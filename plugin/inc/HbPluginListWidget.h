@@ -1,0 +1,66 @@
+#ifndef HBPLUGINLISTWIDGET_H
+#define HBPLUGINLISTWIDGET_H
+
+// Copyright (C) 2012-2014
+// Adrien Gavignet (hasboeuf)
+// adrien.gavignet@gmail.com
+
+// Qt
+#include <QtGui/QStandardItemModel>
+#include <QtCore/QStringList>
+#include <QtCore/QSortFilterProxyModel>
+// Local
+#include <ui_HbPluginListWidget.h>
+#include <HbPluginInfos.h>
+
+namespace hb
+{
+	namespace plugin
+	{
+        class HbPluginListWidget : public QWidget, private Ui::HbPluginListWidget
+		{
+			Q_OBJECT
+
+		public:
+			enum ColumnID
+			{
+				COLUMN_NAME = 0,
+				COLUMN_LOAD,
+				COLUMN_VERSION,
+				COLUMN_AUTHOR,
+				COLUMN_REQUIRED,
+				COLUMN_OPTIONAL
+			};
+
+            explicit HbPluginListWidget(QWidget *parent = 0);
+
+			void setPlugins(QList<const HbPluginInfos *> plugins);
+
+		private:
+			QStandardItem* getLoadItem(QString plugin_name);
+
+		private:
+
+			QStringList           mLabels;
+
+			QStandardItemModel    mModel;
+			QSortFilterProxyModel mProxy;
+
+			QHash<QString, QStandardItem*> mPlugins;
+
+			public slots:
+			// From PlatformService
+			void onPluginLoaded(const HbPluginInfos* plugin_infos);
+			void onPluginUnloaded(QString            plugin_name);
+
+			// From Delegate
+			void onPluginChecked(QStandardItem *item_load);
+
+		signals:
+			void loadPluginRequest(QString plugin_name);
+			void unloadPluginRequest(QString plugin_name);
+		};
+	}
+}
+
+#endif // HBPLUGINLISTWIDGET_H

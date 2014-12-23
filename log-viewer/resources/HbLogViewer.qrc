@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>HbLogViewer.png</file>
+        <file>config/default.hblog</file>
+        <file>images/adjust.png</file>
+        <file>images/garbage.png</file>
+        <file>images/open.png</file>
+        <file>images/save.png</file>
+        <file>images/settings.png</file>
+        <file>images/stop.png</file>
+        <file>images/logo.png</file>
+    </qresource>
+</RCC>

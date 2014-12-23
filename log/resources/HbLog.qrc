@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>config/default.hblog</file>
+    </qresource>
+</RCC>

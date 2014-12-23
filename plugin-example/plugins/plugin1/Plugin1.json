@@ -1,0 +1,9 @@
+{
+	"author" : "hasboeuf",
+	"name" : "Plugin1",
+	"version" : "0.0.1",
+    "plugin_required" : [ { "name" : "Plugin2", "version" : "0.0.1" } ],
+    "plugin_optional" : [ ],
+    "service_required" : [ { "name" : "ServiceMenuBar", "version" : "0.0.1" } ],
+    "service_optional" : [ ]
+}

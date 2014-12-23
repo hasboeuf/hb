@@ -1,0 +1,65 @@
+#ifndef HBLOGTCPSOCKETINPUT_H
+#define HBLOGTCPSOCKETINPUT_H
+
+/*! \file HbLogTcpSocketInput.h */
+
+#include <inputs/HbLogAbstractInput.h>
+
+#include <HbGlobal.h>
+#include <QTcpServer>
+
+namespace hb
+{
+	namespace log
+	{
+		/*! \namespace hb::log */
+
+        class HbLogMessage;
+
+
+        /*! 
+        * \class HbLogTcpSocketInput
+        * \brief The %HbLogTcpSocketInput class defines a tcp server input.
+        *
+        * %HbLogTcpSocketInput inherits from HbLogAbstractInput.\n
+        */
+        class HbLogTcpSocketInput final : public QTcpServer, public HbLogAbstractInput
+		{
+			Q_OBJECT
+            Q_DISABLE_COPY( HbLogTcpSocketInput )
+
+
+		public :
+
+            HbLogTcpSocketInput() = delete;
+            HbLogTcpSocketInput( quint32 port );
+            virtual ~HbLogTcpSocketInput();
+
+			quint32 port() const;
+
+        signals :
+
+            void inputMessageReceived( HbLogMessage * message );
+
+		private :
+
+			void incomingConnection( qint32 descriptor );
+
+		private callbacks :
+
+			void onReadyRead();
+			void onClientDisconnected();
+
+
+        private :
+
+            quint32 mPort;
+
+            qint32 mAvailable;
+            QSet< QTcpSocket * > mClients;
+		};
+	}
+}
+
+#endif
+

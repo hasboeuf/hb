@@ -1,0 +1,27 @@
+<!DOCTYPE hbLogViewerConfig>
+<hbLogViewerConfig>
+ <maxBuffer>500</maxBuffer>
+ <font>
+  <family>Courier</family>
+  <size>8</size>
+ </font>
+ <backgroundColor>#ffffff</backgroundColor>
+ <levels>
+  <level id="1" color="#000000"/>
+  <level id="2" color="#00aa00"/>
+  <level id="4" color="#0055ff"/>
+  <level id="8" color="#ff8001"/>
+  <level id="16" color="#ff0000"/>
+  <level id="32" color="#aa0000"/>
+  <level id="64" color="#6b0000"/>
+ </levels>
+ <projectFolders>
+  <projectFolder path=""/>
+ </projectFolders>
+ <editors>
+  <editor default="1" name="Notepad++">"notepad++.exe" -n$(LINE) "$(FILE)"</editor>
+  <editor default="0" name="QtCreator">"qtcreator.exe" -client $(FILE):$(LINE)</editor>
+  <editor default="0" name="VS2008">"devenv.exe" "$(FILE)" /command "Edit.GoTo $(LINE)"</editor>
+  <editor default="0" name="VS2010">"devenv.exe" "$(FILE)" /command "Edit.GoTo $(LINE)"</editor>
+ </editors>
+</hbLogViewerConfig>

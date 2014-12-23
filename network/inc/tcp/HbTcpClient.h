@@ -1,0 +1,51 @@
+#ifndef HBTCPCLIENT_H
+#define HBTCPCLIENT_H
+
+// Local
+#include <HbAbstractClient.h>
+#include <tcp/HbTcpConfig.h>
+
+namespace hb
+{
+    namespace network
+	{
+
+        class HbTcpSocket;
+
+		class HB_NETWORK_DECL HbTcpClient : public HbAbstractClient
+		{
+			Q_DISABLE_COPY( HbTcpClient )
+
+        public :
+
+            HbTcpClient( QObject * parent = nullptr );
+            virtual ~HbTcpClient();
+
+			using HbAbstractClient::join;
+            virtual bool join( const HbTcpConfig & config ) final;
+
+            virtual bool setConfiguration( const HbTcpConfig & config ) final;
+            virtual const HbTcpConfig & configuration() const final;
+
+        private :
+
+            bool connectToNetwork();
+            bool disconnectFromNetwork();
+
+            HbAbstractSocket * pendingConnection();
+            HbAbstractSocket * currentConnection() const;
+
+
+        private :
+
+            HbTcpSocket * _socket;
+            HbTcpConfig _config;
+		};
+
+
+	}
+}
+
+using hb::network::HbTcpClient;
+
+#endif // HBTCPCLIENT_H
