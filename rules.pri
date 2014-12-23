@@ -68,7 +68,7 @@
 # -----------------
 # Project Settings
 # -----------------
-
+	 
     PROJECT.PATH = $${_PRO_FILE_PWD_}/
 
 # ----------------
@@ -140,43 +140,33 @@
         PACKAGES = $$eval($$MODULE_NAME)
         for( PACKAGE, PACKAGES ) {
 
-            equals( MODULE_NAME, $${MODULE.NAME} ) { # Internal dependency
-                PACKAGE_INC =	$$MODULE_PATH/$$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.INC ) )/inc
-            } else {
-                PACKAGE_INC =	$${MODULE_INC}/$$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.INC ) )
-            }
+            PACKAGE_INC =	$${MODULE_INC}/$$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.INC ) )
             PACKAGE_TARGET =    $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.TARGET ) )
             PACKAGE_QT =        $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.QT ) )
             PACKAGE_TYPE =      $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.TYPE ) )
 
-            message ( TOTO $$PACKAGE_INC )
+
 
             QT *= $$PACKAGE_QT
 
             INCLUDEPATH *= $$PACKAGE_INC
+            #INCLUDEPATH *= $$(HBDIR)/$$HB_TOOLS/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/uic/
 
-            #equals ( PACKAGE_TYPE, dynlib ): \
-            #    PRE_TARGETDEPS += $$clean_path( $${MODULE_LIB}/$${BUILD.CONFIG}/$$fullTarget( PACKAGE_TARGET, dynlib ) )
-            #
-            #equals ( PACKAGE_TYPE, staticlib ): \
-            #    PRE_TARGETDEPS += $$clean_path( $${MODULE_LIB}/$${BUILD.CONFIG}/$$fullTarget( PACKAGE_TARGET, staticlib ) )
+            equals ( PACKAGE_TYPE, dynlib ): \
+                PRE_TARGETDEPS += $$clean_path( $${MODULE_LIB}/$${BUILD.CONFIG}/$$fullTarget( PACKAGE_TARGET, dynlib ) )
+
+            equals ( PACKAGE_TYPE, staticlib ): \
+                PRE_TARGETDEPS += $$clean_path( $${MODULE_LIB}/$${BUILD.CONFIG}/$$fullTarget( PACKAGE_TARGET, staticlib ) )
 
             CONFIG( debug, debug|release ): PACKAGE_TARGET = $$replaceString( PACKAGE_TARGET,, d )
 
-            equals( MODULE_NAME, $${MODULE.NAME} ) { # Internal dependency
-                DEPENDPATH *= $$clean_path( $$MODULE_PATH/$$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.INC ) )/bin/$${BUILD.CONFIG} )
-                LIBS *= -L$$clean_path( $$MODULE_PATH/$$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.INC ) )/bin/$${BUILD.CONFIG} )
-                LIBS *= -L$$clean_path( $$MODULE_PATH/$$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.INC ) )/lib/$${BUILD.CONFIG} )
-            } else {
-                DEPENDPATH *= $$clean_path( $${MODULE_BIN}/$${BUILD.CONFIG} )
-                LIBS *= -L$$clean_path( $${MODULE_BIN}/$${BUILD.CONFIG} )
-                LIBS *= -L$$clean_path( $${MODULE_LIB}/$${BUILD.CONFIG} )
-            }
+            DEPENDPATH *= $$clean_path( $${MODULE_BIN}/$${BUILD.CONFIG} )
+            LIBS *= -L$$clean_path( $${MODULE_BIN}/$${BUILD.CONFIG} )
+
+            LIBS *= -L$$clean_path( $${MODULE_LIB}/$${BUILD.CONFIG} )
 
             #win32-msvc*:LIBS *= -l$${PACKAGE_TARGET}.lib # Dependency purpose.
             LIBS *= -l$${PACKAGE_TARGET}
-
-            message ( LIBS=$$LIBS )
 
             unset( PACKAGE_INC )
             unset( PACKAGE_TARGET )
@@ -281,7 +271,7 @@
 
     scanDirectories( SUBDIRS )
 }
-
+	
 # ----------------
 # Generated Files
 # ----------------
@@ -296,20 +286,20 @@
 # ---------------
 
     !contains( PROJECT.TYPE, subdirs ) {
-        contains( PROJECT.TYPE, app ): OUTPUT_DIR = bin
-        contains( PROJECT.TYPE, staticlib ): OUTPUT_DIR = lib
-        contains( PROJECT.TYPE, dynlib ) {
-                OUTPUT_DIR = lib/$${BUILD.CONFIG}
-                OUTPUT_DIR_DLL = bin/$${BUILD.CONFIG}
-        }
-
-        isEmpty( OUTPUT_DIR ) {
-                error( "$${PROJECT.PRO}: Project $${TARGET} output directory cannot be resolved" )
-        }
-
+	contains( PROJECT.TYPE, app ): OUTPUT_DIR = bin
+	contains( PROJECT.TYPE, staticlib ): OUTPUT_DIR = lib
+	contains( PROJECT.TYPE, dynlib ) {
+		OUTPUT_DIR = lib
+		OUTPUT_DIR_DLL = bin
+	}
+	
+	isEmpty( OUTPUT_DIR ) {
+		error( "$${PROJECT.PRO}: Project $${TARGET} output directory cannot be resolved" )
+	}
+	
         DESTDIR = $$clean_path( $${PROJECT.PATH}/$${OUTPUT_DIR}/ )
 
-        !isEmpty( OUTPUT_DIR_DLL ): DLLDESTDIR = $${PROJECT.PATH}/$${OUTPUT_DIR_DLL}/
+	!isEmpty( OUTPUT_DIR_DLL ): DLLDESTDIR = $${PROJECT.PATH}/$${OUTPUT_DIR_DLL}/
 
         TARGET = $${PROJECT.NAME}
         CONFIG( debug, debug|release ): TARGET = $$replaceString( TARGET,, d )
@@ -408,98 +398,86 @@
 # Install Settings
 # -----------------
 
+    # Copy header files.
+
+    for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) { # Normalize filenames.
+        EXCLUDED_HEADERS_TMP += $$clean_path( $$EXCLUDED_HEADER )
+    }
+    EXCLUDED_HEADERS = $$EXCLUDED_HEADERS_TMP
+
+
+    for( EXCLUDED_HEADER, EXCLUDED_HEADERS_TMP ) {
+        # ex: EXCLUDED_HEADERS = inputs/*.h
+        !isRelativePath( EXCLUDED_HEADER ) {
+            error( "$${PROJECT.PRO}: $${EXCLUDED_HEADER} must define an relative path" )
+        }
+
+        EXCLUDED_HEADERS -= $$EXCLUDED_HEADER
+        EXCLUDED_HEADER  = $$files( $$clean_path( $$replaceString( EXCLUDED_HEADER, $${PROJECT.PATH}/inc/, ) ) )
+        EXCLUDED_HEADERS += $$EXCLUDED_HEADER
+        # ex: EXCLUDED_HEADERS = C:/my_project/inputs/toto.h C:/my_project/inputs/toto.h
+    }
+
+    HEADERS_TO_COPY = $$HEADERS
+    HEADERS_TO_COPY -= $$EXCLUDED_HEADERS # Substract excluded headers.
+
+    for( HEADER, HEADERS_TO_COPY ) {
+        HEADER_DIR = $$dirname( HEADER ) # Only take the subdir part of the header path.
+        HEADER_DIR = $$replace( HEADER_DIR, $$clean_path( $${PROJECT.PATH}/inc ), )
+
+        QMAKE_POST_LINK += $${QMAKE_COPY} \
+                            \"$$HEADER\" \
+                            \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INC )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INC )/$${HEADER_DIR}/* )\" $$escape_expand(\n\t)
+    }
+
+    # Copy ui files.
+    exists( $${UI_DIR}/ui_*.h ) {
+        QMAKE_POST_LINK += $${QMAKE_COPY} \
+                            \"$$UI_DIR/ui_*.h\" \
+                            \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INC )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INC )/* )\" $$escape_expand(\n\t)
+    }
+
+    PROJECT_TYPE = $${PROJECT.TYPE}
+    PROJECT_NAME = $${PROJECT.NAME}
+
     # Copy lib file.
     contains( PROJECT_TYPE , dynlib|staticlib ) {
         FULLPATH_LIB = $$DESTDIR/$$fullTarget( PROJECT_NAME, staticlib ) # Force to staticlib to get .lib.
         exists( $${FULLPATH_LIB} ) {
-            copy_lib.path  = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.LIB )/$${BUILD.CONFIG} )
-            copy_lib.files = $${FULLPATH_LIB}
-
-            INSTALLS += copy_lib
+            QMAKE_POST_LINK += $${QMAKE_COPY} \
+                                \"$${FULLPATH_LIB}\" \
+                                \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.LIB )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
         }
     }
 
+    # Copy dll and pdb file.
+    contains( PROJECT_TYPE, dynlib ) {
+        FULLPATH_DLL = $$DESTDIR/$$fullTarget( PROJECT_NAME, dynlib )
+        exists( $${FULLPATH_DLL} ) {
+            QMAKE_POST_LINK += $${QMAKE_COPY} \
+                                \"$${FULLPATH_DLL}\" \
+                                \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
+        }
 
-#    # Copy header files.
-#
-#    for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) { # Normalize filenames.
-#        EXCLUDED_HEADERS_TMP += $$clean_path( $$EXCLUDED_HEADER )
-#    }
-#    EXCLUDED_HEADERS = $$EXCLUDED_HEADERS_TMP
-#
-#
-#    for( EXCLUDED_HEADER, EXCLUDED_HEADERS_TMP ) {
-#        # ex: EXCLUDED_HEADERS = inputs/*.h
-#        !isRelativePath( EXCLUDED_HEADER ) {
-#            error( "$${PROJECT.PRO}: $${EXCLUDED_HEADER} must define an relative path" )
-#        }
-#
-#        EXCLUDED_HEADERS -= $$EXCLUDED_HEADER
-#        EXCLUDED_HEADER  = $$files( $$clean_path( $$replaceString( EXCLUDED_HEADER, $${PROJECT.PATH}/inc/, ) ) )
-#        EXCLUDED_HEADERS += $$EXCLUDED_HEADER
-#        # ex: EXCLUDED_HEADERS = C:/my_project/inputs/toto.h C:/my_project/inputs/toto.h
-#    }
-#
-#    HEADERS_TO_COPY = $$HEADERS
-#    HEADERS_TO_COPY -= $$EXCLUDED_HEADERS # Substract excluded headers.
-#
-#    for( HEADER, HEADERS_TO_COPY ) {
-#        HEADER_DIR = $$dirname( HEADER ) # Only take the subdir part of the header path.
-#        HEADER_DIR = $$replace( HEADER_DIR, $$clean_path( $${PROJECT.PATH}/inc ), )
-#
-#        QMAKE_POST_LINK += $${QMAKE_COPY} \
-#                            \"$$HEADER\" \
-#                            \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INC )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INC )/$${HEADER_DIR}/* )\" $$escape_expand(\n\t)
-#    }
-#
-#    # Copy ui files.
-#    exists( $${UI_DIR}/ui_*.h ) {
-#        QMAKE_POST_LINK += $${QMAKE_COPY} \
-#                            \"$$UI_DIR/ui_*.h\" \
-#                            \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INC )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INC )/* )\" $$escape_expand(\n\t)
-#    }
-#
-#    PROJECT_TYPE = $${PROJECT.TYPE}
-#    PROJECT_NAME = $${PROJECT.NAME}
-#
-#    # Copy lib file.
-#    contains( PROJECT_TYPE , dynlib|staticlib ) {
-#        FULLPATH_LIB = $$DESTDIR/$$fullTarget( PROJECT_NAME, staticlib ) # Force to staticlib to get .lib.
-#        exists( $${FULLPATH_LIB} ) {
-#            QMAKE_POST_LINK += $${QMAKE_COPY} \
-#                                \"$${FULLPATH_LIB}\" \
-#                                \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.LIB )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
-#        }
-#    }
-#
-#    # Copy dll and pdb file.
-#    contains( PROJECT_TYPE, dynlib ) {
-#        FULLPATH_DLL = $$DESTDIR/$$fullTarget( PROJECT_NAME, dynlib )
-#        exists( $${FULLPATH_DLL} ) {
-#            QMAKE_POST_LINK += $${QMAKE_COPY} \
-#                                \"$${FULLPATH_DLL}\" \
-#                                \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
-#        }
-#
-#        win32: {
-#            FULLPATH_PDB = $$DESTDIR/$$replaceString( TARGET,, .pdb )
-#            exists( $${FULLPATH_PDB} ) {
-#                QMAKE_POST_LINK += $${QMAKE_COPY} \
-#                                    \"$${FULLPATH_PDB}\" \
-#                                    \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
-#            }
-#
-#        }
-#    }
-#
-#    # Copy exe file.
-#    contains( PROJECT_TYPE, app ) {
-#
-#        QMAKE_POST_LINK += $${QMAKE_COPY} \
-#                            \"$$DESTDIR/$$fullTarget( PROJECT_NAME, app )\" \
-#                            \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
-#
-#    }
-#
-#    message ( post_build=$$QMAKE_POST_LINK )
+        win32: {
+            FULLPATH_PDB = $$DESTDIR/$$replaceString( TARGET,, .pdb )
+            exists( $${FULLPATH_PDB} ) {
+                QMAKE_POST_LINK += $${QMAKE_COPY} \
+                                    \"$${FULLPATH_PDB}\" \
+                                    \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
+            }
+
+        }
+    }
+
+    # Copy exe file.
+    contains( PROJECT_TYPE, app ) {
+
+        QMAKE_POST_LINK += $${QMAKE_COPY} \
+                            \"$$DESTDIR/$$fullTarget( PROJECT_NAME, app )\" \
+                            \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
+
+    }
+
+    message ( post_build=$$QMAKE_POST_LINK )
 
