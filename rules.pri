@@ -459,30 +459,26 @@ win32-msvc*: {
     # Copy lib file.
     contains( PROJECT_TYPE , dynlib|staticlib ) {
         FULLPATH_LIB = $$DESTDIR/$$fullTarget( PROJECT_NAME, staticlib ) # Force to staticlib to get .lib.
-        exists( $${FULLPATH_LIB} ) {
-            QMAKE_POST_LINK += $${QMAKE_COPY} \
-                                \"$${FULLPATH_LIB}\" \
-                                \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.LIB )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
-        }
+		
+		QMAKE_POST_LINK += $${QMAKE_COPY} \
+							\"$${FULLPATH_LIB}\" \
+							\"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.LIB )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
     }
 
     # Copy dll and pdb file.
     contains( PROJECT_TYPE, dynlib ) {
         FULLPATH_DLL = $$DESTDIR/$$fullTarget( PROJECT_NAME, dynlib )
-        exists( $${FULLPATH_DLL} ) {
-            QMAKE_POST_LINK += $${QMAKE_COPY} \
-                                \"$${FULLPATH_DLL}\" \
-                                \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
-        }
 
-        win32: {
+		QMAKE_POST_LINK += $${QMAKE_COPY} \
+							\"$${FULLPATH_DLL}\" \
+							\"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
+
+        win32-msvc*: {
             FULLPATH_PDB = $$DESTDIR/$$replaceString( TARGET,, .pdb )
-            exists( $${FULLPATH_PDB} ) {
-                QMAKE_POST_LINK += $${QMAKE_COPY} \
-                                    \"$${FULLPATH_PDB}\" \
-                                    \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
-            }
 
+			QMAKE_POST_LINK += $${QMAKE_COPY} \
+								\"$${FULLPATH_PDB}\" \
+								\"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
         }
     }
 
