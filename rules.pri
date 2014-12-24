@@ -37,6 +37,12 @@
 # Building Configuration
 # -----------------------
 
+    win32-msvc*|win32-g++: {
+        message( "Compilator supported." )
+    } else {
+        error( "Compilator not supported." )
+    }
+
     win32-g++: QMAKE_CXXFLAGS += -std=c++0x
 
     QMAKE_SPEC = $$(QMAKESPEC)
@@ -140,38 +146,48 @@
         PACKAGES = $$eval($$MODULE_NAME)
         for( PACKAGE, PACKAGES ) {
 
-            PACKAGE_INC =	$${MODULE_INC}/$$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.INC ) )
             PACKAGE_TARGET =    $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.TARGET ) )
             PACKAGE_QT =        $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.QT ) )
             PACKAGE_TYPE =      $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.TYPE ) )
 
+            # Internal dependency
+            equals( MODULE_NAME, $${MODULE.NAME} ) {
 
+                PACKAGE_INC = $${MODULE_PATH}/$${PACKAGE}/inc
+                PACKAGE_LIB = $${MODULE_PATH}/$${PACKAGE}/lib/$${BUILD.CONFIG}
+                PACKAGE_BIN = $${MODULE_PATH}/$${PACKAGE}/bin/$${BUILD.CONFIG}
+            }
+            # External dependency
+            else {
+                PACKAGE_INC = $${MODULE_INC}/$$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.INC ) )
+                PACKAGE_LIB = $${MODULE_LIB}/$${BUILD.CONFIG}
+                PACKAGE_BIN = $${MODULE_BIN}/$${BUILD.CONFIG}
+            }
+
+            *-g++: {
+                equals ( PACKAGE_TYPE, staticlib ): {
+                    PRE_TARGETDEPS += $$clean_path( $${PACKAGE_LIB}/$$fullTarget( PACKAGE_TARGET, staticlib ) )
+                }
+            }
 
             QT *= $$PACKAGE_QT
 
             INCLUDEPATH *= $$PACKAGE_INC
-            #INCLUDEPATH *= $$(HBDIR)/$$HB_TOOLS/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/uic/
 
-            equals ( PACKAGE_TYPE, dynlib ): \
-                PRE_TARGETDEPS += $$clean_path( $${MODULE_LIB}/$${BUILD.CONFIG}/$$fullTarget( PACKAGE_TARGET, dynlib ) )
-
-            equals ( PACKAGE_TYPE, staticlib ): \
-                PRE_TARGETDEPS += $$clean_path( $${MODULE_LIB}/$${BUILD.CONFIG}/$$fullTarget( PACKAGE_TARGET, staticlib ) )
+            DEPENDPATH *= $$clean_path( $${PACKAGE_BIN} )
 
             CONFIG( debug, debug|release ): PACKAGE_TARGET = $$replaceString( PACKAGE_TARGET,, d )
 
-            DEPENDPATH *= $$clean_path( $${MODULE_BIN}/$${BUILD.CONFIG} )
-            LIBS *= -L$$clean_path( $${MODULE_BIN}/$${BUILD.CONFIG} )
-
-            LIBS *= -L$$clean_path( $${MODULE_LIB}/$${BUILD.CONFIG} )
-
-            #win32-msvc*:LIBS *= -l$${PACKAGE_TARGET}.lib # Dependency purpose.
+            LIBS *= -L$$clean_path( $${PACKAGE_BIN} )
+            LIBS *= -L$$clean_path( $${PACKAGE_LIB} )
             LIBS *= -l$${PACKAGE_TARGET}
 
             unset( PACKAGE_INC )
             unset( PACKAGE_TARGET )
             unset( PACKAGE_QT )
             unset( PACKAGE_TYPE )
+            unset( PACKAGE_LIB )
+            unset( PACKAGE_BIN )
         }
 
         export( QT )
@@ -286,11 +302,11 @@
 # ---------------
 
     !contains( PROJECT.TYPE, subdirs ) {
-	contains( PROJECT.TYPE, app ): OUTPUT_DIR = bin
-	contains( PROJECT.TYPE, staticlib ): OUTPUT_DIR = lib
+        contains( PROJECT.TYPE, app ): OUTPUT_DIR = bin/$${BUILD.CONFIG}
+        contains( PROJECT.TYPE, staticlib ): OUTPUT_DIR = lib/$${BUILD.CONFIG}
 	contains( PROJECT.TYPE, dynlib ) {
-		OUTPUT_DIR = lib
-		OUTPUT_DIR_DLL = bin
+                OUTPUT_DIR = lib/$${BUILD.CONFIG}
+                OUTPUT_DIR_DLL = bin/$${BUILD.CONFIG}
 	}
 	
 	isEmpty( OUTPUT_DIR ) {
@@ -398,8 +414,8 @@
 # Install Settings
 # -----------------
 
+win32-msvc*: {
     # Copy header files.
-
     for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) { # Normalize filenames.
         EXCLUDED_HEADERS_TMP += $$clean_path( $$EXCLUDED_HEADER )
     }
@@ -480,4 +496,5 @@
     }
 
     message ( post_build=$$QMAKE_POST_LINK )
+}
 

@@ -15,6 +15,7 @@ namespace hb
 
 		class HbAbstractSocket;
 		class HbNetworkHeader;
+        class HbSocketHandler;
 
 		class HB_NETWORK_DECL HbAbstractServer : public HbAbstractNetwork
 		{
