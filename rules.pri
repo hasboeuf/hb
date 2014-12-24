@@ -494,3 +494,44 @@ win32-msvc*: {
     message ( post_build=$$QMAKE_POST_LINK )
 }
 
+win32-g++: {
+
+    # Copy header files.
+    for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) { # Normalize filenames.
+        EXCLUDED_HEADERS_TMP += $$clean_path( $$EXCLUDED_HEADER )
+    }
+    EXCLUDED_HEADERS = $$EXCLUDED_HEADERS_TMP
+
+
+    for( EXCLUDED_HEADER, EXCLUDED_HEADERS_TMP ) {
+        # ex: EXCLUDED_HEADERS = inputs/*.h
+        !isRelativePath( EXCLUDED_HEADER ) {
+            error( "$${PROJECT.PRO}: $${EXCLUDED_HEADER} must define an relative path" )
+        }
+
+        EXCLUDED_HEADERS -= $$EXCLUDED_HEADER
+        EXCLUDED_HEADER  = $$files( $$clean_path( $$replaceString( EXCLUDED_HEADER, $${PROJECT.PATH}/inc/, ) ) )
+        EXCLUDED_HEADERS += $$EXCLUDED_HEADER
+        # ex: EXCLUDED_HEADERS = C:/my_project/inputs/toto.h C:/my_project/inputs/toto.h
+    }
+
+    HEADERS_TO_COPY = $$HEADERS
+    HEADERS_TO_COPY -= $$EXCLUDED_HEADERS # Substract excluded headers.
+
+    for( HEADER, HEADERS_TO_COPY ) {
+        HEADER_TMP = $$clean_path( $$replace( HEADER, $$clean_path( $${PROJECT.PATH} ), ) )
+        # /com/tcp/HbTcpServer.h
+        HEADER_TMP = $$replaceString( HEADER_TMP, ., )
+        # ./com/tcp/HbTcpServer.h
+        HEADERS_TO_COPY_TMP += $$HEADER_TMP
+    }
+    HEADERS_TO_COPY = $$HEADERS_TO_COPY_TMP
+
+    copy_headers.files = $$HEADERS_TO_COPY
+    copy_headers.path = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INC )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INC ) )
+
+    message ( files=$${copy_headers.files} )
+    message ( path=$${copy_headers.path} )
+
+    INSTALLS += copy_headers
+}
