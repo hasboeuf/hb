@@ -8,13 +8,13 @@
 #include <HbGlobal.h>
 #include <HbNetworkContract.h>
 // Local
+#include <HbAbstractServer.h> // Covariance.
 
 namespace hb
 {
 	namespace network
     {
 		class HbAbstractSocket;
-		class HbAbstractServer;
 
         class HbSocketHandler : public QObject
         {
@@ -32,6 +32,9 @@ namespace hb
 			HbSocketHandler( HbAbstractServer * server );
 			virtual ~HbSocketHandler();
 
+			//virtual HbAbstractServer * server( ) const = 0;
+			virtual HbAbstractServer * server() const;
+
             virtual quint16  id() const final;
             virtual bool canHandleNewConnection() const final;
 			virtual bool storeNewSocket( HbAbstractSocket * socket ) final;
@@ -39,10 +42,12 @@ namespace hb
         protected:
             quint16            mId;
 			HandlerState       mState;
-			HbAbstractServer * mpServer;
 
 			QMap<quint16, HbAbstractSocket *> mSocketById;
 			QMap<HbAbstractSocket *, quint16> mIdBySocket;
+
+		private:
+			HbAbstractServer * mpServer; // SUB
 
         public callbacks:
             // From QThread

@@ -20,11 +20,18 @@ HbTcpSocketHandler::HbTcpSocketHandler( HbTcpServer * server ) :
 {
     HbLogBegin();
 
+	mpServer = q_assert_ptr( server );
+
     HbLogEnd();
 }
 
 HbTcpSocketHandler::~HbTcpSocketHandler()
 {
+}
+
+HbTcpServer * HbTcpSocketHandler::server() const
+{
+	return mpServer;
 }
 
 void HbTcpSocketHandler::init()
@@ -45,19 +52,25 @@ void HbTcpSocketHandler::onNewPendingConnection( qint32 socket_descriptor )
 		socket->close();
         delete socket;
         HbLogEnd();
+		return;
         //return HbNetworkError::TCPSOCKETHANDLER_FULL;
-     }
-
-	q_assert( !mSocketById.contains( socket_descriptor ) );
+	}
 
 	QTcpSocket* device = q_assert_ptr( new QTcpSocket() );
 	q_assert( device->setSocketDescriptor(socket_descriptor) );
 
-    HbTcpSocket *socket = new HbTcpSocket( device );
+    HbTcpSocket * socket = new HbTcpSocket( device );
 
-    HbInfo("SocketHandler#%d: New socket#%d added.", mId, socket_descriptor);
+	HbTcpConfig::SocketOptions options = mpServer->configuration().options();
+	socket->setSocketOption( QAbstractSocket::LowDelayOption, options.testFlag( HbTcpConfig::SocketOption::LowDelay ) );
+	socket->setSocketOption( QAbstractSocket::KeepAliveOption, options.testFlag( HbTcpConfig::SocketOption::KeepAlive ) );
+	socket->setSocketOption( QAbstractSocket::MulticastLoopbackOption, options.testFlag( HbTcpConfig::SocketOption::MulticastLoopback ) );
 
 	storeNewSocket( socket );
+
+	HbInfo( "SocketHandler#%d: New socket#%d added.", mId, socket_descriptor );
+
+	emit socketConnected( socket_descriptor, socket->uuid() ); // To Server.
 
     HbLogEnd();
 	//return HbNetworkError::G_SUCCESS;

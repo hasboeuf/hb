@@ -7,13 +7,13 @@
 #include <HbGlobal.h>
 // Local
 #include <HbSocketHandler.h>
+#include <tcp/HbTcpServer.h> // Covariance.
 
 namespace hb
 {
 	namespace network
     {
 		class HbTcpSocket;
-		class HbTcpServer;
 
         class HbTcpSocketHandler : public HbSocketHandler
         {
@@ -26,12 +26,15 @@ namespace hb
 			HbTcpSocketHandler( HbTcpServer * server );
             virtual ~HbTcpSocketHandler();
 
+			virtual HbTcpServer * server( ) const;
+
 			virtual void init();
 
         public slots:
 			virtual void onNewPendingConnection( qint32 socket_descriptor );
 
 		private:
+			HbTcpServer * mpServer;
 
         signals:
 

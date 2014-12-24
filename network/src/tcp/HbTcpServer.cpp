@@ -20,7 +20,7 @@ void TcpServer::incomingConnection(qint32 socket_descriptor)
 {
 	HbLogBegin();
 
-	emit newConnection(socket_descriptor);
+	emit newConnection( socket_descriptor );
 
 	HbLogEnd();
 }
@@ -107,7 +107,7 @@ bool HbTcpServer::disconnectFromNetwork( HbAbstractSocket * socket )
 }
 
 
-void HbTcpServer::onNewConnection(int socket_descriptor)
+void HbTcpServer::onNewConnection(qint32 socket_descriptor)
 {
 	HbLogBegin();
 
@@ -148,27 +148,8 @@ void HbTcpServer::onNewConnection(int socket_descriptor)
 		HbInfo("New HbTcpSocketHandler#%d created to handle socket#%d added.", handler->id(), socket_descriptor);
 	}
 
-	QMetaObject::invokeMethod(handler, "createNewSocket", Q_ARG(qint32, socket_descriptor));
+	Q_ASSERT( QMetaObject::invokeMethod(handler, "onNewPendingConnection", Q_ARG(qint32, socket_descriptor)) );
 
 	HbLogEnd();
-    /*QTcpSocket * socket = q_assert_ptr( _server->nextPendingConnection() );
-
-	HbTcpConfig::SocketOptions options = _config.options();
-
-	socket->setSocketOption( QAbstractSocket::LowDelayOption, options.testFlag( HbTcpConfig::SocketOption::LowDelay ) );
-    socket->setSocketOption( QAbstractSocket::KeepAliveOption, options.testFlag( HbTcpConfig::SocketOption::KeepAlive ) );
-    socket->setSocketOption( QAbstractSocket::MulticastLoopbackOption, options.testFlag( HbTcpConfig::SocketOption::MulticastLoopback ) );
-	    
-	HbTcpSocket * pending = q_check_ptr( new HbTcpSocket( socket ) );
-
-    connect( pending, ( void ( HbTcpSocket::* )( QAbstractSocket::SocketError ) ) &HbTcpSocket::error,
-        this, [this, pending]( QAbstractSocket::SocketError error )
-    {
-        raiseError( error, QStringLiteral( "%1 on socket %2" ).
-            arg( pending->errorString() ).arg( pending->uuid()) );
-
-    }, Qt::UniqueConnection );
-
-    incomingConnection( pending );*/
 }
 

@@ -33,6 +33,11 @@ HbSocketHandler::~HbSocketHandler()
 {
 }
 
+HbAbstractServer * HbSocketHandler::server() const
+{
+	return mpServer;
+}
+
 void HbSocketHandler::init()
 {
     HbLogBegin();
@@ -82,8 +87,17 @@ bool HbSocketHandler::storeNewSocket( HbAbstractSocket * socket )
 	connect( socket, &HbAbstractSocket::readyPacket,  this, &HbSocketHandler::onSocketReadyPacket );
 	connect( socket, &HbAbstractSocket::disconnected, this, &HbSocketHandler::onSocketDisconnected );
 
+	connect( socket, (void (HbAbstractSocket::*)(QAbstractSocket::SocketError)) &HbAbstractSocket::error,
+		this, [this, socket]( QAbstractSocket::SocketError error )
+	{
+		server()->raiseError( error, QStringLiteral( "%1 on socket %2" ).
+			arg( socket->errorString( ) ).arg( socket->uuid( ) ) );
+
+	}, Qt::UniqueConnection );
+
 	return true;
 }
+
 
 void HbSocketHandler::onSocketReadyPacket()
 {
