@@ -276,6 +276,8 @@
             }
         }
 
+        unset( subdir )
+
         export( INCLUDEPATH )
         export( HEADERS )
         export( SOURCES )
@@ -285,6 +287,7 @@
 
     INCLUDEPATH += $$clean_path( $${PROJECT.PATH}/inc )
 
+    SUBDIRS *= .
     scanDirectories( SUBDIRS )
 }
 	
@@ -414,6 +417,50 @@
 # Install Settings
 # -----------------
 
+# Copy header files.
+#message( excl=$$EXCLUDED_HEADERS )
+#for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) { # Normalize filenames.
+#    EXCLUDED_HEADER = $$clean_path( $$EXCLUDED_HEADER )
+#    !isRelativePath( EXCLUDED_HEADER ): \
+#        error( "Excluded headers must define a relative path." )
+#    EXCLUDED_HEADERS_TMP += $$files( $$EXCLUDED_HEADER )
+#}
+#EXCLUDED_HEADERS = $$EXCLUDED_HEADERS_TMP
+#unset( EXCLUDED_HEADERS_TMP )
+#unset( EXCLUDED_HEADER )
+#
+#INC_DIR = $${PROJECT.PATH}/inc
+#message( sub=$$SUBDIRS )
+#for( SUBDIR, SUBDIRS ) {
+#    HEADERS_TO_COPY = $$files( $$clean_path( $$INC_DIR/$$SUBDIR/*.h ) )
+#
+#    win32-g++: {
+#        !equals( SUBDIR, . ) {
+#            suffix = _$$SUBDIR
+#        } else { suffix = }
+#    
+#        copy_headers$$suffix.files = $$HEADERS_TO_COPY
+#        copy_headers$$suffix.path  = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INC )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INC )/$${SURBDIR} )
+#    
+#        INSTALLS *= copy_headers$$suffix
+#    }
+#    win32-msvc*: {
+#
+#        QMAKE_POST_LINK += $${QMAKE_COPY} \
+#                            \"$$HEADER\" \
+#                            \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INC )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INC )/$${HEADER_DIR}/* )\" $$escape_expand(\n\t)
+#
+#    }
+#}
+#
+#message ( excl_final=$$EXCLUDED_HEADERS )
+#for( EXCLUDED_HEADER, EXCLUDED_HEADERS)
+#{
+#
+#}
+#
+#message ( headers=$$INSTALLS )
+
 win32-msvc*: {
     # Copy header files.
     for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) { # Normalize filenames.
@@ -494,44 +541,44 @@ win32-msvc*: {
     message ( post_build=$$QMAKE_POST_LINK )
 }
 
-win32-g++: {
-
-    # Copy header files.
-    for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) { # Normalize filenames.
-        EXCLUDED_HEADERS_TMP += $$clean_path( $$EXCLUDED_HEADER )
-    }
-    EXCLUDED_HEADERS = $$EXCLUDED_HEADERS_TMP
-
-
-    for( EXCLUDED_HEADER, EXCLUDED_HEADERS_TMP ) {
-        # ex: EXCLUDED_HEADERS = inputs/*.h
-        !isRelativePath( EXCLUDED_HEADER ) {
-            error( "$${PROJECT.PRO}: $${EXCLUDED_HEADER} must define an relative path" )
-        }
-
-        EXCLUDED_HEADERS -= $$EXCLUDED_HEADER
-        EXCLUDED_HEADER  = $$files( $$clean_path( $$replaceString( EXCLUDED_HEADER, $${PROJECT.PATH}/inc/, ) ) )
-        EXCLUDED_HEADERS += $$EXCLUDED_HEADER
-        # ex: EXCLUDED_HEADERS = C:/my_project/inputs/toto.h C:/my_project/inputs/toto.h
-    }
-
-    HEADERS_TO_COPY = $$HEADERS
-    HEADERS_TO_COPY -= $$EXCLUDED_HEADERS # Substract excluded headers.
-
-    for( HEADER, HEADERS_TO_COPY ) {
-        HEADER_TMP = $$clean_path( $$replace( HEADER, $$clean_path( $${PROJECT.PATH} ), ) )
-        # /com/tcp/HbTcpServer.h
-        HEADER_TMP = $$replaceString( HEADER_TMP, ., )
-        # ./com/tcp/HbTcpServer.h
-        HEADERS_TO_COPY_TMP += $$HEADER_TMP
-    }
-    HEADERS_TO_COPY = $$HEADERS_TO_COPY_TMP
-
-    copy_headers.files = $$HEADERS_TO_COPY
-    copy_headers.path = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INC )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INC ) )
-
-    message ( files=$${copy_headers.files} )
-    message ( path=$${copy_headers.path} )
-
-    INSTALLS += copy_headers
-}
+#win32-g++: {
+#
+#    # Copy header files.
+#    for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) { # Normalize filenames.
+#        EXCLUDED_HEADERS_TMP += $$clean_path( $$EXCLUDED_HEADER )
+#    }
+#    EXCLUDED_HEADERS = $$EXCLUDED_HEADERS_TMP
+#
+#
+#    for( EXCLUDED_HEADER, EXCLUDED_HEADERS_TMP ) {
+#        # ex: EXCLUDED_HEADERS = inputs/*.h
+#        !isRelativePath( EXCLUDED_HEADER ) {
+#            error( "$${PROJECT.PRO}: $${EXCLUDED_HEADER} must define an relative path" )
+#        }
+#
+#        EXCLUDED_HEADERS -= $$EXCLUDED_HEADER
+#        EXCLUDED_HEADER  = $$files( $$clean_path( $$replaceString( EXCLUDED_HEADER, $${PROJECT.PATH}/inc/, ) ) )
+#        EXCLUDED_HEADERS += $$EXCLUDED_HEADER
+#        # ex: EXCLUDED_HEADERS = C:/my_project/inputs/toto.h C:/my_project/inputs/toto.h
+#    }
+#
+#    HEADERS_TO_COPY = $$HEADERS
+#    HEADERS_TO_COPY -= $$EXCLUDED_HEADERS # Substract excluded headers.
+#
+#    for( HEADER, HEADERS_TO_COPY ) {
+#        HEADER_TMP = $$clean_path( $$replace( HEADER, $$clean_path( $${PROJECT.PATH} ), ) )
+#        # /com/tcp/HbTcpServer.h
+#        HEADER_TMP = $$replaceString( HEADER_TMP, ., )
+#        # ./com/tcp/HbTcpServer.h
+#        HEADERS_TO_COPY_TMP += $$HEADER_TMP
+#    }
+#    HEADERS_TO_COPY = $$HEADERS_TO_COPY_TMP
+#
+#    copy_headers.files = $$HEADERS_TO_COPY
+#    copy_headers.path = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INC )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INC ) )
+#
+#    message ( files=$${copy_headers.files} )
+#    message ( path=$${copy_headers.path} )
+#
+#    INSTALLS += copy_headers
+#}
