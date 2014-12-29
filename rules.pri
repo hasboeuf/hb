@@ -431,87 +431,91 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BU
 
 # Copy header files.
 {
-    # Copy all headers.
-    message( sub=$$SUBDIRS )
-    for( HEADER_DIR, SUBDIRS ) {
-        HEADERS_TO_COPY = $$files( $$clean_path( $$PROJECT_INC/$$HEADER_DIR/*.h ) )
+    contains( PROJECT_TYPE , dynlib|staticlib ) {
+        # Copy all headers.
+        message( sub=$$SUBDIRS )
+        for( HEADER_DIR, SUBDIRS ) {
+            HEADERS_TO_COPY = $$files( $$clean_path( $$PROJECT_INC/$$HEADER_DIR/*.h ) )
 
-        win32-g++: {
-            !equals( HEADER_DIR, . ) {
-                suffix = _$$HEADER_DIR
-            } else { suffix = }
+            win32-g++: {
+                !equals( HEADER_DIR, . ) {
+                    suffix = _$$HEADER_DIR
+                } else { suffix = }
 
-            install_name = copy_headers$$suffix
+                install_name = copy_headers$$suffix
 
-            $${install_name}.files = $$HEADERS_TO_COPY
-            $${install_name}.path  = $$clean_path( $$DELIVERY_INC/$${HEADER_DIR} )
+                $${install_name}.files = $$HEADERS_TO_COPY
+                $${install_name}.path  = $$clean_path( $$DELIVERY_INC/$${HEADER_DIR} )
 
-            INSTALLS *= $${install_name}
-        }
-        win32-msvc*: {
-            for( HEADER_TO_COPY, HEADERS_TO_COPY ) {
-                QMAKE_POST_LINK += $${QMAKE_COPY} \
-                                    \"$$HEADER_TO_COPY\" \
-                                    \"$$clean_path( $$DELIVERY_INC/$${HEADER_DIR}/* )\" $$escape_expand(\n\t)
+                INSTALLS *= $${install_name}
             }
+            win32-msvc*: {
+                for( HEADER_TO_COPY, HEADERS_TO_COPY ) {
+                    QMAKE_POST_LINK += $${QMAKE_COPY} \
+                                        \"$$HEADER_TO_COPY\" \
+                                        \"$$clean_path( $$DELIVERY_INC/$${HEADER_DIR}/* )\" $$escape_expand(\n\t)
+                }
+            }
+
+            unset( HEADERS_TO_COPY )
         }
 
-        unset( HEADERS_TO_COPY )
-    }
+        #message ( post_build_=$$QMAKE_POST_LINK )
 
-    #message ( post_build_=$$QMAKE_POST_LINK )
+        # Remove excluded headers.
+        for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) {
+            !isRelativePath( EXCLUDED_HEADER ): \
+                error( "Excluded headers must define a relative path." )
 
-    # Remove excluded headers.
-    for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) {
-        !isRelativePath( EXCLUDED_HEADER ): \
-            error( "Excluded headers must define a relative path." )
+            # ex: gui/*.h
+            EXCLUDED_HEADER = $$clean_path( $$replaceString( EXCLUDED_HEADER, $$PROJECT_INC/, ) )
 
-        # ex: gui/*.h
-        EXCLUDED_HEADER = $$clean_path( $$replaceString( EXCLUDED_HEADER, $$PROJECT_INC/, ) )
+            # ex: C:/hb/log/gui/*.h
+            EXCLUDED_HEADER_FILES *= $$files( $$EXCLUDED_HEADER )
 
-        # ex: C:/hb/log/gui/*.h
-        EXCLUDED_HEADER_FILES *= $$files( $$EXCLUDED_HEADER )
+            # ex: C:/hb/log/gui/foo1.h C:/hb/log/gui/foo2.h
 
-        # ex: C:/hb/log/gui/foo1.h C:/hb/log/gui/foo2.h
+            for( EXCLUDED_HEADER_FILE, EXCLUDED_HEADER_FILES ) {
+                # Replace root path.
+                EXCLUDED_HEADER_FILES_TMP *= $$clean_path( $$replace( EXCLUDED_HEADER_FILE, $$PROJECT_INC, $$DELIVERY_INC ) )
+            }
+            EXCLUDED_HEADER_FILES = $$EXCLUDED_HEADER_FILES_TMP
+            unset( EXCLUDED_HEADER_FILES_TMP )
 
-        for( EXCLUDED_HEADER_FILE, EXCLUDED_HEADER_FILES ) {
-            # Replace root path.
-            EXCLUDED_HEADER_FILES_TMP *= $$clean_path( $$replace( EXCLUDED_HEADER_FILE, $$PROJECT_INC, $$DELIVERY_INC ) )
+            # ex: C:/hb/delivery/inc/log/gui/foo1.h C:/hb/delivery/inc/log/gui/foo2.h
+            EXCLUDED_HEADERS_TMP *= $$EXCLUDED_HEADER_FILES
+            unset( EXCLUDED_HEADER_FILES )
         }
-        EXCLUDED_HEADER_FILES = $$EXCLUDED_HEADER_FILES_TMP
-        unset( EXCLUDED_HEADER_FILES_TMP )
+        EXCLUDED_HEADERS = $$EXCLUDED_HEADERS_TMP
 
-        # ex: C:/hb/delivery/inc/log/gui/foo1.h C:/hb/delivery/inc/log/gui/foo2.h
-        EXCLUDED_HEADERS_TMP *= $$EXCLUDED_HEADER_FILES
-        unset( EXCLUDED_HEADER_FILES )
+        message ( excl_final=$$EXCLUDED_HEADERS )
+
+        unset( EXCLUDED_HEADERS_TMP )
+        unset( EXCLUDED_HEADER )
     }
-    EXCLUDED_HEADERS = $$EXCLUDED_HEADERS_TMP
-
-    message ( excl_final=$$EXCLUDED_HEADERS )
-
-    unset( EXCLUDED_HEADERS_TMP )
-    unset( EXCLUDED_HEADER )
 }
 
 # Copy ui files.
 {
-    UI_FILES = $$clean_path( $${PROJECT_UI}/ui_*.h )
-    exists( $$UI_FILES ) {
-        win32-g++: {
-            copy_ui.files = $$UI_FILES
-            copy_ui.path  = $$DELIVERY_UI
+    contains( PROJECT_TYPE , dynlib|staticlib ) {
+        UI_FILES = $$clean_path( $${PROJECT_UI}/ui_*.h )
+        exists( $$UI_FILES ) {
+            win32-g++: {
+                copy_ui.files = $$UI_FILES
+                copy_ui.path  = $$DELIVERY_INC
 
-            INSTALLS *= copy_ui
-        }
-        win32-msvc*: {
+                INSTALLS *= copy_ui
+            }
+            win32-msvc*: {
 
-            QMAKE_POST_LINK += $${QMAKE_COPY} \
-                                \"$${UI_FILES}\" \
-                                \"$${DELIVERY_INC}/* )\" $$escape_expand(\n\t)
+                QMAKE_POST_LINK += $${QMAKE_COPY} \
+                                    \"$${UI_FILES}\" \
+                                    \"$${DELIVERY_INC}/* )\" $$escape_expand(\n\t)
+            }
         }
+
+        unset( UI_FILES )
     }
-
-    unset( UI_FILES )
 }
 
 # Copy lib file.
