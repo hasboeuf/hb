@@ -418,30 +418,35 @@
 # -----------------
 
 # General variables.
-PROJECT_INC = $$clean_path( $${PROJECT.PATH}/inc/ )
-PROJECT_LIB = $$clean_path( $${PROJECT.PATH}/lib/$${BUILD.CONFIG}/ )
-PROJECT_BIN = $$clean_path( $${PROJECT.PATH}/bin/$${BUILD.CONFIG}/ )
+PROJECT_INC  = $$clean_path( $${PROJECT.PATH}/inc/ )
+PROJECT_UI   = $$UI_DIR
+PROJECT_LIB  = $$clean_path( $${PROJECT.PATH}/lib/$${BUILD.CONFIG}/ )
+PROJECT_BIN  = $$clean_path( $${PROJECT.PATH}/bin/$${BUILD.CONFIG}/ )
+PROJECT_TYPE = $${PROJECT.TYPE}
+PROJECT_NAME = $${PROJECT.NAME}
 
 DELIVERY_INC = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INC )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INC ) )
-DELIVERY_LIB = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.LIB )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).LIB/$${BUILD.CONFIG} ) )
-DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).BIN/$${BUILD.CONFIG} ) )
+DELIVERY_LIB = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.LIB )/$${BUILD.CONFIG} )
+DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )
 
 # Copy header files.
-
+{
     # Copy all headers.
     message( sub=$$SUBDIRS )
     for( HEADER_DIR, SUBDIRS ) {
-        HEADERS_TO_COPY = $$files( $$clean_path( $$PROJECT_INC/$$SUBDIR/*.h ) )
+        HEADERS_TO_COPY = $$files( $$clean_path( $$PROJECT_INC/$$HEADER_DIR/*.h ) )
 
         win32-g++: {
             !equals( HEADER_DIR, . ) {
                 suffix = _$$HEADER_DIR
             } else { suffix = }
 
-            copy_headers$$suffix.files = $$HEADERS_TO_COPY
-            copy_headers$$suffix.path  = $$clean_path( $$DELIVERY_INC/$${HEADER_DIR} )
+            install_name = copy_headers$$suffix
 
-            INSTALLS *= copy_headers$$suffix
+            $${install_name}.files = $$HEADERS_TO_COPY
+            $${install_name}.path  = $$clean_path( $$DELIVERY_INC/$${HEADER_DIR} )
+
+            INSTALLS *= $${install_name}
         }
         win32-msvc*: {
             for( HEADER_TO_COPY, HEADERS_TO_COPY ) {
@@ -454,7 +459,7 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$$eva
         unset( HEADERS_TO_COPY )
     }
 
-    message ( post_build_=$$QMAKE_POST_LINK )
+    #message ( post_build_=$$QMAKE_POST_LINK )
 
     # Remove excluded headers.
     for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) {
@@ -486,95 +491,97 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$$eva
 
     unset( EXCLUDED_HEADERS_TMP )
     unset( EXCLUDED_HEADER )
+}
 
-# Copy lib file. TODO
+# Copy ui files.
+{
+    UI_FILES = $$clean_path( $${PROJECT_UI}/ui_*.h )
+    exists( $$UI_FILES ) {
+        win32-g++: {
+            copy_ui.files = $$UI_FILES
+            copy_ui.path  = $$DELIVERY_UI
 
-
-
-# Copy dll and pdb file. TODO
-
-
-
-# Copy exe file. TODO
-
-
-
-win32-msvc*: {
-    # Copy header files.
-    #for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) { # Normalize filenames.
-    #    EXCLUDED_HEADERS_TMP += $$clean_path( $$EXCLUDED_HEADER )
-    #}
-    #EXCLUDED_HEADERS = $$EXCLUDED_HEADERS_TMP
-    #
-    #
-    #for( EXCLUDED_HEADER, EXCLUDED_HEADERS_TMP ) {
-    #    # ex: EXCLUDED_HEADERS = inputs/*.h
-    #    !isRelativePath( EXCLUDED_HEADER ) {
-    #        error( "$${PROJECT.PRO}: $${EXCLUDED_HEADER} must define an relative path" )
-    #    }
-    #
-    #    EXCLUDED_HEADERS -= $$EXCLUDED_HEADER
-    #    EXCLUDED_HEADER  = $$files( $$clean_path( $$replaceString( EXCLUDED_HEADER, $${PROJECT.PATH}/inc/, ) ) )
-    #    EXCLUDED_HEADERS += $$EXCLUDED_HEADER
-    #    # ex: EXCLUDED_HEADERS = C:/my_project/inputs/toto.h C:/my_project/inputs/toto.h
-    #}
-    #
-    #HEADERS_TO_COPY = $$HEADERS
-    #HEADERS_TO_COPY -= $$EXCLUDED_HEADERS # Substract excluded headers.
-    #
-    #for( HEADER, HEADERS_TO_COPY ) {
-    #    HEADER_DIR = $$dirname( HEADER ) # Only take the subdir part of the header path.
-    #    HEADER_DIR = $$replace( HEADER_DIR, $$clean_path( $${PROJECT.PATH}/inc ), )
-    #
-    #    QMAKE_POST_LINK += $${QMAKE_COPY} \
-    #                        \"$$HEADER\" \
-    #                        \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INC )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INC )/$${HEADER_DIR}/* )\" $$escape_expand(\n\t)
-    #}
-
-    # Copy ui files.
-    exists( $${UI_DIR}/ui_*.h ) {
-        QMAKE_POST_LINK += $${QMAKE_COPY} \
-                            \"$$UI_DIR/ui_*.h\" \
-                            \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INC )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INC )/* )\" $$escape_expand(\n\t)
-    }
-
-    PROJECT_TYPE = $${PROJECT.TYPE}
-    PROJECT_NAME = $${PROJECT.NAME}
-
-    # Copy lib file.
-    contains( PROJECT_TYPE , dynlib|staticlib ) {
-        FULLPATH_LIB = $$DESTDIR/$$fullTarget( PROJECT_NAME, staticlib ) # Force to staticlib to get .lib.
-		
-		QMAKE_POST_LINK += $${QMAKE_COPY} \
-							\"$${FULLPATH_LIB}\" \
-							\"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.LIB )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
-    }
-
-    # Copy dll and pdb file.
-    contains( PROJECT_TYPE, dynlib ) {
-        FULLPATH_DLL = $$DESTDIR/$$fullTarget( PROJECT_NAME, dynlib )
-
-		QMAKE_POST_LINK += $${QMAKE_COPY} \
-							\"$${FULLPATH_DLL}\" \
-							\"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
-
+            INSTALLS *= copy_ui
+        }
         win32-msvc*: {
-            FULLPATH_PDB = $$DESTDIR/$$replaceString( TARGET,, .pdb )
 
-			QMAKE_POST_LINK += $${QMAKE_COPY} \
-								\"$${FULLPATH_PDB}\" \
-								\"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
+            QMAKE_POST_LINK += $${QMAKE_COPY} \
+                                \"$${UI_FILES}\" \
+                                \"$${DELIVERY_INC}/* )\" $$escape_expand(\n\t)
         }
     }
 
-    # Copy exe file.
-    contains( PROJECT_TYPE, app ) {
-
-        QMAKE_POST_LINK += $${QMAKE_COPY} \
-                            \"$$DESTDIR/$$fullTarget( PROJECT_NAME, app )\" \
-                            \"$$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )/* )\" $$escape_expand(\n\t)
-
-    }
-
-    message ( post_build=$$QMAKE_POST_LINK )
+    unset( UI_FILES )
 }
+
+# Copy lib file.
+{
+    contains( PROJECT_TYPE , dynlib|staticlib ) {
+        FULLPATH_LIB = $$DESTDIR/$$fullTarget( PROJECT_NAME, staticlib ) # Force to staticlib to get .lib.
+
+        win32-g++ : {
+            copy_lib.files = $$FULLPATH_LIB
+            copy_lib.path  = $$DELIVERY_LIB
+
+            INSTALLS *= copy_lib
+        }
+        win32-msvc* : {
+            QMAKE_POST_LINK += $${QMAKE_COPY} \
+                                \"$${FULLPATH_LIB}\" \
+                                \"$${DELIVERY_LIB}/*\" $$escape_expand(\n\t)
+        }
+
+        unset( FULLPATH_LIB )
+    }
+}
+
+# Copy dll and pdb file.
+{
+    contains( PROJECT_TYPE, dynlib ) {
+        FULLPATH_DLL = $$DESTDIR/$$fullTarget( PROJECT_NAME, dynlib )
+
+        win32-g++ : {
+            copy_dll.files = $$FULLPATH_DLL
+            copy_dll.path  = $$DELIVERY_BIN
+
+            INSTALLS *= copy_dll
+        }
+        win32-msvc* : {
+            FULLPATH_PDB = $$DESTDIR/$$replaceString( TARGET,, .pdb )
+
+            QMAKE_POST_LINK += $${QMAKE_COPY} \
+                                \"$${FULLPATH_DLL}\" \
+                                \"$${DELIVERY_BIN}/*\" $$escape_expand(\n\t)
+
+            QMAKE_POST_LINK += $${QMAKE_COPY} \
+                                \"$${FULLPATH_PDB}\" \
+                                \"$${DELIVERY_BIN}/*\" $$escape_expand(\n\t)
+        }
+
+        unset( FULLPATH_DLL )
+    }
+}
+
+# Copy exe file.
+{
+    contains( PROJECT_TYPE, app ) {
+        FULLPATH_BIN = $$DESTDIR/$$fullTarget( PROJECT_NAME, app )
+        win32-g++ : {
+            copy_exe.files = $$FULLPATH_BIN
+            copy_exe.path  = $$DELIVERY_BIN
+
+            INSTALLS *= copy_exe
+        }
+        win32-msvc* : {
+            QMAKE_POST_LINK += $${QMAKE_COPY} \
+                                \"$${FULLPATH_BIN}\" \
+                                \"$${DELIVERY_BIN}/*\" $$escape_expand(\n\t)
+        }
+
+        unset( FULLPATH_BIN )
+    }
+}
+
+# Debug
+win32-g++: message ( post_build=$$INSTALLS )
+win32-msvc*: message ( post_build=$$QMAKE_POST_LINK )
