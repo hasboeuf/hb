@@ -18,7 +18,7 @@ HbLogWidget::HbLogWidget(QWidget *parent) :
 
 	mConfig.loadSettings(); // Init config from settings or default xml config file.
 
-	foreach(QString level, HbLogger::MetaLevel::toString())
+    foreach(QString level, HbLogger::MetaLevel::toString())
 	{
 		if (!level.contains(QLatin1String("_ALL")) && !level.contains(QLatin1String("_NONE")))
 		{
@@ -26,7 +26,7 @@ HbLogWidget::HbLogWidget(QWidget *parent) :
 
 			qcb_level->addItem(level, enum_level);
 		}
-	}
+    }
 
 	updateGui();
 

@@ -86,9 +86,9 @@ QString HbLogMessage::toString() const
 {
 	QString buffer;
 
-	if( mFormat & HbLogger::OUTPUTmLevel )
+    if( mFormat & HbLogger::OUTPUT_LEVEL )
 	{
-		QString level = HbLogger::MetaLevel::toString( mLevel );
+        QString level = HbLogger::MetaLevel::toString( mLevel );
 		buffer += level.leftJustified( 14, QChar::Space ); // LEVEL_CRITICAL is the longest.
 	}
 

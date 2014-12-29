@@ -4,37 +4,31 @@
 // Qt
 #include <QtCore/QString>
 
-/*! \file QsGlobal.h */
+/*! \file HbGlobal.h */
 
-//#include <quint128.h>
+#if defined( Q_OS_WIN32 )
+#   if !defined( Q_CC_MSVC ) && !defined( Q_CC_MINGW )
+#   error Windows compiler not supported
+#   endif
+#elif defined( Q_OS_ANDROID ) || defined( Q_OS_LINUX )
+#   include <linux/version.h>
+#   if LINUX_VERSION_CODE < KERNEL_VERSION( 2, 6, 16 )
+#   error Linux kernel version not supported
+#   endif
+#   if !defined( Q_CC_GNU )
+#   error Linux compiler not supported
+#   endif
+#else
+#error Operating system not supported
+#endif
 
-//#if defined( Q_OS_WIN32 )
-//#   if !defined( Q_CC_MSVC ) && !defined( Q_CC_MINGW )
-//#   error Windows compiler not supported
-//#   endif
-//#elif defined( Q_OS_ANDROID ) || defined( Q_OS_LINUX )
-//#   include <linux/version.h>
-//#   if LINUX_VERSION_CODE < KERNEL_VERSION( 2, 6, 16 )
-//#   error Linux kernel version not supported
-//#   endif
-//#   if !defined( Q_CC_GNU )
-//#   error Linux compiler not supported
-//#   endif
-//#else
-//#error Operating system not supported
-//#endif
+#if defined( Q_OS_ANDROID )
+#   define Q_OS_MOBILE
+#endif
 
-//#if defined( Q_OS_ANDROID )
-//#   define Q_OS_MOBILE
-//#endif
-//
-//#if defined( Q_CC_GNU )
-//#	include <cxxabi.h>
-//#	include <typeinfo>
-//#endif
-
-#if defined( Q_CC_MINGW )
-#include <typeinfo>
+#if defined( Q_CC_GNU ) || defined( Q_CC_MINGW )
+#	include <cxxabi.h>
+#	include <typeinfo>
 #endif
 
 
@@ -92,10 +86,7 @@ namespace HbPrivate {
 
 		QString name;
 		name = QLatin1String(type);
-#elif defined( Q_CC_MINGW )
-        QString name;
-        name = QLatin1String(type);
-#elif defined( Q_CC_GNU )
+#elif defined( Q_CC_GNU ) || defined( Q_CC_MINGW )
 
 		QString name;
 		qint32 status = 0;

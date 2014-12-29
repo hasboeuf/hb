@@ -56,13 +56,13 @@ namespace hb
 
             enum Format : qint16
             {
-                OUTPUTmLevel   = 1 << 0,
+                OUTPUT_LEVEL   = 1 << 0,
                 OUTPUT_TIME    = 1 << 1,
                 OUTPUT_WHO     = 1 << 2,
                 OUTPUT_WHERE   = 1 << 3,     // File + Function + Line.
                 OUTPUT_TEXT    = 1 << 4,
                 OUTPUT_SYSTEM  = 1 << 5,
-                OUTPUT_ALL     = OUTPUTmLevel | OUTPUT_TIME | OUTPUT_WHO | OUTPUT_WHERE | OUTPUT_TEXT
+                OUTPUT_ALL     = OUTPUT_LEVEL | OUTPUT_TIME | OUTPUT_WHO | OUTPUT_WHERE | OUTPUT_TEXT
             };
 
             Q_META_ENUMS( Format )
