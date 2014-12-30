@@ -97,7 +97,14 @@ void LogViewer::onOpenFileClicked()
     {
         line = in.readLine();
 
-        QStringList items = line.split( HbLogFileOutput::fieldSeparator() );
+        const HbLogMessage * msg = HbLogMessage::fromRaw( line );
+        if( !msg )
+        {
+            qDebug() << "Unreadable line.";
+            continue;
+        }
+
+        /*QStringList items = line.split( HbLogMessage::msFieldSeparator );
 
         if( items.size() != 7 )
         {
@@ -118,9 +125,10 @@ void LogViewer::onOpenFileClicked()
             HbLogger::OUTPUT_ALL,
             context,
             time_tag,
-            items.at( 6 ) );
+            items.at( 6 ) );*/
 
-        tab->addEntry( &msg, true );
+        tab->addEntry( msg, true );
+        delete msg;
     }
 
     file.close();

@@ -8,59 +8,77 @@
 
 using namespace hb::log;
 
+const quint32 HbLogFileOutput::msMaxFileSize = 100000000; // 100 Mo.
+const QString HbLogFileOutput::msDefaultPath = "log";
 
 HbLogFileOutput::HbLogFileOutput( const QString & path, quint32 max_size, HbLogger::Levels level ) :
     HbLogAbstractOutput( HbLogAbstractOutput::OUTPUTmFile, level )
 {
-    QString filename = QDateTime::currentDateTime().toString( QStringLiteral( "yyyy-MM-dd_hh-mm" ) );
-	mMaxSize = max_size;
-    quint32 instance = 0;
+    mPath = ( path.isEmpty() ? msDefaultPath : path );
 
-    do mFile.setFileName( QStringLiteral( "%1/%2%3.log" ).arg( path ).arg( filename ).arg( instance++ ) );
-    while( mFile.exists() );
-
-    if( !QDir( path ).exists() )
-        QDir().mkdir( path );
-
-    if( !mFile.open( QIODevice::WriteOnly | QIODevice::Text ) )
+    max_size *= 1000000; // To bytes.
+    mMaxSize = ( ( max_size > msMaxFileSize ) ? msMaxFileSize : max_size );
+    if( max_size == 0)
     {
-        qDebug( "HbLogFileOutput: Error while opening file \"%s\": %s", 
-			HbLatin1(mFile.fileName()), HbLatin1(mFile.errorString()));
+        mMaxSize = msMaxFileSize;
     }
 
-    mStream.setDevice( &mFile );
+    createLogFile();
 }
 
 HbLogFileOutput::~HbLogFileOutput()
 {
-	mFile.flush();
-    mFile.close();
+    closeLogFile();
 }
-
 
 bool HbLogFileOutput::isValid() const
 {
     return mFile.isOpen();
 }
 
-
-const QString & HbLogFileOutput::fieldSeparator()
+void HbLogFileOutput::closeLogFile()
 {
-    static QString separator = QStringLiteral( "###" );
-    return separator;
+    mStream.setDevice( 0 );
+    if(mFile.isOpen())
+    {
+        mFile.flush();
+        mFile.close();
+    }
 }
 
+void HbLogFileOutput::createLogFile()
+{
+    closeLogFile();
+
+    QString filename = QDateTime::currentDateTime().toString( QStringLiteral( "yyyy-MM-dd_hh-mm-ss-zzz" ) );
+    QString filepath = QStringLiteral( "%1/%2.log" ).arg( mPath ).arg( filename );
+
+    mFile.setFileName( filepath );
+
+    if( !QDir( mPath ).exists() )
+    {
+        QDir().mkdir( mPath );
+    }
+
+    if( !mFile.open( QIODevice::WriteOnly | QIODevice::Text ) )
+    {
+        qDebug( "HbLogFileOutput: Error while opening file \"%s\": %s",
+            HbLatin1(mFile.fileName()), HbLatin1(mFile.errorString()));
+    }
+
+    mStream.setDevice( &mFile );
+}
 
 void HbLogFileOutput::processMessage( const HbLogMessage & message )
 {
+    if( mFile.size() >= mMaxSize)
+    {
+        createLogFile();
+    }
+
     if( mFile.isWritable() )
     {
-        mStream << message.level() << fieldSeparator()
-                << message.timeTag() << fieldSeparator()
-                << message.context().owner() << fieldSeparator()
-                << message.context().line() << fieldSeparator()
-                << message.context().file() << fieldSeparator()
-                << message.context().function() << fieldSeparator()
-                << message.message() << QChar( QChar::LineFeed );
+        mStream << HbLogMessage::toRaw( message ) << QChar( QChar::LineFeed );
+        mStream.flush();
     }
 }

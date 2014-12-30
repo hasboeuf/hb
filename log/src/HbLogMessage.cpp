@@ -5,6 +5,50 @@
 
 using namespace hb::log;
 
+const QString HbLogMessage::msFieldSeparator = QStringLiteral( "___" );
+
+const HbLogMessage * HbLogMessage::fromRaw( const QString & raw)
+{
+    HbLogMessage * msg = nullptr;
+
+    QStringList fields = raw.split( msFieldSeparator );
+    if( fields.size() == 7)
+    {
+        QString level_str   = fields.at( 0 );
+        QString time_str    = fields.at( 1 );
+        QString owner       = fields.at( 2 );
+        QString line_str    = fields.at( 3 );
+        QString file        = fields.at( 4 );
+        QString function    = fields.at( 5 );
+        QString text        = fields.at( 6 );
+
+        HbLogger::Level level = HbLogger::MetaLevel::fromString( level_str, HbLogger::LEVEL_NONE );
+
+        QTime  time    = QTime::fromString( time_str, QStringLiteral( "HH:mm:ss:zzz" ) );
+        qint32 timetag = time.msec() + 1000 * ( time.second() + ( time.minute() * 60 ) + ( time.hour() * 3600 ) );
+        qint32 line    = ( qint32 ) line_str.toInt();
+
+        HbLogContext context( owner, file.toStdString().c_str(), line, function.toStdString().c_str() );
+        msg = new HbLogMessage( level, HbLogger::OUTPUT_ALL, context, timetag, text );
+    }
+
+    return msg;
+}
+
+const QString HbLogMessage::toRaw(const HbLogMessage &msg)
+{
+    QString raw;
+
+    raw += msg.levelStr( false )                             + HbLogMessage::msFieldSeparator;
+    raw += msg.timeTagStr()                                  + HbLogMessage::msFieldSeparator;
+    raw += msg.mContext.owner()                              + HbLogMessage::msFieldSeparator;
+    raw += QStringLiteral( "%1" ).arg( msg.mContext.line() ) + HbLogMessage::msFieldSeparator;
+    raw += msg.mContext.file()                               + HbLogMessage::msFieldSeparator;
+    raw += msg.mContext.function()                           + HbLogMessage::msFieldSeparator;
+    raw += msg.mMessage;
+
+    return raw;
+}
 
 HbLogMessage::HbLogMessage() :
 	QObject()
@@ -64,13 +108,27 @@ HbLogger::Level HbLogMessage::level() const
     return mLevel;
 }
 
+QString HbLogMessage::levelStr(bool spacing) const
+{
+    QString level = HbLogger::MetaLevel::toString( mLevel );
+    if( spacing )
+    {
+        level = level.leftJustified( 14, QChar::Space ); // LEVEL_CRITICAL is the longest.
+    }
+    return level;
+}
+
 const HbLogContext & HbLogMessage::context() const
 {
     return mContext;
 }
 
+qint32 HbLogMessage::timeTag() const
+{
+    return mTimeTag;
+}
 
-QString HbLogMessage::timeTag() const
+QString HbLogMessage::timeTagStr() const
 {
     return QStringLiteral( "%1" ).arg( QTime( 0, 0 ).
         addMSecs( mTimeTag ).toString( QStringLiteral( "HH:mm:ss:zzz" ) ) );
@@ -87,29 +145,36 @@ QString HbLogMessage::toString() const
 	QString buffer;
 
     if( mFormat & HbLogger::OUTPUT_LEVEL )
-	{
-        QString level = HbLogger::MetaLevel::toString( mLevel );
-		buffer += level.leftJustified( 14, QChar::Space ); // LEVEL_CRITICAL is the longest.
-	}
+    {
+        buffer += levelStr();
+    }
 
-	if( mFormat & HbLogger::OUTPUT_TIME )
+    if( mFormat & HbLogger::OUTPUT_TIME )
     {
         if( mTimeTag > 0 )
-            buffer += QStringLiteral( "[%1]" ).arg( timeTag() );
-	}
+        {
+            buffer += QStringLiteral( "[%1]" ).arg( timeTagStr() );
+        }
+    }
 
     if( mFormat & HbLogger::OUTPUT_WHO )
+    {
         buffer += QStringLiteral( "[%1]" ).arg( mContext.owner() );
+    }
 
     if( mFormat & HbLogger::OUTPUT_WHERE )
+    {
         if( !mContext.file().isEmpty() )
         {
             buffer += QStringLiteral( "[%1::%2 (line %3)]" ).arg( mContext.file() ).
                 arg( mContext.function() ).arg( mContext.line() );
         }
+    }
 
-	if( mFormat & HbLogger::OUTPUT_TEXT )
+    if( mFormat & HbLogger::OUTPUT_TEXT )
+    {
         buffer += QStringLiteral( " %1" ).arg( mMessage );
+    }
 
     return buffer;
 }

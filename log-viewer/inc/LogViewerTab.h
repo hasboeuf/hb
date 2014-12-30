@@ -57,7 +57,7 @@ namespace hb
 
             void updateView();
 
-            void addEntry( HbLogMessage* msg, bool rerun = false );
+            void addEntry(const hb::log::HbLogMessage *msg, bool rerun = false );
 
         signals :
 

@@ -3,6 +3,7 @@
 #include <QtCore/QProcess>
 #include <QtCore/QDir>
 #include <QtCore/QPropertyAnimation>
+#include <QtCore/QTime>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
@@ -168,7 +169,7 @@ bool LogViewerTab::isValidEntry(QList<QStandardItem*>& row)
 	return mFilter->acceptsValue(item_to_be_filtered->data(mFilter->mRole));
 }
 
-void LogViewerTab::addEntry(HbLogMessage* msg, bool rerun)
+void LogViewerTab::addEntry(const HbLogMessage* msg, bool rerun)
 {
 	if(!msg)
 	{
@@ -189,22 +190,22 @@ void LogViewerTab::addEntry(HbLogMessage* msg, bool rerun)
 	QStandardItem* item_file  = q_check_ptr( new QStandardItem() );
 	QStandardItem* item_func  = q_check_ptr( new QStandardItem() );
 
-	QString level_str = HbLogger::MetaLevel::toString(msg->level());
 
-	QString line = QString::number(msg->context().line());
+    QString line = QString::number(msg->context().line());
     if( line == QLatin1String( "-1" ) ) line.clear();
 
 	QString where = QStringLiteral( "%1::%2" ).arg( msg->context().file() ).arg( msg->context().function() );
     if( where == QLatin1String( "::" ) ) where.clear();
 
-	item_level->setData(level_str,             Qt::DisplayRole);
-	item_level->setData(msg->level(),           Qt::UserRole);
-	item_time->setData (msg->timeTag(),      Qt::DisplayRole); 
-	item_owner->setData(msg->context().owner(), Qt::DisplayRole);  
-	item_where->setData(where,                 Qt::DisplayRole);
-	item_text->setData (msg->message(),         Qt::DisplayRole); 
-	item_line->setData (line,                  Qt::DisplayRole); 
-	item_file->setData (msg->context().file(),  Qt::DisplayRole);
+    item_level->setData(msg->levelStr(),           Qt::DisplayRole);
+    item_level->setData(msg->level(),              Qt::UserRole);
+    item_time->setData (msg->timeTagStr(),         Qt::DisplayRole);
+    item_time->setData (msg->timeTag(),            Qt::UserRole);
+    item_owner->setData(msg->context().owner(),    Qt::DisplayRole);
+    item_where->setData(where,                     Qt::DisplayRole);
+    item_text->setData (msg->message(),            Qt::DisplayRole);
+    item_line->setData (line,                      Qt::DisplayRole);
+    item_file->setData (msg->context().file(),     Qt::DisplayRole);
 	item_func->setData (msg->context().function(), Qt::DisplayRole);
 
 	QBrush foreground_color;
@@ -405,28 +406,19 @@ void LogViewerTab::onSaveAsClicked()
 			continue;
 		}
 
-		QString level = item_level->data(Qt::UserRole).toString();
-		QString time  = item_time->data(Qt::DisplayRole).toString();
+        qint16  level = ( qint16 ) item_level->data(Qt::UserRole).toInt();
+        qint32  time  = ( qint32 ) item_time->data(Qt::UserRole).toInt();
 		QString owner = item_owner->data(Qt::DisplayRole).toString();
 		QString text  = item_text->data(Qt::DisplayRole).toString();
-		QString line  = item_line->data(Qt::DisplayRole).toString();
+        qint32  line  = ( qint32 ) item_line->data(Qt::DisplayRole).toInt();
 		QString file  = item_file->data(Qt::DisplayRole).toString();
 		QString func  = item_func->data(Qt::DisplayRole).toString();
 
-		QStringList log_row;
+        HbLogContext context( owner, file.toStdString().c_str(), line, func.toStdString().c_str() );
+        HbLogMessage msg( ( HbLogger::Level ) level, HbLogger::OUTPUT_ALL, context, time, text);
 
-		log_row.append(level + HbLogFileOutput::fieldSeparator());
-		log_row.append(time  + HbLogFileOutput::fieldSeparator());
-		log_row.append(owner + HbLogFileOutput::fieldSeparator());
-		log_row.append(line  + HbLogFileOutput::fieldSeparator());
-		log_row.append(file  + HbLogFileOutput::fieldSeparator());
-		log_row.append(func  + HbLogFileOutput::fieldSeparator());
-        log_row.append( text + QChar::LineFeed );
-
-		foreach(QString info, log_row)
-		{
-			buffer += info;
-		}
+        buffer += HbLogMessage::toRaw( msg );
+        buffer += QChar::LineFeed;
 	}
 
 	QByteArray ba = buffer.toUtf8();
@@ -435,8 +427,6 @@ void LogViewerTab::onSaveAsClicked()
 	file.write(data);
 	file.close();
 }
-
-
 
 void LogViewerTab::onRowDoubleClicked(const QModelIndex& index)
 {

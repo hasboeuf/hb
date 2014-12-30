@@ -12,7 +12,7 @@ SUBDIRS += \
     log/HbLog.pro \
 	log-viewer/HbLogViewer.pro \
     network/HbNetwork.pro \
-    plugin/HbPlugin.pro
+    #plugin/HbPlugin.pro
     #plugin-example/HbPluginExample.pro
 	
 logger.depends = tools

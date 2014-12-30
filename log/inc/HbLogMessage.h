@@ -24,6 +24,10 @@ namespace hb
 		{
 		public:
 
+            static const QString msFieldSeparator;
+            static const HbLogMessage * fromRaw( const QString & raw); // Use for export.
+            static const QString toRaw( const HbLogMessage & msg );                              // Use for import.
+
             HbLogMessage();
             HbLogMessage( HbLogger::Level level, HbLogger::Formats format,
                             const HbLogContext & context, qint32 timeTag, const QString & message );
@@ -34,9 +38,11 @@ namespace hb
 
             bool system() const;
             HbLogger::Level level() const;
+            QString levelStr( bool spacing = true ) const;
             const HbLogContext & context() const;
 
-            QString timeTag() const;
+            qint32 timeTag() const;
+            QString timeTagStr() const;
             const QString & message() const;
 
             QString toString() const;

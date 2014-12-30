@@ -29,8 +29,8 @@ namespace hb
 
 
 		public :
-
-			static const QString & fieldSeparator();
+            static const QString msDefaultPath;
+            static const quint32 msMaxFileSize;
 
 		public :
 
@@ -41,12 +41,13 @@ namespace hb
 			bool isValid() const;
 
 		private :
-
+            void closeLogFile();
+            void createLogFile();
 			void processMessage( const HbLogMessage & message );
 
 
 		private :
-
+            QString mPath;
 			QFile mFile;
 			quint32 mMaxSize;
 			QTextStream mStream;
