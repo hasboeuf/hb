@@ -45,12 +45,25 @@ HbLoggerOutputs * HbLogService::outputs()
     return q_assert_ptr( msManager.localData() )->outputs();
 }
 
+void HbLogService::processArgs(int argc, char *argv[])
+{
+    QStringList args;
+    for (int n = 1; n < argc; ++n) // Skip the program name.
+    {
+        args.append(QString::fromLatin1(argv[n]));
+    }
+
+    processArgs( args );
+}
+
 void HbLogService::processArgs(QStringList args)
 {
 	// usage
 	// -hblog-(output|input)-local:name
 	// -hblog-(output|input)-tcp:port[:ip]
 	// -hblog-output-file:dir:file_max_size
+
+
 
 	QRegExp check("-hblog-(output|input)-(local|tcp|file):");
 

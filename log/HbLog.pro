@@ -16,6 +16,7 @@ PROJECT.TYPE =		dynlib
 SUBDIRS +=	inputs \
 			outputs \
 			gui
+EXCLUDED_HEADERS +=
 
 # ------------
 # Qt Settings
