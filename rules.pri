@@ -63,7 +63,7 @@
         win32-msvc*: QMAKE_LFLAGS *= /MACHINE:X64
     }
 
-    BUILD.CONFIG = $$(QMAKESPEC)_$${QMAKE_HOST.arch}
+    BUILD.CONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
 
     message("config=" $$BUILD.CONFIG)
 
