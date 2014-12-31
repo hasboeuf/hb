@@ -58,13 +58,6 @@ void HbLogService::processArgs(int argc, char *argv[])
 
 void HbLogService::processArgs(QStringList args)
 {
-	// usage
-	// -hblog-(output|input)-local:name
-	// -hblog-(output|input)-tcp:port[:ip]
-	// -hblog-output-file:dir:file_max_size
-
-
-
 	QRegExp check("-hblog-(output|input)-(local|tcp|file):");
 
 	// Required args number.

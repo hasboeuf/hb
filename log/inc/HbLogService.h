@@ -36,10 +36,10 @@ namespace hb
 
             static void processArgs(int argc, char *argv[]);
 			static void processArgs(QStringList args);
-			// usage
-			// -hblog-(output|input)-local:name
-			// -hblog-(output|input)-tcp:ip_numeric:port
-			// -hblog-output-file:dir
+            // usage
+            // -hblog-(output|input)-local:name
+            // -hblog-(output|input)-tcp:port[:ip]
+            // -hblog-output-file:dir:file_max_size
 
         private :
 
