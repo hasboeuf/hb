@@ -36,6 +36,9 @@
 # -----------------------
 # Building Configuration
 # -----------------------
+    message( ------------------------------------ )
+    message( QMake-ing $${PROJECT.NAME} projects. )
+    message( ------------------------------------ )
 
     win32-msvc*|win32-g++: {
         message( "Compilator supported." )
@@ -433,7 +436,6 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BU
 {
     contains( PROJECT_TYPE , dynlib|staticlib ) {
         # Copy all headers.
-        message( sub=$$SUBDIRS )
         for( HEADER_DIR, SUBDIRS ) {
             HEADERS_TO_COPY = $$files( $$clean_path( $$PROJECT_INC/$$HEADER_DIR/*.h ) )
 
@@ -460,8 +462,6 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BU
             unset( HEADERS_TO_COPY )
         }
 
-        #message ( post_build_=$$QMAKE_POST_LINK )
-
         # Remove excluded headers.
         for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) {
             !isRelativePath( EXCLUDED_HEADER ): \
@@ -487,8 +487,6 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BU
             unset( EXCLUDED_HEADER_FILES )
         }
         EXCLUDED_HEADERS = $$EXCLUDED_HEADERS_TMP
-
-        message ( excl_final=$$EXCLUDED_HEADERS )
 
         unset( EXCLUDED_HEADERS_TMP )
         unset( EXCLUDED_HEADER )

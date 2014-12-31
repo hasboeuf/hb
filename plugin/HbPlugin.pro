@@ -9,7 +9,7 @@ MODULE.PATH =		..
 # Project Settings
 # -----------------
 
-PROJECT.ID   =      plugin
+PROJECT.ID   =          plugin
 PROJECT.NAME =		HbPlugin
 PROJECT.TYPE =		staticlib
 
