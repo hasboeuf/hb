@@ -18,12 +18,11 @@ isEmpty( MODULE.NAME ) {
 !isEmpty( MODULE.PATH ) {
 
 	!isRelativePath( MODULE.PATH ) {
-                error( "$$basename( _PRO_FILE_ ) : ${MODULE.PATH} must define a relative path" )
+            error( "$$basename( _PRO_FILE_ ) : ${MODULE.PATH} must define a relative path" )
 	}
 	
         MODULE.PATH = $${_PRO_FILE_PWD_}/$${MODULE.PATH}
 }
-
 else: MODULE.PATH = $${PWD}
 
 # -------------------

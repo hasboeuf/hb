@@ -3,41 +3,39 @@
 # ----------------
 
 MODULE.NAME =		HB
-MODULE.PATH =		..
+MODULE.PATH =		../../..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID   =      log
+PROJECT.ID   =      plugin1
+PROJECT.NAME =		HbPlugin1
+PROJECT.TYPE =		dynlib
 
-SUBDIRS +=	inputs \
-                outputs \
-                gui
-
-EXCLUDED_HEADERS +=
+OTHER_FILES += Plugin1.json
 
 # ------------
 # Qt Settings
 # ------------
 
-QT *=		xml widgets network
+QT *=
+CONFIG *= plugin
 
 # -----------------
 # Modules Settings
 # -----------------
 
-HB +=		tools
+HB += plugin plugin-interfaces
 
 # -------------
 # C++ Settings
 # -------------
-DEFINES += HB_LOG_BUILD
+DEFINES += HB_PLUGIN_BUILD
 
 # -----------------
 # Install Settings
 # -----------------
-
 
 # ---------------
 # QMake Includes

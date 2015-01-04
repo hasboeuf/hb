@@ -5,15 +5,13 @@
 PROJECT.NAME =			HB
 PROJECT.TYPE =			subdirs
 
-TEMPLATE = subdirs
-CONFIG += ordered
 SUBDIRS += \
     tools/HbTools.pro \
     log/HbLog.pro \
-	log-viewer/HbLogViewer.pro \
+    log-viewer/HbLogViewer.pro \
     network/HbNetwork.pro \
-    plugin/HbPlugin.pro
-    #plugin-example/HbPluginExample.pro
+    plugin/HbPlugin.pro \
+    plugin-example/HbPluginExample.pro
 	
 logger.depends = tools
 network.depends = log tools    

@@ -9,17 +9,16 @@ MODULE.PATH =		..
 # Project Settings
 # -----------------
 
-PROJECT.ID   =      log-viewer
-PROJECT.NAME =		HbLogViewer
-PROJECT.TYPE =		app
-
-#QRC_FILE  =             $${PROJECT.NAME}
+PROJECT.ID   = log-viewer
+PROJECT.DIR  = log-viewer
+PROJECT.NAME = HbLogViewer
+PROJECT.TYPE = app
 
 # ------------
 # QT Settings
 # ------------
 
-QT *= gui widgets
+QT *= widgets xml network
 
 # -----------------
 # Modules Settings

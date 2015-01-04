@@ -1,7 +1,10 @@
-#include "AppPluginInterface.hpp"
+// Local
+#include <AppPluginInterface.h>
+
+using namespace hb::pluginexample;
 
 AppPluginInterface::AppPluginInterface() :
-    PluginInterface()
+    HbPluginInterface()
 {
     mpPlatformService = 0;
 }

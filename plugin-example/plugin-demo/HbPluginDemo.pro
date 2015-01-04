@@ -3,41 +3,27 @@
 # ----------------
 
 MODULE.NAME =		HB
-MODULE.PATH =		..
+MODULE.PATH =		../..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID   =      log
-
-SUBDIRS +=	inputs \
-                outputs \
-                gui
-
-EXCLUDED_HEADERS +=
+PROJECT.ID   =          plugin-demo
+PROJECT.NAME =		HbPluginDemo
+PROJECT.TYPE =		app
 
 # ------------
-# Qt Settings
+# QT Settings
 # ------------
 
-QT *=		xml widgets network
+QT *= gui widgets
 
 # -----------------
 # Modules Settings
 # -----------------
 
-HB +=		tools
-
-# -------------
-# C++ Settings
-# -------------
-DEFINES += HB_LOG_BUILD
-
-# -----------------
-# Install Settings
-# -----------------
-
+HB  += plugin plugin-interfaces
 
 # ---------------
 # QMake Includes

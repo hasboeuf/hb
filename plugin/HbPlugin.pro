@@ -10,20 +10,18 @@ MODULE.PATH =		..
 # -----------------
 
 PROJECT.ID   =          plugin
-PROJECT.NAME =		HbPlugin
-PROJECT.TYPE =		staticlib
 
 # ------------
 # Qt Settings
 # ------------
 
-QT *=		gui widgets
+QT *= gui widgets
 
 # -----------------
 # Modules Settings
 # -----------------
 
-HB +=		tools logger
+HB += tools log
 
 # -------------
 # C++ Settings

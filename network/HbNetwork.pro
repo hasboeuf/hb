@@ -10,14 +10,12 @@ MODULE.PATH =		..
 # -----------------
 
 PROJECT.ID   =      network
-PROJECT.NAME =		HbNetwork
-PROJECT.TYPE =		dynlib
 			
-SUBDIRS +=	auth \
-			channel \
-			protocol \
-			tcp \
-			update
+SUBDIRS +=  auth \
+            channel \
+            protocol \
+            tcp \
+            update
 			
 # ------------
 # Qt Settings

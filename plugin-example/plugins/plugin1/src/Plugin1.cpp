@@ -1,11 +1,14 @@
-#include "Plugin1.hpp"
-#include "AppPlatformService.hpp"
-#include "MenuService.hpp"
-
+// Qt
 #include <QtCore/QDebug>
 #include <QtWidgets/QAction>
+// Local
+#include <Plugin1.h>
+#include <AppPlatformService.h>
+#include <MenuService.h>
 
-Q_PLUGIN_METADATA(IID "AppPluginInterface")
+Q_PLUGIN_METADATA(IID "hb::plugin-example::AppPluginInterface")
+
+using namespace hb::pluginexample;
 
 Plugin1::Plugin1() :
     QObject(), AppPluginInterface()
@@ -18,7 +21,7 @@ Plugin1::~Plugin1()
 
 // TODO visibility of PlatformService methods.
 
-PluginInterface::PluginInitState Plugin1::init(const PlatformService *platform_service)
+HbPluginInterface::PluginInitState Plugin1::init(const AppPlatformService *platform_service)
 {
     if(!platform_service)
     {

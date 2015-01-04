@@ -1,8 +1,11 @@
-#include "MenuService.hpp"
-
+// Qt
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QAction>
+// Local
+#include "MenuService.h"
+
+using namespace hb::pluginexample;
 
 MenuService::MenuService(QString name, QString version, QMenuBar* menuBar) :
     AppService(name, version)

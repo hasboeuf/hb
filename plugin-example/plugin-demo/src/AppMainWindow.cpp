@@ -1,6 +1,7 @@
-#include "AppMainWindow.hpp"
-#include "AppPlatformService.hpp"
-#include "MenuService.hpp"
+// Local
+#include <AppMainWindow.h>
+#include <AppPlatformService.h>
+#include <MenuService.h>
 
 AppMainWindow::AppMainWindow(QWidget *parent) :
     QMainWindow(parent)

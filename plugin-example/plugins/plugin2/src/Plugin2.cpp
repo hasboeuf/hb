@@ -1,6 +1,6 @@
-#include "Plugin2.hpp"
-#include "AppPlatformService.hpp"
-#include "MenuService.hpp"
+#include "Plugin2.h"
+#include "AppPlatformService.h"
+#include "MenuService.h"
 
 #include <QtCore/QDebug>
 #include <QtWidgets/QAction>

@@ -1,6 +1,9 @@
-#include "AppService.hpp"
+// Local
+#include <AppService.h>
+
+using namespace hb::pluginexample;
 
 AppService::AppService(QString name, QString version) :
-    Service(name, version)
+    HbPluginService(name, version)
 {
 }

@@ -13,73 +13,6 @@
         error( "$${PROJECT.PRO}: Cannot build project with Qt $$[QT_VERSION] (QT 5 minimum is required)" )
     }
 
-# ------------
-# Qt Settings
-# ------------
-
-    CONFIG += qt warn_on thread largefile
-    CONFIG -= warn_off lex yacc static shared
-    CONFIG -= ordered no_empty_targets
-
-    contains( PROJECT.TYPE, dynlib ): CONFIG += shared
-    contains( PROJECT.TYPE, staticlib ): CONFIG += static
-    contains( PROJECT.TYPE, subdirs ): CONFIG += ordered no_empty_targets
-
-
-
-# -----------
-# QT Modules
-# -----------
-
-    !contains( QT, core ): QT += core
-
-# -----------------------
-# Building Configuration
-# -----------------------
-    message( ------------------------------------ )
-    message( QMake-ing $${PROJECT.NAME} projects. )
-    message( ------------------------------------ )
-
-    win32-msvc*|win32-g++: {
-        message( "Compilator supported." )
-    } else {
-        error( "Compilator not supported." )
-    }
-
-    win32-g++: QMAKE_CXXFLAGS += -std=c++0x
-
-    QMAKE_SPEC = $$(QMAKESPEC)
-    isEmpty( QMAKE_SPEC ): QMAKE_SPEC = $$[QMAKESPEC]
-
-    isEmpty( QMAKE_SPEC ) {
-        error( "$${PROJECT.PRO}: Platform scope not defined" )
-    }
-
-    contains( QMAKE_HOST.arch, x86 ) {
-        win32-msvc*: QMAKE_LFLAGS *= /MACHINE:X86
-    }
-
-    contains( QMAKE_HOST.arch, x86_64 ) {
-        win32-msvc*: QMAKE_LFLAGS *= /MACHINE:X64
-    }
-
-    BUILD.CONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
-
-    message("config=" $$BUILD.CONFIG)
-
-    CONFIG( debug, debug|release ): BUILD.MODE = debug
-    CONFIG( release, debug|release ): BUILD.MODE = release
-
-    isEmpty( BUILD.MODE ) {
-        error( "$${PROJECT.PRO}: Building mode cannot be resolved" )
-    }
-
-# -----------------
-# Project Settings
-# -----------------
-	 
-    PROJECT.PATH = $${_PRO_FILE_PWD_}/
-
 # ----------------
 # Module Settings
 # ----------------
@@ -111,6 +44,123 @@
         }
 
         unset( MODULE_CONF_FILE )
+
+        # Module install.
+        MODULE.INSTALL = $$eval( $${MODULE.NAME}.INSTALL )
+        isEmpty( MODULE.INSTALL ) {
+            error( "Module install variable cannot be resolved" )
+        }
+    }
+
+# -----------------
+# Project Settings
+# -----------------
+
+    PROJECT.PATH = $${_PRO_FILE_PWD_}/
+
+    # Project name.
+    isEmpty( PROJECT.NAME ): {
+        PROJECT.NAME = $$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).NAME )
+    }
+    isEmpty( PROJECT.NAME ): {
+        error( "Project name must be defined." )
+    }
+    # Project type
+    isEmpty( PROJECT.TYPE ): {
+        PROJECT.TYPE = $$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).TYPE )
+    }
+    isEmpty( PROJECT.TYPE ): {
+        error( "Project type must be defined." )
+    }
+    !contains( PROJECT.TYPE, app|dynlib|staticlib|subdirs ) {
+        error( "$${PROJECT.PRO}: Project $${TARGET} must be of type app, dynlib, staticlib or subdirs" )
+    }
+
+    !contains( PROJECT.TYPE, subdirs ) {
+        # Project id.
+        isEmpty( PROJECT.ID ): {
+            error( "Project id must be defined." )
+        }
+        # Project dir.
+        isEmpty( PROJECT.DIR ): {
+            PROJECT.DIR = $$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).DIR )
+        }
+        isEmpty( PROJECT.DIR ): {
+            error( "Project ($${PROJECT.NAME}) dir must be defined." )
+        }
+        # Project intermediate dir.
+        isEmpty( PROJECT.INTDIR ): {
+            PROJECT.INTDIR = $$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INTDIR )
+        }
+        isEmpty( PROJECT.INTDIR ): {
+            PROJECT.INTDIR = .
+        }
+        # Project install.
+        isEmpty( PROJECT.INSTALL ): {
+            PROJECT.INSTALL = $$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INSTALL )
+        }
+        isEmpty( PROJECT.INSTALL ): {
+           PROJECT.INSTALL = .
+        }
+    }
+
+# ------------
+# Qt Settings
+# ------------
+
+    CONFIG += qt warn_on thread largefile
+    CONFIG -= warn_off lex yacc static shared
+    CONFIG -= ordered no_empty_targets
+
+    contains( PROJECT.TYPE, dynlib ): CONFIG += shared
+    contains( PROJECT.TYPE, staticlib ): CONFIG += static
+    contains( PROJECT.TYPE, subdirs ): CONFIG += ordered no_empty_targets
+
+# -----------
+# Qt Modules
+# -----------
+
+    QT *= core
+
+# -----------------------
+# Building Configuration
+# -----------------------
+    message( ------------------------------------ )
+    message( QMake-ing $${PROJECT.NAME} projects. )
+    message( ------------------------------------ )
+
+    win32-msvc*|win32-g++: {
+        message( "Compilator supported." )
+    } else {
+        error( "Compilator not supported." )
+    }
+
+    win32-g++: QMAKE_CXXFLAGS += -std=c++0x
+
+    QMAKE_SPEC = $$(QMAKESPEC)
+    isEmpty( QMAKE_SPEC ): QMAKE_SPEC = $$[QMAKESPEC]
+
+    isEmpty( QMAKE_SPEC ) {
+        error( "$${PROJECT.PRO}: Platform scope not defined" )
+    }
+
+    contains( QMAKE_HOST.arch, x86 ) {
+        win32-msvc*: QMAKE_LFLAGS *= /MACHINE:X86
+    }
+
+    contains( QMAKE_HOST.ar-ch, x86_64 ) {
+        win32-msvc*: QMAKE_LFLAGS *= /MACHINE:X64
+    }
+
+    BUILD.CONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
+
+    message("config=" $$BUILD.CONFIG)
+
+    CONFIG( debug, debug|release ): BUILD.MODE = debug
+    CONFIG( release, debug|release ): BUILD.MODE = release
+
+    isEmpty( BUILD.MODE ) {
+        error( "$${PROJECT.PRO}: Building mode cannot be resolved" )
     }
 
 # ---------------------
@@ -138,57 +188,76 @@
                 message ( Configuration file $$MODULE_CONF_FILE loaded. )
             }
 
-            unset( MODULE_CONF_FILE )
             unset( MODULE_ENV_DIR )
         }
 
-        MODULE_INC =	$${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INC ) )
-        MODULE_LIB =    $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.LIB ) )
-        MODULE_BIN =    $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.BIN ) )
+        unset( MODULE_CONF_FILE )
+
+        isEmpty( MODULE_PATH ): error( Module path not defined.)
+
+        MODULE_INC =	$${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/inc
+        MODULE_LIB =    $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/lib
+        MODULE_BIN =    $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/bin
 
         PACKAGES = $$eval($$MODULE_NAME)
         for( PACKAGE, PACKAGES ) {
 
-            PACKAGE_TARGET =    $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.TARGET ) )
-            PACKAGE_QT =        $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.QT ) )
-            PACKAGE_TYPE =      $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.TYPE ) )
+            PACKAGE_NAME    = $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.NAME ) )
+            PACKAGE_DIR     = $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.DIR ) )
+            PACKAGE_INTDIR  = $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.INTDIR ) )
+            PACKAGE_INSTALL = $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.INSTALL ) )
+            PACKAGE_QT      = $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.QT ) )
+            PACKAGE_TYPE    = $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.TYPE ) )
+
+            isEmpty( PACKAGE_NAME ): {
+                error( PACKAGE_NAME not defined ($${PROJECT.NAME})($${MODULE_NAME}.$${PACKAGE}.NAME).)
+            }
+            isEmpty( PACKAGE_DIR  ): error( PACKAGE_DIR not defined.)
+            isEmpty( PACKAGE_INTDIR  ): PACKAGE_INTDIR = .
+            isEmpty( PACKAGE_TYPE ): error( PACKAGE_TYPE not defined.)
+            isEmpty( PACKAGE_INSTALL ): PACKAGE_INSTALL = .
 
             # Internal dependency
             equals( MODULE_NAME, $${MODULE.NAME} ) {
 
-                PACKAGE_INC = $${MODULE_PATH}/$${PACKAGE}/inc
-                PACKAGE_LIB = $${MODULE_PATH}/$${PACKAGE}/lib/$${BUILD.CONFIG}
-                PACKAGE_BIN = $${MODULE_PATH}/$${PACKAGE}/bin/$${BUILD.CONFIG}
+                PACKAGE_INC = $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/inc
+                PACKAGE_LIB = $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/lib/$${BUILD.CONFIG}
+                PACKAGE_BIN = $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/bin/$${BUILD.CONFIG}
             }
             # External dependency
             else {
-                PACKAGE_INC = $${MODULE_INC}/$$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.INC ) )
-                PACKAGE_LIB = $${MODULE_LIB}/$${BUILD.CONFIG}
-                PACKAGE_BIN = $${MODULE_BIN}/$${BUILD.CONFIG}
+                PACKAGE_INC = $${MODULE_INC}/$${PACKAGE_INSTALL}/$${PACKAGE_DIR}
+                PACKAGE_LIB = $${MODULE_LIB}/$${BUILD.CONFIG}/$${PACKAGE_INSTALL}/
+                PACKAGE_BIN = $${MODULE_BIN}/$${BUILD.CONFIG}/$${PACKAGE_INSTALL}/
             }
 
             *-g++: {
                 equals ( PACKAGE_TYPE, staticlib ): {
-                    PRE_TARGETDEPS += $$clean_path( $${PACKAGE_LIB}/$$fullTarget( PACKAGE_TARGET, staticlib ) )
+                    PRE_TARGETDEPS += $$clean_path( $${PACKAGE_LIB}/$$fullTarget( PACKAGE_NAME, staticlib ) )
                 }
             }
-
+.
             QT *= $$PACKAGE_QT
 
-            INCLUDEPATH *= $$PACKAGE_INC
+            INCLUDEPATH *= $${PACKAGE_INC}
+
+            message( inc=$$INCLUDEPATH )
 
             DEPENDPATH *= $$clean_path( $${PACKAGE_BIN} )
 
-            CONFIG( debug, debug|release ): PACKAGE_TARGET = $$replaceString( PACKAGE_TARGET,, d )
+            CONFIG( debug, debug|release ): PACKAGE_NAME = $$replaceString( PACKAGE_NAME,, d )
 
             LIBS *= -L$$clean_path( $${PACKAGE_BIN} )
             LIBS *= -L$$clean_path( $${PACKAGE_LIB} )
-            LIBS *= -l$${PACKAGE_TARGET}
+            LIBS *= -l$${PACKAGE_NAME}
 
-            unset( PACKAGE_INC )
-            unset( PACKAGE_TARGET )
+            unset( PACKAGE_NAME )
+            unset( PACKAGE_DIR )
+            unset( PACKAGE_INTDIR )
+            unset( PACKAGE_INSTALL )
             unset( PACKAGE_QT )
             unset( PACKAGE_TYPE )
+            unset( PACKAGE_INC )
             unset( PACKAGE_LIB )
             unset( PACKAGE_BIN )
         }
@@ -211,13 +280,11 @@
         resolveModuleDependency( $$LINKED_MODULE )
     }
 
+    message( Qt=$$QT )
+
 # ----------------
 # Target Settings
 # ----------------
-
-    !contains( PROJECT.TYPE, app|dynlib|staticlib|subdirs ) {
-        error( "$${PROJECT.PRO}: Project $${TARGET} must be of type app, dynlib, staticlib or subdirs" )
-    }
 
     contains( PROJECT.TYPE, app ): TEMPLATE = app
     contains( PROJECT.TYPE, dynlib|staticlib ): TEMPLATE = lib
@@ -427,10 +494,12 @@ PROJECT_LIB  = $$clean_path( $${PROJECT.PATH}/lib/$${BUILD.CONFIG}/ )
 PROJECT_BIN  = $$clean_path( $${PROJECT.PATH}/bin/$${BUILD.CONFIG}/ )
 PROJECT_TYPE = $${PROJECT.TYPE}
 PROJECT_NAME = $${PROJECT.NAME}
+PROJECT_DIR  = $${PROJECT.DIR}
+PROJECT_INSTALL = $${PROJECT.INSTALL}
 
-DELIVERY_INC = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INC )/$$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INC ) )
-DELIVERY_LIB = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.LIB )/$${BUILD.CONFIG} )
-DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.BIN )/$${BUILD.CONFIG} )
+DELIVERY_INC = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/inc/$${PROJECT_INSTALL}/$${PROJECT_DIR} )
+DELIVERY_LIB = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/lib/$${BUILD.CONFIG}/$${PROJECT_INSTALL} )
+DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/bin/$${BUILD.CONFIG}/$${PROJECT_INSTALL} )
 
 # Copy header files.
 {

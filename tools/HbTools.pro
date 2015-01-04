@@ -10,8 +10,6 @@ MODULE.PATH =		..
 # -----------------
 
 PROJECT.ID   =      tools
-PROJECT.NAME =		HbTools
-PROJECT.TYPE =		dynlib
 
 SUBDIRS += core
 

@@ -1,5 +1,11 @@
-#include "AppPlatformService.hpp"
-#include "AppService.hpp"
+// Hb
+#include <HbPluginService.h>
+// Local
+#include <AppPlatformService.h>
+#include <AppService.h>
+
+using namespace hb::pluginexample;
+using namespace hb::plugin;
 
 AppPlatformService::AppPlatformService()
 {
@@ -26,9 +32,9 @@ QString AppPlatformService::serviceName(ServiceID service_id)
     }
 }
 
-AppService* AppPlatformService::requestService(QString service_name)
+AppService* AppPlatformService::requestService( QString service_name ) const
 {
-    Service*    service     = PlatformService::requestService(service_name);
+    HbPluginService * service = HbPlatformService::requestService( service_name );
 
-    return dynamic_cast<AppService*>(service);
+    return dynamic_cast< AppService * >( service );
 }
