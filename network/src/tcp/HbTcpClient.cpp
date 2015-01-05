@@ -44,7 +44,6 @@ const HbTcpConfig & HbTcpClient::configuration() const
     return _config;
 }
 
-
 bool HbTcpClient::connectToNetwork()
 {
     if( !q_assert_ptr( _socket )->connectToHost( this->configuration() ) )

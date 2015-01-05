@@ -87,7 +87,7 @@ namespace hb
 			//virtual void removeListener(IHbNetworkListener * listener) final;
 
 			virtual bool send(const HbNetworkContract * contract) = 0;
-			virtual bool reply(int sender, const HbNetworkContract * contract) = 0;
+			//virtual bool reply(int sender, const HbNetworkContract * contract) = 0;
 
 			virtual QAbstractSocket::SocketError error() const final;
 			virtual QString errorString() const final;
@@ -96,11 +96,9 @@ namespace hb
 			virtual const HbNetworkConfig & configuration() const;
 
 		signals:
-
 			void error(QAbstractSocket::SocketError error);
 
 		protected:
-
 			HbAbstractNetwork(QObject * parent = nullptr);
 			virtual ~HbAbstractNetwork() = default;
 

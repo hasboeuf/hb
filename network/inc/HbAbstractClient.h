@@ -35,14 +35,13 @@ namespace hb
 			virtual bool ready() const final;
 
 			virtual bool send(const HbNetworkContract * contract);
-			virtual bool reply(int sender, const HbNetworkContract * contract);
+			//virtual bool reply(int sender, const HbNetworkContract * contract);
 
 		signals:
 			void connected();
 			void disconnected();
 
 		protected:
-
 			HbAbstractClient(QObject * parent = nullptr);
 			virtual ~HbAbstractClient() = default;
 
@@ -53,17 +52,14 @@ namespace hb
 			virtual HbAbstractSocket * currentConnection() const = 0;
 
 		private:
-
 			void timerEvent(QTimerEvent * event);
 
-		private callbacks :
-
+		private callbacks : // From device.
 			void onConnected();
 			void onDisconnected();
 			void onContractReceived( const HbNetworkContract& contract );
 
 		private:
-
 			qint32 _retry;
 			bool _ready;
 		};

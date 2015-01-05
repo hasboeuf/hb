@@ -9,7 +9,6 @@ namespace hb
 {
     namespace network
 	{
-
         class HbTcpSocket;
 
 		class HB_NETWORK_DECL HbTcpClient : public HbAbstractClient
