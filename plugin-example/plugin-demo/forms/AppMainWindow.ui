@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="PluginListWidget" name="plw_plugins" native="true"/>
+     <widget class="hb::plugin::HbPluginListWidget" name="plw_plugins" native="true"/>
     </item>
    </layout>
   </widget>
@@ -77,9 +77,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>PluginListWidget</class>
+   <class>HbPluginListWidget</class>
    <extends>QWidget</extends>
-   <header>PluginListWidget.h</header>
+   <header>HbPluginListWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

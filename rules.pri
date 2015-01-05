@@ -220,9 +220,10 @@
             # Internal dependency
             equals( MODULE_NAME, $${MODULE.NAME} ) {
 
-                PACKAGE_INC = $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/inc
-                PACKAGE_LIB = $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/lib/$${BUILD.CONFIG}
-                PACKAGE_BIN = $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/bin/$${BUILD.CONFIG}
+                PACKAGE_INC =  $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/inc
+                PACKAGE_INC += $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/uic/
+                PACKAGE_LIB =  $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/lib/$${BUILD.CONFIG}
+                PACKAGE_BIN =  $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/bin/$${BUILD.CONFIG}
             }
             # External dependency
             else {

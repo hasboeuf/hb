@@ -3,6 +3,8 @@
 // Local
 #include <AppMainWindow.h>
 
+using hb::pluginexample::AppMainWindow;
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

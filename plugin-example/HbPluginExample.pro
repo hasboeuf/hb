@@ -12,7 +12,7 @@ MODULE.PATH =		..
 PROJECT.NAME =			HbPluginExample
 PROJECT.TYPE =			subdirs
 
-TEMPLATE = SUBDIRS
+TEMPLATE = subdirs
 CONFIG += ordered
 
 SUBDIRS += \
