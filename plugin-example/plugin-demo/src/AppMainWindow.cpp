@@ -24,5 +24,5 @@ AppMainWindow::AppMainWindow(QWidget *parent) :
     mPlatformServices.registerService(menu_service);
     mPlatformServices.loadPlugins(QCoreApplication::applicationDirPath() + "/plugins");
 
-    //mPlatformServices.unloadPlugin("Plugin2");
+    //mPlatformServices.unloadPlugin("HbPlugin2");
 }

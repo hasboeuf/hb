@@ -14,6 +14,7 @@
 #include <QtCore/QHash>
 // Local
 #include <HbPluginInfos.h>
+#include <HbPlugin.h>
 
 class QPluginLoader;
 
@@ -24,7 +25,7 @@ namespace hb
 		class HbPluginInterface;
 		class HbPlatformService;
 
-        class HbPluginManager : public QObject
+        class HB_PLUGIN_DECL HbPluginManager : public QObject
 		{
 			Q_OBJECT
 		public:

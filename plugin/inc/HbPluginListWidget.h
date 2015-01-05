@@ -16,12 +16,13 @@
 // Local
 #include <ui_HbPluginListWidget.h>
 #include <HbPluginInfos.h>
+#include <HbPlugin.h>
 
 namespace hb
 {
 	namespace plugin
 	{
-        class HbPluginListWidget : public QWidget, private Ui::HbPluginListWidget
+        class HB_PLUGIN_DECL HbPluginListWidget : public QWidget, private Ui::HbPluginListWidget
 		{
 			Q_OBJECT
 

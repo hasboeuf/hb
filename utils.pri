@@ -123,7 +123,7 @@ defineReplace( fullTarget ) {
 
         target = $$eval( $$1 )
         type = $$2
-message ( type=$$type )
+
         !contains( type, app|dynlib|staticlib ): \
             error( "$${PROJECT.PRO}: Project $${TARGET} must be of type app, dynlib or staticlib" )
 

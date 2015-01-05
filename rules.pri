@@ -154,7 +154,8 @@
 
     BUILD.CONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
 
-    message("config=" $$BUILD.CONFIG)
+    message("buildconfig=" $$BUILD.CONFIG)
+    message( config=$$CONFIG)
 
     CONFIG( debug, debug|release ): BUILD.MODE = debug
     CONFIG( release, debug|release ): BUILD.MODE = release
@@ -281,6 +282,7 @@
         resolveModuleDependency( $$LINKED_MODULE )
     }
 
+    message( lib=$$LIBS )
     message( Qt=$$QT )
 
 # ----------------

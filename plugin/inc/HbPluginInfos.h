@@ -13,12 +13,14 @@
 #include <QtCore/QHash>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
+// Local
+#include <HbPlugin.h>
 
 namespace hb
 {
 	namespace plugin
 	{
-        class HbPluginInfos
+        class HB_PLUGIN_DECL HbPluginInfos
 		{
 			enum PluginState
 			{

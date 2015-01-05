@@ -11,12 +11,14 @@
 
 // Qt
 #include <QtCore/QObject>
+// Local
+#include <HbPlugin.h>
 
 namespace hb
 {
 	namespace plugin
 	{
-        class HbPluginService : public QObject
+        class HB_PLUGIN_DECL HbPluginService : public QObject
 		{
 			Q_OBJECT
 		public:

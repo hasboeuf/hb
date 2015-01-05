@@ -13,6 +13,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QHash>
 // Local
+#include <HbPlugin.h>
 #include <HbPluginManager.h>
 #include <HbPluginInfos.h>
 
@@ -24,7 +25,7 @@ namespace hb
 		class HbPluginInterface;
 		class HbPluginService;
 
-        class HbPlatformService : public QObject
+        class HB_PLUGIN_DECL HbPlatformService : public QObject
 		{
 			Q_OBJECT
 

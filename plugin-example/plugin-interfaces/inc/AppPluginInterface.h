@@ -8,6 +8,11 @@
 
 namespace hb
 {
+    namespace plugin
+    {
+        class HbPlatformService;
+    }
+
     namespace pluginexample
     {
         using hb::plugin::HbPluginInterface;
@@ -19,8 +24,8 @@ namespace hb
             explicit AppPluginInterface();
             virtual ~AppPluginInterface();
 
-            virtual PluginInitState init  (const AppPlatformService* platform_service) = 0;
-            virtual void            unload()                                        = 0;
+            virtual PluginInitState init  (const HbPlatformService * platform_service);
+            virtual void            unload() = 0;
 
         protected:
             const AppPlatformService * mpPlatformService;

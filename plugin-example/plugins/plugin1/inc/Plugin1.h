@@ -9,6 +9,11 @@
 
 namespace hb
 {
+    namespace plugin
+    {
+        class HbPlatformService;
+    }
+
     namespace pluginexample
     {
         class Plugin1 : public QObject, public AppPluginInterface
@@ -21,7 +26,7 @@ namespace hb
             explicit Plugin1();
             virtual ~Plugin1();
 
-            virtual PluginInitState init  (const AppPlatformService* platform_service);
+            virtual PluginInitState init  (const HbPlatformService * platform_service);
             virtual void            unload();
 
         signals:

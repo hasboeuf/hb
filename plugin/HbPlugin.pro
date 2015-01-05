@@ -27,6 +27,7 @@ HB += tools log
 # C++ Settings
 # -------------
 
+DEFINES += HB_PLUGIN_BUILD
 
 # -----------------
 # Install Settings

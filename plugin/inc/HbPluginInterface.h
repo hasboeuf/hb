@@ -15,12 +15,13 @@
 #include <QtGui/QIcon>
 // Local
 #include <HbPlatformService.h>
+#include <HbPlugin.h>
 
 namespace hb
 {
 	namespace plugin
 	{
-		class HbPluginInterface
+        class HB_PLUGIN_DECL HbPluginInterface
 		{
 		public:
 
@@ -34,7 +35,7 @@ namespace hb
 
 			virtual ~HbPluginInterface();
 
-            virtual PluginInitState init(const HbPlatformService * platform_service) = 0; // TODO Covariance.
+            virtual PluginInitState init(const HbPlatformService * platform_service) = 0;
             virtual void unload() = 0;
 
 		};

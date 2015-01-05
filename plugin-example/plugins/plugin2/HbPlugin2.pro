@@ -31,7 +31,7 @@ HB += plugin plugin-interfaces
 # -------------
 # C++ Settings
 # -------------
-DEFINES += HB_PLUGIN_BUILD
+DEFINES +=
 
 # -----------------
 # Install Settings
