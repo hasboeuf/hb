@@ -35,11 +35,10 @@ namespace hb
 
 			inner class HbNetworkPacket final
 			{
-				Q_DISABLE_COPY(HbNetworkPacket)
+				Q_DISABLE_COPY( HbNetworkPacket )
 
 
 			public:
-
 				HbNetworkPacket() = delete;
 				HbNetworkPacket(const HbNetworkHeader * header, const HbNetworkContract * contract);
 				virtual ~HbNetworkPacket() = default;
@@ -58,56 +57,56 @@ namespace hb
 
 			virtual bool join() final;
 			virtual bool leave() final;
-			virtual bool leave(int uuid) final;
+			virtual bool leave( quint16 uuid ) final;
 			virtual bool ready() const final;
 
 			virtual bool send(const HbNetworkContract * contract);
-			virtual bool reply(int sender, const HbNetworkContract * contract);
+			//virtual bool reply(int sender, const HbNetworkContract * contract);
 			//virtual bool forward(int receiver, HbNetworkContract * contract);
 
-			virtual QList< int > connected() const final;
-			virtual bool isConnected(int uuid) const final;
+			virtual bool isConnected( quint16 uuid ) const final;
 
 			//virtual const HbServerConfig & configuration() const = 0;
-			virtual const HbServerConfig & configuration() const;
+			virtual const HbServerConfig & configuration() const; // SUB
 	
-		//signals:
-		//	void connected   (int uuid);
-		//	void disconnected(int uuid);
+		signals:
+			void serverConnected   ( quint32 uuid );
+			void serverDisconnected( quint32 uuid );
+			void socketConnected   ( quint32 uuid ); // To higher class.
+			void socketDisconnected( quint32 uuid ); // To higher class.
 
 		protected:
-
 			HbAbstractServer(QObject * parent = nullptr);
 			virtual ~HbAbstractServer() = default;
 
 			virtual bool connectToNetwork() = 0;
 			virtual void disconnectFromNetwork() = 0;
-			virtual bool isListening() const = 0;
+			virtual bool isListening() const = 0; // From device.
 
 			//virtual void incomingConnection(HbAbstractSocket * socket); to handler
-			virtual bool disconnectFromNetwork(int uuid) = 0;
+			virtual bool disconnectFromNetwork( quint16 uuid ) = 0;
 
 			virtual void reset() = 0;
 
 		private:
 
 			bool send(const HbNetworkPacket & packet);
-			bool send(int uuid, const HbNetworkPacket & packet);
+			//bool send(int uuid, const HbNetworkPacket & packet);
 
 		private callbacks :
-			void onSocketConnected( int uuid );
-			void onSocketDisconnected( int uuid );
-			void onSocketContractReceived( const HbNetworkContract& contract );
+		    void onSocketConnected( qint32 socket_descriptor, quint16 uuid ); // From HbSocketHandler.
+			void onSocketDisconnected( quint16 uuid ); // From HbSocketHandler.
+			void onSocketContractReceived( const HbNetworkContract& contract ); // From HbSocketHandler.
 
 		private:
 			HbServerConfig _config; // SUB
-			int _uuid;
+			quint32 _uuid;
 			bool _ready;
 
 		protected:
-			QList< int > _pending;
-			QHash< int, HbSocketHandler * > mHandlerBySocketId;
-			QHash< HbSocketHandler *, int > mSocketByHandlerId;
+			QList< quint32 > _pending; // Socket descriptors not instanciated.
+			QHash< quint32, HbSocketHandler * > mHandlerBySocketId;
+			QHash< HbSocketHandler *, quint32 > mSocketByHandlerId;
 		};
 
 

@@ -98,6 +98,10 @@ bool HbSocketHandler::storeNewSocket( HbAbstractSocket * socket )
 	return true;
 }
 
+void HbSocketHandler::onDisconnectRequest( quint16 uuid )
+{
+	// TODO disconnect socket.
+}
 
 void HbSocketHandler::onSocketReadyPacket()
 {

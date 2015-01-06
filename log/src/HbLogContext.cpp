@@ -16,7 +16,7 @@ HbLogContext::HbLogContext()
 
         Q_ASSERT( !msApplicationName.isEmpty() );
     }
-
+	
     mOwner = msApplicationName;
     mLine = -1;
 }

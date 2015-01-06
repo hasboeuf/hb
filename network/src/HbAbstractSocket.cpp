@@ -59,7 +59,7 @@ HbAbstractSocket::~HbAbstractSocket()
 }
 
 
-int HbAbstractSocket::uuid() const
+quint16 HbAbstractSocket::uuid() const
 {
 	return _uuid;
 }

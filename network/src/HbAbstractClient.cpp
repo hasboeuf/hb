@@ -21,7 +21,7 @@ HbAbstractClient::HbAbstractClient(QObject * parent) :
 
 bool HbAbstractClient::join()
 {
-	if (!currentConnection())
+	if ( !currentConnection() )
 	{
 		if ( !this->configuration( ).isValid( ) )
 		{
@@ -33,15 +33,18 @@ bool HbAbstractClient::join()
 
 		HbAbstractSocket * socket = pendingConnection();
 
-		//connect(socket, &HbAbstractSocket::connected,
-		//	this, &HbAbstractClient::onClientConnected, Qt::UniqueConnection);
+        //connect(socket, &HbAbstractSocket::connected,
+        //	this, &HbAbstractClient::onClientConnected, Qt::UniqueConnection);
 
-		if (!connectToNetwork())
+		if ( !connectToNetwork() )
 		{
-			if( this->configuration( ).timeout( ).reconnection > 0 )
-				_retry = startTimer( this->configuration().timeout().reconnection );
+			qint16 retry_delay = configuration().timeout().reconnection;
+			if( retry_delay > 0 )
+			{
+				_retry = startTimer( retry_delay );
+			}
 
-			raiseError(socket->error(), socket->errorString());
+			raiseError( socket->error(), socket->errorString() );
 			return false;
 		}
 	}
@@ -51,11 +54,11 @@ bool HbAbstractClient::join()
 
 bool HbAbstractClient::leave()
 {
-	if (currentConnection())
+	if ( currentConnection() )
 	{
-		if (_retry)
+		if ( _retry )
 		{
-			killTimer(_retry);
+			killTimer( _retry );
 			_retry = 0;
 		}
 
@@ -64,9 +67,9 @@ bool HbAbstractClient::leave()
 		disconnect(socket, &HbAbstractSocket::readyPacket,  this, nullptr);
 		disconnect(socket, &HbAbstractSocket::disconnected, this, nullptr);
 
-		if (!disconnectFromNetwork())
+		if ( !disconnectFromNetwork() )
 		{
-			raiseError(socket->error(), socket->errorString());
+			raiseError( socket->error(), socket->errorString() );
 			return false;
 		}
 

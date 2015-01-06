@@ -10,11 +10,13 @@ SUBDIRS += \
     log/HbLog.pro \
     log-viewer/HbLogViewer.pro \
     network/HbNetwork.pro \
+    network-example/HbNetworkExample.pro \
     plugin/HbPlugin.pro \
     plugin-example/HbPluginExample.pro
-	
-logger.depends = tools
-network.depends = log tools    
+
+log.depends = tools
+network.depends = log tools
+network-example.depends = tools log network
 plugin.depends = log tools
 plugin-example.depends = plugin log tools
 

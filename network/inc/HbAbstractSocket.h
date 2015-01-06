@@ -45,7 +45,7 @@ namespace hb
 
 			virtual ~HbAbstractSocket();
 
-			virtual int uuid() const final;
+			virtual quint16 uuid( ) const final;
 			virtual SocketType type() const = 0;
 
 			virtual bool isListening() const = 0;
@@ -79,7 +79,7 @@ namespace hb
 			virtual void receive() = 0;
 
 		private:
-			int _uuid;
+			quint16 _uuid;
 			QPointer< QIODevice > _device;
 
 			quint32 _bytesPending;
@@ -88,8 +88,6 @@ namespace hb
 			HbErrorCode _errors;
 			QString _errorString;
 		};
-
-
 	}
 }
 

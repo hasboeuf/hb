@@ -59,8 +59,8 @@ namespace hb
 
 			virtual void setRouting(RoutingScheme routing);
 
-			virtual bool addReceiver(int receiver);
-			virtual bool setReceiver(int receiver);
+			virtual bool addReceiver(quint16 receiver);
+			virtual bool setReceiver(quint16 receiver);
 			virtual void resetReceivers();
 
 			virtual bool setReply(HbNetworkContract * reply);
@@ -86,7 +86,7 @@ namespace hb
 		private:
 
 			RoutingScheme routing() const;
-			const QSet< int > & receivers() const;
+			const QSet< quint16 > & receivers() const;
 
 
 		private:
@@ -95,7 +95,7 @@ namespace hb
 			Code _code;
 
 			RoutingScheme _routing;
-			QSet< int > _receivers;
+			QSet< quint16 > _receivers;
 
 			HbNetworkContract * _reply;
 		};

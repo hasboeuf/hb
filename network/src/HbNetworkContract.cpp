@@ -60,7 +60,7 @@ HbNetworkContract::RoutingScheme HbNetworkContract::routing() const
 }
 
 
-bool HbNetworkContract::addReceiver(int receiver)
+bool HbNetworkContract::addReceiver(quint16 receiver)
 {
 	if (_service != UNDEFINED)
 	{
@@ -98,7 +98,7 @@ bool HbNetworkContract::addReceiver(int receiver)
 	return false;
 }
 
-bool HbNetworkContract::setReceiver(int receiver)
+bool HbNetworkContract::setReceiver( quint16 receiver )
 {
 	_receivers.clear();
 	return addReceiver(receiver);
@@ -109,7 +109,7 @@ void HbNetworkContract::resetReceivers()
 	_receivers.clear();
 }
 
-const QSet< int > & HbNetworkContract::receivers() const
+const QSet< quint16 > & HbNetworkContract::receivers() const
 {
 	return _receivers;
 }

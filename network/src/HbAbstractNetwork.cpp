@@ -115,6 +115,7 @@ void HbAbstractNetwork::raiseError(QAbstractSocket::SocketError error, const QSt
 	if ((_errorCode != error) || (_errorString != message))
 	{
 		_errorString = message;
-		emit this->error(_errorCode = error);
+		_errorCode = error;
+		emit this->error( _errorCode );
 	}
 }

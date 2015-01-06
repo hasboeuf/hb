@@ -1,13 +1,17 @@
 // Qt
 #include <QtCore/QDataStream>
+// Hb
+#include <HbIdGenerator.h>
 // Local
 #include <HbAbstractServer.h>
 #include <HbAbstractSocket.h>
 #include <HbNetworkConfig.h>
 #include <HbNetworkHeader.h>
+#include <HbSocketHandler.h>
 #include <IHbNetworkListener.h>
 
 
+using namespace hb::tools;
 using namespace hb::network;
 
 
@@ -32,14 +36,14 @@ const HbNetworkContract * HbAbstractServer::HbNetworkPacket::content() const
 HbAbstractServer::HbAbstractServer(QObject * parent) :
 	HbAbstractNetwork(parent)
 {
-	_uuid = 0;
+	_uuid = HbIdGenerator::get()->getUniqueId();
 	_ready = false;
 }
 
 
 bool HbAbstractServer::join()
 {
-	if (!isListening())
+	if ( !isListening() )
 	{
 		if( !this->configuration( ).isValid( ) )
 		{
@@ -49,10 +53,9 @@ bool HbAbstractServer::join()
 			return false;
 		}
 
-		if (connectToNetwork())
+		if ( connectToNetwork() )
 		{
 			_ready = true;
-			//emit connected(_uuid = HbAbstractNetwork::configuration().uuid());
 		}
 	}
 
@@ -64,6 +67,11 @@ bool HbAbstractServer::leave()
 	if (isListening())
 	{
 		disconnectFromNetwork();
+
+		emit serverDisconnected( _uuid );
+
+		_ready = false;
+		_pending.clear();
 
 		// TODO
 		//foreach(HbAbstractSocket * socket, _pending)
@@ -80,29 +88,31 @@ bool HbAbstractServer::leave()
 		//	emit disconnected(socket->uuid());
 		//}
 
-		_uuid = 0;
-
 		//qDeleteAll(_pending);
 		//qDeleteAll(_connected);
 
 
-		_ready = false;
-		//emit disconnected( HbAbstractNetwork::configuration( ).uuid( ) );
 	}
 
 	return true;
 }
 
-bool HbAbstractServer::leave(int uuid)
+bool HbAbstractServer::leave(quint16 uuid)
 {
-	if (!isListening())
+	if ( !isListening() )
 	{
 		raiseError(QAbstractSocket::OperationError,
 			QStringLiteral("unable to close a client from an inactive server"));
 	}
-
 	else
 	{
+		HbSocketHandler * handler = mHandlerBySocketId.value( uuid, nullptr );
+		q_assert_ptr( handler );
+
+		//QMetaObject::invokeMethod(	handler,
+		//							QStringLiteral("onDisconnectRequest"),
+		//							Q_ARG( quint16, uuid ) );
+
 		//HbAbstractSocket * socket = _connected.take(uuid);
 		//
 		//if (!socket)
@@ -141,8 +151,10 @@ bool HbAbstractServer::ready() const
 
 bool HbAbstractServer::send(const HbNetworkContract * contract)
 {
-	if (!contract)
-		qWarning("HbAbstractServer::send() -> try to send a null contract");
+	if( !contract )
+	{
+		qWarning( "HbAbstractServer::send() -> try to send a null contract" );
+	}
 
 	else
 	{
@@ -151,7 +163,6 @@ bool HbAbstractServer::send(const HbNetworkContract * contract)
 			raiseError(QAbstractSocket::OperationError,
 				QStringLiteral("unable to send contract on inactive server"));
 		}
-
 		else
 		{
 			HbNetworkHeader header( HbAbstractNetwork::configuration( ).uuid( ), contract );
@@ -164,7 +175,7 @@ bool HbAbstractServer::send(const HbNetworkContract * contract)
 	return false;
 }
 
-bool HbAbstractServer::reply(int sender, const HbNetworkContract * contract)
+/*bool HbAbstractServer::reply(int sender, const HbNetworkContract * contract)
 {
 	if (!contract || !contract->reply())
 		qWarning("HbAbstractServer::reply() -> try to send a null contract");
@@ -178,7 +189,7 @@ bool HbAbstractServer::reply(int sender, const HbNetworkContract * contract)
 	}
 
 	return false;
-}
+}*/
 
 //bool HbAbstractServer::forward(int receiver, HbNetworkContract * contract)
 //{
@@ -195,12 +206,12 @@ bool HbAbstractServer::reply(int sender, const HbNetworkContract * contract)
 //}
 
 
-QList< int > HbAbstractServer::connected() const
+/*QList< quint16 > HbAbstractServer::connected() const
 {
 	return mHandlerBySocketId.keys( );
-}
+}*/
 
-bool HbAbstractServer::isConnected(int uuid) const
+bool HbAbstractServer::isConnected( quint16 uuid ) const
 {
 	return mHandlerBySocketId.contains( uuid );
 }
@@ -212,12 +223,11 @@ const HbServerConfig & HbAbstractServer::configuration() const // SUB
 
 bool HbAbstractServer::send(const HbNetworkPacket & packet)
 {
-	if( !HbAbstractNetwork::configuration( ).openMode( ).testFlag( QIODevice::WriteOnly ) )
+	if( !HbAbstractNetwork::configuration( ).openMode().testFlag( QIODevice::WriteOnly ) )
 	{
 		raiseError(QAbstractSocket::OperationError,
 			QStringLiteral("unable to send contract on read only server"));
 	}
-
 	else
 	{
 		const HbNetworkHeader * header = packet.header();
@@ -240,7 +250,6 @@ bool HbAbstractServer::send(const HbNetworkPacket & packet)
 
 			return status;
 		}
-
 		else if (!header->receivers().isEmpty())
 		{
 			bool status = true;
@@ -299,10 +308,10 @@ bool HbAbstractServer::send(const HbNetworkPacket & packet)
 	return false;
 }
 
-bool HbAbstractServer::send( int uuid, const HbNetworkPacket & packet )
+/*bool HbAbstractServer::send( int uuid, const HbNetworkPacket & packet )
 {
 	return true;
-}
+}*/
 
 //bool HbAbstractServer::send(HbAbstractSocket * socket, const HbNetworkPacket & packet)
 //{

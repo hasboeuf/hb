@@ -163,6 +163,8 @@
     isEmpty( BUILD.MODE ) {
         error( "$${PROJECT.PRO}: Building mode cannot be resolved" )
     }
+	
+	message( mode=$${BUILD.MODE})
 
 # ---------------------
 # Modules Dependencies
@@ -372,7 +374,7 @@
     MOC_DIR = $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/moc/
     RCC_DIR = $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/qrc/
     UI_DIR = $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/uic/ # TODO est-ce utile de differencier par config?
-
+message( ui_dir=$$UI_DIR )
 # ---------------
 # Build Settings
 # ---------------
@@ -567,9 +569,13 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
 
 # Copy ui files.
 {
+message( UI FILES )
     contains( PROJECT_TYPE , dynlib|staticlib ) {
+message( UI FILES1 )
         UI_FILES = $$clean_path( $${PROJECT_UI}/ui_*.h )
+message( UI FILES1=$$UI_FILES)
         exists( $$UI_FILES ) {
+message( UI FILES2 )
             win32-g++: {
                 copy_ui.files = $$UI_FILES
                 copy_ui.path  = $$DELIVERY_INC
@@ -577,13 +583,13 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
                 INSTALLS *= copy_ui
             }
             win32-msvc*: {
-
+message( UI FILES3 )
                 QMAKE_POST_LINK += $${QMAKE_COPY} \
                                     \"$${UI_FILES}\" \
                                     \"$${DELIVERY_INC}/* )\" $$escape_expand(\n\t)
             }
         }
-
+		
         unset( UI_FILES )
     }
 }

@@ -46,7 +46,8 @@ const HbTcpConfig & HbTcpClient::configuration() const
 
 bool HbTcpClient::connectToNetwork()
 {
-    if( !q_assert_ptr( _socket )->connectToHost( this->configuration() ) )
+	q_assert_ptr( _socket );
+	if( !_socket->connectToHost( this->configuration( ) ) )
     {
         raiseError( _socket->error(), _socket->errorString() );
         return false;
@@ -57,9 +58,11 @@ bool HbTcpClient::connectToNetwork()
 
 bool HbTcpClient::disconnectFromNetwork()
 {
-    if( !q_assert_ptr( _socket )->disconnectFromHost() )
-        raiseError( _socket->error(), _socket->errorString() );
-
+	q_assert_ptr( _socket );
+	if( !_socket->disconnectFromHost() )
+	{
+		raiseError( _socket->error(), _socket->errorString() );
+	}
     else
     {
         _socket->deleteLater();

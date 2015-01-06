@@ -25,7 +25,7 @@ namespace hb
 		{
         public :
 
-            virtual void receive( int sender, const HbNetworkContract * contract ) = 0;
+            virtual void receive( quint16 sender, const HbNetworkContract * contract ) = 0;
     
         protected :
 

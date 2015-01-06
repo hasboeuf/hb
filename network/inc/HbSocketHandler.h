@@ -63,12 +63,13 @@ namespace hb
 
 			// From Server
 			virtual void onNewPendingConnection( qint32 socket_descriptor ) = 0;
+			virtual void onDisconnectRequest( quint16 uuid );
 			// From Socket
 			virtual void onSocketReadyPacket();
 			virtual void onSocketDisconnected();
 
 		signals:
-			void socketConnected( int socket_descriptor, quint16 socket_id );
+			void socketConnected( qint32 socket_descriptor, quint16 socket_id );
 			void socketDisconnected( quint16 socket_id );
 			void socketContractReceived( const HbNetworkContract& contract );
         };

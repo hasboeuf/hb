@@ -14,7 +14,7 @@ HbNetworkHeader::HbNetworkHeader()
 	_routing = HbNetworkContract::RoutingScheme::Unicast;
 }
 
-HbNetworkHeader::HbNetworkHeader(int sender) :
+HbNetworkHeader::HbNetworkHeader( quint16 sender ) :
 HbNetworkHeader()
 {
 	_sender = sender;
@@ -23,7 +23,7 @@ HbNetworkHeader()
 	_routing = HbNetworkContract::RoutingScheme::Unicast;
 }
 
-HbNetworkHeader::HbNetworkHeader(int sender, const HbNetworkContract * contract) :
+HbNetworkHeader::HbNetworkHeader( quint16 sender, const HbNetworkContract * contract ) :
 HbNetworkHeader()
 {
 	_sender = sender;
@@ -46,7 +46,7 @@ HbNetworkHeader()
 }
 
 
-int HbNetworkHeader::sender() const
+quint16 HbNetworkHeader::sender( ) const
 {
 	return _sender;
 }
@@ -68,7 +68,7 @@ HbNetworkContract::RoutingScheme HbNetworkHeader::routing() const
 	return _routing;
 }
 
-const QSet< int > & HbNetworkHeader::receivers() const
+const QSet< quint16 > & HbNetworkHeader::receivers( ) const
 {
 	return _receivers;
 }

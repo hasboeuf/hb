@@ -30,17 +30,17 @@ namespace hb
 		public:
 
 			HbNetworkHeader();
-			HbNetworkHeader(int sender);
-			HbNetworkHeader(int sender, const HbNetworkContract * contract);
+			HbNetworkHeader(quint16 sender);
+			HbNetworkHeader(quint16 sender, const HbNetworkContract * contract);
 			virtual ~HbNetworkHeader() = default;
 
-			int sender() const;
+			quint16 sender() const;
 
 			HbNetworkContract::Service service() const;
 			HbNetworkContract::Code code() const;
 
 			HbNetworkContract::RoutingScheme routing() const;
-			const QSet< int > & receivers() const;
+			const QSet< quint16 > & receivers() const;
 
 			friend QDataStream & operator <<(QDataStream & stream, const HbNetworkHeader & header);
 			friend QDataStream & operator >>(QDataStream & stream, HbNetworkHeader & header);
@@ -48,13 +48,13 @@ namespace hb
 
 		private:
 
-			int _sender;
+			quint16 _sender;
 
 			HbNetworkContract::Service _service;
 			HbNetworkContract::Code _code;
 
 			HbNetworkContract::RoutingScheme _routing;
-			QSet< int > _receivers;
+			QSet< quint16 > _receivers;
 		};
 
 

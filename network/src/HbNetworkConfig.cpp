@@ -35,12 +35,12 @@ HbNetworkConfig & HbNetworkConfig::operator =(const HbNetworkConfig & config)
 	return *this;
 }
 
-void HbNetworkConfig::setOwner(int address)
+void HbNetworkConfig::setOwner(quint16 address)
 {
 	_uuid = address;
 }
 
-int HbNetworkConfig::owner() const
+quint16 HbNetworkConfig::owner( ) const
 {
 	return _uuid;
 }
