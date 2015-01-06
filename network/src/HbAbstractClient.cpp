@@ -148,7 +148,7 @@ bool HbAbstractClient::send(const HbNetworkContract * contract)
 	return false;
 }
 
-bool HbAbstractClient::reply(int sender, const HbNetworkContract * contract)
+/*bool HbAbstractClient::reply(int sender, const HbNetworkContract * contract)
 {
 	if (!contract || !contract->reply())
 		qWarning("HbAbstractClient::reply() -> try to send a null contract");
@@ -162,7 +162,7 @@ bool HbAbstractClient::reply(int sender, const HbNetworkContract * contract)
 	}
 
 	return false;
-}
+}*/
 
 
 void HbAbstractClient::timerEvent(QTimerEvent * event)
