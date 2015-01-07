@@ -89,14 +89,8 @@ namespace hb
 			virtual bool send(const HbNetworkContract * contract) = 0;
 			//virtual bool reply(int sender, const HbNetworkContract * contract) = 0;
 
-			virtual QAbstractSocket::SocketError error() const final;
-			virtual QString errorString() const final;
-
 			//virtual const HbNetworkConfig & configuration() const = 0; SUB
 			virtual const HbNetworkConfig & configuration() const;
-
-		signals:
-			void error(QAbstractSocket::SocketError error);
 
 		protected:
 			HbAbstractNetwork(QObject * parent = nullptr);
@@ -107,15 +101,10 @@ namespace hb
 
 			//virtual const QList< IHbNetworkListener * > & listeners() const final;
 
-			virtual void raiseError(QAbstractSocket::SocketError error, const QString & message) final;
-
 		private:
 			HbNetworkConfig _config; // SUB
 			Exchanges _exchanges;
 			//QList< IHbNetworkListener * > _listeners;
-
-			QAbstractSocket::SocketError _errorCode;
-			QString _errorString;
 
 		};
 	}

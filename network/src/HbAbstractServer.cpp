@@ -1,6 +1,7 @@
 // Qt
 #include <QtCore/QDataStream>
 // Hb
+#include <HbLogService.h>
 #include <HbIdGenerator.h>
 // Local
 #include <HbAbstractServer.h>
@@ -47,8 +48,7 @@ bool HbAbstractServer::join()
 	{
 		if( !this->configuration( ).isValid( ) )
 		{
-			raiseError(QAbstractSocket::ConnectionRefusedError,
-				QStringLiteral("invalid server configuration"));
+            HbError( "Invalid server configuration." );
 
 			return false;
 		}
@@ -101,8 +101,7 @@ bool HbAbstractServer::leave(quint16 uuid)
 {
 	if ( !isListening() )
 	{
-		raiseError(QAbstractSocket::OperationError,
-			QStringLiteral("unable to close a client from an inactive server"));
+        HbError( "Unable to close a client from an inactive server." );
 	}
 	else
 	{
@@ -160,8 +159,7 @@ bool HbAbstractServer::send(const HbNetworkContract * contract)
 	{
 		if (!isListening())
 		{
-			raiseError(QAbstractSocket::OperationError,
-				QStringLiteral("unable to send contract on inactive server"));
+            HbError( "Unable to send contract on inactive server" );
 		}
 		else
 		{
@@ -225,8 +223,7 @@ bool HbAbstractServer::send(const HbNetworkPacket & packet)
 {
 	if( !HbAbstractNetwork::configuration( ).openMode().testFlag( QIODevice::WriteOnly ) )
 	{
-		raiseError(QAbstractSocket::OperationError,
-			QStringLiteral("unable to send contract on read only server"));
+        HbError( "Unable to send contract on read only server." );
 	}
 	else
 	{
@@ -301,8 +298,8 @@ bool HbAbstractServer::send(const HbNetworkPacket & packet)
 			return status;
 		}
 
-		raiseError(QAbstractSocket::UnknownSocketError,
-			QStringLiteral("unable to send a contract without receivers"));
+        HbError( "Unable to send a contract without receivers." );
+
 	}
 
 	return false;

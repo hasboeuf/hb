@@ -35,26 +35,16 @@ namespace hb
 			void setSocketOption(QAbstractSocket::SocketOption option, bool enable);
 			bool socketOption(QAbstractSocket::SocketOption option) const;
 
-			QAbstractSocket::SocketError error() const;
-            QAbstractSocket::SocketState onStateChanged() const;
-
-		signals:
-
-			void error(QAbstractSocket::SocketError error);
-            void onStateChanged(QAbstractSocket::SocketState onStateChanged);
+            QAbstractSocket::SocketError error() const;
+            QAbstractSocket::SocketState state() const;
 
         private callbacks :
-
-            void onReadyRead(); // From device.
-
-            void onError(QAbstractSocket::SocketError error);
-            void socketState(QAbstractSocket::SocketState onStateChanged);
+            // From device.
+            void onReadyRead();
 
 		private:
-
 			HbTcpConfig _config;
-			QPointer< QTcpSocket > _device;
-			QAbstractSocket::SocketState _state;
+            QTcpSocket * _device;
 		};
 	}
 }

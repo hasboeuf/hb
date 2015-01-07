@@ -13,49 +13,25 @@ using namespace hb::tools;
 
 HbAbstractSocket::HbAbstractSocket(QIODevice * device)
 {
-	q_assert_x(_device = device, "HbAbstractSocket::HbAbstractSocket()", "device not defined");
+    q_assert_ptr( device );
+    _device = device;
 
-	connect(_device.data(), &QIODevice::readyRead, this,
+    connect( _device, &QIODevice::readyRead, this,
         &HbAbstractSocket::onReadyRead, Qt::UniqueConnection);
 
 	_uuid = HbIdGenerator::get()->getUniqueId();
 
 	_bytesPending = 0;
 	_packets.clear();
-
-
-	_errors.add(QAbstractSocket::ConnectionRefusedError, "connection refused by remote host");
-	_errors.add(QAbstractSocket::RemoteHostClosedError, "connection closed by remote host");
-	_errors.add(QAbstractSocket::HostNotFoundError, "remote host address not found");
-	_errors.add(QAbstractSocket::SocketAccessError, "socket operation not permitted");
-	_errors.add(QAbstractSocket::SocketResourceError, "local system ran out of resources");
-	_errors.add(QAbstractSocket::SocketTimeoutError, "socket operation timed out");
-	_errors.add(QAbstractSocket::DatagramTooLargeError, "UDP datagram larger than operating system's limit");
-	_errors.add(QAbstractSocket::NetworkError, "unexpected network error occurred");
-	_errors.add(QAbstractSocket::AddressInUseError, "specified address already in use");
-	_errors.add(QAbstractSocket::SocketAddressNotAvailableError, "remote host address not available");
-	_errors.add(QAbstractSocket::UnsupportedSocketOperationError, "socket operation not supported");
-	_errors.add(QAbstractSocket::UnfinishedSocketOperationError, "socket operation still in progress");
-	_errors.add(QAbstractSocket::ProxyAuthenticationRequiredError, "proxy authentication required");
-	_errors.add(QAbstractSocket::SslHandshakeFailedError, "SSL/TLS handshake failed");
-	_errors.add(QAbstractSocket::ProxyConnectionRefusedError, "connection to proxy server not permitted");
-	_errors.add(QAbstractSocket::ProxyConnectionClosedError, "connection to proxy server closed");
-	_errors.add(QAbstractSocket::ProxyConnectionTimeoutError, "connection to proxy server timed out");
-	_errors.add(QAbstractSocket::ProxyNotFoundError, "proxy server address not found");
-	_errors.add(QAbstractSocket::ProxyProtocolError, "connection negotiation with proxy server failed");
-	_errors.add(QAbstractSocket::OperationError, "socket operation not permitted in %1 state");
-	_errors.add(QAbstractSocket::SslInternalError, "SSL internal error occurred");
-	_errors.add(QAbstractSocket::SslInvalidUserDataError, "invalid SSL user data used");
-	_errors.add(QAbstractSocket::TemporaryError, "temporary error occurred");
-	_errors.add(QAbstractSocket::UnknownSocketError, "unknown error");
 }
 
 HbAbstractSocket::~HbAbstractSocket()
 {
-	if (!_device.isNull())
+    if ( !_device )
 	{
-        disconnect(_device.data(), &QIODevice::readyRead, this, nullptr);
-		_device->deleteLater();
+        _device->disconnect(); // Disconnect all signals.
+        _device->close();
+        _device->deleteLater();
 	}
 }
 
@@ -100,17 +76,17 @@ bool HbAbstractSocket::packetAvailable() const
     return ( !_packets.isEmpty() );
 }
 
-
 QString HbAbstractSocket::errorString() const
 {
-    if( !_errorString.isEmpty() )
+    if( !_device )
     {
-        return _errorString;
+        return _device->errorString();
     }
-
-    return QStringLiteral("unknown error");
+    else
+    {
+        return QStringLiteral("");
+    }
 }
-
 
 qint64 HbAbstractSocket::readStream( QDataStream & stream )
 {
@@ -138,7 +114,6 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
 
 				if (buffer.isEmpty())
 				{
-					_errorString = stream.device()->errorString();
 					bytesRead = -1;
 				}
 				else
@@ -154,6 +129,7 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
 
 		if (bytesRead < 0)
 		{
+            HbWarning( "No bytes read => packets cleared." );
 			stream.device()->readAll();
 			_packets.clear();
 
@@ -173,39 +149,9 @@ qint64 HbAbstractSocket::writeBuffer(const QByteArray & buffer) const
 {
     if( buffer.isEmpty())
     {
+        HbWarning( "Try to write an empty buffer." );
         return 0;
     }
 
     return _device->write(buffer);
-}
-
-
-void HbAbstractSocket::setErrorString(const QString & message)
-{
-	_errorString = message;
-}
-
-void HbAbstractSocket::setErrorString(QAbstractSocket::SocketError error)
-{
-	if (error != QAbstractSocket::OperationError)
-    {
-		setErrorString(_errors(error));
-    }
-	else
-	{
-		QString state = QStringLiteral("unconnected");
-
-        switch (this->onStateChanged())
-		{
-		case QAbstractSocket::HostLookupState: state = QStringLiteral("host name lookup"); break;
-		case QAbstractSocket::ConnectingState: state = QStringLiteral("connecting"); break;
-		case QAbstractSocket::ConnectedState:  state = QStringLiteral("connected"); break;
-		case QAbstractSocket::BoundState:      state = QStringLiteral("bound"); break;
-		case QAbstractSocket::ClosingState:    state = QStringLiteral("closing"); break;
-		case QAbstractSocket::ListeningState:  state = QStringLiteral("listening"); break;
-		default:                              break;
-		}
-
-		setErrorString(_errors(error).arg(state));
-	}
 }

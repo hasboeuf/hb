@@ -63,7 +63,7 @@ HbNetworkContract * HbAbstractNetwork::Exchanges::contract(
 HbAbstractNetwork::HbAbstractNetwork(QObject * parent) :
 	QObject(parent)
 {
-	_errorCode = QAbstractSocket::UnknownSocketError;
+
 }
 
 //void HbAbstractNetwork::addListener(IHbNetworkListener * listener)
@@ -85,16 +85,6 @@ HbAbstractNetwork::HbAbstractNetwork(QObject * parent) :
 //	return _listeners;
 //}
 
-QAbstractSocket::SocketError HbAbstractNetwork::error() const
-{
-	return _errorCode;
-}
-
-QString HbAbstractNetwork::errorString() const
-{
-	return (_errorString.isEmpty()) ? QStringLiteral("unknown error") : _errorString;
-}
-
 const HbNetworkConfig & HbAbstractNetwork::configuration( ) const
 {
 	return _config;
@@ -108,14 +98,4 @@ HbAbstractNetwork::Exchanges & HbAbstractNetwork::exchanges()
 const HbAbstractNetwork::Exchanges & HbAbstractNetwork::exchanges() const
 {
 	return _exchanges;
-}
-
-void HbAbstractNetwork::raiseError(QAbstractSocket::SocketError error, const QString & message)
-{
-	if ((_errorCode != error) || (_errorString != message))
-	{
-		_errorString = message;
-		_errorCode = error;
-		emit this->error( _errorCode );
-	}
 }

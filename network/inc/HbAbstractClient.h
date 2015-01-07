@@ -26,7 +26,7 @@ namespace hb
 		class HB_NETWORK_DECL HbAbstractClient : public HbAbstractNetwork
 		{
 			Q_OBJECT
-			Q_DISABLE_COPY(HbAbstractClient)
+            Q_DISABLE_COPY( HbAbstractClient )
 
 		public:
 
@@ -38,7 +38,7 @@ namespace hb
 			//virtual bool reply(int sender, const HbNetworkContract * contract);
 
 		signals:
-			void connected();
+            void connected();
 			void disconnected();
 
 		protected:
@@ -55,9 +55,9 @@ namespace hb
 			void timerEvent(QTimerEvent * event);
 
 		private callbacks : // From device.
-			void onConnected();
-			void onDisconnected();
-			void onContractReceived( const HbNetworkContract& contract );
+            void onSocketConnected();
+            void onSocketDisconnected();
+            void onSocketContractReceived( const HbNetworkContract& contract );
 
 		private:
 			qint32 _retry;

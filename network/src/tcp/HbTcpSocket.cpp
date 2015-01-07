@@ -1,5 +1,7 @@
 // Qt
 #include <QtNetwork/QTcpSocket>
+// Hb
+#include <HbLogService.h>
 // Local
 #include <tcp/HbTcpSocket.h>
 
@@ -9,29 +11,27 @@ using namespace hb::network;
 HbTcpSocket::HbTcpSocket(QTcpSocket * device) :
 	HbAbstractSocket(device)
 {
+    q_assert_ptr( device );
 	_device = device;
-	_state = _device->state();
 
-	connect(_device.data(), &QTcpSocket::connected, this, &HbAbstractSocket::connected,
-		static_cast< Qt::ConnectionType >(Qt::DirectConnection | Qt::UniqueConnection));
-
-	connect(_device.data(), &QTcpSocket::disconnected, this, &HbAbstractSocket::disconnected,
-		static_cast< Qt::ConnectionType >(Qt::DirectConnection | Qt::UniqueConnection));
-
-	connect(_device.data(), (void (QTcpSocket::*)(QAbstractSocket::SocketState)) &QTcpSocket::stateChanged,
-        this, (void (HbTcpSocket::*)(QAbstractSocket::SocketState)) &HbTcpSocket::onStateChanged,
-		static_cast< Qt::ConnectionType >(Qt::DirectConnection | Qt::UniqueConnection));
-
-	connect(_device.data(), (void (QTcpSocket::*)(QAbstractSocket::SocketError)) &QTcpSocket::error,
-        this, &HbTcpSocket::onError, Qt::UniqueConnection);
+    connect(_device, &QTcpSocket::connected,    this, &HbAbstractSocket::socketConnected,    Qt::UniqueConnection);
+    connect(_device, &QTcpSocket::disconnected, this, &HbAbstractSocket::socketDisconnected, Qt::UniqueConnection);
+    connect(_device, &QTcpSocket::stateChanged,
+    [this](QAbstractSocket::SocketState state)
+    {
+        HbError( "Socket state changed [%d]", state );
+        emit socketStateChanged();
+    } );
+    connect(_device, ( void (QTcpSocket::*)( QAbstractSocket::SocketError ) ) &QTcpSocket::error,
+    [this]()
+    {
+        emit socketError();
+    } );
 }
 
 HbTcpSocket::~HbTcpSocket()
 {
-    if ( !_device.isNull() )
-    {
-		_device->abort();
-    }
+    // HbAbstractSocket handles the destruction.
 }
 
 
@@ -43,14 +43,13 @@ HbAbstractSocket::SocketType HbTcpSocket::type() const
 
 bool HbTcpSocket::connectToHost(const HbTcpConfig & config)
 {
-	if (_state == QAbstractSocket::UnconnectedState)
+    if ( state() == QAbstractSocket::UnconnectedState)
 	{
 		_config = config;
 		_device->connectToHost(_config.address(), _config.port(), QIODevice::ReadWrite);
 
-		if (!_device->waitForConnected(_config.timeout().connection))
+        if ( !_device->waitForConnected(_config.timeout().connection))
 		{
-			setErrorString(_device->error());
 			return false;
 		}
 	}
@@ -60,15 +59,14 @@ bool HbTcpSocket::connectToHost(const HbTcpConfig & config)
 
 bool HbTcpSocket::disconnectFromHost()
 {
-	if (_state != QAbstractSocket::UnconnectedState)
+    if ( state() != QAbstractSocket::UnconnectedState)
 	{
 		_device->disconnectFromHost();
 
-		if (_state != QAbstractSocket::UnconnectedState)
+        if ( state() != QAbstractSocket::UnconnectedState )
         {
-            if (!_device->waitForDisconnected(_config.timeout().disconnection))
+            if ( !_device->waitForDisconnected(_config.timeout().disconnection) )
             {
-                setErrorString(_device->error());
                 return false;
             }
         }
@@ -80,7 +78,7 @@ bool HbTcpSocket::disconnectFromHost()
 
 bool HbTcpSocket::isListening() const
 {
-    return ( _state == QAbstractSocket::ConnectedState );
+    return ( state() == QAbstractSocket::ConnectedState );
 }
 
 
@@ -122,9 +120,9 @@ QAbstractSocket::SocketError HbTcpSocket::error() const
 	return _device->error();
 }
 
-QAbstractSocket::SocketState HbTcpSocket::onStateChanged() const
+QAbstractSocket::SocketState HbTcpSocket::state() const
 {
-	return _state;
+    return _device->state();
 }
 
 
@@ -134,32 +132,6 @@ void HbTcpSocket::onReadyRead()
 
     if ( readStream(stream) < 0 )
     {
-        onError(QAbstractSocket::UnknownSocketError);
+        HbError( "Read stream failed." );
     }
-}
-
-
-void HbTcpSocket::onError(QAbstractSocket::SocketError error)
-{
-	if (sender() == _device)
-    {
-		setErrorString(error);
-    }
-
-    emit this->error(error);
-}
-
-void HbTcpSocket::socketState(QAbstractSocket::SocketState state)
-{
-    if (_state == state)
-	{
-        return;
-    }
-
-    _state = state;
-    if ( _state == QAbstractSocket::ClosingState )
-    {
-        _device->abort();
-    }
-
 }

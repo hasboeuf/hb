@@ -11,11 +11,11 @@
 
 // Qt
 #include <QtNetwork/QAbstractSocket>
-#include <QtCore/QPointer>
 #include <QtCore/QQueue>
 // Hb
-#include <HbErrorCode.h>
 #include <HbGlobal.h>
+
+class QIODevice;
 
 namespace hb
 {
@@ -24,7 +24,7 @@ namespace hb
 		class HbAbstractSocket : public QObject
 		{
 			Q_OBJECT
-			Q_DISABLE_COPY(HbAbstractSocket)
+            Q_DISABLE_COPY( HbAbstractSocket )
 
 		public:
 
@@ -42,24 +42,24 @@ namespace hb
 
 			virtual ~HbAbstractSocket();
 
-			virtual quint16 uuid( ) const final;
+            virtual quint16 uuid() const final;
 			virtual SocketType type() const = 0;
-
 			virtual bool isListening() const = 0;
 
-			virtual QAbstractSocket::SocketError error() const = 0;
-			virtual QAbstractSocket::SocketState onStateChanged() const = 0;
+            virtual QAbstractSocket::SocketError error() const = 0;
+            virtual QAbstractSocket::SocketState state() const = 0;
+            virtual QString errorString() const final;
 
 			virtual QByteArray readPacket     () final;
 			virtual qint64     writePacket    (const QByteArray & packet) const final;
 			virtual bool       packetAvailable() const final;
 
-			virtual QString errorString() const final;
-
 		signals:
-			void connected   ();
 			void readyPacket ();
-			void disconnected();
+            void socketStateChanged(); // Used in children.
+            void socketError();        // Used in children.
+            void socketConnected();    // Used in childen.
+            void socketDisconnected(); // Used in children.
 
 		protected:
 
@@ -67,23 +67,19 @@ namespace hb
 			HbAbstractSocket(QIODevice * device);
 
 			virtual qint64 readStream (QDataStream & stream) final;
-			virtual qint64 writeBuffer(const QByteArray & buffer) const;
+            virtual qint64 writeBuffer(const QByteArray & buffer) const final;
 
-			virtual void setErrorString(const QString & message) final;
-			virtual void setErrorString(QAbstractSocket::SocketError error) final;
-
-		protected callbacks :
-            virtual void onReadyRead() = 0; // From device.
+        protected callbacks :
+            // From children device.
+            virtual void onReadyRead() = 0;
 
 		private:
 			quint16 _uuid;
-            QPointer< QIODevice > _device;
+            QIODevice * _device;
 
 			quint32 _bytesPending;
 			QQueue< QByteArray > _packets;
 
-			HbErrorCode _errors;
-			QString _errorString;
 		};
 	}
 }

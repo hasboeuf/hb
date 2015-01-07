@@ -50,8 +50,7 @@ bool HbTcpServer::setConfiguration( const HbTcpServerConfig & config )
 {
     if( isListening() )
     {
-        raiseError( QAbstractSocket::OperationError, 
-            QStringLiteral( "unable to set a server configuration when joined" ) );
+        HbError( "Can not set configuration, server is listening." );
 
         return false;
     }
@@ -77,7 +76,7 @@ bool HbTcpServer::connectToNetwork()
 {
 	if ( !_server->listen( this->configuration( ).address( ), this->configuration( ).port( ) ) )
     {
-        raiseError( _server->serverError(), _server->errorString() );
+        HbError( "Server failed to listen." );
         return false;
     }
 

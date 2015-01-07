@@ -1,5 +1,7 @@
 // Qt
 #include <QtNetwork/QTcpSocket>
+// Hb
+#include <HbLogService.h>
 // Local
 #include <tcp/HbTcpClient.h>
 #include <tcp/HbTcpSocket.h>
@@ -29,8 +31,7 @@ bool HbTcpClient::setConfiguration( const HbTcpConfig & config )
 {
     if( _socket )
     {
-        raiseError( QAbstractSocket::OperationError,
-            QStringLiteral( "unable to set a client configuration when joined" ) );
+        HbError( "Null socket." );
 
         return false;
     }
@@ -49,7 +50,7 @@ bool HbTcpClient::connectToNetwork()
 	q_assert_ptr( _socket );
 	if( !_socket->connectToHost( this->configuration( ) ) )
     {
-        raiseError( _socket->error(), _socket->errorString() );
+        HbError( "Can not connect to host." );
         return false;
     }
 
@@ -61,7 +62,7 @@ bool HbTcpClient::disconnectFromNetwork()
 	q_assert_ptr( _socket );
 	if( !_socket->disconnectFromHost() )
 	{
-		raiseError( _socket->error(), _socket->errorString() );
+        HbError( "Can not disconnect from host." );
 	}
     else
     {
@@ -80,8 +81,8 @@ HbAbstractSocket * HbTcpClient::pendingConnection()
     QTcpSocket * device = q_check_ptr( new QTcpSocket( this ) );
     _socket = q_check_ptr( new HbTcpSocket( device ) );
 
-    connect( _socket, ( void ( HbTcpSocket::* )( QAbstractSocket::SocketError ) ) &HbTcpSocket::error,
-        this, [this]( QAbstractSocket::SocketError error ) { raiseError( error, _socket->errorString() ); }, Qt::UniqueConnection );
+    connect( _socket, &HbAbstractSocket::socketError,
+            this, [this](){ emit this->socketError(_socket->error(), _socket->errorString() ); } );
 
     HbTcpConfig::SocketOptions options = _config.options();
 
