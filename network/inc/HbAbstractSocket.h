@@ -21,8 +21,6 @@ namespace hb
 {
 	namespace network
 	{
-
-
 		class HbAbstractSocket : public QObject
 		{
 			Q_OBJECT
@@ -40,7 +38,6 @@ namespace hb
 				BluetoothSocket
 			};
 
-
 		public:
 
 			virtual ~HbAbstractSocket();
@@ -51,7 +48,7 @@ namespace hb
 			virtual bool isListening() const = 0;
 
 			virtual QAbstractSocket::SocketError error() const = 0;
-			virtual QAbstractSocket::SocketState state() const = 0;
+			virtual QAbstractSocket::SocketState onStateChanged() const = 0;
 
 			virtual QByteArray readPacket     () final;
 			virtual qint64     writePacket    (const QByteArray & packet) const final;
@@ -76,11 +73,11 @@ namespace hb
 			virtual void setErrorString(QAbstractSocket::SocketError error) final;
 
 		protected callbacks :
-			virtual void receive() = 0;
+            virtual void onReadyRead() = 0; // From device.
 
 		private:
 			quint16 _uuid;
-			QPointer< QIODevice > _device;
+            QPointer< QIODevice > _device;
 
 			quint32 _bytesPending;
 			QQueue< QByteArray > _packets;

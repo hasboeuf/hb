@@ -19,20 +19,19 @@ HbTcpSocket::HbTcpSocket(QTcpSocket * device) :
 		static_cast< Qt::ConnectionType >(Qt::DirectConnection | Qt::UniqueConnection));
 
 	connect(_device.data(), (void (QTcpSocket::*)(QAbstractSocket::SocketState)) &QTcpSocket::stateChanged,
-		this, (void (HbTcpSocket::*)(QAbstractSocket::SocketState)) &HbTcpSocket::state,
+        this, (void (HbTcpSocket::*)(QAbstractSocket::SocketState)) &HbTcpSocket::onStateChanged,
 		static_cast< Qt::ConnectionType >(Qt::DirectConnection | Qt::UniqueConnection));
 
-	connect(_device.data(), (void (QTcpSocket::*)(QAbstractSocket::SocketState)) &QTcpSocket::stateChanged,
-		this, &HbTcpSocket::socketState, Qt::UniqueConnection);
-
 	connect(_device.data(), (void (QTcpSocket::*)(QAbstractSocket::SocketError)) &QTcpSocket::error,
-		this, &HbTcpSocket::socketError, Qt::UniqueConnection);
+        this, &HbTcpSocket::onError, Qt::UniqueConnection);
 }
 
 HbTcpSocket::~HbTcpSocket()
 {
-	if (!_device.isNull())
+    if ( !_device.isNull() )
+    {
 		_device->abort();
+    }
 }
 
 
@@ -66,11 +65,13 @@ bool HbTcpSocket::disconnectFromHost()
 		_device->disconnectFromHost();
 
 		if (_state != QAbstractSocket::UnconnectedState)
-		if (!_device->waitForDisconnected(_config.timeout().disconnection))
-		{
-			setErrorString(_device->error());
-			return false;
-		}
+        {
+            if (!_device->waitForDisconnected(_config.timeout().disconnection))
+            {
+                setErrorString(_device->error());
+                return false;
+            }
+        }
 	}
 
 	return true;
@@ -79,7 +80,7 @@ bool HbTcpSocket::disconnectFromHost()
 
 bool HbTcpSocket::isListening() const
 {
-	return ((_state == QAbstractSocket::ConnectedState) && (uuid() > 0));
+    return ( _state == QAbstractSocket::ConnectedState );
 }
 
 
@@ -121,34 +122,44 @@ QAbstractSocket::SocketError HbTcpSocket::error() const
 	return _device->error();
 }
 
-QAbstractSocket::SocketState HbTcpSocket::state() const
+QAbstractSocket::SocketState HbTcpSocket::onStateChanged() const
 {
 	return _state;
 }
 
 
-void HbTcpSocket::receive()
+void HbTcpSocket::onReadyRead()
 {
-	QDataStream stream(_device);
+    QDataStream stream( _device );
 
-	if (readStream(stream) < 0)
-		socketError(QAbstractSocket::UnknownSocketError);
+    if ( readStream(stream) < 0 )
+    {
+        onError(QAbstractSocket::UnknownSocketError);
+    }
 }
 
 
-void HbTcpSocket::socketError(QAbstractSocket::SocketError error)
+void HbTcpSocket::onError(QAbstractSocket::SocketError error)
 {
 	if (sender() == _device)
+    {
 		setErrorString(error);
+    }
 
-	emit this->error(error);
+    emit this->error(error);
 }
 
 void HbTcpSocket::socketState(QAbstractSocket::SocketState state)
 {
-	if (_state != state)
+    if (_state == state)
 	{
-		if ((_state = state) == QAbstractSocket::ClosingState)
-			_device->abort();
-	}
+        return;
+    }
+
+    _state = state;
+    if ( _state == QAbstractSocket::ClosingState )
+    {
+        _device->abort();
+    }
+
 }

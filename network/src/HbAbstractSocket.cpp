@@ -3,6 +3,7 @@
 #include <QtCore/QIODevice>
 // Hb
 #include <HbIdGenerator.h>
+#include <HbLogService.h>
 // Local
 #include <HbAbstractSocket.h>
 #include <HbNetworkHeader.h>
@@ -15,7 +16,7 @@ HbAbstractSocket::HbAbstractSocket(QIODevice * device)
 	q_assert_x(_device = device, "HbAbstractSocket::HbAbstractSocket()", "device not defined");
 
 	connect(_device.data(), &QIODevice::readyRead, this,
-		&HbAbstractSocket::receive, Qt::UniqueConnection);
+        &HbAbstractSocket::onReadyRead, Qt::UniqueConnection);
 
 	_uuid = HbIdGenerator::get()->getUniqueId();
 
@@ -53,7 +54,7 @@ HbAbstractSocket::~HbAbstractSocket()
 {
 	if (!_device.isNull())
 	{
-		disconnect(_device.data(), &QIODevice::readyRead, this, nullptr);
+        disconnect(_device.data(), &QIODevice::readyRead, this, nullptr);
 		_device->deleteLater();
 	}
 }
@@ -67,55 +68,73 @@ quint16 HbAbstractSocket::uuid() const
 
 QByteArray HbAbstractSocket::readPacket()
 {
-	return (!_packets.isEmpty()) ? _packets.dequeue() : QByteArray();
+    if( !_packets.isEmpty() )
+    {
+        return _packets.dequeue();
+    }
+
+    HbWarning( "Read an empty packet." );
+    return QByteArray();
 }
 
 qint64 HbAbstractSocket::writePacket(const QByteArray & packet) const
 {
-	if (!packet.isEmpty())
+    if ( !packet.isEmpty() )
 	{
 		QByteArray buffer;
-		QDataStream stream(&buffer, QIODevice::WriteOnly);
+        QDataStream stream( &buffer, QIODevice::WriteOnly );
 
 		q_assert(stream.writeBytes(packet.constData(), packet.size()).status() == QDataStream::Ok);
 		return writeBuffer(buffer);
 	}
+    else
+    {
+        HbWarning( "Try to write an empty packet." );
+    }
 
 	return 0;
 }
 
 bool HbAbstractSocket::packetAvailable() const
 {
-	return (!_packets.isEmpty());
+    return ( !_packets.isEmpty() );
 }
 
 
 QString HbAbstractSocket::errorString() const
 {
-	return (_errorString.isEmpty()) ? QStringLiteral("unknown error") : _errorString;
+    if( !_errorString.isEmpty() )
+    {
+        return _errorString;
+    }
+
+    return QStringLiteral("unknown error");
 }
 
 
-qint64 HbAbstractSocket::readStream(QDataStream & stream)
+qint64 HbAbstractSocket::readStream( QDataStream & stream )
 {
 	qint64 bytesRead = 0;
-	quint32 expected = (!_bytesPending) ? sizeof(quint32) : _bytesPending;
+    quint32 expected = sizeof(quint32);
+    if( _bytesPending > 0 )
+    {
+        expected = _bytesPending;
+    }
 
-	while (stream.device()->bytesAvailable() >= expected) // Multi packets.
+    while ( stream.device()->bytesAvailable() >= expected ) // Multi packets.
 	{
-		if (!_bytesPending)
+        if ( _bytesPending == 0)
 		{
-			q_assert((stream >> _bytesPending).status() == QDataStream::Ok);
+            QDataStream::Status status = (stream >> _bytesPending).status();
+            q_assert( status == QDataStream::Ok );
+
 			expected = _bytesPending;
 		}
-
-		if (expected > 0)
+        if ( expected > 0 )
 		{
-
-			if (stream.device()->bytesAvailable() >= expected)
-			{
-
-				QByteArray buffer = stream.device()->read(expected);
+            if ( stream.device()->bytesAvailable() >= expected )
+            {
+                QByteArray buffer = stream.device()->read( expected );
 
 				if (buffer.isEmpty())
 				{
@@ -124,7 +143,7 @@ qint64 HbAbstractSocket::readStream(QDataStream & stream)
 				}
 				else
 				{
-					_packets.enqueue(buffer);
+                    _packets.enqueue( buffer );
 					bytesRead += expected;
 				}
 
@@ -152,7 +171,12 @@ qint64 HbAbstractSocket::readStream(QDataStream & stream)
 
 qint64 HbAbstractSocket::writeBuffer(const QByteArray & buffer) const
 {
-	return (!buffer.isEmpty()) ? _device->write(buffer) : 0;
+    if( buffer.isEmpty())
+    {
+        return 0;
+    }
+
+    return _device->write(buffer);
 }
 
 
@@ -164,13 +188,14 @@ void HbAbstractSocket::setErrorString(const QString & message)
 void HbAbstractSocket::setErrorString(QAbstractSocket::SocketError error)
 {
 	if (error != QAbstractSocket::OperationError)
+    {
 		setErrorString(_errors(error));
-
+    }
 	else
 	{
 		QString state = QStringLiteral("unconnected");
 
-		switch (this->state())
+        switch (this->onStateChanged())
 		{
 		case QAbstractSocket::HostLookupState: state = QStringLiteral("host name lookup"); break;
 		case QAbstractSocket::ConnectingState: state = QStringLiteral("connecting"); break;
