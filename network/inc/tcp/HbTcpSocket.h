@@ -41,6 +41,7 @@ namespace hb
         private callbacks :
             // From device.
             void onReadyRead();
+            void onStateChanged(QAbstractSocket::SocketState state);
 
 		private:
 			HbTcpConfig _config;

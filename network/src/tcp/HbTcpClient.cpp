@@ -23,7 +23,12 @@ HbTcpClient::~HbTcpClient()
 
 bool HbTcpClient::join( const HbTcpConfig & config )
 {
-    return ( setConfiguration( config ) ) ? HbAbstractClient::join() : false;
+    if( setConfiguration( config ) )
+    {
+        return HbAbstractClient::join();
+    }
+
+    return false;
 }
 
 
@@ -31,8 +36,7 @@ bool HbTcpClient::setConfiguration( const HbTcpConfig & config )
 {
     if( _socket )
     {
-        HbError( "Null socket." );
-
+        HbError( "Can not apply configuration on instanciated socket." );
         return false;
     }
 
@@ -76,7 +80,10 @@ bool HbTcpClient::disconnectFromNetwork()
 
 HbAbstractSocket * HbTcpClient::pendingConnection()
 {
-    q_delete_ptr( &_socket );
+    if( _socket )
+    {
+        return _socket;
+    }
 
     QTcpSocket * device = q_check_ptr( new QTcpSocket( this ) );
     _socket = q_check_ptr( new HbTcpSocket( device ) );

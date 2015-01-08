@@ -14,15 +14,8 @@ HbTcpSocket::HbTcpSocket(QTcpSocket * device) :
     q_assert_ptr( device );
 	_device = device;
 
-    connect(_device, &QTcpSocket::connected,    this, &HbAbstractSocket::socketConnected,    Qt::UniqueConnection);
-    connect(_device, &QTcpSocket::disconnected, this, &HbAbstractSocket::socketDisconnected, Qt::UniqueConnection);
-    connect(_device, &QTcpSocket::stateChanged,
-    [this](QAbstractSocket::SocketState state)
-    {
-        HbError( "Socket state changed [%d]", state );
-        emit socketStateChanged();
-    } );
-    connect(_device, ( void (QTcpSocket::*)( QAbstractSocket::SocketError ) ) &QTcpSocket::error,
+    connect( _device, &QTcpSocket::stateChanged, this, &HbTcpSocket::onStateChanged );
+    connect( _device, ( void (QTcpSocket::*)( QAbstractSocket::SocketError ) ) &QTcpSocket::error,
     [this]()
     {
         emit socketError();
@@ -46,15 +39,12 @@ bool HbTcpSocket::connectToHost(const HbTcpConfig & config)
     if ( state() == QAbstractSocket::UnconnectedState)
 	{
 		_config = config;
-		_device->connectToHost(_config.address(), _config.port(), QIODevice::ReadWrite);
+        _device->connectToHost( _config.address(), _config.port(), QIODevice::ReadWrite );
 
-        if ( !_device->waitForConnected(_config.timeout().connection))
-		{
-			return false;
-		}
-	}
+        return true;
+    }
 
-	return true;
+    return false;
 }
 
 bool HbTcpSocket::disconnectFromHost()
@@ -62,17 +52,10 @@ bool HbTcpSocket::disconnectFromHost()
     if ( state() != QAbstractSocket::UnconnectedState)
 	{
 		_device->disconnectFromHost();
-
-        if ( state() != QAbstractSocket::UnconnectedState )
-        {
-            if ( !_device->waitForDisconnected(_config.timeout().disconnection) )
-            {
-                return false;
-            }
-        }
+        return true;
 	}
 
-	return true;
+    return false;
 }
 
 
@@ -134,4 +117,42 @@ void HbTcpSocket::onReadyRead()
     {
         HbError( "Read stream failed." );
     }
+}
+
+void HbTcpSocket::onStateChanged( QAbstractSocket::SocketState state )
+{
+    q_assert( _device == sender() );
+
+    if( state == QAbstractSocket::UnconnectedState )
+    {
+        HbInfo( "Socket enters UnconnectedState." );
+        emit socketDisconnected();
+    }
+    else if( state == QAbstractSocket::HostLookupState )
+    {
+        HbInfo( "Socket enters HostLookupState." );
+    }
+    else if( state == QAbstractSocket::ConnectingState )
+    {
+        HbInfo( "Socket enters ConnectingState." );
+    }
+    else if( state == QAbstractSocket::ConnectedState )
+    {
+        HbInfo( "Socket enters ConnectedState." );
+        emit socketConnected();
+    }
+    else if( state == QAbstractSocket::BoundState )
+    {
+        HbInfo( "Socket enters BoundState." );
+    }
+    else if( state == QAbstractSocket::ClosingState )
+    {
+        HbInfo( "Socket enters ClosingState." );
+    }
+    else if( state == QAbstractSocket::ListeningState )
+    {
+        HbInfo( "Socket enters ListeningState." );
+    }
+
+    emit socketStateChanged();
 }

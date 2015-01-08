@@ -46,7 +46,7 @@ namespace hb
             void init();
 
         public slots:
-            void showLogs(bool visible);
+            void showLogs( bool visible );
             void onClientConnected();
             void onClientDisconnected();
 

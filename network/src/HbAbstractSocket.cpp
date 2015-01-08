@@ -35,7 +35,6 @@ HbAbstractSocket::~HbAbstractSocket()
 	}
 }
 
-
 quint16 HbAbstractSocket::uuid() const
 {
 	return _uuid;

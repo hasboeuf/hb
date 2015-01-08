@@ -32,12 +32,12 @@ bool HbAbstractClient::join()
 			return false;
 		}
 
-		HbAbstractSocket * socket = pendingConnection();
+        HbAbstractSocket * socket = pendingConnection();
 
         //connect(socket, &HbAbstractSocket::connected,
         //	this, &HbAbstractClient::onClientConnected, Qt::UniqueConnection);
 
-		if ( !connectToNetwork() )
+        if( !connectToNetwork() )
 		{
 			qint16 retry_delay = configuration().timeout().reconnection;
 			if( retry_delay > 0 )
@@ -88,9 +88,10 @@ bool HbAbstractClient::ready() const
 
 bool HbAbstractClient::send(const HbNetworkContract * contract)
 {
-	if (!contract)
+    if ( !contract )
+    {
 		qWarning("HbAbstractClient::send() -> try to send a null contract");
-
+    }
 	else
 	{
 		HbAbstractSocket * socket = currentConnection();
