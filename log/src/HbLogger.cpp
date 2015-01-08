@@ -128,7 +128,6 @@ void HbLogger::print( Level level, const HbLogContext & context, const char * me
 
 			if (!buffer.isEmpty())
 			{
-				
 				enqueueMessage(level, format(), context, buffer);
 			}
         }

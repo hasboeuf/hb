@@ -84,25 +84,25 @@ namespace hb
 /*! 
 * Should be used to write a new log message of type WARNING.
 */
-#define HbWarning( message, ... ) HbLogContext() \
+#define HbWarning( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \
 	.print(HbLogger::LEVEL_WARNING, message, ## __VA_ARGS__)
 
 /*! 
 * Should be used to write a new log message of type ERROR.
 */
-#define HbError( message, ... ) HbLogContext() \
+#define HbError( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \
 	.print(HbLogger::LEVEL_ERROR, message, ## __VA_ARGS__)
 
 /*! 
 * Should be used to write a new log message of type CRITICAL.
 */
-#define HbCritical( message, ... ) HbLogContext() \
+#define HbCritical( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \
 	.print(HbLogger::LEVEL_CRITICAL, message, ## __VA_ARGS__)
 
 /*! 
 * Should be used to write a new log message of type FATAL.
 */
-#define HbFatal( message, ... ) { HbLogContext() \
+#define HbFatal( message, ... ) { HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \
     .print( HbLogger::LEVEL_FATAL, message, ## __VA_ARGS__ ); qAbort(); }
 
 
