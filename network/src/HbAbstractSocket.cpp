@@ -139,7 +139,7 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
 
 	if( _packets.size() > 0 )
 	{
-		emit readyPacket();
+        emit socketReadyPacket();
 	}
 
 	return bytesRead;

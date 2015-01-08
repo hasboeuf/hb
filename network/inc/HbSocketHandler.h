@@ -12,6 +12,7 @@
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QMap>
+#include <QtCore/QMutex>
 // Hb
 #include <HbGlobal.h>
 #include <HbNetworkContract.h>
@@ -44,7 +45,7 @@ namespace hb
 			virtual HbAbstractServer * server() const;
 
             virtual quint16  id() const final;
-            virtual bool canHandleNewConnection() const final;
+            virtual bool canHandleNewConnection() final;
 			virtual bool storeNewSocket( HbAbstractSocket * socket ) final;
 
         protected:
@@ -53,6 +54,8 @@ namespace hb
 
 			QMap<quint16, HbAbstractSocket *> mSocketById;
 			QMap<HbAbstractSocket *, quint16> mIdBySocket;
+
+            QMutex       mSocketMutex;
 
 		private:
 			HbAbstractServer * mpServer; // SUB
@@ -69,7 +72,8 @@ namespace hb
 			virtual void onSocketDisconnected();
 
 		signals:
-			void socketConnected( qint32 socket_descriptor, quint16 socket_id );
+            // To Server.
+            void socketConnected( qint32 socket_descriptor, quint16 socket_id );
 			void socketDisconnected( quint16 socket_id );
 			void socketContractReceived( const HbNetworkContract& contract );
         };

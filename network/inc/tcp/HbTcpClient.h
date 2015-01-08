@@ -13,6 +13,7 @@ namespace hb
 
 		class HB_NETWORK_DECL HbTcpClient : public HbAbstractClient
 		{
+            Q_OBJECT
 			Q_DISABLE_COPY( HbTcpClient )
 
         public :

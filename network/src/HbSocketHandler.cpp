@@ -1,5 +1,6 @@
 // Qt
 #include <QtCore/QTimer>
+#include <QtCore/QMutexLocker>
 #include <QtNetwork/QTcpSocket>
 // Hb
 #include <HbGlobal.h>
@@ -53,9 +54,11 @@ quint16 HbSocketHandler::id() const
     return mId;
 }
 
-bool HbSocketHandler::canHandleNewConnection() const
+bool HbSocketHandler::canHandleNewConnection()
 {
     HbLogBegin();
+
+    QMutexLocker locker( &mSocketMutex );
 
 	if (!mpServer->configuration().isThreaded() ||
 		(mpServer->configuration().isThreaded() &&
@@ -77,6 +80,8 @@ bool HbSocketHandler::canHandleNewConnection() const
 
 bool HbSocketHandler::storeNewSocket( HbAbstractSocket * socket )
 {
+    QMutexLocker locker( &mSocketMutex );
+
 	// Q_ASSERT( socket->type( ) != HbAbstractSocket::UdpSocket );
 
 	q_assert_ptr( socket );
@@ -84,16 +89,14 @@ bool HbSocketHandler::storeNewSocket( HbAbstractSocket * socket )
 	mSocketById.insert( socket->uuid( ), socket );
 	mIdBySocket.insert( socket, socket->uuid( ) );
 
-	connect( socket, &HbAbstractSocket::readyPacket,  this, &HbSocketHandler::onSocketReadyPacket );
-	connect( socket, &HbAbstractSocket::disconnected, this, &HbSocketHandler::onSocketDisconnected );
+    connect( socket, &HbAbstractSocket::socketReadyPacket,  this, &HbSocketHandler::onSocketReadyPacket );
+    connect( socket, &HbAbstractSocket::socketDisconnected, this, &HbSocketHandler::onSocketDisconnected );
+    connect( socket, &HbAbstractSocket::socketError,
+             this, [this, socket]()
+             {
+                 HbError( "Error %d (%s) on socket %d.", socket->error(), HbLatin1( socket->errorString() ), socket->uuid());
 
-	connect( socket, (void (HbAbstractSocket::*)(QAbstractSocket::SocketError)) &HbAbstractSocket::error,
-		this, [this, socket]( QAbstractSocket::SocketError error )
-	{
-		server()->raiseError( error, QStringLiteral( "%1 on socket %2" ).
-			arg( socket->errorString( ) ).arg( socket->uuid( ) ) );
-
-	}, Qt::UniqueConnection );
+             }, Qt::UniqueConnection );
 
 	return true;
 }
@@ -107,8 +110,7 @@ void HbSocketHandler::onSocketReadyPacket()
 {
 	HbAbstractSocket * socket = q_assert_ptr( dynamic_cast<HbAbstractSocket *>(sender( )) );
 
-	bool available = (socket->isListening( ) &&
-		socket->packetAvailable( ));
+    bool available = ( socket->isListening() && socket->packetAvailable() );
 
 	while( available )
 	{
@@ -116,10 +118,8 @@ void HbSocketHandler::onSocketReadyPacket()
 
 		if( !mpServer->configuration().openMode( ).testFlag( QIODevice::ReadOnly ) )
 		{
-			mpServer->raiseError( QAbstractSocket::OperationError,
-				QStringLiteral( "unable to receive contract on write only socket %1" ).arg( socket->uuid( ) ) );
+            HbError( "Unable to receive contract on write only socket %d.", socket->uuid() );
 		}
-
 		else
 		{
 			QDataStream stream( &packet, QIODevice::ReadOnly );
@@ -134,17 +134,14 @@ void HbSocketHandler::onSocketReadyPacket()
 
 			if( !contract )
 			{
-				mpServer->raiseError( QAbstractSocket::UnknownSocketError,
-					QStringLiteral( "try to read unregistered contract %1::%2" ).arg( service ).arg( code ) );
+                HbError( "Try to read unregistered contract [service=%d, code=%d].", service, code );
 			}
 			else if( !contract->read( stream ) )
 			{
 				Q_ASSERT( stream.status( ) == QDataStream::Ok );
 
-				mpServer->raiseError( QAbstractSocket::UnknownSocketError,
-					QStringLiteral( "error occurred while reading contract %1::%2" ).arg( service ).arg( code ) );
+                HbError( "Error occurred while reading contract [service=%d, code=%d].", service, code );
 			}
-
 			else
 			{
 				//bool processing = ((header.routing( ) == HbNetworkContract::RoutingScheme::Unicast) &&
@@ -154,8 +151,7 @@ void HbSocketHandler::onSocketReadyPacket()
 			}
 		}
 
-		available = (socket->isListening( ) &&
-			socket->packetAvailable( ));
+        available = ( socket->isListening() && socket->packetAvailable() );
 	}
 }
 
@@ -175,8 +171,7 @@ void HbSocketHandler::onSocketDisconnected()
 	mIdBySocket.remove( socket );
 	mSocketById.remove( id );
 
-	disconnect( socket, &HbAbstractSocket::readyPacket, this, nullptr );
-	disconnect( socket, &HbAbstractSocket::disconnected, this, nullptr );
+    disconnect( socket, nullptr, this, nullptr );
 
     socket->deleteLater();
 

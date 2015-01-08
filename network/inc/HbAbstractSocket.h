@@ -55,10 +55,10 @@ namespace hb
 			virtual bool       packetAvailable() const final;
 
 		signals:
-			void readyPacket ();
+            void socketReadyPacket ();
             void socketStateChanged(); // Used in children.
-            void socketError();        // Used in children.
-            void socketConnected();    // Used in childen.
+            void socketError       (); // Used in children.
+            void socketConnected   (); // Used in childen.
             void socketDisconnected(); // Used in children.
 
 		protected:

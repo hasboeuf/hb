@@ -82,7 +82,7 @@ HbAbstractSocket * HbTcpClient::pendingConnection()
     _socket = q_check_ptr( new HbTcpSocket( device ) );
 
     connect( _socket, &HbAbstractSocket::socketError,
-            this, [this](){ emit this->socketError(_socket->error(), _socket->errorString() ); } );
+             this,    [this](){ emit socketError( _socket->error(), _socket->errorString() ); } );
 
     HbTcpConfig::SocketOptions options = _config.options();
 
