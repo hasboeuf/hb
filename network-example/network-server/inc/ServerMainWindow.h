@@ -6,6 +6,7 @@
 #include <QtCore/QSortFilterProxyModel>
 #include <QtGui/QStandardItemModel>
 // Hb
+#include <tcp/HbTcpServer.h>
 //#include <HbNetGlobal.h>
 // Local
 #include <ui_ServerMainWindow.h>
@@ -14,7 +15,7 @@ namespace hb
 {
     namespace network
     {
-		class HbTcpServer;
+        //class HbTcpServer;
     }
 
 	namespace log
@@ -30,7 +31,7 @@ namespace hb
             Q_OBJECT
 
         public:
-            explicit ServerMainWindow(QWidget *parent = 0);
+            explicit ServerMainWindow( QWidget * parent = 0 );
             virtual ~ServerMainWindow();
 
         private:
@@ -39,16 +40,17 @@ namespace hb
             hb::log::HbLogWidget* mpLogWidget;
 
             // Network
-            hb::network::HbTcpServer* mpTcpServer;
+            hb::network::HbTcpServer mTcpServer;
 
         private:
             void init();
 
         public slots:
-            void showLogs(bool visible);
+            void showLogs( bool visible );
 
         private slots:
             void onStartClicked();
+            void onStopClicked();
 
         signals:
 

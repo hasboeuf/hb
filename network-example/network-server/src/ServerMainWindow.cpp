@@ -13,8 +13,6 @@
 #include <HbLogService.h>
 #include <gui/HbLogWidget.h>
 #include <HbLoggerOutputs.h>
-
-#include <tcp/HbTcpServer.h>
 // Local
 #include <ServerMainWindow.h>
 
@@ -28,9 +26,8 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
 {
 
 	mpLogWidget = new HbLogWidget(this);
+    mpLogWidget->hide();
 	q_assert(HbLogService::outputs()->addGuiOutput(HbLogService::outputs()->unusedId(), mpLogWidget->logNotifier())); // TODO Notifier must be handle by hblog ???
-
-	mpTcpServer = nullptr;
 
     HbLogBegin();
 
@@ -38,11 +35,10 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     setupUi(this);
     setWindowTitle("Server");
 
-    ui_qpb_start->setText("Start");
-
     // Internal connects
-    connect(ui_qa_logs, &QAction::triggered,     this, &ServerMainWindow::showLogs);
+    connect(ui_qa_logs,   &QAction::triggered,   this, &ServerMainWindow::showLogs);
     connect(ui_qpb_start, &QPushButton::clicked, this, &ServerMainWindow::onStartClicked);
+    connect(ui_qpb_stop,  &QPushButton::clicked, this, &ServerMainWindow::onStopClicked);
 
     HbLogEnd();
 }
@@ -52,7 +48,6 @@ ServerMainWindow::~ServerMainWindow()
     HbLogBegin();
 
     if (mpLogWidget) delete mpLogWidget;
-    if (mpTcpServer) delete mpTcpServer;
 
     HbLogEnd();
 }
@@ -74,39 +69,29 @@ void ServerMainWindow::onStartClicked()
 {
     HbLogBegin();
 
-/*
-    if(ui_qpb_start->text() == "Start")
-    {
-        ui_qpb_start->setText("Starting...");
+    HbTcpServerConfig config;
+    config.setAddress(QHostAddress::Any);
+    config.setPort( 4000 );
+    config.setMaxUsersPerThread( 1 );
 
-        init();
+    HbNetworkConfig::Timeout timeout;
+    timeout.connection    = 1000;
+    timeout.reconnection  = 1000;
+    timeout.disconnection = 1000;
 
-		if (!mpTcpServer)
-		{
-			mpTcpServer = new HbTcpServer(this);
+    config.setTimeout(timeout);
 
-			HbTcpServerConfig config;
-			config.setAddress(QHostAddress::Any);
-			config.setPort(4000);
-			config.setMaxUsersPerThread( 1 );
+    mTcpServer.setConfiguration( config );
+    mTcpServer.join();
 
-			HbNetworkConfig::Timeout timeout;
-			timeout.connection    = 1000;
-			timeout.reconnection  = 1000;
-			timeout.disconnection = 1000;
+    HbLogEnd();
+}
 
-			config.setTimeout(timeout);
+void ServerMainWindow::onStopClicked()
+{
+    HbLogBegin();
 
-			mpTcpServer->setConfiguration( config );
-			mpTcpServer->join();
-			
-		}
-    }
-    else if(ui_qpb_start->text() == "Stop")
-    {
-        ui_qpb_start->setText("Stopping...");
+    mTcpServer.leave();
 
-    }
-*/
     HbLogEnd();
 }

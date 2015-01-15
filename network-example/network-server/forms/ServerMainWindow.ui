@@ -34,7 +34,7 @@
          </rect>
         </property>
         <property name="text">
-         <string/>
+         <string>Start</string>
         </property>
        </widget>
        <widget class="QPushButton" name="pushButton">
@@ -48,6 +48,19 @@
         </property>
         <property name="text">
          <string>Send bad message</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="ui_qpb_stop">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>40</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Stop</string>
         </property>
        </widget>
       </widget>

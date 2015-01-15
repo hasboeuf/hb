@@ -40,8 +40,6 @@ namespace hb
             // Network
             hb::network::HbTcpClient mTcpClient;
 
-            bool mStarted;
-
         private:
             void init();
 
@@ -52,6 +50,7 @@ namespace hb
 
         private slots:
             void onStartClicked();
+            void onStopClicked();
 
         signals:
 

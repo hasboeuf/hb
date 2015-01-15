@@ -16,8 +16,7 @@ HbAbstractSocket::HbAbstractSocket(QIODevice * device)
     q_assert_ptr( device );
     _device = device;
 
-    connect( _device, &QIODevice::readyRead, this,
-        &HbAbstractSocket::onReadyRead, Qt::UniqueConnection);
+    connect( _device.data(), &QIODevice::readyRead, this, &HbAbstractSocket::onReadyRead, Qt::UniqueConnection);
 
 	_uuid = HbIdGenerator::get()->getUniqueId();
 
@@ -27,7 +26,7 @@ HbAbstractSocket::HbAbstractSocket(QIODevice * device)
 
 HbAbstractSocket::~HbAbstractSocket()
 {
-    if ( !_device )
+    if ( !_device.isNull() )
 	{
         _device->disconnect(); // Disconnect all signals.
         _device->close();

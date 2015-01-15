@@ -34,17 +34,14 @@ bool HbAbstractClient::join()
 
         HbAbstractSocket * socket = pendingConnection();
 
-        //connect(socket, &HbAbstractSocket::connected,
-        //	this, &HbAbstractClient::onClientConnected, Qt::UniqueConnection);
+        connect(socket, &HbAbstractSocket::socketConnected,
+                this,   &HbAbstractClient::onSocketConnected, Qt::UniqueConnection);
+
+        connect(socket, &HbAbstractSocket::socketDisconnected,
+                this,   &HbAbstractClient::onSocketDisconnected, Qt::UniqueConnection);
 
         if( !connectToNetwork() )
 		{
-			qint16 retry_delay = configuration().timeout().reconnection;
-			if( retry_delay > 0 )
-			{
-				_retry = startTimer( retry_delay );
-			}
-
             HbError( "Can not connect to network." );
 			return false;
 		}
@@ -167,7 +164,11 @@ bool HbAbstractClient::send(const HbNetworkContract * contract)
 void HbAbstractClient::timerEvent(QTimerEvent * event)
 {
 	Q_UNUSED(event);
-	connectToNetwork();
+
+    if( !connectToNetwork() )
+    {
+        HbError( "Can not connect to network." );
+    }
 }
 
 
@@ -178,8 +179,6 @@ void HbAbstractClient::onSocketConnected()
 		killTimer(_retry);
 		_retry = 0;
 	}
-
-    HbAbstractSocket * socket = q_assert_ptr( currentConnection() );
 
 	emit connected();
 
@@ -242,14 +241,18 @@ void HbAbstractClient::onSocketContractReceived( const HbNetworkContract & contr
 
 void HbAbstractClient::onSocketDisconnected()
 {
-	_ready = false;
-	emit disconnected();
+    qint16 retry_delay = configuration().timeout().reconnection;
+    if( retry_delay > 0 )
+    {
+        killTimer( _retry );
+        _retry = startTimer( retry_delay );
+    }
+    else
+    {
+        deleteSocket();
+    }
 
-    if ( !connectToNetwork() )
-	{
-		if (configuration().timeout().reconnection > 0)
-        {
-			_retry = startTimer(configuration().timeout().reconnection);
-        }
-	}
+    _ready = false;
+
+    emit disconnected();
 }

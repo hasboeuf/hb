@@ -86,7 +86,7 @@ namespace hb
 			//virtual void incomingConnection(HbAbstractSocket * socket); to handler
 			virtual bool disconnectFromNetwork( quint16 uuid ) = 0;
 
-			virtual void reset() = 0;
+            virtual void reset() = 0;
 
 		private:
 

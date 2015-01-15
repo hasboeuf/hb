@@ -99,12 +99,12 @@ bool HbTcpServer::isListening() const
     HbAbstractServer::incomingConnection( socket );
 }*/
 
-bool HbTcpServer::disconnectFromNetwork( HbAbstractSocket * socket )
+bool HbTcpServer::disconnectFromNetwork(quint16 uuid )
 {
-    HbTcpSocket * disconnected = q_dynamic_cast( HbTcpSocket *, socket );
-    return q_assert_ptr( disconnected )->disconnectFromHost();
+    return true;
+    //HbTcpSocket * disconnected = q_dynamic_cast( HbTcpSocket *, uuid );
+    //return q_assert_ptr( disconnected )->disconnectFromHost();
 }
-
 
 void HbTcpServer::onNewConnection(qint32 socket_descriptor)
 {

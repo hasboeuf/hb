@@ -47,6 +47,7 @@ namespace hb
 
 			virtual bool connectToNetwork() = 0;
 			virtual bool disconnectFromNetwork() = 0;
+            virtual void deleteSocket() = 0;
 
 			virtual HbAbstractSocket * pendingConnection() = 0;
 			virtual HbAbstractSocket * currentConnection() const = 0;

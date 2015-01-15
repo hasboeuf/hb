@@ -34,6 +34,7 @@ namespace hb
 
             bool connectToNetwork();
             bool disconnectFromNetwork();
+            void deleteSocket();
 
             HbAbstractSocket * pendingConnection();
             HbAbstractSocket * currentConnection() const;

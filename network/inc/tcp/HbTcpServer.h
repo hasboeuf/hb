@@ -45,19 +45,20 @@ namespace hb
             virtual const HbTcpServerConfig & configuration() const final;
 
         private :
-			virtual void reset();
-            bool connectToNetwork();
-            void disconnectFromNetwork();
-            bool isListening() const;
+            virtual bool connectToNetwork();
+            virtual void disconnectFromNetwork();
+            virtual bool isListening() const;
 
             //void incomingConnection( HbAbstractSocket * socket ); to handler
-            bool disconnectFromNetwork( HbAbstractSocket * socket );
+            bool disconnectFromNetwork( quint16 uuid );
+
+            virtual void reset() final;
 
         private callbacks:
-			void onNewConnection(qint32 socket_descriptor);
+            void onNewConnection( qint32 socket_descriptor );
 
 		signals:
-			void newConnection(qint32 socket_descriptor);
+            void newConnection( qint32 socket_descriptor );
 
         private :
 

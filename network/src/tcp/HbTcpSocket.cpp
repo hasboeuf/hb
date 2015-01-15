@@ -8,8 +8,8 @@
 using namespace hb::network;
 
 
-HbTcpSocket::HbTcpSocket(QTcpSocket * device) :
-	HbAbstractSocket(device)
+HbTcpSocket::HbTcpSocket( QTcpSocket * device ) :
+    HbAbstractSocket( device )
 {
     q_assert_ptr( device );
 	_device = device;

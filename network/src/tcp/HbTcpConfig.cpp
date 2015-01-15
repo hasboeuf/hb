@@ -30,10 +30,10 @@ HbTcpConfig::HbTcpConfig(const HbTcpConfig & config) :
 
 HbTcpConfig & HbTcpConfig::operator =(const HbTcpConfig & config)
 {
-	if (this != &config)
+    if (this != &config)
 	{
 		HbNetworkConfig::operator =(config);
-		setTimeout(timeout());
+        setTimeout( timeout() );
 
 		_address = config._address;
 		_port    = config._port;

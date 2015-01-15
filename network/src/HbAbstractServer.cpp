@@ -92,7 +92,11 @@ bool HbAbstractServer::leave()
 		//qDeleteAll(_connected);
 
 
-	}
+    }
+    else
+    {
+        HbInfo( "Server already stopped." );
+    }
 
 	return true;
 }

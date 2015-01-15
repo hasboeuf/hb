@@ -70,11 +70,16 @@ bool HbTcpClient::disconnectFromNetwork()
 	}
     else
     {
-        _socket->deleteLater();
-        _socket = nullptr;
+        deleteSocket();
     }
 
     return ( !_socket );
+}
+
+void HbTcpClient::deleteSocket()
+{
+    delete _socket;
+    _socket = nullptr;
 }
 
 

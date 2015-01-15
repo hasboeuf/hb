@@ -12,6 +12,7 @@
 // Qt
 #include <QtNetwork/QAbstractSocket>
 #include <QtCore/QQueue>
+#include <QtCore/QPointer>
 // Hb
 #include <HbGlobal.h>
 
@@ -75,7 +76,7 @@ namespace hb
 
 		private:
 			quint16 _uuid;
-            QIODevice * _device;
+            QPointer< QIODevice > _device;
 
 			quint32 _bytesPending;
 			QQueue< QByteArray > _packets;
