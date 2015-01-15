@@ -18,8 +18,4 @@ LogViewerMainWindow::LogViewerMainWindow( QWidget * parent ) :
 	setupUi(this);
 
 	q_assert(HbLogService::outputs()->addGuiOutput(HbLogService::outputs()->unusedId(), qw_log->logNotifier()));
-
-	HbLogBegin();
-
-	HbLogEnd();
 }
