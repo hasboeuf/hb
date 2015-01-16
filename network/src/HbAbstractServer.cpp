@@ -213,7 +213,7 @@ bool HbAbstractServer::send(const HbNetworkContract * contract)
 	return mHandlerBySocketId.keys( );
 }*/
 
-bool HbAbstractServer::isConnected( quint16 uuid ) const
+bool HbAbstractServer::isUuidConnected( quint16 uuid ) const
 {
 	return mHandlerBySocketId.contains( uuid );
 }

@@ -36,14 +36,14 @@ HbTcpServer * HbTcpSocketHandler::server() const
 
 void HbTcpSocketHandler::init()
 {
-
+    HbSocketHandler::init();
 }
 
 void HbTcpSocketHandler::onNewPendingConnection( qint32 socket_descriptor )
 {
     HbLogBegin();
 
-    if(!canHandleNewConnection())
+    if( !canHandleNewConnection() )
     {
         HbError("SocketHandler#%d: Cannot handle socket#%d.", mId, socket_descriptor);
         // Creating a volatile socket to disconnect the descriptor.
@@ -51,13 +51,13 @@ void HbTcpSocketHandler::onNewPendingConnection( qint32 socket_descriptor )
         socket->setSocketDescriptor(socket_descriptor);
 		socket->close();
         delete socket;
+
         HbLogEnd();
-		return;
-        //return HbNetworkError::TCPSOCKETHANDLER_FULL;
+        return;
 	}
 
-	QTcpSocket* device = q_assert_ptr( new QTcpSocket() );
-	q_assert( device->setSocketDescriptor(socket_descriptor) );
+    QTcpSocket * device = q_assert_ptr( new QTcpSocket() );
+    q_assert( device->setSocketDescriptor( socket_descriptor ) );
 
     HbTcpSocket * socket = new HbTcpSocket( device );
 
@@ -66,12 +66,9 @@ void HbTcpSocketHandler::onNewPendingConnection( qint32 socket_descriptor )
 	socket->setSocketOption( QAbstractSocket::KeepAliveOption, options.testFlag( HbTcpConfig::SocketOption::KeepAlive ) );
 	socket->setSocketOption( QAbstractSocket::MulticastLoopbackOption, options.testFlag( HbTcpConfig::SocketOption::MulticastLoopback ) );
 
-	storeNewSocket( socket );
+    storeNewSocket( socket, socket_descriptor );
 
-	HbInfo( "SocketHandler#%d: New socket#%d added.", mId, socket_descriptor );
-
-	emit socketConnected( socket_descriptor, socket->uuid() ); // To Server.
+    HbInfo( "HbTcpSocketHandler#%d: New socket#%d added.", mId, socket_descriptor );
 
     HbLogEnd();
-	//return HbNetworkError::G_SUCCESS;
 }

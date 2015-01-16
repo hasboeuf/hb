@@ -64,7 +64,7 @@ namespace hb
 			//virtual bool reply(int sender, const HbNetworkContract * contract);
 			//virtual bool forward(int receiver, HbNetworkContract * contract);
 
-			virtual bool isConnected( quint16 uuid ) const final;
+            virtual bool isUuidConnected( quint16 uuid ) const final;
 
 			//virtual const HbServerConfig & configuration() const = 0;
 			virtual const HbServerConfig & configuration() const; // SUB

@@ -46,7 +46,7 @@ namespace hb
 
             virtual quint16  id() const final;
             virtual bool canHandleNewConnection() final;
-			virtual bool storeNewSocket( HbAbstractSocket * socket ) final;
+            virtual bool storeNewSocket(HbAbstractSocket * socket , qint32 previous_uuid ) final;
 
         protected:
             quint16            mId;
@@ -62,18 +62,18 @@ namespace hb
 
         public callbacks:
             // From QThread
-            virtual void init() = 0;
+            virtual void init();
 
 			// From Server
 			virtual void onNewPendingConnection( qint32 socket_descriptor ) = 0;
-			virtual void onDisconnectRequest( quint16 uuid );
+            virtual void onDisconnectionRequest( quint16 uuid );
 			// From Socket
 			virtual void onSocketReadyPacket();
 			virtual void onSocketDisconnected();
 
 		signals:
             // To Server.
-            void socketConnected( qint32 socket_descriptor, quint16 socket_id );
+            void socketConnected( qint32 socket_previous_id, quint16 socket_id );
 			void socketDisconnected( quint16 socket_id );
 			void socketContractReceived( const HbNetworkContract& contract );
         };

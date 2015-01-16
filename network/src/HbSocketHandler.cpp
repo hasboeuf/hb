@@ -19,7 +19,7 @@ using namespace hb::log;
 using namespace hb::network;
 
 HbSocketHandler::HbSocketHandler( HbAbstractServer * server ) :
-	QObject( 0 )
+    QObject( nullptr )
 {
     HbLogBegin();
 
@@ -60,8 +60,9 @@ bool HbSocketHandler::canHandleNewConnection()
 
     QMutexLocker locker( &mSocketMutex );
 
-	if (!mpServer->configuration().isThreaded() ||
-		(mpServer->configuration().isThreaded() &&
+    bool is_threaded = mpServer->configuration().isThreaded();
+    if( !is_threaded ||
+        (is_threaded &&
 		 mState == THREADED &&
 		 mSocketById.size() < mpServer->configuration().maxUsersPerThread() ) )
 	{
@@ -78,7 +79,7 @@ bool HbSocketHandler::canHandleNewConnection()
 	return false;
 }
 
-bool HbSocketHandler::storeNewSocket( HbAbstractSocket * socket )
+bool HbSocketHandler::storeNewSocket( HbAbstractSocket * socket, qint32 previous_uuid )
 {
     QMutexLocker locker( &mSocketMutex );
 
@@ -98,12 +99,26 @@ bool HbSocketHandler::storeNewSocket( HbAbstractSocket * socket )
 
              }, Qt::UniqueConnection );
 
+    emit socketConnected( previous_uuid, socket->uuid() ); // To Server.
+
 	return true;
 }
 
-void HbSocketHandler::onDisconnectRequest( quint16 uuid )
+void HbSocketHandler::onDisconnectionRequest( quint16 uuid )
 {
-	// TODO disconnect socket.
+    QMutexLocker locker( &mSocketMutex );
+
+    HbAbstractSocket * socket = mSocketById.value( uuid, nullptr );
+    if( socket )
+    {
+        // socket->leave();
+
+        // onSocketDisconnected handles the rest.
+    }
+    else
+    {
+        HbWarning( "Socket #%d does not exist for hander #%d.", uuid, mId );
+    }
 }
 
 void HbSocketHandler::onSocketReadyPacket()
@@ -166,16 +181,15 @@ void HbSocketHandler::onSocketDisconnected()
 
     HbInfo("SocketPool%d: Socket#%d disconnected.", mId, socket->uuid() );
 
-	quint16 id = socket->uuid();
+    quint16 uuid = socket->uuid();
 
 	mIdBySocket.remove( socket );
-	mSocketById.remove( id );
+    mSocketById.remove( uuid );
 
-    disconnect( socket, nullptr, this, nullptr );
-
+    socket->disconnect();
     socket->deleteLater();
 
-	emit socketDisconnected( id );
+    emit socketDisconnected( uuid );
 
     HbLogEnd();
 
