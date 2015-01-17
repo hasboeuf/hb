@@ -174,6 +174,8 @@ void HbSocketHandler::onSocketDisconnected()
 {
     HbLogBegin();
 
+    QMutexLocker locker( &mSocketMutex );
+
 	HbAbstractSocket * socket = q_assert_ptr( dynamic_cast<HbAbstractSocket *>(sender() ) );
 
 	q_assert( mIdBySocket.contains( socket ) );
@@ -190,6 +192,12 @@ void HbSocketHandler::onSocketDisconnected()
     socket->deleteLater();
 
     emit socketDisconnected( uuid );
+
+
+    if( mSocketById.isEmpty() )
+    {
+        emit handlerIdled();
+    }
 
     HbLogEnd();
 

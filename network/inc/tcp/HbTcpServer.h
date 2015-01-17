@@ -19,13 +19,13 @@ namespace hb
 		{
 			Q_OBJECT
 			Q_DISABLE_COPY( TcpServer )
-			Q_FRIEND_CLASS( HbTcpServer )
+            Q_FRIEND_CLASS( HbTcpServer )
 
 		protected:
 			TcpServer(QObject * parent = 0);
-			void incomingConnection(qint32 socket_descriptor);
+            void incomingConnection( qint32 socket_descriptor );
 		signals:
-			void newConnection(qint32 socket_descriptor);
+            void newConnection( qint32 socket_descriptor );
 		};
 
 		class HB_NETWORK_DECL HbTcpServer : public HbAbstractServer
@@ -62,15 +62,8 @@ namespace hb
 
         private :
 
-            TcpServer * _server;
+            TcpServer * _device;
 			HbTcpServerConfig _config;
-
-			QHash<quint16, HbTcpSocketHandler * > mHandlerBySocketId;
-			QHash<quint16, HbTcpSocketHandler * > mHandlerById;
-
-			// Threaded case.
-			QHash< QThread *, HbTcpSocketHandler * > mHandlerThreads;
-
 		};
 	}
 }

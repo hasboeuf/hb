@@ -31,6 +31,10 @@ namespace hb
 			Q_DISABLE_COPY( HbSocketHandler )
 			Q_FRIEND_CLASS( HbAbstractServer )
 
+        public:
+            virtual quint16  id() const final;
+            virtual bool canHandleNewConnection() final;
+
         protected:
 			enum HandlerState
 			{
@@ -44,8 +48,6 @@ namespace hb
 			//virtual HbAbstractServer * server( ) const = 0;
 			virtual HbAbstractServer * server() const;
 
-            virtual quint16  id() const final;
-            virtual bool canHandleNewConnection() final;
             virtual bool storeNewSocket(HbAbstractSocket * socket , qint32 previous_uuid ) final;
 
         protected:
@@ -73,8 +75,9 @@ namespace hb
 
 		signals:
             // To Server.
-            void socketConnected( qint32 socket_previous_id, quint16 socket_id );
-			void socketDisconnected( quint16 socket_id );
+            void handlerIdled          ();
+            void socketConnected       ( qint32 socket_previous_id, quint16 socket_id );
+            void socketDisconnected    ( quint16 socket_id );
 			void socketContractReceived( const HbNetworkContract& contract );
         };
     }
