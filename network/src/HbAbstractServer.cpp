@@ -66,10 +66,8 @@ bool HbAbstractServer::leave()
     if ( isListening() )
 	{
 		disconnectFromNetwork();
-
+        _ready = false;
 		emit serverDisconnected( _uuid );
-
-		_ready = false;
 
         HbInfo( "Server stopped." );
     }
@@ -78,10 +76,9 @@ bool HbAbstractServer::leave()
         HbInfo( "Server already stopped." );
     }
 
-    HbInfo( "Cleaning server..." );
-    _pending.clear();
+    reset();
 
-    QHash< quint32, HbSocketHandler * >::iterator it = mHandlerBySocketId.begin();
+    /*QHash< quint32, HbSocketHandler * >::iterator it = mHandlerBySocketId.begin();
     while( it != mHandlerBySocketId.end() )
     {
         quint16 socket_uuid = it.key();
@@ -90,8 +87,7 @@ bool HbAbstractServer::leave()
         leave( socket_uuid ); // TODO delete thread etc.
 
         ++it;
-    }
-
+    }*/
 
 
 		// TODO
@@ -125,7 +121,7 @@ bool HbAbstractServer::leave( quint16 uuid )
     q_assert_ptr( handler );
 
     bool result = false;
-    q_assert( QMetaObject::invokeMethod(handler, "onDisconnectionRequest", Q_ARG( quint16, uuid ) ) );
+    q_assert( QMetaObject::invokeMethod( handler, "onDisconnectionRequest", Q_ARG( quint16, uuid ) ) );
     return result;
 
     //QMetaObject::invokeMethod(	handler,
@@ -160,7 +156,7 @@ bool HbAbstractServer::leave( quint16 uuid )
 
 }
 
-bool HbAbstractServer::ready() const
+bool HbAbstractServer::isReady() const
 {
 	return _ready;
 }
@@ -235,6 +231,23 @@ bool HbAbstractServer::isUuidConnected( quint16 uuid ) const
 const HbServerConfig & HbAbstractServer::configuration() const // SUB
 {
 	return _config;
+}
+
+void HbAbstractServer::reset()
+{
+    HbInfo( "Reset server..." );
+
+    _pending.clear();
+    foreach( HbSocketHandler * handler, mHandlerById.values() )
+    {
+        q_assert_ptr( handler );
+        HbInfo( "Deleting handler #%d", handler->id() );
+        handler->disconnect();
+        handler->deleteLater();
+    }
+    _pending.clear();
+    mHandlerById.clear();
+    mHandlerBySocketId.clear();
 }
 
 bool HbAbstractServer::send(const HbNetworkPacket & packet)
@@ -381,6 +394,11 @@ bool HbAbstractServer::send(const HbNetworkPacket & packet)
 
 void HbAbstractServer::onSocketConnected( qint32 socket_descriptor, quint16 socket_uuid )
 {
+    if( !_ready )
+    {
+        HbInfo( "Server not ready, no treatments for onSocketConnected()." );
+        return;
+    }
     HbSocketHandler * handler = qobject_cast< HbSocketHandler * >( sender() );
     q_assert_ptr( handler );
     q_assert( _pending.contains( socket_descriptor ) );
@@ -392,6 +410,11 @@ void HbAbstractServer::onSocketConnected( qint32 socket_descriptor, quint16 sock
 
 void HbAbstractServer::onSocketDisconnected(quint16 socket_uuid )
 {
+    if( !_ready )
+    {
+        HbInfo( "Server not ready, no treatments for onSocketDisconnected()." );
+        return;
+    }
     HbSocketHandler * handler = qobject_cast< HbSocketHandler * >( sender() );
     q_assert_ptr( handler );
     q_assert( mHandlerBySocketId.value( socket_uuid ) == handler );
@@ -401,11 +424,21 @@ void HbAbstractServer::onSocketDisconnected(quint16 socket_uuid )
 
 void HbAbstractServer::onSocketContractReceived( const HbNetworkContract& contract )
 {
+    if( !_ready )
+    {
+        HbInfo( "Server not ready, no treatments for onSocketContractReceived()." );
+        return;
+    }
     emit socketContractReceived( contract );
 }
 
 void HbAbstractServer::onHandlerIdled()
 {
+    if( !_ready )
+    {
+        HbInfo( "Server not ready, no treatments for onHandlerIdled()." );
+        return;
+    }
     HbSocketHandler * handler = qobject_cast< HbSocketHandler * >( sender() );
     q_assert_ptr( handler );
 

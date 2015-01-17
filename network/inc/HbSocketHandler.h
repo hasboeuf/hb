@@ -51,6 +51,9 @@ namespace hb
             virtual bool storeNewSocket(HbAbstractSocket * socket , qint32 previous_uuid ) final;
 
         protected:
+            virtual void reset();
+
+        protected:
             quint16            mId;
 			HandlerState       mState;
 
@@ -62,16 +65,17 @@ namespace hb
 		private:
 			HbAbstractServer * mpServer; // SUB
 
-        public callbacks:
+        public slots:
             // From QThread
             virtual void init();
-
-			// From Server
-			virtual void onNewPendingConnection( qint32 socket_descriptor ) = 0;
+            // From Server
+            virtual void onNewPendingConnection( qint32 socket_descriptor ) = 0;
             virtual void onDisconnectionRequest( quint16 uuid );
+            virtual void onServerLeft();
 			// From Socket
 			virtual void onSocketReadyPacket();
 			virtual void onSocketDisconnected();
+
 
 		signals:
             // To Server.

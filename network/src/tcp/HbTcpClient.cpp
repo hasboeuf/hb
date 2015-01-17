@@ -78,7 +78,8 @@ bool HbTcpClient::disconnectFromNetwork()
 
 void HbTcpClient::deleteSocket()
 {
-    delete _socket;
+    _socket->disconnect();
+    _socket->deleteLater();
     _socket = nullptr;
 }
 

@@ -58,7 +58,7 @@ namespace hb
             virtual bool join () final;
 			virtual bool leave() final;
 			virtual bool leave( quint16 uuid ) final;
-			virtual bool ready() const final;
+            virtual bool isReady() const final;
 
             virtual bool send( const HbNetworkContract * contract );
 			//virtual bool reply(int sender, const HbNetworkContract * contract);
@@ -80,7 +80,7 @@ namespace hb
 			//virtual void incomingConnection(HbAbstractSocket * socket); to handler
 			virtual bool disconnectFromNetwork( quint16 uuid ) = 0;
 
-            virtual void reset() = 0;
+            virtual void reset();
 
 		private:
             bool send( const HbNetworkPacket & packet );
@@ -110,9 +110,6 @@ namespace hb
 			QList< quint32 > _pending; // Socket descriptors not instanciated.
             QHash< quint32, HbSocketHandler * > mHandlerBySocketId;
             QHash< quint16, HbSocketHandler * > mHandlerById;
-
-            // Threaded case.
-            //QHash< QThread *, HbTcpSocketHandler * > mHandlerThreads; TODO NO NEED ?
 		};
 	}
 }

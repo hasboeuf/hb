@@ -29,6 +29,7 @@ namespace hb
 			virtual HbTcpServer * server( ) const;
 
 			virtual void init();
+            virtual void reset();
 
         public slots:
 			virtual void onNewPendingConnection( qint32 socket_descriptor );

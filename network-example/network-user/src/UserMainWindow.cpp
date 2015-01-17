@@ -91,7 +91,7 @@ void UserMainWindow::onStartClicked()
 
     HbNetworkConfig::Timeout timeout;
     timeout.connection    = 10;
-    timeout.reconnection  = 0;
+    timeout.reconnection  = 2000;
     timeout.disconnection = 10;
 
     config.setTimeout( timeout );

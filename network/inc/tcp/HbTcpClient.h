@@ -39,14 +39,11 @@ namespace hb
             HbAbstractSocket * pendingConnection();
             HbAbstractSocket * currentConnection() const;
 
-
         private :
 
             HbTcpSocket * _socket;
             HbTcpConfig _config;
 		};
-
-
 	}
 }
 

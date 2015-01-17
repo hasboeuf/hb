@@ -55,6 +55,7 @@ namespace hb
             virtual void reset() final;
 
         private callbacks:
+            // From device.
             void onNewConnection( qint32 socket_descriptor );
 
 		signals:

@@ -32,6 +32,7 @@ HbSocketHandler::HbSocketHandler( HbAbstractServer * server ) :
 
 HbSocketHandler::~HbSocketHandler()
 {
+    reset();
 }
 
 HbAbstractServer * HbSocketHandler::server() const
@@ -52,6 +53,21 @@ void HbSocketHandler::init()
 quint16 HbSocketHandler::id() const
 {
     return mId;
+}
+
+void HbSocketHandler::reset()
+{
+    HbInfo( "Reset socket handler #%d", mId );
+    QMutexLocker locker( &mSocketMutex );
+
+    foreach( HbAbstractSocket * socket, mSocketById.values() )
+    {
+        HbInfo( "Delete socket #%d.", socket->uuid() );
+        delete socket;
+    }
+
+    mSocketById.clear();
+    mIdBySocket.clear();
 }
 
 bool HbSocketHandler::canHandleNewConnection()
@@ -104,6 +120,8 @@ bool HbSocketHandler::storeNewSocket( HbAbstractSocket * socket, qint32 previous
 	return true;
 }
 
+
+
 void HbSocketHandler::onDisconnectionRequest( quint16 uuid )
 {
     QMutexLocker locker( &mSocketMutex );
@@ -119,6 +137,12 @@ void HbSocketHandler::onDisconnectionRequest( quint16 uuid )
     {
         HbWarning( "Socket #%d does not exist for hander #%d.", uuid, mId );
     }
+}
+
+void HbSocketHandler::onServerLeft()
+{
+    HbInfo( "Server left -> deleting this handler #%d", mId );
+    reset();
 }
 
 void HbSocketHandler::onSocketReadyPacket()

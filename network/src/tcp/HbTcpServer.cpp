@@ -73,7 +73,7 @@ const HbTcpServerConfig & HbTcpServer::configuration() const
 
 void HbTcpServer::reset()
 {
-    // TODO disconnected everybody, delete handlers, etc.
+    HbAbstractServer::reset();
 }
 
 bool HbTcpServer::connectToNetwork()
@@ -116,6 +116,12 @@ bool HbTcpServer::disconnectFromNetwork(quint16 uuid )
 void HbTcpServer::onNewConnection(qint32 socket_descriptor)
 {
 	HbLogBegin();
+
+    if( !isReady() )
+    {
+        HbInfo( "Server not ready, no treatments for onNewConnection()." );
+        return;
+    }
 
     HbSocketHandler * handler = nullptr;
 

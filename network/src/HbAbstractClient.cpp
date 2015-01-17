@@ -77,7 +77,7 @@ bool HbAbstractClient::leave()
 	return true;
 }
 
-bool HbAbstractClient::ready() const
+bool HbAbstractClient::isReady() const
 {
 	return _ready;
 }

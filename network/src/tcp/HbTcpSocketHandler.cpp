@@ -27,6 +27,7 @@ HbTcpSocketHandler::HbTcpSocketHandler( HbTcpServer * server ) :
 
 HbTcpSocketHandler::~HbTcpSocketHandler()
 {
+    reset();
 }
 
 HbTcpServer * HbTcpSocketHandler::server() const
@@ -37,6 +38,11 @@ HbTcpServer * HbTcpSocketHandler::server() const
 void HbTcpSocketHandler::init()
 {
     HbSocketHandler::init();
+}
+
+void HbTcpSocketHandler::reset()
+{
+    HbSocketHandler::reset();
 }
 
 void HbTcpSocketHandler::onNewPendingConnection( qint32 socket_descriptor )

@@ -28,9 +28,9 @@ HbAbstractSocket::~HbAbstractSocket()
 {
     if ( !_device.isNull() )
 	{
-        _device->disconnect(); // Disconnect all signals.
-        _device->close();
-        _device->deleteLater();
+        _device.data()->disconnect(); // Disconnect all signals.
+        _device.data()->close();
+        _device.data()->deleteLater();
 	}
 }
 
@@ -76,9 +76,9 @@ bool HbAbstractSocket::packetAvailable() const
 
 QString HbAbstractSocket::errorString() const
 {
-    if( !_device )
+    if( !_device.isNull() )
     {
-        return _device->errorString();
+        return _device.data()->errorString();
     }
     else
     {
@@ -145,6 +145,8 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
 
 qint64 HbAbstractSocket::writeBuffer(const QByteArray & buffer) const
 {
+    q_assert( !_device.isNull() );
+
     if( buffer.isEmpty())
     {
         HbWarning( "Try to write an empty buffer." );

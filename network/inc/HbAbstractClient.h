@@ -32,7 +32,7 @@ namespace hb
 
 			virtual bool join () final;
 			virtual bool leave() final;
-			virtual bool ready() const final;
+            virtual bool isReady() const final;
 
 			virtual bool send(const HbNetworkContract * contract);
 			//virtual bool reply(int sender, const HbNetworkContract * contract);
