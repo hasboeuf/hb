@@ -3,6 +3,8 @@
 #include <QtCore/QDebug>
 #include <QtCore/QSettings>
 #include <QtXml/QDomDocument>
+// Hb
+#include <HbLogService.h>
 // Local
 #include <LogViewerConfig.h>
 
@@ -213,13 +215,7 @@ void LogViewerConfig::loadSettings()
 
 	// Project folders
 	mProjectFolders.clear();
-	settings.beginGroup(QStringLiteral("general/paths"));
-	QStringList folders = settings.childKeys();
-	foreach(QString folder, folders)
-	{
-		mProjectFolders.append(settings.value(folder).toString());
-	}
-	settings.endGroup();
+    mProjectFolders = settings.value( QStringLiteral( "general/paths" ) ).toStringList();
 
 	// Editors
     mEditorDefault = settings.value( QStringLiteral( "editors/default" ) ).toString();
