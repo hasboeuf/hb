@@ -110,7 +110,7 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
             {
                 QByteArray buffer = stream.device()->read( expected );
 
-				if (buffer.isEmpty())
+                if ( buffer.isEmpty() )
 				{
 					bytesRead = -1;
 				}
@@ -125,7 +125,7 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
 			}
 		}
 
-		if (bytesRead < 0)
+        if ( bytesRead < 0 )
 		{
             HbWarning( "No bytes read => packets cleared." );
 			stream.device()->readAll();

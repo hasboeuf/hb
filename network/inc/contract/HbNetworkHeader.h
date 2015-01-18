@@ -22,16 +22,11 @@ namespace hb
 		{
 			Q_DISABLE_COPY(HbNetworkHeader)
 
-		public:
-
-			static const HbNetworkContract::Code REGISTRATION = 0;
-
-
-		public:
+        public:
 
 			HbNetworkHeader();
-			HbNetworkHeader(quint16 sender);
-			HbNetworkHeader(quint16 sender, const HbNetworkContract * contract);
+            HbNetworkHeader( quint16 sender );
+            HbNetworkHeader( quint16 sender, const HbNetworkContract * contract );
 			virtual ~HbNetworkHeader() = default;
 
 			quint16 sender() const;

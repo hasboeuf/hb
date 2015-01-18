@@ -67,8 +67,8 @@ namespace hb
 			HbAbstractSocket() = delete;
 			HbAbstractSocket(QIODevice * device);
 
-			virtual qint64 readStream (QDataStream & stream) final;
-            virtual qint64 writeBuffer(const QByteArray & buffer) const final;
+            virtual qint64 readStream ( QDataStream & stream ) final;
+            virtual qint64 writeBuffer( const QByteArray & buffer ) const final;
 
         protected callbacks :
             // From children device.

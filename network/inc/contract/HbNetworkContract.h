@@ -27,29 +27,33 @@ namespace hb
 		class HB_NETWORK_DECL HbNetworkContract
 		{
 			Q_GADGET
-			Q_DISABLE_COPY(HbNetworkContract)
-			Q_FRIEND_CLASS(HbAbstractNetwork)
-			Q_FRIEND_CLASS(HbNetworkHeader)
+            Q_DISABLE_COPY( HbNetworkContract )
+            Q_FRIEND_CLASS( HbAbstractNetwork )
+            Q_FRIEND_CLASS( HbNetworkHeader )
 
 		public:
 
-			typedef quint16 Service;
-			typedef quint16 Code;
-
-			enum class RoutingScheme : qint16
+            enum RoutingScheme : quint8
 			{
-				Unicast = 0,
-				Multicast = 1,
-				Broadcast = 2
+                UNICAST = 0,
+                MULTICAST = 1,
+                BROADCAST = 2
 			};
 
-		public:
+            enum Service : quint16
+            {
+                SERVICE_UNDEFINED = 0,
+                SERVICE_UPDATE = 1,
+                SERVICE_AUTH = 2,
+                SERVICE_TIMEOUT = 3,
 
-			static const Service UNDEFINED = -1;
-			static const Service USER = 255;
-			static const Service MAXUSER = USHRT_MAX;
+                SERVICE_USER = 255
+            };
 
-			static const Code UNKNOWN = -1;
+            enum Code : quint16
+            {
+                CODE_UNDEFINED = 0
+            };
 
 
 		public:
@@ -57,13 +61,13 @@ namespace hb
 			virtual Service service() const final;
 			virtual Code code() const final;
 
-			virtual void setRouting(RoutingScheme routing);
+            virtual void setRouting( RoutingScheme routing );
 
-			virtual bool addReceiver(quint16 receiver);
-			virtual bool setReceiver(quint16 receiver);
+            virtual bool addReceiver( quint16 receiver );
+            virtual bool setReceiver( quint16 receiver );
 			virtual void resetReceivers();
 
-			virtual bool setReply(HbNetworkContract * reply);
+            virtual bool setReply( HbNetworkContract * reply );
 			virtual HbNetworkContract * reply() const;
 
 			template< typename T >

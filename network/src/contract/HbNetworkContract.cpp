@@ -1,11 +1,13 @@
+// Hb
+#include <HbLogService.h>
 // Local
 #include <contract/HbNetworkContract.h>
 
 HbNetworkContract::HbNetworkContract(Service service, Code code)
 {
 	_service = service;
-	_code = (_service != UNDEFINED) ? code : UNKNOWN;
-	_routing = RoutingScheme::Unicast;
+    _code = code;
+    _routing = RoutingScheme::UNICAST;
 
 	_reply = nullptr;
 }
@@ -30,78 +32,74 @@ HbNetworkContract::Code HbNetworkContract::code() const
 void HbNetworkContract::setRouting(RoutingScheme routing)
 {
 	if (_routing != routing)
-	if (_service != UNDEFINED)
 	{
 		_routing = routing;
 
-		if (_routing == RoutingScheme::Broadcast)
+        if (_routing == RoutingScheme::BROADCAST )
 		{
 			if (_receivers.size() > 0)
-				qWarning("HbNetworkContract::setRouting() -> predefined receivers will be cleared");
+            {
+                HbWarning( "Predefined receivers will be cleared." );
+            }
 			
 			_receivers.clear();
 		}
 
-		if (_routing == RoutingScheme::Unicast)
-		if (_receivers.size() > 1)
-		{
-			int receiver = *_receivers.begin();
-		
-			_receivers.clear();
-			_receivers.insert(receiver);
-		}
+        if (_routing == RoutingScheme::UNICAST)
+        {
+            if (_receivers.size() > 1)
+            {
+                HbWarning( "Only the first receiver is kept." );
+
+                int receiver = *_receivers.begin();
+
+                _receivers.clear();
+                _receivers.insert(receiver);
+            }
+        }
 	}
 }
 
 HbNetworkContract::RoutingScheme HbNetworkContract::routing() const
 {
-	return ((_routing == RoutingScheme::Multicast) /*&& _receivers.isEmpty()*/) ?
-		RoutingScheme::Broadcast : _routing;
+    if( _routing == RoutingScheme::MULTICAST && _receivers.isEmpty() )
+    {
+        return RoutingScheme::BROADCAST;
+    }
+
+    return _routing;
 }
 
 
-bool HbNetworkContract::addReceiver(quint16 receiver)
+bool HbNetworkContract::addReceiver( quint16 receiver )
 {
-	if (_service != UNDEFINED)
-	{
-		if (!receiver)
-		{
-			qWarning("HbNetworkContract::addReceiver() -> set a null receiver is not allowed");
-			return false;
-		}
+    if( _routing == RoutingScheme::UNICAST )
+    {
+        if (!_receivers.isEmpty())
+        {
+            HbWarning( "A receiver is already defined in unicast mode." );
+            return false;
+        }
 
-		switch (_routing)
-		{
-		case RoutingScheme::Unicast:
-
-			if (!_receivers.isEmpty())
-			{
-				qWarning("HbNetworkContract::addReceiver() -> a receiver is already defined in unicast mode");
-				return false;
-			}
-
-			_receivers.insert(receiver);
-			return true;
-
-		case RoutingScheme::Multicast:
-
-			_receivers.insert(receiver);
-			return true;
-
-		default:
-
-			qWarning("HbNetworkContract::addReceiver() -> unable to add a receiver in broadcast mode");
-			return false;
-		}
-	}
-
-	return false;
+        _receivers.insert(receiver);
+        return true;
+    }
+    else if( _routing == RoutingScheme::MULTICAST )
+    {
+        _receivers.insert(receiver);
+        return true;
+    }
+    else
+    {
+        HbWarning( "Unable to add a receiver in broadcast mode." );
+        return false;
+    }
 }
 
 bool HbNetworkContract::setReceiver( quint16 receiver )
 {
-	_receivers.clear();
-	return addReceiver(receiver);
+    resetReceivers();
+    return addReceiver( receiver );
 }
 
 void HbNetworkContract::resetReceivers()
@@ -115,13 +113,13 @@ const QSet< quint16 > & HbNetworkContract::receivers() const
 }
 
 
-bool HbNetworkContract::setReply(HbNetworkContract * reply)
+bool HbNetworkContract::setReply( HbNetworkContract * reply )
 {
-	if (_reply != reply)
+    if ( reply && ( _reply != reply ) )
 	{
-		if (reply && (_routing != RoutingScheme::Unicast))
+        if ( _routing != RoutingScheme::UNICAST )
 		{
-			qWarning("HbNetworkContract::setReply() -> reply only supported in unicast mode");
+            HbWarning( "Reply only supported in unicast mode." );
 			return false;
 		}
 

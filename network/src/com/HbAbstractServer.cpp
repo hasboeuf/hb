@@ -166,7 +166,7 @@ bool HbAbstractServer::send(const HbNetworkContract * contract)
 {
 	if( !contract )
 	{
-		qWarning( "HbAbstractServer::send() -> try to send a null contract" );
+        HbWarning( "Try to send a null contract." );
 	}
 
 	else

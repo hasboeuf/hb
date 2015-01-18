@@ -43,36 +43,33 @@ namespace hb
 				virtual ~Exchanges();
 
 				template< typename T >
-				inline T * plug()
+                inline bool plug()
 				{
-					T * reference = q_check_ptr(new T());
-					HbNetworkContract * contract = q_dynamic_cast(HbNetworkContract *, reference);
+                    T * reference = q_check_ptr( new T() );
+                    HbNetworkContract * contract = dynamic_cast< HbNetworkContract * >( reference );
+                    if( !contract )
+                    {
+                        return false;
+                    }
 
-					q_assert(contract->service() < HbNetworkContract::USER);
-					return q_dynamic_cast(T *, add(contract));
+                    return add( contract );
 				}
 
 				template< typename T >
-				inline void unplug()
+                inline bool unplug()
 				{
-					T * reference = q_check_ptr(new T());
-					remove(q_dynamic_cast(HbNetworkContract *, reference));
+                    T * reference = q_check_ptr( new T() );
+                    return remove( dynamic_cast< HbNetworkContract * >( reference ) );
 				}
 
-				bool registered(HbNetworkContract::Service service,
-					HbNetworkContract::Code code) const;
-
-				HbNetworkContract * contract(HbNetworkContract::Service service,
-					HbNetworkContract::Code code) const;
+                bool registered(HbNetworkContract::Service service, HbNetworkContract::Code code) const;
+                HbNetworkContract * contract( HbNetworkContract::Service service, HbNetworkContract::Code code ) const;
 
 			private:
-
-				HbNetworkContract * add(HbNetworkContract * contract);
-				void remove(HbNetworkContract * contract);
-
+                bool add( HbNetworkContract * contract );
+                bool remove( HbNetworkContract * contract );
 
 			private:
-
 				typedef QHash< HbNetworkContract::Code, HbNetworkContract * > Contracts;
 				QHash< HbNetworkContract::Service, Contracts > _contracts;
 			};

@@ -14,50 +14,70 @@ HbAbstractNetwork::Exchanges::~Exchanges()
 }
 
 
-HbNetworkContract * HbAbstractNetwork::Exchanges::add(HbNetworkContract * contract)
+bool HbAbstractNetwork::Exchanges::add(HbNetworkContract * contract)
 {
-	Contracts & contracts = _contracts[q_assert_ptr(contract)->service()];
-	HbNetworkContract * insertable = contracts.value(contract->code());
+    if( !contract )
+    {
+        return false;
+    }
 
-	if (insertable)
+
+    Contracts & contracts = _contracts[ contract->service() ];
+    HbNetworkContract * existing_contract = contracts.value( contract->code(), nullptr );
+
+    if ( existing_contract )
 	{
 		delete contract;
-		return insertable;
 	}
+    else
+    {
+        contracts.insert( contract->code(), contract );
+    }
 
-	contracts.insert(contract->code(), contract);
-	return contract;
+    return true;
 }
 
-void HbAbstractNetwork::Exchanges::remove(HbNetworkContract * contract)
+bool HbAbstractNetwork::Exchanges::remove( HbNetworkContract * contract )
 {
-	HbNetworkContract * removable = q_assert_ptr(contract);
+    if( !contract )
+    {
+        return false;
+    }
 
-	removable = _contracts.value(removable->service()).value(removable->code());
-	if (removable != contract) delete contract;
+    HbNetworkContract * existing_contract = _contracts.value( contract->service() ).value( contract->code(), nullptr );
 
-	if (removable)
+    if ( contract != existing_contract)
+    {
+        delete contract;
+    }
+
+    if ( existing_contract )
 	{
-		Contracts & contracts = _contracts[removable->service()];
-		contracts.remove(removable->code());
+        Contracts & contracts = _contracts[ existing_contract->service() ];
+        contracts.remove( existing_contract->code() );
 
-		if (contracts.isEmpty())
-			_contracts.remove(removable->service());
+        if (contracts.isEmpty() )
+        {
+            _contracts.remove( existing_contract->service() );
+        }
 
-		delete removable;
+        delete existing_contract;
+        return true;
 	}
+    else
+    {
+        return false;
+    }
 }
 
-bool HbAbstractNetwork::Exchanges::registered(
-	HbNetworkContract::Service service, HbNetworkContract::Code code) const
+bool HbAbstractNetwork::Exchanges::registered( HbNetworkContract::Service service, HbNetworkContract::Code code ) const
 {
-	return _contracts.value(service).contains(code);
+    return _contracts.value( service ).contains( code );
 }
 
-HbNetworkContract * HbAbstractNetwork::Exchanges::contract(
-	HbNetworkContract::Service service, HbNetworkContract::Code code) const
+HbNetworkContract * HbAbstractNetwork::Exchanges::contract( HbNetworkContract::Service service, HbNetworkContract::Code code) const
 {
-	return _contracts.value(service).value(code);
+    return _contracts.value( service ).value( code );
 }
 
 HbAbstractNetwork::HbAbstractNetwork(QObject * parent) :
