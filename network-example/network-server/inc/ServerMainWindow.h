@@ -6,7 +6,7 @@
 #include <QtCore/QSortFilterProxyModel>
 #include <QtGui/QStandardItemModel>
 // Hb
-#include <tcp/HbTcpServer.h>
+#include <com/tcp/HbTcpServer.h>
 //#include <HbNetGlobal.h>
 // Local
 #include <ui_ServerMainWindow.h>

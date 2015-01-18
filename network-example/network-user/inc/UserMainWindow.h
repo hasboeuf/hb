@@ -7,7 +7,7 @@
 #include <QtGui/QStandardItemModel>
 // Hb
 //#include <HbNetGlobal.h>
-#include <tcp/HbTcpClient.h>
+#include <com/tcp/HbTcpClient.h>
 // Local
 #include <ui_UserMainWindow.h>
 

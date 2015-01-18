@@ -13,7 +13,6 @@
 #include <HbLogService.h>
 #include <gui/HbLogWidget.h>
 #include <HbLoggerOutputs.h>
-#include <tcp/HbTcpClient.h>
 // Local
 #include <UserMainWindow.h>
 

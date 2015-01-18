@@ -11,11 +11,10 @@ MODULE.PATH =		..
 
 PROJECT.ID   =      network
 			
-SUBDIRS +=  auth \
-            channel \
-            protocol \
-            tcp \
-            update
+SUBDIRS +=  com \
+            com/tcp \
+            config \
+            contract
 			
 # ------------
 # Qt Settings
