@@ -68,9 +68,9 @@ namespace hb
 		QDataStream & operator <<(QDataStream & stream, const HbNetworkHeader & header)
 		{
 			stream << header._sender;
-			stream << header._service;
-			stream << header._code;
-            stream << header._routing;
+            stream << ( quint16 ) header._service;
+            stream << ( quint16 ) header._code;
+            stream << ( quint8 ) header._routing;
 			stream << header._receivers;
 
 			return stream;

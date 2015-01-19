@@ -42,7 +42,7 @@ namespace hb
             virtual bool join( const HbTcpServerConfig & config ) final;
 
             virtual bool setConfiguration( const HbTcpServerConfig & config ) final;
-            virtual const HbTcpServerConfig & configuration() const final;
+            virtual HbTcpServerConfig & configuration() final; // TODO const
 
         private :
             virtual bool connectToNetwork();

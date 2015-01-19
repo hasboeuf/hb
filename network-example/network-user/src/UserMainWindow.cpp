@@ -13,6 +13,8 @@
 #include <HbLogService.h>
 #include <gui/HbLogWidget.h>
 #include <HbLoggerOutputs.h>
+#include <contract/HbConnectionContract.h>
+#include <contract/HbNetworkHeader.h>
 // Local
 #include <UserMainWindow.h>
 
@@ -42,7 +44,10 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     // Internal connects
     connect( ui_qa_logs,   &QAction::triggered,   this, &UserMainWindow::showLogs );
     connect( ui_qpb_start, &QPushButton::clicked, this, &UserMainWindow::onStartClicked );
-    connect( ui_qpb_stop, &QPushButton::clicked, this, &UserMainWindow::onStopClicked );
+    connect( ui_qpb_stop,       &QPushButton::clicked, this, &UserMainWindow::onStopClicked );
+    connect( ui_qpb_connection, &QPushButton::clicked, this, &UserMainWindow::onConnectionRequest );
+
+    init();
 
     HbLogEnd();
 }
@@ -59,6 +64,20 @@ UserMainWindow::~UserMainWindow()
 void UserMainWindow::init()
 {
     HbLogBegin();
+
+    HbConnectionContract contract;
+    HbNetworkHeader header( 89, &contract );
+
+    QByteArray data;
+    QDataStream stream( &data, QIODevice::ReadWrite );
+
+    int status = ( stream << header ).status();
+
+    QDataStream stream2( &data, QIODevice::ReadWrite );
+
+    HbNetworkHeader header2;
+    status = (stream2 >> header2).status();
+
     HbLogEnd();
 }
 
@@ -105,4 +124,17 @@ void UserMainWindow::onStartClicked()
 void UserMainWindow::onStopClicked()
 {
     mTcpClient.leave();
+}
+
+void UserMainWindow::onConnectionRequest()
+{
+    HbLogBegin();
+
+    HbConnectionContract contract;
+    contract.setUsername( "hasboeuf" );
+    contract.setPassword( "motherfucker" );
+
+    mTcpClient.send( &contract );
+
+    HbLogEnd();
 }

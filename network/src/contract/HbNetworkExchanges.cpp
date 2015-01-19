@@ -78,5 +78,16 @@ bool HbNetworkExchanges::registered( HbNetworkContract::Service service, HbNetwo
 
 HbNetworkContract * HbNetworkExchanges::contract( HbNetworkContract::Service service, HbNetworkContract::Code code) const
 {
-    return _contracts.value( service ).value( code );
+    HbNetworkContract * result = nullptr;
+
+    if( _contracts.contains( service ) )
+    {
+        Contracts contracts = _contracts.value( service );
+        if( contracts.contains( code ) )
+        {
+            result = contracts.value( code, nullptr );
+        }
+    }
+    return result;
+//    return _contracts.value( service ).value( code, nullptr );
 }

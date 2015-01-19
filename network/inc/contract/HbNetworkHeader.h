@@ -11,16 +11,17 @@
 
 // Local
 #include <contract/HbNetworkContract.h>
+#include <HbNetwork.h>
 
 namespace hb
 {
 	namespace network
 	{
+        // TODO remove decl
 
-
-		class HbNetworkHeader final
+        class HB_NETWORK_DECL HbNetworkHeader final
 		{
-			Q_DISABLE_COPY(HbNetworkHeader)
+            Q_DISABLE_COPY( HbNetworkHeader )
 
         public:
 
@@ -37,8 +38,8 @@ namespace hb
 			HbNetworkContract::RoutingScheme routing() const;
 			const QSet< quint16 > & receivers() const;
 
-			friend QDataStream & operator <<(QDataStream & stream, const HbNetworkHeader & header);
-			friend QDataStream & operator >>(QDataStream & stream, HbNetworkHeader & header);
+            friend QDataStream & operator<<( QDataStream & stream, const HbNetworkHeader & header );
+            friend QDataStream & operator>>( QDataStream & stream, HbNetworkHeader & header );
 
 
 		private:
@@ -52,7 +53,8 @@ namespace hb
 			QSet< quint16 > _receivers;
 		};
 
-
+        HB_NETWORK_DECL QDataStream & operator<<(QDataStream & stream, const HbNetworkHeader & header);
+        HB_NETWORK_DECL QDataStream & operator>>(QDataStream & stream, HbNetworkHeader & header);
 	}
 }
 

@@ -13,6 +13,7 @@
 #include <config/HbNetworkConfig.h>
 #include <HbNetworkError.h>
 #include <contract/HbNetworkHeader.h>
+#include <contract/HbConnectionContract.h> // TODO remove
 
 using namespace hb::tools;
 using namespace hb::log;
@@ -164,10 +165,12 @@ void HbSocketHandler::onSocketReadyPacket()
 			QDataStream stream( &packet, QIODevice::ReadOnly );
 
 			HbNetworkHeader header;
-			q_assert( (stream >> header).status( ) == QDataStream::Ok );
+            q_assert ( ( stream >> header ).status() == QDataStream::Ok );
 
 			HbNetworkContract::Service service = header.service( );
 			HbNetworkContract::Code code       = header.code( );
+
+            mpServer->configuration().exchanges().plug< HbConnectionContract >();
 
             HbNetworkContract * contract = mpServer->configuration().exchanges().contract( service, code );
 

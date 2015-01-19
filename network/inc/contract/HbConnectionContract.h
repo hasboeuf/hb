@@ -31,8 +31,8 @@ namespace hb
             HbConnectionContract();
             virtual ~HbConnectionContract() = default;
 
-            virtual bool read(QDataStream & stream);
-            virtual bool write(QDataStream & stream) const;
+            virtual bool read ( QDataStream & stream );
+            virtual bool write( QDataStream & stream ) const;
 
             QString username() const;
             QString passwork() const;

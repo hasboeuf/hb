@@ -4,7 +4,7 @@
 HbConnectionContract::HbConnectionContract() :
     HbNetworkContract( SERVICE_AUTH, CODE_CONNECTION_REQUEST )
 {
-
+    setRouting( HbNetworkContract::UNICAST );
 }
 
 bool HbConnectionContract::read( QDataStream & stream )

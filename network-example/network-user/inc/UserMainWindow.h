@@ -51,6 +51,7 @@ namespace hb
         private slots:
             void onStartClicked();
             void onStopClicked();
+            void onConnectionRequest();
 
         signals:
 

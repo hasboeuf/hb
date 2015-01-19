@@ -66,7 +66,7 @@ bool HbTcpServer::setConfiguration( const HbTcpServerConfig & config )
     return true;
 }
 
-const HbTcpServerConfig & HbTcpServer::configuration() const
+HbTcpServerConfig & HbTcpServer::configuration() // TODO const
 {
     return _config;
 }

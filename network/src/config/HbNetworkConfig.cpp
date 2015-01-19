@@ -14,6 +14,14 @@ HbNetworkConfig::HbNetworkConfig()
 	_openMode = QIODevice::ReadWrite;
 
     mExchanges.plug< HbConnectionContract >();
+
+    if( mExchanges.registered( HbNetworkContract::SERVICE_AUTH, HbNetworkContract::CODE_CONNECTION_REQUEST ) )
+    {
+        QString toto;
+        HbNetworkContract * c = mExchanges.contract( HbNetworkContract::SERVICE_AUTH, HbNetworkContract::CODE_CONNECTION_REQUEST );
+        HbConnectionContract * cc = dynamic_cast< HbConnectionContract * >( c );
+        QString tata;
+    }
 }
 
 HbNetworkConfig::HbNetworkConfig(const HbNetworkConfig & config)

@@ -44,7 +44,7 @@ bool HbTcpClient::setConfiguration( const HbTcpConfig & config )
     return true;
 }
 
-const HbTcpConfig & HbTcpClient::configuration() const
+HbTcpConfig & HbTcpClient::configuration() // TODO const
 {
     return _config;
 }

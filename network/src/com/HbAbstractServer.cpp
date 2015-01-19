@@ -228,7 +228,7 @@ bool HbAbstractServer::isUuidConnected( quint16 uuid ) const
 	return mHandlerBySocketId.contains( uuid );
 }
 
-const HbServerConfig & HbAbstractServer::configuration() const // SUB
+HbServerConfig & HbAbstractServer::configuration() // SUB // TODO const
 {
 	return _config;
 }

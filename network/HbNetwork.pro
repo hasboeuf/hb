@@ -15,7 +15,7 @@ SUBDIRS +=  com \
             com/tcp \
             config \
             contract
-			
+
 # ------------
 # Qt Settings
 # ------------

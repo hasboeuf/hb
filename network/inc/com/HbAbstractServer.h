@@ -67,7 +67,7 @@ namespace hb
             virtual bool isUuidConnected( quint16 uuid ) const final;
 
 			//virtual const HbServerConfig & configuration() const = 0;
-			virtual const HbServerConfig & configuration() const; // SUB
+            virtual HbServerConfig & configuration(); // SUB // TODO const
 	
 		protected:
 			HbAbstractServer(QObject * parent = nullptr);

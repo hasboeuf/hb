@@ -44,7 +44,7 @@ namespace hb
 			//virtual bool reply(int sender, const HbNetworkContract * contract) = 0;
 
 			//virtual const HbNetworkConfig & configuration() const = 0; SUB
-			virtual const HbNetworkConfig & configuration() const;
+            virtual HbNetworkConfig & configuration(); // TODO const
 
 		protected:
 			HbAbstractNetwork(QObject * parent = nullptr);
