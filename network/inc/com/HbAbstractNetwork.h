@@ -31,49 +31,6 @@ namespace hb
 			Q_OBJECT
 			Q_DISABLE_COPY( HbAbstractNetwork )
 
-		protected:
-			inner class HB_NETWORK_DECL Exchanges final
-			{
-				Q_DISABLE_COPY(Exchanges)
-				Q_FRIEND_CLASS(HbAbstractNetwork)
-
-			public:
-
-				Exchanges() = default;
-				virtual ~Exchanges();
-
-				template< typename T >
-                inline bool plug()
-				{
-                    T * reference = q_check_ptr( new T() );
-                    HbNetworkContract * contract = dynamic_cast< HbNetworkContract * >( reference );
-                    if( !contract )
-                    {
-                        return false;
-                    }
-
-                    return add( contract );
-				}
-
-				template< typename T >
-                inline bool unplug()
-				{
-                    T * reference = q_check_ptr( new T() );
-                    return remove( dynamic_cast< HbNetworkContract * >( reference ) );
-				}
-
-                bool registered(HbNetworkContract::Service service, HbNetworkContract::Code code) const;
-                HbNetworkContract * contract( HbNetworkContract::Service service, HbNetworkContract::Code code ) const;
-
-			private:
-                bool add( HbNetworkContract * contract );
-                bool remove( HbNetworkContract * contract );
-
-			private:
-				typedef QHash< HbNetworkContract::Code, HbNetworkContract * > Contracts;
-				QHash< HbNetworkContract::Service, Contracts > _contracts;
-			};
-
 		public:
 
 			virtual bool join() = 0;
@@ -93,14 +50,10 @@ namespace hb
 			HbAbstractNetwork(QObject * parent = nullptr);
 			virtual ~HbAbstractNetwork() = default;
 
-			virtual Exchanges & exchanges() final;
-			virtual const Exchanges & exchanges() const final;
-
 			//virtual const QList< IHbNetworkListener * > & listeners() const final;
 
 		private:
 			HbNetworkConfig _config; // SUB
-			Exchanges _exchanges;
 			//QList< IHbNetworkListener * > _listeners;
 
 		};

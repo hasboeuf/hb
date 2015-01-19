@@ -23,27 +23,27 @@ namespace hb
 {
 	namespace network
 	{
-
-
         class HB_NETWORK_DECL HbConnectionContract : public HbNetworkContract
 		{
 
 		public:
 
+            HbConnectionContract();
+            virtual ~HbConnectionContract() = default;
+
             virtual bool read(QDataStream & stream);
             virtual bool write(QDataStream & stream) const;
 
-		protected:
-            HbConnectionContract() = delete;
-            HbConnectionContract( Service service, Code code );
-            virtual ~HbConnectionContract() = default;
+            QString username() const;
+            QString passwork() const;
+            void setUsername( QString username );
+            void setPassword( QString password );
 
 		private:
-
+            QString mUsername;
+            QString mPassword;
 
 		};
-
-
 	}
 }
 

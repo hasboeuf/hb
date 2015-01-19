@@ -15,6 +15,7 @@
 #include <HbGlobal.h>
 // Local
 #include <HbNetwork.h>
+#include <contract/HbNetworkExchanges.h>
 
 namespace hb
 {
@@ -45,6 +46,8 @@ namespace hb
 			virtual QIODevice::OpenMode openMode() const final;
 			
 			virtual int uuid() const final; // DEL
+            virtual const HbNetworkExchanges & exchanges() const final;
+            virtual HbNetworkExchanges & exchanges() final;
 
 			virtual bool isValid() const;
 
@@ -59,6 +62,8 @@ namespace hb
 			quint16 _uuid; // DEL
 			Timeout _timeout;
 			QIODevice::OpenMode _openMode;
+
+            HbNetworkExchanges mExchanges;
 		};
 
 

@@ -169,7 +169,7 @@ void HbSocketHandler::onSocketReadyPacket()
 			HbNetworkContract::Service service = header.service( );
 			HbNetworkContract::Code code       = header.code( );
 
-			HbNetworkContract * contract = mpServer->exchanges( ).contract( service, code );
+            HbNetworkContract * contract = mpServer->configuration().exchanges().contract( service, code );
 
 			if( !contract )
 			{

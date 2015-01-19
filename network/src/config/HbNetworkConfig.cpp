@@ -1,5 +1,6 @@
 // Local
 #include <config/HbNetworkConfig.h>
+#include <contract/HbConnectionContract.h>
 
 using namespace hb::network;
 
@@ -12,6 +13,7 @@ HbNetworkConfig::HbNetworkConfig()
 
 	_openMode = QIODevice::ReadWrite;
 
+    mExchanges.plug< HbConnectionContract >();
 }
 
 HbNetworkConfig::HbNetworkConfig(const HbNetworkConfig & config)
@@ -20,6 +22,7 @@ HbNetworkConfig::HbNetworkConfig(const HbNetworkConfig & config)
 	{
 		_timeout = config._timeout;
 		_openMode = config._openMode;
+        mExchanges = config.mExchanges;
 	}
 }
 
@@ -30,6 +33,7 @@ HbNetworkConfig & HbNetworkConfig::operator =(const HbNetworkConfig & config)
 	{
 		_timeout = config._timeout;
 		_openMode = config._openMode;
+        mExchanges = config.mExchanges;
 	}
 
 	return *this;
@@ -93,6 +97,16 @@ QIODevice::OpenMode HbNetworkConfig::openMode() const
 int HbNetworkConfig::uuid() const
 {
 	return _uuid;
+}
+
+const HbNetworkExchanges & HbNetworkConfig::exchanges() const
+{
+    return mExchanges;
+}
+
+HbNetworkExchanges & HbNetworkConfig::exchanges()
+{
+    return mExchanges;
 }
 
 bool HbNetworkConfig::isValid() const

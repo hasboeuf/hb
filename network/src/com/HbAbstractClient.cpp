@@ -105,7 +105,7 @@ bool HbAbstractClient::send(const HbNetworkContract * contract)
 
 		else
 		{
-			if (!exchanges().registered(contract->service(), contract->code()))
+            if (!configuration().exchanges().registered(contract->service(), contract->code()))
 			{
                 HbError( "Try to send an unregistered contract [service=%d, code=%d", contract->service(), contract->code() );
 
@@ -216,7 +216,7 @@ void HbAbstractClient::onSocketContractReceived( const HbNetworkContract & contr
 			HbNetworkContract::Service service = header.service();
 			HbNetworkContract::Code code = header.code();
 
-			HbNetworkContract * contract = exchanges().contract(service, code);
+            HbNetworkContract * contract = configuration().exchanges().contract(service, code);
 
             if ( !contract )
 			{

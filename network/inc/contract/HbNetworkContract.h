@@ -28,7 +28,7 @@ namespace hb
 		{
 			Q_GADGET
             Q_DISABLE_COPY( HbNetworkContract )
-            Q_FRIEND_CLASS( HbAbstractNetwork )
+            Q_FRIEND_CLASS( HbNetworkExchanges )
             Q_FRIEND_CLASS( HbNetworkHeader )
 
 		public:
@@ -52,7 +52,8 @@ namespace hb
 
             enum Code : quint16
             {
-                CODE_UNDEFINED = 0
+                CODE_UNDEFINED = 0,
+                CODE_CONNECTION_REQUEST = 1
             };
 
 
