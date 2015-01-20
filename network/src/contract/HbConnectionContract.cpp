@@ -1,10 +1,11 @@
 // Local
 #include <contract/HbConnectionContract.h>
+#include <contract/HbNetworkProtocol.h>
 
 HbConnectionContract::HbConnectionContract() :
-    HbNetworkContract( SERVICE_AUTH, CODE_CONNECTION_REQUEST )
+    HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_CONNECTION_REQUEST )
 {
-    setRouting( HbNetworkContract::UNICAST );
+    setRouting( HbNetworkProtocol::UNICAST );
 }
 
 HbConnectionContract::HbConnectionContract( const HbConnectionContract & source ) :

@@ -114,7 +114,7 @@ bool HbAbstractClient::send(const HbNetworkContract * contract)
 
 			if (socket->type() == HbAbstractSocket::UdpSocket)
             {
-                const_cast< HbNetworkContract * >(contract)->setRouting( HbNetworkContract::RoutingScheme::BROADCAST );
+                const_cast< HbNetworkContract * >(contract)->setRouting( HbNetworkProtocol::RoutingScheme::BROADCAST );
             }
 
 			QByteArray buffer;
@@ -208,13 +208,13 @@ void HbAbstractClient::onSocketContractReceived( const HbNetworkContract & contr
 			q_assert((stream >> header).status() == QDataStream::Ok);
 			q_assert(header.sender() != configuration().uuid());
 
-            if( header.routing() != HbNetworkContract::RoutingScheme::BROADCAST )
+            if( header.routing() != HbNetworkProtocol::RoutingScheme::BROADCAST )
             {
 				q_assert(header.receivers().contains(configuration().uuid()));
             }
 
-			HbNetworkContract::Service service = header.service();
-			HbNetworkContract::Code code = header.code();
+            HbNetworkProtocol::Service service = header.service();
+            HbNetworkProtocol::Code code = header.code();
 
             HbNetworkContract * contract = configuration().exchanges().contract(service, code);
 

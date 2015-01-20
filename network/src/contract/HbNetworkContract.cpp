@@ -3,11 +3,13 @@
 // Local
 #include <contract/HbNetworkContract.h>
 
-HbNetworkContract::HbNetworkContract(Service service, Code code)
+using namespace hb::network;
+
+HbNetworkContract::HbNetworkContract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code)
 {
 	_service = service;
     _code    = code;
-    _routing = RoutingScheme::UNICAST;
+    _routing = HbNetworkProtocol::RoutingScheme::UNICAST;
     _reply   = nullptr;
 }
 
@@ -34,24 +36,24 @@ HbNetworkContract & HbNetworkContract::operator=( const HbNetworkContract & sour
     return ( *this );
 }
 
-HbNetworkContract::Service HbNetworkContract::service() const
+HbNetworkProtocol::Service HbNetworkContract::service() const
 {
 	return _service;
 }
 
-HbNetworkContract::Code HbNetworkContract::code() const
+HbNetworkProtocol::Code HbNetworkContract::code() const
 {
 	return _code;
 }
 
 
-void HbNetworkContract::setRouting(RoutingScheme routing)
+void HbNetworkContract::setRouting( HbNetworkProtocol::RoutingScheme routing)
 {
 	if (_routing != routing)
 	{
 		_routing = routing;
 
-        if (_routing == RoutingScheme::BROADCAST )
+        if (_routing == HbNetworkProtocol::RoutingScheme::BROADCAST )
 		{
 			if (_receivers.size() > 0)
             {
@@ -61,7 +63,7 @@ void HbNetworkContract::setRouting(RoutingScheme routing)
 			_receivers.clear();
 		}
 
-        if (_routing == RoutingScheme::UNICAST)
+        if (_routing == HbNetworkProtocol::RoutingScheme::UNICAST)
         {
             if (_receivers.size() > 1)
             {
@@ -76,11 +78,11 @@ void HbNetworkContract::setRouting(RoutingScheme routing)
 	}
 }
 
-HbNetworkContract::RoutingScheme HbNetworkContract::routing() const
+HbNetworkProtocol::RoutingScheme HbNetworkContract::routing() const
 {
-    if( _routing == RoutingScheme::MULTICAST && _receivers.isEmpty() )
+    if( _routing == HbNetworkProtocol::RoutingScheme::MULTICAST && _receivers.isEmpty() )
     {
-        return RoutingScheme::BROADCAST;
+        return HbNetworkProtocol::RoutingScheme::BROADCAST;
     }
 
     return _routing;
@@ -89,7 +91,7 @@ HbNetworkContract::RoutingScheme HbNetworkContract::routing() const
 
 bool HbNetworkContract::addReceiver( quint16 receiver )
 {
-    if( _routing == RoutingScheme::UNICAST )
+    if( _routing == HbNetworkProtocol::RoutingScheme::UNICAST )
     {
         if (!_receivers.isEmpty())
         {
@@ -100,7 +102,7 @@ bool HbNetworkContract::addReceiver( quint16 receiver )
         _receivers.insert(receiver);
         return true;
     }
-    else if( _routing == RoutingScheme::MULTICAST )
+    else if( _routing == HbNetworkProtocol::RoutingScheme::MULTICAST )
     {
         _receivers.insert(receiver);
         return true;
@@ -133,7 +135,7 @@ bool HbNetworkContract::setReply( HbNetworkContract * reply )
 {
     if ( reply && ( _reply != reply ) )
 	{
-        if ( _routing != RoutingScheme::UNICAST )
+        if ( _routing != HbNetworkProtocol::RoutingScheme::UNICAST )
 		{
             HbWarning( "Reply only supported in unicast mode." );
 			return false;

@@ -82,12 +82,12 @@ bool HbNetworkExchanges::remove( HbNetworkContract * contract )
     }
 }
 
-bool HbNetworkExchanges::registered( HbNetworkContract::Service service, HbNetworkContract::Code code ) const
+bool HbNetworkExchanges::registered( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code ) const
 {
     return _contracts.value( service ).contains( code );
 }
 
-HbNetworkContract * HbNetworkExchanges::contract( HbNetworkContract::Service service, HbNetworkContract::Code code) const
+HbNetworkContract * HbNetworkExchanges::contract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code) const
 {
     HbNetworkContract * contract = nullptr;
 

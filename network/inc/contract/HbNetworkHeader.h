@@ -32,10 +32,10 @@ namespace hb
 
 			quint16 sender() const;
 
-			HbNetworkContract::Service service() const;
-			HbNetworkContract::Code code() const;
+            HbNetworkProtocol::Service service() const;
+            HbNetworkProtocol::Code code() const;
 
-			HbNetworkContract::RoutingScheme routing() const;
+            HbNetworkProtocol::RoutingScheme routing() const;
 			const QSet< quint16 > & receivers() const;
 
             friend QDataStream & operator<<( QDataStream & stream, const HbNetworkHeader & header );
@@ -46,10 +46,10 @@ namespace hb
 
 			quint16 _sender;
 
-			HbNetworkContract::Service _service;
-			HbNetworkContract::Code _code;
+            HbNetworkProtocol::Service _service;
+            HbNetworkProtocol::Code _code;
 
-			HbNetworkContract::RoutingScheme _routing;
+            HbNetworkProtocol::RoutingScheme _routing;
 			QSet< quint16 > _receivers;
 		};
 

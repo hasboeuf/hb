@@ -16,10 +16,10 @@ HbTcpConfig::HbTcpConfig() :
 
     mExchanges.plug< HbConnectionContract >();
 
-    if( mExchanges.registered( HbNetworkContract::SERVICE_AUTH, HbNetworkContract::CODE_CONNECTION_REQUEST ) )
+    if( mExchanges.registered( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_CONNECTION_REQUEST ) )
     {
         QString toto;
-        HbNetworkContract * c = mExchanges.contract( HbNetworkContract::SERVICE_AUTH, HbNetworkContract::CODE_CONNECTION_REQUEST );
+        HbNetworkContract * c = mExchanges.contract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_CONNECTION_REQUEST );
         HbConnectionContract * cc = dynamic_cast< HbConnectionContract * >( c );
         QString tata;
     }

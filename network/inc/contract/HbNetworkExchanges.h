@@ -56,16 +56,16 @@ namespace hb
                 return remove( reference );
             }
 
-            bool registered(HbNetworkContract::Service service, HbNetworkContract::Code code) const;
-            HbNetworkContract * contract( HbNetworkContract::Service service, HbNetworkContract::Code code ) const;
+            bool registered(HbNetworkProtocol::Service service, HbNetworkProtocol::Code code) const;
+            HbNetworkContract * contract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code ) const;
 
         private:
             bool add( HbNetworkContract * contract );
             bool remove( HbNetworkContract * contract );
 
         private:
-            typedef QHash< HbNetworkContract::Code, HbNetworkContract * > Contracts;
-            QHash< HbNetworkContract::Service, Contracts > _contracts;
+            typedef QHash< HbNetworkProtocol::Code, HbNetworkContract * > Contracts;
+            QHash< HbNetworkProtocol::Service, Contracts > _contracts;
         };
 	}
 }

@@ -16,13 +16,12 @@
 #include <HbGlobal.h>
 // Local
 #include <HbNetwork.h>
-
+#include <contract/HbNetworkProtocol.h>
 
 namespace hb
 {
 	namespace network
 	{
-
 
 		class HB_NETWORK_DECL HbNetworkContract
 		{
@@ -32,36 +31,10 @@ namespace hb
 
 		public:
 
-            enum RoutingScheme : quint8
-			{
-                UNICAST = 0,
-                MULTICAST = 1,
-                BROADCAST = 2
-			};
+            virtual HbNetworkProtocol::Service service() const final;
+            virtual HbNetworkProtocol::Code code() const final;
 
-            enum Service : quint16
-            {
-                SERVICE_UNDEFINED = 0,
-                SERVICE_UPDATE = 1,
-                SERVICE_AUTH = 2,
-                SERVICE_TIMEOUT = 3,
-
-                SERVICE_USER = 255
-            };
-
-            enum Code : quint16
-            {
-                CODE_UNDEFINED = 0,
-                CODE_CONNECTION_REQUEST = 1
-            };
-
-
-		public:
-
-			virtual Service service() const final;
-			virtual Code code() const final;
-
-            virtual void setRouting( RoutingScheme routing );
+            virtual void setRouting( HbNetworkProtocol::RoutingScheme routing );
 
             virtual bool addReceiver( quint16 receiver );
             virtual bool setReceiver( quint16 receiver );
@@ -76,13 +49,13 @@ namespace hb
 				return dynamic_cast< T * >(this);
 			}
 
-			virtual bool read(QDataStream & stream) = 0;
-			virtual bool write(QDataStream & stream) const = 0;
+            virtual bool read( QDataStream & stream ) = 0;
+            virtual bool write( QDataStream & stream ) const = 0;
 
 		protected:
 
 			HbNetworkContract() = delete;
-            HbNetworkContract( Service service, Code code );
+            HbNetworkContract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code );
             HbNetworkContract( const HbNetworkContract & source );
             HbNetworkContract & operator=( const HbNetworkContract & source );
 			virtual ~HbNetworkContract() = default;
@@ -91,16 +64,16 @@ namespace hb
 
 		private:
 
-			RoutingScheme routing() const;
+            HbNetworkProtocol::RoutingScheme routing() const;
 			const QSet< quint16 > & receivers() const;
 
 
 		private:
 
-			Service _service;
-			Code _code;
+            HbNetworkProtocol::Service _service;
+            HbNetworkProtocol::Code _code;
 
-			RoutingScheme _routing;
+            HbNetworkProtocol::RoutingScheme _routing;
 			QSet< quint16 > _receivers;
 
 			HbNetworkContract * _reply;

@@ -168,8 +168,8 @@ void HbSocketHandler::onSocketReadyPacket()
             stream >> header;
             q_assert( stream.status() == QDataStream::Ok );
 
-			HbNetworkContract::Service service = header.service( );
-            HbNetworkContract::Code code       = header.code();
+            HbNetworkProtocol::Service service = header.service( );
+            HbNetworkProtocol::Code code       = header.code();
 
             HbNetworkContract * contract = mpServer->configuration().exchanges().contract( service, code );
 

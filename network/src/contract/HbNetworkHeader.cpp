@@ -8,9 +8,9 @@ using namespace hb::network;
 HbNetworkHeader::HbNetworkHeader()
 {
     _sender  = 0;
-    _service = HbNetworkContract::SERVICE_UNDEFINED;
-    _code    = HbNetworkContract::CODE_UNDEFINED;
-    _routing = HbNetworkContract::RoutingScheme::UNICAST;
+    _service = HbNetworkProtocol::SERVICE_UNDEFINED;
+    _code    = HbNetworkProtocol::CODE_UNDEFINED;
+    _routing = HbNetworkProtocol::RoutingScheme::UNICAST;
 }
 
 HbNetworkHeader::HbNetworkHeader( quint16 sender, const HbNetworkContract * contract ) :
@@ -23,7 +23,7 @@ HbNetworkHeader::HbNetworkHeader( quint16 sender, const HbNetworkContract * cont
 		_service = contract->service();
     }
 
-    if ( contract->service() != HbNetworkContract::SERVICE_UNDEFINED )
+    if ( contract->service() != HbNetworkProtocol::SERVICE_UNDEFINED )
 	{
         _code      = contract->code();
         _routing   = contract->routing();
@@ -38,18 +38,18 @@ quint16 HbNetworkHeader::sender( ) const
 }
 
 
-HbNetworkContract::Service HbNetworkHeader::service() const
+HbNetworkProtocol::Service HbNetworkHeader::service() const
 {
 	return _service;
 }
 
-HbNetworkContract::Code HbNetworkHeader::code() const
+HbNetworkProtocol::Code HbNetworkHeader::code() const
 {
 	return _code;
 }
 
 
-HbNetworkContract::RoutingScheme HbNetworkHeader::routing() const
+HbNetworkProtocol::RoutingScheme HbNetworkHeader::routing() const
 {
 	return _routing;
 }
@@ -79,9 +79,9 @@ namespace hb
 		QDataStream & operator >>(QDataStream & stream, HbNetworkHeader & header)
 		{
 
-            quint16 service = HbNetworkContract::SERVICE_UNDEFINED;
-            quint16 code = HbNetworkContract::CODE_UNDEFINED;
-            quint8 routing = HbNetworkContract::UNICAST;
+            quint16 service = HbNetworkProtocol::SERVICE_UNDEFINED;
+            quint16 code = HbNetworkProtocol::CODE_UNDEFINED;
+            quint8 routing = HbNetworkProtocol::UNICAST;
 
 			stream >> header._sender;
             stream >> service;
@@ -89,9 +89,9 @@ namespace hb
             stream >> routing;
 			stream >> header._receivers;
 
-            header._service = ( HbNetworkContract::Service ) service;
-            header._code = ( HbNetworkContract::Code ) code;
-            header._routing = ( HbNetworkContract::RoutingScheme ) routing;
+            header._service = ( HbNetworkProtocol::Service ) service;
+            header._code = ( HbNetworkProtocol::Code ) code;
+            header._routing = ( HbNetworkProtocol::RoutingScheme ) routing;
 
 			return stream;
 		}
