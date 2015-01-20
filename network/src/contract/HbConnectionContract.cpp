@@ -7,6 +7,35 @@ HbConnectionContract::HbConnectionContract() :
     setRouting( HbNetworkContract::UNICAST );
 }
 
+HbConnectionContract::HbConnectionContract( const HbConnectionContract & source ) :
+    HbNetworkContract( source )
+{
+    if( & source != this )
+    {
+        mUsername = source.mUsername;
+        mPassword = source.mPassword;
+    }
+}
+
+HbConnectionContract & HbConnectionContract::operator=( const HbConnectionContract & source )
+{
+    if( &source != this )
+    {
+        HbNetworkContract::operator=( source );
+
+        mUsername = source.mUsername;
+        mPassword = source.mPassword;
+    }
+
+    return ( *this );
+}
+
+HbConnectionContract * HbConnectionContract::copy() const
+{
+    HbConnectionContract * copy = new HbConnectionContract( *this );
+    return copy;
+}
+
 bool HbConnectionContract::read( QDataStream & stream )
 {
     stream >> mUsername;

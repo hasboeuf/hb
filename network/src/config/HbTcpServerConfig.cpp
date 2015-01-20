@@ -4,8 +4,8 @@
 #include <config/HbTcpServerConfig.h>
 
 
-HbTcpServerConfig::HbTcpServerConfig( )/* :
-	HbNetworkConfig(), HbTcpConfig( ), HbServerConfig()*/
+HbTcpServerConfig::HbTcpServerConfig( ) :
+    HbNetworkConfig(), HbTcpConfig( ), HbServerConfig()
 {
 
 }

@@ -30,6 +30,10 @@ namespace hb
 
             HbConnectionContract();
             virtual ~HbConnectionContract() = default;
+            HbConnectionContract( const HbConnectionContract & source );
+            HbConnectionContract & operator=( const HbConnectionContract & source );
+
+            HbConnectionContract * copy() const;
 
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;

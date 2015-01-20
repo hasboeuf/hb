@@ -1,6 +1,5 @@
 // Local
 #include <config/HbNetworkConfig.h>
-#include <contract/HbConnectionContract.h>
 
 using namespace hb::network;
 
@@ -10,18 +9,7 @@ HbNetworkConfig::HbNetworkConfig()
 	_timeout.connection = -1;
 	_timeout.reconnection = 1000;
 	_timeout.disconnection = -1;
-
 	_openMode = QIODevice::ReadWrite;
-
-    mExchanges.plug< HbConnectionContract >();
-
-    if( mExchanges.registered( HbNetworkContract::SERVICE_AUTH, HbNetworkContract::CODE_CONNECTION_REQUEST ) )
-    {
-        QString toto;
-        HbNetworkContract * c = mExchanges.contract( HbNetworkContract::SERVICE_AUTH, HbNetworkContract::CODE_CONNECTION_REQUEST );
-        HbConnectionContract * cc = dynamic_cast< HbConnectionContract * >( c );
-        QString tata;
-    }
 }
 
 HbNetworkConfig::HbNetworkConfig(const HbNetworkConfig & config)

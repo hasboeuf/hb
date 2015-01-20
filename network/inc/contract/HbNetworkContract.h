@@ -27,7 +27,6 @@ namespace hb
 		class HB_NETWORK_DECL HbNetworkContract
 		{
 			Q_GADGET
-            Q_DISABLE_COPY( HbNetworkContract )
             Q_FRIEND_CLASS( HbNetworkExchanges )
             Q_FRIEND_CLASS( HbNetworkHeader )
 
@@ -71,8 +70,8 @@ namespace hb
             virtual bool setReply( HbNetworkContract * reply );
 			virtual HbNetworkContract * reply() const;
 
-			template< typename T >
-			inline T * value() const
+            template< typename T >
+            inline T * value() const
 			{
 				return dynamic_cast< T * >(this);
 			}
@@ -83,10 +82,12 @@ namespace hb
 		protected:
 
 			HbNetworkContract() = delete;
-			HbNetworkContract(Service service, Code code);
+            HbNetworkContract( Service service, Code code );
+            HbNetworkContract( const HbNetworkContract & source );
+            HbNetworkContract & operator=( const HbNetworkContract & source );
 			virtual ~HbNetworkContract() = default;
 
-			virtual void reset();
+            virtual HbNetworkContract * copy() const = 0;
 
 		private:
 

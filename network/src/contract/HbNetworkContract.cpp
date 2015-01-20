@@ -6,17 +6,33 @@
 HbNetworkContract::HbNetworkContract(Service service, Code code)
 {
 	_service = service;
-    _code = code;
+    _code    = code;
     _routing = RoutingScheme::UNICAST;
-
-	_reply = nullptr;
+    _reply   = nullptr;
 }
 
-
-void HbNetworkContract::reset()
+HbNetworkContract::HbNetworkContract( const HbNetworkContract & source )
 {
+    if( &source != this )
+    {
+        _service = source._service;
+        _code    = source._code;
+        _routing = source._routing;
+        _reply   = source._reply;
+    }
 }
 
+HbNetworkContract & HbNetworkContract::operator=( const HbNetworkContract & source )
+{
+    if( &source != this )
+    {
+        _service = source._service;
+        _code = source._code;
+        _routing = source._routing;
+        _reply = source._reply;
+    }
+    return ( *this );
+}
 
 HbNetworkContract::Service HbNetworkContract::service() const
 {

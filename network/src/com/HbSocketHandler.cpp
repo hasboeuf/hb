@@ -165,12 +165,11 @@ void HbSocketHandler::onSocketReadyPacket()
 			QDataStream stream( &packet, QIODevice::ReadOnly );
 
 			HbNetworkHeader header;
-            q_assert ( ( stream >> header ).status() == QDataStream::Ok );
+            stream >> header;
+            q_assert( stream.status() == QDataStream::Ok );
 
 			HbNetworkContract::Service service = header.service( );
-			HbNetworkContract::Code code       = header.code( );
-
-            mpServer->configuration().exchanges().plug< HbConnectionContract >();
+            HbNetworkContract::Code code       = header.code();
 
             HbNetworkContract * contract = mpServer->configuration().exchanges().contract( service, code );
 
@@ -180,16 +179,13 @@ void HbSocketHandler::onSocketReadyPacket()
 			}
 			else if( !contract->read( stream ) )
 			{
-				Q_ASSERT( stream.status( ) == QDataStream::Ok );
+                q_assert( stream.status( ) == QDataStream::Ok );
 
                 HbError( "Error occurred while reading contract [service=%d, code=%d].", service, code );
 			}
 			else
 			{
-				//bool processing = ((header.routing( ) == HbNetworkContract::RoutingScheme::Unicast) &&
-				//	(header.receivers( ).isEmpty( ) || header.receivers( ).contains( _uuid )));
-
-				//emit contractReceived( socket->uuid(), contract );
+                //emit socketContractReceived( contract );
 			}
 		}
 

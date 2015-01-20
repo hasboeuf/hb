@@ -57,13 +57,14 @@ namespace hb
 
 			virtual HbNetworkConfig & operator =(const HbNetworkConfig & config);
 
+        protected:
+            HbNetworkExchanges mExchanges;
 
 		private:
 			quint16 _uuid; // DEL
 			Timeout _timeout;
 			QIODevice::OpenMode _openMode;
 
-            HbNetworkExchanges mExchanges;
 		};
 
 

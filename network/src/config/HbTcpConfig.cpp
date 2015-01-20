@@ -2,16 +2,27 @@
 #include <HbLogService.h>
 // Local
 #include <config/HbTcpConfig.h>
+#include <contract/HbConnectionContract.h>
 
 
-HbTcpConfig::HbTcpConfig()/* :
-	HbNetworkConfig()*/
+HbTcpConfig::HbTcpConfig() :
+    HbNetworkConfig()
 {
 	setTimeout(timeout());
 
 	_address = QHostAddress::Null;
 	_port = 0;
 	_options = SocketOption::NoOptions;
+
+    mExchanges.plug< HbConnectionContract >();
+
+    if( mExchanges.registered( HbNetworkContract::SERVICE_AUTH, HbNetworkContract::CODE_CONNECTION_REQUEST ) )
+    {
+        QString toto;
+        HbNetworkContract * c = mExchanges.contract( HbNetworkContract::SERVICE_AUTH, HbNetworkContract::CODE_CONNECTION_REQUEST );
+        HbConnectionContract * cc = dynamic_cast< HbConnectionContract * >( c );
+        QString tata;
+    }
 }
 
 HbTcpConfig::HbTcpConfig(const HbTcpConfig & config) :

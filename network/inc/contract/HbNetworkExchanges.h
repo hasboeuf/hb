@@ -23,11 +23,14 @@ namespace hb
 	{
         class HB_NETWORK_DECL HbNetworkExchanges final
         {
+            Q_FRIEND_CLASS( HbNetworkConfig )
 
-        public:
+        protected:
             HbNetworkExchanges() = default;
             virtual ~HbNetworkExchanges();
+            HbNetworkExchanges & operator=( const HbNetworkExchanges & source );
 
+        public:
             template< typename T >
             inline bool plug()
             {
@@ -38,14 +41,19 @@ namespace hb
                     return false;
                 }
 
-                return add( contract );
+                return add( reference );
             }
 
             template< typename T >
             inline bool unplug()
             {
                 T * reference = q_check_ptr( new T() );
-                return remove( dynamic_cast< HbNetworkContract * >( reference ) );
+                HbNetworkContract * contract = dynamic_cast< HbNetworkContract * >( reference );
+                if( !contract )
+                {
+                    return false;
+                }
+                return remove( reference );
             }
 
             bool registered(HbNetworkContract::Service service, HbNetworkContract::Code code) const;

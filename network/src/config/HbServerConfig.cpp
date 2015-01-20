@@ -3,8 +3,8 @@
 // Local
 #include <config/HbServerConfig.h>
 
-HbServerConfig::HbServerConfig( )/* : 
-	HbNetworkConfig()*/
+HbServerConfig::HbServerConfig( ) :
+    HbNetworkConfig()
 {
 	mMaxUsersPerThread = 0; // Not threaded.
 }

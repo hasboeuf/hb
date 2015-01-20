@@ -14,6 +14,21 @@ HbNetworkExchanges::~HbNetworkExchanges()
     }
 }
 
+HbNetworkExchanges & HbNetworkExchanges::operator=( const HbNetworkExchanges & source )
+{
+    if( &source != this )
+    {
+        foreach(const Contracts & contracts, source._contracts)
+        {
+            foreach(HbNetworkContract * contract, contracts)
+            {
+                add( contract->copy() );
+            }
+        }
+    }
+    return *this;
+}
+
 
 bool HbNetworkExchanges::add(HbNetworkContract * contract)
 {
@@ -21,7 +36,6 @@ bool HbNetworkExchanges::add(HbNetworkContract * contract)
     {
         return false;
     }
-
 
     Contracts & contracts = _contracts[ contract->service() ];
     HbNetworkContract * existing_contract = contracts.value( contract->code(), nullptr );
@@ -45,16 +59,13 @@ bool HbNetworkExchanges::remove( HbNetworkContract * contract )
         return false;
     }
 
-    HbNetworkContract * existing_contract = _contracts.value( contract->service() ).value( contract->code(), nullptr );
+    Contracts & contracts = _contracts[ contract->service() ];
+    HbNetworkContract * existing_contract = contracts.value( contract->code(), nullptr );
 
-    if ( contract != existing_contract)
-    {
-        delete contract;
-    }
+    delete contract;
 
     if ( existing_contract )
     {
-        Contracts & contracts = _contracts[ existing_contract->service() ];
         contracts.remove( existing_contract->code() );
 
         if (contracts.isEmpty() )
@@ -78,16 +89,18 @@ bool HbNetworkExchanges::registered( HbNetworkContract::Service service, HbNetwo
 
 HbNetworkContract * HbNetworkExchanges::contract( HbNetworkContract::Service service, HbNetworkContract::Code code) const
 {
-    HbNetworkContract * result = nullptr;
+    HbNetworkContract * contract = nullptr;
 
     if( _contracts.contains( service ) )
     {
         Contracts contracts = _contracts.value( service );
         if( contracts.contains( code ) )
         {
-            result = contracts.value( code, nullptr );
+            HbNetworkContract * reference = contracts.value( code, nullptr );
+            q_assert_ptr( reference );
+            contract = reference->copy();
         }
     }
-    return result;
+    return contract;
 //    return _contracts.value( service ).value( code, nullptr );
 }
