@@ -75,11 +75,11 @@ namespace hb
             virtual void onReadyRead() = 0;
 
 		private:
-			quint16 _uuid;
-            QPointer< QIODevice > _device;
+            quint16 mUuid;
+            QPointer< QIODevice > mDevice;
 
-			quint32 _bytesPending;
-			QQueue< QByteArray > _packets;
+            quint32 mBytesPending;
+            QQueue< QByteArray > mPackets;
 
 		};
 	}

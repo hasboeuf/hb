@@ -69,13 +69,13 @@ namespace hb
 
 		private:
 
-            HbNetworkProtocol::Service _service;
-            HbNetworkProtocol::Code _code;
+            HbNetworkProtocol::Service mService;
+            HbNetworkProtocol::Code mCode;
 
-            HbNetworkProtocol::RoutingScheme _routing;
-			QSet< quint16 > _receivers;
+            HbNetworkProtocol::RoutingScheme mRouting;
+            QSet< quint16 > mReceivers;
 
-			HbNetworkContract * _reply;
+            HbNetworkContract * mpReply;
 		};
 
 

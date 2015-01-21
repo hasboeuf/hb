@@ -44,8 +44,8 @@ namespace hb
             */
             inline HbNullable()
             {
-                _value = T();
-                _isNull = true;
+                mValue = T();
+                mIsNull = true;
             }
 
             /*!
@@ -53,8 +53,8 @@ namespace hb
             */
             inline HbNullable( const T & value )
             {
-                _value = value;
-                _isNull = false;
+                mValue = value;
+                mIsNull = false;
             }
 
             /*!
@@ -64,8 +64,8 @@ namespace hb
             */
             inline HbNullable( const QVariant & variant )
             {
-                _isNull = !( variant.isValid() && variant.canConvert< T >() );
-                _value = ( !_isNull ) ? variant.value< T >() : T();
+                mIsNull = !( variant.isValid() && variant.canConvert< T >() );
+                mValue = ( !mIsNull ) ? variant.value< T >() : T();
             }
 
             /*!
@@ -76,8 +76,8 @@ namespace hb
             {
                 if( &nullable != this )
                 {
-                    _value = nullable.value();
-                    _isNull = nullable.isNull();
+                    mValue = nullable.value();
+                    mIsNull = nullable.isNull();
                 }
             }
 
@@ -92,7 +92,7 @@ namespace hb
             */
             inline bool isNull() const
             {
-                return _isNull;
+                return mIsNull;
             }
 
             /*!
@@ -100,7 +100,7 @@ namespace hb
             */
             inline const T & value() const
             {
-                return _value;
+                return mValue;
             }
 
             /*!
@@ -108,7 +108,7 @@ namespace hb
             */
             inline const T & value( const T & defaultValue ) const
             {
-                return ( _isNull ) ? defaultValue : _value;
+                return ( mIsNull ) ? defaultValue : mValue;
             }
 
             /*!
@@ -116,7 +116,7 @@ namespace hb
             */
             inline void invalidate()
             {
-                _isNull = true;
+                mIsNull = true;
             }
 
 
@@ -125,8 +125,8 @@ namespace hb
             */
             inline HbNullable< T > & operator =( const T & value )
             {
-                _value = value;
-                _isNull = false;
+                mValue = value;
+                mIsNull = false;
 
                 return *this;
             }
@@ -138,8 +138,8 @@ namespace hb
             */
             inline HbNullable< T > & operator =( const QVariant & variant )
             {
-                _isNull = !( variant.isValid() && variant.canConvert< T >() );
-                _value = ( !_isNull ) ? variant.value< T >() : T();
+                mIsNull = !( variant.isValid() && variant.canConvert< T >() );
+                mValue = ( !mIsNull ) ? variant.value< T >() : T();
 
                 return *this;
             }
@@ -152,8 +152,8 @@ namespace hb
             {
                 if( &nullable != this )
                 {
-                    _value = nullable.value();
-                    _isNull = nullable.isNull();
+                    mValue = nullable.value();
+                    mIsNull = nullable.isNull();
                 }
 
                 return *this;
@@ -164,7 +164,7 @@ namespace hb
             */
             inline bool operator ==( const T & value ) const
             {
-                return ( !_isNull && ( _value == value ) );
+                return ( !mIsNull && ( mValue == value ) );
             }
 
             /*!
@@ -184,11 +184,11 @@ namespace hb
             */
             inline bool operator ==( const HbNullable< T > & nullable ) const
             {
-                if( _isNull && nullable.isNull() )
+                if( mIsNull && nullable.isNull() )
                     return true;
 
-                if( !_isNull && !nullable.isNull() )
-                    return ( _value == nullable.value() );
+                if( !mIsNull && !nullable.isNull() )
+                    return ( mValue == nullable.value() );
 
                 return false;
             }
@@ -232,8 +232,8 @@ namespace hb
 
         private :
 
-            T _value;
-            bool _isNull;
+            T mValue;
+            bool mIsNull;
         };
     }
 }

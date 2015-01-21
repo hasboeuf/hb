@@ -41,8 +41,8 @@ namespace hb
 
         private :
 
-            HbTcpSocket * _socket;
-            HbTcpConfig _config;
+            HbTcpSocket * mpSocket;
+            HbTcpConfig mConfig;
 		};
 	}
 }

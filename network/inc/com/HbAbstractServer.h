@@ -48,8 +48,8 @@ namespace hb
 
 			private:
 
-                //const HbNetworkHeader * _header;
-                //const HbNetworkContract * _content;
+                //const HbNetworkHeader * mpHeader;
+                //const HbNetworkContract * mpContent;
 			};
 
 
@@ -102,12 +102,12 @@ namespace hb
             void onHandlerIdled();
 
 		private:
-			HbServerConfig _config; // SUB
-			quint32 _uuid;
-			bool _ready;
+            HbServerConfig mConfig; // SUB
+            quint32 mUuid;
+            bool mReady;
 
 		protected:
-			QList< quint32 > _pending; // Socket descriptors not instanciated.
+            QList< quint32 > mPending; // Socket descriptors not instanciated.
             QHash< quint32, HbSocketHandler * > mHandlerBySocketId;
             QHash< quint16, HbSocketHandler * > mHandlerById;
 		};

@@ -44,8 +44,8 @@ namespace hb
             void onStateChanged(QAbstractSocket::SocketState state);
 
 		private:
-			HbTcpConfig _config;
-            QTcpSocket * _device;
+            HbTcpConfig mConfig;
+            QTcpSocket * mpDevice;
 		};
 	}
 }

@@ -12,10 +12,10 @@ HbTcpSocket::HbTcpSocket( QTcpSocket * device ) :
     HbAbstractSocket( device )
 {
     q_assert_ptr( device );
-	_device = device;
+    mpDevice = device;
 
-    connect( _device, &QTcpSocket::stateChanged, this, &HbTcpSocket::onStateChanged );
-    connect( _device, ( void (QTcpSocket::*)( QAbstractSocket::SocketError ) ) &QTcpSocket::error,
+    connect( mpDevice, &QTcpSocket::stateChanged, this, &HbTcpSocket::onStateChanged );
+    connect( mpDevice, ( void (QTcpSocket::*)( QAbstractSocket::SocketError ) ) &QTcpSocket::error,
     [this]()
     {
         emit socketError();
@@ -38,8 +38,8 @@ bool HbTcpSocket::connectToHost(const HbTcpConfig & config)
 {
     if ( state() == QAbstractSocket::UnconnectedState)
 	{
-		_config = config;
-        _device->connectToHost( _config.address(), _config.port(), QIODevice::ReadWrite );
+        mConfig = config;
+        mpDevice->connectToHost( mConfig.address(), mConfig.port(), QIODevice::ReadWrite );
 
         return true;
     }
@@ -51,7 +51,7 @@ bool HbTcpSocket::disconnectFromHost()
 {
     if ( state() != QAbstractSocket::UnconnectedState)
 	{
-		_device->disconnectFromHost();
+        mpDevice->disconnectFromHost();
         return true;
 	}
 
@@ -73,7 +73,7 @@ void HbTcpSocket::setSocketOption(QAbstractSocket::SocketOption option, bool ena
 	case QAbstractSocket::KeepAliveOption:
 	case QAbstractSocket::MulticastLoopbackOption:
 
-		_device->setSocketOption(option, enable);
+        mpDevice->setSocketOption(option, enable);
 		break;
 
 	default:
@@ -90,7 +90,7 @@ bool HbTcpSocket::socketOption(QAbstractSocket::SocketOption option) const
 	case QAbstractSocket::LowDelayOption:
 	case QAbstractSocket::KeepAliveOption:
 	case QAbstractSocket::MulticastLoopbackOption:
-		return _device->socketOption(option).toBool();
+        return mpDevice->socketOption(option).toBool();
 
 	default:
 		return false;
@@ -100,18 +100,18 @@ bool HbTcpSocket::socketOption(QAbstractSocket::SocketOption option) const
 
 QAbstractSocket::SocketError HbTcpSocket::error() const
 {
-	return _device->error();
+    return mpDevice->error();
 }
 
 QAbstractSocket::SocketState HbTcpSocket::state() const
 {
-    return _device->state();
+    return mpDevice->state();
 }
 
 
 void HbTcpSocket::onReadyRead()
 {
-    QDataStream stream( _device );
+    QDataStream stream( mpDevice );
 
     if ( readStream(stream) < 0 )
     {
@@ -121,7 +121,7 @@ void HbTcpSocket::onReadyRead()
 
 void HbTcpSocket::onStateChanged( QAbstractSocket::SocketState state )
 {
-    q_assert( _device == sender() );
+    q_assert( mpDevice == sender() );
 
     if( state == QAbstractSocket::UnconnectedState )
     {

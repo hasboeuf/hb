@@ -61,8 +61,8 @@ namespace hb
             void onSocketContractReceived( const HbNetworkContract& contract );
 
 		private:
-			qint32 _retry;
-			bool _ready;
+            qint32 mRetry;
+            bool mReady;
 		};
 
 

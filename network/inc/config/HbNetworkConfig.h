@@ -61,9 +61,9 @@ namespace hb
             HbNetworkExchanges mExchanges;
 
 		private:
-			quint16 _uuid; // DEL
-			Timeout _timeout;
-			QIODevice::OpenMode _openMode;
+            quint16 mUuid; // DEL
+            Timeout mTimeout;
+            QIODevice::OpenMode mOpenMode;
 
 		};
 

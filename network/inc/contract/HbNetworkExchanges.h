@@ -65,7 +65,7 @@ namespace hb
 
         private:
             typedef QHash< HbNetworkProtocol::Code, HbNetworkContract * > Contracts;
-            QHash< HbNetworkProtocol::Service, Contracts > _contracts;
+            QHash< HbNetworkProtocol::Service, Contracts > mContracts;
         };
 	}
 }

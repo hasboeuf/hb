@@ -28,9 +28,9 @@ void TcpServer::incomingConnection(qint32 socket_descriptor)
 HbTcpServer::HbTcpServer( QObject * parent ) :
     HbAbstractServer( parent )
 {
-    _device = q_check_ptr( new TcpServer( this ) );
+    mpDevice = q_check_ptr( new TcpServer( this ) );
 
-    connect( _device, &TcpServer::newConnection,
+    connect( mpDevice, &TcpServer::newConnection,
              this, &HbTcpServer::onNewConnection, Qt::UniqueConnection );
 }
 
@@ -61,14 +61,14 @@ bool HbTcpServer::setConfiguration( const HbTcpServerConfig & config )
 
 	reset();
 
-    _config = config;
+    mConfig = config;
 
     return true;
 }
 
 const HbTcpServerConfig & HbTcpServer::configuration() const
 {
-    return _config;
+    return mConfig;
 }
 
 void HbTcpServer::reset()
@@ -80,7 +80,7 @@ bool HbTcpServer::connectToNetwork()
 {
     quint16 port = this->configuration().port();
 
-    if ( !_device->listen( this->configuration().address(), port ) )
+    if ( !mpDevice->listen( this->configuration().address(), port ) )
     {
         HbError( "Server failed to listen." );
         return false;
@@ -92,12 +92,12 @@ bool HbTcpServer::connectToNetwork()
 
 void HbTcpServer::disconnectFromNetwork()
 {
-    _device->close();
+    mpDevice->close();
 }
 
 bool HbTcpServer::isListening() const
 {
-    return _device->isListening();
+    return mpDevice->isListening();
 }
 
 
@@ -144,7 +144,7 @@ void HbTcpServer::onNewConnection(qint32 socket_descriptor)
         connect( handler, &HbSocketHandler::socketContractReceived, this, &HbAbstractServer::onSocketContractReceived );
         connect( handler, &HbSocketHandler::handlerIdled,           this, &HbAbstractServer::onHandlerIdled );
 
-		bool is_threaded = _config.maxUsersPerThread() > 0;
+        bool is_threaded = mConfig.maxUsersPerThread() > 0;
 		// Must be threaded.
 		if (is_threaded)
 		{
@@ -164,7 +164,7 @@ void HbTcpServer::onNewConnection(qint32 socket_descriptor)
         HbInfo( "New HbTcpSocketHandler#%d created to handle socket#%d added.", handler->id(), socket_descriptor );
 	}
 
-    _pending.append( socket_descriptor );
+    mPending.append( socket_descriptor );
     q_assert( QMetaObject::invokeMethod(handler, "onNewPendingConnection", Q_ARG( qint32, socket_descriptor ) ) );
 
 	HbLogEnd();

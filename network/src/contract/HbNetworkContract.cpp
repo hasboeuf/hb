@@ -7,20 +7,20 @@ using namespace hb::network;
 
 HbNetworkContract::HbNetworkContract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code)
 {
-	_service = service;
-    _code    = code;
-    _routing = HbNetworkProtocol::RoutingScheme::UNICAST;
-    _reply   = nullptr;
+    mService = service;
+    mCode    = code;
+    mRouting = HbNetworkProtocol::RoutingScheme::UNICAST;
+    mpReply  = nullptr;
 }
 
 HbNetworkContract::HbNetworkContract( const HbNetworkContract & source )
 {
     if( &source != this )
     {
-        _service = source._service;
-        _code    = source._code;
-        _routing = source._routing;
-        _reply   = source._reply;
+        mService = source.mService;
+        mCode    = source.mCode;
+        mRouting = source.mRouting;
+        mpReply  = source.mpReply; // TODO copy ptr.
     }
 }
 
@@ -28,51 +28,51 @@ HbNetworkContract & HbNetworkContract::operator=( const HbNetworkContract & sour
 {
     if( &source != this )
     {
-        _service = source._service;
-        _code = source._code;
-        _routing = source._routing;
-        _reply = source._reply;
+        mService = source.mService;
+        mCode    = source.mCode;
+        mRouting = source.mRouting;
+        mpReply  = source.mpReply; // TODO copy ptr.
     }
     return ( *this );
 }
 
 HbNetworkProtocol::Service HbNetworkContract::service() const
 {
-	return _service;
+    return mService;
 }
 
 HbNetworkProtocol::Code HbNetworkContract::code() const
 {
-	return _code;
+    return mCode;
 }
 
 
 void HbNetworkContract::setRouting( HbNetworkProtocol::RoutingScheme routing)
 {
-	if (_routing != routing)
+    if (mRouting != routing)
 	{
-		_routing = routing;
+        mRouting = routing;
 
-        if (_routing == HbNetworkProtocol::RoutingScheme::BROADCAST )
+        if ( mRouting == HbNetworkProtocol::RoutingScheme::BROADCAST )
 		{
-			if (_receivers.size() > 0)
+            if ( mReceivers.size() > 0)
             {
                 HbWarning( "Predefined receivers will be cleared." );
             }
 			
-			_receivers.clear();
+            mReceivers.clear();
 		}
 
-        if (_routing == HbNetworkProtocol::RoutingScheme::UNICAST)
+        if ( mRouting == HbNetworkProtocol::RoutingScheme::UNICAST )
         {
-            if (_receivers.size() > 1)
+            if ( mReceivers.size() > 1 )
             {
                 HbWarning( "Only the first receiver is kept." );
 
-                int receiver = *_receivers.begin();
+                int receiver = *mReceivers.begin();
 
-                _receivers.clear();
-                _receivers.insert(receiver);
+                mReceivers.clear();
+                mReceivers.insert( receiver );
             }
         }
 	}
@@ -80,31 +80,31 @@ void HbNetworkContract::setRouting( HbNetworkProtocol::RoutingScheme routing)
 
 HbNetworkProtocol::RoutingScheme HbNetworkContract::routing() const
 {
-    if( _routing == HbNetworkProtocol::RoutingScheme::MULTICAST && _receivers.isEmpty() )
+    if( mRouting == HbNetworkProtocol::RoutingScheme::MULTICAST && mReceivers.isEmpty() )
     {
         return HbNetworkProtocol::RoutingScheme::BROADCAST;
     }
 
-    return _routing;
+    return mRouting;
 }
 
 
 bool HbNetworkContract::addReceiver( quint16 receiver )
 {
-    if( _routing == HbNetworkProtocol::RoutingScheme::UNICAST )
+    if( mRouting == HbNetworkProtocol::RoutingScheme::UNICAST )
     {
-        if (!_receivers.isEmpty())
+        if ( !mReceivers.isEmpty() )
         {
             HbWarning( "A receiver is already defined in unicast mode." );
             return false;
         }
 
-        _receivers.insert(receiver);
+        mReceivers.insert( receiver );
         return true;
     }
-    else if( _routing == HbNetworkProtocol::RoutingScheme::MULTICAST )
+    else if( mRouting == HbNetworkProtocol::RoutingScheme::MULTICAST )
     {
-        _receivers.insert(receiver);
+        mReceivers.insert( receiver );
         return true;
     }
     else
@@ -122,26 +122,26 @@ bool HbNetworkContract::setReceiver( quint16 receiver )
 
 void HbNetworkContract::resetReceivers()
 {
-	_receivers.clear();
+    mReceivers.clear();
 }
 
 const QSet< quint16 > & HbNetworkContract::receivers() const
 {
-	return _receivers;
+    return mReceivers;
 }
 
 
 bool HbNetworkContract::setReply( HbNetworkContract * reply )
 {
-    if ( reply && ( _reply != reply ) )
+    if ( reply && ( mpReply != reply ) )
 	{
-        if ( _routing != HbNetworkProtocol::RoutingScheme::UNICAST )
+        if ( mRouting != HbNetworkProtocol::RoutingScheme::UNICAST )
 		{
             HbWarning( "Reply only supported in unicast mode." );
 			return false;
 		}
 
-		_reply = reply;
+        mpReply = reply;
 	}
 
 	return true;
@@ -149,5 +149,5 @@ bool HbNetworkContract::setReply( HbNetworkContract * reply )
 
 HbNetworkContract * HbNetworkContract::reply() const
 {
-	return _reply;
+    return mpReply;
 }

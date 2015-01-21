@@ -58,7 +58,7 @@ private :
 
 private :
 
-    QHash< qint32, QString > _errors;
+    QHash< qint32, QString > mErrors;
 };
 
 

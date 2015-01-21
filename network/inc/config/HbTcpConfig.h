@@ -47,9 +47,9 @@ namespace hb
 			bool isValid() const;
 
 		private:
-			QHostAddress  _address;
-			quint16       _port;
-			SocketOptions _options;
+            QHostAddress  mAddress;
+            quint16       mPort;
+            SocketOptions mOptions;
 		};
 
 	}

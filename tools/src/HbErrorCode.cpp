@@ -3,10 +3,10 @@
 
 bool HbErrorCode::add( qint32 code, const QString & message )
 {
-    if( !_errors.contains( code ) )
+    if( !mErrors.contains( code ) )
         if( !message.isEmpty() )
         {
-            _errors.insert( code, message );
+            mErrors.insert( code, message );
             return true;
         }
 
@@ -15,8 +15,8 @@ bool HbErrorCode::add( qint32 code, const QString & message )
 
 QString HbErrorCode::get( qint32 code ) const
 {
-    if( !_errors.contains( code ) )
+    if( !mErrors.contains( code ) )
         Q_UNREACHABLE();
 
-    return _errors.value( code );
+    return mErrors.value( code );
 }

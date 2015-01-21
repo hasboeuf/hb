@@ -30,5 +30,5 @@ HbAbstractNetwork::HbAbstractNetwork(QObject * parent) :
 
 const HbNetworkConfig & HbAbstractNetwork::configuration() const
 {
-	return _config;
+    return mConfig;
 }

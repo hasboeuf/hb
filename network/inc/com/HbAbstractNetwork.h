@@ -53,8 +53,8 @@ namespace hb
 			//virtual const QList< IHbNetworkListener * > & listeners() const final;
 
 		private:
-			HbNetworkConfig _config; // SUB
-			//QList< IHbNetworkListener * > _listeners;
+            HbNetworkConfig mConfig; // SUB
+            //QList< IHbNetworkListener * > mListeners;
 
 		};
 	}

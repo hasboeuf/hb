@@ -10,9 +10,9 @@ HbTcpConfig::HbTcpConfig() :
 {
 	setTimeout(timeout());
 
-	_address = QHostAddress::Null;
-	_port = 0;
-	_options = SocketOption::NoOptions;
+    mAddress = QHostAddress::Null;
+    mPort = 0;
+    mOptions = SocketOption::NoOptions;
 
     mExchanges.plug< HbConnectionContract >();
 
@@ -32,9 +32,9 @@ HbTcpConfig::HbTcpConfig(const HbTcpConfig & config) :
 	{
 		setTimeout(timeout());
 
-		_address = config._address;
-		_port    = config._port;
-		_options = config._options;
+        mAddress = config.mAddress;
+        mPort    = config.mPort;
+        mOptions = config.mOptions;
 	}
 }
 
@@ -46,9 +46,9 @@ HbTcpConfig & HbTcpConfig::operator =(const HbTcpConfig & config)
 		HbNetworkConfig::operator =(config);
         setTimeout( timeout() );
 
-		_address = config._address;
-		_port    = config._port;
-		_options = config._options;
+        mAddress = config.mAddress;
+        mPort    = config.mPort;
+        mOptions = config.mOptions;
 	}
 
 	return *this;
@@ -71,34 +71,34 @@ void HbTcpConfig::setAddress(const QString & address)
 
 void HbTcpConfig::setAddress(const QHostAddress & address)
 {
-	_address = address;
+    mAddress = address;
 }
 
 void HbTcpConfig::setPort(quint16 port)
 {
-	_port = port;
+    mPort = port;
 }
 
 
 const QHostAddress & HbTcpConfig::address() const
 {
-	return _address;
+    return mAddress;
 }
 
 quint16 HbTcpConfig::port() const
 {
-	return _port;
+    return mPort;
 }
 
 
 void HbTcpConfig::setOptions(SocketOptions options)
 {
-	_options = options;
+    mOptions = options;
 }
 
 HbTcpConfig::SocketOptions HbTcpConfig::options() const
 {
-	return _options;
+    return mOptions;
 }
 
 bool HbTcpConfig::isValid() const
@@ -108,7 +108,7 @@ bool HbTcpConfig::isValid() const
 		return false;
 	}
 
-	if (_address.isNull())
+    if (mAddress.isNull())
 	{
 		HbError("Null address.");
 		return false;

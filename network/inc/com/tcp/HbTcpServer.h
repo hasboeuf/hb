@@ -63,8 +63,8 @@ namespace hb
 
         private :
 
-            TcpServer * _device;
-			HbTcpServerConfig _config;
+            TcpServer * mpDevice;
+            HbTcpServerConfig mConfig;
 		};
 	}
 }

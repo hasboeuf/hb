@@ -5,7 +5,7 @@ using namespace hb::network;
 
 HbNetworkExchanges::~HbNetworkExchanges()
 {
-    foreach(const Contracts & contracts, _contracts)
+    foreach(const Contracts & contracts, mContracts)
     {
         foreach(HbNetworkContract * contract, contracts)
         {
@@ -18,7 +18,7 @@ HbNetworkExchanges & HbNetworkExchanges::operator=( const HbNetworkExchanges & s
 {
     if( &source != this )
     {
-        foreach(const Contracts & contracts, source._contracts)
+        foreach(const Contracts & contracts, source.mContracts)
         {
             foreach(HbNetworkContract * contract, contracts)
             {
@@ -37,7 +37,7 @@ bool HbNetworkExchanges::add(HbNetworkContract * contract)
         return false;
     }
 
-    Contracts & contracts = _contracts[ contract->service() ];
+    Contracts & contracts = mContracts[ contract->service() ];
     HbNetworkContract * existing_contract = contracts.value( contract->code(), nullptr );
 
     if ( existing_contract )
@@ -59,7 +59,7 @@ bool HbNetworkExchanges::remove( HbNetworkContract * contract )
         return false;
     }
 
-    Contracts & contracts = _contracts[ contract->service() ];
+    Contracts & contracts = mContracts[ contract->service() ];
     HbNetworkContract * existing_contract = contracts.value( contract->code(), nullptr );
 
     delete contract;
@@ -70,7 +70,7 @@ bool HbNetworkExchanges::remove( HbNetworkContract * contract )
 
         if (contracts.isEmpty() )
         {
-            _contracts.remove( existing_contract->service() );
+            mContracts.remove( existing_contract->service() );
         }
 
         delete existing_contract;
@@ -84,16 +84,16 @@ bool HbNetworkExchanges::remove( HbNetworkContract * contract )
 
 bool HbNetworkExchanges::registered( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code ) const
 {
-    return _contracts.value( service ).contains( code );
+    return mContracts.value( service ).contains( code );
 }
 
 HbNetworkContract * HbNetworkExchanges::contract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code) const
 {
     HbNetworkContract * contract = nullptr;
 
-    if( _contracts.contains( service ) )
+    if( mContracts.contains( service ) )
     {
-        Contracts contracts = _contracts.value( service );
+        Contracts contracts = mContracts.value( service );
         if( contracts.contains( code ) )
         {
             HbNetworkContract * reference = contracts.value( code, nullptr );

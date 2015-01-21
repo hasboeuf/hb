@@ -16,8 +16,8 @@ using namespace hb::network;
 HbAbstractClient::HbAbstractClient(QObject * parent) :
 	HbAbstractNetwork(parent)
 {
-	_retry = 0;
-	_ready = false;
+    mRetry = 0;
+    mReady = false;
 }
 
 
@@ -54,10 +54,10 @@ bool HbAbstractClient::leave()
 {
 	if ( currentConnection() )
 	{
-		if ( _retry )
+        if ( mRetry )
 		{
-			killTimer( _retry );
-			_retry = 0;
+            killTimer( mRetry );
+            mRetry = 0;
 		}
 
 		HbAbstractSocket * socket = currentConnection();
@@ -70,7 +70,7 @@ bool HbAbstractClient::leave()
 			return false;
 		}
 
-		_ready = false;
+        mReady = false;
 		emit disconnected();
 	}
 
@@ -79,7 +79,7 @@ bool HbAbstractClient::leave()
 
 bool HbAbstractClient::isReady() const
 {
-	return _ready;
+    return mReady;
 }
 
 
@@ -176,10 +176,10 @@ void HbAbstractClient::timerEvent(QTimerEvent * event)
 
 void HbAbstractClient::onSocketConnected()
 {
-	if (_retry)
+    if ( mRetry )
 	{
-		killTimer(_retry);
-		_retry = 0;
+        killTimer( mRetry );
+        mRetry = 0;
 	}
 
 	emit connected();
@@ -248,15 +248,15 @@ void HbAbstractClient::onSocketDisconnected()
     qint16 retry_delay = configuration().timeout().reconnection;
     if( retry_delay > 0 )
     {
-        killTimer( _retry );
-        _retry = startTimer( retry_delay );
+        killTimer( mRetry );
+        mRetry = startTimer( retry_delay );
     }
     else
     {
         deleteSocket();
     }
 
-    _ready = false;
+    mReady = false;
 
     emit disconnected();
 }

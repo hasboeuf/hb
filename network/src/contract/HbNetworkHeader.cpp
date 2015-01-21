@@ -7,56 +7,56 @@ using namespace hb::network;
 
 HbNetworkHeader::HbNetworkHeader()
 {
-    _sender  = 0;
-    _service = HbNetworkProtocol::SERVICE_UNDEFINED;
-    _code    = HbNetworkProtocol::CODE_UNDEFINED;
-    _routing = HbNetworkProtocol::RoutingScheme::UNICAST;
+    mSender  = 0;
+    mService = HbNetworkProtocol::SERVICE_UNDEFINED;
+    mCode    = HbNetworkProtocol::CODE_UNDEFINED;
+    mRouting = HbNetworkProtocol::RoutingScheme::UNICAST;
 }
 
 HbNetworkHeader::HbNetworkHeader( quint16 sender, const HbNetworkContract * contract ) :
     HbNetworkHeader()
 {
-	_sender = sender;
+    mSender = sender;
 
     if ( contract )
     {
-		_service = contract->service();
+        mService = contract->service();
     }
 
     if ( contract->service() != HbNetworkProtocol::SERVICE_UNDEFINED )
 	{
-        _code      = contract->code();
-        _routing   = contract->routing();
-		_receivers = contract->receivers();
+        mCode      = contract->code();
+        mRouting   = contract->routing();
+        mReceivers = contract->receivers();
 	}
 }
 
 
 quint16 HbNetworkHeader::sender( ) const
 {
-	return _sender;
+    return mSender;
 }
 
 
 HbNetworkProtocol::Service HbNetworkHeader::service() const
 {
-	return _service;
+    return mService;
 }
 
 HbNetworkProtocol::Code HbNetworkHeader::code() const
 {
-	return _code;
+    return mCode;
 }
 
 
 HbNetworkProtocol::RoutingScheme HbNetworkHeader::routing() const
 {
-	return _routing;
+    return mRouting;
 }
 
 const QSet< quint16 > & HbNetworkHeader::receivers( ) const
 {
-	return _receivers;
+    return mReceivers;
 }
 
 
@@ -67,11 +67,11 @@ namespace hb
 
 		QDataStream & operator <<(QDataStream & stream, const HbNetworkHeader & header)
 		{
-			stream << header._sender;
-            stream << ( quint16 ) header._service;
-            stream << ( quint16 ) header._code;
-            stream << ( quint8 ) header._routing;
-			stream << header._receivers;
+            stream << header.mSender;
+            stream << ( quint16 ) header.mService;
+            stream << ( quint16 ) header.mCode;
+            stream << ( quint8 ) header.mRouting;
+            stream << header.mReceivers;
 
 			return stream;
 		}
@@ -83,15 +83,15 @@ namespace hb
             quint16 code = HbNetworkProtocol::CODE_UNDEFINED;
             quint8 routing = HbNetworkProtocol::UNICAST;
 
-			stream >> header._sender;
+            stream >> header.mSender;
             stream >> service;
             stream >> code;
             stream >> routing;
-			stream >> header._receivers;
+            stream >> header.mReceivers;
 
-            header._service = ( HbNetworkProtocol::Service ) service;
-            header._code = ( HbNetworkProtocol::Code ) code;
-            header._routing = ( HbNetworkProtocol::RoutingScheme ) routing;
+            header.mService = ( HbNetworkProtocol::Service ) service;
+            header.mCode = ( HbNetworkProtocol::Code ) code;
+            header.mRouting = ( HbNetworkProtocol::RoutingScheme ) routing;
 
 			return stream;
 		}

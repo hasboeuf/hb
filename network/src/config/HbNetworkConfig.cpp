@@ -6,18 +6,18 @@ using namespace hb::network;
 
 HbNetworkConfig::HbNetworkConfig()
 {
-	_timeout.connection = -1;
-	_timeout.reconnection = 1000;
-	_timeout.disconnection = -1;
-	_openMode = QIODevice::ReadWrite;
+    mTimeout.connection = -1;
+    mTimeout.reconnection = 1000;
+    mTimeout.disconnection = -1;
+    mOpenMode = QIODevice::ReadWrite;
 }
 
 HbNetworkConfig::HbNetworkConfig(const HbNetworkConfig & config)
 {
 	if (this != &config)
 	{
-		_timeout = config._timeout;
-		_openMode = config._openMode;
+        mTimeout = config.mTimeout;
+        mOpenMode = config.mOpenMode;
         mExchanges = config.mExchanges;
 	}
 }
@@ -27,8 +27,8 @@ HbNetworkConfig & HbNetworkConfig::operator =(const HbNetworkConfig & config)
 {
 	if (this != &config)
 	{
-		_timeout = config._timeout;
-		_openMode = config._openMode;
+        mTimeout = config.mTimeout;
+        mOpenMode = config.mOpenMode;
         mExchanges = config.mExchanges;
 	}
 
@@ -37,25 +37,25 @@ HbNetworkConfig & HbNetworkConfig::operator =(const HbNetworkConfig & config)
 
 void HbNetworkConfig::setOwner(quint16 address)
 {
-	_uuid = address;
+    mUuid = address;
 }
 
 quint16 HbNetworkConfig::owner( ) const
 {
-	return _uuid;
+    return mUuid;
 }
 
 
 void HbNetworkConfig::setTimeout(const Timeout & timeout)
 {
-	_timeout.connection    = qMax< qint16 >(-1, timeout.connection   );
-	_timeout.reconnection  = qMax< qint16 >(-1, timeout.reconnection );
-	_timeout.disconnection = qMax< qint16 >(-1, timeout.disconnection);
+    mTimeout.connection    = qMax< qint16 >(-1, timeout.connection   );
+    mTimeout.reconnection  = qMax< qint16 >(-1, timeout.reconnection );
+    mTimeout.disconnection = qMax< qint16 >(-1, timeout.disconnection);
 }
 
 void HbNetworkConfig::setOpenMode(QIODevice::OpenMode mode)
 {
-	if (_openMode != mode)
+    if (mOpenMode != mode)
 	{
 		switch (mode)
 		{
@@ -63,18 +63,18 @@ void HbNetworkConfig::setOpenMode(QIODevice::OpenMode mode)
 		case QIODevice::WriteOnly:
 		case QIODevice::ReadWrite:
 
-			_openMode = mode;
+            mOpenMode = mode;
 			break;
 
 		case QIODevice::Append:
 		case QIODevice::Truncate:
 
-			_openMode = QIODevice::WriteOnly;
+            mOpenMode = QIODevice::WriteOnly;
 			break;
 
 		default:
 
-			_openMode = QIODevice::NotOpen;
+            mOpenMode = QIODevice::NotOpen;
 			break;
 		}
 	}
@@ -82,17 +82,17 @@ void HbNetworkConfig::setOpenMode(QIODevice::OpenMode mode)
 
 const HbNetworkConfig::Timeout & HbNetworkConfig::timeout() const
 {
-	return _timeout;
+    return mTimeout;
 }
 
 QIODevice::OpenMode HbNetworkConfig::openMode() const
 {
-	return _openMode;
+    return mOpenMode;
 }
 
 int HbNetworkConfig::uuid() const
 {
-	return _uuid;
+    return mUuid;
 }
 
 const HbNetworkExchanges & HbNetworkConfig::exchanges() const
@@ -107,5 +107,5 @@ HbNetworkExchanges & HbNetworkConfig::exchanges()
 
 bool HbNetworkConfig::isValid() const
 {
-	return (_openMode != QIODevice::NotOpen);
+    return ( mOpenMode != QIODevice::NotOpen );
 }

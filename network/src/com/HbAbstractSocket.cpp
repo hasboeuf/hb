@@ -14,37 +14,37 @@ using namespace hb::tools;
 HbAbstractSocket::HbAbstractSocket(QIODevice * device)
 {
     q_assert_ptr( device );
-    _device = device;
+    mDevice = device;
 
-    connect( _device.data(), &QIODevice::readyRead, this, &HbAbstractSocket::onReadyRead, Qt::UniqueConnection);
+    connect( mDevice.data(), &QIODevice::readyRead, this, &HbAbstractSocket::onReadyRead, Qt::UniqueConnection);
 
-	_uuid = HbIdGenerator::get()->getUniqueId();
+    mUuid = HbIdGenerator::get()->getUniqueId();
 
-	_bytesPending = 0;
-	_packets.clear();
+    mBytesPending = 0;
+    mPackets.clear();
 }
 
 HbAbstractSocket::~HbAbstractSocket()
 {
-    if ( !_device.isNull() )
+    if ( !mDevice.isNull() )
 	{
-        _device.data()->disconnect(); // Disconnect all signals.
-        _device.data()->close();
-        _device.data()->deleteLater();
+        mDevice.data()->disconnect(); // Disconnect all signals.
+        mDevice.data()->close();
+        mDevice.data()->deleteLater();
 	}
 }
 
 quint16 HbAbstractSocket::uuid() const
 {
-	return _uuid;
+    return mUuid;
 }
 
 
 QByteArray HbAbstractSocket::readPacket()
 {
-    if( !_packets.isEmpty() )
+    if( !mPackets.isEmpty() )
     {
-        return _packets.dequeue();
+        return mPackets.dequeue();
     }
 
     HbWarning( "Read an empty packet." );
@@ -71,14 +71,14 @@ qint64 HbAbstractSocket::writePacket(const QByteArray & packet) const
 
 bool HbAbstractSocket::packetAvailable() const
 {
-    return ( !_packets.isEmpty() );
+    return ( !mPackets.isEmpty() );
 }
 
 QString HbAbstractSocket::errorString() const
 {
-    if( !_device.isNull() )
+    if( !mDevice.isNull() )
     {
-        return _device.data()->errorString();
+        return mDevice.data()->errorString();
     }
     else
     {
@@ -90,19 +90,19 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
 {
 	qint64 bytesRead = 0;
     quint32 expected = sizeof(quint32);
-    if( _bytesPending > 0 )
+    if( mBytesPending > 0 )
     {
-        expected = _bytesPending;
+        expected = mBytesPending;
     }
 
     while ( stream.device()->bytesAvailable() >= expected ) // Multi packets.
 	{
-        if ( _bytesPending == 0)
+        if ( mBytesPending == 0)
 		{
-            QDataStream::Status status = (stream >> _bytesPending).status();
+            QDataStream::Status status = (stream >> mBytesPending).status();
             q_assert( status == QDataStream::Ok );
 
-			expected = _bytesPending;
+            expected = mBytesPending;
 		}
         if ( expected > 0 )
 		{
@@ -116,11 +116,11 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
 				}
 				else
 				{
-                    _packets.enqueue( buffer );
+                    mPackets.enqueue( buffer );
 					bytesRead += expected;
 				}
 
-				_bytesPending = 0;
+                mBytesPending = 0;
 				expected = sizeof(quint32);
 			}
 		}
@@ -129,13 +129,13 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
 		{
             HbWarning( "No bytes read => packets cleared." );
 			stream.device()->readAll();
-			_packets.clear();
+            mPackets.clear();
 
 			return bytesRead;
 		}
 	}
 
-	if( _packets.size() > 0 )
+    if( mPackets.size() > 0 )
 	{
         emit socketReadyPacket();
 	}
@@ -145,7 +145,7 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
 
 qint64 HbAbstractSocket::writeBuffer(const QByteArray & buffer) const
 {
-    q_assert( !_device.isNull() );
+    q_assert( !mDevice.isNull() );
 
     if( buffer.isEmpty())
     {
@@ -153,5 +153,5 @@ qint64 HbAbstractSocket::writeBuffer(const QByteArray & buffer) const
         return 0;
     }
 
-    return _device->write(buffer);
+    return mDevice->write(buffer);
 }

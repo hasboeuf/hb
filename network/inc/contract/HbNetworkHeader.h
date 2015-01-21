@@ -44,13 +44,13 @@ namespace hb
 
 		private:
 
-			quint16 _sender;
+            quint16 mSender;
 
-            HbNetworkProtocol::Service _service;
-            HbNetworkProtocol::Code _code;
+            HbNetworkProtocol::Service mService;
+            HbNetworkProtocol::Code mCode;
 
-            HbNetworkProtocol::RoutingScheme _routing;
-			QSet< quint16 > _receivers;
+            HbNetworkProtocol::RoutingScheme mRouting;
+            QSet< quint16 > mReceivers;
 		};
 
         HB_NETWORK_DECL QDataStream & operator<<(QDataStream & stream, const HbNetworkHeader & header);
