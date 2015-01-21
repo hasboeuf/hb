@@ -14,7 +14,12 @@ PROJECT.ID   =      network
 SUBDIRS +=  com \
             com/tcp \
             config \
-            contract
+            contract \
+            service \
+            service/auth \
+            service/channel \
+            service/timeout \
+            user
 
 # ------------
 # Qt Settings
