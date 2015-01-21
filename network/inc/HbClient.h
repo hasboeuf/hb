@@ -6,27 +6,30 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HB_H
-#define HB_H
+#ifndef HBCLIENT_H
+#define HBCLIENT_H
 
 // Qt
 // Hb
 // Local
 #include <HbNetwork.h>
+#include <HbPeer.h>
 
 namespace hb
 {
 	namespace network
 	{
 
-		class HB_NETWORK_DECL Hb
+        class HB_NETWORK_DECL HbClient final : public HbPeer
 		{
+            Q_DISABLE_COPY( HbClient )
 		public:
 
-			Hb() = default;
-			virtual ~Hb( ) = default;
+            HbClient() = delete;
+            HbClient( const HbGeneralConfig & config );
+            virtual ~HbClient() = default;
 		};
 	}
 }
 
-#endif // HB_H
+#endif // HBCLIENT_H

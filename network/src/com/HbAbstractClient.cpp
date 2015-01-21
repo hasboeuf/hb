@@ -105,16 +105,16 @@ bool HbAbstractClient::send(const HbNetworkContract * contract)
 
 		else
 		{
-            if (!configuration().exchanges().registered(contract->service(), contract->code()))
+            if ( !configuration().exchanges().registered( contract->service(), contract->code() ) )
 			{
                 HbError( "Try to send an unregistered contract [service=%d, code=%d", contract->service(), contract->code() );
 
 				return false;
 			}
 
-			if (socket->type() == HbAbstractSocket::UdpSocket)
+            if ( socket->type() == HbNetworkProtocol::NETWORK_UDP )
             {
-                const_cast< HbNetworkContract * >(contract)->setRouting( HbNetworkProtocol::RoutingScheme::BROADCAST );
+                const_cast< HbNetworkContract * >( contract )->setRouting( HbNetworkProtocol::RoutingScheme::BROADCAST );
             }
 
 			QByteArray buffer;

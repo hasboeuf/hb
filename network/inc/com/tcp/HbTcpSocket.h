@@ -25,7 +25,7 @@ namespace hb
 			HbTcpSocket( QTcpSocket * device );
 			virtual ~HbTcpSocket();
 
-			SocketType type() const;
+            HbNetworkProtocol::NetworkType type() const;
 
 			bool connectToHost(const HbTcpConfig & config);
 			bool disconnectFromHost();

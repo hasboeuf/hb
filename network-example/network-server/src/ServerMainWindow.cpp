@@ -13,6 +13,7 @@
 #include <HbLogService.h>
 #include <gui/HbLogWidget.h>
 #include <HbLoggerOutputs.h>
+#include <HbServer.h>
 // Local
 #include <ServerMainWindow.h>
 
@@ -27,9 +28,16 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
 
 	mpLogWidget = new HbLogWidget(this);
     mpLogWidget->hide();
-	q_assert(HbLogService::outputs()->addGuiOutput(HbLogService::outputs()->unusedId(), mpLogWidget->logNotifier())); // TODO Notifier must be handle by hblog ???
+    q_assert(HbLogService::outputs()->addGuiOutput(HbLogService::outputs()->unusedId(), mpLogWidget->logNotifier())); // TODO Notifier must be handle by hblog ???
 
     HbLogBegin();
+
+
+    HbGeneralConfig config;
+    config.setAppName("hb-network-example");
+    config.setProtocolVersion( 1 );
+
+    mpHbServer = new HbServer( config );
 
     // Ui
     setupUi(this);
@@ -39,6 +47,8 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     connect(ui_qa_logs,   &QAction::triggered,   this, &ServerMainWindow::showLogs);
     connect(ui_qpb_start, &QPushButton::clicked, this, &ServerMainWindow::onStartClicked);
     connect(ui_qpb_stop,  &QPushButton::clicked, this, &ServerMainWindow::onStopClicked);
+
+
 
     HbLogEnd();
 }
@@ -81,8 +91,10 @@ void ServerMainWindow::onStartClicked()
 
     config.setTimeout(timeout);
 
-    mTcpServer.setConfiguration( config );
-    mTcpServer.join();
+    //mTcpServer.setConfiguration( config );
+    //mTcpServer.join();
+
+    mpHbServer->joinTcpServer( config );
 
     HbLogEnd();
 }
@@ -91,7 +103,8 @@ void ServerMainWindow::onStopClicked()
 {
     HbLogBegin();
 
-    mTcpServer.leave();
+    //mTcpServer.leave();
+    mpHbServer->leave();
 
     HbLogEnd();
 }

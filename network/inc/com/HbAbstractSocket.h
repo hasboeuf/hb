@@ -15,6 +15,7 @@
 #include <QtCore/QPointer>
 // Hb
 #include <HbGlobal.h>
+#include <contract/HbNetworkProtocol.h>
 
 class QIODevice;
 
@@ -29,22 +30,10 @@ namespace hb
 
 		public:
 
-			enum SocketType : qint16
-			{
-				TcpSocket = 0,
-				WebSocket,
-				SslSocket,
-				UdpSocket,
-				LocalSocket,
-				BluetoothSocket
-			};
-
-		public:
-
 			virtual ~HbAbstractSocket();
 
             virtual quint16 uuid() const final;
-			virtual SocketType type() const = 0;
+            virtual HbNetworkProtocol::NetworkType type() const = 0;
 			virtual bool isListening() const = 0;
 
             virtual QAbstractSocket::SocketError error() const = 0;

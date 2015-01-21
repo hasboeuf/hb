@@ -36,6 +36,7 @@ namespace hb
 			virtual bool join() = 0;
 			virtual bool leave() = 0;
             virtual bool isReady() const = 0;
+            virtual quint16 uuid() const = 0;
 
 			//virtual void addListener(IHbNetworkListener * listener) final;
 			//virtual void removeListener(IHbNetworkListener * listener) final;

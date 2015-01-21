@@ -15,7 +15,7 @@ namespace hb
 {
     namespace network
     {
-        //class HbTcpServer;
+        class HbServer;
     }
 
 	namespace log
@@ -41,6 +41,7 @@ namespace hb
 
             // Network
             hb::network::HbTcpServer mTcpServer;
+            hb::network::HbServer * mpHbServer;
 
         private:
             void init();

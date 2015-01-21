@@ -23,6 +23,7 @@ namespace hb
 
 			using HbAbstractClient::join;
             virtual bool join( const HbTcpConfig & config ) final;
+            virtual quint16 uuid() const final;
 
             virtual bool setConfiguration( const HbTcpConfig & config ) final;
             virtual const HbTcpConfig & configuration() const final;

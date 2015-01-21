@@ -54,11 +54,13 @@ namespace hb
 
 
 		public:
+            virtual ~HbAbstractServer() = default; // TODO CHECK
 
             virtual bool join () final;
 			virtual bool leave() final;
 			virtual bool leave( quint16 uuid ) final;
             virtual bool isReady() const final;
+            virtual quint16 uuid() const final;
 
             virtual bool send( const HbNetworkContract * contract );
 			//virtual bool reply(int sender, const HbNetworkContract * contract);
@@ -71,7 +73,7 @@ namespace hb
 	
 		protected:
 			HbAbstractServer(QObject * parent = nullptr);
-			virtual ~HbAbstractServer() = default;
+
 
 			virtual bool connectToNetwork() = 0;
 			virtual void disconnectFromNetwork() = 0;

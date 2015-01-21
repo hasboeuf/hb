@@ -9,6 +9,9 @@
 #ifndef HBNETWORKPROTOCOL_H
 #define HBNETWORKPROTOCOL_H
 
+// Qt
+#include <QtCore/QString>
+
 namespace hb
 {
 	namespace network
@@ -17,6 +20,18 @@ namespace hb
 		{
 
         public:
+            static QString msAppName;
+            static quint16 msProtocolVersion;
+
+            enum NetworkType : qint16
+            {
+                NETWORK_TCP = 0,
+                NETWORK_WEB,
+                NETWORK_SSL,
+                NETWORK_UDP,
+                NETWORK_LOCAL,
+                NETWORK_BLUETOOTH
+            };
 
             enum RoutingScheme : quint8
             {
@@ -44,5 +59,7 @@ namespace hb
         };
 	}
 }
+
+using hb::network::HbNetworkProtocol;
 
 #endif // HBNETWORKPROTOCOL_H

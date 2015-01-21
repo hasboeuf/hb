@@ -31,6 +31,18 @@ bool HbTcpClient::join( const HbTcpConfig & config )
     return false;
 }
 
+quint16 HbTcpClient::uuid() const // TODO CHECK
+{
+    if( mpSocket )
+    {
+        return mpSocket->uuid();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 
 bool HbTcpClient::setConfiguration( const HbTcpConfig & config )
 {

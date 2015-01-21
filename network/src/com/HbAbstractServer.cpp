@@ -161,6 +161,11 @@ bool HbAbstractServer::isReady() const
     return mReady;
 }
 
+quint16 HbAbstractServer::uuid() const
+{
+    return mUuid;
+}
+
 
 bool HbAbstractServer::send(const HbNetworkContract * contract)
 {

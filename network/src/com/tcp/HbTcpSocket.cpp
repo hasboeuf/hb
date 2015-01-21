@@ -28,9 +28,9 @@ HbTcpSocket::~HbTcpSocket()
 }
 
 
-HbAbstractSocket::SocketType HbTcpSocket::type() const
+HbNetworkProtocol::NetworkType HbTcpSocket::type() const
 {
-	return TcpSocket;
+    return HbNetworkProtocol::NETWORK_TCP;
 }
 
 
