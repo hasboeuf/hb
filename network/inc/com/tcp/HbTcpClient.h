@@ -25,7 +25,7 @@ namespace hb
             virtual bool join( const HbTcpConfig & config ) final;
 
             virtual bool setConfiguration( const HbTcpConfig & config ) final;
-            virtual HbTcpConfig & configuration() final; // TODO const
+            virtual const HbTcpConfig & configuration() const final;
 
         signals:
             void socketError( QAbstractSocket::SocketError error, QString error_str );

@@ -10,7 +10,7 @@ MODULE.PATH =		..
 # -----------------
 
 PROJECT.ID   =      network
-			
+
 SUBDIRS +=  com \
             com/tcp \
             config \

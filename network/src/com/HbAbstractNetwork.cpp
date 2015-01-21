@@ -28,7 +28,7 @@ HbAbstractNetwork::HbAbstractNetwork(QObject * parent) :
 //	return _listeners;
 //}
 
-HbNetworkConfig & HbAbstractNetwork::configuration()
+const HbNetworkConfig & HbAbstractNetwork::configuration() const
 {
 	return _config;
 }

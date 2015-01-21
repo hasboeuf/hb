@@ -22,7 +22,6 @@ namespace hb
 {
 	namespace network
 	{
-
 		class HB_NETWORK_DECL HbNetworkContract
 		{
 			Q_GADGET
