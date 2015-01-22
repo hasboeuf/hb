@@ -55,6 +55,7 @@ bool HbAbstractServer::join()
 		if ( connectToNetwork() )
 		{
             mReady = true;
+            emit serverConnected( mUuid );
 		}
 	}
 
@@ -434,7 +435,7 @@ void HbAbstractServer::onSocketContractReceived( const HbNetworkContract& contra
         HbInfo( "Server not ready, no treatments for onSocketContractReceived()." );
         return;
     }
-    emit socketContractReceived( contract );
+    emit socketContractReceived( mUuid, contract );
 }
 
 void HbAbstractServer::onHandlerIdled()

@@ -6,8 +6,8 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBNETWORKUSERPRIVATE_H
-#define HBNETWORKUSERPRIVATE_H
+#ifndef HBNETWORKUSERINFO_H
+#define HBNETWORKUSERINFO_H
 
 // Qt
 // Hb
@@ -19,14 +19,14 @@ namespace hb
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbNetworkUserPrivate
+        class HB_NETWORK_DECL HbNetworkUserInfo
 		{
 		public:
 
-            HbNetworkUserPrivate() = default;
-            virtual ~HbNetworkUserPrivate( ) = default;
+            HbNetworkUserInfo() = default;
+            virtual ~HbNetworkUserInfo( ) = default;
 		};
 	}
 }
 
-#endif // HBNETWORKUSERPRIVATE_H
+#endif // HBNETWORKUSERINFO_H

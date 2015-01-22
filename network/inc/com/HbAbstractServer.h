@@ -89,17 +89,17 @@ namespace hb
 			//bool send(int uuid, const HbNetworkPacket & packet);
 
         signals:
-            void serverConnected   ( quint32 socket_uuid );
-            void serverDisconnected( quint32 socket_uuid );
+            void serverConnected   ( quint16 server_uuid );
+            void serverDisconnected( quint16 server_uuid );
             // To higher level class.
-            void socketConnected   ( quint32 socket_uuid );
-            void socketDisconnected( quint32 socket_uuid );
-            void socketContractReceived( const HbNetworkContract & contract );
+            void socketConnected       ( quint16 server_uuid, quint32 socket_uuid );
+            void socketDisconnected    ( quint16 server_uuid, quint32 socket_uuid );
+            void socketContractReceived( quint16 server_uuid, const HbNetworkContract & contract );
 
         public callbacks :
             // From HbSocketHandler.
-            void onSocketConnected( qint32 socket_descriptor, quint16 socket_uuid );
-            void onSocketDisconnected( quint16 socket_uuid );
+            void onSocketConnected       ( qint32 socket_descriptor, quint16 socket_uuid );
+            void onSocketDisconnected    ( quint16 socket_uuid );
             void onSocketContractReceived( const HbNetworkContract& contract );
             void onHandlerIdled();
 

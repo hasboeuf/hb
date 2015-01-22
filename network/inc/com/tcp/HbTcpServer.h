@@ -59,6 +59,7 @@ namespace hb
             void onNewConnection( qint32 socket_descriptor );
 
 		signals:
+            // To HbTcpSocketHandler.
             void newConnection( qint32 socket_descriptor );
 
         private :
