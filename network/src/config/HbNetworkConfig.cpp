@@ -35,17 +35,6 @@ HbNetworkConfig & HbNetworkConfig::operator =(const HbNetworkConfig & config)
 	return *this;
 }
 
-void HbNetworkConfig::setOwner(quint16 address)
-{
-    mUuid = address;
-}
-
-quint16 HbNetworkConfig::owner( ) const
-{
-    return mUuid;
-}
-
-
 void HbNetworkConfig::setTimeout(const Timeout & timeout)
 {
     mTimeout.connection    = qMax< qint16 >(-1, timeout.connection   );
@@ -88,11 +77,6 @@ const HbNetworkConfig::Timeout & HbNetworkConfig::timeout() const
 QIODevice::OpenMode HbNetworkConfig::openMode() const
 {
     return mOpenMode;
-}
-
-int HbNetworkConfig::uuid() const
-{
-    return mUuid;
 }
 
 const HbNetworkExchanges & HbNetworkConfig::exchanges() const

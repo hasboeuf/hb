@@ -5,7 +5,7 @@
 HbConnectionContract::HbConnectionContract() :
     HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_CONNECTION_REQUEST )
 {
-    setRouting( HbNetworkProtocol::UNICAST );
+    mHeader.setRouting( HbNetworkProtocol::UNICAST );
 }
 
 HbConnectionContract::HbConnectionContract( const HbConnectionContract & source ) :

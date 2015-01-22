@@ -22,7 +22,6 @@ namespace hb
 	{
 
 		class HbAbstractSocket;
-		class HbNetworkHeader;
         class HbSocketHandler;
 
 		class HB_NETWORK_DECL HbAbstractServer : public HbAbstractNetwork
@@ -30,28 +29,6 @@ namespace hb
 			Q_OBJECT
 			Q_DISABLE_COPY( HbAbstractServer )
 			Q_FRIEND_CLASS( HbSocketHandler )
-
-		private:
-
-			inner class HbNetworkPacket final
-			{
-				Q_DISABLE_COPY( HbNetworkPacket )
-
-
-			public:
-				HbNetworkPacket() = delete;
-				HbNetworkPacket(const HbNetworkHeader * header, const HbNetworkContract * contract);
-				virtual ~HbNetworkPacket() = default;
-
-                //const HbNetworkHeader * header() const;
-                //const HbNetworkContract * content() const;
-
-			private:
-
-                //const HbNetworkHeader * mpHeader;
-                //const HbNetworkContract * mpContent;
-			};
-
 
 		public:
             virtual ~HbAbstractServer() = default; // TODO CHECK
@@ -85,8 +62,7 @@ namespace hb
             virtual void reset();
 
 		private:
-            bool send( const HbNetworkPacket & packet );
-			//bool send(int uuid, const HbNetworkPacket & packet);
+            bool send( const HbNetworkContract & contract );
 
         signals:
             void serverConnected   ( quint16 server_uuid );

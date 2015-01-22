@@ -7,36 +7,54 @@ using namespace hb::network;
 
 HbNetworkHeader::HbNetworkHeader()
 {
-    mSender  = 0;
+    mAppName = HbNetworkProtocol::msAppName;
+    mProtocolVersion = HbNetworkProtocol::msProtocolVersion;
     mService = HbNetworkProtocol::SERVICE_UNDEFINED;
     mCode    = HbNetworkProtocol::CODE_UNDEFINED;
     mRouting = HbNetworkProtocol::RoutingScheme::UNICAST;
 }
 
-HbNetworkHeader::HbNetworkHeader( quint16 sender, const HbNetworkContract * contract ) :
+HbNetworkHeader::HbNetworkHeader( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code ) :
     HbNetworkHeader()
 {
-    mSender = sender;
-
-    if ( contract )
-    {
-        mService = contract->service();
-    }
-
-    if ( contract->service() != HbNetworkProtocol::SERVICE_UNDEFINED )
-	{
-        mCode      = contract->code();
-        mRouting   = contract->routing();
-        mReceivers = contract->receivers();
-	}
+    mService = service;
+    mCode = code;
 }
 
-
-quint16 HbNetworkHeader::sender( ) const
+HbNetworkHeader::HbNetworkHeader( const HbNetworkHeader & header )
 {
-    return mSender;
+    if( &header != this )
+    {
+        mAppName         = header.mAppName;
+        mProtocolVersion = header.mProtocolVersion;
+        mService         = header.mService;
+        mCode            = header.mCode;
+        mRouting         = header.mRouting;
+    }
 }
 
+HbNetworkHeader & HbNetworkHeader::operator=( const HbNetworkHeader & header )
+{
+    if( &header != this )
+    {
+        mAppName         = header.mAppName;
+        mProtocolVersion = header.mProtocolVersion;
+        mService         = header.mService;
+        mCode            = header.mCode;
+        mRouting         = header.mRouting;
+    }
+    return *this;
+}
+
+const QString & HbNetworkHeader::appName() const
+{
+    return mAppName;
+}
+
+quint16 HbNetworkHeader::protocolVersion() const
+{
+    return mProtocolVersion;
+}
 
 HbNetworkProtocol::Service HbNetworkHeader::service() const
 {
@@ -54,11 +72,11 @@ HbNetworkProtocol::RoutingScheme HbNetworkHeader::routing() const
     return mRouting;
 }
 
-const QSet< quint16 > & HbNetworkHeader::receivers( ) const
+void HbNetworkHeader::setRouting( HbNetworkProtocol::RoutingScheme routing )
 {
-    return mReceivers;
+    mRouting = routing;
+    // TODO logique routing.
 }
-
 
 namespace hb
 {
@@ -67,11 +85,11 @@ namespace hb
 
 		QDataStream & operator <<(QDataStream & stream, const HbNetworkHeader & header)
 		{
-            stream << header.mSender;
+            stream << header.mAppName;
+            stream << header.mProtocolVersion;
             stream << ( quint16 ) header.mService;
             stream << ( quint16 ) header.mCode;
             stream << ( quint8 ) header.mRouting;
-            stream << header.mReceivers;
 
 			return stream;
 		}
@@ -83,11 +101,11 @@ namespace hb
             quint16 code = HbNetworkProtocol::CODE_UNDEFINED;
             quint8 routing = HbNetworkProtocol::UNICAST;
 
-            stream >> header.mSender;
+            stream >> header.mAppName;
+            stream >> header.mProtocolVersion;
             stream >> service;
             stream >> code;
             stream >> routing;
-            stream >> header.mReceivers;
 
             header.mService = ( HbNetworkProtocol::Service ) service;
             header.mCode = ( HbNetworkProtocol::Code ) code;
@@ -97,3 +115,44 @@ namespace hb
 		}
 	}
 }
+
+/*void HbNetworkContract::setRouting( HbNetworkProtocol::RoutingScheme routing)
+{
+    if (mRouting != routing)
+    {
+        mRouting = routing;
+
+        if ( mRouting == HbNetworkProtocol::RoutingScheme::BROADCAST )
+        {
+            if ( mSocketReceivers.size() > 0)
+            {
+                HbWarning( "Predefined receivers will be cleared." );
+            }
+
+            resetReceivers();
+        }
+
+        if ( mRouting == HbNetworkProtocol::RoutingScheme::UNICAST )
+        {
+            if ( mSocketReceivers.size() > 1 )
+            {
+                HbWarning( "Only the first receiver is kept." );
+
+                int receiver = *mSocketReceivers.begin();
+
+                resetReceivers();
+                mSocketReceivers.insert( receiver );
+            }
+        }
+    }
+}
+
+HbNetworkProtocol::RoutingScheme HbNetworkContract::routing() const
+{
+    if( mRouting == HbNetworkProtocol::RoutingScheme::MULTICAST && mSocketReceivers.isEmpty() )
+    {
+        return HbNetworkProtocol::RoutingScheme::BROADCAST;
+    }
+
+    return mRouting;
+}*/

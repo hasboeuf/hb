@@ -25,7 +25,8 @@ namespace hb
 
             enum NetworkType : qint16
             {
-                NETWORK_TCP = 0,
+                NETWORK_UNDEFINED = 0,
+                NETWORK_TCP,
                 NETWORK_WEB,
                 NETWORK_SSL,
                 NETWORK_UDP,

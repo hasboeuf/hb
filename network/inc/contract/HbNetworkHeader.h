@@ -9,9 +9,11 @@
 #ifndef HBNETWORKHEADER_H
 #define HBNETWORKHEADER_H
 
+// Hb
+#include <HbGlobal.h>
 // Local
-#include <contract/HbNetworkContract.h>
 #include <HbNetwork.h>
+#include <contract/HbNetworkProtocol.h>
 
 namespace hb
 {
@@ -21,41 +23,40 @@ namespace hb
 
         class HB_NETWORK_DECL HbNetworkHeader final
 		{
-            Q_DISABLE_COPY( HbNetworkHeader )
+            Q_FRIEND_CLASS( HbNetworkContract )
 
         public:
 
 			HbNetworkHeader();
-            HbNetworkHeader( quint16 sender );
-            HbNetworkHeader( quint16 sender, const HbNetworkContract * contract );
-			virtual ~HbNetworkHeader() = default;
+            virtual ~HbNetworkHeader() = default;
+            HbNetworkHeader( const HbNetworkHeader & header );
+            HbNetworkHeader( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code );
+            HbNetworkHeader & operator=( const HbNetworkHeader & header );
 
-			quint16 sender() const;
-
+            const QString & appName() const;
+            quint16 protocolVersion() const;
             HbNetworkProtocol::Service service() const;
             HbNetworkProtocol::Code code() const;
-
             HbNetworkProtocol::RoutingScheme routing() const;
-			const QSet< quint16 > & receivers() const;
+
+            void setRouting( HbNetworkProtocol::RoutingScheme routing );
 
             friend QDataStream & operator<<( QDataStream & stream, const HbNetworkHeader & header );
             friend QDataStream & operator>>( QDataStream & stream, HbNetworkHeader & header );
 
-
-		private:
-
-            quint16 mSender;
-
+        private:
+            QString mAppName;
+            quint16 mProtocolVersion;
             HbNetworkProtocol::Service mService;
             HbNetworkProtocol::Code mCode;
-
             HbNetworkProtocol::RoutingScheme mRouting;
-            QSet< quint16 > mReceivers;
 		};
 
         HB_NETWORK_DECL QDataStream & operator<<(QDataStream & stream, const HbNetworkHeader & header);
         HB_NETWORK_DECL QDataStream & operator>>(QDataStream & stream, HbNetworkHeader & header);
 	}
 }
+
+using hb::network::HbNetworkHeader;
 
 #endif // HBNETWORKHEADER_H

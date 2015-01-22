@@ -37,8 +37,8 @@ bool HbNetworkExchanges::add(HbNetworkContract * contract)
         return false;
     }
 
-    Contracts & contracts = mContracts[ contract->service() ];
-    HbNetworkContract * existing_contract = contracts.value( contract->code(), nullptr );
+    Contracts & contracts = mContracts[ contract->header().service() ];
+    HbNetworkContract * existing_contract = contracts.value( contract->header().code(), nullptr );
 
     if ( existing_contract )
     {
@@ -46,7 +46,7 @@ bool HbNetworkExchanges::add(HbNetworkContract * contract)
     }
     else
     {
-        contracts.insert( contract->code(), contract );
+        contracts.insert( contract->header().code(), contract );
     }
 
     return true;
@@ -59,18 +59,18 @@ bool HbNetworkExchanges::remove( HbNetworkContract * contract )
         return false;
     }
 
-    Contracts & contracts = mContracts[ contract->service() ];
-    HbNetworkContract * existing_contract = contracts.value( contract->code(), nullptr );
+    Contracts & contracts = mContracts[ contract->header().service() ];
+    HbNetworkContract * existing_contract = contracts.value( contract->header().code(), nullptr );
 
     delete contract;
 
     if ( existing_contract )
     {
-        contracts.remove( existing_contract->code() );
+        contracts.remove( existing_contract->header().code() );
 
-        if (contracts.isEmpty() )
+        if ( contracts.isEmpty() )
         {
-            mContracts.remove( existing_contract->service() );
+            mContracts.remove( existing_contract->header().service() );
         }
 
         delete existing_contract;

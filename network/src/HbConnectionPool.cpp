@@ -26,7 +26,8 @@ quint16 HbConnectionPool::joinTcpServer( const HbTcpServerConfig & config )
     q_assert( !mServers.contains( server->uuid() ) );
 
     server->setConfiguration( config );
-    if( !server->join() );
+
+    if( !server->join() )
     {
         delete server;
         return 0;

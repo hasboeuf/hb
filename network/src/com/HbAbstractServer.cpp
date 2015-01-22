@@ -15,25 +15,6 @@
 using namespace hb::tools;
 using namespace hb::network;
 
-
-HbAbstractServer::HbNetworkPacket::HbNetworkPacket(const HbNetworkHeader * header, const HbNetworkContract * contract)
-{
-    //_header = q_assert_ptr(header);
-    //_content = q_assert_ptr(contract);
-}
-
-
-/*const HbNetworkHeader * HbAbstractServer::HbNetworkPacket::header() const
-{
-	return _header;
-}*/
-
-/*const HbNetworkContract * HbAbstractServer::HbNetworkPacket::content() const
-{
-	return _content;
-}*/
-
-
 HbAbstractServer::HbAbstractServer(QObject * parent) :
 	HbAbstractNetwork(parent)
 {
@@ -183,10 +164,7 @@ bool HbAbstractServer::send(const HbNetworkContract * contract)
 		}
 		else
 		{
-			HbNetworkHeader header( HbAbstractNetwork::configuration( ).uuid( ), contract );
-			HbNetworkPacket packet(&header, contract);
-
-			return send(packet);
+            return send( contract );
 		}
 	}
 
@@ -256,7 +234,7 @@ void HbAbstractServer::reset()
     mHandlerBySocketId.clear();
 }
 
-bool HbAbstractServer::send(const HbNetworkPacket & packet)
+bool HbAbstractServer::send( const HbNetworkContract & contract )
 {
 	if( !HbAbstractNetwork::configuration( ).openMode().testFlag( QIODevice::WriteOnly ) )
 	{

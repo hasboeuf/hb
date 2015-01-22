@@ -94,7 +94,11 @@ void ServerMainWindow::onStartClicked()
     //mTcpServer.setConfiguration( config );
     //mTcpServer.join();
 
-    mpHbServer->joinTcpServer( config );
+    quint16 server_uuid = mpHbServer->joinTcpServer( config );
+    if( server_uuid > 0 )
+    {
+        HbInfo( "Server #%d started.", server_uuid );
+    }
 
     HbLogEnd();
 }

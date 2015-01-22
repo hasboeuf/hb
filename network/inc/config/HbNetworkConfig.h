@@ -36,16 +36,12 @@ namespace hb
 
 		public:
 
-			virtual void setOwner( quint16 address ) final; // DEL
-			virtual quint16 owner( ) const final; // DEL
-
 			virtual void setTimeout(const Timeout & timeout);
 			virtual void setOpenMode(QIODevice::OpenMode mode) final;
 
 			virtual const Timeout & timeout() const final;
 			virtual QIODevice::OpenMode openMode() const final;
 			
-			virtual int uuid() const final; // DEL
             virtual const HbNetworkExchanges & exchanges() const final;
             virtual HbNetworkExchanges & exchanges() final;
 
@@ -61,7 +57,6 @@ namespace hb
             HbNetworkExchanges mExchanges;
 
 		private:
-            quint16 mUuid; // DEL
             Timeout mTimeout;
             QIODevice::OpenMode mOpenMode;
 

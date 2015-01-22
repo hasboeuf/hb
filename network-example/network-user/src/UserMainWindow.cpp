@@ -65,19 +65,6 @@ void UserMainWindow::init()
 {
     HbLogBegin();
 
-    HbConnectionContract contract;
-    HbNetworkHeader header( 89, &contract );
-
-    QByteArray data;
-    QDataStream stream( &data, QIODevice::ReadWrite );
-
-    int status = ( stream << header ).status();
-
-    QDataStream stream2( &data, QIODevice::ReadWrite );
-
-    HbNetworkHeader header2;
-    status = (stream2 >> header2).status();
-
     HbLogEnd();
 }
 

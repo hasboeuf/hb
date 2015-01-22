@@ -83,7 +83,7 @@ bool HbAbstractClient::isReady() const
 }
 
 
-bool HbAbstractClient::send(const HbNetworkContract * contract)
+bool HbAbstractClient::send( const HbNetworkContract * contract )
 {
     if ( !contract )
     {
@@ -105,25 +105,25 @@ bool HbAbstractClient::send(const HbNetworkContract * contract)
 
 		else
 		{
-            if ( !configuration().exchanges().registered( contract->service(), contract->code() ) )
+            if ( !configuration().exchanges().registered( contract->header().service(), contract->header().code() ) )
 			{
-                HbError( "Try to send an unregistered contract [service=%d, code=%d", contract->service(), contract->code() );
+                HbError( "Try to send an unregistered contract [service=%d, code=%d", contract->header().service(), contract->header().code() );
 
 				return false;
 			}
 
-            if ( socket->type() == HbNetworkProtocol::NETWORK_UDP )
-            {
-                const_cast< HbNetworkContract * >( contract )->setRouting( HbNetworkProtocol::RoutingScheme::BROADCAST );
-            }
+            //if ( socket->type() == HbNetworkProtocol::NETWORK_UDP )
+            //{
+            //    contract->setRouting( HbNetworkProtocol::RoutingScheme::BROADCAST );
+            //}
 
 			QByteArray buffer;
 			QString socketError;
 
 			QDataStream stream(&buffer, QIODevice::WriteOnly);
-			stream << HbNetworkHeader( this->configuration( ).uuid( ), contract );
+            stream << contract;
 
-			if (!contract->write(stream))
+            if ( !contract->write(stream) )
             {
                 HbError( "Invalid contract format." );
             }
@@ -206,12 +206,11 @@ void HbAbstractClient::onSocketContractReceived( const HbNetworkContract & contr
 
 			HbNetworkHeader header;
 			q_assert((stream >> header).status() == QDataStream::Ok);
-			q_assert(header.sender() != configuration().uuid());
 
-            if( header.routing() != HbNetworkProtocol::RoutingScheme::BROADCAST )
-            {
-				q_assert(header.receivers().contains(configuration().uuid()));
-            }
+            //if( header.routing() != HbNetworkProtocol::RoutingScheme::BROADCAST )
+            //{
+            //	q_assert(header.receivers().contains(configuration().uuid()));
+            //}
 
             HbNetworkProtocol::Service service = header.service();
             HbNetworkProtocol::Code code = header.code();

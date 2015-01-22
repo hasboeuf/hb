@@ -47,6 +47,7 @@ namespace hb
             // From HbNetworkService.
 
         signals:
+            // To services.
             void socketConnected       ( quint16 socket_uuid );
             void socketDisconnected    ( quint16 socket_uuid );
             void socketContractReceived( const HbNetworkContract & contract );
