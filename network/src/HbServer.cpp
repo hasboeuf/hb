@@ -13,26 +13,12 @@ HbServer::HbServer( const HbGeneralConfig & config ) :
 
 }
 
-bool HbServer::joinTcpServer( const HbTcpServerConfig & config )
+quint16 HbServer::joinTcpServer( const HbTcpServerConfig & config )
 {
-    HbTcpServer * server = new HbTcpServer();
-    server->setConfiguration( config );
-
-    bool ok = server->join();
-    if( !ok )
-    {
-        delete server;
-    }
-    else
-    {
-        mServers.insert( server->uuid(), server );
-    }
-
-    return ok;
+    return mConnectionPool.joinTcpServer( config );
 }
 
 bool HbServer::leave()
 {
-    qDeleteAll( mServers );
-    mServers.clear();
+    mConnectionPool.leave();
 }

@@ -10,21 +10,30 @@
 #define HBCONNECTIONPOOL_H
 
 // Qt
+#include <QtCore/QHash>
 // Hb
 // Local
 #include <HbNetwork.h>
+#include <config/HbTcpServerConfig.h>
 
 namespace hb
 {
 	namespace network
 	{
+        class HbAbstractServer;
 
         class HB_NETWORK_DECL HbConnectionPool
 		{
 		public:
 
             HbConnectionPool() = default;
-            virtual ~HbConnectionPool() = default;
+            virtual ~HbConnectionPool();
+
+            bool leave();
+            quint16 joinTcpServer( const HbTcpServerConfig & config );
+
+        private:
+            QHash< quint16, HbAbstractServer * > mServers;
 		};
 	}
 }

@@ -32,12 +32,11 @@ namespace hb
             HbServer( const HbGeneralConfig & config );
             virtual ~HbServer() = default;
 
-            bool joinTcpServer( const HbTcpServerConfig & config );
+            quint16 joinTcpServer( const HbTcpServerConfig & config );
             bool leave();
 
         private:
             HbConnectionPool mConnectionPool;
-            QHash< quint16, HbAbstractServer * > mServers;
 
 		};
 	}
