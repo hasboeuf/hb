@@ -34,7 +34,7 @@ namespace hb
 			virtual bool leave() final;
             virtual bool isReady() const final;
 
-			virtual bool send(const HbNetworkContract * contract);
+            virtual bool send( HbNetworkContract * contract);
 			//virtual bool reply(int sender, const HbNetworkContract * contract);
 
 		signals:

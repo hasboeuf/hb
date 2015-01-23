@@ -81,7 +81,7 @@ bool HbAbstractClient::isReady() const
 }
 
 
-bool HbAbstractClient::send( const HbNetworkContract * contract )
+bool HbAbstractClient::send( HbNetworkContract *contract )
 {
     if ( !contract )
     {

@@ -147,7 +147,7 @@ quint16 HbAbstractServer::uuid() const
 }
 
 
-bool HbAbstractServer::send(const HbNetworkContract * contract)
+bool HbAbstractServer::send( HbNetworkContract * contract )
 {
 	if( !contract )
 	{
@@ -232,7 +232,7 @@ void HbAbstractServer::reset()
     mHandlerBySocketId.clear();
 }
 
-bool HbAbstractServer::send( const HbNetworkContract & contract )
+/*bool HbAbstractServer::send( HbNetworkContract * contract )
 {
 	if( !HbAbstractNetwork::configuration( ).openMode().testFlag( QIODevice::WriteOnly ) )
 	{
@@ -240,7 +240,7 @@ bool HbAbstractServer::send( const HbNetworkContract & contract )
 	}
 	else
 	{
-        /*
+
         const HbNetworkHeader * header = packet.header();
 
 		if (header->routing() == HbNetworkContract::RoutingScheme::Broadcast)
@@ -313,11 +313,11 @@ bool HbAbstractServer::send( const HbNetworkContract & contract )
 		}
 
         HbError( "Unable to send a contract without receivers." );
-        */
+
 	}
 
 	return false;
-}
+}*/
 
 /*bool HbAbstractServer::send( int uuid, const HbNetworkPacket & packet )
 {

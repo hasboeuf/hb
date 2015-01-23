@@ -39,7 +39,7 @@ namespace hb
             virtual bool isReady() const final;
             virtual quint16 uuid() const final;
 
-            virtual bool send( const HbNetworkContract * contract );
+            virtual bool send( HbNetworkContract * contract );
 			//virtual bool reply(int sender, const HbNetworkContract * contract);
 			//virtual bool forward(int receiver, HbNetworkContract * contract);
 
@@ -60,9 +60,6 @@ namespace hb
 			virtual bool disconnectFromNetwork( quint16 uuid ) = 0;
 
             virtual void reset();
-
-		private:
-            bool send( const HbNetworkContract & contract );
 
         signals:
             void serverConnected   ( quint16 server_uuid );

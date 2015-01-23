@@ -41,7 +41,7 @@ namespace hb
 			//virtual void addListener(IHbNetworkListener * listener) final;
 			//virtual void removeListener(IHbNetworkListener * listener) final;
 
-			virtual bool send(const HbNetworkContract * contract) = 0;
+            virtual bool send( HbNetworkContract * contract ) = 0;
 			//virtual bool reply(int sender, const HbNetworkContract * contract) = 0;
 
 			//virtual const HbNetworkConfig & configuration() const = 0; SUB

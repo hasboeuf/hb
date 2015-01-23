@@ -74,8 +74,6 @@ namespace hb
             QSet< quint16 > mSocketReceivers;
             HbNetworkContract * mpReply;
 		};
-
-
 	}
 }
 
