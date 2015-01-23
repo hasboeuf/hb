@@ -23,21 +23,19 @@ namespace hb
 
         class HB_NETWORK_DECL HbNetworkHeader final
 		{
-            Q_FRIEND_CLASS( HbNetworkContract )
 
         public:
 
-			HbNetworkHeader();
-            virtual ~HbNetworkHeader() = default;
+            HbNetworkHeader(); // Used before streamed back.
             HbNetworkHeader( const HbNetworkHeader & header );
             HbNetworkHeader( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code );
             HbNetworkHeader & operator=( const HbNetworkHeader & header );
+            ~HbNetworkHeader() = default;
 
             const QString & appName() const;
             quint16 protocolVersion() const;
             HbNetworkProtocol::Service service() const;
             HbNetworkProtocol::Code code() const;
-            HbNetworkProtocol::RoutingScheme routing() const;
 
             void setRouting( HbNetworkProtocol::RoutingScheme routing );
 
@@ -49,7 +47,6 @@ namespace hb
             quint16 mProtocolVersion;
             HbNetworkProtocol::Service mService;
             HbNetworkProtocol::Code mCode;
-            HbNetworkProtocol::RoutingScheme mRouting;
 		};
 
         HB_NETWORK_DECL QDataStream & operator<<(QDataStream & stream, const HbNetworkHeader & header);

@@ -3,7 +3,9 @@
 // Local
 #include <config/HbTcpConfig.h>
 #include <contract/HbConnectionContract.h>
+#include <contract/HbNetworkHeader.h>
 
+using namespace hb::network;
 
 HbTcpConfig::HbTcpConfig() :
     HbNetworkConfig()
@@ -15,14 +17,6 @@ HbTcpConfig::HbTcpConfig() :
     mOptions = SocketOption::NoOptions;
 
     mExchanges.plug< HbConnectionContract >();
-
-    if( mExchanges.registered( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_CONNECTION_REQUEST ) )
-    {
-        QString toto;
-        HbNetworkContract * c = mExchanges.contract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_CONNECTION_REQUEST );
-        HbConnectionContract * cc = dynamic_cast< HbConnectionContract * >( c );
-        QString tata;
-    }
 }
 
 HbTcpConfig::HbTcpConfig(const HbTcpConfig & config) :

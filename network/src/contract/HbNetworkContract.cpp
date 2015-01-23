@@ -5,10 +5,11 @@
 
 using namespace hb::network;
 
-HbNetworkContract::HbNetworkContract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code) :
+HbNetworkContract::HbNetworkContract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code ) :
     mHeader( service, code )
 {
     mNetworkTarget = HbNetworkProtocol::NETWORK_UNDEFINED;
+    mRouting = HbNetworkProtocol::RoutingScheme::UNICAST;
     mpReply  = nullptr;
 }
 
@@ -18,6 +19,7 @@ HbNetworkContract::HbNetworkContract( const HbNetworkContract & source )
     {
         mHeader           = source.mHeader;
         mNetworkTarget    = source.mNetworkTarget;
+        mRouting          = source.mRouting;
         mPendingReceivers = source.mPendingReceivers;
         mSocketReceivers  = source.mSocketReceivers;
         mpReply           = nullptr; // TODO CHECK
@@ -30,11 +32,17 @@ HbNetworkContract & HbNetworkContract::operator=( const HbNetworkContract & sour
     {
         mHeader           = source.mHeader;
         mNetworkTarget    = source.mNetworkTarget;
+        mRouting          = source.mRouting;
         mPendingReceivers = source.mPendingReceivers;
         mSocketReceivers  = source.mSocketReceivers;
         mpReply           = nullptr; // TODO CHECK
     }
     return ( *this );
+}
+
+void HbNetworkContract::setHeader( const HbNetworkHeader & header )
+{
+    mHeader = header;
 }
 
 const HbNetworkHeader & HbNetworkContract::header() const
@@ -49,7 +57,7 @@ void HbNetworkContract::addPendingReceiver( const QString & user_uuid )
 
 bool HbNetworkContract::addReceiver( quint16 receiver )
 {
-    if( mHeader.routing() == HbNetworkProtocol::RoutingScheme::UNICAST )
+    if( mRouting == HbNetworkProtocol::RoutingScheme::UNICAST )
     {
         if ( !mSocketReceivers.isEmpty() )
         {
@@ -60,7 +68,7 @@ bool HbNetworkContract::addReceiver( quint16 receiver )
         mSocketReceivers.insert( receiver );
         return true;
     }
-    else if( mHeader.routing() == HbNetworkProtocol::RoutingScheme::MULTICAST )
+    else if( mRouting == HbNetworkProtocol::RoutingScheme::MULTICAST )
     {
         mSocketReceivers.insert( receiver );
         return true;
@@ -82,12 +90,23 @@ const QSet< quint16 > & HbNetworkContract::receivers() const
     return mSocketReceivers;
 }
 
+HbNetworkProtocol::RoutingScheme HbNetworkContract::routing() const
+{
+    return mRouting;
+}
+
+void HbNetworkContract::setRouting( HbNetworkProtocol::RoutingScheme routing )
+{
+    mRouting = routing;
+    // TODO logique routing.
+}
+
 
 bool HbNetworkContract::setReply( HbNetworkContract * reply )
 {
     if ( reply && ( mpReply != reply ) )
 	{
-        if ( mHeader.routing() != HbNetworkProtocol::RoutingScheme::UNICAST )
+        if ( mRouting != HbNetworkProtocol::RoutingScheme::UNICAST )
 		{
             HbWarning( "Reply only supported in unicast mode." );
 			return false;

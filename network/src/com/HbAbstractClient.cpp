@@ -91,12 +91,12 @@ bool HbAbstractClient::send( HbNetworkContract *contract )
 	{
 		HbAbstractSocket * socket = currentConnection();
 
-		if (!socket || !socket->isListening())
+        if ( !socket || !socket->isListening() )
 		{
             HbError( "Unable to send contract on null/inactive socket." );
 		}
 
-		else if( !this->configuration( ).openMode( ).testFlag( QIODevice::WriteOnly ) )
+        else if( !this->configuration().openMode().testFlag( QIODevice::WriteOnly ) )
 		{
             HbError( "Unable to send contract on read only socket." );
 		}
@@ -121,11 +121,10 @@ bool HbAbstractClient::send( HbNetworkContract *contract )
 			QDataStream stream(&buffer, QIODevice::WriteOnly);
             stream << contract;
 
-            if ( !contract->write(stream) )
+            if ( !contract->write( stream ) )
             {
                 HbError( "Invalid contract format." );
             }
-
 			else
 			{
 				qint64 bytesWritten = socket->writePacket(buffer);
@@ -210,10 +209,7 @@ void HbAbstractClient::onSocketContractReceived( const HbNetworkContract & contr
             //	q_assert(header.receivers().contains(configuration().uuid()));
             //}
 
-            HbNetworkProtocol::Service service = header.service();
-            HbNetworkProtocol::Code code = header.code();
-
-            HbNetworkContract * contract = configuration().exchanges().contract(service, code);
+            HbNetworkContract * contract = configuration().exchanges().contract( header );
 
             if ( !contract )
 			{
@@ -224,7 +220,7 @@ void HbAbstractClient::onSocketContractReceived( const HbNetworkContract & contr
 			{
                 q_assert( stream.status() == QDataStream::Ok );
 
-                HbError( "Error occurred while reading contract [service=%d, code=%d", service, code );
+                HbError( "Error occurred while reading contract [service=%d, code=%d", header.service(), header.code() );
 			}
 
 			else

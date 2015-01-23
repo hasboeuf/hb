@@ -11,7 +11,6 @@ HbNetworkHeader::HbNetworkHeader()
     mProtocolVersion = HbNetworkProtocol::msProtocolVersion;
     mService = HbNetworkProtocol::SERVICE_UNDEFINED;
     mCode    = HbNetworkProtocol::CODE_UNDEFINED;
-    mRouting = HbNetworkProtocol::RoutingScheme::UNICAST;
 }
 
 HbNetworkHeader::HbNetworkHeader( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code ) :
@@ -29,11 +28,10 @@ HbNetworkHeader::HbNetworkHeader( const HbNetworkHeader & header )
         mProtocolVersion = header.mProtocolVersion;
         mService         = header.mService;
         mCode            = header.mCode;
-        mRouting         = header.mRouting;
     }
 }
 
-HbNetworkHeader & HbNetworkHeader::operator=( const HbNetworkHeader & header )
+HbNetworkHeader & HbNetworkHeader::operator=( const HbNetworkHeader & header ) // TODO USEFUL ?
 {
     if( &header != this )
     {
@@ -41,7 +39,6 @@ HbNetworkHeader & HbNetworkHeader::operator=( const HbNetworkHeader & header )
         mProtocolVersion = header.mProtocolVersion;
         mService         = header.mService;
         mCode            = header.mCode;
-        mRouting         = header.mRouting;
     }
     return *this;
 }
@@ -66,18 +63,6 @@ HbNetworkProtocol::Code HbNetworkHeader::code() const
     return mCode;
 }
 
-
-HbNetworkProtocol::RoutingScheme HbNetworkHeader::routing() const
-{
-    return mRouting;
-}
-
-void HbNetworkHeader::setRouting( HbNetworkProtocol::RoutingScheme routing )
-{
-    mRouting = routing;
-    // TODO logique routing.
-}
-
 namespace hb
 {
 	namespace network
@@ -89,7 +74,6 @@ namespace hb
             stream << header.mProtocolVersion;
             stream << ( quint16 ) header.mService;
             stream << ( quint16 ) header.mCode;
-            stream << ( quint8 ) header.mRouting;
 
 			return stream;
 		}
@@ -99,17 +83,14 @@ namespace hb
 
             quint16 service = HbNetworkProtocol::SERVICE_UNDEFINED;
             quint16 code = HbNetworkProtocol::CODE_UNDEFINED;
-            quint8 routing = HbNetworkProtocol::UNICAST;
 
             stream >> header.mAppName;
             stream >> header.mProtocolVersion;
             stream >> service;
             stream >> code;
-            stream >> routing;
 
             header.mService = ( HbNetworkProtocol::Service ) service;
             header.mCode = ( HbNetworkProtocol::Code ) code;
-            header.mRouting = ( HbNetworkProtocol::RoutingScheme ) routing;
 
 			return stream;
 		}

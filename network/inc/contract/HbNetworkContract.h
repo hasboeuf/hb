@@ -33,17 +33,21 @@ namespace hb
 
 		public:
 
-            const HbNetworkHeader & header() const;
+            virtual void setHeader( const HbNetworkHeader & header ) final;
+            virtual const HbNetworkHeader & header() const final;
 
-            virtual void addPendingReceiver( const QString & user_uuid );
-            virtual bool addReceiver( quint16 receiver );
-			virtual void resetReceivers();
+            virtual void addPendingReceiver( const QString & user_uuid ) final;
+            virtual bool addReceiver( quint16 receiver ) final ;
+            virtual void resetReceivers() final;
 
-            virtual bool setReply( HbNetworkContract * reply );
-			virtual HbNetworkContract * reply() const;
+            virtual HbNetworkProtocol::RoutingScheme routing() const final;
+            virtual void setRouting( HbNetworkProtocol::RoutingScheme routing ) final;
+
+            virtual bool setReply( HbNetworkContract * reply ); // TODO DEL ?
+            virtual HbNetworkContract * reply() const; // TODO = 0
 
             template< typename T >
-            inline T * value() const
+            inline T * value() const final
 			{
                 return dynamic_cast< T * >( this );
             }
@@ -59,7 +63,7 @@ namespace hb
             HbNetworkContract & operator=( const HbNetworkContract & source );
 			virtual ~HbNetworkContract() = default;
 
-            virtual HbNetworkContract * copy() const = 0;
+            virtual HbNetworkContract * create() const = 0;
 
 		private:
 			const QSet< quint16 > & receivers() const;
@@ -68,11 +72,14 @@ namespace hb
             HbNetworkHeader mHeader;
 
         private:
-            // Internal use.
+            HbNetworkContract * mpReply;
+
+            // Internal use. Server side. TODO protect the client side.
             HbNetworkProtocol::NetworkType mNetworkTarget;
+            HbNetworkProtocol::RoutingScheme mRouting;
             QSet< QString > mPendingReceivers; // user_uuid, morph into SocketReceivers at sending time.
             QSet< quint16 > mSocketReceivers;
-            HbNetworkContract * mpReply;
+
 		};
 	}
 }

@@ -168,20 +168,17 @@ void HbSocketHandler::onSocketReadyPacket()
             stream >> header;
             q_assert( stream.status() == QDataStream::Ok );
 
-            HbNetworkProtocol::Service service = header.service( );
-            HbNetworkProtocol::Code code       = header.code();
-
-            HbNetworkContract * contract = mpServer->configuration().exchanges().contract( service, code );
+            HbNetworkContract * contract = mpServer->configuration().exchanges().contract( header );
 
 			if( !contract )
 			{
-                HbError( "Try to read unregistered contract [service=%d, code=%d].", service, code );
+                HbError( "Try to read unregistered contract [service=%d, code=%d].", header.service(), header.code() );
 			}
 			else if( !contract->read( stream ) )
 			{
                 q_assert( stream.status( ) == QDataStream::Ok );
 
-                HbError( "Error occurred while reading contract [service=%d, code=%d].", service, code );
+                HbError( "Error occurred while reading contract [service=%d, code=%d].", header.service(), header.code() );
 			}
 			else
 			{

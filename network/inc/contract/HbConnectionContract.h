@@ -18,7 +18,6 @@
 #include <HbNetwork.h>
 #include <contract/HbNetworkContract.h>
 
-
 namespace hb
 {
 	namespace network
@@ -33,7 +32,7 @@ namespace hb
             HbConnectionContract( const HbConnectionContract & source );
             HbConnectionContract & operator=( const HbConnectionContract & source );
 
-            HbConnectionContract * copy() const;
+            HbConnectionContract * create() const;
 
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;

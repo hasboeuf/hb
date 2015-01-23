@@ -5,7 +5,7 @@
 HbConnectionContract::HbConnectionContract() :
     HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_CONNECTION_REQUEST )
 {
-    mHeader.setRouting( HbNetworkProtocol::UNICAST );
+
 }
 
 HbConnectionContract::HbConnectionContract( const HbConnectionContract & source ) :
@@ -31,10 +31,9 @@ HbConnectionContract & HbConnectionContract::operator=( const HbConnectionContra
     return ( *this );
 }
 
-HbConnectionContract * HbConnectionContract::copy() const
+HbConnectionContract * HbConnectionContract::create() const
 {
-    HbConnectionContract * copy = new HbConnectionContract( *this );
-    return copy;
+    return new HbConnectionContract();
 }
 
 bool HbConnectionContract::read( QDataStream & stream )

@@ -22,7 +22,7 @@ HbNetworkExchanges & HbNetworkExchanges::operator=( const HbNetworkExchanges & s
         {
             foreach(HbNetworkContract * contract, contracts)
             {
-                add( contract->copy() );
+                add( contract->create() );
             }
         }
     }
@@ -87,18 +87,19 @@ bool HbNetworkExchanges::registered( HbNetworkProtocol::Service service, HbNetwo
     return mContracts.value( service ).contains( code );
 }
 
-HbNetworkContract * HbNetworkExchanges::contract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code) const
+HbNetworkContract * HbNetworkExchanges::contract( const HbNetworkHeader & header ) const
 {
     HbNetworkContract * contract = nullptr;
 
-    if( mContracts.contains( service ) )
+    if( mContracts.contains( header.service() ) )
     {
-        Contracts contracts = mContracts.value( service );
-        if( contracts.contains( code ) )
+        Contracts contracts = mContracts.value( header.service() );
+        if( contracts.contains( header.code() ) )
         {
-            HbNetworkContract * reference = contracts.value( code, nullptr );
+            HbNetworkContract * reference = contracts.value( header.code(), nullptr );
             q_assert_ptr( reference );
-            contract = reference->copy();
+            contract = reference->create();
+            contract->setHeader( header );
         }
     }
     return contract;

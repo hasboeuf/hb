@@ -57,7 +57,7 @@ namespace hb
             }
 
             bool registered(HbNetworkProtocol::Service service, HbNetworkProtocol::Code code) const;
-            HbNetworkContract * contract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code ) const;
+            HbNetworkContract * contract( const HbNetworkHeader & header ) const;
 
         private:
             bool add( HbNetworkContract * contract );
