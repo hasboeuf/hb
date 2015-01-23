@@ -30,7 +30,7 @@ namespace hb
             Q_OBJECT
 		public:
 
-            HbConnectionPool() = default;
+            HbConnectionPool();
             virtual ~HbConnectionPool();
 
             bool leave();

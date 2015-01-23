@@ -6,31 +6,33 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBNETWORKSERVICE_H
-#define HBNETWORKSERVICE_H
+#ifndef IHBCONTRACTLISTENER_H
+#define IHBCONTRACTLISTENER_H
 
-// Qt
 // Hb
+#include <HbGlobal.h>
 // Local
 #include <HbNetwork.h>
 #include <contract/HbNetworkContract.h>
-#include <listener/IHbContractListener.h>
 
 namespace hb
 {
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbNetworkService : public IHbContractListener
+        class HB_NETWORK_DECL IHbContractListener
 		{
-		public:
 
-            HbNetworkService() = default;
-            virtual ~HbNetworkService( ) = default;
-
+        public callbacks:
             virtual void onContractReceived( const HbNetworkContract & contract ) = 0;
+
+        protected:
+            virtual ~IHbContractListener() = default;
 		};
+
 	}
 }
 
-#endif // HBNETWORKSERVICE_H
+using hb::network::IHbContractListener;
+
+#endif // IHBCONTRACTLISTENER_H

@@ -6,11 +6,12 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef IHBNETWORKLISTENER_H
-#define IHBNETWORKLISTENER_H
+#ifndef IHBSOCKETTLISTENER_H
+#define IHBSOCKETTLISTENER_H
 
 // Hb
 #include <HbGlobal.h>
+// Local
 #include <HbNetwork.h>
 
 namespace hb
@@ -18,23 +19,20 @@ namespace hb
 	namespace network
 	{
 
-		class HbNetworkContract;
-
-
-		class HB_NETWORK_DECL IHbNetworkListener
+        class HB_NETWORK_DECL IHbSocketListener
 		{
-        public :
 
-            virtual void receive( quint16 sender, const HbNetworkContract * contract ) = 0;
-    
-        protected :
+        public callbacks:
+            virtual void onSocketConnected   ( quint32 socket_uuid ) = 0;
+            virtual void onSocketDisconnected( quint32 socket_uuid ) = 0;
 
-            virtual ~IHbNetworkListener() = default;
+        protected:
+            virtual ~IHbSocketListener() = default;
 		};
 
 	}
 }
 
-using hb::network::IHbNetworkListener;
+using hb::network::IHbSocketListener;
 
-#endif // IHBNETWORKLISTENER_H
+#endif // IHBSOCKETTLISTENER_H

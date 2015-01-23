@@ -13,18 +13,25 @@
 // Hb
 // Local
 #include <HbNetwork.h>
+#include <service/HbNetworkService.h>
+#include <listener/IHbSocketListener.h>
 
 namespace hb
 {
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbNetworkAuthenticationService
+        class HB_NETWORK_DECL HbNetworkAuthenticationService : public HbNetworkService, public IHbSocketListener
 		{
 		public:
 
             HbNetworkAuthenticationService() = default;
             virtual ~HbNetworkAuthenticationService( ) = default;
+
+        public callbacks:
+            virtual void onContractReceived( const HbNetworkContract & contract );
+            virtual void onSocketConnected   ( quint32 socket_uuid );
+            virtual void onSocketDisconnected( quint32 socket_uuid );
 		};
 	}
 }

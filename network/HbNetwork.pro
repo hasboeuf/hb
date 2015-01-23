@@ -19,7 +19,8 @@ SUBDIRS +=  com \
             service/auth \
             service/channel \
             service/timeout \
-            user
+            user \
+            listener
 
 # ------------
 # Qt Settings

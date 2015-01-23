@@ -9,8 +9,6 @@
 #include <config/HbNetworkConfig.h>
 #include <contract/HbNetworkHeader.h>
 #include <com/HbSocketHandler.h>
-#include <IHbNetworkListener.h>
-
 
 using namespace hb::tools;
 using namespace hb::network;

@@ -13,18 +13,25 @@
 // Hb
 // Local
 #include <HbNetwork.h>
+#include <service/HbNetworkService.h>
+#include <listener/IHbSocketListener.h>
 
 namespace hb
 {
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbNetworkTimeoutService
+        class HB_NETWORK_DECL HbNetworkTimeoutService : public HbNetworkService, public IHbSocketListener
 		{
 		public:
 
             HbNetworkTimeoutService() = default;
             virtual ~HbNetworkTimeoutService( ) = default;
+
+        public callbacks:
+            void onContractReceived( const HbNetworkContract & contract );
+            void onSocketConnected   ( quint32 socket_uuid );
+            void onSocketDisconnected( quint32 socket_uuid );
 		};
 	}
 }

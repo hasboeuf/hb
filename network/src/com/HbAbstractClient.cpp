@@ -7,8 +7,6 @@
 #include <com/HbAbstractSocket.h>
 #include <config/HbNetworkConfig.h>
 #include <contract/HbNetworkHeader.h>
-#include <IHbNetworkListener.h>
-
 
 using namespace hb::network;
 

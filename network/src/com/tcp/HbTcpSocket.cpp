@@ -113,7 +113,7 @@ void HbTcpSocket::onReadyRead()
 {
     QDataStream stream( mpDevice );
 
-    if ( readStream(stream) < 0 )
+    if ( readStream( stream ) < 0 )
     {
         HbError( "Read stream failed." );
     }

@@ -5,8 +5,17 @@
 // Local
 #include <HbConnectionPool.h>
 #include <com/tcp/HbTcpServer.h>
+#include <service/timeout/HbNetworkTimeoutService.h>
+#include <service/auth/HbNetworkAuthenticationService.h>
+#include <service/channel/HbNetworkChannelService.h>
 
 using namespace hb::network;
+
+
+HbConnectionPool::HbConnectionPool()
+{
+
+}
 
 HbConnectionPool::~HbConnectionPool()
 {
