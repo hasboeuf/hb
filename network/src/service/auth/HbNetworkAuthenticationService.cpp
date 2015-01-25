@@ -5,7 +5,7 @@
 
 using namespace hb::network;
 
-void HbNetworkAuthenticationService::onContractReceived( const HbNetworkContract & contract )
+void HbNetworkAuthenticationService::onContractReceived( const HbNetworkContract * contract )
 {
 
 }

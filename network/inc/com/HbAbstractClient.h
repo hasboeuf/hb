@@ -58,7 +58,7 @@ namespace hb
 		private callbacks : // From device.
             void onSocketConnected();
             void onSocketDisconnected();
-            void onSocketContractReceived( const HbNetworkContract& contract );
+            void onSocketContractReceived( const HbNetworkContract * contract );
 
 		private:
             qint32 mRetry;

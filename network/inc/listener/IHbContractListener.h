@@ -24,7 +24,7 @@ namespace hb
 		{
 
         public callbacks:
-            virtual void onContractReceived( const HbNetworkContract & contract ) = 0;
+            virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
 
         protected:
             virtual ~IHbContractListener() = default;

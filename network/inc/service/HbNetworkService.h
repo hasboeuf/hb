@@ -28,7 +28,7 @@ namespace hb
             HbNetworkService() = default;
             virtual ~HbNetworkService( ) = default;
 
-            virtual void onContractReceived( const HbNetworkContract & contract ) = 0;
+            virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
 		};
 	}
 }

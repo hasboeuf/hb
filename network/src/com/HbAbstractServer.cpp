@@ -404,14 +404,15 @@ void HbAbstractServer::onSocketDisconnected(quint16 socket_uuid )
     mHandlerBySocketId.remove( socket_uuid );
 }
 
-void HbAbstractServer::onSocketContractReceived( const HbNetworkContract& contract )
+void HbAbstractServer::onSocketContractReceived(quint16 socket_uuid, const HbNetworkContract * contract )
 {
     if( !mReady )
     {
         HbInfo( "Server not ready, no treatments for onSocketContractReceived()." );
+        delete contract;
         return;
     }
-    emit socketContractReceived( mUuid, contract );
+    emit socketContractReceived( mUuid, socket_uuid, contract );
 }
 
 void HbAbstractServer::onHandlerIdled()

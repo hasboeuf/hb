@@ -12,6 +12,8 @@
 // Qt
 #include <QtCore/QtGlobal>
 
+typedef quint16 sockid;
+
 #if !defined( HB_NETWORK_DECL )
 #	if defined( HB_NETWORK_BUILD )
 #		define HB_NETWORK_DECL Q_DECL_EXPORT

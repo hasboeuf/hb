@@ -29,7 +29,7 @@ namespace hb
             virtual ~HbNetworkChannelService( ) = default;
 
         public callbacks:
-            virtual void onContractReceived( const HbNetworkContract & contract );
+            virtual void onContractReceived( const HbNetworkContract * contract );
             virtual void onUserConnected   ( const HbNetworkUserInfo & user_info );
             virtual void onUserDisconnected( const HbNetworkUserInfo & user_info );
 		};

@@ -67,13 +67,13 @@ namespace hb
             // To higher level class.
             void socketConnected       ( quint16 server_uuid, quint32 socket_uuid );
             void socketDisconnected    ( quint16 server_uuid, quint32 socket_uuid );
-            void socketContractReceived( quint16 server_uuid, const HbNetworkContract & contract );
+            void socketContractReceived( quint16 server_uuid, quint32 socket_uuid, const HbNetworkContract * contract );
 
         public callbacks :
             // From HbSocketHandler.
             void onSocketConnected       ( qint32 socket_descriptor, quint16 socket_uuid );
             void onSocketDisconnected    ( quint16 socket_uuid );
-            void onSocketContractReceived( const HbNetworkContract& contract );
+            void onSocketContractReceived( quint16 socket_uuid, const HbNetworkContract * contract );
             void onHandlerIdled();
 
 		private:

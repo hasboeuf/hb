@@ -11,12 +11,15 @@
 
 // Qt
 #include <QtCore/QString>
+// Local
+#include <HbNetwork.h>
 
 namespace hb
 {
 	namespace network
 	{
-        class HbNetworkProtocol final
+        // TODO decl temp
+        class HB_NETWORK_DECL HbNetworkProtocol final
 		{
 
         public:

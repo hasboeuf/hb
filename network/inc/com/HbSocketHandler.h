@@ -81,8 +81,8 @@ namespace hb
             // To Server.
             void handlerIdled          ();
             void socketConnected       ( qint32 socket_previous_id, quint16 socket_id );
-            void socketDisconnected    ( quint16 socket_id );
-			void socketContractReceived( const HbNetworkContract& contract );
+            void socketDisconnected    ( quint16 socket_uuid );
+            void socketContractReceived( quint16 socket_uuid, const HbNetworkContract * contract );
         };
     }
 }

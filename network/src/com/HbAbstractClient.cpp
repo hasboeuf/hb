@@ -119,7 +119,7 @@ bool HbAbstractClient::send( HbNetworkContract *contract )
 			QString socketError;
 
 			QDataStream stream(&buffer, QIODevice::WriteOnly);
-            stream << contract;
+            stream << contract->header();
 
             if ( !contract->write( stream ) )
             {
@@ -129,10 +129,10 @@ bool HbAbstractClient::send( HbNetworkContract *contract )
 			{
 				qint64 bytesWritten = socket->writePacket(buffer);
 
-				if (bytesWritten > 0)
+                if ( bytesWritten > 0 )
 					return true;
 
-				q_assert(bytesWritten);
+                q_assert( bytesWritten );
 				socketError = socket->errorString();
 			}
 
@@ -183,7 +183,7 @@ void HbAbstractClient::onSocketConnected()
 
 }
 
-void HbAbstractClient::onSocketContractReceived( const HbNetworkContract & contract)
+void HbAbstractClient::onSocketContractReceived( const HbNetworkContract * contract)
 {
 	HbAbstractSocket * socket = q_assert_ptr(currentConnection());
 	bool available = (socket->isListening() && socket->packetAvailable());

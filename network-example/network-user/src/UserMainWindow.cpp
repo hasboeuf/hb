@@ -15,6 +15,7 @@
 #include <HbLoggerOutputs.h>
 #include <contract/HbConnectionContract.h>
 #include <contract/HbNetworkHeader.h>
+#include <contract/HbNetworkProtocol.h>
 // Local
 #include <UserMainWindow.h>
 
@@ -89,6 +90,9 @@ void UserMainWindow::onClientDisconnected()
 void UserMainWindow::onStartClicked()
 {
     HbLogBegin();
+
+    HbNetworkProtocol::msAppName = "hb-network-example";
+    HbNetworkProtocol::msProtocolVersion = 1;
 
     HbTcpConfig config;
     config.setAddress( QHostAddress::LocalHost );

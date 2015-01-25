@@ -27,11 +27,11 @@ namespace hb
         class HbNetworkHeader;
 
 		class HB_NETWORK_DECL HbNetworkContract
-		{
-			Q_GADGET
+        {
             Q_FRIEND_CLASS( HbNetworkExchanges )
 
 		public:
+            virtual ~HbNetworkContract() = default;
 
             virtual void setHeader( const HbNetworkHeader & header ) final;
             virtual const HbNetworkHeader & header() const final;
@@ -61,7 +61,6 @@ namespace hb
             HbNetworkContract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code );
             HbNetworkContract( const HbNetworkContract & source );
             HbNetworkContract & operator=( const HbNetworkContract & source );
-			virtual ~HbNetworkContract() = default;
 
             virtual HbNetworkContract * create() const = 0;
 

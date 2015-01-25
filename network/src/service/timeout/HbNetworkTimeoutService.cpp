@@ -5,7 +5,7 @@
 
 using namespace hb::network;
 
-void HbNetworkTimeoutService::onContractReceived( const HbNetworkContract & contract )
+void HbNetworkTimeoutService::onContractReceived( const HbNetworkContract * contract )
 {
 
 }

@@ -29,7 +29,7 @@ namespace hb
             virtual ~HbNetworkTimeoutService( ) = default;
 
         public callbacks:
-            void onContractReceived( const HbNetworkContract & contract );
+            void onContractReceived( const HbNetworkContract * contract );
             void onSocketConnected   ( quint32 socket_uuid );
             void onSocketDisconnected( quint32 socket_uuid );
 		};

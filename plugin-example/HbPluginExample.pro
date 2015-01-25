@@ -16,8 +16,8 @@ TEMPLATE = subdirs
 CONFIG += ordered
 
 SUBDIRS += \
-    plugin-demo/HbPluginDemo.pro \
     plugin-interfaces/HbPluginInterfaces.pro \
+    plugin-demo/HbPluginDemo.pro \
     plugins/HbPlugins.pro
 
 plugin-demo.depends = plugin-interfaces plugins

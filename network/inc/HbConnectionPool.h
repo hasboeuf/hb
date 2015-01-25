@@ -42,7 +42,7 @@ namespace hb
             void onServerDisconnected    ( quint16 server_uuid );
             void onSocketConnected       ( quint16 server_uuid, quint32 socket_uuid );
             void onSocketDisconnected    ( quint16 server_uuid, quint32 socket_uuid );
-            void onSocketContractReceived( quint16 server_uuid, const HbNetworkContract & contract );
+            void onSocketContractReceived( quint16 server_uuid, quint16 socket_uuid, const HbNetworkContract * contract );
 
             // From HbNetworkService.
 
@@ -50,10 +50,15 @@ namespace hb
             // To services.
             void socketConnected       ( quint16 socket_uuid );
             void socketDisconnected    ( quint16 socket_uuid );
-            void socketContractReceived( const HbNetworkContract & contract );
+            void socketContractReceived( const HbNetworkContract * contract );
             void userConnected         ( const HbNetworkUserInfo & user_info );
             void userDisconnected      ( const HbNetworkUserInfo & user_info );
-            void userContractReceived  ( const HbNetworkUserInfo & user_info, const HbNetworkContract & contract );
+            void userContractReceived  ( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract );
+            // To
+            void socketPendingContractReceived( quint16 socket_uuid, const HbNetworkContract * contract );
+
+        private:
+            bool checkContractReceived( const HbNetworkContract * contract );
 
         private:
             QHash< quint16, HbAbstractServer * > mServers;

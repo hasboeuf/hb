@@ -148,7 +148,7 @@ void HbSocketHandler::onServerLeft()
 
 void HbSocketHandler::onSocketReadyPacket()
 {
-	HbAbstractSocket * socket = q_assert_ptr( dynamic_cast<HbAbstractSocket *>(sender( )) );
+    HbAbstractSocket * socket = q_assert_ptr( dynamic_cast<HbAbstractSocket *>( sender( )) );
 
     bool available = ( socket->isListening() && socket->packetAvailable() );
 
@@ -174,16 +174,19 @@ void HbSocketHandler::onSocketReadyPacket()
 			{
                 HbError( "Try to read unregistered contract [service=%d, code=%d].", header.service(), header.code() );
 			}
-			else if( !contract->read( stream ) )
-			{
-                q_assert( stream.status( ) == QDataStream::Ok );
+            else
+            {
+                if( !contract->read( stream ) )
+                {
+                    q_assert( stream.status( ) == QDataStream::Ok );
 
-                HbError( "Error occurred while reading contract [service=%d, code=%d].", header.service(), header.code() );
-			}
-			else
-			{
-                //emit socketContractReceived( contract );
-			}
+                    HbError( "Error occurred while reading contract [service=%d, code=%d].", header.service(), header.code() );
+                }
+                else
+                {
+                    emit socketContractReceived( socket->uuid(), contract );
+                }
+            }
 		}
 
         available = ( socket->isListening() && socket->packetAvailable() );
