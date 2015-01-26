@@ -37,7 +37,7 @@ namespace hb
 			Q_OBJECT
 
 		public:
-			explicit HbLogWidget(QWidget *parent = 0);
+            explicit HbLogWidget(QWidget *parent = nullptr);
 			~HbLogWidget();
 
 			HbLogGuiNotifier* logNotifier();

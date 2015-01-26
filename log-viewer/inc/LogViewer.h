@@ -51,7 +51,7 @@ namespace hb
             void onRefreshTimeChanged( int refresh );
             void onTabCloseRequested( int index );
 
-            // From _refreshTimer.
+            // From mProcessTimer.
             void processLogMessage();
 
             // From LogViewerTab

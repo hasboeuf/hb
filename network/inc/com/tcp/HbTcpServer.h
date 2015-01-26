@@ -22,7 +22,7 @@ namespace hb
             Q_FRIEND_CLASS( HbTcpServer )
 
 		protected:
-			TcpServer(QObject * parent = 0);
+            TcpServer( QObject * parent = nullptr );
             void incomingConnection( qint32 socket_descriptor );
 		signals:
             void newConnection( qint32 socket_descriptor );

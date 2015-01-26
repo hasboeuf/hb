@@ -88,7 +88,7 @@
 
 namespace HbPrivate {
 
-	inline QString qs_scopename(const char * type)
+    inline QString hb_scopename(const char * type)
 	{
 #if defined( Q_CC_MSVC )
 
@@ -112,9 +112,9 @@ namespace HbPrivate {
 		return name;
 	}
 
-	inline QString qs_typename(const char * type)
+    inline QString hb_typename(const char * type)
 	{
-		QString name(qs_scopename(type));
+        QString name(hb_scopename(type));
 
 		if (!name.isEmpty())
 		{
@@ -138,44 +138,44 @@ namespace HbPrivate {
 template< typename T >
 inline QString qScopeName()
 {
-    return HbPrivate::qs_scopename(typeid(T).name());
+    return HbPrivate::hb_scopename(typeid(T).name());
 }
 
 template< typename T >
 inline QString qScopeName(T * pointer)
 {
-    return (pointer) ? HbPrivate::qs_scopename(typeid(*pointer).name()) : QString();
+    return (pointer) ? HbPrivate::hb_scopename(typeid(*pointer).name()) : QString();
 }
 
 template< typename T >
 inline QString qScopeName(const T & expression)
 {
-    return HbPrivate::qs_scopename(typeid(expression).name());
+    return HbPrivate::hb_scopename(typeid(expression).name());
 }
 
 template< typename T >
 inline QString qTypeName()
 {
-    return HbPrivate::qs_typename(typeid(T).name());
+    return HbPrivate::hb_typename(typeid(T).name());
 }
 
 template< typename T >
 inline QString qTypeName(T * pointer)
 {
-    return (pointer) ? HbPrivate::qs_typename(typeid(*pointer).name()) : QString();
+    return (pointer) ? HbPrivate::hb_typename(typeid(*pointer).name()) : QString();
 }
 
 template< typename T >
 inline QString qTypeName(const T & expression)
 {
-    return HbPrivate::qs_typename(typeid(expression).name());
+    return HbPrivate::hb_typename(typeid(expression).name());
 }
 
 
 namespace HbPrivate {
 
 	template< typename T >
-	inline T * qs_assert_ptr(T * pointer, const char * file, qint32 line)
+    inline T * hb_assert_ptr(T * pointer, const char * file, qint32 line)
 	{
 #if !defined( QT_NO_DEBUG )
 		if (!pointer)
@@ -190,7 +190,7 @@ namespace HbPrivate {
 	}
 
 	template< typename U, typename T >
-	inline U qs_dynamic_cast(T * pointer, const char * file, qint32 line)
+    inline U hb_dynamic_cast(T * pointer, const char * file, qint32 line)
 	{
 #if !defined( QT_NO_DEBUG )
 
@@ -220,7 +220,7 @@ namespace HbPrivate {
 * Prints a fatal error message if \a pointer is null.\n
 * If QT_NO_DEBUG was defined during compilation, q_assert_ptr prints nothing.
 */
-#define q_assert_ptr( pointer ) HbPrivate::qs_assert_ptr( pointer, __FILE__, __LINE__ )
+#define q_assert_ptr( pointer ) HbPrivate::hb_assert_ptr( pointer, __FILE__, __LINE__ )
 
 /*!
 * \def q_dynamic_cast( Type, pointer )
@@ -228,7 +228,7 @@ namespace HbPrivate {
 * Prints a fatal error message if \a pointer dynamic cast failed.\n
 * If QT_NO_DEBUG was defined during compilation, q_dynamic_cast prints nothing.
 */
-#define q_dynamic_cast( Type, pointer ) HbPrivate::qs_dynamic_cast< Type >( pointer, __FILE__, __LINE__ )
+#define q_dynamic_cast( Type, pointer ) HbPrivate::hb_dynamic_cast< Type >( pointer, __FILE__, __LINE__ )
 
 template< typename U, typename T >
 inline QList< U > qlist_dynamic_cast(const QList< T * > & list)

@@ -19,7 +19,7 @@ namespace hb
         public :
 
             LogViewerConfigDialog() = delete;
-            LogViewerConfigDialog( LogViewerConfig & pConfig, QWidget *parent = 0 );
+            LogViewerConfigDialog( LogViewerConfig & pConfig, QWidget *parent = nullptr );
             virtual ~LogViewerConfigDialog() = default;
 
             const LogViewerConfig & config() const;

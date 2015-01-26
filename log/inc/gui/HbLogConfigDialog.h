@@ -28,7 +28,7 @@ namespace hb
 		public:
 
 			HbLogConfigDialog() = delete;
-			HbLogConfigDialog(HbLogConfig & pConfig, QWidget *parent = 0);
+            HbLogConfigDialog( HbLogConfig & pConfig, QWidget *parent = nullptr );
 			virtual ~HbLogConfigDialog() = default;
 
 			const HbLogConfig & config() const;

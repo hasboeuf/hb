@@ -25,7 +25,7 @@ namespace hb
             Q_OBJECT
 
         public:
-            HbCheckBoxList(QWidget *parent = 0);
+            HbCheckBoxList( QWidget *parent = nullptr );
             virtual ~HbCheckBoxList();
             //bool eventFilter(QObject *object, QEvent *event);
             //virtual void paintEvent(QPaintEvent *);

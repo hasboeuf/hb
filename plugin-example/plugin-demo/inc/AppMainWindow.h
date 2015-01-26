@@ -14,7 +14,7 @@ namespace hb
             Q_OBJECT
 
         public:
-            explicit AppMainWindow(QWidget *parent = 0);
+            explicit AppMainWindow(QWidget *parent = nullptr);
 
         private:
             AppPlatformService mPlatformServices;

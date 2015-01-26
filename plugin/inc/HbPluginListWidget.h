@@ -37,7 +37,7 @@ namespace hb
 				COLUMN_OPTIONAL
 			};
 
-            explicit HbPluginListWidget(QWidget *parent = 0);
+            explicit HbPluginListWidget(QWidget *parent = nullptr);
 
 			void setPlugins(QList<const HbPluginInfos *> plugins);
 

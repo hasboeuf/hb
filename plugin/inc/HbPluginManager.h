@@ -29,7 +29,7 @@ namespace hb
 		{
 			Q_OBJECT
 		public:
-            explicit HbPluginManager(HbPlatformService* platformService, QObject *parent = 0);
+            explicit HbPluginManager( HbPlatformService* platformService, QObject * parent = nullptr );
 
 			void load(QString folder_path);
 			int  unload();
@@ -47,7 +47,7 @@ namespace hb
 		private:
 			void         scanFolder(QString folder_path);
 			HbPluginInfos* scanPlugin(QString plugin_path);
-			bool         loadPlugin(QString name, const HbPluginInfos* child = 0);
+            bool         loadPlugin(QString name, const HbPluginInfos* child = nullptr );
 
 		signals:
 			void pluginLoaded(const HbPluginInfos* plugin_infos);

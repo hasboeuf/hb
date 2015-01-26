@@ -31,7 +31,7 @@ namespace hb
             Q_OBJECT
 
         public:
-            explicit ServerMainWindow( QWidget * parent = 0 );
+            explicit ServerMainWindow( QWidget * parent = nullptr );
             virtual ~ServerMainWindow();
 
         private:

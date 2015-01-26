@@ -17,41 +17,41 @@ namespace hb
     namespace tools
     {
 
-        template <class T>
+        template < class T >
         class HbSingleton
         {
 
         public:
-            static T* get()
+            static T * get()
             {
-                if(mInstance == 0)
+                if( mpInstance == nullptr )
                 {
-                    mInstance = new T();
+                    mpInstance = new T();
                 }
-                return mInstance;
+                return mpInstance;
             }
 
             static void kill()
             {
-                if(mInstance)
+                if( mpInstance )
                 {
-                    delete mInstance;
-                    mInstance = 0;
+                    delete mpInstance;
+                    mpInstance = nullptr;
                 }
             }
 
         protected:
-            static T* mInstance;
+            static T * mpInstance;
 
         private:
-            T& operator=(const T&);
+            T & operator=( const T & );
         };
     }
 }
 
 using hb::tools::HbSingleton;
 
-template<typename T>
-T* HbSingleton<T>::mInstance = 0;
+template< typename T >
+T * HbSingleton< T >::mpInstance = nullptr;
 
 #endif // HBSINGLETON_H

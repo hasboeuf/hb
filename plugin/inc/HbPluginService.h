@@ -22,7 +22,7 @@ namespace hb
 		{
 			Q_OBJECT
 		public:
-            explicit HbPluginService(QString name, QString version, QObject *parent = 0);
+            explicit HbPluginService( QString name, QString version, QObject * parent = nullptr );
 
 			QString name() const;
 			QString version() const;

@@ -17,7 +17,7 @@ private slots:
 signals:
 
 public:
-    HbCheckBoxListDelegate(QObject *parent = 0) : QItemDelegate(parent)
+    HbCheckBoxListDelegate( QObject * parent = nullptr ) : QItemDelegate(parent)
     {
 
     }
