@@ -24,7 +24,7 @@ HbSocketHandler::HbSocketHandler( HbAbstractServer * server ) :
 {
     HbLogBegin();
 
-    mId = HbUuidGenerator< quint16 >::get()->getUuid();
+    mUuid = HbUuidGenerator< quint16 >::get()->getUuid();
 	mState = NOT_THREADED;
 	mpServer = q_assert_ptr( server );
 
@@ -53,12 +53,12 @@ void HbSocketHandler::init()
 
 quint16 HbSocketHandler::id() const
 {
-    return mId;
+    return mUuid;
 }
 
 void HbSocketHandler::reset()
 {
-    HbInfo( "Reset socket handler #%d", mId );
+    HbInfo( "Reset socket handler #%d", mUuid );
     QMutexLocker locker( &mSocketMutex );
 
     foreach( HbAbstractSocket * socket, mSocketById.values() )
@@ -87,7 +87,7 @@ bool HbSocketHandler::canHandleNewConnection()
 	}
 
     HbError("SocketHandler#%d: Cannot handle new socket. [state=%d, size=%d, max=%d].",
-			mId,
+            mUuid,
 			mState,
 			mSocketById.size(),
 			mpServer->configuration().maxUsersPerThread() );
@@ -136,13 +136,13 @@ void HbSocketHandler::onDisconnectionRequest( quint16 uuid )
     }
     else
     {
-        HbWarning( "Socket #%d does not exist for hander #%d.", uuid, mId );
+        HbWarning( "Socket #%d does not exist for hander #%d.", uuid, mUuid );
     }
 }
 
 void HbSocketHandler::onServerLeft()
 {
-    HbInfo( "Server left -> deleting this handler #%d", mId );
+    HbInfo( "Server left -> deleting this handler #%d", mUuid );
     reset();
 }
 
@@ -204,9 +204,9 @@ void HbSocketHandler::onSocketDisconnected()
 	q_assert( mIdBySocket.contains( socket ) );
 	q_assert( mSocketById.contains( socket->uuid( ) ) );
 
-    HbInfo("SocketPool%d: Socket#%d disconnected.", mId, socket->uuid() );
+    HbInfo("SocketPool%d: Socket#%d disconnected.", mUuid, socket->uuid() );
 
-    quint16 uuid = socket->uuid();
+    sockuuid uuid = socket->uuid();
 
 	mIdBySocket.remove( socket );
     mSocketById.remove( uuid );

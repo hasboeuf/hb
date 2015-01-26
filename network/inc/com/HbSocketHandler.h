@@ -54,7 +54,7 @@ namespace hb
             virtual void reset();
 
         protected:
-            netwuuid           mId;
+            netwuuid           mUuid;
 			HandlerState       mState;
 
             QMap<sockuuid, HbAbstractSocket *> mSocketById;
