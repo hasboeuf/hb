@@ -60,6 +60,15 @@ namespace hb
                 CODE_CONNECTION_REQUEST = 1
             };
 
+            enum AuthenticationStatus : quint8
+            {
+                AUTH_INTERNAL_ERROR = 0,
+                AUTH_BAD_UUID,
+                AUTH_BAD_PASSWORD,
+                AUTH_OK,
+                AUTH_OK_ADMIN
+            };
+
         };
 	}
 }

@@ -20,6 +20,7 @@ namespace hb
 {
     namespace network
     {
+        class HbAuthenticationStrategy;
 
         class HB_NETWORK_DECL HbGeneralConfig final
         {
@@ -39,11 +40,23 @@ namespace hb
             void setAppName( const QString & app_name );
             void setProtocolVersion( quint16 protocol_version );
 
+            template< class A >
+            void enableAuthentication()
+            {
+                strategy = new A();
+                if( dynamic_cast< HbAuthenticationStrategy * >( strategy ) )
+                {
+                    mpAuthenticationStrategy = strategy;
+                }
+            }
+
+
         protected:
 
         private:
             QString mAppName;
             quint16 mProtocolVersion;
+            HbAuthenticationStrategy * mpAuthenticationStrategy;
         };
     }
 }

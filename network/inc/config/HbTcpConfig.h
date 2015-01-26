@@ -20,7 +20,7 @@ namespace hb
 	namespace network
 	{
 
-		class HB_NETWORK_DECL HbTcpConfig : public virtual HbNetworkConfig
+        class HB_NETWORK_DECL HbTcpConfig
 		{
 		public:
 
@@ -31,28 +31,26 @@ namespace hb
 				KeepAlive = 1 << 1,
 				MulticastLoopback = 1 << 2
 			};
-			Q_DECLARE_FLAGS(SocketOptions, SocketOption)
+            Q_DECLARE_FLAGS( SocketOptions, SocketOption )
 
-		public:
+            void setAddress(const QString & address);
+            void setAddress(const QHostAddress & address);
+            void setPort   (quint16 port);
+            void setOptions(SocketOptions options);
 
+            const QHostAddress & address() const;
+            quint16 port() const;
+            SocketOptions options() const;
+
+
+
+        protected:
 			HbTcpConfig();
 			HbTcpConfig(const HbTcpConfig & config);
 			virtual ~HbTcpConfig() = default;
-
 			HbTcpConfig & operator =(const HbTcpConfig & config);
 
-			void setTimeout(const Timeout & timeout);
-
-			void setAddress(const QString & address);
-			void setAddress(const QHostAddress & address);
-			void setPort   (quint16 port);
-			void setOptions(SocketOptions options);
-
-			const QHostAddress & address() const;
-			quint16 port() const;
-			SocketOptions options() const;
-
-			bool isValid() const;
+            bool isValid() const;
 
 		private:
             QHostAddress  mAddress;

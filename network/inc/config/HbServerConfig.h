@@ -14,6 +14,7 @@
 // Local
 #include <HbNetwork.h>
 #include <config/HbNetworkConfig.h>
+#include <config/HbTimeoutServerConfig.h>
 
 namespace hb
 {
@@ -39,6 +40,7 @@ namespace hb
 
 		private:
 			quint16 mMaxUsersPerThread;
+            HbTimeoutServerConfig mTimeout;
 		};
 
 	}

@@ -23,23 +23,10 @@ namespace hb
 	{
 		class HB_NETWORK_DECL HbNetworkConfig
 		{
-		public:
 
-			typedef struct final
-			{
-				qint16 connection;
-				qint16 reconnection;
-				qint16 disconnection;
-			}
-			Timeout;
+        public:
 
-
-		public:
-
-			virtual void setTimeout(const Timeout & timeout);
 			virtual void setOpenMode(QIODevice::OpenMode mode) final;
-
-			virtual const Timeout & timeout() const final;
 			virtual QIODevice::OpenMode openMode() const final;
 			
             virtual const HbNetworkExchanges & exchanges() const final;
@@ -47,18 +34,15 @@ namespace hb
 
 			virtual bool isValid() const;
 
+        protected:
 			HbNetworkConfig();
 			HbNetworkConfig(const HbNetworkConfig & config);
 			virtual ~HbNetworkConfig() = default;
-
 			virtual HbNetworkConfig & operator =(const HbNetworkConfig & config);
 
-        protected:
-            HbNetworkExchanges mExchanges;
-
 		private:
-            Timeout mTimeout;
             QIODevice::OpenMode mOpenMode;
+            HbNetworkExchanges mExchanges;
 
 		};
 

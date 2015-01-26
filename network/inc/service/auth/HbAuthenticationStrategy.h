@@ -11,8 +11,11 @@
 
 // Qt
 // Hb
+#include <listener/IHbSocketListener.h>
 // Local
 #include <HbNetwork.h>
+#include <contract/HbNetworkProtocol.h>
+#include <contract/HbConnectionContract.h>
 
 namespace hb
 {
@@ -24,7 +27,10 @@ namespace hb
 		public:
 
             HbAuthenticationStrategy() = default;
-            virtual ~HbAuthenticationStrategy( ) = default;
+            virtual ~HbAuthenticationStrategy() = default;
+
+            virtual HbNetworkProtocol::AuthenticationStatus tryLogin( const HbConnectionContract * contract ) = 0;
+
 		};
 	}
 }

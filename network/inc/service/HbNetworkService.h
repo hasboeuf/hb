@@ -29,6 +29,14 @@ namespace hb
             virtual ~HbNetworkService( ) = default;
 
             virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
+
+            virtual void id() const final
+            {
+                return mId;
+            }
+
+        protected:
+            HbNetworkProtocol::Service mId = HbNetworkProtocol::SERVICE_UNDEFINED;
 		};
 	}
 }
