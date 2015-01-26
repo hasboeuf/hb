@@ -3,7 +3,7 @@
 #include <QtNetwork/QTcpSocket>
 // Hb
 #include <HbGlobal.h>
-#include <HbIdGenerator.h>
+#include <HbUuidGenerator.h>
 #include <HbLogService.h>
 // Local
 #include <com/tcp/HbTcpSocketHandler.h>

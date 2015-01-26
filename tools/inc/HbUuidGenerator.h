@@ -6,12 +6,15 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBIDGENERATOR_H
-#define HBIDGENERATOR_H
+#ifndef HBUUIDGENERATOR_H
+#define HBUUIDGENERATOR_H
 
+// System
+#include <limits>
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QQueue>
+#include <QtCore/QMutex>
 // Hb
 #include <HbTools.h>
 #include <HbSingleton.h>
@@ -21,35 +24,57 @@ namespace hb
 {
     namespace tools
     {
-        class HB_TOOLS_DECL HbIdGenerator : public QObject, public HbSingleton<HbIdGenerator>
+        template< typename T >
+        class HB_TOOLS_DECL HbUuidGenerator : public HbSingleton< HbUuidGenerator< T > >
         {
-            Q_OBJECT
+            Q_DISABLE_COPY( HbUuidGenerator )
 
-            friend HbIdGenerator* HbSingleton<HbIdGenerator>::get();
-            friend void HbSingleton<HbIdGenerator>::kill();
+            friend HbUuidGenerator * HbSingleton< HbUuidGenerator >::get();
+            friend void HbSingleton< HbUuidGenerator >::kill();
+
+        private:
+            QMutex mMutex;
+            T mCurrent;
+            QQueue< T > mUnused;
 
         public:
-            quint16 getUniqueId();
-            quint16 getRandomId();
-			void addUnusedId(quint16 unused_id);
+            T getUuid()
+            {
+                //QMutexLocker( &mMutex );
+                if( !mUnused.isEmpty() )
+                {
+                    return mUnused.dequeue();
+                }
+                else
+                {
+                    return mCurrent++;
+                }
+            }
 
-        signals:
+            T getRandomUuid()
+            {
+                //QMutexLocker( &mMutex );
 
-        public slots:
+                T lowest = std::numeric_limits< T >::min();
+                T highest = std::numeric_limits< T >::max();
+                return qrand() % ((highest + 1) - lowest) + lowest;
+            }
 
+            void releaseUuid(T released_id)
+            {
+                //QMutexLocker( &mMutex );
+                mUnused.enqueue( released_id );
+            }
 
         private:
-            quint16 mCurrent;
-            QQueue<quint16> mUnused;
+            HbUuidGenerator()
+            {
+                mCurrent = std::numeric_limits< T >::min();
+            }
 
-        private:
-			HbIdGenerator(const HbIdGenerator&) = default;
-            explicit HbIdGenerator(QObject *parent = 0);
-
-            ~HbIdGenerator();
-
+            ~HbUuidGenerator() = default;
         };
     }
 }
 
-#endif // HBIDGENERATOR_H
+#endif // HBUUIDGENERATOR_H

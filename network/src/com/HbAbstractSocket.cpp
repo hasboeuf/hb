@@ -2,7 +2,7 @@
 #include <QtCore/QDataStream>
 #include <QtCore/QIODevice>
 // Hb
-#include <HbIdGenerator.h>
+#include <HbUuidGenerator.h>
 #include <HbLogService.h>
 // Local
 #include <com/HbAbstractSocket.h>
@@ -18,7 +18,7 @@ HbAbstractSocket::HbAbstractSocket(QIODevice * device)
 
     connect( mDevice.data(), &QIODevice::readyRead, this, &HbAbstractSocket::onReadyRead, Qt::UniqueConnection);
 
-    mUuid = HbIdGenerator::get()->getUniqueId();
+    mUuid = HbUuidGenerator< sockuuid >::get()->getUuid();
 
     mBytesPending = 0;
     mPackets.clear();

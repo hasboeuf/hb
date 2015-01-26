@@ -89,7 +89,7 @@ void HbConnectionPool::onSocketDisconnected( quint16 server_uuid, sockuuid socke
     HbInfo( "Socket #%d on server #%d disconnected.", server_uuid, socket_uuid );
 }
 
-void HbConnectionPool::onSocketContractReceived( quint16 server_uuid, quint16 socket_uuid, const HbNetworkContract * contract )
+void HbConnectionPool::onSocketContractReceived( quint16 server_uuid, sockuuid socket_uuid, const HbNetworkContract * contract )
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );

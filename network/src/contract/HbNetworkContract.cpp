@@ -85,7 +85,7 @@ void HbNetworkContract::resetReceivers()
     mSocketReceivers.clear();
 }
 
-const QSet< quint16 > & HbNetworkContract::receivers() const
+const QSet< sockuuid > & HbNetworkContract::receivers() const
 {
     return mSocketReceivers;
 }

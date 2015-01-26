@@ -2,7 +2,7 @@
 #include <QtCore/QDataStream>
 // Hb
 #include <HbLogService.h>
-#include <HbIdGenerator.h>
+#include <HbUuidGenerator.h>
 // Local
 #include <com/HbAbstractServer.h>
 #include <com/HbAbstractSocket.h>
@@ -16,7 +16,7 @@ using namespace hb::network;
 HbAbstractServer::HbAbstractServer(QObject * parent) :
 	HbAbstractNetwork(parent)
 {
-    mUuid = HbIdGenerator::get()->getUniqueId();
+    mUuid = HbUuidGenerator< quint32 >::get()->getUuid();
     mReady = false;
 }
 
@@ -374,7 +374,7 @@ void HbAbstractServer::reset()
 //}
 
 
-void HbAbstractServer::onSocketConnected( qint32 socket_descriptor, quint16 socket_uuid )
+void HbAbstractServer::onSocketConnected( qint32 socket_descriptor, sockuuid socket_uuid )
 {
     if( !mReady )
     {
@@ -390,7 +390,7 @@ void HbAbstractServer::onSocketConnected( qint32 socket_descriptor, quint16 sock
     mHandlerBySocketId.insert( socket_uuid, handler );
 }
 
-void HbAbstractServer::onSocketDisconnected(quint16 socket_uuid )
+void HbAbstractServer::onSocketDisconnected( sockuuid socket_uuid )
 {
     if( !mReady )
     {
@@ -404,7 +404,7 @@ void HbAbstractServer::onSocketDisconnected(quint16 socket_uuid )
     mHandlerBySocketId.remove( socket_uuid );
 }
 
-void HbAbstractServer::onSocketContractReceived(quint16 socket_uuid, const HbNetworkContract * contract )
+void HbAbstractServer::onSocketContractReceived( sockuuid socket_uuid, const HbNetworkContract * contract )
 {
     if( !mReady )
     {

@@ -65,7 +65,7 @@ namespace hb
             virtual HbNetworkContract * create() const = 0;
 
 		private:
-			const QSet< quint16 > & receivers() const;
+            const QSet< sockuuid > & receivers() const;
 
         protected:
             HbNetworkHeader mHeader;

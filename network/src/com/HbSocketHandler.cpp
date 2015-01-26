@@ -4,7 +4,7 @@
 #include <QtNetwork/QTcpSocket>
 // Hb
 #include <HbGlobal.h>
-#include <HbIdGenerator.h>
+#include <HbUuidGenerator.h>
 #include <HbLogService.h>
 // Local
 #include <com/HbSocketHandler.h>
@@ -24,7 +24,7 @@ HbSocketHandler::HbSocketHandler( HbAbstractServer * server ) :
 {
     HbLogBegin();
 
-	mId = HbIdGenerator::get()->getUniqueId();
+    mId = HbUuidGenerator< quint16 >::get()->getUuid();
 	mState = NOT_THREADED;
 	mpServer = q_assert_ptr( server );
 

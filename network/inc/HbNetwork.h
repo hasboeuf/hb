@@ -12,7 +12,8 @@
 // Qt
 #include <QtCore/QtGlobal>
 
-typedef quint16 sockuuid;
+typedef quint32 sockuuid;
+typedef quint16 netwuuid;
 
 #if !defined( HB_NETWORK_DECL )
 #	if defined( HB_NETWORK_BUILD )
