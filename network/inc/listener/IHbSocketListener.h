@@ -23,8 +23,8 @@ namespace hb
 		{
 
         public callbacks:
-            virtual void onSocketConnected   ( quint32 socket_uuid ) = 0;
-            virtual void onSocketDisconnected( quint32 socket_uuid ) = 0;
+            virtual void onSocketConnected   ( sockuuid socket_uuid ) = 0;
+            virtual void onSocketDisconnected( sockuuid socket_uuid ) = 0;
 
         protected:
             virtual ~IHbSocketListener() = default;

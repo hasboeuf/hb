@@ -10,12 +10,12 @@ void HbNetworkTimeoutService::onContractReceived( const HbNetworkContract * cont
 
 }
 
-void HbNetworkTimeoutService::onSocketConnected   ( quint32 socket_uuid )
+void HbNetworkTimeoutService::onSocketConnected   ( sockuuid socket_uuid )
 {
 
 }
 
-void HbNetworkTimeoutService::onSocketDisconnected( quint32 socket_uuid )
+void HbNetworkTimeoutService::onSocketDisconnected( sockuuid socket_uuid )
 {
 
 }

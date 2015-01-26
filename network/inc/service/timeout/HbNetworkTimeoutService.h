@@ -30,8 +30,8 @@ namespace hb
 
         public callbacks:
             void onContractReceived( const HbNetworkContract * contract );
-            void onSocketConnected   ( quint32 socket_uuid );
-            void onSocketDisconnected( quint32 socket_uuid );
+            void onSocketConnected   ( sockuuid socket_uuid );
+            void onSocketDisconnected( sockuuid socket_uuid );
 		};
 	}
 }

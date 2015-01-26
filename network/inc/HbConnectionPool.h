@@ -40,22 +40,22 @@ namespace hb
             // From HbAbstractServer.
             void onServerConnected       ( quint16 server_uuid );
             void onServerDisconnected    ( quint16 server_uuid );
-            void onSocketConnected       ( quint16 server_uuid, quint32 socket_uuid );
-            void onSocketDisconnected    ( quint16 server_uuid, quint32 socket_uuid );
-            void onSocketContractReceived( quint16 server_uuid, quint16 socket_uuid, const HbNetworkContract * contract );
+            void onSocketConnected       ( quint16 server_uuid, sockuuid socket_uuid );
+            void onSocketDisconnected    ( quint16 server_uuid, sockuuid socket_uuid );
+            void onSocketContractReceived( quint16 server_uuid, sockuuid socket_uuid, const HbNetworkContract * contract );
 
             // From HbNetworkService.
 
         signals:
             // To services.
-            void socketConnected       ( quint16 socket_uuid );
-            void socketDisconnected    ( quint16 socket_uuid );
+            void socketConnected       ( sockuuid socket_uuid );
+            void socketDisconnected    ( sockuuid socket_uuid );
             void socketContractReceived( const HbNetworkContract * contract );
             void userConnected         ( const HbNetworkUserInfo & user_info );
             void userDisconnected      ( const HbNetworkUserInfo & user_info );
             void userContractReceived  ( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract );
             // To
-            void socketPendingContractReceived( quint16 socket_uuid, const HbNetworkContract * contract );
+            void socketPendingContractReceived( sockuuid socket_uuid, const HbNetworkContract * contract );
 
         private:
             bool checkContractReceived( const HbNetworkContract * contract );
@@ -63,10 +63,10 @@ namespace hb
         private:
             QHash< quint16, HbAbstractServer * > mServers;
             QHash< quint16, HbNetworkService * > mServices;
-            QHash< quint16, quint16 > mServerBySocketId;
-            QHash< quint16, HbNetworkProtocol::NetworkType > mSocketTypes;
-            QSet < quint16 > mPendingSockets;
-            QHash< QString, HbNetworkUser * > mUserBySocketId;
+            QHash< sockuuid, quint16 > mServerBySocketId;
+            QHash< sockuuid, HbNetworkProtocol::NetworkType > mSocketTypes;
+            QSet < sockuuid > mPendingSockets;
+            QHash< sockuuid, HbNetworkUser * > mUserBySocketId;
 		};
 	}
 }

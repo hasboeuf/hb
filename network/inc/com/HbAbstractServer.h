@@ -65,15 +65,15 @@ namespace hb
             void serverConnected   ( quint16 server_uuid );
             void serverDisconnected( quint16 server_uuid );
             // To higher level class.
-            void socketConnected       ( quint16 server_uuid, quint32 socket_uuid );
-            void socketDisconnected    ( quint16 server_uuid, quint32 socket_uuid );
-            void socketContractReceived( quint16 server_uuid, quint32 socket_uuid, const HbNetworkContract * contract );
+            void socketConnected       ( quint16 server_uuid, sockuuid socket_uuid );
+            void socketDisconnected    ( quint16 server_uuid, sockuuid socket_uuid );
+            void socketContractReceived( quint16 server_uuid, sockuuid socket_uuid, const HbNetworkContract * contract );
 
         public callbacks :
             // From HbSocketHandler.
-            void onSocketConnected       ( qint32 socket_descriptor, quint16 socket_uuid );
-            void onSocketDisconnected    ( quint16 socket_uuid );
-            void onSocketContractReceived( quint16 socket_uuid, const HbNetworkContract * contract );
+            void onSocketConnected       ( qint32 socket_descriptor, sockuuid socket_uuid );
+            void onSocketDisconnected    ( sockuuid socket_uuid );
+            void onSocketContractReceived( sockuuid socket_uuid, const HbNetworkContract * contract );
             void onHandlerIdled();
 
 		private:
@@ -83,7 +83,7 @@ namespace hb
 
 		protected:
             QList< quint32 > mPending; // Socket descriptors not instanciated.
-            QHash< quint32, HbSocketHandler * > mHandlerBySocketId;
+            QHash< sockuuid, HbSocketHandler * > mHandlerBySocketId;
             QHash< quint16, HbSocketHandler * > mHandlerById;
 		};
 	}

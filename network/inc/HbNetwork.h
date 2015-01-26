@@ -12,7 +12,7 @@
 // Qt
 #include <QtCore/QtGlobal>
 
-typedef quint16 sockid;
+typedef quint16 sockuuid;
 
 #if !defined( HB_NETWORK_DECL )
 #	if defined( HB_NETWORK_BUILD )

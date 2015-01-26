@@ -77,7 +77,7 @@ namespace hb
             HbNetworkProtocol::NetworkType mNetworkTarget;
             HbNetworkProtocol::RoutingScheme mRouting;
             QSet< QString > mPendingReceivers; // user_uuid, morph into SocketReceivers at sending time.
-            QSet< quint16 > mSocketReceivers;
+            QSet< sockuuid > mSocketReceivers;
 
 		};
 	}

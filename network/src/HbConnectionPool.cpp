@@ -71,7 +71,7 @@ void HbConnectionPool::onServerDisconnected( quint16 server_uuid )
     HbInfo( "Server #%d disconnected.", server_uuid );
 }
 
-void HbConnectionPool::onSocketConnected( quint16 server_uuid, quint32 socket_uuid )
+void HbConnectionPool::onSocketConnected( quint16 server_uuid, sockuuid socket_uuid )
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
@@ -80,12 +80,11 @@ void HbConnectionPool::onSocketConnected( quint16 server_uuid, quint32 socket_uu
     HbInfo( "Socket #%d on server #%d connected.", server_uuid, socket_uuid );
 }
 
-void HbConnectionPool::onSocketDisconnected( quint16 server_uuid, quint32 socket_uuid )
+void HbConnectionPool::onSocketDisconnected( quint16 server_uuid, sockuuid socket_uuid )
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
     q_assert( !mServers.contains( server_uuid ) );
-
 
     HbInfo( "Socket #%d on server #%d disconnected.", server_uuid, socket_uuid );
 }

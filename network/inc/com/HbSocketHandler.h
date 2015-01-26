@@ -58,7 +58,7 @@ namespace hb
 			HandlerState       mState;
 
 			QMap<quint16, HbAbstractSocket *> mSocketById;
-			QMap<HbAbstractSocket *, quint16> mIdBySocket;
+            QMap<HbAbstractSocket *, sockuuid> mIdBySocket;
 
             QMutex       mSocketMutex;
 
@@ -80,9 +80,9 @@ namespace hb
 		signals:
             // To Server.
             void handlerIdled          ();
-            void socketConnected       ( qint32 socket_previous_id, quint16 socket_id );
-            void socketDisconnected    ( quint16 socket_uuid );
-            void socketContractReceived( quint16 socket_uuid, const HbNetworkContract * contract );
+            void socketConnected       ( qint32 socket_previous_id, sockuuid socket_id );
+            void socketDisconnected    ( sockuuid socket_uuid );
+            void socketContractReceived( sockuuid socket_uuid, const HbNetworkContract * contract );
         };
     }
 }

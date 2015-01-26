@@ -10,12 +10,12 @@ void HbNetworkAuthenticationService::onContractReceived( const HbNetworkContract
 
 }
 
-void HbNetworkAuthenticationService::onSocketConnected   ( quint32 socket_uuid )
+void HbNetworkAuthenticationService::onSocketConnected   ( sockuuid socket_uuid )
 {
 
 }
 
-void HbNetworkAuthenticationService::onSocketDisconnected( quint32 socket_uuid )
+void HbNetworkAuthenticationService::onSocketDisconnected( sockuuid socket_uuid )
 {
 
 }
