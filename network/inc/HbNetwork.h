@@ -14,6 +14,7 @@
 
 typedef quint32 sockuuid;
 typedef quint16 netwuuid;
+typedef quint16 servuuid;
 
 #if !defined( HB_NETWORK_DECL )
 #	if defined( HB_NETWORK_BUILD )

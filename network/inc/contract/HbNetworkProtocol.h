@@ -44,7 +44,7 @@ namespace hb
                 BROADCAST = 2
             };
 
-            enum Service : quint16
+            enum Service : servuuid
             {
                 SERVICE_UNDEFINED = 0,
                 SERVICE_UPDATE = 1,

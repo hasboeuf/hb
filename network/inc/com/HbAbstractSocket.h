@@ -64,7 +64,7 @@ namespace hb
             virtual void onReadyRead() = 0;
 
 		private:
-            quint16 mUuid;
+            sockuuid mUuid;
             QPointer< QIODevice > mDevice;
 
             quint32 mBytesPending;

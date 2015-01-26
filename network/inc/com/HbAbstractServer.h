@@ -78,13 +78,13 @@ namespace hb
 
 		private:
             HbServerConfig mConfig; // SUB
-            quint32 mUuid;
+            netwuuid mUuid;
             bool mReady;
 
 		protected:
-            QList< quint32 > mPending; // Socket descriptors not instanciated.
+            QList< qint32 > mPending; // Socket descriptors not instanciated.
             QHash< sockuuid, HbSocketHandler * > mHandlerBySocketId;
-            QHash< quint16, HbSocketHandler * > mHandlerById;
+            QHash< netwuuid, HbSocketHandler * > mHandlerById;
 		};
 	}
 }

@@ -61,9 +61,9 @@ namespace hb
             bool checkContractReceived( const HbNetworkContract * contract );
 
         private:
-            QHash< quint16, HbAbstractServer * > mServers;
-            QHash< quint16, HbNetworkService * > mServices;
-            QHash< sockuuid, quint16 > mServerBySocketId;
+            QHash< netwuuid, HbAbstractServer * > mServers;
+            QHash< servuuid, HbNetworkService * > mServices;
+            QHash< sockuuid, netwuuid > mServerBySocketId;
             QHash< sockuuid, HbNetworkProtocol::NetworkType > mSocketTypes;
             QSet < sockuuid > mPendingSockets;
             QHash< sockuuid, HbNetworkUser * > mUserBySocketId;

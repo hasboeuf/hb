@@ -54,10 +54,10 @@ namespace hb
             virtual void reset();
 
         protected:
-            quint16            mId;
+            netwuuid           mId;
 			HandlerState       mState;
 
-			QMap<quint16, HbAbstractSocket *> mSocketById;
+            QMap<sockuuid, HbAbstractSocket *> mSocketById;
             QMap<HbAbstractSocket *, sockuuid> mIdBySocket;
 
             QMutex       mSocketMutex;
