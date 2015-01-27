@@ -6,7 +6,7 @@
 #include <HbConnectionPool.h>
 #include <com/tcp/HbTcpServer.h>
 #include <service/timeout/HbNetworkTimeoutService.h>
-#include <service/auth/HbNetworkAuthenticationService.h>
+#include <service/auth/HbNetworkAuthService.h>
 #include <service/channel/HbNetworkChannelService.h>
 
 using namespace hb::network;
@@ -14,17 +14,17 @@ using namespace hb::network;
 
 HbConnectionPool::HbConnectionPool()
 {
-    HbNetworkTimeoutService        * service_timeout        = new HbNetworkTimeoutService();
-    HbNetworkAuthenticationService * service_authentication = new HbNetworkAuthenticationService();
-    HbNetworkChannelService        * service_channel        = new HbNetworkChannelService();
+    HbNetworkTimeoutService * service_timeout = new HbNetworkTimeoutService();
+    HbNetworkAuthService    * service_auth    = new HbNetworkAuthService();
+    HbNetworkChannelService * service_channel = new HbNetworkChannelService();
 
-    q_assert( service_timeout->uuid()        != HbNetworkProtocol::SERVICE_UNDEFINED );
-    q_assert( service_authentication->uuid() != HbNetworkProtocol::SERVICE_UNDEFINED );
-    q_assert( service_channel->uuid()        != HbNetworkProtocol::SERVICE_UNDEFINED );
+    q_assert( service_timeout->uuid() != HbNetworkProtocol::SERVICE_UNDEFINED );
+    q_assert( service_auth->uuid()    != HbNetworkProtocol::SERVICE_UNDEFINED );
+    q_assert( service_channel->uuid() != HbNetworkProtocol::SERVICE_UNDEFINED );
 
-    mServices.insert( service_timeout->uuid(),        service_timeout );
-    mServices.insert( service_authentication->uuid(), service_authentication );
-    mServices.insert( service_channel->uuid(),        service_channel );
+    mServices.insert( service_timeout->uuid(), service_timeout );
+    mServices.insert( service_auth->uuid(),    service_auth    );
+    mServices.insert( service_channel->uuid(), service_channel );
 
 
 }

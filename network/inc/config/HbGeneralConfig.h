@@ -15,12 +15,12 @@
 // Hb
 // Local
 #include <HbNetwork.h>
+#include <service/auth/HbNetworkAuthStrategy.h>
 
 namespace hb
 {
     namespace network
     {
-        class HbAuthenticationStrategy;
 
         class HB_NETWORK_DECL HbGeneralConfig final
         {
@@ -44,7 +44,7 @@ namespace hb
             void enableAuthentication()
             {
                 A * strategy = new A();
-                if( dynamic_cast< HbAuthenticationStrategy * >( strategy ) )
+                if( dynamic_cast< HbNetworkAuthStrategy * >( strategy ) )
                 {
                     mpAuthenticationStrategy = strategy;
                 }
@@ -56,7 +56,7 @@ namespace hb
         private:
             QString mAppName;
             quint16 mProtocolVersion;
-            HbAuthenticationStrategy * mpAuthenticationStrategy;
+            HbNetworkAuthStrategy * mpAuthenticationStrategy;
         };
     }
 }

@@ -6,12 +6,11 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBAUTHENTICATIONSTRATEGY_H
-#define HBAUTHENTICATIONSTRATEGY_H
+#ifndef HBAUTHSTRATEGY_H
+#define HBAUTHSTRATEGY_H
 
 // Qt
 // Hb
-#include <listener/IHbSocketListener.h>
 // Local
 #include <HbNetwork.h>
 #include <contract/HbNetworkProtocol.h>
@@ -22,17 +21,19 @@ namespace hb
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbAuthenticationStrategy
+        class HB_NETWORK_DECL HbNetworkAuthStrategy
 		{
 		public:
 
-            HbAuthenticationStrategy() = default;
-            virtual ~HbAuthenticationStrategy() = default;
+            HbNetworkAuthStrategy() = default;
+            virtual ~HbNetworkAuthStrategy() = default;
 
-            virtual HbNetworkProtocol::AuthenticationStatus tryLogin( const HbConnectionContract * contract ) = 0;
+            virtual HbNetworkProtocol::AuthStatus tryLogin( const HbConnectionContract * contract ) = 0;
 
 		};
 	}
 }
 
-#endif // HBAUTHENTICATIONSTRATEGY_H
+using hb::network::HbNetworkAuthStrategy;
+
+#endif // HBAUTHSTRATEGY_H

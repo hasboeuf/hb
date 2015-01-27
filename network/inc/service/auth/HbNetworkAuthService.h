@@ -6,8 +6,8 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBNETWORKAUTHENTICATIONSERVICE_H
-#define HBNETWORKAUTHENTICATIONSERVICE_H
+#ifndef HBNETWORKAUTHSERVICE_H
+#define HBNETWORKAUTHSERVICE_H
 
 // Qt
 // Hb
@@ -21,12 +21,12 @@ namespace hb
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbNetworkAuthenticationService : public HbNetworkService, public IHbSocketListener
+        class HB_NETWORK_DECL HbNetworkAuthService : public HbNetworkService, public IHbSocketListener
 		{
 		public:
 
-            HbNetworkAuthenticationService() = default;
-            virtual ~HbNetworkAuthenticationService( ) = default;
+            HbNetworkAuthService() = default;
+            virtual ~HbNetworkAuthService( ) = default;
 
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract );
@@ -36,4 +36,4 @@ namespace hb
 	}
 }
 
-#endif // HBNETWORKAUTHENTICATIONSERVICE_H
+#endif // HBNETWORKAUTHSERVICE_H

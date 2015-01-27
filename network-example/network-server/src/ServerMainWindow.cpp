@@ -16,6 +16,7 @@
 #include <HbServer.h>
 // Local
 #include <ServerMainWindow.h>
+#include <ServerAuthStrategy.h>
 
 
 using namespace hb::log;
@@ -36,6 +37,7 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     HbGeneralConfig config;
     config.setAppName("hb-network-example");
     config.setProtocolVersion( 1 );
+    config.enableAuthentication< ServerAuthStrategy >();
 
     mpHbServer = new HbServer( config );
 
