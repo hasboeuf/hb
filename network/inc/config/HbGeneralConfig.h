@@ -43,7 +43,7 @@ namespace hb
             template< class A >
             void enableAuthentication()
             {
-                strategy = new A();
+                A * strategy = new A();
                 if( dynamic_cast< HbAuthenticationStrategy * >( strategy ) )
                 {
                     mpAuthenticationStrategy = strategy;

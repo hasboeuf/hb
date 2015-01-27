@@ -23,6 +23,10 @@ namespace hb
         {
 
         public:
+            HbTimeoutServerConfig();
+            virtual ~HbTimeoutServerConfig() = default;
+            HbTimeoutServerConfig( const HbTimeoutServerConfig & config );
+            virtual HbTimeoutServerConfig & operator =( const HbTimeoutServerConfig & config );
 
             virtual void setWarningThreshold( quint16 duration ) final;
             virtual quint16 warningThreshold() const final;
@@ -32,19 +36,11 @@ namespace hb
 
             virtual bool isValid() const;
 
-        protected:
-            HbTimeoutServerConfig();
-            HbTimeoutServerConfig(const HbTimeoutServerConfig & config);
-            virtual ~HbTimeoutServerConfig() = default;
-            virtual HbTimeoutServerConfig & operator =(const HbTimeoutServerConfig & config);
-
         private:
             quint16 mWarningThreshold;
             quint16 mKickThreshold;
 
         };
-
-
     }
 }
 

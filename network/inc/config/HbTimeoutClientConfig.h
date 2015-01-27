@@ -23,17 +23,15 @@ namespace hb
         {
 
         public:
+            HbTimeoutClientConfig();
+            virtual ~HbTimeoutClientConfig() = default;
+            HbTimeoutClientConfig(const HbTimeoutClientConfig & config);
+            virtual HbTimeoutClientConfig & operator =(const HbTimeoutClientConfig & config);
 
             virtual void setReconnectionDelay( quint16 duration ) final;
             virtual quint16 reconnectionDelay() const final;
 
             virtual bool isValid() const;
-
-        protected:
-            HbTimeoutClientConfig();
-            HbTimeoutClientConfig(const HbTimeoutClientConfig & config);
-            virtual ~HbTimeoutClientConfig() = default;
-            virtual HbTimeoutClientConfig & operator =(const HbTimeoutClientConfig & config);
 
         private:
             quint16 mReconnectionDelay;
@@ -44,6 +42,6 @@ namespace hb
     }
 }
 
-using hb::network::HbTimeoutServerConfig;
+using hb::network::HbTimeoutClientConfig;
 
 #endif // HBTIMEOUTCLIENTCONFIG_H

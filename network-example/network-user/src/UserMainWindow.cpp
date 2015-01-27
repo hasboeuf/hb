@@ -94,16 +94,16 @@ void UserMainWindow::onStartClicked()
     HbNetworkProtocol::msAppName = "hb-network-example";
     HbNetworkProtocol::msProtocolVersion = 1;
 
-    HbTcpConfig config;
+    HbTcpClientConfig config;
     config.setAddress( QHostAddress::LocalHost );
     config.setPort( 4000 );
 
-    HbNetworkConfig::Timeout timeout;
+    /*HbNetworkConfig::Timeout timeout;
     timeout.connection    = 10;
     timeout.reconnection  = 2000;
     timeout.disconnection = 10;
 
-    config.setTimeout( timeout );
+    config.setTimeout( timeout );*/
 
     mTcpClient.setConfiguration( config );
     mTcpClient.join();

@@ -20,7 +20,7 @@ namespace hb
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbTcpConfig
+        class HB_NETWORK_DECL HbTcpConfig : public virtual HbNetworkConfig
 		{
 		public:
 
@@ -33,6 +33,13 @@ namespace hb
 			};
             Q_DECLARE_FLAGS( SocketOptions, SocketOption )
 
+            HbTcpConfig();
+            virtual ~HbTcpConfig() = default;
+            HbTcpConfig(const HbTcpConfig & config);
+            HbTcpConfig & operator =(const HbTcpConfig & config);
+
+            bool isValid() const;
+
             void setAddress(const QString & address);
             void setAddress(const QHostAddress & address);
             void setPort   (quint16 port);
@@ -41,16 +48,6 @@ namespace hb
             const QHostAddress & address() const;
             quint16 port() const;
             SocketOptions options() const;
-
-
-
-        protected:
-			HbTcpConfig();
-			HbTcpConfig(const HbTcpConfig & config);
-			virtual ~HbTcpConfig() = default;
-			HbTcpConfig & operator =(const HbTcpConfig & config);
-
-            bool isValid() const;
 
 		private:
             QHostAddress  mAddress;

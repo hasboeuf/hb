@@ -30,13 +30,13 @@ namespace hb
 
             virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
 
-            virtual void id() const final
+            virtual HbNetworkProtocol::Service uuid() const final
             {
-                return mId;
+                return mUuid;
             }
 
         protected:
-            HbNetworkProtocol::Service mId = HbNetworkProtocol::SERVICE_UNDEFINED;
+            HbNetworkProtocol::Service mUuid = HbNetworkProtocol::SERVICE_UNDEFINED;
 		};
 	}
 }

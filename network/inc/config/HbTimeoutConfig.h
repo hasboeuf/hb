@@ -23,23 +23,21 @@ namespace hb
 
         public:
 
+            HbTimeoutConfig();
+            virtual ~HbTimeoutConfig() = default;
+            HbTimeoutConfig(const HbTimeoutConfig & config);
+            virtual HbTimeoutConfig & operator =(const HbTimeoutConfig & config);
+
             virtual void setTickInterval( quint16 interval ) final;
-            virtual void isTickEnabled() const final;
+            virtual quint16 tickInterval() const final;
+            virtual bool isTimeoutEnabled() const final;
 
             virtual bool isValid() const;
-
-        protected:
-            HbTimeoutConfig();
-            HbTimeoutConfig(const HbTimeoutConfig & config);
-            virtual ~HbTimeoutConfig() = default;
-            virtual HbTimeoutConfig & operator =(const HbTimeoutConfig & config);
 
         private:
             quint16 mTickInterval;
 
         };
-
-
     }
 }
 

@@ -84,12 +84,12 @@ void ServerMainWindow::onStartClicked()
     config.setPort( 4000 );
     config.setMaxUsersPerThread( 1 );
 
-    HbNetworkConfig::Timeout timeout;
+    /*HbNetworkConfig::Timeout timeout;
     timeout.connection    = 1000;
     timeout.reconnection  = 1000;
     timeout.disconnection = 1000;
 
-    config.setTimeout(timeout);
+    config.setTimeout(timeout);*/
 
     //mTcpServer.setConfiguration( config );
     //mTcpServer.join();

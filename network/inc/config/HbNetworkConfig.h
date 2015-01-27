@@ -23,8 +23,11 @@ namespace hb
 	{
 		class HB_NETWORK_DECL HbNetworkConfig
 		{
-
         public:
+            HbNetworkConfig();
+            virtual ~HbNetworkConfig() = default;
+            HbNetworkConfig(const HbNetworkConfig & config);
+            virtual HbNetworkConfig & operator =(const HbNetworkConfig & config);
 
 			virtual void setOpenMode(QIODevice::OpenMode mode) final;
 			virtual QIODevice::OpenMode openMode() const final;
@@ -35,18 +38,12 @@ namespace hb
 			virtual bool isValid() const;
 
         protected:
-			HbNetworkConfig();
-			HbNetworkConfig(const HbNetworkConfig & config);
-			virtual ~HbNetworkConfig() = default;
-			virtual HbNetworkConfig & operator =(const HbNetworkConfig & config);
+            HbNetworkExchanges mExchanges;
 
 		private:
             QIODevice::OpenMode mOpenMode;
-            HbNetworkExchanges mExchanges;
 
 		};
-
-
 	}
 }
 

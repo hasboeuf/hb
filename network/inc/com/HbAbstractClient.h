@@ -14,6 +14,7 @@
 // Local
 #include <HbNetwork.h>
 #include <com/HbAbstractNetwork.h>
+#include <config/HbClientConfig.h>
 
 namespace hb
 {
@@ -36,6 +37,8 @@ namespace hb
 
             virtual bool send( HbNetworkContract * contract);
 			//virtual bool reply(int sender, const HbNetworkContract * contract);
+
+            virtual const HbClientConfig & configuration() const; // SUB
 
 		signals:
             void connected();
@@ -61,6 +64,7 @@ namespace hb
             void onSocketContractReceived( const HbNetworkContract * contract );
 
 		private:
+            HbClientConfig mConfig; // SUB
             qint32 mRetry;
             bool mReady;
 		};

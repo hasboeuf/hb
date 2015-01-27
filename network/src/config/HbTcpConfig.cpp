@@ -10,8 +10,6 @@ using namespace hb::network;
 HbTcpConfig::HbTcpConfig() :
     HbNetworkConfig()
 {
-	setTimeout(timeout());
-
     mAddress = QHostAddress::Null;
     mPort = 0;
     mOptions = SocketOption::NoOptions;
@@ -24,8 +22,6 @@ HbTcpConfig::HbTcpConfig(const HbTcpConfig & config) :
 {
 	if (this != &config)
 	{
-		setTimeout(timeout());
-
         mAddress = config.mAddress;
         mPort    = config.mPort;
         mOptions = config.mOptions;
@@ -38,25 +34,14 @@ HbTcpConfig & HbTcpConfig::operator =(const HbTcpConfig & config)
     if (this != &config)
 	{
 		HbNetworkConfig::operator =(config);
-        setTimeout( timeout() );
 
         mAddress = config.mAddress;
         mPort    = config.mPort;
         mOptions = config.mOptions;
 	}
 
-	return *this;
+    return ( *this );
 }
-
-
-void HbTcpConfig::setTimeout(const Timeout & timeout)
-{
-	Timeout updated = timeout;
-	HbNetworkConfig::setTimeout(updated);
-
-	updated.connection = qMax< qint16 >(10, updated.connection);
-}
-
 
 void HbTcpConfig::setAddress(const QString & address)
 {
@@ -73,7 +58,6 @@ void HbTcpConfig::setPort(quint16 port)
     mPort = port;
 }
 
-
 const QHostAddress & HbTcpConfig::address() const
 {
     return mAddress;
@@ -83,7 +67,6 @@ quint16 HbTcpConfig::port() const
 {
     return mPort;
 }
-
 
 void HbTcpConfig::setOptions(SocketOptions options)
 {

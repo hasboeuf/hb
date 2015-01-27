@@ -3,19 +3,11 @@
 // Local
 #include <config/HbTcpServerConfig.h>
 
-
-HbTcpServerConfig::HbTcpServerConfig( ) :
-    HbNetworkConfig(), HbTcpConfig( ), HbServerConfig()
-{
-
-}
-
 HbTcpServerConfig::HbTcpServerConfig( const HbTcpServerConfig & config ) :
 	HbNetworkConfig( config ), HbTcpConfig( config ), HbServerConfig( config )
 {
 
 }
-
 
 HbTcpServerConfig & HbTcpServerConfig::operator =( const HbTcpServerConfig & config )
 {

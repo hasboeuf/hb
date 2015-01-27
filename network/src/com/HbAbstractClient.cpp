@@ -143,6 +143,11 @@ bool HbAbstractClient::send( HbNetworkContract *contract )
 	return false;
 }
 
+const HbClientConfig & HbAbstractClient::configuration() const
+{
+    return mConfig;
+}
+
 /*bool HbAbstractClient::reply(int sender, const HbNetworkContract * contract)
 {
 	if (!contract || !contract->reply())
@@ -238,7 +243,7 @@ void HbAbstractClient::onSocketContractReceived( const HbNetworkContract * contr
 
 void HbAbstractClient::onSocketDisconnected()
 {
-    qint16 retry_delay = configuration().timeout().reconnection;
+    qint16 retry_delay = configuration().timeout().reconnectionDelay();
     if( retry_delay > 0 )
     {
         killTimer( mRetry );

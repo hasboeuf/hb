@@ -6,9 +6,6 @@ using namespace hb::network;
 
 HbNetworkConfig::HbNetworkConfig()
 {
-    mTimeout.connection = -1;
-    mTimeout.reconnection = 1000;
-    mTimeout.disconnection = -1;
     mOpenMode = QIODevice::ReadWrite;
 }
 
@@ -16,7 +13,6 @@ HbNetworkConfig::HbNetworkConfig(const HbNetworkConfig & config)
 {
 	if (this != &config)
 	{
-        mTimeout = config.mTimeout;
         mOpenMode = config.mOpenMode;
         mExchanges = config.mExchanges;
 	}
@@ -27,19 +23,11 @@ HbNetworkConfig & HbNetworkConfig::operator =(const HbNetworkConfig & config)
 {
 	if (this != &config)
 	{
-        mTimeout = config.mTimeout;
         mOpenMode = config.mOpenMode;
         mExchanges = config.mExchanges;
 	}
 
 	return *this;
-}
-
-void HbNetworkConfig::setTimeout(const Timeout & timeout)
-{
-    mTimeout.connection    = qMax< qint16 >(-1, timeout.connection   );
-    mTimeout.reconnection  = qMax< qint16 >(-1, timeout.reconnection );
-    mTimeout.disconnection = qMax< qint16 >(-1, timeout.disconnection);
 }
 
 void HbNetworkConfig::setOpenMode(QIODevice::OpenMode mode)
@@ -67,11 +55,6 @@ void HbNetworkConfig::setOpenMode(QIODevice::OpenMode mode)
 			break;
 		}
 	}
-}
-
-const HbNetworkConfig::Timeout & HbNetworkConfig::timeout() const
-{
-    return mTimeout;
 }
 
 QIODevice::OpenMode HbNetworkConfig::openMode() const

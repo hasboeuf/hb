@@ -28,10 +28,9 @@ namespace hb
         {
         public:
 
-            HbTcpClientConfig( );
+            HbTcpClientConfig() = default;
+            virtual ~HbTcpClientConfig() = default;
             HbTcpClientConfig( const HbTcpClientConfig & config );
-            virtual ~HbTcpClientConfig( ) = default;
-
             HbTcpClientConfig & operator =( const HbTcpClientConfig & config );
 
             bool isValid() const;

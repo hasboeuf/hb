@@ -21,7 +21,7 @@ HbTcpClient::~HbTcpClient()
 }
 
 
-bool HbTcpClient::join( const HbTcpConfig & config )
+bool HbTcpClient::join( const HbTcpClientConfig & config )
 {
     if( setConfiguration( config ) )
     {
@@ -44,7 +44,7 @@ quint16 HbTcpClient::uuid() const // TODO CHECK
 }
 
 
-bool HbTcpClient::setConfiguration( const HbTcpConfig & config )
+bool HbTcpClient::setConfiguration( const HbTcpClientConfig & config )
 {
     if( mpSocket )
     {
@@ -56,7 +56,7 @@ bool HbTcpClient::setConfiguration( const HbTcpConfig & config )
     return true;
 }
 
-const HbTcpConfig & HbTcpClient::configuration() const
+const HbTcpClientConfig &HbTcpClient::configuration() const
 {
     return mConfig;
 }

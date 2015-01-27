@@ -25,12 +25,13 @@ namespace hb
         {
 
         public:
-
-            HbClientConfig();
-            HbClientConfig( const HbClientConfig & config );
+            HbClientConfig() = default;
             virtual ~HbClientConfig() = default;
-
+            HbClientConfig( const HbClientConfig & config );
             HbClientConfig & operator =( const HbClientConfig & config );
+
+            const HbTimeoutClientConfig & timeout() const;
+            void setTimeout( const HbTimeoutClientConfig & timeout );
 
             bool isValid() const;
 

@@ -8,6 +8,7 @@ HbGeneralConfig::HbGeneralConfig()
 {
     mAppName = "";
     mProtocolVersion = 0;
+    mpAuthenticationStrategy = nullptr;
 }
 
 HbGeneralConfig::HbGeneralConfig(const HbGeneralConfig & config)

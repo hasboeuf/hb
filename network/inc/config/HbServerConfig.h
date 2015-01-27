@@ -27,9 +27,8 @@ namespace hb
 		public:
 
 			HbServerConfig();
+            virtual ~HbServerConfig() = default;
 			HbServerConfig( const HbServerConfig & config );
-			virtual ~HbServerConfig() = default;
-
 			HbServerConfig & operator =( const HbServerConfig & config );
 
 			virtual void setMaxUsersPerThread( quint16 max_users ) final;
@@ -42,7 +41,6 @@ namespace hb
 			quint16 mMaxUsersPerThread;
             HbTimeoutServerConfig mTimeout;
 		};
-
 	}
 }
 

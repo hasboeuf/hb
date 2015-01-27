@@ -18,9 +18,9 @@ HbConnectionPool::HbConnectionPool()
     HbNetworkAuthenticationService * service_authentication = new HbNetworkAuthenticationService();
     HbNetworkChannelService        * service_channel        = new HbNetworkChannelService();
 
-    q_assert( service_timeout->id()        != HbNetworkProtocol::SERVICE_UNDEFINED );
-    q_assert( service_authentication->id() != HbNetworkProtocol::SERVICE_UNDEFINED );
-    q_assert( service_channel->id()        != HbNetworkProtocol::SERVICE_UNDEFINED );
+    q_assert( service_timeout->uuid()        != HbNetworkProtocol::SERVICE_UNDEFINED );
+    q_assert( service_authentication->uuid() != HbNetworkProtocol::SERVICE_UNDEFINED );
+    q_assert( service_channel->uuid()        != HbNetworkProtocol::SERVICE_UNDEFINED );
 
     mServices.insert( service_timeout->uuid(),        service_timeout );
     mServices.insert( service_authentication->uuid(), service_authentication );

@@ -3,7 +3,7 @@
 
 // Local
 #include <com/HbAbstractClient.h>
-#include <config/HbTcpConfig.h>
+#include <config/HbTcpClientConfig.h>
 
 namespace hb
 {
@@ -22,11 +22,11 @@ namespace hb
             virtual ~HbTcpClient();
 
 			using HbAbstractClient::join;
-            virtual bool join( const HbTcpConfig & config ) final;
+            virtual bool join( const HbTcpClientConfig & config ) final;
             virtual quint16 uuid() const final;
 
-            virtual bool setConfiguration( const HbTcpConfig & config ) final;
-            virtual const HbTcpConfig & configuration() const final;
+            virtual bool setConfiguration( const HbTcpClientConfig & config ) final;
+            virtual const HbTcpClientConfig & configuration() const final;
 
         signals:
             void socketError( QAbstractSocket::SocketError error, QString error_str );
@@ -43,7 +43,7 @@ namespace hb
         private :
 
             HbTcpSocket * mpSocket;
-            HbTcpConfig mConfig;
+            HbTcpClientConfig mConfig;
 		};
 	}
 }
