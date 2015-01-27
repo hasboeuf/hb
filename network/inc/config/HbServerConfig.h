@@ -35,6 +35,9 @@ namespace hb
 			virtual quint16 maxUsersPerThread() const final;
 			virtual bool isThreaded() const final;
 
+            const HbTimeoutServerConfig & timeout() const;
+            void setTimeout( const HbTimeoutServerConfig & timeout );
+
 			bool isValid() const;
 
 		private:

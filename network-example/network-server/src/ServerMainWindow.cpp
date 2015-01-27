@@ -84,15 +84,15 @@ void ServerMainWindow::onStartClicked()
     config.setPort( 4000 );
     config.setMaxUsersPerThread( 1 );
 
-    /*HbNetworkConfig::Timeout timeout;
-    timeout.connection    = 1000;
-    timeout.reconnection  = 1000;
-    timeout.disconnection = 1000;
+    HbTimeoutServerConfig timeout;
+    timeout.setTickInterval( 1 );
+    timeout.setWarningThreshold( 5 );
+    timeout.setKickThreshold( 10 );
 
-    config.setTimeout(timeout);*/
+    config.setTimeout( timeout );
 
-    //mTcpServer.setConfiguration( config );
-    //mTcpServer.join();
+    mTcpServer.setConfiguration( config );
+    mTcpServer.join();
 
     quint16 server_uuid = mpHbServer->joinTcpServer( config );
     if( server_uuid > 0 )

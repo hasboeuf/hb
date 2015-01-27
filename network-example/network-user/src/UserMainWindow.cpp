@@ -98,16 +98,14 @@ void UserMainWindow::onStartClicked()
     config.setAddress( QHostAddress::LocalHost );
     config.setPort( 4000 );
 
-    /*HbNetworkConfig::Timeout timeout;
-    timeout.connection    = 10;
-    timeout.reconnection  = 2000;
-    timeout.disconnection = 10;
+    HbTimeoutClientConfig timeout;
+    timeout.setReconnectionDelay( 1000 );
+    timeout.setTickInterval( 1 );
 
-    config.setTimeout( timeout );*/
+    config.setTimeout( timeout );
 
     mTcpClient.setConfiguration( config );
     mTcpClient.join();
-
 
     HbLogEnd();
 }

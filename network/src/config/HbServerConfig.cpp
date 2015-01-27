@@ -45,6 +45,16 @@ bool HbServerConfig::isThreaded() const
 	return ( mMaxUsersPerThread > 0 );
 }
 
+const HbTimeoutServerConfig & HbServerConfig::timeout() const
+{
+    return mTimeout;
+}
+
+void HbServerConfig::setTimeout( const HbTimeoutServerConfig & timeout )
+{
+    mTimeout = timeout;
+}
+
 bool HbServerConfig::isValid() const
 {
 	return HbNetworkConfig::isValid();
