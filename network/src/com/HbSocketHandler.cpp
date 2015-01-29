@@ -184,6 +184,7 @@ void HbSocketHandler::onSocketReadyPacket()
                 }
                 else
                 {
+                    contract->setNetworkType( server()->type() );
                     emit socketContractReceived( socket->uuid(), contract );
                 }
             }

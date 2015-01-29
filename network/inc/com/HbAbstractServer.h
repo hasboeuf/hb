@@ -38,6 +38,7 @@ namespace hb
 			virtual bool leave( quint16 uuid ) final;
             virtual bool isReady() const final;
             virtual quint16 uuid() const final;
+            virtual HbNetworkProtocol::NetworkType type() const = 0;
 
             virtual bool send( HbNetworkContract * contract );
 			//virtual bool reply(int sender, const HbNetworkContract * contract);

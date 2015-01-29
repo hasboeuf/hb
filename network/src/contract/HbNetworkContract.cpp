@@ -8,7 +8,7 @@ using namespace hb::network;
 HbNetworkContract::HbNetworkContract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code ) :
     mHeader( service, code )
 {
-    mNetworkTarget = HbNetworkProtocol::NETWORK_UNDEFINED;
+    mNetworkType = HbNetworkProtocol::NETWORK_UNDEFINED;
     mRouting = HbNetworkProtocol::RoutingScheme::UNICAST;
     mpReply  = nullptr;
 }
@@ -18,7 +18,7 @@ HbNetworkContract::HbNetworkContract( const HbNetworkContract & source )
     if( &source != this )
     {
         mHeader           = source.mHeader;
-        mNetworkTarget    = source.mNetworkTarget;
+        mNetworkType      = source.mNetworkType;
         mRouting          = source.mRouting;
         mPendingReceivers = source.mPendingReceivers;
         mSocketReceivers  = source.mSocketReceivers;
@@ -31,7 +31,7 @@ HbNetworkContract & HbNetworkContract::operator=( const HbNetworkContract & sour
     if( &source != this )
     {
         mHeader           = source.mHeader;
-        mNetworkTarget    = source.mNetworkTarget;
+        mNetworkType      = source.mNetworkType;
         mRouting          = source.mRouting;
         mPendingReceivers = source.mPendingReceivers;
         mSocketReceivers  = source.mSocketReceivers;
@@ -121,4 +121,14 @@ bool HbNetworkContract::setReply( HbNetworkContract * reply )
 HbNetworkContract * HbNetworkContract::reply() const
 {
     return mpReply;
+}
+
+void HbNetworkContract::setNetworkType( HbNetworkProtocol::NetworkType type )
+{
+    mNetworkType = type;
+}
+
+HbNetworkProtocol::NetworkType HbNetworkContract::networkType() const
+{
+    return mNetworkType;
 }

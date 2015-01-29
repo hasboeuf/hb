@@ -46,6 +46,9 @@ namespace hb
             virtual bool setReply( HbNetworkContract * reply ); // TODO DEL ?
             virtual HbNetworkContract * reply() const; // TODO = 0
 
+            virtual void setNetworkType( HbNetworkProtocol::NetworkType type ) final;
+            virtual HbNetworkProtocol::NetworkType networkType() const final;
+
             template< typename T >
             inline T * value() const final
 			{
@@ -74,7 +77,7 @@ namespace hb
             HbNetworkContract * mpReply;
 
             // Internal use. Server side. TODO protect the client side.
-            HbNetworkProtocol::NetworkType mNetworkTarget;
+            HbNetworkProtocol::NetworkType mNetworkType;
             HbNetworkProtocol::RoutingScheme mRouting;
             QSet< QString > mPendingReceivers; // user_uuid, morph into SocketReceivers at sending time.
             QSet< sockuuid > mSocketReceivers;

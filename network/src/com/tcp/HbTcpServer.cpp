@@ -100,6 +100,11 @@ bool HbTcpServer::isListening() const
     return mpDevice->isListening();
 }
 
+HbNetworkProtocol::NetworkType HbTcpServer::type() const
+{
+    return HbNetworkProtocol::NETWORK_TCP;
+}
+
 
 /*void HbTcpServer::incomingConnection( HbAbstractSocket * socket )
 {
