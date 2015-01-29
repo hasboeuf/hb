@@ -41,13 +41,15 @@ namespace hb
             void setProtocolVersion( quint16 protocol_version );
 
             template< class A >
-            void enableAuthentication()
+            A * enableAuthentication()
             {
                 A * strategy = new A();
                 if( dynamic_cast< HbNetworkAuthStrategy * >( strategy ) )
                 {
                     mpAuthenticationStrategy = strategy;
+                    return strategy;
                 }
+                return nullptr;
             }
 
 
