@@ -22,7 +22,7 @@ namespace hb
 {
 	namespace network
 	{
-        class HB_NETWORK_DECL HbConnectionContract : public HbNetworkContract
+        class HB_NETWORK_DECL HbConnectionContract final : public HbNetworkContract
 		{
 
 		public:

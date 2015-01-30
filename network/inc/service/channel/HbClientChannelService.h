@@ -6,8 +6,8 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBNETWORKCHANNELSERVICE_H
-#define HBNETWORKCHANNELSERVICE_H
+#ifndef HBCLIENTCHANNELSERVICE_H
+#define HBCLIENTCHANNELSERVICE_H
 
 // Qt
 // Hb
@@ -21,19 +21,17 @@ namespace hb
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbNetworkChannelService : public HbNetworkService, public IHbUserListener
+        class HB_NETWORK_DECL HbClientChannelService : public HbNetworkService
 		{
 		public:
 
-            HbNetworkChannelService() = default;
-            virtual ~HbNetworkChannelService( ) = default;
+            HbClientChannelService() = default;
+            virtual ~HbClientChannelService( ) = default;
 
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract );
-            virtual void onUserConnected   ( const HbNetworkUserInfo & user_info );
-            virtual void onUserDisconnected( const HbNetworkUserInfo & user_info );
 		};
 	}
 }
 
-#endif // HBNETWORKCHANNELSERVICE_H
+#endif // HBCLIENTCHANNELSERVICE_H

@@ -6,34 +6,34 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBNETWORKAUTHSERVICE_H
-#define HBNETWORKAUTHSERVICE_H
+#ifndef HBSERVERCHANNELSERVICE_H
+#define HBSERVERCHANNELSERVICE_H
 
 // Qt
 // Hb
 // Local
 #include <HbNetwork.h>
 #include <service/HbNetworkService.h>
-#include <listener/IHbSocketListener.h>
+#include <listener/IHbUserListener.h>
 
 namespace hb
 {
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbNetworkAuthService : public HbNetworkService, public IHbSocketListener
+        class HB_NETWORK_DECL HbServerChannelService : public HbNetworkService, public IHbUserListener
 		{
 		public:
 
-            HbNetworkAuthService() = default;
-            virtual ~HbNetworkAuthService( ) = default;
+            HbServerChannelService() = default;
+            virtual ~HbServerChannelService( ) = default;
 
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract );
-            virtual void onSocketConnected   ( sockuuid socket_uuid );
-            virtual void onSocketDisconnected( sockuuid socket_uuid );
+            virtual void onUserConnected   ( const HbNetworkUserInfo & user_info );
+            virtual void onUserDisconnected( const HbNetworkUserInfo & user_info );
 		};
 	}
 }
 
-#endif // HBNETWORKAUTHSERVICE_H
+#endif // HBSERVERCHANNELSERVICE_H

@@ -6,8 +6,8 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBNETWORKTIMEOUTSERVICE_H
-#define HBNETWORKTIMEOUTSERVICE_H
+#ifndef HBSERVERAUTHSERVICE_H
+#define HBSERVERAUTHSERVICE_H
 
 // Qt
 // Hb
@@ -21,19 +21,19 @@ namespace hb
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbNetworkTimeoutService : public HbNetworkService, public IHbSocketListener
+        class HB_NETWORK_DECL HbServerAuthService : public HbNetworkService
 		{
 		public:
 
-            HbNetworkTimeoutService() = default;
-            virtual ~HbNetworkTimeoutService( ) = default;
+            HbServerAuthService() = default;
+            virtual ~HbServerAuthService() = default;
 
         public callbacks:
-            void onContractReceived( const HbNetworkContract * contract );
-            void onSocketConnected   ( sockuuid socket_uuid );
-            void onSocketDisconnected( sockuuid socket_uuid );
+            virtual void onContractReceived( const HbNetworkContract * contract );
+            virtual void onSocketConnected   ( sockuuid socket_uuid );
+            virtual void onSocketDisconnected( sockuuid socket_uuid );
 		};
 	}
 }
 
-#endif // HBNETWORKTIMEOUTSERVICE_H
+#endif // HBSERVERAUTHSERVICE_H

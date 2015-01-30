@@ -5,18 +5,18 @@
 // Local
 #include <HbConnectionPool.h>
 #include <com/tcp/HbTcpServer.h>
-#include <service/timeout/HbNetworkTimeoutService.h>
-#include <service/auth/HbNetworkAuthService.h>
-#include <service/channel/HbNetworkChannelService.h>
+#include <service/timeout/HbServerTimeoutService.h>
+#include <service/auth/HbServerAuthService.h>
+#include <service/channel/HbServerChannelService.h>
 
 using namespace hb::network;
 
 
 HbConnectionPool::HbConnectionPool()
 {
-    HbNetworkTimeoutService * service_timeout = new HbNetworkTimeoutService();
-    HbNetworkAuthService    * service_auth    = new HbNetworkAuthService();
-    HbNetworkChannelService * service_channel = new HbNetworkChannelService();
+    HbServerTimeoutService * service_timeout = new HbServerTimeoutService();
+    HbServerAuthService    * service_auth    = new HbServerAuthService();
+    HbServerChannelService * service_channel = new HbServerChannelService();
 
     q_assert( service_timeout->uuid() != HbNetworkProtocol::SERVICE_UNDEFINED );
     q_assert( service_auth->uuid()    != HbNetworkProtocol::SERVICE_UNDEFINED );

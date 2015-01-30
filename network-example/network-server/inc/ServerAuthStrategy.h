@@ -12,7 +12,7 @@
 // Qt
 // Hb
 #include <contract/HbNetworkProtocol.h>
-#include <service/auth/HbNetworkAuthStrategy.h>
+#include <service/auth/HbServerAuthStrategy.h>
 // Local
 
 
@@ -26,7 +26,7 @@ namespace hb
     namespace networkexample
 	{
 
-        class ServerAuthStrategy : public HbNetworkAuthStrategy
+        class ServerAuthStrategy : public HbServerAuthStrategy
 		{
 		public:
 
