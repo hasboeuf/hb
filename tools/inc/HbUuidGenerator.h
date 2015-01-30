@@ -27,6 +27,8 @@ namespace hb
         template< typename T >
         class HB_TOOLS_DECL HbUuidGenerator : public HbSingleton< HbUuidGenerator< T > >
         {
+            using I = typename std::conditional< std::is_integral< T >::value, T, qint32 >::type;
+
             Q_DISABLE_COPY( HbUuidGenerator )
 
             friend HbUuidGenerator * HbSingleton< HbUuidGenerator >::get();
@@ -34,11 +36,11 @@ namespace hb
 
         private:
             QMutex mMutex;
-            T mCurrent;
-            QQueue< T > mUnused;
+            I mCurrent;
+            QQueue< I > mUnused;
 
         public:
-            T getUuid()
+            I getUuid()
             {
                 //QMutexLocker( &mMutex );
                 if( !mUnused.isEmpty() )
@@ -51,16 +53,16 @@ namespace hb
                 }
             }
 
-            T getRandomUuid()
+            I getRandomUuid()
             {
                 //QMutexLocker( &mMutex );
 
-                T lowest = std::numeric_limits< T >::min();
-                T highest = std::numeric_limits< T >::max();
+                I lowest = std::numeric_limits< I >::min();
+                I highest = std::numeric_limits< I >::max();
                 return qrand() % ((highest + 1) - lowest) + lowest;
             }
 
-            void releaseUuid(T released_id)
+            void releaseUuid( I released_id )
             {
                 //QMutexLocker( &mMutex );
                 mUnused.enqueue( released_id );
@@ -69,7 +71,7 @@ namespace hb
         private:
             HbUuidGenerator()
             {
-                mCurrent = std::numeric_limits< T >::min();
+                mCurrent = std::numeric_limits< I >::min();
             }
 
             ~HbUuidGenerator() = default;
