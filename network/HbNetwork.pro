@@ -18,7 +18,7 @@ SUBDIRS +=  com \
             service \
             service/auth \
             service/channel \
-            service/timeout \
+            service/presence \
             user \
             listener
 

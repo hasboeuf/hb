@@ -5,7 +5,7 @@
 // Local
 #include <HbConnectionPool.h>
 #include <com/tcp/HbTcpServer.h>
-#include <service/timeout/HbServerTimeoutService.h>
+#include <service/presence/HbServerPresenceService.h>
 #include <service/auth/HbServerAuthService.h>
 #include <service/channel/HbServerChannelService.h>
 
@@ -14,7 +14,7 @@ using namespace hb::network;
 
 HbConnectionPool::HbConnectionPool()
 {
-    HbServerTimeoutService * service_timeout = new HbServerTimeoutService();
+    HbServerPresenceService * service_timeout = new HbServerPresenceService();
     HbServerAuthService    * service_auth    = new HbServerAuthService();
     HbServerChannelService * service_channel = new HbServerChannelService();
 
