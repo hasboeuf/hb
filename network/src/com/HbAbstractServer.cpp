@@ -6,7 +6,7 @@
 // Local
 #include <com/HbAbstractServer.h>
 #include <com/HbAbstractSocket.h>
-#include <config/HbNetworkConfig.h>
+#include <config/com/HbNetworkConfig.h>
 #include <contract/HbNetworkHeader.h>
 #include <com/HbSocketHandler.h>
 

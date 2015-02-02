@@ -14,7 +14,7 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <config/HbTcpServerConfig.h>
+#include <config/com/HbTcpServerConfig.h>
 #include <user/HbNetworkUserInfo.h>
 
 namespace hb

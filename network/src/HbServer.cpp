@@ -3,11 +3,11 @@
 // Local
 #include <HbServer.h>
 #include <com/tcp/HbTcpServer.h>
-#include <config/HbTcpServerConfig.h>
+#include <config/com/HbTcpServerConfig.h>
 
 using namespace hb::network;
 
-HbServer::HbServer( const HbGeneralConfig & config ) :
+HbServer::HbServer(const HbGeneralServerConfig &config ) :
     HbPeer( config )
 {
 

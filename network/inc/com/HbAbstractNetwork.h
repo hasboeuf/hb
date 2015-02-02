@@ -17,7 +17,7 @@
 // Local
 #include <HbNetwork.h>
 #include <contract/HbNetworkContract.h>
-#include <config/HbNetworkConfig.h>
+#include <config/com/HbNetworkConfig.h>
 
 namespace hb
 {

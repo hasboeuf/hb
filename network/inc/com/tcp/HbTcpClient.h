@@ -3,7 +3,7 @@
 
 // Local
 #include <com/HbAbstractClient.h>
-#include <config/HbTcpClientConfig.h>
+#include <config/com/HbTcpClientConfig.h>
 
 namespace hb
 {

@@ -5,7 +5,7 @@
 #include <QtNetwork/QTcpServer>
 // Local
 #include <com/HbAbstractServer.h>
-#include <config/HbTcpServerConfig.h>
+#include <config/com/HbTcpServerConfig.h>
 
 class QTcpServer;
 

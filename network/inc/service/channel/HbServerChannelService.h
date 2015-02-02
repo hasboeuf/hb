@@ -26,7 +26,7 @@ namespace hb
 		public:
 
             HbServerChannelService() = default;
-            virtual ~HbServerChannelService( ) = default;
+            virtual ~HbServerChannelService() = default;
 
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
 

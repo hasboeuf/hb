@@ -15,6 +15,7 @@
 #include <HbNetwork.h>
 #include <HbPeer.h>
 #include <HbConnectionPool.h>
+#include <config/peer/HbGeneralServerConfig.h>
 
 namespace hb
 {
@@ -29,7 +30,7 @@ namespace hb
 		public:
 
             HbServer() = delete;
-            HbServer( const HbGeneralConfig & config );
+            HbServer( const HbGeneralServerConfig & config );
             virtual ~HbServer() = default;
 
             quint16 joinTcpServer( const HbTcpServerConfig & config );

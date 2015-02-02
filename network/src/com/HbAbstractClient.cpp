@@ -5,7 +5,7 @@
 // Local
 #include <com/HbAbstractClient.h>
 #include <com/HbAbstractSocket.h>
-#include <config/HbNetworkConfig.h>
+#include <config/com/HbNetworkConfig.h>
 #include <contract/HbNetworkHeader.h>
 
 using namespace hb::network;

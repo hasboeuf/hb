@@ -3,7 +3,7 @@
 
 // Local
 #include <com/HbAbstractSocket.h>
-#include <config/HbTcpConfig.h>
+#include <config/com/HbTcpConfig.h>
 
 class QTcpSocket;
 

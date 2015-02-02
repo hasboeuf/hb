@@ -14,6 +14,7 @@
 // Local
 #include <HbNetwork.h>
 #include <HbPeer.h>
+#include <config/peer/HbGeneralClientConfig.h>
 
 namespace hb
 {
@@ -26,7 +27,7 @@ namespace hb
 		public:
 
             HbClient() = delete;
-            HbClient( const HbGeneralConfig & config );
+            HbClient( const HbGeneralClientConfig & config );
             virtual ~HbClient() = default;
 		};
 	}

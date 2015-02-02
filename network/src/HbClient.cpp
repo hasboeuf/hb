@@ -5,7 +5,7 @@
 
 using hb::network::HbClient;
 
-HbClient::HbClient( const HbGeneralConfig & config ) :
+HbClient::HbClient( const HbGeneralClientConfig & config ) :
     HbPeer( config )
 {
 

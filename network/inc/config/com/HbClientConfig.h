@@ -13,8 +13,8 @@
 #include <QtCore/QtGlobal>
 // Local
 #include <HbNetwork.h>
-#include <config/HbNetworkConfig.h>
-#include <config/HbTimeoutClientConfig.h>
+#include <config/com/HbNetworkConfig.h>
+#include <config/com/HbTimeoutClientConfig.h>
 
 namespace hb
 {

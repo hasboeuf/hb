@@ -14,7 +14,7 @@
 // Local
 #include <HbNetwork.h>
 #include <com/HbAbstractNetwork.h>
-#include <config/HbClientConfig.h>
+#include <config/com/HbClientConfig.h>
 
 namespace hb
 {

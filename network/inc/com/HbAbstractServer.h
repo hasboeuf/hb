@@ -14,7 +14,7 @@
 #include <QtCore/QList>
 // Local
 #include <com/HbAbstractNetwork.h>
-#include <config/HbServerConfig.h>
+#include <config/com/HbServerConfig.h>
 
 namespace hb
 {

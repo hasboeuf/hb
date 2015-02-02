@@ -13,7 +13,7 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <config/HbTimeoutConfig.h>
+#include <config/com/HbTimeoutConfig.h>
 
 namespace hb
 {

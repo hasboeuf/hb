@@ -26,7 +26,7 @@ namespace hb
     namespace networkexample
 	{
 
-        class ServerAuthStrategy : public HbServerAuthStrategy
+        class ServerAuthStrategy : public hb::network::HbServerAuthStrategy
 		{
 		public:
 

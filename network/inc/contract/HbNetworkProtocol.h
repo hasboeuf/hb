@@ -52,7 +52,7 @@ namespace hb
                 SERVICE_AUTH = 2,
                 SERVICE_TIMEOUT = 3,
 
-                SERVICE_USER = 255
+                SERVICE_UNDEFINED_USER = 255
             };
 
             enum Code : quint16

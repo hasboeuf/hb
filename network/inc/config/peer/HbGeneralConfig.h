@@ -16,20 +16,20 @@
 // Local
 #include <HbNetwork.h>
 #include <service/auth/HbServerAuthStrategy.h>
+#include <service/channel/HbNetworkChannel.h>
 
 namespace hb
 {
     namespace network
     {
 
-        class HB_NETWORK_DECL HbGeneralConfig final
+        class HB_NETWORK_DECL HbGeneralConfig
         {
 
         public:
             HbGeneralConfig();
             HbGeneralConfig( const HbGeneralConfig & config );
             virtual ~HbGeneralConfig() = default;
-
             virtual HbGeneralConfig & operator =( const HbGeneralConfig & config );
 
             virtual bool isValid() const;
@@ -52,6 +52,17 @@ namespace hb
                 return nullptr;
             }
 
+            template< class C >
+            C * registerChannel()
+            {
+                C * channel = new C();
+                if( dynamic_cast< HbNetworkChannel * >( channel ) )
+                {
+                    mChannels.append( channel );
+                    return channel;
+                }
+                return nullptr;
+            }
 
         protected:
 
@@ -59,6 +70,7 @@ namespace hb
             QString mAppName;
             quint16 mProtocolVersion;
             HbServerAuthStrategy * mpAuthenticationStrategy;
+            QList< HbNetworkChannel * > mChannels;
         };
     }
 }

@@ -1,5 +1,5 @@
 // Local
-#include <config/HbGeneralConfig.h>
+#include <config/peer/HbGeneralConfig.h>
 
 using namespace hb::network;
 
@@ -15,7 +15,10 @@ HbGeneralConfig::HbGeneralConfig(const HbGeneralConfig & config)
 {
 	if (this != &config)
 	{
-
+        mAppName                 = config.mAppName;
+        mProtocolVersion         = config.mProtocolVersion;
+        mpAuthenticationStrategy = config.mpAuthenticationStrategy; // TODO ptr
+        mChannels                = config.mChannels; // TODO ptr
 	}
 }
 
@@ -24,7 +27,10 @@ HbGeneralConfig & HbGeneralConfig::operator =(const HbGeneralConfig & config)
 {
 	if (this != &config)
 	{
-
+        mAppName                 = config.mAppName;
+        mProtocolVersion         = config.mProtocolVersion;
+        mpAuthenticationStrategy = config.mpAuthenticationStrategy; // TODO ptr
+        mChannels                = config.mChannels; // TODO ptr
 	}
 
 	return *this;

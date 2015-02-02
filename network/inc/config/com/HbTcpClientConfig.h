@@ -12,8 +12,8 @@
 // Qt
 #include <QtNetwork/QHostAddress>
 // Local
-#include <config/HbClientConfig.h>
-#include <config/HbTcpConfig.h>
+#include <config/com/HbClientConfig.h>
+#include <config/com/HbTcpConfig.h>
 
 
 namespace hb

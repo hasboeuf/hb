@@ -10,10 +10,9 @@
 #include <com/HbSocketHandler.h>
 #include <com/HbAbstractServer.h>
 #include <com/HbAbstractSocket.h>
-#include <config/HbNetworkConfig.h>
+#include <config/com/HbNetworkConfig.h>
 #include <HbNetworkError.h>
 #include <contract/HbNetworkHeader.h>
-#include <contract/HbConnectionContract.h> // TODO remove
 
 using namespace hb::tools;
 using namespace hb::log;

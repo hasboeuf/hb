@@ -9,7 +9,6 @@
 #include <QtGui/QStandardItemModel>
 // Hb
 #include <HbGlobal.h>
-//#include <HbNetGlobal.h>
 #include <HbLogService.h>
 #include <gui/HbLogWidget.h>
 #include <HbLoggerOutputs.h>
@@ -34,7 +33,7 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     HbLogBegin();
 
 
-    HbGeneralConfig config;
+    HbGeneralServerConfig config;
     config.setAppName("hb-network-example");
     config.setProtocolVersion( 1 );
     config.enableAuthentication< ServerAuthStrategy >();

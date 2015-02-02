@@ -13,7 +13,7 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <config/HbGeneralConfig.h>
+#include <config/peer/HbGeneralConfig.h>
 
 namespace hb
 {

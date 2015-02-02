@@ -12,7 +12,7 @@
 // Qt
 #include <QtNetwork/QHostAddress>
 // Local
-#include <config/HbNetworkConfig.h>
+#include <config/com/HbNetworkConfig.h>
 
 
 namespace hb
