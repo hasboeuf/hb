@@ -5,6 +5,7 @@
 *.suo
 *.user
 *.sln.docstates
+*.cdproj
 
 # Build results
 
@@ -18,6 +19,7 @@ delivery*/
 stable/
 lib/
 bin/
+CppDependOut
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/

@@ -5,6 +5,11 @@
 
 using namespace hb::network;
 
+HbNetworkProtocol::NetworkTypes HbServerTimeoutService::enabledNetworkTypes() const
+{
+    return HbNetworkProtocol::NETWORK_TCP;
+}
+
 void HbServerTimeoutService::onContractReceived( const HbNetworkContract * contract )
 {
 

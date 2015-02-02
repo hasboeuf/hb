@@ -28,6 +28,8 @@ namespace hb
             HbServerAuthService() = default;
             virtual ~HbServerAuthService() = default;
 
+            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
+
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract );
             virtual void onSocketConnected   ( sockuuid socket_uuid );

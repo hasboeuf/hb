@@ -1,4 +1,5 @@
 // Qt
+#include <QtCore/QString>
 #include <QtCore/QThread>
 #include <QtCore/QSortFilterProxyModel>
 #include <QtCore/QDebug>

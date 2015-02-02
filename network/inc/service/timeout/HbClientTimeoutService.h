@@ -28,6 +28,8 @@ namespace hb
             HbClientTimeoutService() = default;
             virtual ~HbClientTimeoutService( ) = default;
 
+            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
+
         public callbacks:
             void onContractReceived( const HbNetworkContract * contract );
 		};

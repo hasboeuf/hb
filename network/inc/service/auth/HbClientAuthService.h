@@ -27,6 +27,8 @@ namespace hb
             HbClientAuthService() = default;
             virtual ~HbClientAuthService( ) = default;
 
+            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
+
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract );
 		};

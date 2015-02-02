@@ -29,6 +29,7 @@ namespace hb
             virtual ~HbNetworkService( ) = default;
 
             virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
+            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const = 0;
 
             virtual HbNetworkProtocol::Service uuid() const final
             {

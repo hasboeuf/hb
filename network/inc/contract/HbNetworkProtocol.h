@@ -29,13 +29,14 @@ namespace hb
             enum NetworkType : qint16
             {
                 NETWORK_UNDEFINED = 0,
-                NETWORK_TCP,
-                NETWORK_WEB,
-                NETWORK_SSL,
-                NETWORK_UDP,
-                NETWORK_LOCAL,
-                NETWORK_BLUETOOTH
+                NETWORK_TCP       = 1 << 0,
+                NETWORK_WEB       = 1 << 1,
+                NETWORK_SSL       = 1 << 2,
+                NETWORK_UDP       = 1 << 3,
+                NETWORK_LOCAL     = 1 << 4,
+                NETWORK_BLUETOOTH = 1 << 5
             };
+            Q_DECLARE_FLAGS( NetworkTypes, NetworkType )
 
             enum RoutingScheme : quint8
             {
@@ -72,6 +73,8 @@ namespace hb
         };
 	}
 }
+
+Q_DECLARE_OPERATORS_FOR_FLAGS( hb::network::HbNetworkProtocol::NetworkTypes )
 
 using hb::network::HbNetworkProtocol;
 
