@@ -1,1 +1,1 @@
-[# README #](https://bitbucket.org/hasboeuf/hb/wiki/Home)
+Instructions: https://bitbucket.org/hasboeuf/hb/wiki/Home
