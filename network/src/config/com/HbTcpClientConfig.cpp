@@ -1,7 +1,7 @@
 // Hb
 #include <HbLogService.h>
 // Local
-#include <config/HbTcpClientConfig.h>
+#include <config/com/HbTcpClientConfig.h>
 
 HbTcpClientConfig::HbTcpClientConfig( const HbTcpClientConfig & config ) :
     HbNetworkConfig( config ), HbTcpConfig( config ), HbClientConfig( config )

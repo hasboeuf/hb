@@ -17,7 +17,7 @@
 #include <QtCore/QMutex>
 // Hb
 #include <HbTools.h>
-#include <HbSingleton.h>
+#include <core/HbSingleton.h>
 #include <HbGlobal.h>
 
 namespace hb
@@ -53,7 +53,7 @@ namespace hb
                 }
             }
 
-            I getRandomUuid()
+            I getRandomId()
             {
                 //QMutexLocker( &mMutex );
 

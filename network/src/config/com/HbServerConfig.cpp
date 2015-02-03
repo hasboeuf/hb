@@ -1,7 +1,7 @@
 // Hb
 #include <HbLogService.h>
 // Local
-#include <config/HbServerConfig.h>
+#include <config/com/HbServerConfig.h>
 
 HbServerConfig::HbServerConfig( ) :
     HbNetworkConfig()

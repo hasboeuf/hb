@@ -1,5 +1,5 @@
 // Local
-#include <config/HbNetworkConfig.h>
+#include <config/com/HbNetworkConfig.h>
 
 using namespace hb::network;
 

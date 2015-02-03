@@ -1,7 +1,7 @@
 // Hb
 #include <HbLogService.h>
 // Local
-#include <config/HbTcpConfig.h>
+#include <config/com/HbTcpConfig.h>
 #include <contract/HbConnectionContract.h>
 #include <contract/HbNetworkHeader.h>
 

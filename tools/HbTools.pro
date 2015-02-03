@@ -11,7 +11,8 @@ MODULE.PATH =		..
 
 PROJECT.ID   =      tools
 
-SUBDIRS += core
+SUBDIRS += core \
+           gui
 
 # ------------
 # Qt Settings
