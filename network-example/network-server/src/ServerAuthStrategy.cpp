@@ -1,12 +1,12 @@
 // Qt
 // Hb
-#include <contract/HbConnectionContract.h>
+#include <contract/auth/HbAuthRequestContract.h>
 // Local
 #include <ServerAuthStrategy.h>
 
 using namespace hb::networkexample;
 
-HbNetworkProtocol::AuthStatus ServerAuthStrategy::tryLogin( const HbConnectionContract * contract )
+HbNetworkProtocol::AuthStatus ServerAuthStrategy::tryLogin( const HbAuthRequestContract * contract )
 {
 
 }

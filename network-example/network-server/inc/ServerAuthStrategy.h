@@ -18,11 +18,6 @@
 
 namespace hb
 {
-    namespace network
-    {
-        class HbConnectionContract;
-    }
-
     namespace networkexample
 	{
 
@@ -33,7 +28,7 @@ namespace hb
             ServerAuthStrategy() = default;
             virtual ~ServerAuthStrategy() = default;
 
-            virtual HbNetworkProtocol::AuthStatus tryLogin( const HbConnectionContract * contract );
+            virtual HbNetworkProtocol::AuthStatus tryLogin( const HbAuthRequestContract * contract );
 
 		};
 	}

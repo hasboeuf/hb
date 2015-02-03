@@ -16,6 +16,8 @@ SUBDIRS +=  com \
             config/peer \
             config/com \
             contract \
+            contract/auth \
+            contract/presence \
             service \
             service/auth \
             service/channel \

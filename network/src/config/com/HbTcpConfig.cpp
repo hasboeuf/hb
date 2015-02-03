@@ -1,8 +1,8 @@
 // Hb
 #include <HbLogService.h>
 // Local
-#include <config/HbTcpConfig.h>
-#include <contract/HbConnectionContract.h>
+#include <config/com/HbTcpConfig.h>
+#include <contract/presence/HbPresenceContract.h>
 #include <contract/HbNetworkHeader.h>
 
 using namespace hb::network;
@@ -14,7 +14,7 @@ HbTcpConfig::HbTcpConfig() :
     mPort = 0;
     mOptions = SocketOption::NoOptions;
 
-    mExchanges.plug< HbConnectionContract >();
+    mExchanges.plug< HbPresenceContract >();
 }
 
 HbTcpConfig::HbTcpConfig(const HbTcpConfig & config) :

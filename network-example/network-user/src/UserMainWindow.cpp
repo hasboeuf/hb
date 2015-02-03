@@ -14,7 +14,7 @@
 #include <HbLogService.h>
 #include <gui/HbLogWidget.h>
 #include <HbLoggerOutputs.h>
-#include <contract/HbConnectionContract.h>
+#include <contract/auth/HbAuthRequestContract.h>
 #include <contract/HbNetworkHeader.h>
 #include <contract/HbNetworkProtocol.h>
 // Local
@@ -120,7 +120,7 @@ void UserMainWindow::onConnectionRequest()
 {
     HbLogBegin();
 
-    HbConnectionContract contract;
+    HbAuthRequestContract contract;
     contract.setUsername( "hasboeuf" );
     contract.setPassword( "motherfucker" );
 

@@ -6,8 +6,8 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBCONNECTIONCONTRACT_H
-#define HBCONNECTIONCONTRACT_H
+#ifndef HBPRESENCECONTRACT_H
+#define HBPRESENCECONTRACT_H
 
 // Qt
 #include <QtCore/QObject>
@@ -22,17 +22,17 @@ namespace hb
 {
 	namespace network
 	{
-        class HB_NETWORK_DECL HbConnectionContract final : public HbNetworkContract
+        class HB_NETWORK_DECL HbPresenceContract final : public HbNetworkContract
 		{
 
 		public:
 
-            HbConnectionContract();
-            virtual ~HbConnectionContract() = default;
-            HbConnectionContract( const HbConnectionContract & source );
-            HbConnectionContract & operator=( const HbConnectionContract & source );
+            HbPresenceContract();
+            virtual ~HbPresenceContract() = default;
+            HbPresenceContract( const HbPresenceContract & source );
+            HbPresenceContract & operator=( const HbPresenceContract & source );
 
-            HbConnectionContract * create() const;
+            HbPresenceContract * create() const;
 
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;
@@ -50,6 +50,6 @@ namespace hb
 	}
 }
 
-using hb::network::HbConnectionContract;
+using hb::network::HbPresenceContract;
 
-#endif // HBCONNECTIONCONTRACT_H
+#endif // HBPRESENCECONTRACT_H

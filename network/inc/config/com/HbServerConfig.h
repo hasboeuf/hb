@@ -38,11 +38,15 @@ namespace hb
             const HbTimeoutServerConfig & timeout() const;
             void setTimeout( const HbTimeoutServerConfig & timeout );
 
+            virtual void setAuthTriesMax( quint16 max ) final;
+            virtual quint16 authTriesMax() const;
+
 			bool isValid() const;
 
 		private:
 			quint16 mMaxUsersPerThread;
             HbTimeoutServerConfig mTimeout;
+            quint16 mAuthTriesMax;
 		};
 	}
 }

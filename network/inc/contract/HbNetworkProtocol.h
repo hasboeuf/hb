@@ -50,7 +50,7 @@ namespace hb
                 SERVICE_UNDEFINED = 0,
                 SERVICE_UPDATE = 1,
                 SERVICE_AUTH = 2,
-                SERVICE_TIMEOUT = 3,
+                SERVICE_PRESENCE = 3,
 
                 SERVICE_UNDEFINED_USER = 255
             };
@@ -58,7 +58,10 @@ namespace hb
             enum Code : quint16
             {
                 CODE_UNDEFINED = 0,
-                CODE_CONNECTION_REQUEST = 1
+                CODE_AUTH_REQUEST,
+                CODE_AUTH_STATUS,
+                CODE_PRESENCE,
+                CODE_PRESENCE_STATUS
             };
 
             enum AuthStatus : quint8

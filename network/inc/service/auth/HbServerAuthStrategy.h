@@ -14,12 +14,13 @@
 // Local
 #include <HbNetwork.h>
 #include <contract/HbNetworkProtocol.h>
-#include <contract/HbConnectionContract.h>
+#include <contract/auth/HbAuthRequestContract.h> // Template.
 
 namespace hb
 {
 	namespace network
 	{
+        class HbAuthRequestContract;
 
         class HB_NETWORK_DECL HbServerAuthStrategy
 		{
@@ -28,7 +29,7 @@ namespace hb
             HbServerAuthStrategy() = default;
             virtual ~HbServerAuthStrategy() = default;
 
-            virtual HbNetworkProtocol::AuthStatus tryLogin( const HbConnectionContract * contract ) = 0;
+            virtual HbNetworkProtocol::AuthStatus tryLogin( const HbAuthRequestContract * contract ) = 0;
 
 		};
 	}

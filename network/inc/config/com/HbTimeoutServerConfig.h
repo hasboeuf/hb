@@ -39,7 +39,6 @@ namespace hb
         private:
             quint16 mWarningThreshold;
             quint16 mKickThreshold;
-
         };
     }
 }
