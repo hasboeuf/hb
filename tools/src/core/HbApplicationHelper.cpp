@@ -5,7 +5,7 @@
 #include <QtGui/QPalette>
 #include <QtCore/QTime>
 // Local
-#include <HbApplicationHelper.h>
+#include <core/HbApplicationHelper.h>
 
 using namespace hb::tools;
 
