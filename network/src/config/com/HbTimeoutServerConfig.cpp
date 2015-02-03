@@ -1,5 +1,5 @@
 // Local
-#include <config/HbTimeoutServerConfig.h>
+#include <config/com/HbTimeoutServerConfig.h>
 
 HbTimeoutServerConfig::HbTimeoutServerConfig() :
     HbTimeoutConfig()

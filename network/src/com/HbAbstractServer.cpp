@@ -2,7 +2,7 @@
 #include <QtCore/QDataStream>
 // Hb
 #include <HbLogService.h>
-#include <HbUuidGenerator.h>
+#include <core/HbUuidGenerator.h>
 // Local
 #include <com/HbAbstractServer.h>
 #include <com/HbAbstractSocket.h>

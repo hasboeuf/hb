@@ -1,5 +1,5 @@
 // Local
-#include <config/HbClientConfig.h>
+#include <config/com/HbClientConfig.h>
 
 HbClientConfig::HbClientConfig( const HbClientConfig & config ) :
     HbNetworkConfig( config )

@@ -10,7 +10,7 @@
 #include <QtGui/QStandardItemModel>
 // Hb
 #include <HbGlobal.h>
-#include <HbUuidGenerator.h>
+#include <core/HbUuidGenerator.h>
 #include <HbLogService.h>
 #include <gui/HbLogWidget.h>
 #include <HbLoggerOutputs.h>

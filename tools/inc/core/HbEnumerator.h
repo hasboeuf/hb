@@ -12,7 +12,7 @@
 // Qt
 #include <QtCore/QMetaEnum>
 // Hb
-#include <HbNullable.h>
+#include <core/HbNullable.h>
 
 namespace HbPrivate {
 

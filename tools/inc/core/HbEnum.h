@@ -13,7 +13,7 @@
 
 // Hb
 #include <HbTools.h>
-#include <HbEnumerator.h>
+#include <core/HbEnumerator.h>
 
 namespace HbPrivate
 {

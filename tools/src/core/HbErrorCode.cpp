@@ -1,4 +1,4 @@
-#include <HbErrorCode.h>
+#include <core/HbErrorCode.h>
 
 
 bool HbErrorCode::add( qint32 code, const QString & message )

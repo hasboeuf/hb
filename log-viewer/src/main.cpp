@@ -4,7 +4,7 @@
 // Hb
 #include <HbGlobal.h>
 #include <HbLogService.h>
-#include <HbApplicationHelper.h>
+#include <core/HbApplicationHelper.h>
 // Local
 #include <LogViewerMainWindow.h>
 

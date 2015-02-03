@@ -17,7 +17,7 @@
 // Hb
 #include <HbLog.h>
 #include <HbGlobal.h>
-#include <HbEnum.h>
+#include <core/HbEnum.h>
 
 namespace hb
 {	
