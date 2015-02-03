@@ -25,7 +25,7 @@ namespace hb
 		{
 		public:
 
-            HbServerAuthService() = default;
+            HbServerAuthService();
             virtual ~HbServerAuthService() = default;
 
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;

@@ -30,6 +30,7 @@ bool HbGeneralClientConfig::isValid() const
     if( HbGeneralConfig::isValid() )
     {
         // TODO check channel.
+        return true;
     }
     return false;
 }

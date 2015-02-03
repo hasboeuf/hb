@@ -92,9 +92,6 @@ void ServerMainWindow::onStartClicked()
 
     config.setTimeout( timeout );
 
-    mTcpServer.setConfiguration( config );
-    mTcpServer.join();
-
     quint16 server_uuid = mpHbServer->joinTcpServer( config );
     if( server_uuid > 0 )
     {
@@ -108,7 +105,6 @@ void ServerMainWindow::onStopClicked()
 {
     HbLogBegin();
 
-    //mTcpServer.leave();
     mpHbServer->leave();
 
     HbLogEnd();

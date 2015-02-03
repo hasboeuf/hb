@@ -3,6 +3,9 @@
 // Local
 #include <config/com/HbTcpConfig.h>
 #include <contract/presence/HbPresenceContract.h>
+#include <contract/presence/HbPresenceStatusContract.h>
+#include <contract/auth/HbAuthRequestContract.h>
+#include <contract/auth/HbAuthStatusContract.h>
 #include <contract/HbNetworkHeader.h>
 
 using namespace hb::network;
@@ -14,7 +17,10 @@ HbTcpConfig::HbTcpConfig() :
     mPort = 0;
     mOptions = SocketOption::NoOptions;
 
+    mExchanges.plug< HbAuthRequestContract >();
+    mExchanges.plug< HbAuthStatusContract >();
     mExchanges.plug< HbPresenceContract >();
+    mExchanges.plug< HbPresenceStatusContract >();
 }
 
 HbTcpConfig::HbTcpConfig(const HbTcpConfig & config) :

@@ -6,7 +6,7 @@ using namespace hb::network;
 
 HbNetworkChannel::HbNetworkChannel()
 {
-    mUuid = HbNetworkProtocol::SERVICE_UNDEFINED_USER;
+    mUuid = HbNetworkProtocol::SERVICE_CHANNEL_USER;
 }
 
 servuuid HbNetworkChannel::uuid() const

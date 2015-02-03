@@ -3,7 +3,7 @@
 #include <contract/HbNetworkProtocol.h>
 
 HbAuthRequestContract::HbAuthRequestContract() :
-    HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_AUTH_REQUEST )
+    HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_CLT_AUTH_REQUEST )
 {
 
 }

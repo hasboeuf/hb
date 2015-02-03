@@ -119,8 +119,23 @@ void HbConnectionPool::onSocketContractReceived( quint16 server_uuid, sockuuid s
         return;
     }
 
-    HbInfo( "Contract OK [socket=%d, server=%d].", socket_uuid, server_uuid );
+    HbInfo( "Contract OK [socket=%d, server=%d, service=%s, code=%s].",
+            socket_uuid,
+            server_uuid,
+            HbLatin1( HbNetworkProtocol::MetaService::toString( contract->header().service() ) ),
+            HbLatin1( HbNetworkProtocol::MetaCode::toString( contract->header().code() ) ) );
 
+    if( !mServices.contains( contract->header().service() ) )
+    {
+        // TODO kick
+        HbError( "Service %s is not instanciated.", HbLatin1( HbNetworkProtocol::MetaService::toString( contract->header().service() ) ) );
+        return;
+    }
+
+    HbNetworkService * service = mServices.value( contract->header().service() );
+    q_assert_ptr( service );
+
+    service->onContractReceived( contract );
 }
 
 bool HbConnectionPool::checkContractReceived( const HbNetworkContract * contract )

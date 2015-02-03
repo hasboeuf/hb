@@ -29,6 +29,7 @@ bool HbGeneralServerConfig::isValid() const
     if( HbGeneralConfig::isValid() )
     {
         // TODO check channel.
+        return true;
     }
     return false;
 }

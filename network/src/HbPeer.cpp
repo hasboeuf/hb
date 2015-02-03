@@ -1,4 +1,5 @@
 // Qt
+#include <QtCore/QMetaType>
 // Hb
 #include <HbGlobal.h>
 #include <HbLogService.h>
@@ -10,6 +11,11 @@ using namespace hb::network;
 
 HbPeer::HbPeer( const HbGeneralConfig &config )
 {
+
+    qRegisterMetaType< sockuuid >( "sockuuid" );
+    qRegisterMetaType< netwuuid >( "netwwuid" );
+    qRegisterMetaType< servuuid >( "servuuid" );
+
     if( config.isValid() )
     {
         HbNetworkProtocol::msAppName = config.appName();
@@ -21,8 +27,6 @@ HbPeer::HbPeer( const HbGeneralConfig &config )
         HbError( "General configuration not valid. HbPeer will never do anything." );
         mReady = false;
     }
-
-    q_assert( mReady );
 }
 
 bool HbPeer::isReady() const

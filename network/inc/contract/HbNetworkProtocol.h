@@ -11,6 +11,9 @@
 
 // Qt
 #include <QtCore/QString>
+// Hb
+#include <HbGlobal.h>
+#include <core/HbEnum.h>
 // Local
 #include <HbNetwork.h>
 
@@ -21,6 +24,10 @@ namespace hb
         // TODO decl temp
         class HB_NETWORK_DECL HbNetworkProtocol final
 		{
+            Q_GADGET
+            Q_ENUMS_HANDLER( HbNetworkProtocol )
+            Q_ENUMS( Service )
+            Q_ENUMS( Code )
 
         public:
             static QString msAppName;
@@ -52,17 +59,20 @@ namespace hb
                 SERVICE_AUTH = 2,
                 SERVICE_PRESENCE = 3,
 
-                SERVICE_UNDEFINED_USER = 255
+                SERVICE_CHANNEL = 255,
+                SERVICE_CHANNEL_USER
             };
+            Q_META_ENUMS( Service )
 
             enum Code : quint16
             {
                 CODE_UNDEFINED = 0,
-                CODE_AUTH_REQUEST,
-                CODE_AUTH_STATUS,
-                CODE_PRESENCE,
-                CODE_PRESENCE_STATUS
+                CODE_CLT_AUTH_REQUEST,
+                CODE_SRV_AUTH_STATUS,
+                CODE_CLT_PRESENCE,
+                CODE_SRV_PRESENCE_STATUS
             };
+            Q_META_ENUMS( Code )
 
             enum AuthStatus : quint8
             {

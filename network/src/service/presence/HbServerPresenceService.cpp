@@ -5,6 +5,11 @@
 
 using namespace hb::network;
 
+HbServerPresenceService::HbServerPresenceService()
+{
+    mUuid = HbNetworkProtocol::SERVICE_PRESENCE;
+}
+
 HbNetworkProtocol::NetworkTypes HbServerPresenceService::enabledNetworkTypes() const
 {
     return HbNetworkProtocol::NETWORK_TCP;

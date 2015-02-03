@@ -5,6 +5,11 @@
 
 using namespace hb::network;
 
+HbServerAuthService::HbServerAuthService()
+{
+    mUuid = HbNetworkProtocol::SERVICE_AUTH;
+}
+
 HbNetworkProtocol::NetworkTypes HbServerAuthService::enabledNetworkTypes() const
 {
     return HbNetworkProtocol::NETWORK_TCP |

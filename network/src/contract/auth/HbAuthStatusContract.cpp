@@ -3,7 +3,7 @@
 #include <contract/HbNetworkProtocol.h>
 
 HbAuthStatusContract::HbAuthStatusContract() :
-    HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_AUTH_STATUS )
+    HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_SRV_AUTH_STATUS )
 {
 
 }

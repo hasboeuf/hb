@@ -83,7 +83,12 @@ namespace HbPrivate
         */
         static QString toString( Enum value )
         {
-            return HbPrivate::HbEnumerator< Class >::toString( value );
+            QString texte = HbPrivate::HbEnumerator< Class >::toString( value );
+            if( texte.isEmpty() )
+            {
+                texte = QString::number( ( int ) value );
+            }
+            return texte;
         }
 
         /*!
@@ -168,6 +173,5 @@ private :
 */
 #define Q_META_ENUMS( Enum ) \
     typedef HbEnum< Enum > Meta ## Enum;
-
 
 #endif
