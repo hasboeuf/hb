@@ -92,6 +92,14 @@ namespace HbPrivate
         }
 
         /*!
+        * Returns the label of the given integer \a value, or an empty string if value is not defined.
+        */
+        static QString toString( qint64 value )
+        {
+            return toString( ( Enum ) value );
+        }
+
+        /*!
         * Returns all labels contains in the given enumerator \a value, or an empty list if enumerator is empty.
         */
         static QStringList toString()
