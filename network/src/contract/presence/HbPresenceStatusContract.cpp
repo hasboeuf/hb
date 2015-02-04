@@ -22,8 +22,6 @@ HbPresenceStatusContract & HbPresenceStatusContract::operator=( const HbPresence
     if( &source != this )
     {
         HbNetworkContract::operator=( source );
-
-
     }
 
     return ( *this );

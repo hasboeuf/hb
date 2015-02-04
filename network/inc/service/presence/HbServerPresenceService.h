@@ -15,14 +15,20 @@
 #include <HbNetwork.h>
 #include <service/HbNetworkService.h>
 #include <listener/IHbSocketListener.h>
+#include <listener/IHbUserListener.h>
 
 namespace hb
 {
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbServerPresenceService : public HbNetworkService, public IHbSocketListener
+        class HB_NETWORK_DECL HbServerPresenceService : public HbNetworkService, public IHbSocketListener, public IHbUserListener
 		{
+            Q_OBJECT
+
+            Q_INTERFACES( hb::network::IHbSocketListener )
+            Q_INTERFACES( hb::network::IHbUserListener )
+
 		public:
 
             HbServerPresenceService();
@@ -31,9 +37,11 @@ namespace hb
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
 
         public callbacks:
-            void onContractReceived( const HbNetworkContract * contract );
             void onSocketConnected   ( sockuuid socket_uuid );
             void onSocketDisconnected( sockuuid socket_uuid );
+            void onUserConnected   ( const HbNetworkUserInfo & user_info );
+            void onUserDisconnected( const HbNetworkUserInfo & user_info );
+            void onContractReceived( const HbNetworkContract * contract );
 		};
 	}
 }

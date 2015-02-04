@@ -14,7 +14,6 @@
 // Local
 #include <HbNetwork.h>
 #include <service/HbNetworkService.h>
-#include <listener/IHbSocketListener.h>
 
 namespace hb
 {
@@ -23,6 +22,7 @@ namespace hb
 
         class HB_NETWORK_DECL HbClientPresenceService : public HbNetworkService
 		{
+            Q_OBJECT
 		public:
 
             HbClientPresenceService() = default;

@@ -21,8 +21,12 @@ namespace hb
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbServerAuthService : public HbNetworkService
+        class HB_NETWORK_DECL HbServerAuthService : public HbNetworkService, public IHbSocketListener
 		{
+            Q_OBJECT
+
+            Q_INTERFACES( hb::network::IHbSocketListener )
+
 		public:
 
             HbServerAuthService();

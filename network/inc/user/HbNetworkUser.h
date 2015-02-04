@@ -13,18 +13,20 @@
 // Hb
 // Local
 #include <HbNetwork.h>
+#include <user/HbNetworkUserInfo.h>
 
 namespace hb
 {
 	namespace network
 	{
-
         class HB_NETWORK_DECL HbNetworkUser
 		{
 		public:
 
             HbNetworkUser() = default;
             virtual ~HbNetworkUser( ) = default;
+
+            const HbNetworkUserInfo userInfo() const;
 		};
 	}
 }

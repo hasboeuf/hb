@@ -34,6 +34,8 @@ namespace hb
     }
 }
 
+Q_DECLARE_INTERFACE( hb::network::IHbUserListener, "hb::network::IHbUserListener" )
+
 using hb::network::IHbUserListener;
 
 #endif // IHBUSERTLISTENER_H

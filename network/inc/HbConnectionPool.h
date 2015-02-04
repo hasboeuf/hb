@@ -59,13 +59,30 @@ namespace hb
 
         private:
             bool checkContractReceived( const HbNetworkContract * contract );
+            HbNetworkUser * isSocketAuthenticated( sockuuid socket_uuid );
+
+            template< class T >
+            QList< T * > getListeners()
+            {
+                QList< T * > listeners;
+                foreach( HbNetworkService * service, mServices )
+                {
+                    T * listener = dynamic_cast< T * >( service );
+                    if( listener )
+                    {
+                        listeners.push_back( listener );
+                    }
+                }
+
+                return listeners;
+            }
 
         private:
             QHash< netwuuid, HbAbstractServer * > mServers;
             QHash< servuuid, HbNetworkService * > mServices;
-            QHash< sockuuid, netwuuid > mServerBySocketId;
-            QHash< sockuuid, HbNetworkProtocol::NetworkType > mSocketTypes;
+
             QSet < sockuuid > mPendingSockets;
+            QHash< sockuuid, netwuuid > mServerBySocketId;
             QHash< sockuuid, HbNetworkUser * > mUserBySocketId;
 		};
 	}

@@ -10,6 +10,7 @@
 #define HBNETWORKSERVICE_H
 
 // Qt
+#include <QtCore/QObject>
 // Hb
 // Local
 #include <HbNetwork.h>
@@ -21,8 +22,12 @@ namespace hb
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbNetworkService : public IHbContractListener
+        class HB_NETWORK_DECL HbNetworkService : public QObject, public IHbContractListener
 		{
+            Q_OBJECT
+
+            Q_INTERFACES( hb::network::IHbContractListener )
+
 		public:
 
             HbNetworkService() = default;

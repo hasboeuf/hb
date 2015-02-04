@@ -9,6 +9,7 @@
 #ifndef IHBSOCKETTLISTENER_H
 #define IHBSOCKETTLISTENER_H
 
+#include <QtCore/QtPlugin>
 // Hb
 #include <HbGlobal.h>
 // Local
@@ -32,6 +33,8 @@ namespace hb
 
 	}
 }
+
+Q_DECLARE_INTERFACE( hb::network::IHbSocketListener, "hb::network::IHbSocketListener" )
 
 using hb::network::IHbSocketListener;
 
