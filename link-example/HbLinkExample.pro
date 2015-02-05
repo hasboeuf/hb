@@ -9,30 +9,22 @@ MODULE.PATH =		..
 # Project Settings
 # -----------------
 
-PROJECT.ID   =      link
-
-SUBDIRS +=  o2
+PROJECT.ID   = link-example
+PROJECT.DIR  = link-example
+PROJECT.NAME = HbLinkExample
+PROJECT.TYPE = app
 
 # ------------
-# Qt Settings
+# QT Settings
 # ------------
 
-QT *=		gui
+QT *= widgets xml network script
 
 # -----------------
 # Modules Settings
 # -----------------
 
-
-# -------------
-# C++ Settings
-# -------------
-DEFINES += HB_LINK_BUILD
-
-# -----------------
-# Install Settings
-# -----------------
-
+HB  += link
 
 # ---------------
 # QMake Includes

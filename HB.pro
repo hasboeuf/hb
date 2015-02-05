@@ -8,6 +8,7 @@ PROJECT.TYPE =			subdirs
 SUBDIRS += \
     tools/HbTools.pro \
     link/HbLink.pro \
+	link-example/HbLinkExample.pro \
     log/HbLog.pro \
     log-viewer/HbLogViewer.pro \
     network/HbNetwork.pro \
@@ -20,6 +21,7 @@ network.depends = log tools
 network-example.depends = tools log network
 plugin.depends = log tools
 plugin-example.depends = plugin log tools
+link-example.depends = link
 
 # ---------------
 # QMake Includes
