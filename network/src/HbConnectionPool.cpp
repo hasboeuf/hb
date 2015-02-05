@@ -32,7 +32,11 @@ HbConnectionPool::HbConnectionPool()
         IHbSocketListener * socket_listener = dynamic_cast< IHbSocketListener * >( service );
         if( socket_listener )
         {
-            //connect( this, &HbConnectionPool::socketConnected, dynamic_cast< IHbSocketListener * >( service ), &IHbSocketListener::onSocketConnected );
+            connect( this, &HbConnectionPool::socketConnected,
+                    [socket_listener]( sockuuid socket_uuid )
+                    {
+                        socket_listener->onSocketConnected( socket_uuid );
+                    } );
         }
     }
 }

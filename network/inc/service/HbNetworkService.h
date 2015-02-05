@@ -26,8 +26,6 @@ namespace hb
 		{
             Q_OBJECT
 
-            Q_INTERFACES( hb::network::IHbContractListener )
-
 		public:
 
             HbNetworkService() = default;

@@ -26,9 +26,6 @@ namespace hb
 		{
             Q_OBJECT
 
-            Q_INTERFACES( hb::network::IHbSocketListener )
-            Q_INTERFACES( hb::network::IHbUserListener )
-
 		public:
 
             HbServerPresenceService();

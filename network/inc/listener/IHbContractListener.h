@@ -33,8 +33,6 @@ namespace hb
 	}
 }
 
-Q_DECLARE_INTERFACE( hb::network::IHbContractListener, "hb::network::IHbContractListener" )
-
 using hb::network::IHbContractListener;
 
 #endif // IHBCONTRACTLISTENER_H

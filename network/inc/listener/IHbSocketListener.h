@@ -34,8 +34,6 @@ namespace hb
 	}
 }
 
-Q_DECLARE_INTERFACE( hb::network::IHbSocketListener, "hb::network::IHbSocketListener" )
-
 using hb::network::IHbSocketListener;
 
 #endif // IHBSOCKETTLISTENER_H
