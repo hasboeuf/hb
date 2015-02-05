@@ -21,6 +21,8 @@ namespace hb
 	namespace network
 	{
 
+        class HbServerAuthStrategy;
+
         class HB_NETWORK_DECL HbServerAuthService : public HbNetworkService, public IHbSocketListener
 		{
             Q_OBJECT
@@ -38,6 +40,9 @@ namespace hb
             virtual void onContractReceived( const HbNetworkContract * contract );
             virtual void onSocketConnected   ( sockuuid socket_uuid );
             virtual void onSocketDisconnected( sockuuid socket_uuid );
+
+        private:
+            HbServerAuthStrategy * mpStrategy;
 		};
 	}
 }
