@@ -35,7 +35,7 @@ void HbLinkServer::onReadyRead()
 
     QByteArray reply;
     QByteArray content;
-    content.append( QStringLiteral( "<HTML></HTML>" ) );
+    content.append( QStringLiteral( "<html><p>Please close this page.</p><script>window.close();</script></html>" ) );
     reply.append( QStringLiteral( "HTTP/1.0 200 OK \r\n" ) );
     reply.append( QStringLiteral( "Content-Type: text/html; charset=\"utf-8\"\r\n" ) );
     reply.append( QString( "Content-Length: %1\r\n\r\n" ).arg( content.size() ) );
