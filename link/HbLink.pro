@@ -23,6 +23,7 @@ QT *=		gui
 # Modules Settings
 # -----------------
 
+HB += tools log
 
 # -------------
 # C++ Settings

@@ -25,8 +25,11 @@ namespace hb
             Q_OBJECT
 
         public:
-            HbO2Facebook() = default;
+            HbO2Facebook();
             virtual ~HbO2Facebook() = default;
+
+        protected:
+            static QString msRequestUrl;
         };
     }
 }

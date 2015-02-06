@@ -18,13 +18,13 @@ PROJECT.TYPE = app
 # QT Settings
 # ------------
 
-QT *= widgets xml network script
+QT *= gui widgets xml network script
 
 # -----------------
 # Modules Settings
 # -----------------
 
-HB  += link
+HB  += tools log link
 
 # ---------------
 # QMake Includes
