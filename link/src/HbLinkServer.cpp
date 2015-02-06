@@ -60,10 +60,10 @@ QMap<QString, QString> HbLinkServer::parseQueryParameters( QByteArray & data )
 
     HbInfo( "Reply received: %s", HbLatin1( splited_line ) );
 
-    splited_line.split("\r\n").first();
-    splited_line.remove("GET ");
+    splited_line = splited_line.split("\n").first();
+    splited_line.remove("GET");
     splited_line.remove("HTTP/1.1");
-    splited_line.remove("\r\n");
+    splited_line = splited_line.trimmed();
     splited_line.prepend("http://localhost");
 
     HbInfo( "Simplifed reply: %s", HbLatin1( splited_line ) );
