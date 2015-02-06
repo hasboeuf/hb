@@ -4,6 +4,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QPropertyAnimation>
 #include <QtCore/QTime>
+#include <QtGui/QClipboard>
 #include <QtWidgets/QInputDialog>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMessageBox>
@@ -508,8 +509,11 @@ void LogViewerTab::onCustomContextMenuRequested(const QPoint &pos)
 
 	QMenu* menu = q_check_ptr( new QMenu() );
 
-    QAction* qa_new_tab = menu->addAction( QStringLiteral( "Open in a new tab" ) );
-	connect(qa_new_tab, &QAction::triggered, this, &LogViewerTab::onOpenNewTab);
+    QAction* qa_new_tab           = menu->addAction( QStringLiteral( "Open in a new tab" ) );
+    QAction* qa_copy_cell_content = menu->addAction( QStringLiteral( "Copy cell content" ) );
+
+    connect( qa_new_tab,           &QAction::triggered, this, &LogViewerTab::onOpenNewTab );
+    connect( qa_copy_cell_content, &QAction::triggered, this, &LogViewerTab::onCopyCellContent );
 
 	menu->exec(qtv_log->mapToGlobal(pos));
 }
@@ -532,6 +536,29 @@ void LogViewerTab::onOpenNewTab()
 
 	QString content = selected_item->data(Qt::DisplayRole).toString();
 	emit newTabRequest(index_right.column(), content);
+
+}
+
+void LogViewerTab::onCopyCellContent()
+{
+    QModelIndex index = qtv_log->currentIndex();
+    if(!index.isValid())
+    {
+        return;
+    }
+
+    QModelIndex index_right = mProxy.mapToSource(index);
+
+    QStandardItem* selected_item = mModel.item(index_right.row(), index_right.column());
+    if(!selected_item)
+    {
+        return;
+    }
+
+    QString content = selected_item->data(Qt::DisplayRole).toString();
+
+    QClipboard * clipboard = QApplication::clipboard();
+    clipboard->setText( content );
 
 }
 

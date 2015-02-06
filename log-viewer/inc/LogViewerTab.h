@@ -73,6 +73,7 @@ namespace hb
             void onAdjustToContent();
             void onSaveAsClicked();
             void onOpenNewTab();
+            void onCopyCellContent();
 
             void onRowDoubleClicked( const QModelIndex& index );
             void onCustomContextMenuRequested( const QPoint &pos );
