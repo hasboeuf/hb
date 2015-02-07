@@ -1,22 +1,24 @@
-#ifndef HBLINKSERVER_H
-#define HBLINKSERVER_H
+#ifndef HBLINKLOCALSERVER_H
+#define HBLINKLOCALSERVER_H
 
 // Qt
 #include <QtCore/QMap>
 #include <QtCore/QString>
 #include <QtNetwork/QTcpServer>
+// Hb
+#include <HbLink.h>
 
 namespace hb
 {
     namespace link
     {
-        class HbLinkServer final: public QTcpServer
+        class HB_LINK_DECL HbLinkLocalServer final: public QTcpServer
         {
             Q_OBJECT
 
         public:
-            explicit HbLinkServer( QObject * parent = nullptr );
-            ~HbLinkServer() = default;
+            explicit HbLinkLocalServer( QObject * parent = nullptr );
+            ~HbLinkLocalServer() = default;
 
         signals:
             void responseReceived( QHash< QString, QString > response );
@@ -32,4 +34,4 @@ namespace hb
 }
 
 
-#endif // HBLINKSERVER_H
+#endif // HBLINKLOCALSERVER_H

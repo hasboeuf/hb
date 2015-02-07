@@ -7,25 +7,25 @@
 #include <HbLogService.h>
 #include <core/HbDictionaryHelper.h>
 // Local
-#include <HbLinkServer.h>
+#include <client/HbLinkLocalServer.h>
 
 using namespace hb::link;
 
-HbLinkServer::HbLinkServer( QObject * parent ) :
+HbLinkLocalServer::HbLinkLocalServer( QObject * parent ) :
     QTcpServer( parent )
 {
-    connect( this, &QTcpServer::newConnection, this, &HbLinkServer::onIncomingConnection );
+    connect( this, &QTcpServer::newConnection, this, &HbLinkLocalServer::onIncomingConnection );
 }
 
-void HbLinkServer::onIncomingConnection()
+void HbLinkLocalServer::onIncomingConnection()
 {
     QTcpSocket * socket = nextPendingConnection();
 
-    connect( socket, &QTcpSocket::readyRead, this, &HbLinkServer::onReadyRead, Qt::UniqueConnection );
+    connect( socket, &QTcpSocket::readyRead, this, &HbLinkLocalServer::onReadyRead, Qt::UniqueConnection );
     connect( socket, &QTcpSocket::disconnected, socket, &QObject::deleteLater );
 }
 
-void HbLinkServer::onReadyRead()
+void HbLinkLocalServer::onReadyRead()
 {
     QTcpSocket *socket = dynamic_cast< QTcpSocket * >( sender() );
     if ( !socket )
@@ -55,7 +55,7 @@ void HbLinkServer::onReadyRead()
     emit responseReceived( response );
 }
 
-QHash< QString, QString > HbLinkServer::parseResponse( QByteArray & data )
+QHash< QString, QString > HbLinkLocalServer::parseResponse( QByteArray & data )
 {
     QString content = QString( data );
 

@@ -1,30 +1,27 @@
-#include <o2/HbO2Facebook.h>
+// Local
+#include <client/HbO2ClientFacebook.h>
 
 const QString FB_ERROR             = QStringLiteral( "error" );
 const QString FB_ERROR_REASON      = QStringLiteral( "error_reason" );
 const QString FB_ERROR_DESCRIPTION = QStringLiteral( "error_description" );
 
-HbO2Facebook::HbO2Facebook()
-{
-}
-
-const QUrl HbO2Facebook::endPoint() const
+const QUrl HbO2ClientFacebook::endPoint() const
 {
     return QUrl( QStringLiteral( "https://www.facebook.com/dialog/oauth" ) );
 }
 
-const QHash< QString, QString > HbO2Facebook::codeRequest() const
+const QHash< QString, QString > HbO2ClientFacebook::codeRequest() const
 {
     QHash< QString, QString > request;
     request.insert( OAUTH2_RESPONSE_TYPE, OAUTH2_GRANT_CODE );
-    request.insert( OAUTH2_CLIENT_ID,     clientId() );
-    request.insert( OAUTH2_REDIRECT_URI,  redirectUri() );
-    request.insert( OAUTH2_SCOPE,         scope() );
+    request.insert( OAUTH2_CLIENT_ID,     mClientId );
+    request.insert( OAUTH2_REDIRECT_URI,  mRedirectUri );
+    request.insert( OAUTH2_SCOPE,         mScope );
 
     return request;
 }
 
-auto HbO2Facebook::codeResponse( const QHash< QString, QString > & response ) -> LinkStatus
+auto HbO2ClientFacebook::codeResponse( const QHash< QString, QString > & response ) -> LinkStatus
 {
     if ( response.contains( FB_ERROR ) )
     {

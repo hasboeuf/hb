@@ -12,11 +12,12 @@
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QUrl>
+#include <QtCore/QHash>
+// Hb
+#include <HbGlobal.h>
 // Local
 #include <HbLink.h>
 #include <HbLinkConstant.h>
-#include <HbLinkServer.h>
-
 
 namespace hb
 {
@@ -39,51 +40,34 @@ namespace hb
 
             virtual bool isValid() const;
 
-            virtual void link();
-
-            virtual void setClientId( const QString & client_id ) final;
-            virtual void setLocalPort( quint16 local_port ) final;
-            virtual void addScope( const QString & permission ) final;
+            virtual bool link();
 
             virtual const QString & errorString() const final;
+
+            virtual void setClientId( const QString & client_id ) final;
             virtual const QString & clientId() const final;
-            virtual quint16 localPort() const final;
             virtual const QString & redirectUri() const final;
             virtual const QString & code() const final;
-            virtual const QString & scope() const final;
-
 
         protected:
             // Target specific.
             virtual const QUrl endPoint() const = 0;
-            virtual const QHash< QString, QString > codeRequest() const = 0;
-            virtual LinkStatus codeResponse( const QHash< QString, QString > & response ) = 0;
-
-        public slots:
-            void onResponseReceived( const QHash< QString, QString > response_parameters );
 
         signals:
-            void openBrowser( const QUrl & url );
             void linkingFailed( QString error );
             void linkingSucceed();
 
         protected:
+            LinkStatus mLinkStatus;
             QString mErrorString;
+
             QString mCode;
 
-        private:
-            LinkStatus mLinkStatus;
-            HbLinkServer mReplyServer;
-
-            // Code request
-            QString mClientId;
-            QString mScope;
             QString mRedirectUri;
-            quint16 mLocalPort;
+            QString mClientId;
+
         };
     }
 }
-
-using hb::link::HbO2;
 
 #endif // HBO2_H

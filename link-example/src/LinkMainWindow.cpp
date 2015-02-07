@@ -4,7 +4,8 @@
 #include <QtNetwork/QNetworkReply>
 // Hb
 #include <HbLogService.h>
-#include <o2/HbO2Facebook.h>
+#include <client/HbO2ClientFacebook.h>
+#include <server/HbO2ServerFacebook.h>
 // Local
 #include <LinkMainWindow.h>
 
@@ -22,7 +23,8 @@ LinkMainWindow::LinkMainWindow(QWidget * parent) :
     setupUi( this );
     setWindowTitle( "Link" );
 
-    mpO2 = nullptr;
+    mpFacebookClient = nullptr;
+    mpFacebookServer = nullptr;
 
     connect( ui_qpb_connect, &QPushButton::clicked, this, &LinkMainWindow::onConnectClicked );
     connect( &mNetworkAccess, &QNetworkAccessManager::finished, this, &LinkMainWindow::onNetworkAccessFinished );
@@ -34,9 +36,9 @@ LinkMainWindow::~LinkMainWindow()
 {
     HbLogBegin();
 
-    if( mpO2 )
+    if( mpFacebookClient )
     {
-        delete mpO2;
+        delete mpFacebookClient;
     }
 
     HbLogEnd();
@@ -46,15 +48,16 @@ void LinkMainWindow::onConnectClicked()
 {
     HbLogBegin();
 
-    mpO2 = new HbO2Facebook();
+    mpFacebookClient = new HbO2ClientFacebook();
 
-    connect( mpO2, &HbO2::openBrowser, this, &LinkMainWindow::onOpenBrower );
+    connect( mpFacebookClient, &HbO2Client::openBrowser, this, &LinkMainWindow::onOpenBrower );
+    connect( mpFacebookClient, &HbO2::linkingSucceed, this, &LinkMainWindow::onClientLinkSucceed );
 
-    mpO2->setClientId( "940633959281250" );
-    mpO2->setLocalPort( 8080 );
-    mpO2->addScope( FB_PERMISSION_EMAIL );
-    mpO2->addScope( FB_PERMISSION_FRIENDS );
-    mpO2->link();
+    mpFacebookClient->setClientId( "940633959281250" );
+    mpFacebookClient->setLocalPort( 8080 );
+    mpFacebookClient->addScope( FB_PERMISSION_EMAIL );
+    mpFacebookClient->addScope( FB_PERMISSION_FRIENDS );
+    mpFacebookClient->link();
 
     HbLogEnd();
 
@@ -88,3 +91,39 @@ void LinkMainWindow::onOpenBrower( const QUrl & url )
     HbInfo( "Opening browser on %s", HbLatin1( url.toString() ) );
     QDesktopServices::openUrl( url );
 }
+
+void LinkMainWindow::onClientLinkSucceed()
+{
+    if( sender() != mpFacebookClient )
+    {
+        return;
+    }
+
+    HbInfo( "Client link succeed" );
+
+    mpFacebookServer = new HbO2ServerFacebook();
+
+    connect( mpFacebookServer, &HbO2ServerFacebook::linkingSucceed, this, &LinkMainWindow::onServerLinkSucceed );
+
+    mpFacebookServer->setClientId( mpFacebookClient->clientId() );
+    mpFacebookServer->setRedirectUri( mpFacebookClient->redirectUri() );
+    mpFacebookServer->setCode( mpFacebookClient->code() );
+    mpFacebookServer->setClientSecret( "74621eedf9aa2cde9cd31dc5c4d3c440" );
+
+    mpFacebookClient->deleteLater();
+    mpFacebookClient = nullptr;
+
+    mpFacebookServer->link();
+}
+
+void LinkMainWindow::onServerLinkSucceed()
+{
+    if( sender() != mpFacebookClient )
+    {
+        return;
+    }
+
+    HbInfo( "Server link succeed" );
+
+}
+

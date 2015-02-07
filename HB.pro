@@ -8,7 +8,7 @@ PROJECT.TYPE =			subdirs
 SUBDIRS += \
     tools/HbTools.pro \
     link/HbLink.pro \
-	link-example/HbLinkExample.pro \
+    link-example/HbLinkExample.pro \
     log/HbLog.pro \
     log-viewer/HbLogViewer.pro \
     network/HbNetwork.pro \

@@ -11,13 +11,14 @@ MODULE.PATH =		..
 
 PROJECT.ID   =      link
 
-SUBDIRS +=  o2
+SUBDIRS +=  client \
+            server
 
 # ------------
 # Qt Settings
 # ------------
 
-QT *=		gui
+QT *=		gui network
 
 # -----------------
 # Modules Settings

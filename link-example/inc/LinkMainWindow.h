@@ -17,7 +17,8 @@ namespace hb
 {
     namespace link
     {
-        class HbO2Facebook;
+        class HbO2ClientFacebook;
+        class HbO2ServerFacebook;
     }
 
     namespace linkexample
@@ -32,11 +33,14 @@ namespace hb
             virtual ~LinkMainWindow();
 
         private:
-            hb::link::HbO2Facebook * mpO2;
+            hb::link::HbO2ClientFacebook * mpFacebookClient;
+            hb::link::HbO2ServerFacebook * mpFacebookServer;
             QNetworkAccessManager mNetworkAccess;
 
         public slots:
             void onOpenBrower( const QUrl & url );
+            void onClientLinkSucceed();
+            void onServerLinkSucceed();
 
         private slots:
             void onConnectClicked();

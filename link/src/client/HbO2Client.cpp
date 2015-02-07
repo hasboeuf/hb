@@ -5,19 +5,22 @@
 #include <HbLogService.h>
 #include <core/HbDictionaryHelper.h>
 // Local
-#include <o2/HbO2.h>
-#include <HbLinkServer.h>
+#include <client/HbO2Client.h>
 
 using namespace hb::link;
 
-HbO2::HbO2()
+HbO2Client::HbO2Client()
 {
     mLocalPort = 0;
-    mLinkStatus = UNLINKED;
 }
 
-bool HbO2::isValid() const
+bool HbO2Client::isValid() const
 {
+    if( !HbO2::isValid() )
+    {
+        return false;
+    }
+
     if( mLocalPort == 0 )
     {
         return false;
@@ -26,20 +29,12 @@ bool HbO2::isValid() const
     return true;
 }
 
-void HbO2::link()
+bool HbO2Client::link()
 {
-    if( mLinkStatus != UNLINKED)
+    if( !HbO2::link() )
     {
-        HbInfo( "HbO2 already linked or in linking." );
+        return false;
     }
-
-    if( !isValid() )
-    {
-        HbError( "HbO2 not valid." );
-        return;
-    }
-
-    mLinkStatus = LINKING;
 
     if( mReplyServer.isListening() )
     {
@@ -47,7 +42,7 @@ void HbO2::link()
     }
 
     mReplyServer.listen( QHostAddress::Any, mLocalPort );
-    connect( &mReplyServer, &HbLinkServer::responseReceived, this, &HbO2::onResponseReceived );
+    connect( &mReplyServer, &HbLinkLocalServer::responseReceived, this, &HbO2Client::onCodeResponseReceived );
 
     QUrl url( endPoint() );
 
@@ -58,9 +53,11 @@ void HbO2::link()
     HbInfo( "Url to open: %s", HbLatin1( url.toString() ) );
 
     emit openBrowser( url );
+
+    return true;
 }
 
-void HbO2::onResponseReceived( const QHash< QString, QString > response )
+void HbO2Client::onCodeResponseReceived( const QHash< QString, QString > response )
 {
     if( codeResponse( response ) == LINKED )
     {
@@ -78,18 +75,18 @@ void HbO2::onResponseReceived( const QHash< QString, QString > response )
     }
 }
 
-void HbO2::setClientId( const QString & client_id )
-{
-    mClientId = client_id;
-}
-
-void HbO2::setLocalPort( quint16 local_port )
+void HbO2Client::setLocalPort( quint16 local_port )
 {
     mLocalPort = local_port;
     mRedirectUri = REDIRECT_URI.arg( mLocalPort );
 }
 
-void HbO2::addScope( const QString & permission )
+quint16 HbO2Client::localPort() const
+{
+    return mLocalPort;
+}
+
+void HbO2Client::addScope( const QString & permission )
 {
     if( !permission.isEmpty() )
     {
@@ -101,33 +98,8 @@ void HbO2::addScope( const QString & permission )
     }
 }
 
-const QString & HbO2::errorString() const
-{
-    return mErrorString;
-}
-
-const QString & HbO2::scope() const
+const QString & HbO2Client::scope() const
 {
     return mScope;
-}
-
-const QString & HbO2::clientId() const
-{
-    return mClientId;
-}
-
-quint16 HbO2::localPort() const
-{
-    return mLocalPort;
-}
-
-const QString & HbO2::code() const
-{
-    return mCode;
-}
-
-const QString & HbO2::redirectUri() const
-{
-    return mRedirectUri;
 }
 
