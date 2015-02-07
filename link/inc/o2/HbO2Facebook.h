@@ -11,6 +11,7 @@
 
 // Qt
 #include <QtCore/QObject>
+#include <QtCore/QUrl>
 // Local
 #include <HbLink.h>
 #include <o2/HbO2.h>
@@ -29,7 +30,9 @@ namespace hb
             virtual ~HbO2Facebook() = default;
 
         protected:
-            static QString msRequestUrl;
+            virtual const QUrl endPoint() const;
+            virtual const QHash< QString, QString > codeRequest() const;
+            virtual LinkStatus codeResponse( const QHash< QString, QString > & response );
         };
     }
 }

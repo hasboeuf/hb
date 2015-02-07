@@ -14,6 +14,7 @@
 #include <QtCore/QUrl>
 // Local
 #include <HbLink.h>
+#include <HbLinkConstant.h>
 #include <HbLinkServer.h>
 
 
@@ -26,6 +27,13 @@ namespace hb
             Q_OBJECT
 
         public:
+            enum LinkStatus
+            {
+                UNLINKED = 0,
+                LINKING,
+                LINKED
+            };
+
             HbO2();
             virtual ~HbO2() = default;
 
@@ -35,46 +43,43 @@ namespace hb
 
             virtual void setClientId( const QString & client_id ) final;
             virtual void setLocalPort( quint16 local_port ) final;
-            virtual void setCode( const QString & code ) final;
+            virtual void addScope( const QString & permission ) final;
 
+            virtual const QString & errorString() const final;
             virtual const QString & clientId() const final;
             virtual quint16 localPort() const final;
             virtual const QString & redirectUri() const final;
             virtual const QString & code() const final;
+            virtual const QString & scope() const final;
+
 
         protected:
-            virtual void setRequestUrl( QString request_url ) final;
+            // Target specific.
+            virtual const QUrl endPoint() const = 0;
+            virtual const QHash< QString, QString > codeRequest() const = 0;
+            virtual LinkStatus codeResponse( const QHash< QString, QString > & response ) = 0;
 
         public slots:
-            void onParametersReceived(const QMap<QString, QString> query_parameters );
+            void onResponseReceived( const QHash< QString, QString > response_parameters );
 
         signals:
             void openBrowser( const QUrl & url );
-            void linkingFailed();
+            void linkingFailed( QString error );
             void linkingSucceed();
 
-        private:
-            bool mLinked;
-
-            QString mClientId;
-            //QString mClientSecret;
-            //QString mScope;
+        protected:
+            QString mErrorString;
             QString mCode;
+
+        private:
+            LinkStatus mLinkStatus;
+            HbLinkServer mReplyServer;
+
+            // Code request
+            QString mClientId;
+            QString mScope;
             QString mRedirectUri;
             quint16 mLocalPort;
-            //QString mLocalhostPolicy;
-            QUrl mRequestUrl;
-            QUrl mTokenUrl;
-            //QUrl mRefreshTokenUrl;
-            //QNetworkAccessManager * mpManager;
-            //O2ReplyServer * mpReplyServer;
-            //O2ReplyList mTimedReplies;
-            //quint16 mLocalPort;
-            //GrantFlow mGrantFlow_;
-            //O2AbstractStore * mpStore_;
-            //QVariantMap mExtraTokens;
-
-            HbLinkServer mReplyServer;
         };
     }
 }

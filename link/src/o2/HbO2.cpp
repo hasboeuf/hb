@@ -3,9 +3,9 @@
 #include <QtCore/QPair>
 // Hb
 #include <HbLogService.h>
+#include <core/HbDictionaryHelper.h>
 // Local
 #include <o2/HbO2.h>
-#include <HbLinkConstant.h>
 #include <HbLinkServer.h>
 
 using namespace hb::link;
@@ -13,7 +13,7 @@ using namespace hb::link;
 HbO2::HbO2()
 {
     mLocalPort = 0;
-    mLinked = false;
+    mLinkStatus = UNLINKED;
 }
 
 bool HbO2::isValid() const
@@ -28,9 +28,9 @@ bool HbO2::isValid() const
 
 void HbO2::link()
 {
-    if( mLinked )
+    if( mLinkStatus != UNLINKED)
     {
-        HbInfo( "HbO2 already linked." );
+        HbInfo( "HbO2 already linked or in linking." );
     }
 
     if( !isValid() )
@@ -39,49 +39,43 @@ void HbO2::link()
         return;
     }
 
+    mLinkStatus = LINKING;
+
     if( mReplyServer.isListening() )
     {
         mReplyServer.close();
     }
 
     mReplyServer.listen( QHostAddress::Any, mLocalPort );
-    connect( &mReplyServer, &HbLinkServer::parametersReceived, this, &HbO2::onParametersReceived );
+    connect( &mReplyServer, &HbLinkServer::responseReceived, this, &HbO2::onResponseReceived );
 
-    QList< QPair< QString, QString > > parameters;
-    parameters.append( qMakePair( OAUTH2_RESPONSE_TYPE, QStringLiteral( "code" ) ) );
-    parameters.append( qMakePair( OAUTH2_CLIENT_ID,     mClientId ) );
-    parameters.append( qMakePair( OAUTH2_REDIRECT_URI,  mRedirectUri ) );
+    QUrl url( endPoint() );
 
-    QUrl url( mRequestUrl );
-
-    QUrlQuery query( url );
-    query.setQueryItems( parameters );
-    url.setQuery( query );
+    QUrlQuery request( url );
+    request.setQueryItems( HbDictionaryHelper::toPairList< QString, QString >( codeRequest() ) );
+    url.setQuery( request );
 
     HbInfo( "Url to open: %s", HbLatin1( url.toString() ) );
 
     emit openBrowser( url );
 }
 
-void HbO2::onParametersReceived(const QMap<QString, QString> query_parameters )
+void HbO2::onResponseReceived( const QHash< QString, QString > response )
 {
-    if ( query_parameters.contains("error") )
+    if( codeResponse( response ) == LINKED )
     {
-        HbError( "Verification failed." );
-        emit linkingFailed();
-        return;
+        HbInfo( "Verification succeed." );
+        HbInfo( "Code received: %s", HbLatin1( mCode ) );
+        mLinkStatus = LINKED;
+        emit linkingSucceed();
     }
     else
     {
-        HbInfo( "Verification succeed." );
+        HbError( "Verification failed. (%s)", HbLatin1( mErrorString ) );
+        mLinkStatus = UNLINKED;
+
+        emit linkingFailed( mErrorString );
     }
-
-
-    // Save access code
-    setCode( query_parameters.value( OAUTH2_CODE ) );
-
-    HbInfo( "Code received: %s", HbLatin1( mCode ) );
-
 }
 
 void HbO2::setClientId( const QString & client_id )
@@ -95,9 +89,26 @@ void HbO2::setLocalPort( quint16 local_port )
     mRedirectUri = REDIRECT_URI.arg( mLocalPort );
 }
 
-void HbO2::setCode( const QString & code )
+void HbO2::addScope( const QString & permission )
 {
-    mCode = code;
+    if( !permission.isEmpty() )
+    {
+        if( !mScope.isEmpty() )
+        {
+            mScope += QStringLiteral( "," );
+        }
+        mScope += permission;
+    }
+}
+
+const QString & HbO2::errorString() const
+{
+    return mErrorString;
+}
+
+const QString & HbO2::scope() const
+{
+    return mScope;
 }
 
 const QString & HbO2::clientId() const
@@ -120,7 +131,3 @@ const QString & HbO2::redirectUri() const
     return mRedirectUri;
 }
 
-void HbO2::setRequestUrl( QString request_url )
-{
-    mRequestUrl = request_url;
-}

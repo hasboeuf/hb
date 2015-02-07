@@ -19,14 +19,14 @@ namespace hb
             ~HbLinkServer() = default;
 
         signals:
-            void parametersReceived( QMap< QString, QString > parameters );
+            void responseReceived( QHash< QString, QString > response );
 
         public slots:
             void onIncomingConnection();
             void onReadyRead();
 
         private:
-            QMap<QString, QString> parseQueryParameters( QByteArray & data );
+            QHash< QString, QString > parseResponse( QByteArray & data );
         };
     }
 }

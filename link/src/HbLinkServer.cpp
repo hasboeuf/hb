@@ -5,6 +5,7 @@
 #include <QtCore/QUrlQuery>
 // Hb
 #include <HbLogService.h>
+#include <core/HbDictionaryHelper.h>
 // Local
 #include <HbLinkServer.h>
 
@@ -35,7 +36,7 @@ void HbLinkServer::onReadyRead()
 
     QByteArray reply;
     QByteArray content;
-    content.append( QStringLiteral( "<html><p>Please close this page.</p><script>window.close();</script></html>" ) );
+    content.append( QStringLiteral( "<html><head><script>window.close();</script></head></html>" ) );
     reply.append( QStringLiteral( "HTTP/1.0 200 OK \r\n" ) );
     reply.append( QStringLiteral( "Content-Type: text/html; charset=\"utf-8\"\r\n" ) );
     reply.append( QString( "Content-Length: %1\r\n\r\n" ).arg( content.size() ) );
@@ -46,46 +47,31 @@ void HbLinkServer::onReadyRead()
     socket->write( reply );
 
     QByteArray data = socket->readAll();
-    QMap<QString, QString> query_parameters = parseQueryParameters( data );
+    auto response = parseResponse( data );
 
     socket->disconnectFromHost();
     close();
 
-    emit parametersReceived( query_parameters );
+    emit responseReceived( response );
 }
 
-QMap<QString, QString> HbLinkServer::parseQueryParameters( QByteArray & data )
+QHash< QString, QString > HbLinkServer::parseResponse( QByteArray & data )
 {
-    QString splited_line = QString( data );
+    QString content = QString( data );
 
-    HbInfo( "Reply received: %s", HbLatin1( splited_line ) );
+    HbInfo( "Response content received: %s", HbLatin1( content ) );
 
-    splited_line = splited_line.split("\n").first();
-    splited_line.remove("GET");
-    splited_line.remove("HTTP/1.1");
-    splited_line = splited_line.trimmed();
-    splited_line.prepend("http://localhost");
+    content = content.split("\n").first();
+    content.remove("GET");
+    content.remove("HTTP/1.1");
+    content = content.trimmed();
+    content.prepend("http://localhost");
 
-    HbInfo( "Simplifed reply: %s", HbLatin1( splited_line ) );
+    HbInfo( "Simplifed response content: %s", HbLatin1( content ) );
 
-    QUrl token_url( splited_line );
-    QUrlQuery query( token_url );
+    QUrl url( content );
+    QUrlQuery response( url );
 
-    auto tokens = query.queryItems();
-    QMap< QString, QString > query_parameter;
-
-    for( int i = 0; i < tokens.size(); ++i )
-    {
-        QPair< QString, QString > pair = tokens.at( i );
-
-        QString key   = pair.first;
-        QString value = pair.second;
-
-        HbDebug( "Add parameter key=%s, value=%s", HbLatin1( key ), HbLatin1( value ) );
-
-        query_parameter.insert( pair.first, pair.second );
-    }
-
-    return query_parameter;
+    return HbDictionaryHelper::toHash< QString, QString >( response.queryItems() );
 }
 

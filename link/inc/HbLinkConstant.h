@@ -24,9 +24,16 @@ const QString OAUTH2_CODE          = QStringLiteral( "code" );
 const QString OAUTH2_TOKEN         = QStringLiteral( "token" );
 const QString OAUTH2_GRANT_TYPE    = QStringLiteral( "grant_type" );
 
+const QString OAUTH2_GRANT_CODE    = QStringLiteral( "code" );
+
 // Reply
 const QString OAUTH2_ACCESS_TOKEN  = QStringLiteral( "access_token" );
 const QString OAUTH2_REFRESH_TOKEN = QStringLiteral( "refresh_token" );
 const QString OAUTH2_EXPIRES_IN    = QStringLiteral( "expires_in" );
+
+// Facebook
+// permissions
+const QString FB_PERMISSION_EMAIL     = QStringLiteral( "email" );
+const QString FB_PERMISSION_FRIENDS   = QStringLiteral( "user_friends" );
 
 #endif // HBLINKCONSTANT_H

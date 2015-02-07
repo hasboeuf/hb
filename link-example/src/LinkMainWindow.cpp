@@ -5,7 +5,6 @@
 // Hb
 #include <HbLogService.h>
 #include <o2/HbO2Facebook.h>
-#include <HbLinkConstant.h>
 // Local
 #include <LinkMainWindow.h>
 
@@ -53,6 +52,8 @@ void LinkMainWindow::onConnectClicked()
 
     mpO2->setClientId( "940633959281250" );
     mpO2->setLocalPort( 8080 );
+    mpO2->addScope( FB_PERMISSION_EMAIL );
+    mpO2->addScope( FB_PERMISSION_FRIENDS );
     mpO2->link();
 
     HbLogEnd();
