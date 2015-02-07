@@ -12,7 +12,7 @@
 #include <QtCore/QString>
 
 // General
-const QString REDIRECT_URI         = QStringLiteral( "http://localhost:%1" );
+const QString REDIRECT_URI         = QStringLiteral( "http://localhost:%1/" );
 
 // Request
 const QString OAUTH2_RESPONSE_TYPE = QStringLiteral( "response_type" );
