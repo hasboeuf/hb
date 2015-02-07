@@ -12,13 +12,13 @@ MODULE.PATH =		..
 PROJECT.ID   =      tools
 
 SUBDIRS += core \
-           gui
+           network
 
 # ------------
 # Qt Settings
 # ------------
 
-QT *=		gui widgets
+QT *=		gui widgets network
 
 # -----------------
 # Modules Settings

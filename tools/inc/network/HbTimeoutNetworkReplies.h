@@ -1,0 +1,45 @@
+/****************************************************************************
+** Copyright (C) 2012-2015 Adrien Gavignet (hasboeuf)
+** Contact: adrien.gavignet@gmail.com
+**
+** This file is part of the Hb module. Provided "AS IS", WITHOUT WARRANTIES
+** OR CONDITIONS OF ANY KIND, either express or implied.
+****************************************************************************/
+
+#ifndef HBTIMEOUTNETWORKREPLIES_H
+#define HBTIMEOUTNETWORKREPLIES_H
+
+// Qt
+#include <QtCore/QObject>
+#include <QtCore/QList>
+// Local
+#include <HbTools.h>
+#include <network/HbTimeoutNetworkReply.h>
+
+namespace hb
+{
+	namespace tools
+	{
+        class HB_TOOLS_DECL HbTimeoutNetworkReplies : public QObject
+		{
+            Q_OBJECT
+
+        public:
+            HbTimeoutNetworkReplies() = default;
+            virtual ~HbTimeoutNetworkReplies();
+
+            void add( QNetworkReply * reply, quint32 timeout = HbTimeoutNetworkReply::msDefaultTimeout );
+            void add( HbTimeoutNetworkReply * timeout_reply );
+
+        public slots:
+            void onDestroyed();
+
+        private:
+            QList< HbTimeoutNetworkReply * > mReplies;
+		};
+	}
+}
+
+using hb::tools::HbTimeoutNetworkReplies;
+
+#endif // HBTIMEOUTNETWORKREPLIES_H
