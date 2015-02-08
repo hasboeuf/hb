@@ -19,12 +19,15 @@ namespace hb
 {
 	namespace tools
 	{
-        class HB_TOOLS_DECL HbTimeoutNetworkReply : public QTimer
+        class HB_TOOLS_DECL HbTimeoutNetworkReply final : public QTimer
 		{
             Q_OBJECT
 
 		public:
             HbTimeoutNetworkReply( QNetworkReply * reply, quint32 timeout = msDefaultTimeout, QObject * parent = nullptr );
+            ~HbTimeoutNetworkReply();
+
+            quint64 id() const;
 
         signals:
             void error( QNetworkReply::NetworkError error );
@@ -36,6 +39,7 @@ namespace hb
             static quint32 msDefaultTimeout;
 
         private:
+            quint64 mId;
             QNetworkReply * mpReply;
 		};
 	}

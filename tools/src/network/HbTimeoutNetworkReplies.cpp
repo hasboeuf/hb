@@ -9,29 +9,48 @@ HbTimeoutNetworkReplies::~HbTimeoutNetworkReplies()
     mReplies.clear();
 }
 
-void HbTimeoutNetworkReplies::add( QNetworkReply * reply, quint32 timeout )
+qint64 HbTimeoutNetworkReplies::add( QNetworkReply * reply, quint32 timeout )
 {
     if( reply )
     {
         HbTimeoutNetworkReply * timeout_reply = new HbTimeoutNetworkReply( reply, timeout, this );
-        add( timeout_reply );
+
+        connect( timeout_reply, &QObject::destroyed, this, &HbTimeoutNetworkReplies::onDestroyed );
+
+        mReplies.insert( reply, timeout_reply );
+
+        return timeout_reply->id();
     }
+
+    return -1;
 }
 
-void HbTimeoutNetworkReplies::add( HbTimeoutNetworkReply * timeout_reply )
+void HbTimeoutNetworkReplies::remove( QNetworkReply * reply )
 {
-    if( !timeout_reply )
+    if( !reply )
     {
         return;
     }
 
-    connect( timeout_reply, &QObject::destroyed, this, &HbTimeoutNetworkReplies::onDestroyed );
+    mReplies.remove( reply );
+}
 
-    mReplies.append( timeout_reply );
+qint64 HbTimeoutNetworkReplies::id( QNetworkReply * reply ) const
+{
+    if( reply )
+    {
+        HbTimeoutNetworkReply * timeout_reply = mReplies.value( reply, nullptr );
+        if( timeout_reply )
+        {
+            return timeout_reply->id();
+        }
+    }
+
+    return -1;
 }
 
 void HbTimeoutNetworkReplies::onDestroyed()
 {
     QObject * object = sender();
-    mReplies.removeOne( static_cast< HbTimeoutNetworkReply * >( object ) );
+    mReplies.remove( mReplies.key( static_cast< HbTimeoutNetworkReply * >( object ) ) );
 }

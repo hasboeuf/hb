@@ -28,14 +28,16 @@ namespace hb
             HbTimeoutNetworkReplies() = default;
             virtual ~HbTimeoutNetworkReplies();
 
-            void add( QNetworkReply * reply, quint32 timeout = HbTimeoutNetworkReply::msDefaultTimeout );
-            void add( HbTimeoutNetworkReply * timeout_reply );
+            qint64 add( QNetworkReply * reply, quint32 timeout = HbTimeoutNetworkReply::msDefaultTimeout );
+
+            void remove( QNetworkReply * reply );
+
+            qint64 id( QNetworkReply * reply ) const;
 
         public slots:
             void onDestroyed();
-
         private:
-            QList< HbTimeoutNetworkReply * > mReplies;
+            QHash< QNetworkReply *, HbTimeoutNetworkReply * > mReplies;
 		};
 	}
 }
