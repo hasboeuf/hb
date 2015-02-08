@@ -39,6 +39,7 @@ namespace hb
             void setFilterRole  ( qint32 column, qint32 role = Qt::DisplayRole );
             void setFilterFlags ( qint32 column, const Qt::MatchFlags flags = Qt::MatchContains );
             void removeFilter   ( qint32 column );
+            void removeFilters  ();
 
             QVariant filterValue( qint32 column ) const;
             qint32 filterRole   ( qint32 column ) const;

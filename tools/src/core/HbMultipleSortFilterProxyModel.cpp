@@ -135,6 +135,19 @@ void HbMultipleSortFilterProxyModel::removeFilter ( qint32 column )
 }
 
 /*!
+    \brief Removes filters of all columns
+ */
+void HbMultipleSortFilterProxyModel::removeFilters()
+{
+    filters.clear();
+
+    if( !mDeclaringFilter )
+    {
+        invalidateFilter();
+    }
+}
+
+/*!
     \brief Sets the filter \a value for the given \a column
  */
 void HbMultipleSortFilterProxyModel::setFilterValue ( qint32 column , const QVariant &value )

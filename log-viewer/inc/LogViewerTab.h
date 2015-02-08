@@ -95,19 +95,19 @@ namespace hb
 
         private :
 
-            qint32                       mId;
-            QStandardItemModel           mModel;
+            qint32                         mId;
+            QStandardItemModel             mModel;
             HbMultipleSortFilterProxyModel mProxy;
-            QStringList                  mLabels;
-            bool                         mFrozen;
-            bool                         mRerun;
-            const LogViewerConfig&       mConfig;
+            QStringList                    mLabels;
+            bool                           mFrozen;
+            bool                           mRerun;
+            const LogViewerConfig &        mConfig;
 
-            ModelFilter*                 mFilter;
-            qint32                       mFilterColumn;
+            ModelFilter *                  mpFilter;
+            qint32                         mFilterColumn;
 										 
-            qreal                        mFreezeAnimationValue;
-            QPropertyAnimation *         mFreezeAnimation;
+            qreal                          mFreezeAnimationValue;
+            QPropertyAnimation *           mpFreezeAnimation;
         };
     }
 }

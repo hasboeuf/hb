@@ -22,28 +22,28 @@
 using namespace hb::logviewer;
 using namespace hb::log;
 
-LogViewerTab::LogViewerTab( qint32 id, const LogViewerConfig& config, bool rerun, ModelFilter* filter, ColumnID filter_column, QWidget *parent )
-	: QWidget(parent), mConfig(config)
+LogViewerTab::LogViewerTab( qint32 id, const LogViewerConfig& config, bool rerun, ModelFilter * filter, ColumnID filter_column, QWidget *parent )
+    : QWidget( parent ), mConfig( config )
 {
 	setupUi(this);
 
 	mId           = id;
-	mFilter       = filter;
+    mpFilter      = filter;
 	mFilterColumn = filter_column;
 	mFrozen       = rerun;
 	mRerun        = rerun;
 
-	if(rerun)
+    if( rerun )
 	{	
-		qpb_freeze->setEnabled(false);
+        qpb_freeze->setEnabled( false );
 	}
 
-	mFreezeAnimation = q_check_ptr( new QPropertyAnimation(this, "_freezeAnimationValue") );
-	mFreezeAnimation->setDuration(2000);
-	mFreezeAnimation->setLoopCount(-1);
-	mFreezeAnimation->setStartValue(0.f);
-	mFreezeAnimation->setKeyValueAt(0.5, 1.f);
-	mFreezeAnimation->setEndValue(0.f);
+    mpFreezeAnimation = q_check_ptr ( new QPropertyAnimation(this, "_freezeAnimationValue") );
+    mpFreezeAnimation->setDuration  ( 2000 );
+    mpFreezeAnimation->setLoopCount ( -1 );
+    mpFreezeAnimation->setStartValue( 0.f );
+    mpFreezeAnimation->setKeyValueAt( 0.5, 1.f );
+    mpFreezeAnimation->setEndValue  ( 0.f );
 
 	mFreezeAnimationValue = -1.f;
 
@@ -59,26 +59,26 @@ LogViewerTab::LogViewerTab( qint32 id, const LogViewerConfig& config, bool rerun
 	updateView(); // Update icon colors. At this time, the config is not loaded so black icons will be drawn.
 
 	mLabels.insert( COLUMN_LEVEL, QStringLiteral( "Level" ) );
-    mLabels.insert( COLUMN_TIME, QStringLiteral( "Time" ) );
+    mLabels.insert( COLUMN_TIME,  QStringLiteral( "Time" ) );
     mLabels.insert( COLUMN_OWNER, QStringLiteral( "Owner" ) );
-    mLabels.insert( COLUMN_LINE, QStringLiteral( "Line" ) );
+    mLabels.insert( COLUMN_LINE,  QStringLiteral( "Line" ) );
     mLabels.insert( COLUMN_WHERE, QStringLiteral( "Where" ) );
-    mLabels.insert( COLUMN_TEXT, QStringLiteral( "Message" ) );
-    mLabels.insert( COLUMN_FILE, QStringLiteral( "File" ) );
-    mLabels.insert( COLUMN_FUNC, QStringLiteral( "Func" ) );
+    mLabels.insert( COLUMN_TEXT,  QStringLiteral( "Message" ) );
+    mLabels.insert( COLUMN_FILE,  QStringLiteral( "File" ) );
+    mLabels.insert( COLUMN_FUNC,  QStringLiteral( "Func" ) );
 
-	mProxy.setSourceModel(&mModel);
+    mProxy.setSourceModel( &mModel );
 
-	qtv_log->setModel(&mProxy);
-	qtv_log->setAlternatingRowColors(true);
-	qtv_log->setSelectionBehavior(QAbstractItemView::SelectRows);
-	qtv_log->setSelectionMode(QAbstractItemView::SingleSelection);
+    qtv_log->setModel( &mProxy );
+    qtv_log->setAlternatingRowColors( true );
+    qtv_log->setSelectionBehavior( QAbstractItemView::SelectRows );
+    qtv_log->setSelectionMode( QAbstractItemView::SingleSelection );
 	qtv_log->verticalHeader()->hide();
-	qtv_log->setEditTriggers(QAbstractItemView::NoEditTriggers);
-	qtv_log->verticalHeader()->setDefaultSectionSize(20);
-	qtv_log->setSortingEnabled(true);
-	qtv_log->setShowGrid(false);
-	qtv_log->setContextMenuPolicy(Qt::CustomContextMenu);
+    qtv_log->setEditTriggers( QAbstractItemView::NoEditTriggers );
+    qtv_log->verticalHeader()->setDefaultSectionSize( 20 );
+    qtv_log->setSortingEnabled( true );
+    qtv_log->setShowGrid( false );
+    qtv_log->setContextMenuPolicy( Qt::CustomContextMenu );
     qtv_log->setItemDelegate( q_check_ptr( new LogViewerTabDelegate( qtv_log ) ) );
 
 	initTable();
@@ -96,7 +96,7 @@ LogViewerTab::LogViewerTab( qint32 id, const LogViewerConfig& config, bool rerun
 
 LogViewerTab::~LogViewerTab()
 {
-    delete mFilter;
+    delete mpFilter;
 }
 
 qint32 LogViewerTab::id() const
@@ -111,6 +111,11 @@ void LogViewerTab::initTable()
 	qtv_log->hideColumn(COLUMN_FILE);
 	qtv_log->hideColumn(COLUMN_FUNC);
     qtv_log->horizontalHeader()->setStretchLastSection(true);
+
+    mProxy.beginDeclareFilter();
+    mProxy.removeFilters();
+    mProxy.endDeclareFilter();
+    mProxy.sort( COLUMN_TIME, Qt::AscendingOrder );
 
 	checkMaxBuffer();
 }
@@ -145,10 +150,10 @@ void  LogViewerTab::setFreezeAnimationValue( qreal value )
 	}
 }
 
-bool LogViewerTab::isValidEntry(QList<QStandardItem*>& row)
+bool LogViewerTab::isValidEntry( QList< QStandardItem * > & row )
 {
 
-	if(!row.at(COLUMN_LEVEL) ||
+    if( !row.at(COLUMN_LEVEL) ||
 		!row.at(COLUMN_TIME)  ||
 		!row.at(COLUMN_OWNER) ||
 		!row.at(COLUMN_LINE)  ||
@@ -161,13 +166,13 @@ bool LogViewerTab::isValidEntry(QList<QStandardItem*>& row)
 		return false;
 	}
 
-	if(!mFilter)
+    if( !mpFilter )
 	{
 		return true;
 	}
 
-	QStandardItem* item_to_be_filtered = row.at(mFilterColumn);
-	return mFilter->acceptsValue(item_to_be_filtered->data(mFilter->mRole));
+    QStandardItem * item_to_be_filtered = row.at( mFilterColumn );
+    return mpFilter->acceptsValue( item_to_be_filtered->data( mpFilter->mRole ) );
 }
 
 void LogViewerTab::addEntry(const HbLogMessage* msg, bool rerun)
@@ -228,9 +233,9 @@ void LogViewerTab::addEntry(const HbLogMessage* msg, bool rerun)
 	row.insert(COLUMN_FILE, item_file);
 	row.insert(COLUMN_FUNC, item_func);
 
-	if(isValidEntry(row))
+    if(isValidEntry( row ) )
 	{
-		mModel.appendRow(row);
+        mModel.appendRow( row );
 		checkMaxBuffer();
 	}
 	else
@@ -321,8 +326,8 @@ void LogViewerTab::onLevelChanged(int index)
 	regexp += QLatin1Char( ')' );
 
 	mProxy.beginDeclareFilter();
-	mProxy.removeFilter(COLUMN_LEVEL);
-	mProxy.setFilter(COLUMN_LEVEL, regexp, Qt::UserRole, Qt::MatchRegExp);
+    mProxy.removeFilter( COLUMN_LEVEL);
+    mProxy.setFilter( COLUMN_LEVEL, regexp, Qt::UserRole, Qt::MatchRegExp );
 	mProxy.endDeclareFilter();
 
 }
@@ -330,9 +335,9 @@ void LogViewerTab::onLevelChanged(int index)
 void LogViewerTab::onFilterTextChanged(const QString& filter)
 {
 
-	mProxy.removeFilter(COLUMN_TEXT);
+    mProxy.removeFilter( COLUMN_TEXT );
 	mProxy.beginDeclareFilter();
-	mProxy.setFilter(COLUMN_TEXT,  filter, Qt::DisplayRole, Qt::MatchContains);
+    mProxy.setFilter( COLUMN_TEXT, filter, Qt::DisplayRole, Qt::MatchContains );
 	mProxy.endDeclareFilter();
 }
 
@@ -341,49 +346,49 @@ void LogViewerTab::onClearClicked()
 	initTable();
 }
 
-void LogViewerTab::onFreezeClicked   (bool checked)
+void LogViewerTab::onFreezeClicked( bool checked )
 {
 	mFrozen = checked;
 
-	if(mFreezeAnimation)
+    if( mpFreezeAnimation )
 	{
 		if(mFrozen)
 		{
-			mFreezeAnimation->start();
+            mpFreezeAnimation->start();
 		}
 		else
 		{
-			mFreezeAnimation->stop();
-			setFreezeAnimationValue(-1.f);
+            mpFreezeAnimation->stop();
+            setFreezeAnimationValue( -1.f );
 		}
 	}
 }
 
 void LogViewerTab::onAdjustToContent()
 {
-	qtv_log->resizeColumnToContents(COLUMN_TEXT);
+    qtv_log->resizeColumnToContents( COLUMN_TEXT );
 }
 
 void LogViewerTab::onSaveAsClicked()
 {
-	if(!mFrozen)
+    if( !mFrozen )
 	{
 
         QMessageBox::StandardButton answer = QMessageBox::question( this, QStringLiteral( "Save as" ), 
             QStringLiteral( "During the saving process, freeze must be enabled. Alright?" ), QMessageBox::Yes | QMessageBox::No );
 
-		if(answer == QMessageBox::No)
+        if( answer == QMessageBox::No )
 		{
 			return;
 		}
 
-		qpb_freeze->setChecked(true);
+        qpb_freeze->setChecked( true );
 	}
 
     QString file_path = QFileDialog::getSaveFileName( this, QStringLiteral( "Save log" ), QString(), QString() );
 
-	QFile file(file_path);
-	if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    QFile file( file_path );
+    if( !file.open( QIODevice::WriteOnly | QIODevice::Text ) )
 	{
 		return;
 	}
@@ -393,27 +398,27 @@ void LogViewerTab::onSaveAsClicked()
     for( qint32 row = 0; row < mModel.rowCount(); ++row )
 	{
 		
-		QStandardItem* item_level = mModel.item(row, COLUMN_LEVEL);
-		QStandardItem* item_time  = mModel.item(row, COLUMN_TIME);
-		QStandardItem* item_owner = mModel.item(row, COLUMN_OWNER);
-		QStandardItem* item_text  = mModel.item(row, COLUMN_TEXT);
-		QStandardItem* item_line  = mModel.item(row, COLUMN_LINE);
-		QStandardItem* item_file  = mModel.item(row, COLUMN_FILE);
-		QStandardItem* item_func  = mModel.item(row, COLUMN_FUNC);
+        QStandardItem* item_level = mModel.item( row, COLUMN_LEVEL );
+        QStandardItem* item_time  = mModel.item( row, COLUMN_TIME );
+        QStandardItem* item_owner = mModel.item( row, COLUMN_OWNER );
+        QStandardItem* item_text  = mModel.item( row, COLUMN_TEXT );
+        QStandardItem* item_line  = mModel.item( row, COLUMN_LINE );
+        QStandardItem* item_file  = mModel.item( row, COLUMN_FILE );
+        QStandardItem* item_func  = mModel.item( row, COLUMN_FUNC );
 
-		if(!item_level || !item_time || !item_owner || !item_text || !item_line || !item_file || !item_func)
+        if( !item_level || !item_time || !item_owner || !item_text || !item_line || !item_file || !item_func )
 		{
 			qDebug() << "Unexpected null pointer.";
 			continue;
 		}
 
-        qint16  level = ( qint16 ) item_level->data(Qt::UserRole).toInt();
-        qint32  time  = ( qint32 ) item_time->data(Qt::UserRole).toInt();
-		QString owner = item_owner->data(Qt::DisplayRole).toString();
-		QString text  = item_text->data(Qt::DisplayRole).toString();
-        qint32  line  = ( qint32 ) item_line->data(Qt::DisplayRole).toInt();
-		QString file  = item_file->data(Qt::DisplayRole).toString();
-		QString func  = item_func->data(Qt::DisplayRole).toString();
+        qint16  level = ( qint16 ) item_level->data( Qt::UserRole ).toInt();
+        qint32  time  = ( qint32 ) item_time->data( Qt::UserRole ).toInt();
+        QString owner = item_owner->data( Qt::DisplayRole ).toString();
+        QString text  = item_text->data( Qt::DisplayRole ).toString();
+        qint32  line  = ( qint32 ) item_line->data( Qt::DisplayRole ).toInt();
+        QString file  = item_file->data( Qt::DisplayRole ).toString();
+        QString func  = item_func->data( Qt::DisplayRole ).toString();
 
         HbLogContext context( owner, file.toStdString().c_str(), line, func.toStdString().c_str() );
         HbLogMessage msg( ( HbLogger::Level ) level, HbLogger::OUTPUT_ALL, context, time, text);
