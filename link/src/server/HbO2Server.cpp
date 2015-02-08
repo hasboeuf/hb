@@ -78,10 +78,6 @@ void HbO2Server::onTokenResponseReceived()
 
             emit linkingFailed( mErrorString );
         }
-
-        token_reply->deleteLater();
-
-        emit linkingSucceed();
     }
     else
     {

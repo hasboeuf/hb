@@ -48,8 +48,6 @@ QHash< QString, QString > HbO2::getUrlItems( const QString & content )
     QUrl url( ENRICHED_URI_BASE + content );
     QUrlQuery response( url );
 
-    HbInfo( "URLLLL=%s", HbLatin1( url.toString() ) );
-
     return HbDictionaryHelper::toHash< QString, QString >( response.queryItems() );
 }
 

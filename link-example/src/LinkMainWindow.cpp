@@ -1,9 +1,11 @@
 // Qt
 #include <QtCore/QUrl>
+#include <QtCore/QUrlQuery>
 #include <QtGui/QDesktopServices>
 #include <QtNetwork/QNetworkReply>
 // Hb
 #include <HbLogService.h>
+#include <core/HbDictionaryHelper.h>
 #include <client/HbO2ClientFacebook.h>
 #include <server/HbO2ServerFacebook.h>
 // Local
@@ -27,7 +29,9 @@ LinkMainWindow::LinkMainWindow(QWidget * parent) :
     mpFacebookServer = nullptr;
 
     connect( ui_qpb_connect, &QPushButton::clicked, this, &LinkMainWindow::onConnectClicked );
-    connect( &mNetworkAccess, &QNetworkAccessManager::finished, this, &LinkMainWindow::onNetworkAccessFinished );
+
+    connect( &mRequester, &HbLinkRequester::requestFinished, this, &LinkMainWindow::onRequestFinished );
+    connect( &mRequester, &HbLinkRequester::requestError,    this, &LinkMainWindow::onRequestError );
 
     HbLogEnd();
 }
@@ -63,29 +67,6 @@ void LinkMainWindow::onConnectClicked()
 
 }
 
-void LinkMainWindow::onNetworkAccessFinished( QNetworkReply * reply )
-{
-    HbLogBegin();
-
-    if( reply->error() == QNetworkReply::NoError )
-    {
-        HbInfo( "Reply succeed." );
-
-        QByteArray raw = reply->readAll();
-        QString content( raw );
-
-        HbInfo( "Reply content: %s", HbLatin1( content ) );
-    }
-    else
-    {
-        HbError( "Reply error: %s", HbLatin1( reply->errorString() ) );
-    }
-
-    reply->deleteLater();
-
-    HbLogEnd();
-}
-
 void LinkMainWindow::onOpenBrower( const QUrl & url )
 {
     HbInfo( "Opening browser on %s", HbLatin1( url.toString() ) );
@@ -103,7 +84,7 @@ void LinkMainWindow::onClientLinkSucceed()
 
     mpFacebookServer = new HbO2ServerFacebook();
 
-    connect( mpFacebookServer, &HbO2ServerFacebook::linkingSucceed, this, &LinkMainWindow::onServerLinkSucceed );
+    connect( mpFacebookServer, &HbO2ServerFacebook::linkingSucceed, this, &LinkMainWindow::onServerLinkSucceed, Qt::UniqueConnection );
 
     mpFacebookServer->setClientId( mpFacebookClient->clientId() );
     mpFacebookServer->setRedirectUri( mpFacebookClient->redirectUri() );
@@ -124,6 +105,32 @@ void LinkMainWindow::onServerLinkSucceed()
     }
 
     HbInfo( "Server link succeed" );
+
+    // Test
+    QUrl url( "https://graph.facebook.com/me" );
+    QUrlQuery request( url );
+
+    QHash< QString, QString > params;
+    params.insert( FB_TOKEN, mpFacebookServer->token() );
+
+    request.setQueryItems( HbDictionaryHelper::toPairList< QString, QString >( params ) );
+    url.setQuery( request );
+
+    qint64 id = mRequester.processRequest( url );
+    HbInfo( "Request %lld is sent (%s).", id, HbLatin1( url.toString() ) );
+}
+
+void LinkMainWindow::onRequestFinished( quint64 request_id, const QJsonDocument & doc )
+{
+    HbInfo( "Request %d finished.", request_id );
+
+    HbInfo( "JSON response: %s", HbLatin1( QString( doc.toJson( QJsonDocument::Indented ) ) ) );
+}
+
+void LinkMainWindow::onRequestError   ( quint64 request_id, const QString & error )
+{
+    HbError( "Request %d failed (%s).", request_id, HbLatin1( error ) );
+
 
 }
 

@@ -3,6 +3,7 @@
 
 // Qt
 #include <QtCore/QHash>
+#include <QtCore/QJsonDocument>
 #include <QtCore/QSortFilterProxyModel>
 #include <QtGui/QStandardItemModel>
 #include <QtNetwork/QNetworkAccessManager>
@@ -10,6 +11,7 @@
 
 // Local
 #include <ui_LinkMainWindow.h>
+#include <HbLinkRequester.h>
 
 class QNetworkAccessManager;
 
@@ -35,16 +37,17 @@ namespace hb
         private:
             hb::link::HbO2ClientFacebook * mpFacebookClient;
             hb::link::HbO2ServerFacebook * mpFacebookServer;
-            QNetworkAccessManager mNetworkAccess;
+            hb::link::HbLinkRequester      mRequester;
 
         public slots:
             void onOpenBrower( const QUrl & url );
             void onClientLinkSucceed();
             void onServerLinkSucceed();
+            void onRequestFinished( quint64 request_id, const QJsonDocument & doc );
+            void onRequestError   ( quint64 request_id, const QString & error );
 
         private slots:
             void onConnectClicked();
-            void onNetworkAccessFinished( QNetworkReply * reply );
 
         signals:
 
