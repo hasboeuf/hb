@@ -5,7 +5,7 @@
 #include <HbLogService.h>
 #include <core/HbDictionaryHelper.h>
 // Local
-#include <server/HbO2ServerFacebook.h>
+#include <facebook/HbO2ServerFacebook.h>
 
 void HbO2ServerFacebook::inspectToken( QString admin_token )
 {

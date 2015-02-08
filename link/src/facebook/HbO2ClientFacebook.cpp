@@ -1,5 +1,5 @@
 // Local
-#include <client/HbO2ClientFacebook.h>
+#include <facebook/HbO2ClientFacebook.h>
 
 const QString FB_ERROR             = QStringLiteral( "error" );
 const QString FB_ERROR_REASON      = QStringLiteral( "error_reason" );

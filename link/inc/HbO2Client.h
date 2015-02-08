@@ -14,7 +14,7 @@
 #include <QtCore/QUrl>
 // Local
 #include <HbO2.h>
-#include <client/HbLinkLocalServer.h>
+#include <HbLinkLocalServer.h>
 
 namespace hb
 {

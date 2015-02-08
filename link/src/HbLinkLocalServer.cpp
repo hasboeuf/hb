@@ -7,7 +7,7 @@
 #include <HbLogService.h>
 #include <core/HbDictionaryHelper.h>
 // Local
-#include <client/HbLinkLocalServer.h>
+#include <HbLinkLocalServer.h>
 #include <HbO2.h>
 
 using namespace hb::link;

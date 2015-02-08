@@ -6,36 +6,39 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBO2CLIENTFACEBOOK_H
-#define HBO2CLIENTFACEBOOK_H
+#ifndef HBO2SERVERFACEBOOK_H
+#define HBO2SERVERFACEBOOK_H
 
 // Qt
-#include <QtCore/QObject>
-#include <QtCore/QUrl>
 // Local
-#include <client/HbO2Client.h>
+#include <HbLink.h>
+#include <HbO2Server.h>
 
 
 namespace hb
 {
     namespace link
     {
-        class HB_LINK_DECL HbO2ClientFacebook : public HbO2Client
+        class HB_LINK_DECL HbO2ServerFacebook : public HbO2Server
         {
             Q_OBJECT
 
         public:
-            HbO2ClientFacebook() = default;
-            virtual ~HbO2ClientFacebook() = default;
+
+            HbO2ServerFacebook() = default;
+            virtual ~HbO2ServerFacebook() = default;
+
+            void inspectToken( QString admin_token );
 
         protected:
             virtual const QUrl endPoint() const;
-            virtual const QHash< QString, QString > codeRequest() const;
-            virtual LinkStatus codeResponse( const QHash< QString, QString > & response );
+            virtual const QHash< QString, QString > tokenRequest() const;
+            virtual LinkStatus tokenResponse( const QHash< QString, QString > & response );
+
         };
     }
 }
 
-using hb::link::HbO2ClientFacebook;
+using hb::link::HbO2ServerFacebook;
 
-#endif // HBO2CLIENTFACEBOOK_H
+#endif // HBO2SERVERFACEBOOK_H

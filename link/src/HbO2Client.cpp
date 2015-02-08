@@ -5,7 +5,7 @@
 #include <HbLogService.h>
 #include <core/HbDictionaryHelper.h>
 // Local
-#include <client/HbO2Client.h>
+#include <HbO2Client.h>
 
 using namespace hb::link;
 

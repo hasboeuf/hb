@@ -6,8 +6,8 @@
 // Hb
 #include <HbLogService.h>
 #include <core/HbDictionaryHelper.h>
-#include <client/HbO2ClientFacebook.h>
-#include <server/HbO2ServerFacebook.h>
+#include <facebook/HbO2ClientFacebook.h>
+#include <facebook/HbO2ServerFacebook.h>
 // Local
 #include <LinkMainWindow.h>
 
