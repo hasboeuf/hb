@@ -36,7 +36,7 @@ HbTimeoutNetworkReply::~HbTimeoutNetworkReply()
 
 quint64 HbTimeoutNetworkReply::id() const
 {
-
+    return mId;
 }
 
 void HbTimeoutNetworkReply::onTimeout()

@@ -11,6 +11,7 @@
 
 // Qt
 #include <QtNetwork/QNetworkAccessManager>
+#include <QtCore/QJsonDocument>
 // Hb
 #include <network/HbTimeoutNetworkReplies.h>
 // Local

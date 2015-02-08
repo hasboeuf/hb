@@ -11,7 +11,7 @@
 
 // Local
 #include <ui_LinkMainWindow.h>
-#include <HbLinkRequester.h>
+#include <facebook/HbFacebookRequester.h>
 
 class QNetworkAccessManager;
 
@@ -21,6 +21,7 @@ namespace hb
     {
         class HbO2ClientFacebook;
         class HbO2ServerFacebook;
+        class HbFacebookObject;
     }
 
     namespace linkexample
@@ -37,14 +38,13 @@ namespace hb
         private:
             hb::link::HbO2ClientFacebook * mpFacebookClient;
             hb::link::HbO2ServerFacebook * mpFacebookServer;
-            hb::link::HbLinkRequester      mRequester;
+            hb::link::HbFacebookRequester  mRequester;
 
         public slots:
             void onOpenBrower( const QUrl & url );
             void onClientLinkSucceed();
             void onServerLinkSucceed();
-            void onRequestFinished( quint64 request_id, const QJsonDocument & doc );
-            void onRequestError   ( quint64 request_id, const QString & error );
+            void onRequestCompleted( hb::link::HbFacebookObject * object );
 
         private slots:
             void onConnectClicked();

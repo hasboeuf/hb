@@ -8,6 +8,7 @@
 #include <core/HbDictionaryHelper.h>
 #include <facebook/HbO2ClientFacebook.h>
 #include <facebook/HbO2ServerFacebook.h>
+#include <facebook/api/HbFacebookUser.h>
 // Local
 #include <LinkMainWindow.h>
 
@@ -30,8 +31,7 @@ LinkMainWindow::LinkMainWindow(QWidget * parent) :
 
     connect( ui_qpb_connect, &QPushButton::clicked, this, &LinkMainWindow::onConnectClicked );
 
-    connect( &mRequester, &HbLinkRequester::requestFinished, this, &LinkMainWindow::onRequestFinished );
-    connect( &mRequester, &HbLinkRequester::requestError,    this, &LinkMainWindow::onRequestError );
+    connect( &mRequester, &HbFacebookRequester::requestCompleted, this, &LinkMainWindow::onRequestCompleted );
 
     HbLogEnd();
 }
@@ -104,33 +104,38 @@ void LinkMainWindow::onServerLinkSucceed()
         return;
     }
 
-    HbInfo( "Server link succeed" );
+    HbInfo( "Server link succeed. Request facebook user..." );
 
-    // Test
-    QUrl url( "https://graph.facebook.com/me" );
-    QUrlQuery request( url );
-
-    QHash< QString, QString > params;
-    params.insert( FB_TOKEN, mpFacebookServer->token() );
-
-    request.setQueryItems( HbDictionaryHelper::toPairList< QString, QString >( params ) );
-    url.setQuery( request );
-
-    qint64 id = mRequester.processRequest( url );
-    HbInfo( "Request %lld is sent (%s).", id, HbLatin1( url.toString() ) );
+    mRequester.requestUser( mpFacebookServer );
 }
 
-void LinkMainWindow::onRequestFinished( quint64 request_id, const QJsonDocument & doc )
+void LinkMainWindow::onRequestCompleted( hb::link::HbFacebookObject * object )
 {
-    HbInfo( "Request %d finished.", request_id );
+    if( !object )
+    {
+        HbError( "Facebook object null." );
+        return;
+    }
 
-    HbInfo( "JSON response: %s", HbLatin1( QString( doc.toJson( QJsonDocument::Indented ) ) ) );
+    HbInfo( "Facebook object of type %s received.",
+            HbLatin1( HbFacebookObject::MetaObjectType::toString( object->type() ) ) );
+
+    if( object->type() == HbFacebookObject::OBJECT_USER )
+    {
+        HbFacebookUser * user = dynamic_cast< HbFacebookUser * >( object );
+        if( user )
+        {
+            HbInfo( "Facebook user informations: %s", HbLatin1( user->toString() ) );
+        }
+        else
+        {
+            HbError( "Bad dynamic cast HbFacebookObject -> HbFacebookUser." );
+        }
+    }
+    else
+    {
+        HbWarning( "No displayable for this type." );
+    }
+
+    delete object;
 }
-
-void LinkMainWindow::onRequestError   ( quint64 request_id, const QString & error )
-{
-    HbError( "Request %d failed (%s).", request_id, HbLatin1( error ) );
-
-
-}
-

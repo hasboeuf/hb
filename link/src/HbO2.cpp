@@ -56,6 +56,11 @@ const QString & HbO2::errorString() const
     return mErrorString;
 }
 
+auto HbO2::linkStatus() const -> LinkStatus
+{
+    return mLinkStatus;
+}
+
 void HbO2::setClientId( const QString & client_id )
 {
     mClientId = client_id;

@@ -40,5 +40,16 @@ const QString FB_EXPIRES_IN           = QStringLiteral( "expires" );
 // permissions
 const QString FB_PERMISSION_EMAIL     = QStringLiteral( "email" );
 const QString FB_PERMISSION_FRIENDS   = QStringLiteral( "user_friends" );
+// object
+const QString FB_OBJECT_ID            = QStringLiteral( "id" );
+// user
+const QString FB_USER_FIRST_NAME      = QStringLiteral( "first_name" );
+const QString FB_USER_LAST_NAME       = QStringLiteral( "last_name" );
+const QString FB_USER_LINK            = QStringLiteral( "link" );
+const QString FB_USER_EMAIL           = QStringLiteral( "email" );
+const QString FB_USER_GENDER          = QStringLiteral( "gender" );
+const QString FB_USER_LOCALE          = QStringLiteral( "locale" );
+const QString FB_USER_VERIFIED        = QStringLiteral( "verified" );
+const QString FB_USER_TIMEZONE        = QStringLiteral( "timezone" );
 
 #endif // HBLINKCONSTANT_H

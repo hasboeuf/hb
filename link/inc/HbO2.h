@@ -45,6 +45,7 @@ namespace hb
             virtual bool link();
 
             virtual const QString & errorString() const final;
+            virtual LinkStatus      linkStatus() const final;
 
             virtual void setClientId( const QString & client_id ) final;
             virtual const QString & clientId() const final;

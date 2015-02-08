@@ -108,9 +108,10 @@
 # Qt Settings
 # ------------
 
-    CONFIG += qt warn_on thread largefile
     CONFIG -= warn_off lex yacc static shared
     CONFIG -= ordered no_empty_targets
+    CONFIG += qt warn_on thread largefile
+
 
     contains( PROJECT.TYPE, dynlib ): CONFIG += shared
     contains( PROJECT.TYPE, staticlib ): CONFIG += static

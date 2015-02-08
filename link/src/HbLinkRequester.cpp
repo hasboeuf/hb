@@ -1,7 +1,6 @@
 // Qt
 #include <QtCore/QUrlQuery>
 #include <QtCore/QPair>
-#include <QtCore/QJsonDocument>
 // Hb
 #include <HbLogService.h>
 #include <core/HbDictionaryHelper.h>
@@ -21,7 +20,7 @@ qint64 HbLinkRequester::processRequest( const QUrl &url, quint32 timeout )
     QNetworkReply * reply = mManager.get( request );
 
     qint64 id = mReplies.add( reply, timeout );
-    if( id > 0)
+    if( id >= 0)
     {
         connect( reply, &QNetworkReply::finished, this, &HbLinkRequester::onFinished );
         connect( reply, ( void ( QNetworkReply:: * )( QNetworkReply::NetworkError ) )( &QNetworkReply::error ),
