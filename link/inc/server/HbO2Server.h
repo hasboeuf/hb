@@ -40,6 +40,9 @@ namespace hb
             void setRedirectUri( const QString & redirect_uri );
             void setCode( const QString & code );
 
+            virtual const QString & token() const final;
+            virtual qint32 tokenExpiration() const final;
+
         protected:
             // Target specific.
             virtual const QUrl endPoint() const = 0;
@@ -52,6 +55,8 @@ namespace hb
 
         protected:
             QString mClientSecret;
+            QString mToken;
+            qint32  mTokenExpiration;
 
         private:
             QNetworkAccessManager mManager;

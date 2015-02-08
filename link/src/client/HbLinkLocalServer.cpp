@@ -8,6 +8,7 @@
 #include <core/HbDictionaryHelper.h>
 // Local
 #include <client/HbLinkLocalServer.h>
+#include <HbO2.h>
 
 using namespace hb::link;
 
@@ -65,13 +66,13 @@ QHash< QString, QString > HbLinkLocalServer::parseResponse( QByteArray & data )
     content.remove("GET");
     content.remove("HTTP/1.1");
     content = content.trimmed();
-    content.prepend("http://localhost");
+    if( content.startsWith( "/?" ) )
+    {
+        content = content.remove( 0, 2 );
+    }
 
     HbInfo( "Simplifed response content: %s", HbLatin1( content ) );
 
-    QUrl url( content );
-    QUrlQuery response( url );
-
-    return HbDictionaryHelper::toHash< QString, QString >( response.queryItems() );
+    return HbO2::getUrlItems( content );
 }
 

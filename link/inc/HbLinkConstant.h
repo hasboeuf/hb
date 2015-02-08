@@ -12,6 +12,7 @@
 #include <QtCore/QString>
 
 // General
+const QString ENRICHED_URI_BASE    = QStringLiteral( "http://localhost/?" );
 const QString REDIRECT_URI         = QStringLiteral( "http://localhost:%1/" );
 
 // Request
@@ -32,6 +33,10 @@ const QString OAUTH2_REFRESH_TOKEN = QStringLiteral( "refresh_token" );
 const QString OAUTH2_EXPIRES_IN    = QStringLiteral( "expires_in" );
 
 // Facebook
+// reply
+const QString FB_INPUT_TOKEN          = QStringLiteral( "input_token" );
+const QString FB_TOKEN                = QStringLiteral( "access_token" );
+const QString FB_EXPIRES_IN           = QStringLiteral( "expires" );
 // permissions
 const QString FB_PERMISSION_EMAIL     = QStringLiteral( "email" );
 const QString FB_PERMISSION_FRIENDS   = QStringLiteral( "user_friends" );

@@ -28,6 +28,8 @@ namespace hb
             HbO2ServerFacebook() = default;
             virtual ~HbO2ServerFacebook() = default;
 
+            void inspectToken( QString admin_token );
+
         protected:
             virtual const QUrl endPoint() const;
             virtual const QHash< QString, QString > tokenRequest() const;

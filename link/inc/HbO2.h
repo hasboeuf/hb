@@ -35,6 +35,8 @@ namespace hb
                 LINKED
             };
 
+            static QHash< QString, QString > getUrlItems( const QString & content );
+
             HbO2();
             virtual ~HbO2() = default;
 

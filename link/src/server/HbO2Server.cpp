@@ -64,24 +64,24 @@ void HbO2Server::onTokenResponseReceived()
 
         HbInfo( "Token content: %s", HbLatin1( content ) );
 
-        /*QMap<QString, QString> reply;
-        foreach (QString pair, QString(replyData).split("&")) {
-            QStringList kv = pair.split("=");
-            if (kv.length() == 2) {
-                reply.insert(kv[0], kv[1]);
-            }
+        if( tokenResponse( HbO2::getUrlItems( content ) ) == LINKED )
+        {
+            HbInfo( "Verification succeed." );
+            HbInfo( "Token received: %s", HbLatin1( mToken ) );
+            mLinkStatus = LINKED;
+            emit linkingSucceed();
+        }
+        else
+        {
+            HbError( "Verification failed. (%s)", HbLatin1( mErrorString ) );
+            mLinkStatus = UNLINKED;
+
+            emit linkingFailed( mErrorString );
         }
 
-        // Interpret reply
-        setToken(reply.value(O2_OAUTH2_ACCESS_TOKEN, ""));
-        setExpires(reply.value(FB_EXPIRES_KEY).toInt());
-        setRefreshToken(reply.value(O2_OAUTH2_REFRESH_TOKEN, ""));
+        token_reply->deleteLater();
 
-        timedReplies_.remove(tokenReply);
-        emit linkedChanged();
-        emit tokenChanged();
-        emit linkingSucceeded();*/
-
+        emit linkingSucceed();
     }
     else
     {
@@ -102,6 +102,8 @@ void HbO2Server::onTokenResponseError( QNetworkReply::NetworkError error )
     mErrorString = token_reply->errorString();
 
     HbInfo( "Token response error. (%s)", HbLatin1( mErrorString ) );
+
+    token_reply->deleteLater();
 
     emit linkingFailed( mErrorString );
 }
@@ -124,4 +126,14 @@ void HbO2Server::setRedirectUri( const QString & redirect_uri )
 void HbO2Server::setCode( const QString & code )
 {
     mCode = code;
+}
+
+const QString & HbO2Server::token() const
+{
+    return mToken;
+}
+
+qint32 HbO2Server::tokenExpiration() const
+{
+    return mTokenExpiration;
 }

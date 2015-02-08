@@ -118,7 +118,7 @@ void LinkMainWindow::onClientLinkSucceed()
 
 void LinkMainWindow::onServerLinkSucceed()
 {
-    if( sender() != mpFacebookClient )
+    if( sender() != mpFacebookServer )
     {
         return;
     }
