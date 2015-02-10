@@ -29,6 +29,8 @@ namespace hb
             static HbSteadyTime now();
             static HbSteadyTime fromDateTime( const QDateTime & datatime, quint64 steady = 0 );
             static HbSteadyTime fromString( const QString & format, const QString & value );
+            static HbSteadyTime fromEpoch( quint64 nano );
+            quint64 sinceEpoch() const;
             QString toString( const QString & format );
 
             const QDateTime & datetime() const;

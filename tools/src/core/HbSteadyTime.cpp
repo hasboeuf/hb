@@ -62,6 +62,26 @@ HbSteadyTime HbSteadyTime::fromString( const QString & format, const QString & v
     return steady_time;
 }
 
+HbSteadyTime HbSteadyTime::fromEpoch( quint64 nano )
+{
+    HbSteadyTime steady_time;
+
+    QString time = QString::number( nano );
+
+    steady_time.mDateTime = QDateTime::fromMSecsSinceEpoch( time.left( time.size() - 6 ).toInt() );
+    steady_time.mSteady   = time.right( 6 ).toInt();
+
+    return steady_time;
+}
+
+quint64 HbSteadyTime::sinceEpoch() const
+{
+    QString time;
+    time.append( QString::number( mDateTime.toMSecsSinceEpoch() ) );
+    time.append( QString::number( mSteady ) );
+    return time.toInt();
+}
+
 QString HbSteadyTime::toString( const QString & format )
 {
 
