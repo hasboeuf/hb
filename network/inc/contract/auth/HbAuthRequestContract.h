@@ -22,30 +22,33 @@ namespace hb
 {
     namespace network
     {
-        class HB_NETWORK_DECL HbAuthRequestContract final : public HbNetworkContract
+        class HB_NETWORK_DECL HbAuthRequestContract : public HbNetworkContract
         {
 
         public:
+
+            enum AuthType : quint8
+            {
+                AUTH_NONE = 0,
+                AUTH_USER,
+                AUTH_FACEOOK
+            };
 
             HbAuthRequestContract();
             virtual ~HbAuthRequestContract() = default;
             HbAuthRequestContract( const HbAuthRequestContract & source );
             HbAuthRequestContract & operator=( const HbAuthRequestContract & source );
 
-            HbAuthRequestContract * create() const;
+            HbAuthRequestContract * create() const = 0;
 
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;
 
-            QString username() const;
-            QString passwork() const;
-            void setUsername( QString username );
-            void setPassword( QString password );
+            virtual AuthType type() const final;
+            virtual void setType( AuthType type ) final;
 
-        private:
-            QString mUsername;
-            QString mPassword;
-
+        protected:
+            AuthType mType;
         };
     }
 }

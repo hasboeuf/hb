@@ -5,7 +5,7 @@
 HbAuthRequestContract::HbAuthRequestContract() :
     HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_CLT_AUTH_REQUEST )
 {
-
+    mType = AUTH_NONE;
 }
 
 HbAuthRequestContract::HbAuthRequestContract( const HbAuthRequestContract & source ) :
@@ -13,8 +13,7 @@ HbAuthRequestContract::HbAuthRequestContract( const HbAuthRequestContract & sour
 {
     if( & source != this )
     {
-        mUsername = source.mUsername;
-        mPassword = source.mPassword;
+        mType = source.mType;
     }
 }
 
@@ -24,53 +23,37 @@ HbAuthRequestContract & HbAuthRequestContract::operator=( const HbAuthRequestCon
     {
         HbNetworkContract::operator=( source );
 
-        mUsername = source.mUsername;
-        mPassword = source.mPassword;
+        mType = source.mType;
     }
 
     return ( *this );
 }
 
-HbAuthRequestContract * HbAuthRequestContract::create() const
-{
-    return new HbAuthRequestContract();
-}
-
 bool HbAuthRequestContract::read( QDataStream & stream )
 {
-    stream >> mUsername;
-    stream >> mPassword;
+    quint8 type;
+    stream >> type;
+
+    mType = ( AuthType ) type;
 
     return true;
 }
 
 bool HbAuthRequestContract::write( QDataStream & stream ) const
 {
-    stream << mUsername;
-    stream << mPassword;
+    stream << ( qint32 ) mType;
 
     return true;
 }
 
-QString HbAuthRequestContract::username() const
+auto HbAuthRequestContract::type() const -> AuthType
 {
-    return mUsername;
+    return mType;
 }
 
-QString HbAuthRequestContract::passwork() const
+void HbAuthRequestContract::setType( AuthType type )
 {
-    return mPassword;
+    mType = type;
 }
-
-void HbAuthRequestContract::setUsername( QString username )
-{
-    mUsername = username;
-}
-
-void HbAuthRequestContract::setPassword( QString password )
-{
-    mPassword = password;
-}
-
 
 

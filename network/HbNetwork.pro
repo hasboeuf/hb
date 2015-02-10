@@ -35,7 +35,7 @@ QT *=		network sql
 # Modules Settings
 # -----------------
 
-HB +=		log tools
+HB +=		log tools link
 
 # -------------
 # C++ Settings

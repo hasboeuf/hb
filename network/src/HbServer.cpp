@@ -21,4 +21,5 @@ quint16 HbServer::joinTcpServer( const HbTcpServerConfig & config )
 bool HbServer::leave()
 {
     mConnectionPool.leave();
+    return true;
 }

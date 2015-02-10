@@ -50,6 +50,7 @@ bool HbConnectionPool::leave()
 {
     qDeleteAll( mServers );
     mServers.clear();
+    return true;
 }
 
 quint16 HbConnectionPool::joinTcpServer( const HbTcpServerConfig & config )
@@ -68,6 +69,7 @@ quint16 HbConnectionPool::joinTcpServer( const HbTcpServerConfig & config )
         delete server;
         return 0;
     }
+    return server->uuid();
 }
 
 void HbConnectionPool::onServerConnected( quint16 server_uuid )

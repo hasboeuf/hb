@@ -4,7 +4,7 @@
 #include <config/com/HbTcpConfig.h>
 #include <contract/presence/HbPresenceContract.h>
 #include <contract/presence/HbPresenceStatusContract.h>
-#include <contract/auth/HbAuthRequestContract.h>
+#include <contract/auth/HbAuthFacebookRequestContract.h>
 #include <contract/auth/HbAuthStatusContract.h>
 #include <contract/HbNetworkHeader.h>
 
@@ -17,7 +17,7 @@ HbTcpConfig::HbTcpConfig() :
     mPort = 0;
     mOptions = SocketOption::NoOptions;
 
-    mExchanges.plug< HbAuthRequestContract >();
+    mExchanges.plug< HbAuthFacebookRequestContract >();
     mExchanges.plug< HbAuthStatusContract >();
     mExchanges.plug< HbPresenceContract >();
     mExchanges.plug< HbPresenceStatusContract >();

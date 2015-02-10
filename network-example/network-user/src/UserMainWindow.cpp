@@ -120,11 +120,11 @@ void UserMainWindow::onConnectionRequest()
 {
     HbLogBegin();
 
-    HbAuthRequestContract contract;
+    /*HbAuthRequestContract contract;
     contract.setUsername( "hasboeuf" );
     contract.setPassword( "motherfucker" );
 
-    mTcpClient.send( &contract );
+    mTcpClient.send( &contract );*/
 
     HbLogEnd();
 }

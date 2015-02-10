@@ -23,6 +23,8 @@ namespace hb
 
         class HB_NETWORK_DECL HbNetworkHeader final
 		{
+            friend QDataStream & operator<<( QDataStream & stream, const HbNetworkHeader & header );
+            friend QDataStream & operator>>( QDataStream & stream, HbNetworkHeader & header );
 
         public:
 
@@ -38,9 +40,6 @@ namespace hb
             HbNetworkProtocol::Code code() const;
 
             void setRouting( HbNetworkProtocol::RoutingScheme routing );
-
-            friend QDataStream & operator<<( QDataStream & stream, const HbNetworkHeader & header );
-            friend QDataStream & operator>>( QDataStream & stream, HbNetworkHeader & header );
 
         private:
             QString mAppName;
