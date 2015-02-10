@@ -27,12 +27,15 @@ namespace hb
 
 		public:
             static HbSteadyTime now();
-            static HbSteadyTime fromDataTime( const QDateTime & datatime, quint64 steady = 0 );
+            static HbSteadyTime fromDateTime( const QDateTime & datatime, quint64 steady = 0 );
             static HbSteadyTime fromString( const QString & format, const QString & value );
             QString toString( const QString & format );
 
+            const QDateTime & datetime() const;
+            quint64 steady() const;
+
         protected:
-            HbSteadyTime() = default;
+            HbSteadyTime();
 
         private:
             QDateTime mDateTime;

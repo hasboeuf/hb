@@ -3,6 +3,11 @@
 
 using namespace hb::tools;
 
+HbSteadyTime::HbSteadyTime()
+{
+    mSteady = 0;
+}
+
 HbSteadyTime HbSteadyTime::now()
 {
     system_clock::time_point::duration system_time   = system_clock::now().time_since_epoch();
@@ -19,7 +24,7 @@ HbSteadyTime HbSteadyTime::now()
     return current_time;
 }
 
-HbSteadyTime HbSteadyTime::fromDataTime( const QDateTime & datatime, quint64 steady )
+HbSteadyTime HbSteadyTime::fromDateTime( const QDateTime & datatime, quint64 steady )
 {
     HbSteadyTime steady_time;
     steady_time.mDateTime = datatime;
@@ -31,37 +36,41 @@ HbSteadyTime HbSteadyTime::fromDataTime( const QDateTime & datatime, quint64 ste
 HbSteadyTime HbSteadyTime::fromString( const QString & format, const QString & value )
 {
     HbSteadyTime steady_time;
-/*
-    // Get steady part.
+
     if( format.length() != value.length() )
     {
-        steady_time.mSteady = 0;
         return steady_time;
     }
 
+    // Get steady part.
+    QString value_copy = value;
     QString steady;
     for( int i = 0; i < format.length(); ++i )
     {
         if( format[i] == 'u' )
         {
             steady += value[i];
+            value_copy[i] = 'u'; // QDateTime::fromString wants format and value coherent.
         }
     }
     steady_time.mSteady = steady.toInt();
 
-    QString format_copy = format;
-    format_copy.replace( "u", "" );
-
     // Get datetime part.
-    steady_time.mDateTime = QDateTime::fromString( value, format );
-*/
+    steady_time.mDateTime = QDateTime::fromString( value_copy, format );
+
+
     return steady_time;
 }
 
 QString HbSteadyTime::toString( const QString & format )
 {
-    QString time_str = mDateTime.time().toString( format );
 
+    QString time_str;
+
+    // Stringify datetime.
+    time_str += mDateTime.time().toString( format );
+
+    // Stringify steady part.
     QString steady = QString::number( mSteady );
     quint32 u_max  = steady.length();
     quint32 u_nb   = 0;
@@ -81,4 +90,14 @@ QString HbSteadyTime::toString( const QString & format )
     }
 
     return time_str;
+}
+
+const QDateTime & HbSteadyTime::datetime() const
+{
+    return mDateTime;
+}
+
+quint64 HbSteadyTime::steady() const
+{
+    return mSteady;
 }
