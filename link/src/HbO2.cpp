@@ -9,9 +9,36 @@
 
 using namespace hb::link;
 
-HbO2::HbO2()
+HbO2::HbO2() :
+    QObject()
 {
     mLinkStatus = UNLINKED;
+}
+
+HbO2::HbO2( const HbO2 & source ) :
+    QObject()
+{
+    if( &source != this )
+    {
+        mLinkStatus  = source.mLinkStatus;
+        mErrorString = source.mErrorString;
+        mCode        = source.mCode;
+        mRedirectUri = source.mRedirectUri;
+        mClientId    = source.mClientId;
+    }
+}
+
+HbO2 & HbO2::operator=( const HbO2 & source )
+{
+    if( &source != this )
+    {
+        mLinkStatus  = source.mLinkStatus;
+        mErrorString = source.mErrorString;
+        mCode        = source.mCode;
+        mRedirectUri = source.mRedirectUri;
+        mClientId    = source.mClientId;
+    }
+    return ( *this );
 }
 
 bool HbO2::isValid() const
@@ -81,4 +108,45 @@ const QString & HbO2::code() const
     return mCode;
 }
 
+bool HbO2::read( QDataStream & stream )
+{
+    quint8 status;
+    stream >> status;
+    stream >> mErrorString;
+    stream >> mCode;
+    stream >> mRedirectUri;
+    stream >> mClientId;
 
+    mLinkStatus = ( LinkStatus ) status;
+
+    return ( stream.status() == QDataStream::Ok );
+}
+
+bool HbO2::write( QDataStream & stream ) const
+{
+    stream << ( quint8 ) mLinkStatus;
+    stream << mErrorString;
+    stream << mCode;
+    stream << mRedirectUri;
+    stream << mClientId;
+
+    return ( stream.status() == QDataStream::Ok );
+}
+
+namespace hb
+{
+    namespace link
+    {
+        QDataStream & operator<<( QDataStream & stream, const HbO2 & o2 )
+        {
+            o2.write( stream );
+            return stream;
+        }
+
+        QDataStream & operator>>( QDataStream & stream, HbO2 & o2 )
+        {
+            o2.read( stream );
+            return stream;
+        }
+    }
+}

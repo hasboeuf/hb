@@ -27,8 +27,11 @@ namespace hb
         {
             Q_OBJECT
 
+            friend QDataStream & operator<<( QDataStream & stream, const HbO2 & o2 );
+            friend QDataStream & operator>>( QDataStream & stream, HbO2 & o2 );
+
         public:
-            enum LinkStatus
+            enum LinkStatus : quint8
             {
                 UNLINKED = 0,
                 LINKING,
@@ -39,6 +42,9 @@ namespace hb
 
             HbO2();
             virtual ~HbO2() = default;
+            HbO2( const HbO2 & source );
+            HbO2 & operator=( const HbO2 & source );
+
 
             virtual bool isValid() const;
 
@@ -51,6 +57,9 @@ namespace hb
             virtual const QString & clientId() const final;
             virtual const QString & redirectUri() const final;
             virtual const QString & code() const final;
+
+            virtual bool read( QDataStream & stream );
+            virtual bool write( QDataStream & stream ) const;
 
         protected:
             // Target specific.
@@ -70,6 +79,9 @@ namespace hb
             QString mClientId;
 
         };
+
+        HB_LINK_DECL QDataStream & operator<<( QDataStream & stream, const HbO2 & o2 );
+        HB_LINK_DECL QDataStream & operator>>( QDataStream & stream, HbO2 & o2 );
     }
 }
 

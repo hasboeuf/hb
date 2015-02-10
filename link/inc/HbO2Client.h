@@ -27,6 +27,8 @@ namespace hb
         public:
             HbO2Client();
             virtual ~HbO2Client() = default;
+            HbO2Client( const HbO2Client & source );
+            HbO2Client & operator=( const HbO2Client & source );
 
             virtual bool isValid() const;
 
@@ -38,6 +40,8 @@ namespace hb
             virtual void addScope( const QString & permission ) final;
             virtual const QString & scope() const final;
 
+            virtual bool read( QDataStream & stream );
+            virtual bool write( QDataStream & stream ) const;
 
         protected:
             // Target specific.
