@@ -47,6 +47,7 @@ bool HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )
     mRequestTypes.insert( id, HbFacebookObject::OBJECT_USER );
     HbInfo( "Request %lld is sent (%s).", id, HbLatin1( url.toString() ) );
 
+    return true;
 }
 
 void HbFacebookRequester::onRequestFinished( quint64 request_id, const QJsonDocument & doc )
