@@ -18,8 +18,6 @@ namespace hb
 {	
 	namespace log
 	{
-
-
 		/*! \namespace hb::log */
 
         /*! 
@@ -37,8 +35,8 @@ namespace hb
             static const QString toRaw( const HbLogMessage & msg );                              // Use for import.
 
             HbLogMessage();
-            HbLogMessage( HbLogger::Level level, HbLogger::Formats format,
-                            const HbLogContext & context, qint32 timeTag, const QString & message );
+            HbLogMessage(HbLogger::Level level, HbLogger::Formats format,
+                            const HbLogContext & context, qint64 timestamp, const QString & message );
             HbLogMessage( const HbLogMessage & message );
             virtual ~HbLogMessage() = default;
 				
@@ -49,8 +47,8 @@ namespace hb
             QString levelStr( bool spacing = true ) const;
             const HbLogContext & context() const;
 
-            qint32 timeTag() const;
-            QString timeTagStr() const;
+            qint64 timestamp() const;
+            QString timestampStr() const;
             const QString & message() const;
 
             QString toString() const;
@@ -65,7 +63,7 @@ namespace hb
             HbLogger::Formats mFormat;
             HbLogContext mContext;
 
-            qint32 mTimeTag;
+            qint64  mTimestamp;
 			QString mMessage;
 		};
 	}

@@ -2,8 +2,10 @@
 #include <QtCore/QTime>
 // Hb
 #include <HbLogMessage.h>
+#include <core/HbSteadyDateTime.h>
 
 using namespace hb::log;
+using namespace hb::tools;
 
 const QString HbLogMessage::msFieldSeparator = QStringLiteral( "___" );
 
@@ -40,7 +42,7 @@ const QString HbLogMessage::toRaw(const HbLogMessage &msg)
     QString raw;
 
     raw += msg.levelStr( false )                             + HbLogMessage::msFieldSeparator;
-    raw += msg.timeTagStr()                                  + HbLogMessage::msFieldSeparator;
+    raw += msg.timestampStr()                                + HbLogMessage::msFieldSeparator;
     raw += msg.mContext.owner()                              + HbLogMessage::msFieldSeparator;
     raw += QStringLiteral( "%1" ).arg( msg.mContext.line() ) + HbLogMessage::msFieldSeparator;
     raw += msg.mContext.file()                               + HbLogMessage::msFieldSeparator;
@@ -55,18 +57,18 @@ HbLogMessage::HbLogMessage() :
 {
 	mLevel     = HbLogger::LEVEL_NONE;
     mFormat    = HbLogger::OUTPUT_ALL;
-    mTimeTag   = -1;
+    mTimestamp = 0;
 }
 
-HbLogMessage::HbLogMessage( HbLogger::Level level, HbLogger::Formats format,
-                            const HbLogContext & context, qint32 timeTag, const QString & message ) :
+HbLogMessage::HbLogMessage(HbLogger::Level level, HbLogger::Formats format,
+                            const HbLogContext & context, qint64 timestamp, const QString & message ) :
 	QObject()
 {
-    mLevel   = level;
-    mFormat  = format;
-    mContext = context;
-    mTimeTag = timeTag;
-	mMessage = message;
+    mLevel     = level;
+    mFormat    = format;
+    mContext   = context;
+    mTimestamp = timestamp;
+    mMessage   = message;
 }
 
 HbLogMessage::HbLogMessage( const HbLogMessage & message ) :
@@ -77,7 +79,7 @@ HbLogMessage::HbLogMessage( const HbLogMessage & message ) :
         mLevel = message.mLevel;
         mFormat = message.mFormat;
         mContext = message.mContext;
-        mTimeTag = message.mTimeTag;
+        mTimestamp = message.mTimestamp;
         mMessage = message.mMessage;
     }
 }
@@ -90,7 +92,7 @@ HbLogMessage & HbLogMessage::operator =( const HbLogMessage & message )
         mLevel = message.mLevel;
         mFormat = message.mFormat;
         mContext = message.mContext;
-        mTimeTag = message.mTimeTag;
+        mTimestamp = message.mTimestamp;
         mMessage = message.mMessage;
     }
 
@@ -123,15 +125,14 @@ const HbLogContext & HbLogMessage::context() const
     return mContext;
 }
 
-qint32 HbLogMessage::timeTag() const
+qint64 HbLogMessage::timestamp() const
 {
-    return mTimeTag;
+    return mTimestamp;
 }
 
-QString HbLogMessage::timeTagStr() const
+QString HbLogMessage::timestampStr() const
 {
-    return QStringLiteral( "%1" ).arg( QTime( 0, 0 ).
-        addMSecs( mTimeTag ).toString( QStringLiteral( "HH:mm:ss:zzz" ) ) );
+    return HbSteadyDateTime::fromNsSinceEpoch( mTimestamp ).toString("HH:mm:ss.zzz.uuuuuu");
 }
 
 const QString & HbLogMessage::message() const
@@ -151,9 +152,9 @@ QString HbLogMessage::toString() const
 
     if( mFormat & HbLogger::OUTPUT_TIME )
     {
-        if( mTimeTag > 0 )
+        if( mTimestamp > 0 )
         {
-            buffer += QStringLiteral( "[%1]" ).arg( timeTagStr() );
+            buffer += QStringLiteral( "[%1]" ).arg( timestampStr() );
         }
     }
 
@@ -190,7 +191,7 @@ QByteArray HbLogMessage::toByteArray() const
     stream << size;
     stream << ( qint32 ) mLevel;
     stream << mContext;
-    stream << mTimeTag;
+    stream << mTimestamp;
     stream << mMessage;
 
     stream.device()->seek( 0 );
@@ -208,7 +209,7 @@ void HbLogMessage::fromDataStream( QDataStream & stream )
 
     stream >> enum_stream;
     stream >> mContext;
-	stream >> mTimeTag;
+    stream >> mTimestamp;
 	stream >> mMessage;
 
     mLevel = ( HbLogger::Level ) enum_stream;

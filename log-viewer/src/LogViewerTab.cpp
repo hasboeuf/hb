@@ -205,8 +205,8 @@ void LogViewerTab::addEntry(const HbLogMessage* msg, bool rerun)
 
     item_level->setData(msg->levelStr(),           Qt::DisplayRole);
     item_level->setData(msg->level(),              Qt::UserRole);
-    item_time->setData (msg->timeTagStr(),         Qt::DisplayRole);
-    item_time->setData (msg->timeTag(),            Qt::UserRole);
+    item_time->setData (msg->timestampStr(),       Qt::DisplayRole);
+    item_time->setData (msg->timestamp(),          Qt::UserRole);
     item_owner->setData(msg->context().owner(),    Qt::DisplayRole);
     item_where->setData(where,                     Qt::DisplayRole);
     item_text->setData (msg->message(),            Qt::DisplayRole);

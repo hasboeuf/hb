@@ -9,8 +9,10 @@
 #include <HbLoggerPool.h>
 #include <HbLogMessage.h>
 #include <native/HbLogHandler.h>
+#include <core/HbSteadyDateTime.h>
 
 using namespace hb::log;
+using namespace hb::tools;
 
 
 QMutex HbLogManager::msMutex;
@@ -99,10 +101,9 @@ HbLoggerPool * HbLogManager::pool() const
 
 void HbLogManager::enqueueMessage( Level level, Formats format, const HbLogContext & context, const QString & text )
 {
-    QTime timeTag = QTime::currentTime();
-    qint32 time = timeTag.msec() + 1000 * ( timeTag.second() + ( timeTag.minute() * 60 ) + ( timeTag.hour() * 3600 ) );
+    qint64 timestamp = HbSteadyDateTime::now().toNsSinceEpoch();
 
-	HbLogMessage * message = q_check_ptr( new HbLogMessage( level, format, context, time, text ) );
+    HbLogMessage * message = q_check_ptr( new HbLogMessage( level, format, context, timestamp, text ) );
 
     mMessages.push_back( message );
 	msLoggerPool->enqueueMessage( mMessages );
