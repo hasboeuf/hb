@@ -6,8 +6,8 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBSTEADYTIME_H
-#define HBSTEADYTIME_H
+#ifndef HBSTEADYDATETIME_H
+#define HBSTEADYDATETIME_H
 
 // System
 #include <chrono>
@@ -22,14 +22,14 @@ namespace hb
 {
 	namespace tools
 	{
-        class HB_TOOLS_DECL HbSteadyTime
+        class HB_TOOLS_DECL HbSteadyDateTime
 		{
 
 		public:
-            static HbSteadyTime now();
-            static HbSteadyTime fromDateTime( const QDateTime & datetime, quint64 steady = 0 );
-            static HbSteadyTime fromString( const QString & format, const QString & value );
-            static HbSteadyTime fromNsSinceEpoch(qint64 nano );
+            static HbSteadyDateTime now();
+            static HbSteadyDateTime fromDateTime( const QDateTime & datetime, quint64 steady = 0 );
+            static HbSteadyDateTime fromString( const QString & format, const QString & value );
+            static HbSteadyDateTime fromNsSinceEpoch(qint64 nano );
             qint64 toNsSinceEpoch() const;
             QString toString( const QString & format );
 
@@ -37,7 +37,7 @@ namespace hb
             quint64 steady() const;
 
         protected:
-            HbSteadyTime();
+            HbSteadyDateTime();
 
         private:
             QDateTime mDateTime;
@@ -46,4 +46,4 @@ namespace hb
 	}
 }
 
-#endif // HBSTEADYTIME_H
+#endif // HBSTEADYDATETIME_H
