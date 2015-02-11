@@ -1,3 +1,5 @@
+// Qt
+#include <QtCore/QDebug>
 // Local
 #include <core/HbSteadyTime.h>
 
@@ -24,11 +26,13 @@ HbSteadyTime HbSteadyTime::now()
     return current_time;
 }
 
-HbSteadyTime HbSteadyTime::fromDateTime( const QDateTime & datatime, quint64 steady )
+HbSteadyTime HbSteadyTime::fromDateTime( const QDateTime & datetime, quint64 steady )
 {
     HbSteadyTime steady_time;
-    steady_time.mDateTime = datatime;
+    steady_time.mDateTime = datetime;
     steady_time.mSteady   = steady;
+
+    if( !steady_time.mDateTime.isValid() ) qDebug() << "fromDateTime: Invalid datetime!";
 
     return steady_time;
 }
@@ -56,30 +60,44 @@ HbSteadyTime HbSteadyTime::fromString( const QString & format, const QString & v
     steady_time.mSteady = steady.toInt();
 
     // Get datetime part.
+    qDebug() << "value_copy=" << value_copy << " format=" << format;
     steady_time.mDateTime = QDateTime::fromString( value_copy, format );
 
+    if( !steady_time.mDateTime.isValid() ) qDebug() << "fromString: Invalid datetime!";
 
     return steady_time;
 }
 
-HbSteadyTime HbSteadyTime::fromEpoch( quint64 nano )
+HbSteadyTime HbSteadyTime::fromNsSinceEpoch( qint64 nano )
 {
     HbSteadyTime steady_time;
+    qDebug() << "epoch=" << nano;
+    qint64 ms = nano * pow( 10, -6 );
+    qDebug() << "epoch_ms=" << ms;
+    steady_time.mDateTime = QDateTime::fromMSecsSinceEpoch( ms );
+    steady_time.mSteady = ( nano - ms * pow( 10, 6 ) );
+    qDebug() << "steady=" << steady_time.mSteady;
 
-    QString time = QString::number( nano );
-
-    steady_time.mDateTime = QDateTime::fromMSecsSinceEpoch( time.left( time.size() - 6 ).toInt() );
-    steady_time.mSteady   = time.right( 6 ).toInt();
-
+    if( !steady_time.mDateTime.isValid() ) qDebug() << "fromNsSinceEpoch: Invalid datetime!";
     return steady_time;
 }
 
-quint64 HbSteadyTime::sinceEpoch() const
+qint64 HbSteadyTime::toNsSinceEpoch() const
 {
-    QString time;
-    time.append( QString::number( mDateTime.toMSecsSinceEpoch() ) );
-    time.append( QString::number( mSteady ) );
-    return time.toInt();
+    if( !mDateTime.isValid() ) qDebug() << "toNsSinceEpoch: Invalid datetime!";
+    qint64 timestamp = mDateTime.toMSecsSinceEpoch();
+    qDebug() << "timestamp_str=" << mDateTime.toString("hh:mm:ss.zzz");
+    qint64 ns        = mSteady;
+
+    qDebug() << "timestamp=" << timestamp;
+    qDebug() << "ns=" << ns;
+
+    timestamp *= pow( 10, 6 ); // ms to ns.
+    timestamp += ns;
+
+    qDebug() << "timestampns=" << timestamp;
+
+    return timestamp;
 }
 
 QString HbSteadyTime::toString( const QString & format )
@@ -92,6 +110,7 @@ QString HbSteadyTime::toString( const QString & format )
 
     // Stringify steady part.
     QString steady = QString::number( mSteady );
+    steady.rightJustified( 6, '0' );
     quint32 u_max  = steady.length();
     quint32 u_nb   = 0;
     for( int i = 0; i < format.length(); ++i )
