@@ -9,7 +9,7 @@ HbTimeoutNetworkReplies::~HbTimeoutNetworkReplies()
     mReplies.clear();
 }
 
-qint64 HbTimeoutNetworkReplies::add( QNetworkReply * reply, quint32 timeout )
+quint64 HbTimeoutNetworkReplies::add( QNetworkReply * reply, quint32 timeout )
 {
     if( reply )
     {
@@ -22,7 +22,7 @@ qint64 HbTimeoutNetworkReplies::add( QNetworkReply * reply, quint32 timeout )
         return timeout_reply->id();
     }
 
-    return -1;
+    return 0;
 }
 
 void HbTimeoutNetworkReplies::remove( QNetworkReply * reply )
@@ -35,7 +35,7 @@ void HbTimeoutNetworkReplies::remove( QNetworkReply * reply )
     mReplies.remove( reply );
 }
 
-qint64 HbTimeoutNetworkReplies::id( QNetworkReply * reply ) const
+quint64 HbTimeoutNetworkReplies::id( QNetworkReply * reply ) const
 {
     if( reply )
     {
@@ -46,7 +46,7 @@ qint64 HbTimeoutNetworkReplies::id( QNetworkReply * reply ) const
         }
     }
 
-    return -1;
+    return 0;
 }
 
 void HbTimeoutNetworkReplies::onDestroyed()

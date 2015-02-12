@@ -40,7 +40,7 @@ namespace hb
             QQueue< I > mUnused;
 
         public:
-            I getUuid()
+            I getUuid( bool zero_prohibited = false ) // TODO zero
             {
                 //QMutexLocker( &mMutex );
                 if( !mUnused.isEmpty() )

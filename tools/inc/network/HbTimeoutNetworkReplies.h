@@ -28,11 +28,11 @@ namespace hb
             HbTimeoutNetworkReplies() = default;
             virtual ~HbTimeoutNetworkReplies();
 
-            qint64 add( QNetworkReply * reply, quint32 timeout = HbTimeoutNetworkReply::msDefaultTimeout );
+            quint64 add( QNetworkReply * reply, quint32 timeout = HbTimeoutNetworkReply::msDefaultTimeout );
 
             void remove( QNetworkReply * reply );
 
-            qint64 id( QNetworkReply * reply ) const;
+            quint64 id( QNetworkReply * reply ) const;
 
         public slots:
             void onDestroyed();

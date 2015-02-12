@@ -12,12 +12,12 @@ HbHttpRequester::HbHttpRequester()
 
 }
 
-qint64 HbHttpRequester::processRequest( const QUrl &url, quint32 timeout )
+quint64 HbHttpRequester::processRequest( const QUrl &url, quint32 timeout )
 {
     QNetworkRequest request( url );
     QNetworkReply * reply = mManager.get( request );
 
-    qint64 id = mReplies.add( reply, timeout );
+    quint64 id = mReplies.add( reply, timeout );
     if( id >= 0)
     {
         connect( reply, &QNetworkReply::finished, this, &HbHttpRequester::onFinished );
@@ -33,7 +33,7 @@ void HbHttpRequester::onFinished()
     QNetworkReply * reply = dynamic_cast< QNetworkReply * >( sender() );
     q_assert_ptr( reply );
 
-    qint64 id = mReplies.id( reply );
+    quint64 id = mReplies.id( reply );
 
     if ( reply->error() == QNetworkReply::NoError)
     {
@@ -56,7 +56,7 @@ void HbHttpRequester::onError( const QNetworkReply::NetworkError & error )
     QNetworkReply * reply = dynamic_cast< QNetworkReply * >( sender() );
     q_assert_ptr( reply );
 
-    qint64 id = mReplies.id( reply );
+    quint64 id = mReplies.id( reply );
 
     emit requestError( id, reply->errorString() );
 
