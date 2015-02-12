@@ -1,20 +1,18 @@
 // Qt
 #include <QtCore/QUrlQuery>
 #include <QtCore/QPair>
-// Hb
-#include <HbLogService.h>
-#include <core/HbDictionaryHelper.h>
 // Local
-#include <HbLinkRequester.h>
+#include <HbGlobal.h>
+#include <network/HbHttpRequester.h>
 
 using namespace hb::link;
 
-HbLinkRequester::HbLinkRequester()
+HbHttpRequester::HbHttpRequester()
 {
 
 }
 
-qint64 HbLinkRequester::processRequest( const QUrl &url, quint32 timeout )
+qint64 HbHttpRequester::processRequest( const QUrl &url, quint32 timeout )
 {
     QNetworkRequest request( url );
     QNetworkReply * reply = mManager.get( request );
@@ -22,15 +20,15 @@ qint64 HbLinkRequester::processRequest( const QUrl &url, quint32 timeout )
     qint64 id = mReplies.add( reply, timeout );
     if( id >= 0)
     {
-        connect( reply, &QNetworkReply::finished, this, &HbLinkRequester::onFinished );
+        connect( reply, &QNetworkReply::finished, this, &HbHttpRequester::onFinished );
         connect( reply, ( void ( QNetworkReply:: * )( QNetworkReply::NetworkError ) )( &QNetworkReply::error ),
-                 this, &HbLinkRequester::onError );
+                 this, &HbHttpRequester::onError );
     }
 
     return id;
 }
 
-void HbLinkRequester::onFinished()
+void HbHttpRequester::onFinished()
 {
     QNetworkReply * reply = dynamic_cast< QNetworkReply * >( sender() );
     q_assert_ptr( reply );
@@ -53,7 +51,7 @@ void HbLinkRequester::onFinished()
     reply->deleteLater();
 }
 
-void HbLinkRequester::onError( const QNetworkReply::NetworkError & error )
+void HbHttpRequester::onError( const QNetworkReply::NetworkError & error )
 {
     QNetworkReply * reply = dynamic_cast< QNetworkReply * >( sender() );
     q_assert_ptr( reply );

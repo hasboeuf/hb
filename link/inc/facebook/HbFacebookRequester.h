@@ -14,7 +14,7 @@
 #include <QtCore/QString>
 // Local
 #include <HbLink.h>
-#include <HbLinkRequester.h>
+#include <network/HbHttpRequester.h>
 #include <facebook/api/HbFacebookObject.h>
 
 namespace hb
@@ -24,11 +24,11 @@ namespace hb
         class HbO2ServerFacebook;
         class HbFacebookUser;
 
-        class HB_LINK_DECL HbFacebookRequester : public HbLinkRequester
+        class HB_LINK_DECL HbFacebookRequester : public HbHttpRequester
         {
             Q_OBJECT
 
-            // TODO hide HbLinkRequester signals.
+            // TODO hide HbHttpRequester signals.
         public:
             HbFacebookRequester();
             virtual ~HbFacebookRequester() = default;
@@ -36,7 +36,7 @@ namespace hb
             bool requestUser( HbO2ServerFacebook * auth );
 
         private slots:
-            // From HbLinkRequester
+            // From HbHttpRequester
             void onRequestFinished( quint64 request_id, const QJsonDocument & doc );
             void onRequestError   ( quint64 request_id, const QString & error );
 

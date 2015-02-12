@@ -116,6 +116,7 @@ bool HbTcpServer::disconnectFromNetwork(quint16 uuid )
     // TODO
     //HbTcpSocket * disconnected = q_dynamic_cast( HbTcpSocket *, uuid );
     //return q_assert_ptr( disconnected )->disconnectFromHost();
+    return false;
 }
 
 void HbTcpServer::onNewConnection(qint32 socket_descriptor)

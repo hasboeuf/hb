@@ -6,28 +6,27 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBLINKREQUESTER_H
-#define HBLINKREQUESTER_H
+#ifndef HBHTTPREQUESTER_H
+#define HBHTTPREQUESTER_H
 
 // Qt
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtCore/QJsonDocument>
-// Hb
-#include <network/HbTimeoutNetworkReplies.h>
 // Local
-#include <HbLink.h>
+#include <network/HbTimeoutNetworkReplies.h>
+#include <HbTools.h>
 
 namespace hb
 {
     namespace link
     {
-        class HB_LINK_DECL HbLinkRequester : public QObject
+        class HB_TOOLS_DECL HbHttpRequester : public QObject
         {
             Q_OBJECT
 
         public:
-            HbLinkRequester();
-            virtual ~HbLinkRequester() = default;
+            HbHttpRequester();
+            virtual ~HbHttpRequester() = default;
 
             qint64 processRequest( const QUrl & url, quint32 timeout = hb::tools::HbTimeoutNetworkReply::msDefaultTimeout );
 
@@ -46,6 +45,6 @@ namespace hb
     }
 }
 
-using hb::link::HbLinkRequester;
+using hb::link::HbHttpRequester;
 
-#endif // HBLINKREQUESTER_H
+#endif // HbHttpRequester_H

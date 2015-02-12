@@ -13,11 +13,11 @@
 using namespace hb::link;
 
 HbFacebookRequester::HbFacebookRequester() :
-    HbLinkRequester()
+    HbHttpRequester()
 {
 
-    connect( this, &HbLinkRequester::requestFinished, this, &HbFacebookRequester::onRequestFinished );
-    connect( this, &HbLinkRequester::requestError,    this, &HbFacebookRequester::onRequestError );
+    connect( this, &HbHttpRequester::requestFinished, this, &HbFacebookRequester::onRequestFinished );
+    connect( this, &HbHttpRequester::requestError,    this, &HbFacebookRequester::onRequestError );
 }
 
 bool HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )

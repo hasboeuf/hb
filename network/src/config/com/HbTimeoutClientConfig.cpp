@@ -7,7 +7,8 @@ HbTimeoutClientConfig::HbTimeoutClientConfig() :
     mReconnectionDelay = 0;
 }
 
-HbTimeoutClientConfig::HbTimeoutClientConfig(const HbTimeoutClientConfig & config)
+HbTimeoutClientConfig::HbTimeoutClientConfig(const HbTimeoutClientConfig & config) :
+    HbTimeoutConfig( config )
 {
     if( &config != this )
     {

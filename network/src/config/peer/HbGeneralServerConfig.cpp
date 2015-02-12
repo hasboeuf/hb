@@ -4,7 +4,8 @@
 using namespace hb::network;
 
 
-HbGeneralServerConfig::HbGeneralServerConfig(const HbGeneralServerConfig & config)
+HbGeneralServerConfig::HbGeneralServerConfig(const HbGeneralServerConfig & config) :
+    HbGeneralConfig( config )
 {
 	if (this != &config)
 	{

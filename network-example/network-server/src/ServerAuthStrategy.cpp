@@ -8,6 +8,6 @@ using namespace hb::networkexample;
 
 HbNetworkProtocol::AuthStatus ServerAuthStrategy::tryLogin( const HbAuthRequestContract * contract )
 {
-
+    return HbNetworkProtocol::AUTH_BAD;
 }
 
