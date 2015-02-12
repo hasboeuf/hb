@@ -36,9 +36,10 @@ namespace hb
             virtual void setHeader( const HbNetworkHeader & header ) final;
             virtual const HbNetworkHeader & header() const final;
 
+            virtual void setSender( sockuuid sender ) final;
+            virtual sockuuid sender() const final;
+
             virtual void addPendingReceiver( const QString & user_uuid ) final;
-            virtual bool addReceiver( quint16 receiver ) final ;
-            virtual void resetReceivers() final;
 
             virtual HbNetworkProtocol::RoutingScheme routing() const final;
             virtual void setRouting( HbNetworkProtocol::RoutingScheme routing ) final;
@@ -60,12 +61,15 @@ namespace hb
 
 		protected:
 
-			HbNetworkContract() = delete;
+            HbNetworkContract();
             HbNetworkContract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code );
             HbNetworkContract( const HbNetworkContract & source );
             HbNetworkContract & operator=( const HbNetworkContract & source );
 
             virtual HbNetworkContract * create() const = 0;
+
+            virtual bool addReceiver( sockuuid receiver ) final ;
+            virtual void resetReceivers() final;
 
 		private:
             const QSet< sockuuid > & receivers() const;
@@ -77,6 +81,7 @@ namespace hb
             HbNetworkContract * mpReply;
 
             // Internal use. Server side. TODO protect the client side.
+            sockuuid mSender;
             HbNetworkProtocol::NetworkType mNetworkType;
             HbNetworkProtocol::RoutingScheme mRouting;
             QSet< QString > mPendingReceivers; // user_uuid, morph into SocketReceivers at sending time.

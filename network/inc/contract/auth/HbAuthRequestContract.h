@@ -27,11 +27,11 @@ namespace hb
 
         public:
 
-            enum AuthType : quint8
+            enum AuthType : authstgy
             {
                 AUTH_NONE = 0,
-                AUTH_USER,
-                AUTH_FACEOOK
+                AUTH_FACEOOK,
+                AUTH_USER = 255
             };
 
             HbAuthRequestContract();
@@ -44,11 +44,11 @@ namespace hb
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;
 
-            virtual AuthType type() const final;
-            virtual void setType( AuthType type ) final;
+            virtual authstgy type() const final;
+            virtual void setType( authstgy type ) final;
 
         protected:
-            AuthType mType;
+            authstgy mType;
         };
     }
 }

@@ -22,14 +22,21 @@ namespace hb
 	{
         class HbAuthRequestContract;
 
-        class HB_NETWORK_DECL HbServerAuthStrategy
+        class HB_NETWORK_DECL HbServerAuthStrategy : public QObject
 		{
+            Q_OBJECT
 		public:
 
             HbServerAuthStrategy() = default;
             virtual ~HbServerAuthStrategy() = default;
 
-            virtual HbNetworkProtocol::AuthStatus tryLogin( const HbAuthRequestContract * contract ) = 0;
+            virtual bool tryLogin( const HbAuthRequestContract * contract ) = 0;
+            virtual authstgy type() const = 0;
+
+        signals:
+            void loginFinished( sockuuid sender,
+                                const HbNetworkProtocol::AuthStatus & status,
+                                const QString & description );
 
 		};
 	}

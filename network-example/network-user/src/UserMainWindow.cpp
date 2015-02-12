@@ -140,7 +140,7 @@ void UserMainWindow::onFacebookConnectionRequest()
         mpFacebookClient = new HbO2ClientFacebook();
 
         connect( mpFacebookClient, &HbO2Client::openBrowser, this, &UserMainWindow::onFacebookOpenBrower );
-        connect( mpFacebookClient, &HbO2::linkingSucceed, this, &UserMainWindow::onFacebookLinked );
+        connect( mpFacebookClient, &HbO2::linkSucceed,       this, &UserMainWindow::onFacebookLinked );
     }
 
     if( mpFacebookClient->linkStatus() == HbO2Client::UNLINKED )

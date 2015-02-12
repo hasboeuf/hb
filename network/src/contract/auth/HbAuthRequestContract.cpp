@@ -46,12 +46,12 @@ bool HbAuthRequestContract::write( QDataStream & stream ) const
     return true;
 }
 
-auto HbAuthRequestContract::type() const -> AuthType
+authstgy HbAuthRequestContract::type() const
 {
     return mType;
 }
 
-void HbAuthRequestContract::setType( AuthType type )
+void HbAuthRequestContract::setType( authstgy type )
 {
     mType = type;
 }

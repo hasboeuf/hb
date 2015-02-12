@@ -82,8 +82,10 @@ namespace hb
                 AUTH_BAD_UUID,
                 AUTH_BAD_PASSWORD,
                 AUTH_OK,
-                AUTH_OK_ADMIN
+                AUTH_OK_ADMIN,
                 // Facebook
+                AUTH_FB_OK,
+                AUTH_FB_KO
             };
 
         };

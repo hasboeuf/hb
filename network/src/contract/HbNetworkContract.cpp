@@ -5,9 +5,18 @@
 
 using namespace hb::network;
 
+HbNetworkContract::HbNetworkContract()
+{
+    mSender = 0;
+    mNetworkType = HbNetworkProtocol::NETWORK_UNDEFINED;
+    mRouting = HbNetworkProtocol::RoutingScheme::UNICAST;
+    mpReply  = nullptr;
+}
+
 HbNetworkContract::HbNetworkContract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code ) :
     mHeader( service, code )
 {
+    mSender = 0;
     mNetworkType = HbNetworkProtocol::NETWORK_UNDEFINED;
     mRouting = HbNetworkProtocol::RoutingScheme::UNICAST;
     mpReply  = nullptr;
@@ -18,6 +27,7 @@ HbNetworkContract::HbNetworkContract( const HbNetworkContract & source )
     if( &source != this )
     {
         mHeader           = source.mHeader;
+        mSender           = source.mSender;
         mNetworkType      = source.mNetworkType;
         mRouting          = source.mRouting;
         mPendingReceivers = source.mPendingReceivers;
@@ -31,6 +41,7 @@ HbNetworkContract & HbNetworkContract::operator=( const HbNetworkContract & sour
     if( &source != this )
     {
         mHeader           = source.mHeader;
+        mSender           = source.mSender;
         mNetworkType      = source.mNetworkType;
         mRouting          = source.mRouting;
         mPendingReceivers = source.mPendingReceivers;
@@ -50,12 +61,22 @@ const HbNetworkHeader & HbNetworkContract::header() const
     return mHeader;
 }
 
+void HbNetworkContract::setSender( sockuuid sender )
+{
+    mSender = sender;
+}
+
+sockuuid HbNetworkContract::sender() const
+{
+    return mSender;
+}
+
 void HbNetworkContract::addPendingReceiver( const QString & user_uuid )
 {
     mPendingReceivers.insert( user_uuid );
 }
 
-bool HbNetworkContract::addReceiver( quint16 receiver )
+bool HbNetworkContract::addReceiver(sockuuid receiver )
 {
     if( mRouting == HbNetworkProtocol::RoutingScheme::UNICAST )
     {

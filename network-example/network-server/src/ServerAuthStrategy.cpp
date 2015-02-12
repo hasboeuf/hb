@@ -4,10 +4,16 @@
 // Local
 #include <ServerAuthStrategy.h>
 
+using namespace hb::network;
 using namespace hb::networkexample;
 
-HbNetworkProtocol::AuthStatus ServerAuthStrategy::tryLogin( const HbAuthRequestContract * contract )
+bool ServerAuthStrategy::tryLogin( const HbAuthRequestContract * contract )
 {
-    return HbNetworkProtocol::AUTH_BAD;
+    return true;
+}
+
+authstgy ServerAuthStrategy::type() const
+{
+    return HbAuthRequestContract::AUTH_USER + 0;
 }
 

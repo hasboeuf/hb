@@ -27,7 +27,7 @@ QT *= gui widgets network
 # Modules Settings
 # -----------------
 
-HB  += tools log network
+HB  += tools log link network
 
 # ---------------
 # QMake Includes

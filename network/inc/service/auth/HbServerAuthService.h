@@ -41,9 +41,7 @@ namespace hb
             virtual void onSocketDisconnected( sockuuid socket_uuid );
 
         private:
-            bool tryFacebookLogin( const HbAuthRequestContract * contract );
-        private:
-            HbServerAuthStrategy * mpStrategy;
+            QHash< authstgy, HbServerAuthStrategy * > mStrategies;
 		};
 	}
 }
