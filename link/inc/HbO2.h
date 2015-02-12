@@ -66,8 +66,8 @@ namespace hb
             virtual const QUrl endPoint() const = 0;
 
         signals:
-            void linkingFailed( QString error );
-            void linkingSucceed();
+            void linkFailed( QString error );
+            void linkSucceed();
 
         protected:
             LinkStatus mLinkStatus;

@@ -55,7 +55,7 @@ void LinkMainWindow::onConnectClicked()
     mpFacebookClient = new HbO2ClientFacebook();
 
     connect( mpFacebookClient, &HbO2Client::openBrowser, this, &LinkMainWindow::onOpenBrower );
-    connect( mpFacebookClient, &HbO2::linkingSucceed, this, &LinkMainWindow::onClientLinkSucceed );
+    connect( mpFacebookClient, &HbO2::linkSucceed, this, &LinkMainWindow::onClientLinkSucceed );
 
     mpFacebookClient->setClientId( "940633959281250" );
     mpFacebookClient->setLocalPort( 8080 );
@@ -84,7 +84,7 @@ void LinkMainWindow::onClientLinkSucceed()
 
     mpFacebookServer = new HbO2ServerFacebook();
 
-    connect( mpFacebookServer, &HbO2ServerFacebook::linkingSucceed, this, &LinkMainWindow::onServerLinkSucceed, Qt::UniqueConnection );
+    connect( mpFacebookServer, &HbO2ServerFacebook::linkSucceed, this, &LinkMainWindow::onServerLinkSucceed, Qt::UniqueConnection );
 
     mpFacebookServer->setClientId( mpFacebookClient->clientId() );
     mpFacebookServer->setRedirectUri( mpFacebookClient->redirectUri() );
@@ -106,11 +106,20 @@ void LinkMainWindow::onServerLinkSucceed()
 
     HbInfo( "Server link succeed. Request facebook user..." );
 
-    mRequester.requestUser( mpFacebookServer );
+    quint64 request_id = mRequester.requestUser( mpFacebookServer );
+    if( request_id > 0 )
+    {
+        HbInfo( "Request id: %lld.", request_id );
+    }
+    else
+    {
+        HbError( "Request user failed." );
+    }
 }
 
-void LinkMainWindow::onRequestCompleted( hb::link::HbFacebookObject * object )
+void LinkMainWindow::onRequestCompleted( quint64 request_id, hb::link::HbFacebookObject * object )
 {
+    HbInfo( "Request %lld completed.", request_id );
     if( !object )
     {
         HbError( "Facebook object null." );

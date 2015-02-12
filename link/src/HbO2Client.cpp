@@ -86,14 +86,14 @@ void HbO2Client::onCodeResponseReceived( const QHash< QString, QString > respons
         HbInfo( "Verification succeed." );
         HbInfo( "Code received: %s", HbLatin1( mCode ) );
         mLinkStatus = LINKED;
-        emit linkingSucceed();
+        emit linkSucceed();
     }
     else
     {
         HbError( "Verification failed. (%s)", HbLatin1( mErrorString ) );
         mLinkStatus = UNLINKED;
 
-        emit linkingFailed( mErrorString );
+        emit linkFailed( mErrorString );
     }
 }
 

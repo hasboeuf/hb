@@ -69,21 +69,21 @@ void HbO2Server::onTokenResponseReceived()
             HbInfo( "Verification succeed." );
             HbInfo( "Token received: %s", HbLatin1( mToken ) );
             mLinkStatus = LINKED;
-            emit linkingSucceed();
+            emit linkSucceed();
         }
         else
         {
             HbError( "Verification failed. (%s)", HbLatin1( mErrorString ) );
             mLinkStatus = UNLINKED;
 
-            emit linkingFailed( mErrorString );
+            emit linkFailed( mErrorString );
         }
     }
     else
     {
         mLinkStatus = UNLINKED;
         mErrorString = token_reply->errorString();
-        emit linkingFailed( mErrorString );
+        emit linkFailed( mErrorString );
     }
 
     token_reply->deleteLater();
@@ -101,7 +101,7 @@ void HbO2Server::onTokenResponseError( QNetworkReply::NetworkError error )
 
     token_reply->deleteLater();
 
-    emit linkingFailed( mErrorString );
+    emit linkFailed( mErrorString );
 }
 
 void HbO2Server::setClientSecret( const QString & client_secret )

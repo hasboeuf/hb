@@ -20,8 +20,9 @@ HbFacebookRequester::HbFacebookRequester() :
     connect( this, &HbHttpRequester::requestError,    this, &HbFacebookRequester::onRequestError );
 }
 
-bool HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )
+quint64 HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )
 {
+
     if( !auth || ( auth->linkStatus() != HbO2::LINKED ) )
     {
         HbError( "Auth null or unlinked." );
@@ -69,12 +70,12 @@ void HbFacebookRequester::onRequestFinished( quint64 request_id, const QJsonDocu
     {
         HbFacebookUser * user = new HbFacebookUser();
         user->load( doc );
-        emit requestCompleted( user );
+        emit requestCompleted( request_id, user );
     }
     else
     {
         HbError( "Object creation failed, bad type." );
-        emit requestCompleted( nullptr );
+        emit requestCompleted( request_id, nullptr );
     }
 }
 
@@ -92,5 +93,5 @@ void HbFacebookRequester::onRequestError( quint64 request_id, const QString & er
              HbLatin1( HbFacebookObject::MetaObjectType::toString( type ) ),
              HbLatin1( error ) );
 
-    emit requestCompleted( nullptr );
+    emit requestCompleted( request_id, nullptr );
 }

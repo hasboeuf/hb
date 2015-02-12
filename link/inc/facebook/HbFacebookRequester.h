@@ -33,7 +33,7 @@ namespace hb
             HbFacebookRequester();
             virtual ~HbFacebookRequester() = default;
 
-            bool requestUser( HbO2ServerFacebook * auth );
+            quint64 requestUser( HbO2ServerFacebook * auth );
 
         private slots:
             // From HbHttpRequester
@@ -41,7 +41,7 @@ namespace hb
             void onRequestError   ( quint64 request_id, const QString & error );
 
         signals:
-            void requestCompleted( HbFacebookObject * object );
+            void requestCompleted( quint64 request_id, HbFacebookObject * object );
 
         private:
             QHash< quint64, HbFacebookObject::ObjectType > mRequestTypes;
@@ -50,8 +50,6 @@ namespace hb
     }
 }
 
-
-
-using hb::link::HbFacebookObject;
+using hb::link::HbFacebookRequester;
 
 #endif // HBFACEBOOKREQUESTER_H

@@ -44,7 +44,7 @@ namespace hb
             void onOpenBrower( const QUrl & url );
             void onClientLinkSucceed();
             void onServerLinkSucceed();
-            void onRequestCompleted( hb::link::HbFacebookObject * object );
+            void onRequestCompleted(quint64 request_id, hb::link::HbFacebookObject * object );
 
         private slots:
             void onConnectClicked();
