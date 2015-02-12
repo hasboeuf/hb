@@ -85,4 +85,6 @@ namespace hb
     }
 }
 
+using hb::link::HbO2;
+
 #endif // HBO2_H

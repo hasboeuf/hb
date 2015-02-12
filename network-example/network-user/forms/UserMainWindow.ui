@@ -40,17 +40,30 @@
      <string>Stop</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="ui_qpb_connection">
+   <widget class="QPushButton" name="ui_qpb_fb_connection">
     <property name="geometry">
      <rect>
       <x>300</x>
       <y>60</y>
-      <width>75</width>
+      <width>111</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Connection</string>
+     <string>Facebook connection</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ui_qpb_user_connection">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>60</y>
+      <width>111</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>User connection</string>
     </property>
    </widget>
   </widget>

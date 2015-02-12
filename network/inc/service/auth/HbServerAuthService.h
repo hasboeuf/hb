@@ -22,6 +22,7 @@ namespace hb
 	{
 
         class HbServerAuthStrategy;
+        class HbAuthRequestContract;
 
         class HB_NETWORK_DECL HbServerAuthService : public HbNetworkService, public IHbSocketListener
 		{
@@ -39,6 +40,8 @@ namespace hb
             virtual void onSocketConnected   ( sockuuid socket_uuid );
             virtual void onSocketDisconnected( sockuuid socket_uuid );
 
+        private:
+            bool tryFacebookLogin( const HbAuthRequestContract * contract );
         private:
             HbServerAuthStrategy * mpStrategy;
 		};

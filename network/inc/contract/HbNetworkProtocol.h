@@ -76,11 +76,14 @@ namespace hb
 
             enum AuthStatus : quint8
             {
+                // General
                 AUTH_INTERNAL_ERROR = 0,
+                AUTH_BAD,
                 AUTH_BAD_UUID,
                 AUTH_BAD_PASSWORD,
                 AUTH_OK,
                 AUTH_OK_ADMIN
+                // Facebook
             };
 
         };

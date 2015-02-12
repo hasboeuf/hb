@@ -23,6 +23,11 @@ namespace hb
 		class HbLogWidget;
 	}
 
+    namespace link
+    {
+        class HbO2ClientFacebook;
+    }
+
     namespace networkexample
     {
 
@@ -39,6 +44,8 @@ namespace hb
             hb::log::HbLogWidget* mpLogWidget;
             // Network
             hb::network::HbTcpClient mTcpClient;
+            // Link
+            hb::link::HbO2ClientFacebook * mpFacebookClient;
 
         private:
             void init();
@@ -51,7 +58,10 @@ namespace hb
         private slots:
             void onStartClicked();
             void onStopClicked();
-            void onConnectionRequest();
+            void onUserConnectionRequest();
+            void onFacebookConnectionRequest();
+            void onFacebookOpenBrower( const QUrl & url );
+            void onFacebookLinked();
 
         signals:
 
