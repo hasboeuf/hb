@@ -27,13 +27,6 @@ namespace hb
 
         public:
 
-            enum AuthType : authstgy
-            {
-                AUTH_NONE = 0,
-                AUTH_FACEOOK,
-                AUTH_USER = 255
-            };
-
             HbAuthRequestContract();
             virtual ~HbAuthRequestContract() = default;
             HbAuthRequestContract( const HbAuthRequestContract & source );

@@ -15,6 +15,7 @@
 #include <HbNetwork.h>
 #include <contract/HbNetworkProtocol.h>
 #include <contract/auth/HbAuthRequestContract.h> // Template.
+#include <user/HbNetworkUserInfo.h>
 
 namespace hb
 {
@@ -34,10 +35,11 @@ namespace hb
             virtual authstgy type() const = 0;
 
         signals:
-            void loginFinished( sockuuid sender,
-                                const HbNetworkProtocol::AuthStatus & status,
-                                const QString & description );
-
+            void loginSucceed( sockuuid sender,
+                               const HbNetworkUserInfo & user );
+            void loginFailed(  sockuuid sender,
+                               const HbNetworkProtocol::AuthStatus & status,
+                               const QString & description );
 		};
 	}
 }

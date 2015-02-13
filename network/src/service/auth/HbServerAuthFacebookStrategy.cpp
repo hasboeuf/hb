@@ -3,6 +3,7 @@
 #include <facebook/HbO2ServerFacebook.h>
 #include <facebook/api/HbFacebookUser.h>
 // Local
+#include <service/auth/HbAuthService.h>
 #include <service/auth/HbServerAuthFacebookStrategy.h>
 #include <contract/auth/HbAuthFacebookRequestContract.h>
 
@@ -45,7 +46,7 @@ bool HbServerAuthFacebookStrategy::tryLogin( const HbAuthRequestContract * contr
 
 authstgy HbServerAuthFacebookStrategy::type() const
 {
-    return HbAuthRequestContract::AUTH_FACEOOK;
+    return HbAuthService::AUTH_FACEBOOK;
 }
 
 void HbServerAuthFacebookStrategy::onLinkSucceed()
@@ -64,7 +65,7 @@ void HbServerAuthFacebookStrategy::onLinkSucceed()
     }
     else
     {
-        emit loginFinished( sender, HbNetworkProtocol::AUTH_INTERNAL_ERROR, "" );
+        emit loginFailed( sender, HbNetworkProtocol::AUTH_INTERNAL_ERROR, "" );
     }
 
     server_auth->deleteLater();
@@ -81,7 +82,7 @@ void HbServerAuthFacebookStrategy::onLinkFailed(const QString & error )
     sockuuid sender = mPendingToken.take( server_auth );
     server_auth->deleteLater();
 
-    emit loginFinished( sender, HbNetworkProtocol::AUTH_FB_KO, error );
+    emit loginFailed( sender, HbNetworkProtocol::AUTH_FB_KO, error );
 }
 
 void HbServerAuthFacebookStrategy::onRequestCompleted( quint64 request_id, HbFacebookObject * object )
@@ -94,13 +95,34 @@ void HbServerAuthFacebookStrategy::onRequestCompleted( quint64 request_id, HbFac
     if( user )
     {
         HbInfo( "Facebook user informations: %s", HbLatin1( user->toString() ) );
-        emit loginFinished( sender, HbNetworkProtocol::AUTH_FB_OK, "" );
+
+        HbNetworkUserInfo user_info;
+        user_info.setUuid     ( user->id() );
+        user_info.setType     ( HbAuthService::AUTH_FACEBOOK );
+        user_info.setEmail    ( user->email() );
+        user_info.setNickname ( user->firstName() + " " +
+                                user->lastName() );
+        user_info.setFirstName( user->firstName() );
+        user_info.setLastName ( user->lastName() );
+        if( user->gender() == "male" )
+        {
+            user_info.setGender( HbNetworkUserInfo::GENDER_MALE );
+        }
+        else if( user->gender() == "female" )
+        {
+            user_info.setGender( HbNetworkUserInfo::GENDER_FEMALE );
+        }
+
+        emit loginSucceed( sender, user_info );
     }
     else
     {
         HbError( "Bad dynamic cast HbFacebookObject -> HbFacebookUser." );
-        emit loginFinished( sender, HbNetworkProtocol::AUTH_FB_KO, "" );
+        emit loginFailed( sender, HbNetworkProtocol::AUTH_FB_KO, "" );
     }
 
-    delete object;
+    if( object )
+    {
+        delete object;
+    }
 }

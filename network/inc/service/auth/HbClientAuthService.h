@@ -12,15 +12,14 @@
 // Qt
 // Hb
 // Local
-#include <HbNetwork.h>
-#include <service/HbNetworkService.h>
+#include <service/auth/HbAuthService.h>
 
 namespace hb
 {
 	namespace network
 	{
 
-        class HB_NETWORK_DECL HbClientAuthService : public HbNetworkService
+        class HB_NETWORK_DECL HbClientAuthService : public HbAuthService
 		{
 		public:
 

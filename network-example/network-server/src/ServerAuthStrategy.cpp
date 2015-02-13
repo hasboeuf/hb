@@ -1,6 +1,6 @@
 // Qt
 // Hb
-#include <contract/auth/HbAuthRequestContract.h>
+#include <service/auth/HbAuthService.h>
 // Local
 #include <ServerAuthStrategy.h>
 
@@ -14,6 +14,6 @@ bool ServerAuthStrategy::tryLogin( const HbAuthRequestContract * contract )
 
 authstgy ServerAuthStrategy::type() const
 {
-    return HbAuthRequestContract::AUTH_USER + 0;
+    return HbAuthService::AUTH_USER + 0;
 }
 

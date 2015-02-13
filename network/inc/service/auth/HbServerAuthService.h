@@ -12,9 +12,9 @@
 // Qt
 // Hb
 // Local
-#include <HbNetwork.h>
-#include <service/HbNetworkService.h>
+#include <service/auth/HbAuthService.h>
 #include <listener/IHbSocketListener.h>
+#include <user/HbNetworkUserInfo.h>
 
 namespace hb
 {
@@ -24,21 +24,25 @@ namespace hb
         class HbServerAuthStrategy;
         class HbAuthRequestContract;
 
-        class HB_NETWORK_DECL HbServerAuthService : public HbNetworkService, public IHbSocketListener
+        class HB_NETWORK_DECL HbServerAuthService : public HbAuthService, public IHbSocketListener
 		{
             Q_OBJECT
 
 		public:
 
             HbServerAuthService();
-            virtual ~HbServerAuthService() = default;
+            virtual ~HbServerAuthService();
 
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
 
         public callbacks:
+            // From HbConnectionPool.
             virtual void onContractReceived( const HbNetworkContract * contract );
             virtual void onSocketConnected   ( sockuuid socket_uuid );
             virtual void onSocketDisconnected( sockuuid socket_uuid );
+            // From HbServerAuthStrategy.
+            void onLoginSucceed( sockuuid sender, const HbNetworkUserInfo & user_info );
+            void onLoginFailed ( sockuuid sender, HbNetworkProtocol::AuthStatus, const QString & description );
 
         private:
             QHash< authstgy, HbServerAuthStrategy * > mStrategies;

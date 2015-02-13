@@ -1,13 +1,14 @@
 // Local
 #include <contract/auth/HbAuthFacebookRequestContract.h>
 #include <contract/HbNetworkProtocol.h>
+#include <service/auth/HbAuthService.h>
 
 using namespace hb::network;
 
 HbAuthFacebookRequestContract::HbAuthFacebookRequestContract() :
     HbAuthRequestContract()
 {
-    mType = AUTH_FACEOOK;
+    mType = HbAuthService::AUTH_FACEOOK;
 }
 
 HbAuthFacebookRequestContract::HbAuthFacebookRequestContract( const HbAuthFacebookRequestContract & source ) :

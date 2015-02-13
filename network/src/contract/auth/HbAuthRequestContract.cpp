@@ -1,11 +1,14 @@
 // Local
 #include <contract/auth/HbAuthRequestContract.h>
 #include <contract/HbNetworkProtocol.h>
+#include <service/auth/HbAuthService.h>
+
+using namespace hb::network;
 
 HbAuthRequestContract::HbAuthRequestContract() :
     HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_CLT_AUTH_REQUEST )
 {
-    mType = AUTH_NONE;
+    mType = HbAuthService::AUTH_NONE;
 }
 
 HbAuthRequestContract::HbAuthRequestContract( const HbAuthRequestContract & source ) :
@@ -34,7 +37,7 @@ bool HbAuthRequestContract::read( QDataStream & stream )
     quint8 type;
     stream >> type;
 
-    mType = ( AuthType ) type;
+    mType = ( HbAuthService::AuthType ) type;
 
     return true;
 }
