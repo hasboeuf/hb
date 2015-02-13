@@ -50,7 +50,15 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
         HbServerAuthStrategy * strategy = mStrategies.value( type, nullptr );
         if( strategy )
         {
-            strategy->tryLogin( auth_contract );
+            if( strategy->tryLogin( auth_contract ) )
+            {
+                // TODO retrieve reply now ?
+            }
+            else
+            {
+                HbError( "Bad contract." );
+                // TODO kick?
+            }
         }
         else
         {
@@ -67,20 +75,40 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
 
 void HbServerAuthService::onSocketConnected   ( sockuuid socket_uuid )
 {
-
+    mPendingSocket.insert( socket_uuid );
 }
 
 void HbServerAuthService::onSocketDisconnected( sockuuid socket_uuid )
 {
-
+    mPendingSocket.remove( socket_uuid );
 }
 
 void HbServerAuthService::onLoginSucceed( sockuuid sender, const HbNetworkUserInfo & user_info )
 {
+    if( mPendingSocket.contains( sender ) )
+    {
+        mPendingSocket.remove( sender );
 
+        // TODO retrieve or create the reply.
+        // TODO create user and notify ConnectionPool.
+    }
+    else
+    {
+        HbWarning( "Socket %d disconnected before getting ok auth response.", sender );
+    }
 }
 
 void HbServerAuthService::onLoginFailed ( sockuuid sender, HbNetworkProtocol::AuthStatus, const QString & description )
 {
+    if( mPendingSocket.contains( sender ) )
+    {
+        mPendingSocket.remove( sender );
 
+        // TODO retrieve or create the reply.
+        // TODO think about number of tries.
+    }
+    else
+    {
+        HbWarning( "Socket %d disconnected before getting nok auth response.", sender );
+    }
 }

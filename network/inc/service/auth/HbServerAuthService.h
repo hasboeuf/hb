@@ -45,6 +45,7 @@ namespace hb
             void onLoginFailed ( sockuuid sender, HbNetworkProtocol::AuthStatus, const QString & description );
 
         private:
+            QSet< sockuuid > mPendingSocket;
             QHash< authstgy, HbServerAuthStrategy * > mStrategies;
 		};
 	}
