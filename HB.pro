@@ -17,8 +17,8 @@ SUBDIRS += \
     plugin-example/HbPluginExample.pro
 
 log.depends = tools
-network.depends = log tools
-network-example.depends = tools log network
+network.depends = link log tools
+network-example.depends = link tools log network
 plugin.depends = log tools
 plugin-example.depends = plugin log tools
 link-example.depends = link

@@ -24,7 +24,7 @@ namespace hb
         using hb::log::HbLogMessage;
 
         
-		class LogViewer final : public QWidget, private hb::logviewer::Ui::LogViewer
+        class LogViewer final : public QWidget, private Ui::LogViewer
         {
             Q_OBJECT
             Q_DISABLE_COPY( LogViewer )
@@ -42,20 +42,20 @@ namespace hb
 
         private slots :
 
-            // From mLogNotifier
+            // From mLogNotifier.
             void onNewLogMessage( const HbLogMessage & message );
 
-            // From GUI
-            void onOpenFileClicked();
-            void onConfigureClicked();
+            // From GUI.
+            void onOpenFileClicked   ();
+            void onConfigureClicked  ();
             void onRefreshTimeChanged( int refresh );
-            void onTabCloseRequested( int index );
+            void onTabCloseRequested ( int index );
 
             // From mProcessTimer.
             void processLogMessage();
 
-            // From LogViewerTab
-            void onNewTabRequest( qint32 column, QString value );
+            // From LogViewerTab.
+            void onNewTabRequest( quint8 column, const QString & value );
 
 
         private :

@@ -13,7 +13,6 @@ using namespace hb::logviewer;
 using namespace hb::log;
 using namespace hb::tools;
 
-
 LogViewerMainWindow::LogViewerMainWindow( QWidget * parent ) : 
     QMainWindow( parent )
 {

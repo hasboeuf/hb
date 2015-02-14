@@ -19,29 +19,26 @@ namespace hb
         public :
 
             LogViewerConfigDialog() = delete;
-            LogViewerConfigDialog( LogViewerConfig & pConfig, QWidget *parent = nullptr );
+            LogViewerConfigDialog( LogViewerConfig & config, QWidget * parent = nullptr );
             virtual ~LogViewerConfigDialog() = default;
 
             const LogViewerConfig & config() const;
 
         private :
-
-            void updateGui();
-			void saveConfig();
-            void addEditorField( QString name, QString cmd );
+            void updateGui     ();
+            void saveConfig    ();
+            void addEditorField( const QString & name, const QString & cmd );
 
         private slots :
-
-            void onFontClicked();
-            void onColorClicked( int color_id );
+            void onFontClicked           ();
+            void onColorClicked          ( int color_id );
             void onBackgroundColorClicked();
-            void onAddEditorClicked();
-            void onSaveClicked();
-            void onResetClicked();
-			void onImportClicked();
-			void onExportClicked();
-
-			void onEditorNameChanged();
+            void onAddEditorClicked      ();
+            void onSaveClicked           ();
+            void onResetClicked          ();
+            void onImportClicked         ();
+            void onExportClicked         ();
+            void onEditorNameChanged     ();
 
         private :
 

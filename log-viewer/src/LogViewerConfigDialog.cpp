@@ -12,79 +12,79 @@
 using namespace hb::logviewer;
 
 
-LogViewerConfigDialog::LogViewerConfigDialog(LogViewerConfig& pConfig, QWidget *parent) :
-    QDialog(parent), mConfig(pConfig)
+LogViewerConfigDialog::LogViewerConfigDialog( LogViewerConfig & config, QWidget * parent ) :
+    QDialog( parent ), mConfig( config )
 {
     setupUi( this );
 
-	QMenu* save_menu = new QMenu(qtb_save);
-	QAction* action_import = save_menu->addAction("Import...");
-	QAction* action_export = save_menu->addAction("Export...");
-	qtb_save->setMenu(save_menu);
+    QMenu * save_menu = new QMenu( qtb_save );
+    QAction * action_import = save_menu->addAction( "Import..." );
+    QAction * action_export = save_menu->addAction( "Export..." );
+    qtb_save->setMenu( save_menu );
 
-	connect(qpb_cancel,     &QPushButton::clicked, this, &LogViewerConfigDialog::reject);
-	connect(qtb_save,       &QToolButton::clicked, this, &LogViewerConfigDialog::onSaveClicked);
-    connect(qpb_reset,      &QPushButton::clicked, this, &LogViewerConfigDialog::onResetClicked);
-	connect(qpb_font,       &QPushButton::clicked, this, &LogViewerConfigDialog::onFontClicked);
-	connect(qpb_bck_color,	&QPushButton::clicked, this, &LogViewerConfigDialog::onBackgroundColorClicked);
-	connect(qpb_add_editor,	&QPushButton::clicked, this, &LogViewerConfigDialog::onAddEditorClicked);
-	connect(action_import,  &QAction::triggered,   this, &LogViewerConfigDialog::onImportClicked);
-	connect(action_export,  &QAction::triggered,   this, &LogViewerConfigDialog::onExportClicked);
-	connect(&qbg_colors,	(void (QButtonGroup::*)(int)) &QButtonGroup::buttonClicked,   this, &LogViewerConfigDialog::onColorClicked);
+    connect( qpb_cancel,     &QPushButton::clicked, this, &LogViewerConfigDialog::reject );
+    connect( qtb_save,       &QToolButton::clicked, this, &LogViewerConfigDialog::onSaveClicked );
+    connect( qpb_reset,      &QPushButton::clicked, this, &LogViewerConfigDialog::onResetClicked );
+    connect( qpb_font,       &QPushButton::clicked, this, &LogViewerConfigDialog::onFontClicked );
+    connect( qpb_bck_color,	 &QPushButton::clicked, this, &LogViewerConfigDialog::onBackgroundColorClicked );
+    connect( qpb_add_editor, &QPushButton::clicked, this, &LogViewerConfigDialog::onAddEditorClicked );
+    connect( action_import,  &QAction::triggered,   this, &LogViewerConfigDialog::onImportClicked );
+    connect( action_export,  &QAction::triggered,   this, &LogViewerConfigDialog::onExportClicked );
+    connect( &qbg_colors,	 (void (QButtonGroup::*)(int)) &QButtonGroup::buttonClicked,
+             this, &LogViewerConfigDialog::onColorClicked );
 
 	// Level colors
-	QMap<quint32, QColor>::const_iterator iC = mConfig.levelColor().constBegin();
-	while(iC != mConfig.levelColor().constEnd())
+    QMap< quint32, QColor >::const_iterator iC = mConfig.levelColor().constBegin();
+    while( iC != mConfig.levelColor().constEnd() )
 	{
-        QLabel*      label = q_check_ptr( new QLabel( QStringLiteral( "Level %1" ).arg( iC.key() ) ) );
-        QPushButton* button = q_check_ptr( new QPushButton( QStringLiteral( "Choose..." ) ) );
-		button->setFixedHeight(20);
+        QLabel *      label  = q_check_ptr( new QLabel( QStringLiteral( "Level %1" ).arg( iC.key() ) ) );
+        QPushButton * button = q_check_ptr( new QPushButton( QStringLiteral( "Choose..." ) ) );
+        button->setFixedHeight( 20 );
 
 		QHBoxLayout* h_layout = q_check_ptr( new QHBoxLayout() );
 		h_layout->addStretch();
-		h_layout->addWidget(button);
+        h_layout->addWidget( button );
 
-		qfl_colors->addRow(label, h_layout);
+        qfl_colors->addRow( label, h_layout );
 
-		qbg_colors.addButton(button, iC.key());
+        qbg_colors.addButton( button, iC.key() );
 
 		++iC;
 	}
 
     updateGui();
-
 }
 
 void LogViewerConfigDialog::updateGui()
 {
 	// Max buffer
-	qsb_buffer->setValue(mConfig.maxBuffer());
+    qsb_buffer->setValue( mConfig.maxBuffer() );
 
 	// Colors
-    foreach(QAbstractButton* vButton, qbg_colors.buttons())
+    foreach( QAbstractButton * vButton, qbg_colors.buttons() )
     {
-        QColor c = mConfig.colorByIdLevel(qbg_colors.id(vButton));
+        QColor c = mConfig.colorByIdLevel( qbg_colors.id( vButton ) );
 
-        QPixmap vPix(10, 10);
-        vPix.fill(c);
+        QPixmap vPix( 10, 10 );
+        vPix.fill( c );
 
-        vButton->setIcon(QIcon(vPix));
+        vButton->setIcon( QIcon( vPix ) );
     }
 
-    QPixmap vPix(10, 10);
-    vPix.fill(mConfig.backgroundColor());
-    qpb_bck_color->setIcon(QIcon(vPix));
+    QPixmap vPix( 10, 10 );
+    vPix.fill( mConfig.backgroundColor() );
+    qpb_bck_color->setIcon( QIcon( vPix ) );
 
 	// Project folders
 	qte_project_folders->clear();
-	foreach(QString project_folder, mConfig.projectFolders())
+    foreach( const QString project_folder, mConfig.projectFolders() )
 	{
-		qte_project_folders->append(project_folder);
+        qte_project_folders->append( project_folder );
 	}
 
 	// Editors
 	qcb_default->clear();
-	while (QLayoutItem *item = qfl_editors->takeAt(0))
+    while ( QLayoutItem * item = qfl_editors->takeAt( 0 ) )
 	{
 		delete item->widget();
 		delete item;
@@ -92,30 +92,30 @@ void LogViewerConfigDialog::updateGui()
 
 	QMap<QString, QString> editors = mConfig.editors();
 	QString default_editor = mConfig.defaultEditor();
-	QMap<QString, QString>::const_iterator it = editors.constBegin();
-	while (it != editors.constEnd())
+    QMap< QString, QString >::const_iterator it = editors.constBegin();
+    while( it != editors.constEnd() )
 	{
 		QString name = it.key();
 		QString path = it.value();
 
-		addEditorField(name, path);
-		qcb_default->addItem(name);
+        addEditorField( name, path );
+        qcb_default->addItem( name );
 
 		++it;
 	}
-	qcb_default->setCurrentIndex(qcb_default->findText(default_editor));
+    qcb_default->setCurrentIndex( qcb_default->findText( default_editor ) );
 }
 
-void LogViewerConfigDialog::addEditorField(QString name, QString cmd)
+void LogViewerConfigDialog::addEditorField( const QString & name, const QString & cmd )
 {
-	QLineEdit* label = q_check_ptr( new QLineEdit(name) );
-	QLineEdit* field = q_check_ptr( new QLineEdit(cmd) );
+    QLineEdit * label = q_check_ptr( new QLineEdit( name ) );
+    QLineEdit * field = q_check_ptr( new QLineEdit( cmd  ) );
 
-	connect(label, &QLineEdit::textEdited, this, &LogViewerConfigDialog::onEditorNameChanged);
+    connect( label, &QLineEdit::textEdited, this, &LogViewerConfigDialog::onEditorNameChanged );
 	
-	qfl_editor_fields.append(field); // Used when saving.
+    qfl_editor_fields.append( field ); // Used when saving.
 
-	qfl_editors->addRow(label, field);
+    qfl_editors->addRow( label, field );
 }
 
 
@@ -124,30 +124,30 @@ void LogViewerConfigDialog::onFontClicked()
     bool ok = false;
     QFont vFont = QFontDialog::getFont( &ok, mConfig.font(), this, QStringLiteral( "Select a font" ) );
 
-    if(ok)
+    if( ok )
     {
-        mConfig.setFont(vFont);
+        mConfig.setFont( vFont );
     }
 }
 
-void LogViewerConfigDialog::onColorClicked(int pId)
+void LogViewerConfigDialog::onColorClicked( int color_id )
 {
-    QColor vColor = QColorDialog::getColor( mConfig.colorByIdLevel( pId ), this, QStringLiteral( "Select a color" ) );
-    mConfig.setColorById(pId, vColor);
+    QColor color = QColorDialog::getColor( mConfig.colorByIdLevel( color_id ), this, QStringLiteral( "Select a color" ) );
+    mConfig.setColorById( color_id, color );
 
-    QPixmap vPix(10, 10);
-    vPix.fill(vColor);
-    qbg_colors.button(pId)->setIcon(QIcon(vPix));
+    QPixmap pix( 10, 10 );
+    pix.fill( color );
+    qbg_colors.button( color_id )->setIcon( QIcon( pix ) );
 }
 
 void LogViewerConfigDialog::onBackgroundColorClicked()
 {
-    QColor vColor = QColorDialog::getColor( mConfig.backgroundColor(), this, QStringLiteral( "Select a color" ) );
-    mConfig.setBackgroundColor(vColor);
+    QColor color = QColorDialog::getColor( mConfig.backgroundColor(), this, QStringLiteral( "Select a color" ) );
+    mConfig.setBackgroundColor( color );
 
-    QPixmap vPix(10, 10);
-    vPix.fill(vColor);
-    qpb_bck_color->setIcon(QIcon(vPix));
+    QPixmap pix( 10, 10 );
+    pix.fill( color );
+    qpb_bck_color->setIcon( QIcon( pix ) );
 }
 
 void LogViewerConfigDialog::onAddEditorClicked()
@@ -161,20 +161,21 @@ void LogViewerConfigDialog::onEditorNameChanged()
 
 	qcb_default->clear();
 
-	foreach(QLineEdit* field, qfl_editor_fields)
+    foreach( QLineEdit * field, qfl_editor_fields )
 	{
-		if (!field) continue;
-		QLineEdit* label = qobject_cast<QLineEdit*>(qfl_editors->labelForField(field));
-		if (!label) continue;
+        if ( !field ) continue;
+
+        QLineEdit * label = qobject_cast< QLineEdit * >( qfl_editors->labelForField( field ) );
+        if ( !label ) continue;
 
 		QString editor_name = label->text();
-		if (!editor_name.isEmpty())
+        if( !editor_name.isEmpty() )
 		{
-			qcb_default->addItem(editor_name);
+            qcb_default->addItem( editor_name );
 		}
 	}
 
-	qcb_default->setCurrentIndex(current_index);
+    qcb_default->setCurrentIndex( current_index );
 }
 
 void LogViewerConfigDialog::onSaveClicked()
@@ -191,32 +192,32 @@ void LogViewerConfigDialog::saveConfig()
 	// NOTE: Colors are saved a little at a time in the local model.
 
 	// Max buffer
-	mConfig.setMaxBuffer(qsb_buffer->value());
+    mConfig.setMaxBuffer( qsb_buffer->value()) ;
 
 	// Project folders
-	QStringList folders = qte_project_folders->toPlainText().split(QChar::LineFeed, QString::SkipEmptyParts);
+    QStringList folders = qte_project_folders->toPlainText().split( QChar::LineFeed, QString::SkipEmptyParts );
 	mConfig.resetProjectFolders();
-	foreach(QString folder, folders)
+    foreach( const QString folder, folders )
 	{
-		mConfig.addProjectFolder(folder);
+        mConfig.addProjectFolder( folder );
 	}
 
 	// Editors
-	mConfig.setDefaultEditor(qcb_default->currentText());
+    mConfig.setDefaultEditor( qcb_default->currentText() );
 	mConfig.resetEditors();
 
-	foreach(QLineEdit* field, qfl_editor_fields)
+    foreach( QLineEdit * field, qfl_editor_fields )
 	{
 		if (!field) continue;
-		QLineEdit* label = qobject_cast<QLineEdit*>(qfl_editors->labelForField(field));
-		if (!label) continue;
+        QLineEdit * label = qobject_cast< QLineEdit * >( qfl_editors->labelForField( field ) );
+        if ( !label ) continue;
 
 		QString editor_name = label->text();
-		QString editor_cmd = field->text();
+        QString editor_cmd  = field->text();
 
-		if (!(editor_name.isEmpty() || editor_cmd.isEmpty()))
+        if( !( editor_name.isEmpty() || editor_cmd.isEmpty() ) )
 		{
-			mConfig.addEditor(editor_name, editor_cmd);
+            mConfig.addEditor( editor_name, editor_cmd );
 		}
 	}
 }
@@ -224,21 +225,25 @@ void LogViewerConfigDialog::saveConfig()
 
 void LogViewerConfigDialog::onResetClicked()
 {
-	mConfig = LogViewerConfig::importConfigXml(QString::fromLatin1(LogViewerConfig::msDefaultConfigXml));
+    mConfig = LogViewerConfig::importConfigXml( QString::fromLatin1( LogViewerConfig::msDefaultConfigXml ) );
 	accept();
 }
 
 void LogViewerConfigDialog::onImportClicked()
 {
-	QString file_path = QFileDialog::getOpenFileName(this, QStringLiteral("Import log configuration"), QStringLiteral(""), "Config file (*.hblog)");
-	if (file_path.isEmpty())
+    const QString file_path = QFileDialog::getOpenFileName(
+                              this,
+                              QStringLiteral( "Import log configuration" ),
+                              QStringLiteral(""), "Config file (*.hblog)" );
+
+    if( file_path.isEmpty() )
 	{
 		return;
 	}
 
-	LogViewerConfig config = LogViewerConfig::importConfigXml(file_path);
+    LogViewerConfig config = LogViewerConfig::importConfigXml( file_path );
 
-	if (config.isValid())
+    if( config.isValid() )
 	{
 		mConfig = config;
 		updateGui();
@@ -249,15 +254,20 @@ void LogViewerConfigDialog::onExportClicked()
 {
 	saveConfig();
 
-	QString file_path = QFileDialog::getSaveFileName(this, QStringLiteral("Export log configuration"), QStringLiteral(""), "Config file (*.hblog)");
-	if (file_path.isEmpty())
+    QString file_path = QFileDialog::getSaveFileName(
+                        this,
+                        QStringLiteral( "Export log configuration" ),
+                        QStringLiteral(""),
+                        "Config file (*.hblog)" );
+
+    if( file_path.isEmpty() )
 	{
 		return;
 	}
 
-	if (!LogViewerConfig::exportConfigXml(file_path, mConfig))
+    if( !LogViewerConfig::exportConfigXml( file_path, mConfig ) )
 	{
-		HbError("Exporting log config file failed.");
+        HbError( "Exporting log config file failed." );
 	}
 }
 

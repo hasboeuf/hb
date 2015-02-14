@@ -14,7 +14,6 @@ namespace hb
             Q_OBJECT
             Q_DISABLE_COPY( LogViewerTabDelegate )
 
-
         public :
 
             LogViewerTabDelegate( QObject * parent = nullptr );

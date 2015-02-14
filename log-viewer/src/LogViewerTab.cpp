@@ -22,8 +22,13 @@
 using namespace hb::logviewer;
 using namespace hb::log;
 
-LogViewerTab::LogViewerTab( qint32 id, const LogViewerConfig& config, bool rerun, ModelFilter * filter, ColumnID filter_column, QWidget *parent )
-    : QWidget( parent ), mConfig( config )
+LogViewerTab::LogViewerTab( qint32 id,
+                            const LogViewerConfig & config,
+                            bool rerun,
+                            ModelFilter * filter,
+                            ColumnId filter_column,
+                            QWidget * parent ) :
+    QWidget( parent ), mConfig( config )
 {
 	setupUi(this);
 
@@ -38,7 +43,7 @@ LogViewerTab::LogViewerTab( qint32 id, const LogViewerConfig& config, bool rerun
         qpb_freeze->setEnabled( false );
 	}
 
-    mpFreezeAnimation = q_check_ptr ( new QPropertyAnimation(this, "_freezeAnimationValue") );
+    mpFreezeAnimation = q_check_ptr ( new QPropertyAnimation( this, "_freezeAnimationValue" ) );
     mpFreezeAnimation->setDuration  ( 2000 );
     mpFreezeAnimation->setLoopCount ( -1 );
     mpFreezeAnimation->setStartValue( 0.f );
@@ -47,25 +52,26 @@ LogViewerTab::LogViewerTab( qint32 id, const LogViewerConfig& config, bool rerun
 
 	mFreezeAnimationValue = -1.f;
 
-	foreach(QString level, HbLogger::MetaLevel::toString())
+    foreach( const QString level, HbLogger::MetaLevel::toString() )
 	{
         if( !level.contains( QLatin1String( "_ALL" ) ) && !level.contains( QLatin1String( "_NONE" ) ) )
 		{
 			HbLogger::Level enum_level = HbLogger::MetaLevel::fromString(level, HbLogger::LEVEL_TRACE);
 
-			qcb_level->addItem(level, enum_level);
+            qcb_level->addItem( level, enum_level );
 		}
 	}
+
 	updateView(); // Update icon colors. At this time, the config is not loaded so black icons will be drawn.
 
-	mLabels.insert( COLUMN_LEVEL, QStringLiteral( "Level" ) );
-    mLabels.insert( COLUMN_TIME,  QStringLiteral( "Time" ) );
-    mLabels.insert( COLUMN_OWNER, QStringLiteral( "Owner" ) );
-    mLabels.insert( COLUMN_LINE,  QStringLiteral( "Line" ) );
-    mLabels.insert( COLUMN_WHERE, QStringLiteral( "Where" ) );
+    mLabels.insert( COLUMN_LEVEL, QStringLiteral( "Level"   ) );
+    mLabels.insert( COLUMN_TIME,  QStringLiteral( "Time"    ) );
+    mLabels.insert( COLUMN_OWNER, QStringLiteral( "Owner"   ) );
+    mLabels.insert( COLUMN_LINE,  QStringLiteral( "Line"    ) );
+    mLabels.insert( COLUMN_WHERE, QStringLiteral( "Where"   ) );
     mLabels.insert( COLUMN_TEXT,  QStringLiteral( "Message" ) );
-    mLabels.insert( COLUMN_FILE,  QStringLiteral( "File" ) );
-    mLabels.insert( COLUMN_FUNC,  QStringLiteral( "Func" ) );
+    mLabels.insert( COLUMN_FILE,  QStringLiteral( "File"    ) );
+    mLabels.insert( COLUMN_FUNC,  QStringLiteral( "Func"    ) );
 
     mProxy.setSourceModel( &mModel );
 
@@ -83,15 +89,16 @@ LogViewerTab::LogViewerTab( qint32 id, const LogViewerConfig& config, bool rerun
 
 	initTable();
 
-    connect(qcb_level,          (void (QComboBox::*)(int))&QComboBox::currentIndexChanged,  this, &LogViewerTab::onLevelChanged);
-	connect(qle_filter_text,    &QLineEdit::textEdited,       this, &LogViewerTab::onFilterTextChanged);
-	connect(qpb_clear,          &QPushButton::clicked,        this, &LogViewerTab::onClearClicked);
-	connect(qpb_adjust_content, &QPushButton::clicked,        this, &LogViewerTab::onAdjustToContent);
-	connect(qpb_save_as,        &QPushButton::clicked,        this, &LogViewerTab::onSaveAsClicked);
-	connect(qpb_freeze,         &QPushButton::clicked,        this, &LogViewerTab::onFreezeClicked);
-	connect(qtv_log,            &QTableView::doubleClicked,   this, &LogViewerTab::onRowDoubleClicked);
-	connect(qtv_log, &QTableView::customContextMenuRequested, this, &LogViewerTab::onCustomContextMenuRequested);
-
+    connect( qcb_level,          ( void ( QComboBox::* )( int ) ) &QComboBox::currentIndexChanged,
+             this,               &LogViewerTab::onLevelChanged );
+    connect( qle_filter_text,    &QLineEdit::textEdited,       this, &LogViewerTab::onFilterTextChanged );
+    connect( qpb_clear,          &QPushButton::clicked,        this, &LogViewerTab::onClearClicked );
+    connect( qpb_adjust_content, &QPushButton::clicked,        this, &LogViewerTab::onAdjustToContent );
+    connect( qpb_save_as,        &QPushButton::clicked,        this, &LogViewerTab::onSaveAsClicked );
+    connect( qpb_freeze,         &QPushButton::clicked,        this, &LogViewerTab::onFreezeClicked );
+    connect( qtv_log,            &QTableView::doubleClicked,   this, &LogViewerTab::onRowDoubleClicked );
+    connect( qtv_log,            &QTableView::customContextMenuRequested,
+             this,               &LogViewerTab::onCustomContextMenuRequested);
 }
 
 LogViewerTab::~LogViewerTab()
@@ -107,10 +114,10 @@ qint32 LogViewerTab::id() const
 void LogViewerTab::initTable()
 {
 	mModel.clear();
-	mModel.setHorizontalHeaderLabels(mLabels);
-	qtv_log->hideColumn(COLUMN_FILE);
-	qtv_log->hideColumn(COLUMN_FUNC);
-    qtv_log->horizontalHeader()->setStretchLastSection(true);
+    mModel.setHorizontalHeaderLabels( mLabels );
+    qtv_log->hideColumn( COLUMN_FILE );
+    qtv_log->hideColumn( COLUMN_FUNC );
+    qtv_log->horizontalHeader()->setStretchLastSection( true );
 
     mProxy.beginDeclareFilter();
     mProxy.removeFilters();
@@ -129,14 +136,14 @@ void  LogViewerTab::setFreezeAnimationValue( qreal value )
 {
 	mFreezeAnimationValue = value;
 
-	if(value == -1.f)
+    if( value == -1.f )
 	{
 		QString style;
         style += QLatin1String( "QTableView  {\n" );
         style += QLatin1String( "border: none;\n" );
         style += QLatin1String( "}" );
 
-		qtv_log->setStyleSheet(style);
+        qtv_log->setStyleSheet( style );
 	}
 	else
 	{
@@ -146,21 +153,21 @@ void  LogViewerTab::setFreezeAnimationValue( qreal value )
         style += QLatin1String( "border-radius: 2px;\n" );
         style += QLatin1String( "}" );
 
-		qtv_log->setStyleSheet(style);
+        qtv_log->setStyleSheet( style );
 	}
 }
 
 bool LogViewerTab::isValidEntry( QList< QStandardItem * > & row )
 {
 
-    if( !row.at(COLUMN_LEVEL) ||
-		!row.at(COLUMN_TIME)  ||
-		!row.at(COLUMN_OWNER) ||
-		!row.at(COLUMN_LINE)  ||
-		!row.at(COLUMN_WHERE) ||
-		!row.at(COLUMN_TEXT)  ||
-		!row.at(COLUMN_FILE)  ||
-		!row.at(COLUMN_FUNC))
+    if( !row.at( COLUMN_LEVEL ) ||
+        !row.at( COLUMN_TIME  ) ||
+        !row.at( COLUMN_OWNER ) ||
+        !row.at( COLUMN_LINE  ) ||
+        !row.at( COLUMN_WHERE ) ||
+        !row.at( COLUMN_TEXT  ) ||
+        !row.at( COLUMN_FILE  ) ||
+        !row.at( COLUMN_FUNC  ) )
 	{
 		qDebug() << "Unexpected null pointer.";
 		return false;
@@ -175,65 +182,68 @@ bool LogViewerTab::isValidEntry( QList< QStandardItem * > & row )
     return mpFilter->acceptsValue( item_to_be_filtered->data( mpFilter->mRole ) );
 }
 
-void LogViewerTab::addEntry(const HbLogMessage* msg, bool rerun)
+void LogViewerTab::addEntry( const HbLogMessage * msg, bool rerun )
 {
-	if(!msg)
+    if( !msg )
 	{
 		return;
 	}
 
-	if(mFrozen && !rerun)
+    if( mFrozen && !rerun )
 	{
 		return;
 	}
 
-	QStandardItem* item_level = q_check_ptr( new QStandardItem() );
-	QStandardItem* item_time  = q_check_ptr( new QStandardItem() );
-	QStandardItem* item_owner = q_check_ptr( new QStandardItem() );
-	QStandardItem* item_where = q_check_ptr( new QStandardItem() );
-	QStandardItem* item_text  = q_check_ptr( new QStandardItem() );
-	QStandardItem* item_line  = q_check_ptr( new QStandardItem() );
-	QStandardItem* item_file  = q_check_ptr( new QStandardItem() );
-	QStandardItem* item_func  = q_check_ptr( new QStandardItem() );
+    QStandardItem * item_level = q_check_ptr( new QStandardItem() );
+    QStandardItem * item_time  = q_check_ptr( new QStandardItem() );
+    QStandardItem * item_owner = q_check_ptr( new QStandardItem() );
+    QStandardItem * item_where = q_check_ptr( new QStandardItem() );
+    QStandardItem * item_text  = q_check_ptr( new QStandardItem() );
+    QStandardItem * item_line  = q_check_ptr( new QStandardItem() );
+    QStandardItem * item_file  = q_check_ptr( new QStandardItem() );
+    QStandardItem * item_func  = q_check_ptr( new QStandardItem() );
 
 
-    QString line = QString::number(msg->context().line());
+    QString line = QString::number( msg->context().line() );
     if( line == QLatin1String( "-1" ) ) line.clear();
 
-	QString where = QStringLiteral( "%1::%2" ).arg( msg->context().file() ).arg( msg->context().function() );
+    QString where = QStringLiteral( "%1::%2" )
+                    .arg( msg->context().file() )
+                    .arg( msg->context().function() );
+
     if( where == QLatin1String( "::" ) ) where.clear();
 
-    item_level->setData(msg->levelStr(),           Qt::DisplayRole);
-    item_level->setData(msg->level(),              Qt::UserRole);
-    item_time->setData (msg->timestampStr(),       Qt::DisplayRole);
-    item_time->setData (msg->timestamp(),          Qt::UserRole);
-    item_owner->setData(msg->context().owner(),    Qt::DisplayRole);
-    item_where->setData(where,                     Qt::DisplayRole);
-    item_text->setData (msg->message(),            Qt::DisplayRole);
-    item_line->setData (line,                      Qt::DisplayRole);
-    item_file->setData (msg->context().file(),     Qt::DisplayRole);
-	item_func->setData (msg->context().function(), Qt::DisplayRole);
+    item_level->setData( msg->levelStr(),           Qt::DisplayRole );
+    item_level->setData( msg->level(),              Qt::UserRole    );
+    item_time->setData ( msg->timestampStr(),       Qt::DisplayRole );
+    item_time->setData ( msg->timestamp(),          Qt::UserRole    );
+    item_owner->setData( msg->context().owner(),    Qt::DisplayRole );
+    item_where->setData( where,                     Qt::DisplayRole );
+    item_text->setData ( msg->message(),            Qt::DisplayRole );
+    item_line->setData ( line,                      Qt::DisplayRole );
+    item_file->setData ( msg->context().file(),     Qt::DisplayRole );
+    item_func->setData ( msg->context().function(), Qt::DisplayRole );
 
 	QBrush foreground_color;
-	foreground_color.setColor(mConfig.colorByIdLevel(msg->level()));
-	item_level->setData(foreground_color, Qt::ForegroundRole);
-	item_time->setData(foreground_color, Qt::ForegroundRole);
-	item_owner->setData(foreground_color, Qt::ForegroundRole);
-	item_line->setData(foreground_color, Qt::ForegroundRole);
-	item_where->setData(foreground_color, Qt::ForegroundRole);
-	item_text->setData(foreground_color, Qt::ForegroundRole);
+    foreground_color.setColor(mConfig.colorByIdLevel( msg->level() ) );
+    item_level->setData( foreground_color, Qt::ForegroundRole );
+    item_time->setData ( foreground_color, Qt::ForegroundRole );
+    item_owner->setData( foreground_color, Qt::ForegroundRole );
+    item_line->setData ( foreground_color, Qt::ForegroundRole );
+    item_where->setData( foreground_color, Qt::ForegroundRole );
+    item_text->setData ( foreground_color, Qt::ForegroundRole );
 
-	QList<QStandardItem*> row;
-	row.insert(COLUMN_LEVEL, item_level);
-	row.insert(COLUMN_TIME, item_time);
-	row.insert(COLUMN_OWNER, item_owner);
-	row.insert(COLUMN_LINE, item_line);
-	row.insert(COLUMN_WHERE, item_where);
-	row.insert(COLUMN_TEXT, item_text);
-	row.insert(COLUMN_FILE, item_file);
-	row.insert(COLUMN_FUNC, item_func);
+    QList< QStandardItem * > row;
+    row.insert( COLUMN_LEVEL, item_level );
+    row.insert( COLUMN_TIME,  item_time  );
+    row.insert( COLUMN_OWNER, item_owner );
+    row.insert( COLUMN_LINE,  item_line  );
+    row.insert( COLUMN_WHERE, item_where );
+    row.insert( COLUMN_TEXT,  item_text  );
+    row.insert( COLUMN_FILE,  item_file  );
+    row.insert( COLUMN_FUNC,  item_func  );
 
-    if(isValidEntry( row ) )
+    if( isValidEntry( row ) )
 	{
         mModel.appendRow( row );
 		checkMaxBuffer();
@@ -256,9 +266,9 @@ void LogViewerTab::updateView()
     for( qint32 index = 0; index < qcb_level->count(); ++index )
 	{
 		QColor color = mConfig.colorByIdLevel( qcb_level->itemData(index).toInt() );
-		QPixmap pix(10, 10);
-		pix.fill(color);
-		qcb_level->setItemIcon(index, QIcon(pix));
+        QPixmap pix( 10, 10 );
+        pix.fill( color );
+        qcb_level->setItemIcon( index, QIcon( pix ) );
 	}
 
 	checkMaxBuffer();
@@ -267,28 +277,28 @@ void LogViewerTab::updateView()
     for( qint32 row = 0; row < mModel.rowCount(); ++row )
 	{
 
-		QStandardItem* item_level = mModel.item(row, COLUMN_LEVEL);
-		QStandardItem* item_time  = mModel.item(row, COLUMN_TIME);
-		QStandardItem* item_owner = mModel.item(row, COLUMN_OWNER);
-		QStandardItem* item_line  = mModel.item(row, COLUMN_LINE);
-		QStandardItem* item_where = mModel.item(row, COLUMN_WHERE);
-		QStandardItem* item_text  = mModel.item(row, COLUMN_TEXT);
+        QStandardItem* item_level = mModel.item( row, COLUMN_LEVEL );
+        QStandardItem* item_time  = mModel.item( row, COLUMN_TIME  );
+        QStandardItem* item_owner = mModel.item( row, COLUMN_OWNER );
+        QStandardItem* item_line  = mModel.item( row, COLUMN_LINE  );
+        QStandardItem* item_where = mModel.item( row, COLUMN_WHERE );
+        QStandardItem* item_text  = mModel.item( row, COLUMN_TEXT  );
 
-		if(!item_level || !item_time || !item_owner || !item_line || !item_where || !item_text)
+        if( !item_level || !item_time || !item_owner || !item_line || !item_where || !item_text )
 		{
 			qDebug() << "Unexpected null pointer.";
 			continue;
 		}
 
 		QBrush foreground_color;
-		foreground_color.setColor(mConfig.colorByIdLevel(item_level->data(Qt::UserRole).toInt()));
+        foreground_color.setColor( mConfig.colorByIdLevel( item_level->data( Qt::UserRole ).toInt() ) );
 
-		item_level->setData(foreground_color, Qt::ForegroundRole);
-		item_time->setData (foreground_color, Qt::ForegroundRole);
-		item_owner->setData(foreground_color, Qt::ForegroundRole);
-		item_line->setData (foreground_color, Qt::ForegroundRole);
-		item_where->setData(foreground_color, Qt::ForegroundRole);
-		item_text->setData (foreground_color, Qt::ForegroundRole);
+        item_level->setData( foreground_color, Qt::ForegroundRole );
+        item_time->setData ( foreground_color, Qt::ForegroundRole );
+        item_owner->setData( foreground_color, Qt::ForegroundRole );
+        item_line->setData ( foreground_color, Qt::ForegroundRole );
+        item_where->setData( foreground_color, Qt::ForegroundRole );
+        item_text->setData ( foreground_color, Qt::ForegroundRole );
 	}
 }
 
@@ -299,16 +309,16 @@ void LogViewerTab::checkMaxBuffer()
 
     qreal percent = ( current_buffer * 100.0 ) / ( qreal ) max_buffer;
 
-	while(current_buffer > max_buffer)
+    while( current_buffer > max_buffer )
 	{
-		mModel.removeRow(0);
+        mModel.removeRow( 0 );
 		--current_buffer;
 	}
 
-	qpb_buffer->setValue(percent);
+    qpb_buffer->setValue( percent );
 }
 
-void LogViewerTab::onLevelChanged(int index)
+void LogViewerTab::onLevelChanged( int index )
 {
     qint32 min_level = qcb_level->itemData( index ).toInt();
 
@@ -316,13 +326,13 @@ void LogViewerTab::onLevelChanged(int index)
     regexp += QLatin1Char( '(' );
 
 	qint32 current_level = HbLogConfig::msMaxLevel;
-    while(current_level >= min_level)
+    while( current_level >= min_level )
     {
         regexp += QStringLiteral( "%1|").arg( current_level );
         current_level >>= 1;
     }
 
-	regexp.chop(1); // Remove the the last '|'.
+    regexp.chop( 1 ); // Remove the the last '|'.
 	regexp += QLatin1Char( ')' );
 
 	mProxy.beginDeclareFilter();
@@ -332,7 +342,7 @@ void LogViewerTab::onLevelChanged(int index)
 
 }
 
-void LogViewerTab::onFilterTextChanged(const QString& filter)
+void LogViewerTab::onFilterTextChanged( const QString & filter )
 {
 
     mProxy.removeFilter( COLUMN_TEXT );
@@ -352,7 +362,7 @@ void LogViewerTab::onFreezeClicked( bool checked )
 
     if( mpFreezeAnimation )
 	{
-		if(mFrozen)
+        if( mFrozen )
 		{
             mpFreezeAnimation->start();
 		}
@@ -374,8 +384,11 @@ void LogViewerTab::onSaveAsClicked()
     if( !mFrozen )
 	{
 
-        QMessageBox::StandardButton answer = QMessageBox::question( this, QStringLiteral( "Save as" ), 
-            QStringLiteral( "During the saving process, freeze must be enabled. Alright?" ), QMessageBox::Yes | QMessageBox::No );
+        auto answer = QMessageBox::question(
+                      this,
+                      QStringLiteral( "Save as" ),
+                      QStringLiteral( "During the saving process, freeze must be enabled. Alright?" ),
+                      QMessageBox::Yes | QMessageBox::No );
 
         if( answer == QMessageBox::No )
 		{
@@ -398,13 +411,13 @@ void LogViewerTab::onSaveAsClicked()
     for( qint32 row = 0; row < mModel.rowCount(); ++row )
 	{
 		
-        QStandardItem* item_level = mModel.item( row, COLUMN_LEVEL );
-        QStandardItem* item_time  = mModel.item( row, COLUMN_TIME );
-        QStandardItem* item_owner = mModel.item( row, COLUMN_OWNER );
-        QStandardItem* item_text  = mModel.item( row, COLUMN_TEXT );
-        QStandardItem* item_line  = mModel.item( row, COLUMN_LINE );
-        QStandardItem* item_file  = mModel.item( row, COLUMN_FILE );
-        QStandardItem* item_func  = mModel.item( row, COLUMN_FUNC );
+        QStandardItem * item_level = mModel.item( row, COLUMN_LEVEL );
+        QStandardItem * item_time  = mModel.item( row, COLUMN_TIME  );
+        QStandardItem * item_owner = mModel.item( row, COLUMN_OWNER );
+        QStandardItem * item_text  = mModel.item( row, COLUMN_TEXT  );
+        QStandardItem * item_line  = mModel.item( row, COLUMN_LINE  );
+        QStandardItem * item_file  = mModel.item( row, COLUMN_FILE  );
+        QStandardItem * item_func  = mModel.item( row, COLUMN_FUNC  );
 
         if( !item_level || !item_time || !item_owner || !item_text || !item_line || !item_file || !item_func )
 		{
@@ -421,41 +434,41 @@ void LogViewerTab::onSaveAsClicked()
         QString func  = item_func->data( Qt::DisplayRole ).toString();
 
         HbLogContext context( owner, file.toStdString().c_str(), line, func.toStdString().c_str() );
-        HbLogMessage msg( ( HbLogger::Level ) level, HbLogger::OUTPUT_ALL, context, time, text);
+        HbLogMessage msg( ( HbLogger::Level ) level, HbLogger::OUTPUT_ALL, context, time, text );
 
         buffer += HbLogMessage::toRaw( msg );
         buffer += QChar::LineFeed;
 	}
 
 	QByteArray ba = buffer.toUtf8();
-	const char *data = ba.data();
+    const char * data = ba.data();
 
-	file.write(data);
+    file.write( data );
 	file.close();
 }
 
-void LogViewerTab::onRowDoubleClicked(const QModelIndex& index)
+void LogViewerTab::onRowDoubleClicked( const QModelIndex & index )
 {
-	QModelIndex index_source = mProxy.mapToSource(index);
+    QModelIndex index_source = mProxy.mapToSource( index );
 
-	QStandardItem* item_line = mModel.item(index_source.row(), COLUMN_LINE);
-	QStandardItem* item_file = mModel.item(index_source.row(), COLUMN_FILE);
+    QStandardItem * item_line = mModel.item( index_source.row(), COLUMN_LINE );
+    QStandardItem * item_file = mModel.item( index_source.row(), COLUMN_FILE );
 	
-	qint32  line = item_line->data(Qt::DisplayRole).toInt();
-	QString file = item_file->data(Qt::DisplayRole).toString();
+    qint32  line = item_line->data( Qt::DisplayRole ).toInt();
+    QString file = item_file->data( Qt::DisplayRole ).toString();
 
-	QFileInfo file_info(file);
+    QFileInfo file_info( file );
 	file = file_info.fileName();
 
 	QStringList   folders = mConfig.projectFolders();
-	QSet<QString> found_paths;
+    QSet< QString > found_paths;
 
-	foreach(QString folder, folders)
+    foreach( const QString folder, folders )
 	{
-		found_paths.unite(findAbsoluteFilePath(file, folder));
+        found_paths.unite(findAbsoluteFilePath( file, folder ) );
 	}
 
-	if(found_paths.isEmpty())
+    if( found_paths.isEmpty() )
 	{
         qDebug() << QStringLiteral( "No path found for %1 : %2." ).arg( file ).arg( line );
 		return;
@@ -463,14 +476,14 @@ void LogViewerTab::onRowDoubleClicked(const QModelIndex& index)
 
 	QString file_to_open = *found_paths.begin();
 
-	if(found_paths.size() > 1)
+    if( found_paths.size() > 1 )
 	{
-        QInputDialog dialog(this);
-        dialog.setWindowTitle( QStringLiteral( "The file you want to open" ) );
-        dialog.setTextValue( QStringLiteral( "File:" ) );
-        dialog.setComboBoxItems(found_paths.values());
+        QInputDialog dialog( this );
+        dialog.setWindowTitle  ( QStringLiteral( "The file you want to open" ) );
+        dialog.setTextValue    ( QStringLiteral( "File:" ) );
+        dialog.setComboBoxItems( found_paths.values() );
 		
-        if(dialog.exec() == QDialog::Accepted)
+        if( dialog.exec() == QDialog::Accepted )
         {
             file_to_open = dialog.textValue();
         }
@@ -480,13 +493,13 @@ void LogViewerTab::onRowDoubleClicked(const QModelIndex& index)
         }
 	}
 
-	if(file_to_open.isEmpty())
+    if( file_to_open.isEmpty() )
 	{
 		return;
 	}
 
-	QString cmd = mConfig.editorCommand(mConfig.defaultEditor());
-	if(cmd.isEmpty())
+    QString cmd = mConfig.editorCommand( mConfig.defaultEditor() );
+    if( cmd.isEmpty() )
 	{
 		qDebug() << "No command found.";
 		return;
@@ -495,111 +508,110 @@ void LogViewerTab::onRowDoubleClicked(const QModelIndex& index)
     cmd.replace( QLatin1String( "$(FILE)" ), file_to_open );
     cmd.replace( QLatin1String( "$(LINE)" ), QString::number( line ) );
 
-
-
-	if(!QProcess::startDetached(cmd))
+    if( !QProcess::startDetached( cmd ) )
 	{
-        QMessageBox::critical( this, QStringLiteral( "Error" ), 
-            QStringLiteral( "Error while opening file." ), QMessageBox::Ok );
+        QMessageBox::critical( this,
+                               QStringLiteral( "Error" ),
+                               QStringLiteral( "Error while opening file." ),
+                               QMessageBox::Ok );
 	}
 }
 
-void LogViewerTab::onCustomContextMenuRequested(const QPoint &pos)
+void LogViewerTab::onCustomContextMenuRequested( const QPoint & pos )
 {
-	QModelIndex index = qtv_log->indexAt(pos);
-	if(!index.isValid())
+    QModelIndex index = qtv_log->indexAt( pos );
+    if( !index.isValid() )
 	{
 		return;
 	}
 
-	QMenu* menu = q_check_ptr( new QMenu() );
+    QMenu * menu = q_check_ptr( new QMenu() );
 
-    QAction* qa_new_tab           = menu->addAction( QStringLiteral( "Open in a new tab" ) );
-    QAction* qa_copy_cell_content = menu->addAction( QStringLiteral( "Copy cell content" ) );
+    QAction * qa_new_tab           = menu->addAction( QStringLiteral( "Open in a new tab" ) );
+    QAction * qa_copy_cell_content = menu->addAction( QStringLiteral( "Copy cell content" ) );
 
     connect( qa_new_tab,           &QAction::triggered, this, &LogViewerTab::onOpenNewTab );
     connect( qa_copy_cell_content, &QAction::triggered, this, &LogViewerTab::onCopyCellContent );
 
-	menu->exec(qtv_log->mapToGlobal(pos));
+    menu->exec( qtv_log->mapToGlobal( pos ) );
 }
 
 void LogViewerTab::onOpenNewTab()
 {
 	QModelIndex index = qtv_log->currentIndex();
-	if(!index.isValid())
+    if( !index.isValid() )
 	{
 		return;
 	}
 
-	QModelIndex index_right = mProxy.mapToSource(index);
+    QModelIndex index_right = mProxy.mapToSource( index );
 
-	QStandardItem* selected_item = mModel.item(index_right.row(), index_right.column());
-	if(!selected_item)
+    QStandardItem * selected_item = mModel.item( index_right.row(), index_right.column() );
+    if( !selected_item )
 	{
 		return;
 	}
 
-	QString content = selected_item->data(Qt::DisplayRole).toString();
-	emit newTabRequest(index_right.column(), content);
+    QString content = selected_item->data( Qt::DisplayRole ).toString();
+    emit newTabRequest( index_right.column(), content );
 
 }
 
 void LogViewerTab::onCopyCellContent()
 {
     QModelIndex index = qtv_log->currentIndex();
-    if(!index.isValid())
+    if( !index.isValid() )
     {
         return;
     }
 
-    QModelIndex index_right = mProxy.mapToSource(index);
+    QModelIndex index_right = mProxy.mapToSource( index );
 
-    QStandardItem* selected_item = mModel.item(index_right.row(), index_right.column());
-    if(!selected_item)
+    QStandardItem * selected_item = mModel.item( index_right.row(), index_right.column() );
+    if( !selected_item )
     {
         return;
     }
 
-    QString content = selected_item->data(Qt::DisplayRole).toString();
+    QString content = selected_item->data( Qt::DisplayRole ).toString();
 
     QClipboard * clipboard = QApplication::clipboard();
     clipboard->setText( content );
-
 }
 
-
-QSet<QString> LogViewerTab::findAbsoluteFilePath( const QString & file_path, const QString & root_path )
+QSet< QString > LogViewerTab::findAbsoluteFilePath( const QString & file_path, const QString & root_path )
 {
-	QSet<QString> file_path_found;
+    QSet< QString > file_path_found;
 
     QFileInfo root_path_info( QStringLiteral( "%1/" ).arg( root_path ) );
-	if(!root_path_info.exists() || !root_path_info.isDir())
+    if( !root_path_info.exists() || !root_path_info.isDir() )
 	{
 		return file_path_found;
 	}
 
-	QDir root_path_dir = root_path_info.dir();
-	QStringList subdirs = root_path_dir.entryList(QDir::Dirs | QDir::NoDot | QDir::NoDotDot);
+    QDir root_path_dir  = root_path_info.dir();
+    QStringList subdirs = root_path_dir.entryList( QDir::Dirs | QDir::NoDot | QDir::NoDotDot );
 
 	// Browse subdirs
-	foreach(QString subdir, subdirs)
+    foreach( const QString subdir, subdirs )
 	{
         QString subdir_path = QStringLiteral( "%1%2/" )
             .arg( root_path_info.absoluteFilePath() ).arg( subdir );
 	
-		file_path_found.unite(findAbsoluteFilePath(file_path, subdir_path));
+        file_path_found.unite( findAbsoluteFilePath( file_path, subdir_path ) );
 	}
 
 	// Check current dir
     QString full_file_path = QStringLiteral( "%1/%2" )
-        .arg( root_path ).arg( file_path );
+                             .arg( root_path )
+                             .arg( file_path );
 
-	QFileInfo file_info(full_file_path);
-	if(file_info.exists() && file_info.isFile())
+    QFileInfo file_info( full_file_path );
+    if( file_info.exists() && file_info.isFile() )
 	{
-		full_file_path = QDir::cleanPath(full_file_path);
+        full_file_path = QDir::cleanPath( full_file_path );
 
-		file_path_found.insert(full_file_path);
+        file_path_found.insert( full_file_path );
 	}
 
 	return file_path_found;

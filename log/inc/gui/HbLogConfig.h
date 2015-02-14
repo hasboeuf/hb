@@ -53,7 +53,7 @@ namespace hb
 			void saveSettings();
 
 		public:
-			static const char *  msDefaultConfigXml;
+            static const char *  msDefaultConfigXml;
 			static const quint32 msMaxLevel;
 
 		protected:

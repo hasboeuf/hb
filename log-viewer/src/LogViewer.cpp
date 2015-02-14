@@ -25,12 +25,13 @@ LogViewer::LogViewer( QWidget * parent ) :
 
 	mConfig.loadSettings();
 
-	connect( mpLogNotifier, &HbLogGuiNotifier::newLogMessage, this, &LogViewer::onNewLogMessage, Qt::UniqueConnection );
-	connect( &mProcessTimer,  &QTimer::timeout,               this, &LogViewer::processLogMessage);
-	connect( qpb_open,        &QPushButton::clicked,          this, &LogViewer::onOpenFileClicked);
-	connect( qpb_configure,   &QPushButton::clicked,          this, &LogViewer::onConfigureClicked);
-	connect( qtw_main,        &QTabWidget::tabCloseRequested, this, &LogViewer::onTabCloseRequested);
-	connect(qsb_refresh_time, (void (QSpinBox::*)(int)) &QSpinBox::valueChanged, this, &LogViewer::onRefreshTimeChanged);
+    connect( mpLogNotifier,    &HbLogGuiNotifier::newLogMessage, this, &LogViewer::onNewLogMessage, Qt::UniqueConnection );
+    connect( &mProcessTimer,   &QTimer::timeout,                 this, &LogViewer::processLogMessage );
+    connect( qpb_open,         &QPushButton::clicked,            this, &LogViewer::onOpenFileClicked );
+    connect( qpb_configure,    &QPushButton::clicked,            this, &LogViewer::onConfigureClicked );
+    connect( qtw_main,         &QTabWidget::tabCloseRequested,   this, &LogViewer::onTabCloseRequested );
+    connect( qsb_refresh_time, (void (QSpinBox::*)(int)) &QSpinBox::valueChanged,
+            this, &LogViewer::onRefreshTimeChanged);
 
     LogViewerTab * tab_general = q_check_ptr( new LogViewerTab( mTabIds++, mConfig ) );
 
@@ -39,14 +40,15 @@ LogViewer::LogViewer( QWidget * parent ) :
 	mTabs.insert( tab_general->id(), tab_general );
     qtw_main->insertTab( tab_general->id(), tab_general, QStringLiteral( "General" ) );
 
-	mProcessTimer.start(qsb_refresh_time->value());
+    mProcessTimer.start( qsb_refresh_time->value() );
 }
 
 void LogViewer::loadConfigPath( const QString & path )
 {
-
     foreach( LogViewerTab * tab, mTabs )
+    {
         if( tab ) tab->updateView();
+    }
 }
 
 void LogViewer::loadConfigSettings()
@@ -54,11 +56,13 @@ void LogViewer::loadConfigSettings()
     mConfig.loadSettings();
 
     foreach( LogViewerTab* tab, mTabs )
+    {
         if( tab ) tab->updateView();
+    }
 }
 
 
-HbLogGuiNotifier* LogViewer::logNotifier() const
+HbLogGuiNotifier * LogViewer::logNotifier() const
 {
     return mpLogNotifier;
 }
@@ -86,7 +90,7 @@ void LogViewer::onOpenFileClicked()
     }
 
     LogViewerTab* tab = q_check_ptr( new LogViewerTab( mTabIds++, mConfig, true ) );
-	connect(tab, &LogViewerTab::newTabRequest, this, &LogViewer::onNewTabRequest);
+    connect( tab, &LogViewerTab::newTabRequest, this, &LogViewer::onNewTabRequest );
     mTabs.insert( tab->id(), tab );
     qtw_main->insertTab( tab->id(), tab, file.fileName() );
     qtw_main->setCurrentIndex( tab->id() );
@@ -104,29 +108,6 @@ void LogViewer::onOpenFileClicked()
             continue;
         }
 
-        /*QStringList items = line.split( HbLogMessage::msFieldSeparator );
-
-        if( items.size() != 7 )
-        {
-            qDebug() << "Unreadable line.";
-            continue;
-        }
-
-        HbLogContext context( items.at(2),
-            items.at(4).toLatin1().constData(),
-            items.at(3).toInt(),
-            items.at(5).toLatin1().constData() );
-
-        QString time_str = items.at( 1 );
-        QTime   time = QTime::fromString( time_str, QStringLiteral( "HH:mm:ss:zzz" ) );
-        qint32  time_tag = time.msec() + 1000 * ( time.second() + ( time.minute() * 60 ) + ( time.hour() * 3600 ) );
-
-        HbLogMessage msg( ( HbLogger::Level )( items.at( 0 ).toInt() ),
-            HbLogger::OUTPUT_ALL,
-            context,
-            time_tag,
-            items.at( 6 ) );*/
-
         tab->addEntry( msg, true );
         delete msg;
     }
@@ -136,14 +117,13 @@ void LogViewer::onOpenFileClicked()
 
 void LogViewer::onConfigureClicked()
 {
-
     LogViewerConfigDialog config_dialog( mConfig, this );
     if( config_dialog.exec() == QDialog::Accepted )
     {
         mConfig = config_dialog.config();
         mConfig.saveSettings();
 
-        foreach( LogViewerTab* tab, mTabs )
+        foreach( LogViewerTab * tab, mTabs )
         {
             tab->updateView();
         }
@@ -180,7 +160,9 @@ void LogViewer::processLogMessage()
 		HbLogMessage * message = mTempBuffer.takeFirst();
 	
 		foreach( LogViewerTab* tab, mTabs )
+        {
 			tab->addEntry( message );
+        }
 
         delete message;
 	}
@@ -189,16 +171,16 @@ void LogViewer::processLogMessage()
 }
 
 
-void LogViewer::onNewTabRequest( qint32 column, QString value )
+void LogViewer::onNewTabRequest( quint8 column, const QString & value )
 {
-	ModelFilter* filter = q_check_ptr( new ModelFilter() );
+    ModelFilter * filter = q_check_ptr( new ModelFilter() );
 	filter->mValue = value;
 	filter->mRole  = Qt::DisplayRole;
 	filter->mFlags = Qt::MatchExactly;
 
-    LogViewerTab* tab = q_check_ptr( new LogViewerTab( mTabIds++, mConfig, false, filter, ( LogViewerTab::ColumnID ) column ) );
-	connect(tab, &LogViewerTab::newTabRequest, this, &LogViewer::onNewTabRequest);
-	mTabs.insert(tab->id(), tab);
-	qtw_main->insertTab(tab->id(), tab, value);
-	qtw_main->setCurrentIndex(tab->id());
+    LogViewerTab * tab = q_check_ptr( new LogViewerTab( mTabIds++, mConfig, false, filter, ( LogViewerTab::ColumnId ) column ) );
+    connect( tab, &LogViewerTab::newTabRequest, this, &LogViewer::onNewTabRequest );
+    mTabs.insert( tab->id(), tab );
+    qtw_main->insertTab( tab->id(), tab, value );
+    qtw_main->setCurrentIndex( tab->id() );
 }

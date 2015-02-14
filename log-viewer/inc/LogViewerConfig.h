@@ -12,14 +12,15 @@ namespace hb
 {
     namespace logviewer
 	{
+        using hb::log::HbLogConfig;
 
-        class LogViewerConfig final : public hb::log::HbLogConfig
+        class LogViewerConfig final : public HbLogConfig
         {
             Q_OBJECT
 
         public :
-			static const LogViewerConfig importConfigXml(QString file_path);
-			static bool exportConfigXml(QString file_path, const LogViewerConfig & config);
+            static const LogViewerConfig importConfigXml( const QString & file_path );
+            static bool exportConfigXml( const QString & file_path, const LogViewerConfig & config );
 
             LogViewerConfig();
             LogViewerConfig( const LogViewerConfig & config );
@@ -27,29 +28,29 @@ namespace hb
 
             LogViewerConfig & operator =( const LogViewerConfig & config );
 
-			void addEditor(QString name, QString path);
-			QString editorCommand(QString editor_name) const;
+            void addEditor( const QString & name, const QString & path);
+            const QString editorCommand( const QString & editor_name ) const;
 			void resetEditors();
 			QMap< QString, QString > editors() const;
 
 			QString defaultEditor() const;
-			void setDefaultEditor(QString editor);
+            void setDefaultEditor( const QString & editor );
 
 			void resetProjectFolders();
 			QStringList projectFolders() const;
-			void addProjectFolder(QString folder);
+            void addProjectFolder( const QString & folder);
 
             void loadSettings();
             void saveSettings();
 
 		protected:
-			void buildDomFromConfig(QDomElement& root) const;
-			void buildConfigFromDom(QDomElement& root);
+            void buildDomFromConfig( QDomElement & root ) const;
+            void buildConfigFromDom( QDomElement & root );
 
         private :
-            QStringList mProjectFolders;
+            QStringList              mProjectFolders;
             QMap< QString, QString > mEditorCommands;
-            QString mEditorDefault;
+            QString                  mEditorDefault;
         };
     }
 }
