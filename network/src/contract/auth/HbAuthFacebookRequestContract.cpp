@@ -8,7 +8,7 @@ using namespace hb::network;
 HbAuthFacebookRequestContract::HbAuthFacebookRequestContract() :
     HbAuthRequestContract()
 {
-    mType = HbAuthService::AUTH_FACEOOK;
+    mType = HbAuthService::AUTH_FACEBOOK;
 }
 
 HbAuthFacebookRequestContract::HbAuthFacebookRequestContract( const HbAuthFacebookRequestContract & source ) :
