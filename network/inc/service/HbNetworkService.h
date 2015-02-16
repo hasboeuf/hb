@@ -34,13 +34,13 @@ namespace hb
             virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const = 0;
 
-            virtual HbNetworkProtocol::Service uuid() const final
+            virtual servuuid uuid() const final
             {
                 return mUuid;
             }
 
         protected:
-            HbNetworkProtocol::Service mUuid = HbNetworkProtocol::SERVICE_UNDEFINED;
+            servuuid mUuid = HbNetworkProtocol::SERVICE_UNDEFINED;
 		};
 	}
 }

@@ -38,13 +38,20 @@ namespace hb
 
         public callbacks:
             // From HbAbstractServer.
-            void onServerConnected       ( quint16 server_uuid );
-            void onServerDisconnected    ( quint16 server_uuid );
-            void onSocketConnected       ( quint16 server_uuid, sockuuid socket_uuid );
-            void onSocketDisconnected    ( quint16 server_uuid, sockuuid socket_uuid );
-            void onSocketContractReceived( quint16 server_uuid, sockuuid socket_uuid, const HbNetworkContract * contract );
+            void onServerConnected       ( servuuid server_uuid );
+            void onServerDisconnected    ( servuuid server_uuid );
+            void onSocketConnected       ( servuuid server_uuid, sockuuid socket_uuid );
+            void onSocketDisconnected    ( servuuid server_uuid, sockuuid socket_uuid );
+            void onSocketContractReceived( servuuid server_uuid, sockuuid socket_uuid, const HbNetworkContract * contract );
 
-            // From HbNetworkService.
+            // From services.
+            void onContractSent( const HbNetworkContract * contract );
+            void onUserKick    ( const HbNetworkUser & user_info, kickcode reason );
+            void onSocketKick  ( sockuuid socket_uuid, kickcode reason );
+
+            // From HbAuthService.
+            void onUserConnected( sockuuid socket_id, const HbNetworkUserInfo & user_info );
+
 
         signals:
             // To services.
@@ -54,8 +61,6 @@ namespace hb
             void userConnected         ( const HbNetworkUserInfo & user_info );
             void userDisconnected      ( const HbNetworkUserInfo & user_info );
             void userContractReceived  ( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract );
-            // To
-            void socketPendingContractReceived( sockuuid socket_uuid, const HbNetworkContract * contract );
 
         private:
             bool checkContractReceived( const HbNetworkContract * contract );

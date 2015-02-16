@@ -29,6 +29,7 @@ HbConnectionPool::HbConnectionPool()
 
     foreach( HbNetworkService * service, mServices )
     {
+        // Socket.
         IHbSocketListener * socket_listener = dynamic_cast< IHbSocketListener * >( service );
         if( socket_listener )
         {
@@ -36,6 +37,26 @@ HbConnectionPool::HbConnectionPool()
                     [socket_listener]( sockuuid socket_uuid )
                     {
                         socket_listener->onSocketConnected( socket_uuid );
+                    } );
+            connect( this, &HbConnectionPool::socketDisconnected,
+                    [socket_listener]( sockuuid socket_uuid )
+                    {
+                        socket_listener->onSocketDisconnected( socket_uuid );
+                    } );
+        }
+        // User.
+        IHbUserListener * user_listener = dynamic_cast< IHbUserListener * >( service );
+        if( user_listener )
+        {
+            connect( this, &HbConnectionPool::userConnected,
+                    [user_listener]( const HbNetworkUserInfo & user_info )
+                    {
+                        user_listener->onUserConnected( user_info );
+                    } );
+            connect( this, &HbConnectionPool::userDisconnected,
+                    [user_listener]( const HbNetworkUserInfo & user_info )
+                    {
+                        user_listener->onUserDisconnected( user_info );
                     } );
         }
     }

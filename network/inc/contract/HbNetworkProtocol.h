@@ -74,6 +74,15 @@ namespace hb
             };
             Q_META_ENUMS( Code )
 
+            enum KickCode : kickcode
+            {
+                PROTOCOL_DIFFERENT = 0,
+                AUTH_LIMIT,
+                PRESENCE_TIMEOUT,
+                CONTRACT_INVALID
+            };
+            Q_META_ENUMS( KickCode )
+
             enum AuthStatus : quint8
             {
                 // General

@@ -16,6 +16,7 @@ typedef quint32 sockuuid;
 typedef quint16 netwuuid;
 typedef quint16 servuuid;
 typedef quint16 authstgy;
+typedef quint32 kickcode;
 
 const size_t CLASS_SOCK = 10;
 const size_t CLASS_NETW = 10;
