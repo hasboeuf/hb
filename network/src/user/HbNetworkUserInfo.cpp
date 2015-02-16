@@ -49,7 +49,7 @@ const QString & HbNetworkUserInfo::uuid() const
     return mUuid;
 }
 
-const authstgy  HbNetworkUserInfo::type() const
+authstgy  HbNetworkUserInfo::type() const
 {
     return mType;
 }

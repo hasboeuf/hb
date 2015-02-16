@@ -24,8 +24,8 @@ namespace hb
 {
     namespace tools
     {
-        template< typename T >
-        class HB_TOOLS_DECL HbUuidGenerator : public HbSingleton< HbUuidGenerator< T > >
+        template< typename T, size_t C = CLASS_DEFAULT >
+        class HB_TOOLS_DECL HbUuidGenerator : public HbSingleton< HbUuidGenerator< T, C > >
         {
             using I = typename std::conditional< std::is_integral< T >::value, T, qint32 >::type;
 
@@ -36,26 +36,35 @@ namespace hb
 
         private:
             QMutex mMutex;
-            I mCurrent;
-            QQueue< I > mUnused;
+            QHash< ulong, I > mCurrent;
+            QHash< ulong, QQueue< I > > mUnused;
 
         public:
-            I getUuid( bool zero_prohibited = false ) // TODO zero
+            I uuid( bool zero_excluded = false )
             {
-                //QMutexLocker( &mMutex );
-                if( !mUnused.isEmpty() )
+                QMutexLocker( &( this->mMutex ) );
+
+                I value = 0;
+                if( !mUnused[C].isEmpty() )
                 {
-                    return mUnused.dequeue();
+                    value = mUnused[C].dequeue();
                 }
                 else
                 {
-                    return mCurrent++;
+                    value = mCurrent[C]++;
                 }
+
+                if( zero_excluded && value == 0 )
+                {
+                    return uuid( true );
+                }
+
+                return value;
             }
 
-            I getRandomId()
+            I randomId()
             {
-                //QMutexLocker( &mMutex );
+                QMutexLocker( &( this->mMutex ) );
 
                 I lowest = std::numeric_limits< I >::min();
                 I highest = std::numeric_limits< I >::max();
@@ -64,14 +73,15 @@ namespace hb
 
             void releaseUuid( I released_id )
             {
-                //QMutexLocker( &mMutex );
-                mUnused.enqueue( released_id );
+                QMutexLocker( &( this->mMutex ) );
+
+                mUnused[C].enqueue( released_id );
             }
 
         private:
             HbUuidGenerator()
             {
-                mCurrent = std::numeric_limits< I >::min();
+                mCurrent[C] = std::numeric_limits< I >::min();
             }
 
             ~HbUuidGenerator() = default;

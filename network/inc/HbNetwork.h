@@ -17,6 +17,10 @@ typedef quint16 netwuuid;
 typedef quint16 servuuid;
 typedef quint16 authstgy;
 
+const size_t CLASS_SOCK = 10;
+const size_t CLASS_NETW = 10;
+const size_t CLASS_SERV = 10;
+
 #if !defined( HB_NETWORK_DECL )
 #	if defined( HB_NETWORK_BUILD )
 #		define HB_NETWORK_DECL Q_DECL_EXPORT

@@ -18,7 +18,7 @@ HbAbstractSocket::HbAbstractSocket(QIODevice * device)
 
     connect( mDevice.data(), &QIODevice::readyRead, this, &HbAbstractSocket::onReadyRead, Qt::UniqueConnection);
 
-    mUuid = HbUuidGenerator< sockuuid >::get()->getUuid();
+    mUuid = HbUuidGenerator< sockuuid, CLASS_SOCK >::get()->uuid();
 
     mBytesPending = 0;
     mPackets.clear();

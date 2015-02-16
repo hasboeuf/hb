@@ -16,7 +16,7 @@ using namespace hb::network;
 HbAbstractServer::HbAbstractServer(QObject * parent) :
 	HbAbstractNetwork(parent)
 {
-    mUuid = HbUuidGenerator< quint32 >::get()->getUuid();
+    mUuid = HbUuidGenerator< netwuuid, CLASS_NETW >::get()->uuid();
     mReady = false;
 }
 

@@ -23,7 +23,7 @@ HbSocketHandler::HbSocketHandler( HbAbstractServer * server ) :
 {
     HbLogBegin();
 
-    mUuid = HbUuidGenerator< quint16 >::get()->getUuid();
+    mUuid = HbUuidGenerator< netwuuid, CLASS_NETW >::get()->uuid();
 	mState = NOT_THREADED;
 	mpServer = q_assert_ptr( server );
 

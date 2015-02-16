@@ -12,6 +12,11 @@
 // Qt
 #include <QtCore/QtGlobal>
 
+typedef quint64 replyuuid;
+
+const size_t CLASS_DEFAULT = 0;
+const size_t CLASS_REPLIES = 10;
+
 #if !defined( HB_TOOLS_DECL )
 #   if defined( HB_TOOLS_BUILD )
 #       define HB_TOOLS_DECL Q_DECL_EXPORT

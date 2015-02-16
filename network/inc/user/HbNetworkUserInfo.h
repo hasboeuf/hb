@@ -37,7 +37,7 @@ namespace hb
             HbNetworkUserInfo & operator=( const HbNetworkUserInfo & source );
 
             const QString & uuid     () const;
-            const authstgy  type     () const;
+            authstgy        type     () const;
             const QString & email    () const;
             const QString & nickname () const;
             const QString & firstName() const;

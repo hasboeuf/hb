@@ -18,7 +18,7 @@ quint64 HbHttpRequester::processRequest( const QUrl &url, quint32 timeout )
     QNetworkReply * reply = mManager.get( request );
 
     quint64 id = mReplies.add( reply, timeout );
-    if( id >= 0)
+    if( id > 0)
     {
         connect( reply, &QNetworkReply::finished, this, &HbHttpRequester::onFinished );
         connect( reply, ( void ( QNetworkReply:: * )( QNetworkReply::NetworkError ) )( &QNetworkReply::error ),
