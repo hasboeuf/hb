@@ -24,7 +24,7 @@ namespace hb
 {
     namespace tools
     {
-        template< typename T, size_t C = CLASS_DEFAULT >
+        template< typename T = qint32, size_t C = CLASS_DEFAULT >
         class HB_TOOLS_DECL HbUuidGenerator : public HbSingleton< HbUuidGenerator< T, C > >
         {
             using I = typename std::conditional< std::is_integral< T >::value, T, qint32 >::type;
