@@ -2,10 +2,14 @@
 #include <contract/auth/HbAuthStatusContract.h>
 #include <contract/HbNetworkProtocol.h>
 
+using namespace hb::network;
+
 HbAuthStatusContract::HbAuthStatusContract() :
     HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_SRV_AUTH_STATUS )
 {
-
+    mStatus    = HbNetworkProtocol::AUTH_BAD;
+    mTryNumber = 0;
+    mMaxTries  = 0;
 }
 
 HbAuthStatusContract::HbAuthStatusContract( const HbAuthStatusContract & source ) :
@@ -13,7 +17,9 @@ HbAuthStatusContract::HbAuthStatusContract( const HbAuthStatusContract & source 
 {
     if( & source != this )
     {
-
+        mStatus    = source.mStatus;
+        mTryNumber = source.mTryNumber;
+        mMaxTries  = source.mMaxTries;
     }
 }
 
@@ -23,7 +29,9 @@ HbAuthStatusContract & HbAuthStatusContract::operator=( const HbAuthStatusContra
     {
         HbNetworkContract::operator=( source );
 
-
+        mStatus    = source.mStatus;
+        mTryNumber = source.mTryNumber;
+        mMaxTries  = source.mMaxTries;
     }
 
     return ( *this );
@@ -36,16 +44,51 @@ HbAuthStatusContract * HbAuthStatusContract::create() const
 
 bool HbAuthStatusContract::read( QDataStream & stream )
 {
+    netwcode status;
+    stream >> status;
+    stream >> mTryNumber;
+    stream >> mMaxTries;
 
+    mStatus = ( HbNetworkProtocol::AuthStatus ) status;
 
     return true;
 }
 
 bool HbAuthStatusContract::write( QDataStream & stream ) const
 {
-
+    stream << ( netwcode ) mStatus;
+    stream << mTryNumber;
+    stream << mMaxTries;
 
     return true;
 }
 
+void HbAuthStatusContract::setStatus( HbNetworkProtocol::AuthStatus status )
+{
+    mStatus = status;
+}
 
+void HbAuthStatusContract::setTryNumber( quint8 try_number )
+{
+    mTryNumber = try_number;
+}
+
+void HbAuthStatusContract::setMaxTries ( quint8 max_tries )
+{
+    mMaxTries = max_tries;
+}
+
+HbNetworkProtocol::AuthStatus HbAuthStatusContract::status() const
+{
+    return mStatus;
+}
+
+quint8 HbAuthStatusContract::tryNumber() const
+{
+    return mTryNumber;
+}
+
+quint8 HbAuthStatusContract::maxTries() const
+{
+    return mMaxTries;
+}

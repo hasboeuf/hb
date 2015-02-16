@@ -46,11 +46,15 @@ namespace hb
 
             // From services.
             void onContractSent( const HbNetworkContract * contract );
+            void onContractSent( sockuuid socket_uuid, const HbNetworkContract * contract );
             void onUserKick    ( const HbNetworkUser & user_info, kickcode reason );
             void onSocketKick  ( sockuuid socket_uuid, kickcode reason );
 
             // From HbAuthService.
-            void onUserConnected( sockuuid socket_id, const HbNetworkUserInfo & user_info );
+            void onNewUserConnected( sockuuid socket_id, const HbNetworkUserInfo & user_info );
+            // From HbPresenceService.
+            void onUserWaited();
+
 
 
         signals:

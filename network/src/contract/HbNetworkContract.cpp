@@ -76,7 +76,7 @@ void HbNetworkContract::addPendingReceiver( const QString & user_uuid )
     mPendingReceivers.insert( user_uuid );
 }
 
-bool HbNetworkContract::addReceiver(sockuuid receiver )
+bool HbNetworkContract::addReceiver( sockuuid receiver )
 {
     if( mRouting == HbNetworkProtocol::RoutingScheme::UNICAST )
     {

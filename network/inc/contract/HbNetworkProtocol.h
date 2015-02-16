@@ -33,7 +33,7 @@ namespace hb
             static QString msAppName;
             static quint16 msProtocolVersion;
 
-            enum NetworkType : qint16
+            enum NetworkType : quint8
             {
                 NETWORK_UNDEFINED = 0,
                 NETWORK_TCP       = 1 << 0,
@@ -64,7 +64,7 @@ namespace hb
             };
             Q_META_ENUMS( Service )
 
-            enum Code : quint16
+            enum Code : netwcode
             {
                 CODE_UNDEFINED = 0,
                 CODE_CLT_AUTH_REQUEST,
@@ -83,7 +83,7 @@ namespace hb
             };
             Q_META_ENUMS( KickCode )
 
-            enum AuthStatus : quint8
+            enum AuthStatus : netwcode
             {
                 // General
                 AUTH_INTERNAL_ERROR = 0,
@@ -93,7 +93,6 @@ namespace hb
                 AUTH_OK,
                 AUTH_OK_ADMIN,
                 // Facebook
-                AUTH_FB_OK,
                 AUTH_FB_KO
             };
 

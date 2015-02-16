@@ -16,6 +16,8 @@
 #include <listener/IHbSocketListener.h>
 #include <user/HbNetworkUserInfo.h>
 
+class QTimerEvent;
+
 namespace hb
 {
 	namespace network
@@ -35,6 +37,9 @@ namespace hb
 
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
 
+        private:
+            void timerEvent( QTimerEvent * event );
+
         public callbacks:
             // From HbConnectionPool.
             virtual void onContractReceived( const HbNetworkContract * contract );
@@ -44,10 +49,17 @@ namespace hb
             void onLoginSucceed( sockuuid sender, const HbNetworkUserInfo & user_info );
             void onLoginFailed ( sockuuid sender, HbNetworkProtocol::AuthStatus, const QString & description );
 
+        signals:
+            void userConnected( sockuuid socket_id, const HbNetworkUserInfo & user_info );
+
         private:
-            QSet< sockuuid > mPendingSocket;
             QHash< authstgy, HbServerAuthStrategy * > mStrategies;
-		};
+            qint32 mTimerId;
+            // InOut.
+            QSet< sockuuid >          mPendingSocket;
+            QHash< sockuuid, quint8 > mAuthTries;
+            QHash< sockuuid, quint8 > mAuthTimeout;
+        };
 	}
 }
 

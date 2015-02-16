@@ -6,6 +6,7 @@
 #include <service/auth/HbServerAuthStrategy.h>
 #include <contract/auth/HbAuthRequestContract.h>
 #include <contract/auth/HbAuthFacebookRequestContract.h>
+#include <contract/auth/HbAuthStatusContract.h>
 #include <service/auth/HbServerAuthFacebookStrategy.h>
 
 using namespace hb::network;
@@ -27,6 +28,8 @@ HbServerAuthService::HbServerAuthService()
                      this,     &HbServerAuthService::onLoginSucceed, Qt::UniqueConnection );
         }
     }
+
+    mTimerId = startTimer( 1000 );
 }
 
 HbServerAuthService::~HbServerAuthService()
@@ -40,6 +43,11 @@ HbNetworkProtocol::NetworkTypes HbServerAuthService::enabledNetworkTypes() const
            HbNetworkProtocol::NETWORK_SSL;
 }
 
+void HbServerAuthService::timerEvent( QTimerEvent * )
+{
+    // TODO check socket timeout.
+}
+
 void HbServerAuthService::onContractReceived( const HbNetworkContract * contract )
 {
     const HbAuthRequestContract * auth_contract = contract->value< const HbAuthRequestContract >();
@@ -50,6 +58,7 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
         HbServerAuthStrategy * strategy = mStrategies.value( type, nullptr );
         if( strategy )
         {
+
             if( strategy->tryLogin( auth_contract ) )
             {
                 // TODO retrieve reply now ?
@@ -87,10 +96,14 @@ void HbServerAuthService::onLoginSucceed( sockuuid sender, const HbNetworkUserIn
 {
     if( mPendingSocket.contains( sender ) )
     {
-        mPendingSocket.remove( sender );
+        emit userConnected( sender, user_info );
 
-        // TODO retrieve or create the reply.
-        // TODO create user and notify ConnectionPool.
+        HbAuthStatusContract * response = new HbAuthStatusContract();
+        response->setStatus( HbNetworkProtocol::AUTH_OK );
+        response->setTryNumber( 1 ); // TODO store try number.
+        response->setMaxTries( 3 ); // TODO config.
+
+        mPendingSocket.remove( sender );
     }
     else
     {
@@ -98,7 +111,7 @@ void HbServerAuthService::onLoginSucceed( sockuuid sender, const HbNetworkUserIn
     }
 }
 
-void HbServerAuthService::onLoginFailed ( sockuuid sender, HbNetworkProtocol::AuthStatus, const QString & description )
+void HbServerAuthService::onLoginFailed( sockuuid sender, HbNetworkProtocol::AuthStatus, const QString & description )
 {
     if( mPendingSocket.contains( sender ) )
     {

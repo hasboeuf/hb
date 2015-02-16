@@ -27,6 +27,8 @@ HbConnectionPool::HbConnectionPool()
     mServices.insert( service_auth->uuid(),    service_auth    );
     mServices.insert( service_channel->uuid(), service_channel );
 
+    //connect( service_auth, &HbServerAuthService::userConnected, this, &HbConnectionPool::onUserConnected );
+
     foreach( HbNetworkService * service, mServices )
     {
         // Socket.

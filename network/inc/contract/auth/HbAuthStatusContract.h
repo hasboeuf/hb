@@ -14,6 +14,7 @@
 #include <QtCore/QSet>
 // Hb
 #include <HbGlobal.h>
+#include <contract/HbNetworkProtocol.h>
 // Local
 #include <HbNetwork.h>
 #include <contract/HbNetworkContract.h>
@@ -37,8 +38,18 @@ namespace hb
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;
 
-		private:
+            void setStatus   ( HbNetworkProtocol::AuthStatus status );
+            void setTryNumber( quint8 try_number );
+            void setMaxTries ( quint8 max_tries );
 
+            HbNetworkProtocol::AuthStatus status() const;
+            quint8 tryNumber() const;
+            quint8 maxTries () const;
+
+		private:
+            HbNetworkProtocol::AuthStatus mStatus;
+            quint8 mTryNumber;
+            quint8 mMaxTries;
         };
 	}
 }
