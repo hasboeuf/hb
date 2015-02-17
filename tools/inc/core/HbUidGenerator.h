@@ -42,16 +42,19 @@ namespace hb
         public:
             I uid( bool zero_excluded = false )
             {
-                QMutexLocker locker( &mMutex );
-
                 I value = 0;
-                if( !mUnused[C].isEmpty() )
-                {
-                    value = mUnused[C].dequeue();
-                }
-                else
-                {
-                    value = mCurrent[C]++;
+
+                { // Mutex area
+                    QMutexLocker locker( &mMutex );
+
+                    if( !mUnused[C].isEmpty() )
+                    {
+                        value = mUnused[C].dequeue();
+                    }
+                    else
+                    {
+                        value = mCurrent[C]++;
+                    }
                 }
 
                 if( zero_excluded && value == 0 )
