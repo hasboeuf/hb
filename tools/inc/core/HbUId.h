@@ -27,11 +27,15 @@ namespace hb
             HbUid()
             {
                 mUid = HbUidGenerator< T, C >::get()->uid( Z );
+                mReleaseUid = true;
             }
 
             ~HbUid()
             {
-                HbUidGenerator< T, C >::get()->releaseUid( mUid );
+                if( mReleaseUid )
+                {
+                    HbUidGenerator< T, C >::get()->releaseUid( mUid );
+                }
             }
 
             virtual I uid() const final
@@ -39,8 +43,25 @@ namespace hb
                 return mUid;
             }
 
+            // Take the uid of another HbUid object.
+            // Use with cautious, it breaks the unicity.
+            virtual bool takeUid( HbUid * uid_object )
+            {
+                if( !uid_object )
+                {
+                    return false;
+                }
+
+                HbUidGenerator< T, C >::get()->releaseUid( mUid );
+                mUid = uid_object->uid();
+                uid_object->mReleaseUid = false;
+
+                return true;
+            }
+
         protected:
-            I mUid;
+            I    mUid;
+            bool mReleaseUid;
         };
     }
 }
