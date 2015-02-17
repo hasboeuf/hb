@@ -12,7 +12,7 @@
 // Qt
 #include <QtCore/QtGlobal>
 
-typedef quint64 replyuuid;
+typedef quint64 replyuid;
 
 const size_t CLASS_DEFAULT = 0;
 const size_t CLASS_REPLIES = 10;

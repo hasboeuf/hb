@@ -13,7 +13,7 @@ using namespace hb::network;
 
 HbServerAuthService::HbServerAuthService()
 {
-    mUuid = HbNetworkProtocol::SERVICE_AUTH;
+    mId = HbNetworkProtocol::SERVICE_AUTH;
 
     HbServerAuthFacebookStrategy * fb_strategy = new HbServerAuthFacebookStrategy();
     mStrategies.insert( fb_strategy->type(), fb_strategy );
@@ -82,17 +82,17 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
     }
 }
 
-void HbServerAuthService::onSocketConnected   ( sockuuid socket_uuid )
+void HbServerAuthService::onSocketConnected   ( sockuid socket_uid )
 {
-    mPendingSocket.insert( socket_uuid );
+    mPendingSocket.insert( socket_uid );
 }
 
-void HbServerAuthService::onSocketDisconnected( sockuuid socket_uuid )
+void HbServerAuthService::onSocketDisconnected( sockuid socket_uid )
 {
-    mPendingSocket.remove( socket_uuid );
+    mPendingSocket.remove( socket_uid );
 }
 
-void HbServerAuthService::onLoginSucceed( sockuuid sender, const HbNetworkUserInfo & user_info )
+void HbServerAuthService::onLoginSucceed( sockuid sender, const HbNetworkUserInfo & user_info )
 {
     if( mPendingSocket.contains( sender ) )
     {
@@ -111,7 +111,7 @@ void HbServerAuthService::onLoginSucceed( sockuuid sender, const HbNetworkUserIn
     }
 }
 
-void HbServerAuthService::onLoginFailed( sockuuid sender, HbNetworkProtocol::AuthStatus, const QString & description )
+void HbServerAuthService::onLoginFailed( sockuid sender, HbNetworkProtocol::AuthStatus, const QString & description )
 {
     if( mPendingSocket.contains( sender ) )
     {

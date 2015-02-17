@@ -211,7 +211,7 @@ void HbAbstractClient::onSocketContractReceived( const HbNetworkContract * contr
 
             //if( header.routing() != HbNetworkProtocol::RoutingScheme::BROADCAST )
             //{
-            //	q_assert(header.receivers().contains(configuration().uuid()));
+            //	q_assert(header.receivers().contains(configuration().uid()));
             //}
 
             HbNetworkContract * contract = configuration().exchanges().contract( header );

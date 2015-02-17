@@ -12,6 +12,8 @@
 // Qt
 #include <QtCore/QHash>
 #include <QtCore/QList>
+// Hb
+#include <core/HbUid.h>
 // Local
 #include <com/HbAbstractNetwork.h>
 #include <config/com/HbServerConfig.h>
@@ -24,7 +26,7 @@ namespace hb
 		class HbAbstractSocket;
         class HbSocketHandler;
 
-		class HB_NETWORK_DECL HbAbstractServer : public HbAbstractNetwork
+        class HB_NETWORK_DECL HbAbstractServer : public HbAbstractNetwork, public HbUid< netwuid, CLASS_NETW >
 		{
 			Q_OBJECT
 			Q_DISABLE_COPY( HbAbstractServer )
@@ -35,16 +37,15 @@ namespace hb
 
             virtual bool join () final;
 			virtual bool leave() final;
-			virtual bool leave( quint16 uuid ) final;
+            virtual bool leave( quint16 uid ) final;
             virtual bool isReady() const final;
-            virtual quint16 uuid() const final;
             virtual HbNetworkProtocol::NetworkType type() const = 0;
 
             virtual bool send( HbNetworkContract * contract );
 			//virtual bool reply(int sender, const HbNetworkContract * contract);
 			//virtual bool forward(int receiver, HbNetworkContract * contract);
 
-            virtual bool isUuidConnected( quint16 uuid ) const final;
+            virtual bool isUidConnected( quint16 uid ) const final;
 
 			//virtual const HbServerConfig & configuration() const = 0;
             virtual const HbServerConfig & configuration() const; // SUB
@@ -58,34 +59,33 @@ namespace hb
 			virtual bool isListening() const = 0; // From device.
 
 			//virtual void incomingConnection(HbAbstractSocket * socket); to handler
-			virtual bool disconnectFromNetwork( quint16 uuid ) = 0;
+            virtual bool disconnectFromNetwork( quint16 uid ) = 0;
 
             virtual void reset();
 
         signals:
-            void serverConnected   ( quint16 server_uuid );
-            void serverDisconnected( quint16 server_uuid );
+            void serverConnected   ( servuid server_uid );
+            void serverDisconnected( servuid server_uid );
             // To higher level class.
-            void socketConnected       ( quint16 server_uuid, sockuuid socket_uuid );
-            void socketDisconnected    ( quint16 server_uuid, sockuuid socket_uuid );
-            void socketContractReceived( quint16 server_uuid, sockuuid socket_uuid, const HbNetworkContract * contract );
+            void socketConnected       ( servuid server_uid, sockuid socket_uid );
+            void socketDisconnected    ( servuid server_uid, sockuid socket_uid );
+            void socketContractReceived( servuid server_uid, sockuid socket_uid, const HbNetworkContract * contract );
 
         public callbacks :
             // From HbSocketHandler.
-            void onSocketConnected       ( qint32 socket_descriptor, sockuuid socket_uuid );
-            void onSocketDisconnected    ( sockuuid socket_uuid );
-            void onSocketContractReceived( sockuuid socket_uuid, const HbNetworkContract * contract );
+            void onSocketConnected       ( qint32 socket_descriptor, sockuid socket_uid );
+            void onSocketDisconnected    ( sockuid socket_uid );
+            void onSocketContractReceived( sockuid socket_uid, const HbNetworkContract * contract );
             void onHandlerIdled();
 
 		private:
             HbServerConfig mConfig; // SUB
-            netwuuid mUuid;
             bool mReady;
 
 		protected:
             QList< qint32 > mPending; // Socket descriptors not instanciated.
-            QHash< sockuuid, HbSocketHandler * > mHandlerBySocketId;
-            QHash< netwuuid, HbSocketHandler * > mHandlerById;
+            QHash< sockuid, HbSocketHandler * > mHandlerBySocketId;
+            QHash< netwuid, HbSocketHandler * > mHandlerById;
 		};
 	}
 }

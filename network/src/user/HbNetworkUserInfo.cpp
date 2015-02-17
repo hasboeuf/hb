@@ -17,7 +17,7 @@ HbNetworkUserInfo::HbNetworkUserInfo( const HbNetworkUserInfo & source )
 {
     if( &source != this )
     {
-        mUuid      = source.mUuid;
+        mId        = source.mId;
         mType      = source.mType;
         mEmail     = source.mEmail;
         mNickname  = source.mNickname;
@@ -32,7 +32,7 @@ HbNetworkUserInfo & HbNetworkUserInfo::operator=( const HbNetworkUserInfo & sour
 {
     if( &source != this )
     {
-        mUuid      = source.mUuid;
+        mId        = source.mId;
         mType      = source.mType;
         mEmail     = source.mEmail;
         mNickname  = source.mNickname;
@@ -44,9 +44,9 @@ HbNetworkUserInfo & HbNetworkUserInfo::operator=( const HbNetworkUserInfo & sour
     return ( *this );
 }
 
-const QString & HbNetworkUserInfo::uuid() const
+const QString & HbNetworkUserInfo::id() const
 {
-    return mUuid;
+    return mId;
 }
 
 authstgy  HbNetworkUserInfo::type() const
@@ -85,9 +85,9 @@ auto HbNetworkUserInfo::gender() const -> Gender
 }
 
 
-void HbNetworkUserInfo::setUuid( const QString & uuid )
+void HbNetworkUserInfo::setId( const QString & id )
 {
-    if( !uuid.isEmpty() ) mUuid = uuid;
+    if( !id.isEmpty() ) mId = id;
 }
 
 void HbNetworkUserInfo::setType( authstgy type )

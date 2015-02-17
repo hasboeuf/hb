@@ -34,6 +34,7 @@ namespace hb
 			virtual bool join () final;
 			virtual bool leave() final;
             virtual bool isReady() const final;
+            virtual sockuid uid() const = 0;
 
             virtual bool send( HbNetworkContract * contract);
 			//virtual bool reply(int sender, const HbNetworkContract * contract);

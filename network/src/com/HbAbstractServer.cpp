@@ -2,7 +2,6 @@
 #include <QtCore/QDataStream>
 // Hb
 #include <HbLogService.h>
-#include <core/HbUuidGenerator.h>
 // Local
 #include <com/HbAbstractServer.h>
 #include <com/HbAbstractSocket.h>
@@ -14,9 +13,8 @@ using namespace hb::tools;
 using namespace hb::network;
 
 HbAbstractServer::HbAbstractServer(QObject * parent) :
-	HbAbstractNetwork(parent)
+    HbAbstractNetwork(parent)
 {
-    mUuid = HbUuidGenerator< netwuuid, CLASS_NETW >::get()->uuid();
     mReady = false;
 }
 
@@ -34,7 +32,7 @@ bool HbAbstractServer::join()
 		if ( connectToNetwork() )
 		{
             mReady = true;
-            emit serverConnected( mUuid );
+            emit serverConnected( mUid );
 		}
 	}
 
@@ -47,7 +45,7 @@ bool HbAbstractServer::leave()
 	{
 		disconnectFromNetwork();
         mReady = false;
-        emit serverDisconnected( mUuid );
+        emit serverDisconnected( mUid );
 
         HbInfo( "Server stopped." );
     }
@@ -61,10 +59,10 @@ bool HbAbstractServer::leave()
     /*QHash< quint32, HbSocketHandler * >::iterator it = mHandlerBySocketId.begin();
     while( it != mHandlerBySocketId.end() )
     {
-        quint16 socket_uuid = it.key();
+        quint16 socket_uid = it.key();
         HbSocketHandler * handler = q_assert_ptr( it.value() );
 
-        leave( socket_uuid ); // TODO delete thread etc.
+        leave( socket_uid ); // TODO delete thread etc.
 
         ++it;
     }*/
@@ -82,7 +80,7 @@ bool HbAbstractServer::leave()
 		//	disconnect( socket, &HbAbstractSocket::readyPacket, this, nullptr );
 		//	disconnect(socket, &HbAbstractSocket::disconnected, this, nullptr);
 		//
-		//	emit disconnected(socket->uuid());
+        //	emit disconnected(socket->uid());
 		//}
 
 		//qDeleteAll(_pending);
@@ -94,21 +92,21 @@ bool HbAbstractServer::leave()
 	return true;
 }
 
-bool HbAbstractServer::leave( quint16 uuid )
+bool HbAbstractServer::leave( quint16 uid )
 {
-    HbInfo( "Disconnecting socket %d.", uuid );
-    HbSocketHandler * handler = mHandlerBySocketId.value( uuid, nullptr );
+    HbInfo( "Disconnecting socket %d.", uid );
+    HbSocketHandler * handler = mHandlerBySocketId.value( uid, nullptr );
     q_assert_ptr( handler );
 
     bool result = false;
-    q_assert( QMetaObject::invokeMethod( handler, "onDisconnectionRequest", Q_ARG( quint16, uuid ) ) );
+    q_assert( QMetaObject::invokeMethod( handler, "onDisconnectionRequest", Q_ARG( quint16, uid ) ) );
     return result;
 
     //QMetaObject::invokeMethod(	handler,
     //							QStringLiteral("onDisconnectRequest"),
-    //							Q_ARG( quint16, uuid ) );
+    //							Q_ARG( quint16, uid ) );
 
-    //HbAbstractSocket * socket = _connected.take(uuid);
+    //HbAbstractSocket * socket = _connected.take(uid);
     //
     //if (!socket)
     //{
@@ -129,7 +127,7 @@ bool HbAbstractServer::leave( quint16 uuid )
     //
     //	else
     //	{
-    //		emit disconnected(uuid);
+    //		emit disconnected(uid);
     //		return true;
     //	}
     //}
@@ -140,12 +138,6 @@ bool HbAbstractServer::isReady() const
 {
     return mReady;
 }
-
-quint16 HbAbstractServer::uuid() const
-{
-    return mUuid;
-}
-
 
 bool HbAbstractServer::send( HbNetworkContract * contract )
 {
@@ -205,9 +197,9 @@ bool HbAbstractServer::send( HbNetworkContract * contract )
 	return mHandlerBySocketId.keys( );
 }*/
 
-bool HbAbstractServer::isUuidConnected( quint16 uuid ) const
+bool HbAbstractServer::isUidConnected( quint16 uid ) const
 {
-	return mHandlerBySocketId.contains( uuid );
+    return mHandlerBySocketId.contains( uid );
 }
 
 const HbServerConfig & HbAbstractServer::configuration() const // SUB
@@ -223,7 +215,7 @@ void HbAbstractServer::reset()
     foreach( HbSocketHandler * handler, mHandlerById.values() )
     {
         q_assert_ptr( handler );
-        HbInfo( "Deleting handler #%d", handler->id() );
+        HbInfo( "Deleting handler #%d", handler->uid() );
         handler->disconnect();
         handler->deleteLater();
     }
@@ -249,7 +241,7 @@ void HbAbstractServer::reset()
 
 			//foreach(HbAbstractSocket * socket, _connected)
 			//{
-			//	if (socket->uuid() != header->sender())
+            //	if (socket->uid() != header->sender())
 			//	{
 			//		if (socket->isListening())
 			//			status &= send(socket, packet);
@@ -319,7 +311,7 @@ void HbAbstractServer::reset()
 	return false;
 }*/
 
-/*bool HbAbstractServer::send( int uuid, const HbNetworkPacket & packet )
+/*bool HbAbstractServer::send( int uid, const HbNetworkPacket & packet )
 {
 	return true;
 }*/
@@ -367,14 +359,14 @@ void HbAbstractServer::reset()
 //		Q_ASSERT(stream.status() == QDataStream::Ok);
 //
 //		raiseError(socket->error(), QStringLiteral("error occurred while sending contract %1::%2 on socket %3: %4").
-//			arg(packet.content()->service()).arg(packet.content()->code()).arg(socket->uuid()).arg(socketError));
+//			arg(packet.content()->service()).arg(packet.content()->code()).arg(socket->uid()).arg(socketError));
 //	}
 //
 //	return false;
 //}
 
 
-void HbAbstractServer::onSocketConnected( qint32 socket_descriptor, sockuuid socket_uuid )
+void HbAbstractServer::onSocketConnected( qint32 socket_descriptor, sockuid socket_uid )
 {
     if( !mReady )
     {
@@ -384,13 +376,13 @@ void HbAbstractServer::onSocketConnected( qint32 socket_descriptor, sockuuid soc
     HbSocketHandler * handler = qobject_cast< HbSocketHandler * >( sender() );
     q_assert_ptr( handler );
     q_assert( mPending.contains( socket_descriptor ) );
-    q_assert( !mHandlerBySocketId.contains( socket_uuid ) );
+    q_assert( !mHandlerBySocketId.contains( socket_uid ) );
 
     mPending.removeOne( socket_descriptor );
-    mHandlerBySocketId.insert( socket_uuid, handler );
+    mHandlerBySocketId.insert( socket_uid, handler );
 }
 
-void HbAbstractServer::onSocketDisconnected( sockuuid socket_uuid )
+void HbAbstractServer::onSocketDisconnected( sockuid socket_uid )
 {
     if( !mReady )
     {
@@ -399,12 +391,12 @@ void HbAbstractServer::onSocketDisconnected( sockuuid socket_uuid )
     }
     HbSocketHandler * handler = qobject_cast< HbSocketHandler * >( sender() );
     q_assert_ptr( handler );
-    q_assert( mHandlerBySocketId.value( socket_uuid ) == handler );
+    q_assert( mHandlerBySocketId.value( socket_uid ) == handler );
 
-    mHandlerBySocketId.remove( socket_uuid );
+    mHandlerBySocketId.remove( socket_uid );
 }
 
-void HbAbstractServer::onSocketContractReceived( sockuuid socket_uuid, const HbNetworkContract * contract )
+void HbAbstractServer::onSocketContractReceived( sockuid socket_uid, const HbNetworkContract * contract )
 {
     if( !mReady )
     {
@@ -412,7 +404,7 @@ void HbAbstractServer::onSocketContractReceived( sockuuid socket_uuid, const HbN
         delete contract;
         return;
     }
-    emit socketContractReceived( mUuid, socket_uuid, contract );
+    emit socketContractReceived( mUid, socket_uid, contract );
 }
 
 void HbAbstractServer::onHandlerIdled()
@@ -425,7 +417,7 @@ void HbAbstractServer::onHandlerIdled()
     HbSocketHandler * handler = qobject_cast< HbSocketHandler * >( sender() );
     q_assert_ptr( handler );
 
-    mHandlerById.remove( handler->id() );
+    mHandlerById.remove( handler->uid() );
 
     handler->disconnect();
     handler->deleteLater();

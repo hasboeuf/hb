@@ -11,7 +11,6 @@
 
 // Qt
 #include <QtNetwork/QAbstractSocket>
-//#include <QtCore/QHash>
 // Hb
 #include <HbGlobal.h>
 // Local
@@ -26,7 +25,7 @@ namespace hb
 
 		class IHbNetworkListener;
 
-		class HB_NETWORK_DECL HbAbstractNetwork : public QObject
+        class HB_NETWORK_DECL HbAbstractNetwork : public QObject
 		{
 			Q_OBJECT
 			Q_DISABLE_COPY( HbAbstractNetwork )
@@ -36,7 +35,6 @@ namespace hb
 			virtual bool join() = 0;
 			virtual bool leave() = 0;
             virtual bool isReady() const = 0;
-            virtual quint16 uuid() const = 0;
 
 			//virtual void addListener(IHbNetworkListener * listener) final;
 			//virtual void removeListener(IHbNetworkListener * listener) final;

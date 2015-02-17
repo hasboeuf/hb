@@ -43,22 +43,22 @@ namespace hb
         public callbacks:
             // From HbConnectionPool.
             virtual void onContractReceived( const HbNetworkContract * contract );
-            virtual void onSocketConnected   ( sockuuid socket_uuid );
-            virtual void onSocketDisconnected( sockuuid socket_uuid );
+            virtual void onSocketConnected   ( sockuid socket_uid );
+            virtual void onSocketDisconnected( sockuid socket_uid );
             // From HbServerAuthStrategy.
-            void onLoginSucceed( sockuuid sender, const HbNetworkUserInfo & user_info );
-            void onLoginFailed ( sockuuid sender, HbNetworkProtocol::AuthStatus, const QString & description );
+            void onLoginSucceed( sockuid sender, const HbNetworkUserInfo & user_info );
+            void onLoginFailed ( sockuid sender, HbNetworkProtocol::AuthStatus, const QString & description );
 
         signals:
-            void userConnected( sockuuid socket_id, const HbNetworkUserInfo & user_info );
+            void userConnected( sockuid socket_id, const HbNetworkUserInfo & user_info );
 
         private:
             QHash< authstgy, HbServerAuthStrategy * > mStrategies;
             qint32 mTimerId;
             // InOut.
-            QSet< sockuuid >          mPendingSocket;
-            QHash< sockuuid, quint8 > mAuthTries;
-            QHash< sockuuid, quint8 > mAuthTimeout;
+            QSet< sockuid >          mPendingSocket;
+            QHash< sockuid, quint8 > mAuthTries;
+            QHash< sockuid, quint8 > mAuthTimeout;
         };
 	}
 }

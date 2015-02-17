@@ -51,7 +51,7 @@ namespace hb
             virtual HbNetworkProtocol::NetworkType type() const;
 
             //void incomingConnection( HbAbstractSocket * socket ); to handler
-            bool disconnectFromNetwork( quint16 uuid );
+            bool disconnectFromNetwork( quint16 uid );
 
             virtual void reset() final;
 

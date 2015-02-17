@@ -15,6 +15,7 @@
 #include <QtCore/QPointer>
 // Hb
 #include <HbGlobal.h>
+#include <core/HbUid.h>
 #include <contract/HbNetworkProtocol.h>
 
 class QIODevice;
@@ -23,7 +24,7 @@ namespace hb
 {
 	namespace network
 	{
-		class HbAbstractSocket : public QObject
+        class HbAbstractSocket : public QObject, public HbUid< sockuid, CLASS_SOCK >
 		{
 			Q_OBJECT
             Q_DISABLE_COPY( HbAbstractSocket )
@@ -32,7 +33,6 @@ namespace hb
 
 			virtual ~HbAbstractSocket();
 
-            virtual quint16 uuid() const final;
             virtual HbNetworkProtocol::NetworkType type() const = 0;
 			virtual bool isListening() const = 0;
 
@@ -64,7 +64,6 @@ namespace hb
             virtual void onReadyRead() = 0;
 
 		private:
-            sockuuid mUuid;
             QPointer< QIODevice > mDevice;
 
             quint32 mBytesPending;

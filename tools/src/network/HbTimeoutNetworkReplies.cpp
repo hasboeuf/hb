@@ -19,7 +19,7 @@ quint64 HbTimeoutNetworkReplies::add( QNetworkReply * reply, quint32 timeout )
 
         mReplies.insert( reply, timeout_reply );
 
-        return timeout_reply->id();
+        return timeout_reply->uid();
     }
 
     return 0;
@@ -42,7 +42,7 @@ quint64 HbTimeoutNetworkReplies::id( QNetworkReply * reply ) const
         HbTimeoutNetworkReply * timeout_reply = mReplies.value( reply, nullptr );
         if( timeout_reply )
         {
-            return timeout_reply->id();
+            return timeout_reply->uid();
         }
     }
 

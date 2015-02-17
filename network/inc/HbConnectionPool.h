@@ -38,20 +38,20 @@ namespace hb
 
         public callbacks:
             // From HbAbstractServer.
-            void onServerConnected       ( servuuid server_uuid );
-            void onServerDisconnected    ( servuuid server_uuid );
-            void onSocketConnected       ( servuuid server_uuid, sockuuid socket_uuid );
-            void onSocketDisconnected    ( servuuid server_uuid, sockuuid socket_uuid );
-            void onSocketContractReceived( servuuid server_uuid, sockuuid socket_uuid, const HbNetworkContract * contract );
+            void onServerConnected       ( servuid server_uid );
+            void onServerDisconnected    ( servuid server_uid );
+            void onSocketConnected       ( servuid server_uid, sockuid socket_uid );
+            void onSocketDisconnected    ( servuid server_uid, sockuid socket_uid );
+            void onSocketContractReceived( servuid server_uid, sockuid socket_uid, const HbNetworkContract * contract );
 
             // From services.
             void onContractSent( const HbNetworkContract * contract );
-            void onContractSent( sockuuid socket_uuid, const HbNetworkContract * contract );
+            void onContractSent( sockuid socket_uid, const HbNetworkContract * contract );
             void onUserKick    ( const HbNetworkUser & user_info, kickcode reason );
-            void onSocketKick  ( sockuuid socket_uuid, kickcode reason );
+            void onSocketKick  ( sockuid socket_uid, kickcode reason );
 
             // From HbAuthService.
-            void onNewUserConnected( sockuuid socket_id, const HbNetworkUserInfo & user_info );
+            void onNewUserConnected( sockuid socket_id, const HbNetworkUserInfo & user_info );
             // From HbPresenceService.
             void onUserWaited();
 
@@ -59,8 +59,8 @@ namespace hb
 
         signals:
             // To services.
-            void socketConnected       ( sockuuid socket_uuid );
-            void socketDisconnected    ( sockuuid socket_uuid );
+            void socketConnected       ( sockuid socket_uid );
+            void socketDisconnected    ( sockuid socket_uid );
             void socketContractReceived( const HbNetworkContract * contract );
             void userConnected         ( const HbNetworkUserInfo & user_info );
             void userDisconnected      ( const HbNetworkUserInfo & user_info );
@@ -68,7 +68,7 @@ namespace hb
 
         private:
             bool checkContractReceived( const HbNetworkContract * contract );
-            HbNetworkUser * isSocketAuthenticated( sockuuid socket_uuid );
+            HbNetworkUser * isSocketAuthenticated( sockuid socket_uid );
 
             template< class T >
             QList< T * > getListeners()
@@ -87,12 +87,12 @@ namespace hb
             }
 
         private:
-            QHash< netwuuid, HbAbstractServer * > mServers;
-            QHash< servuuid, HbNetworkService * > mServices;
+            QHash< netwuid, HbAbstractServer * > mServers;
+            QHash< servuid, HbNetworkService * > mServices;
 
-            QSet < sockuuid > mPendingSockets;
-            QHash< sockuuid, netwuuid > mServerBySocketId;
-            QHash< sockuuid, HbNetworkUser * > mUserBySocketId;
+            QSet < sockuid > mPendingSockets;
+            QHash< sockuid, netwuid > mServerBySocketId;
+            QHash< sockuid, HbNetworkUser * > mUserBySocketId;
 		};
 	}
 }

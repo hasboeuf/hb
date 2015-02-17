@@ -111,10 +111,10 @@ HbNetworkProtocol::NetworkType HbTcpServer::type() const
     HbAbstractServer::incomingConnection( socket );
 }*/
 
-bool HbTcpServer::disconnectFromNetwork(quint16 uuid )
+bool HbTcpServer::disconnectFromNetwork(quint16 uid )
 {
     // TODO
-    //HbTcpSocket * disconnected = q_dynamic_cast( HbTcpSocket *, uuid );
+    //HbTcpSocket * disconnected = q_dynamic_cast( HbTcpSocket *, uid );
     //return q_assert_ptr( disconnected )->disconnectFromHost();
     return false;
 }
@@ -165,9 +165,9 @@ void HbTcpServer::onNewConnection(qint32 socket_descriptor)
 			t->start();
 		}
 
-        mHandlerById.insert( handler->id(), handler );
+        mHandlerById.insert( handler->uid(), handler );
 
-        HbInfo( "New HbTcpSocketHandler#%d created to handle socket#%d added.", handler->id(), socket_descriptor );
+        HbInfo( "New HbTcpSocketHandler#%d created to handle socket#%d added.", handler->uid(), socket_descriptor );
 	}
 
     mPending.append( socket_descriptor );

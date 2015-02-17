@@ -57,7 +57,7 @@ void HbServerAuthFacebookStrategy::onLinkSucceed()
 
     HbInfo( "Server link succeed. Requesting Facebook user object %s...", HbLatin1( server_auth->clientId() ) );
 
-    sockuuid sender = mPendingToken.take( server_auth );
+    sockuid sender = mPendingToken.take( server_auth );
     quint64 request_id = mRequester.requestUser( server_auth );
     if( request_id > 0 )
     {
@@ -79,7 +79,7 @@ void HbServerAuthFacebookStrategy::onLinkFailed(const QString & error )
 
     HbInfo( "Server link failed for user %s ( %s ).", HbLatin1( server_auth->clientId() ), HbLatin1( error ) );
 
-    sockuuid sender = mPendingToken.take( server_auth );
+    sockuid sender = mPendingToken.take( server_auth );
     server_auth->deleteLater();
 
     emit loginFailed( sender, HbNetworkProtocol::AUTH_FB_KO, error );
@@ -89,7 +89,7 @@ void HbServerAuthFacebookStrategy::onRequestCompleted( quint64 request_id, HbFac
 {
     q_assert( mPendingRequest.contains( request_id ) );
 
-    sockuuid sender = mPendingRequest.take( request_id );
+    sockuid sender = mPendingRequest.take( request_id );
 
     HbFacebookUser * user = dynamic_cast< HbFacebookUser * >( object );
     if( user )
@@ -97,7 +97,7 @@ void HbServerAuthFacebookStrategy::onRequestCompleted( quint64 request_id, HbFac
         HbInfo( "Facebook user informations: %s", HbLatin1( user->toString() ) );
 
         HbNetworkUserInfo user_info;
-        user_info.setUuid     ( user->id() );
+        user_info.setId       ( user->id() );
         user_info.setType     ( HbAuthService::AUTH_FACEBOOK );
         user_info.setEmail    ( user->email() );
         user_info.setNickname ( user->firstName() + " " +

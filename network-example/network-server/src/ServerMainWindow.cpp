@@ -92,10 +92,10 @@ void ServerMainWindow::onStartClicked()
 
     config.setTimeout( timeout );
 
-    quint16 server_uuid = mpHbServer->joinTcpServer( config );
-    if( server_uuid > 0 )
+    quint16 server_uid = mpHbServer->joinTcpServer( config );
+    if( server_uid > 0 )
     {
-        HbInfo( "Server #%d started.", server_uuid );
+        HbInfo( "Server #%d started.", server_uid );
     }
 
     HbLogEnd();

@@ -12,9 +12,9 @@ using namespace hb::network;
 HbPeer::HbPeer( const HbGeneralConfig &config )
 {
 
-    qRegisterMetaType< sockuuid >( "sockuuid" );
-    qRegisterMetaType< netwuuid >( "netwwuid" );
-    qRegisterMetaType< servuuid >( "servuuid" );
+    qRegisterMetaType< sockuid >( "sockuid" );
+    qRegisterMetaType< netwuid >( "netwwid" );
+    qRegisterMetaType< servuid >( "servuid" );
 
     if( config.isValid() )
     {

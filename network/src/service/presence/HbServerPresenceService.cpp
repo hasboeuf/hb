@@ -7,7 +7,7 @@ using namespace hb::network;
 
 HbServerPresenceService::HbServerPresenceService()
 {
-    mUuid = HbNetworkProtocol::SERVICE_PRESENCE;
+    mId = HbNetworkProtocol::SERVICE_PRESENCE;
 }
 
 HbNetworkProtocol::NetworkTypes HbServerPresenceService::enabledNetworkTypes() const
@@ -15,12 +15,12 @@ HbNetworkProtocol::NetworkTypes HbServerPresenceService::enabledNetworkTypes() c
     return HbNetworkProtocol::NETWORK_TCP;
 }
 
-void HbServerPresenceService::onSocketConnected   ( sockuuid socket_uuid )
+void HbServerPresenceService::onSocketConnected   ( sockuid socket_uid )
 {
 
 }
 
-void HbServerPresenceService::onSocketDisconnected( sockuuid socket_uuid )
+void HbServerPresenceService::onSocketDisconnected( sockuid socket_uid )
 {
 
 }

@@ -6,8 +6,8 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBUUIDGENERATOR_H
-#define HBUUIDGENERATOR_H
+#ifndef HBUIDGENERATOR_H
+#define HBUIDGENERATOR_H
 
 // System
 #include <limits>
@@ -25,14 +25,14 @@ namespace hb
     namespace tools
     {
         template< typename T = qint32, size_t C = CLASS_DEFAULT >
-        class HB_TOOLS_DECL HbUuidGenerator : public HbSingleton< HbUuidGenerator< T, C > >
+        class HB_TOOLS_DECL HbUidGenerator : public HbSingleton< HbUidGenerator< T, C > >
         {
             using I = typename std::conditional< std::is_integral< T >::value, T, qint32 >::type;
 
-            Q_DISABLE_COPY( HbUuidGenerator )
+            Q_DISABLE_COPY( HbUidGenerator )
 
-            friend HbUuidGenerator * HbSingleton< HbUuidGenerator >::get();
-            friend void HbSingleton< HbUuidGenerator >::kill();
+            friend HbUidGenerator * HbSingleton< HbUidGenerator >::get();
+            friend void HbSingleton< HbUidGenerator >::kill();
 
         private:
             QMutex mMutex;
@@ -40,7 +40,7 @@ namespace hb
             QHash< ulong, QQueue< I > > mUnused;
 
         public:
-            I uuid( bool zero_excluded = false )
+            I uid( bool zero_excluded = false )
             {
                 QMutexLocker( &( this->mMutex ) );
 
@@ -56,7 +56,7 @@ namespace hb
 
                 if( zero_excluded && value == 0 )
                 {
-                    return uuid( true );
+                    return uid( true );
                 }
 
                 return value;
@@ -71,7 +71,7 @@ namespace hb
                 return qrand() % ((highest + 1) - lowest) + lowest;
             }
 
-            void releaseUuid( I released_id )
+            void releaseUid( I released_id )
             {
                 QMutexLocker( &( this->mMutex ) );
 
@@ -79,14 +79,14 @@ namespace hb
             }
 
         private:
-            HbUuidGenerator()
+            HbUidGenerator()
             {
                 mCurrent[C] = std::numeric_limits< I >::min();
             }
 
-            ~HbUuidGenerator() = default;
+            ~HbUidGenerator() = default;
         };
     }
 }
 
-#endif // HBUUIDGENERATOR_H
+#endif // HBUIDGENERATOR_H

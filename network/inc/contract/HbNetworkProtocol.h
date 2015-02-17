@@ -52,7 +52,7 @@ namespace hb
                 BROADCAST = 2
             };
 
-            enum Service : servuuid
+            enum Service : servuid
             {
                 SERVICE_UNDEFINED = 0,
                 SERVICE_UPDATE = 1,
@@ -88,7 +88,7 @@ namespace hb
                 // General
                 AUTH_INTERNAL_ERROR = 0,
                 AUTH_BAD,
-                AUTH_BAD_UUID,
+                AUTH_BAD_ID,
                 AUTH_BAD_PASSWORD,
                 AUTH_OK,
                 AUTH_OK_ADMIN,

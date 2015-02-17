@@ -11,7 +11,6 @@
 #include <QtGui/QStandardItemModel>
 // Hb
 #include <HbGlobal.h>
-#include <core/HbUuidGenerator.h>
 #include <HbLogService.h>
 #include <gui/HbLogWidget.h>
 #include <HbLoggerOutputs.h>

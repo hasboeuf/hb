@@ -1,5 +1,4 @@
 // Hb
-#include <core/HbUuidGenerator.h>
 // Local
 #include <HbGlobal.h>
 #include <network/HbTimeoutNetworkReply.h>
@@ -15,8 +14,6 @@ HbTimeoutNetworkReply::HbTimeoutNetworkReply( QNetworkReply * reply, quint32 tim
 
     q_assert_ptr( reply );
 
-    mId = HbUuidGenerator< replyuuid, CLASS_REPLIES >::get()->uuid( true );
-
     connect( this, &HbTimeoutNetworkReply::error,
              reply, ( void (QNetworkReply::*)( QNetworkReply::NetworkError ) )( &QNetworkReply::error ) );
     connect( this, &QTimer::timeout, this, &HbTimeoutNetworkReply::onTimeout );
@@ -31,12 +28,6 @@ HbTimeoutNetworkReply::HbTimeoutNetworkReply( QNetworkReply * reply, quint32 tim
 
 HbTimeoutNetworkReply::~HbTimeoutNetworkReply()
 {
-    HbUuidGenerator< replyuuid, CLASS_REPLIES >::get()->releaseUuid( mId );
-}
-
-quint64 HbTimeoutNetworkReply::id() const
-{
-    return mId;
 }
 
 void HbTimeoutNetworkReply::onTimeout()

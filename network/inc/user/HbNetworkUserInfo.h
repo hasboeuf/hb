@@ -36,7 +36,7 @@ namespace hb
             HbNetworkUserInfo( const HbNetworkUserInfo & source );
             HbNetworkUserInfo & operator=( const HbNetworkUserInfo & source );
 
-            const QString & uuid     () const;
+            const QString & id       () const;
             authstgy        type     () const;
             const QString & email    () const;
             const QString & nickname () const;
@@ -45,7 +45,7 @@ namespace hb
             quint8          age      () const;
             Gender          gender   () const;
 
-            void setUuid     ( const QString & uuid );
+            void setId       ( const QString & id );
             void setType     ( authstgy type );
             void setEmail    ( const QString & email );
             void setNickname ( const QString & nickname );
@@ -56,7 +56,7 @@ namespace hb
 
 
         private:
-            QString  mUuid;
+            QString  mId;
             authstgy mType;
             QString  mEmail;
             QString  mNickname;

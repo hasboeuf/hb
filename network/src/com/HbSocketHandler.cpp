@@ -4,7 +4,6 @@
 #include <QtNetwork/QTcpSocket>
 // Hb
 #include <HbGlobal.h>
-#include <core/HbUuidGenerator.h>
 #include <HbLogService.h>
 // Local
 #include <com/HbSocketHandler.h>
@@ -23,7 +22,6 @@ HbSocketHandler::HbSocketHandler( HbAbstractServer * server ) :
 {
     HbLogBegin();
 
-    mUuid = HbUuidGenerator< netwuuid, CLASS_NETW >::get()->uuid();
 	mState = NOT_THREADED;
 	mpServer = q_assert_ptr( server );
 
@@ -49,20 +47,14 @@ void HbSocketHandler::init()
     HbLogEnd();
 }
 
-
-quint16 HbSocketHandler::id() const
-{
-    return mUuid;
-}
-
 void HbSocketHandler::reset()
 {
-    HbInfo( "Reset socket handler #%d", mUuid );
+    HbInfo( "Reset socket handler #%d", mUid );
     QMutexLocker locker( &mSocketMutex );
 
     foreach( HbAbstractSocket * socket, mSocketById.values() )
     {
-        HbInfo( "Delete socket #%d.", socket->uuid() );
+        HbInfo( "Delete socket #%d.", socket->uid() );
         delete socket;
     }
 
@@ -86,7 +78,7 @@ bool HbSocketHandler::canHandleNewConnection()
 	}
 
     HbError("SocketHandler#%d: Cannot handle new socket. [state=%d, size=%d, max=%d].",
-            mUuid,
+            mUid,
 			mState,
 			mSocketById.size(),
 			mpServer->configuration().maxUsersPerThread() );
@@ -95,7 +87,7 @@ bool HbSocketHandler::canHandleNewConnection()
 	return false;
 }
 
-bool HbSocketHandler::storeNewSocket( HbAbstractSocket * socket, qint32 previous_uuid )
+bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_uid )
 {
     QMutexLocker locker( &mSocketMutex );
 
@@ -103,30 +95,30 @@ bool HbSocketHandler::storeNewSocket( HbAbstractSocket * socket, qint32 previous
 
 	q_assert_ptr( socket );
 
-	mSocketById.insert( socket->uuid( ), socket );
-	mIdBySocket.insert( socket, socket->uuid( ) );
+    mSocketById.insert( socket->uid( ), socket );
+    mIdBySocket.insert( socket, socket->uid( ) );
 
     connect( socket, &HbAbstractSocket::socketReadyPacket,  this, &HbSocketHandler::onSocketReadyPacket );
     connect( socket, &HbAbstractSocket::socketDisconnected, this, &HbSocketHandler::onSocketDisconnected );
     connect( socket, &HbAbstractSocket::socketError,
              this, [this, socket]()
              {
-                 HbError( "Error %d (%s) on socket %d.", socket->error(), HbLatin1( socket->errorString() ), socket->uuid());
+                 HbError( "Error %d (%s) on socket %d.", socket->error(), HbLatin1( socket->errorString() ), socket->uid());
 
              }, Qt::UniqueConnection );
 
-    emit socketConnected( previous_uuid, socket->uuid() ); // To Server.
+    emit socketConnected( previous_uid, socket->uid() ); // To Server.
 
 	return true;
 }
 
 
 
-void HbSocketHandler::onDisconnectionRequest( quint16 uuid )
+void HbSocketHandler::onDisconnectionRequest(quint16 uid )
 {
     QMutexLocker locker( &mSocketMutex );
 
-    HbAbstractSocket * socket = mSocketById.value( uuid, nullptr );
+    HbAbstractSocket * socket = mSocketById.value( uid, nullptr );
     if( socket )
     {
         // socket->leave();
@@ -135,13 +127,13 @@ void HbSocketHandler::onDisconnectionRequest( quint16 uuid )
     }
     else
     {
-        HbWarning( "Socket #%d does not exist for hander #%d.", uuid, mUuid );
+        HbWarning( "Socket #%d does not exist for hander #%d.", uid, mUid );
     }
 }
 
 void HbSocketHandler::onServerLeft()
 {
-    HbInfo( "Server left -> deleting this handler #%d", mUuid );
+    HbInfo( "Server left -> deleting this handler #%d", mUid );
     reset();
 }
 
@@ -157,7 +149,7 @@ void HbSocketHandler::onSocketReadyPacket()
 
 		if( !mpServer->configuration().openMode( ).testFlag( QIODevice::ReadOnly ) )
 		{
-            HbError( "Unable to receive contract on write only socket %d.", socket->uuid() );
+            HbError( "Unable to receive contract on write only socket %d.", socket->uid() );
 		}
 		else
 		{
@@ -184,7 +176,7 @@ void HbSocketHandler::onSocketReadyPacket()
                 else
                 {
                     contract->setNetworkType( server()->type() );
-                    emit socketContractReceived( socket->uuid(), contract );
+                    emit socketContractReceived( socket->uid(), contract );
                 }
             }
 		}
@@ -202,19 +194,19 @@ void HbSocketHandler::onSocketDisconnected()
 	HbAbstractSocket * socket = q_assert_ptr( dynamic_cast<HbAbstractSocket *>(sender() ) );
 
 	q_assert( mIdBySocket.contains( socket ) );
-	q_assert( mSocketById.contains( socket->uuid( ) ) );
+    q_assert( mSocketById.contains( socket->uid( ) ) );
 
-    HbInfo("SocketPool%d: Socket#%d disconnected.", mUuid, socket->uuid() );
+    HbInfo("SocketPool%d: Socket#%d disconnected.", mUid, socket->uid() );
 
-    sockuuid uuid = socket->uuid();
+    sockuid uid = socket->uid();
 
 	mIdBySocket.remove( socket );
-    mSocketById.remove( uuid );
+    mSocketById.remove( uid );
 
     socket->disconnect();
     socket->deleteLater();
 
-    emit socketDisconnected( uuid );
+    emit socketDisconnected( uid );
 
 
     if( mSocketById.isEmpty() )

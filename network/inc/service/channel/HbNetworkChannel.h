@@ -26,12 +26,12 @@ namespace hb
             HbNetworkChannel();
             virtual ~HbNetworkChannel() = default;
 
-            virtual servuuid uuid() const final;
+            virtual servuid id() const final;
 
             virtual void reset() = 0;
 
         protected:
-            servuuid mUuid;
+            servuid mId;
 
         };
     }

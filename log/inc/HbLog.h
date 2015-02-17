@@ -12,6 +12,10 @@
 // Qt
 #include <QtCore/QtGlobal>
 
+typedef quint32 loguid;
+
+const size_t CLASS_LOG = 30;
+
 #if !defined( HB_LOG_DECL )
 #	if defined( HB_LOG_BUILD )
 #		define HB_LOG_DECL Q_DECL_EXPORT

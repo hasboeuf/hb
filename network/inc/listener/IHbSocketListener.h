@@ -24,8 +24,8 @@ namespace hb
 		{
 
         public callbacks:
-            virtual void onSocketConnected   ( sockuuid socket_uuid ) = 0;
-            virtual void onSocketDisconnected( sockuuid socket_uuid ) = 0;
+            virtual void onSocketConnected   ( sockuid socket_uid ) = 0;
+            virtual void onSocketDisconnected( sockuid socket_uid ) = 0;
 
         protected:
             virtual ~IHbSocketListener() = default;

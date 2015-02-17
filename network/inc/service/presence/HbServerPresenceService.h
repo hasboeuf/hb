@@ -34,8 +34,8 @@ namespace hb
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
 
         public callbacks:
-            void onSocketConnected   ( sockuuid socket_uuid );
-            void onSocketDisconnected( sockuuid socket_uuid );
+            void onSocketConnected   ( sockuid socket_uid );
+            void onSocketDisconnected( sockuid socket_uid );
             void onUserConnected   ( const HbNetworkUserInfo & user_info );
             void onUserDisconnected( const HbNetworkUserInfo & user_info );
             void onContractReceived( const HbNetworkContract * contract );

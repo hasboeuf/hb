@@ -6,43 +6,45 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBUUID_H
-#define HBUUID_H
+#ifndef HBUID_H
+#define HBUID_H
 
 // Local
 #include <HbTools.h>
 #include <HbGlobal.h>
-#include <core/HbUuidGenerator.h>
+#include <core/HbUidGenerator.h>
 
 namespace hb
 {
     namespace tools
     {
         template< typename T = qint32, size_t C = CLASS_DEFAULT, bool Z = false >
-        class HB_TOOLS_DECL HbUuid
+        class HbUid
         {
             using I = typename std::conditional< std::is_integral< T >::value, T, qint32 >::type;
 
         public:
-            HbUuid()
+            HbUid()
             {
-                mUuid = HbUuidGenerator< T, C >::get()->uuid( Z );
+                mUid = HbUidGenerator< T, C >::get()->uid( Z );
             }
 
-            ~HbUuid()
+            ~HbUid()
             {
-                HbUuidGenerator< T, C >::get()->releaseUuid( mUuid );
+                HbUidGenerator< T, C >::get()->releaseUid( mUid );
             }
 
-            I uuid() const
+            virtual I uid() const final
             {
-                return mUuid;
+                return mUid;
             }
 
-        private:
-            I mUuid;
+        protected:
+            I mUid;
         };
     }
 }
 
-#endif // HBUUID_H
+using hb::tools::HbUid;
+
+#endif // HBUID_H

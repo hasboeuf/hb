@@ -50,8 +50,8 @@ namespace hb
 
         private:
             HbFacebookRequester                     mRequester;
-            QHash< HbO2ServerFacebook *, sockuuid > mPendingToken;
-            QHash< quint64, sockuuid >              mPendingRequest;
+            QHash< HbO2ServerFacebook *, sockuid > mPendingToken;
+            QHash< quint64, sockuid >              mPendingRequest;
 		};
 	}
 }

@@ -25,14 +25,13 @@ namespace hb
     {
 		class HbAbstractSocket;
 
-        class HbSocketHandler : public QObject
+        class HbSocketHandler : public QObject, public HbUid< netwuid, CLASS_NETW >
         {
 			Q_OBJECT
 			Q_DISABLE_COPY( HbSocketHandler )
 			Q_FRIEND_CLASS( HbAbstractServer )
 
         public:
-            virtual quint16  id() const final;
             virtual bool canHandleNewConnection() final;
 
         protected:
@@ -48,17 +47,16 @@ namespace hb
 			//virtual HbAbstractServer * server( ) const = 0;
 			virtual HbAbstractServer * server() const;
 
-            virtual bool storeNewSocket(HbAbstractSocket * socket , qint32 previous_uuid ) final;
+            virtual bool storeNewSocket(HbAbstractSocket * socket , qint32 previous_uid ) final;
 
         protected:
             virtual void reset();
 
         protected:
-            netwuuid           mUuid;
 			HandlerState       mState;
 
-            QMap<sockuuid, HbAbstractSocket *> mSocketById;
-            QMap<HbAbstractSocket *, sockuuid> mIdBySocket;
+            QMap<sockuid, HbAbstractSocket *> mSocketById;
+            QMap<HbAbstractSocket *, sockuid> mIdBySocket;
 
             QMutex       mSocketMutex;
 
@@ -70,7 +68,7 @@ namespace hb
             virtual void init();
             // From Server
             virtual void onNewPendingConnection( qint32 socket_descriptor ) = 0;
-            virtual void onDisconnectionRequest( quint16 uuid );
+            virtual void onDisconnectionRequest( quint16 uid );
             virtual void onServerLeft();
 			// From Socket
 			virtual void onSocketReadyPacket();
@@ -80,9 +78,9 @@ namespace hb
 		signals:
             // To Server.
             void handlerIdled          ();
-            void socketConnected       ( qint32 socket_previous_id, sockuuid socket_id );
-            void socketDisconnected    ( sockuuid socket_uuid );
-            void socketContractReceived( sockuuid socket_uuid, const HbNetworkContract * contract );
+            void socketConnected       ( qint32 socket_previous_id, sockuid socket_id );
+            void socketDisconnected    ( sockuid socket_uid );
+            void socketContractReceived( sockuid socket_uid, const HbNetworkContract * contract );
         };
     }
 }

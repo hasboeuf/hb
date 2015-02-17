@@ -19,13 +19,13 @@ HbConnectionPool::HbConnectionPool()
     HbServerAuthService     * service_auth    = new HbServerAuthService();
     HbServerChannelService  * service_channel = new HbServerChannelService();
 
-    q_assert( service_timeout->uuid() != HbNetworkProtocol::SERVICE_UNDEFINED );
-    q_assert( service_auth->uuid()    != HbNetworkProtocol::SERVICE_UNDEFINED );
-    q_assert( service_channel->uuid() != HbNetworkProtocol::SERVICE_UNDEFINED );
+    q_assert( service_timeout->id() != HbNetworkProtocol::SERVICE_UNDEFINED );
+    q_assert( service_auth->id()    != HbNetworkProtocol::SERVICE_UNDEFINED );
+    q_assert( service_channel->id() != HbNetworkProtocol::SERVICE_UNDEFINED );
 
-    mServices.insert( service_timeout->uuid(), service_timeout );
-    mServices.insert( service_auth->uuid(),    service_auth    );
-    mServices.insert( service_channel->uuid(), service_channel );
+    mServices.insert( service_timeout->id(), service_timeout );
+    mServices.insert( service_auth->id(),    service_auth    );
+    mServices.insert( service_channel->id(), service_channel );
 
     //connect( service_auth, &HbServerAuthService::userConnected, this, &HbConnectionPool::onUserConnected );
 
@@ -36,14 +36,14 @@ HbConnectionPool::HbConnectionPool()
         if( socket_listener )
         {
             connect( this, &HbConnectionPool::socketConnected,
-                    [socket_listener]( sockuuid socket_uuid )
+                    [socket_listener]( sockuid socket_uid )
                     {
-                        socket_listener->onSocketConnected( socket_uuid );
+                        socket_listener->onSocketConnected( socket_uid );
                     } );
             connect( this, &HbConnectionPool::socketDisconnected,
-                    [socket_listener]( sockuuid socket_uuid )
+                    [socket_listener]( sockuid socket_uid )
                     {
-                        socket_listener->onSocketDisconnected( socket_uuid );
+                        socket_listener->onSocketDisconnected( socket_uid );
                     } );
         }
         // User.
@@ -83,7 +83,7 @@ quint16 HbConnectionPool::joinTcpServer( const HbTcpServerConfig & config )
     connect( server, &HbAbstractServer::serverConnected,    this, &HbConnectionPool::onServerConnected );
     connect( server, &HbAbstractServer::serverDisconnected, this, &HbConnectionPool::onServerDisconnected );
 
-    q_assert( !mServers.contains( server->uuid() ) );
+    q_assert( !mServers.contains( server->uid() ) );
 
     server->setConfiguration( config );
 
@@ -92,16 +92,16 @@ quint16 HbConnectionPool::joinTcpServer( const HbTcpServerConfig & config )
         delete server;
         return 0;
     }
-    return server->uuid();
+    return server->uid();
 }
 
-void HbConnectionPool::onServerConnected( quint16 server_uuid )
+void HbConnectionPool::onServerConnected( quint16 server_uid )
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
-    q_assert( !mServers.contains( server_uuid ) );
+    q_assert( !mServers.contains( server_uid ) );
 
-    HbInfo( "Server #%d connected.", server_uuid );
+    HbInfo( "Server #%d connected.", server_uid );
 
     connect( server, &HbAbstractServer::serverConnected,        this, &HbConnectionPool::onServerConnected );
     connect( server, &HbAbstractServer::serverDisconnected,     this, &HbConnectionPool::onServerDisconnected );
@@ -109,62 +109,62 @@ void HbConnectionPool::onServerConnected( quint16 server_uuid )
     connect( server, &HbAbstractServer::socketDisconnected,     this, &HbConnectionPool::onSocketDisconnected );
     connect( server, &HbAbstractServer::socketContractReceived, this, &HbConnectionPool::onSocketContractReceived );
 
-    mServers.insert( server->uuid(), server );
+    mServers.insert( server->uid(), server );
 }
 
-void HbConnectionPool::onServerDisconnected( quint16 server_uuid )
+void HbConnectionPool::onServerDisconnected( quint16 server_uid )
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
-    q_assert( mServers.contains( server_uuid ) );
+    q_assert( mServers.contains( server_uid ) );
 
-    HbInfo( "Server #%d disconnected.", server_uuid );
+    HbInfo( "Server #%d disconnected.", server_uid );
 }
 
-void HbConnectionPool::onSocketConnected( quint16 server_uuid, sockuuid socket_uuid )
+void HbConnectionPool::onSocketConnected( quint16 server_uid, sockuid socket_uid )
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
-    q_assert( mServers.contains( server_uuid ) );
+    q_assert( mServers.contains( server_uid ) );
 
-    HbInfo( "Socket #%d on server #%d connected.", server_uuid, socket_uuid );
+    HbInfo( "Socket #%d on server #%d connected.", server_uid, socket_uid );
 
-    mPendingSockets.insert( socket_uuid );
+    mPendingSockets.insert( socket_uid );
 
     QList< IHbSocketListener * > listeners = getListeners< IHbSocketListener >();
     foreach( IHbSocketListener * listener, listeners )
     {
-        listener->onSocketConnected( socket_uuid );
+        listener->onSocketConnected( socket_uid );
     }
 
 }
 
-void HbConnectionPool::onSocketDisconnected( quint16 server_uuid, sockuuid socket_uuid )
+void HbConnectionPool::onSocketDisconnected( quint16 server_uid, sockuid socket_uid )
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
-    q_assert( !mServers.contains( server_uuid ) );
-    q_assert( mServerBySocketId.contains( socket_uuid ) );
-    q_assert( mPendingSockets.contains( socket_uuid ) || mUserBySocketId.contains( socket_uuid ) );
+    q_assert( !mServers.contains( server_uid ) );
+    q_assert( mServerBySocketId.contains( socket_uid ) );
+    q_assert( mPendingSockets.contains( socket_uid ) || mUserBySocketId.contains( socket_uid ) );
 
-    mServerBySocketId.remove( socket_uuid );
+    mServerBySocketId.remove( socket_uid );
 
-    HbNetworkUser * user = isSocketAuthenticated( socket_uuid );
+    HbNetworkUser * user = isSocketAuthenticated( socket_uid );
     if( !user )
     {
-        HbInfo( "Unauthenticated socket #%d on server #%d disconnected.", server_uuid, socket_uuid );
+        HbInfo( "Unauthenticated socket #%d on server #%d disconnected.", server_uid, socket_uid );
 
-        mPendingSockets.remove( socket_uuid );
+        mPendingSockets.remove( socket_uid );
 
         QList< IHbSocketListener * > listeners = getListeners< IHbSocketListener >();
         foreach( IHbSocketListener * listener, listeners )
         {
-            listener->onSocketDisconnected( socket_uuid );
+            listener->onSocketDisconnected( socket_uid );
         }
     }
     else
     {
-        mUserBySocketId.remove( socket_uuid );
+        mUserBySocketId.remove( socket_uid );
 
         const HbNetworkUserInfo user_info = user->userInfo();
         delete user;
@@ -177,32 +177,32 @@ void HbConnectionPool::onSocketDisconnected( quint16 server_uuid, sockuuid socke
     }
 }
 
-void HbConnectionPool::onSocketContractReceived( quint16 server_uuid, sockuuid socket_uuid, const HbNetworkContract * contract )
+void HbConnectionPool::onSocketContractReceived( quint16 server_uid, sockuid socket_uid, const HbNetworkContract * contract )
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
-    q_assert( mServers.contains( server_uuid ) );
+    q_assert( mServers.contains( server_uid ) );
 
-    HbInfo( "Contract received from socket #%d on server #%d.", socket_uuid, server_uuid );
+    HbInfo( "Contract received from socket #%d on server #%d.", socket_uid, server_uid );
 
 
     if( !checkContractReceived( contract ) )
     {
-        HbWarning( "Invalid contract received from socket #%d on server #%d. Kick scheduled.", socket_uuid, server_uuid );
+        HbWarning( "Invalid contract received from socket #%d on server #%d. Kick scheduled.", socket_uid, server_uid );
         // TODO kick
         delete contract;
         return;
     }
 
-    servuuid requested_service = contract->header().service();
+    servuid requested_service = contract->header().service();
 
     HbInfo( "Contract OK [socket=%d, server=%d, service=%s, code=%s].",
-            socket_uuid,
-            server_uuid,
+            socket_uid,
+            server_uid,
             HbLatin1( HbNetworkProtocol::MetaService::toString( requested_service ) ),
             HbLatin1( HbNetworkProtocol::MetaCode::toString( contract->header().code() ) ) );
 
-    HbNetworkUser * user = isSocketAuthenticated( socket_uuid );
+    HbNetworkUser * user = isSocketAuthenticated( socket_uid );
     if( !user )
     {
         q_assert( requested_service == HbNetworkProtocol::SERVICE_AUTH );
@@ -234,7 +234,7 @@ bool HbConnectionPool::checkContractReceived( const HbNetworkContract * contract
     return ok;
 }
 
-HbNetworkUser * HbConnectionPool::isSocketAuthenticated( sockuuid socket_uuid )
+HbNetworkUser * HbConnectionPool::isSocketAuthenticated( sockuid socket_uid )
 {
-    return mUserBySocketId.value( socket_uuid, nullptr );
+    return mUserBySocketId.value( socket_uid, nullptr );
 }

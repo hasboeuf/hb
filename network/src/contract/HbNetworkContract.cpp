@@ -61,22 +61,22 @@ const HbNetworkHeader & HbNetworkContract::header() const
     return mHeader;
 }
 
-void HbNetworkContract::setSender( sockuuid sender )
+void HbNetworkContract::setSender( sockuid sender )
 {
     mSender = sender;
 }
 
-sockuuid HbNetworkContract::sender() const
+sockuid HbNetworkContract::sender() const
 {
     return mSender;
 }
 
-void HbNetworkContract::addPendingReceiver( const QString & user_uuid )
+void HbNetworkContract::addPendingReceiver( const QString & user_uid )
 {
-    mPendingReceivers.insert( user_uuid );
+    mPendingReceivers.insert( user_uid );
 }
 
-bool HbNetworkContract::addReceiver( sockuuid receiver )
+bool HbNetworkContract::addReceiver( sockuid receiver )
 {
     if( mRouting == HbNetworkProtocol::RoutingScheme::UNICAST )
     {
@@ -106,7 +106,7 @@ void HbNetworkContract::resetReceivers()
     mSocketReceivers.clear();
 }
 
-const QSet< sockuuid > & HbNetworkContract::receivers() const
+const QSet< sockuid > & HbNetworkContract::receivers() const
 {
     return mSocketReceivers;
 }

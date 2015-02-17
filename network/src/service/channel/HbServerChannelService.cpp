@@ -7,7 +7,7 @@ using namespace hb::network;
 
 HbServerChannelService::HbServerChannelService()
 {
-    mUuid = HbNetworkProtocol::SERVICE_CHANNEL;
+    mId = HbNetworkProtocol::SERVICE_CHANNEL;
 }
 
 HbNetworkProtocol::NetworkTypes HbServerChannelService::enabledNetworkTypes() const
