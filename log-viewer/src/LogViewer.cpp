@@ -72,9 +72,9 @@ void LogViewer::onNewLogMessage( const HbLogMessage & message )
 {
     HbLogMessage * log = q_check_ptr( new HbLogMessage( message ) );
 
-    mMutexBuffer.tryLock( -1 );
+    QMutexLocker locker( &mMutexBuffer );
     mTempBuffer.append( log );
-    mMutexBuffer.unlock();
+
 }
 
 
@@ -153,7 +153,7 @@ void LogViewer::onTabCloseRequested( int index )
 
 void LogViewer::processLogMessage()
 {
-	mMutexBuffer.tryLock( -1 );
+    QMutexLocker locker( &mMutexBuffer );
 
 	while( !mTempBuffer.isEmpty() )
 	{
@@ -166,8 +166,6 @@ void LogViewer::processLogMessage()
 
         delete message;
 	}
-
-	mMutexBuffer.unlock();
 }
 
 

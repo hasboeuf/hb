@@ -73,7 +73,10 @@ loguid HbLoggerPool::addTcpSocketInput( quint16 port, QString * error )
         input->moveToThread( thread() );
 
         q_assert( connect( input, &HbLogTcpSocketInput::inputMessageReceived, this,
-            [this]( HbLogMessage * message ) { mInputsStream.push_back( q_assert_ptr( message ) ); }, Qt::UniqueConnection ) );
+            [this]( HbLogMessage * message )
+            {
+                mInputsStream.push_back( q_assert_ptr( message ) );
+            }, Qt::UniqueConnection ) );
 
         mInputs.insert( input->uid(), input );
 
@@ -108,7 +111,10 @@ loguid HbLoggerPool::addLocalSocketInput( const QString & name, QString * error 
         input->moveToThread( thread() );
 
         q_assert( connect( input, &HbLogLocalSocketInput::inputMessageReceived, this,
-            [this]( HbLogMessage * message ) { mInputsStream.push_back( q_assert_ptr( message ) ); }, Qt::UniqueConnection ) );
+            [this]( HbLogMessage * message )
+            {
+                mInputsStream.push_back( q_assert_ptr( message ) );
+            }, Qt::UniqueConnection ) );
 
         mInputs.insert( input->uid(), input );
         return input->uid();
@@ -331,11 +337,11 @@ bool HbLoggerPool::enqueueMessage( QList< HbLogMessage * > & buffer )
 
         while( !buffer.isEmpty() )
         {
-			if (mLoggerStream.size() == mCapacity)
+            if ( mLoggerStream.size() == mCapacity )
 			{
 				delete mLoggerStream.takeFirst();
 			}
-                
+
             mLoggerStream.push_back( buffer.takeFirst() );
         }
 
@@ -365,44 +371,42 @@ void HbLoggerPool::process()
     if( mAtomic.testAndSetOrdered( 0, 1 ) )
     {
         // Dequeue messages coming from inputs.
-		while (!mInputsStream.isEmpty())
-		{
-			if (mLoggerStream.size() == mCapacity)
-			{
-				delete mLoggerStream.takeFirst();
-			}
+        while ( !mInputsStream.isEmpty() )
+        {
+            if ( mLoggerStream.size() == mCapacity )
+            {
+                delete mLoggerStream.takeFirst();
+            }
 
             mLoggerStream.push_back( mInputsStream.takeFirst() );
         }
 
-        mOutputsLock.lockForRead();
-
-        // Dequeue general message list.
-		if (mOutputs.size() > 0)
-		{
-            while( !mLoggerStream.isEmpty() )
+        { // Dequeue general message list.
+            QReadLocker locker( &mOutputsLock );
+            if ( mOutputs.size() > 0 )
             {
-				HbLogMessage * message = q_assert_ptr(mLoggerStream.takeFirst());
+                while( !mLoggerStream.isEmpty() )
+                {
+                    HbLogMessage * message = q_assert_ptr( mLoggerStream.takeFirst() );
 
-				foreach(HbLogAbstractOutput * output, mOutputs.values())
-				{
-					if (output->isValid())
-					{
-						if (output->level() & message->level())
-						{
-							output->processMessage(*message);
-						}
-					}
-				}
+                    foreach( HbLogAbstractOutput * output, mOutputs.values() )
+                    {
+                        if ( output->isValid() )
+                        {
+                            if ( output->level() & message->level() )
+                            {
+                                output->processMessage( *message );
+                            }
+                        }
+                    }
 
-				if (message)
-				{
-					delete message;
-				}                
+                    if (message)
+                    {
+                        delete message;
+                    }
+                }
             }
-		}
-
-        mOutputsLock.unlock();
+        }
 
         mAtomic.fetchAndStoreOrdered( 0 );
     }

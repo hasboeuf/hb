@@ -42,7 +42,7 @@ namespace hb
         public:
             I uid( bool zero_excluded = false )
             {
-                QMutexLocker( &( this->mMutex ) );
+                QMutexLocker locker( &mMutex );
 
                 I value = 0;
                 if( !mUnused[C].isEmpty() )
@@ -64,7 +64,7 @@ namespace hb
 
             I randomId()
             {
-                QMutexLocker( &( this->mMutex ) );
+                QMutexLocker locker( &mMutex );
 
                 I lowest = std::numeric_limits< I >::min();
                 I highest = std::numeric_limits< I >::max();
@@ -73,7 +73,7 @@ namespace hb
 
             void releaseUid( I released_id )
             {
-                QMutexLocker( &( this->mMutex ) );
+                QMutexLocker locker( &mMutex );
 
                 mUnused[C].enqueue( released_id );
             }

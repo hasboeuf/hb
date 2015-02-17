@@ -25,7 +25,7 @@ HbLoggerPool * HbLogManager::msLoggerPool = nullptr;
 HbLogManager::HbLogManager() :
     QObject(), HbLogger()
 {
-    msMutex.lock();
+   QMutexLocker locker( &msMutex );
 
     if( ++msInstances == 1 )
     {
@@ -41,9 +41,6 @@ HbLogManager::HbLogManager() :
         msThreadPool->start();
 	}
 
-    msMutex.unlock();
-
-
     mpInputs = q_check_ptr( new HbLoggerInputs( this ) );
     mpOutputs = q_check_ptr( new HbLoggerOutputs( this ) );
 }
@@ -53,7 +50,7 @@ HbLogManager::~HbLogManager()
 	// Send via signals/slots log message that remains in the buffer.
     dequeuePendingMessages();
 
-	msMutex.lock();  // Wait forever.
+    QMutexLocker locker( &msMutex );
 
 	if( --msInstances == 0 )
 	{
@@ -62,8 +59,6 @@ HbLogManager::~HbLogManager()
 
         q_delete_ptr( &msLoggerPool );
 	}
-
-    msMutex.unlock();
 }
 
 
