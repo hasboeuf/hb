@@ -13,28 +13,3 @@ HbLoggerStream::HbLoggerStream( HbLogManager * parent ) :
 {
     q_assert_x( parent, "HbLoggerStream", "HbLogManager not defined" );
 }
-
-
-void HbLoggerStream::onStreamStateChanged(quint32 id, HbLoggerStream::State state)
-{
-	if (state == HbLoggerStream::INOUT_ADD_SUCCESS)
-	{
-		mUsedId.insert(id);
-	}
-	else if (state == HbLoggerStream::INOUT_DEL_SUCCESS)
-	{
-		mUsedId.remove(id);
-	}
-
-	emit streamStateChanged(id, state);
-}
-
-quint32 HbLoggerStream::unusedId() const
-{
-	int id = 0;
-	while (mUsedId.contains(id) && id != _UI32_MAX)
-	{
-		++id;
-	}
-	return id;
-}

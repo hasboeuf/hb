@@ -1,5 +1,6 @@
 // Qt
 #include <QtCore/QCoreApplication>
+#include <QtCore/QDebug>
 // Hb
 #include <HbLogService.h>
 #include <HbLogManager.h>
@@ -75,6 +76,8 @@ void HbLogService::processArgs(QStringList args)
 	static const quint32 ARG_POS_FILE_DIR = 0;
 	static const quint32 ARG_POS_FILE_MAX_SIZE = 1;
 
+    QString error;
+
 	foreach(QString arg, args)
 	{
 		int pos = check.indexIn(arg);
@@ -103,7 +106,11 @@ void HbLogService::processArgs(QStringList args)
 				{
 					QString dir_name = parameters.at(ARG_POS_FILE_DIR);
 
-					outputs()->addFileOutput(outputs()->unusedId(), dir_name, file_max_size);
+                    if( outputs()->addFileOutput( dir_name, file_max_size, &error ) == 0 )
+                    {
+                        qDebug() << "HbLog error: " + error;
+                        error.clear();
+                    }
 				}
 			}
 			else if (type == "local" && nb_parameters == ARG_NB_REQUIRED_LOCAL)
@@ -112,11 +119,19 @@ void HbLogService::processArgs(QStringList args)
 
 				if (inout == "input")
 				{
-					inputs()->addLocalSocketInput(inputs()->unusedId(), local_address);
+                    if( inputs()->addLocalSocketInput( local_address, &error ) == 0 )
+                    {
+                        qDebug() << "HbLog error: " + error;
+                        error.clear();
+                    }
 				}
 				else // output
 				{
-					outputs()->addLocalSocketOutput(outputs()->unusedId(), local_address);
+                    if( outputs()->addLocalSocketOutput( local_address, &error ) == 0 )
+                    {
+                        qDebug() << "HbLog error: " + error;
+                        error.clear();
+                    }
 				}
 			}
 			else // Tcp
@@ -128,7 +143,11 @@ void HbLogService::processArgs(QStringList args)
 
 					if (is_valid_port)
 					{
-						inputs()->addTcpSocketInput(outputs()->unusedId(), port);
+                        if( inputs()->addTcpSocketInput( port, &error ) == 0 )
+                        {
+                            qDebug() << "HbLog error: " + error;
+                            error.clear();
+                        }
 					}
 				}
 				else if (inout == "output" && nb_parameters == ARG_NB_REQUIRED_OUTPUT_TCP)
@@ -139,7 +158,11 @@ void HbLogService::processArgs(QStringList args)
 					if (is_valid_port)
 					{
 						QString ip = parameters.at(ARG_POS_TCP_IP);
-						outputs()->addTcpSocketOutput(outputs()->unusedId(), ip, port);
+                        if( outputs()->addTcpSocketOutput( ip, port, &error ) == 0 )
+                        {
+                            qDebug() << "HbLog error: " + error;
+                            error.clear();
+                        }
 					}
 				}
 			}

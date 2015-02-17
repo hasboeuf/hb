@@ -34,8 +34,8 @@ namespace hb
             static HbLoggerInputs * inputs();
             static HbLoggerOutputs * outputs();
 
-            static void processArgs(int argc, char *argv[]);
-			static void processArgs(QStringList args);
+            static void processArgs( int argc, char *argv[] );
+            static void processArgs( QStringList args );
             // usage
             // -hblog-(output|input)-local:name
             // -hblog-(output|input)-tcp:port[:ip]

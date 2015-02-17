@@ -40,20 +40,20 @@ HbLoggerPool::~HbLoggerPool()
 }
 
 
-bool HbLoggerPool::addTcpSocketInput( quint32 id, quint32 port )
+loguid HbLoggerPool::addTcpSocketInput( quint16 port, QString * error )
 {
     QWriteLocker locker( &mInputsLock );
     HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
 
-    if( mInputs.contains( id ) ) 
-        state = HbLoggerStream::INOUT_ID_ALREADY_EXISTS;
-
-    if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
-	if (port < TCP_PORT_MIN || port > TCP_PORT_MAX) state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
+    if ( port < TCP_PORT_MIN || port > TCP_PORT_MAX )
+    {
+        state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
+    }
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
         foreach( HbLogAbstractInput* input, mInputs )
+        {
             if( q_assert_ptr( input )->type() == HbLogAbstractInput::INPUT_TCP_SOCKET )
             {
                 HbLogTcpSocketInput * tcpServer = q_dynamic_cast( HbLogTcpSocketInput *, input );
@@ -64,6 +64,7 @@ bool HbLoggerPool::addTcpSocketInput( quint32 id, quint32 port )
                     break;
                 }
             }
+        }
     }
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
@@ -74,20 +75,22 @@ bool HbLoggerPool::addTcpSocketInput( quint32 id, quint32 port )
         q_assert( connect( input, &HbLogTcpSocketInput::inputMessageReceived, this,
             [this]( HbLogMessage * message ) { mInputsStream.push_back( q_assert_ptr( message ) ); }, Qt::UniqueConnection ) );
 
-        mInputs.insert( id, input );
+        mInputs.insert( input->uid(), input );
+
+        return input->uid();
     }
 
-    emit streamStateChanged( id, state );
-    return ( state == HbLoggerStream::INOUT_ADD_SUCCESS );
+    if( error )
+    {
+        ( *error ) = HbLoggerStream::MetaState::toString( state );
+    }
+    return 0;
 }
 
-bool HbLoggerPool::addLocalSocketInput( quint32 id, const QString & name )
+loguid HbLoggerPool::addLocalSocketInput( const QString & name, QString * error )
 {
     QWriteLocker locker( &mInputsLock );
     HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
-
-    if( mInputs.contains( id ) ) 
-        state = HbLoggerStream::INOUT_ID_ALREADY_EXISTS;
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
@@ -107,19 +110,23 @@ bool HbLoggerPool::addLocalSocketInput( quint32 id, const QString & name )
         q_assert( connect( input, &HbLogLocalSocketInput::inputMessageReceived, this,
             [this]( HbLogMessage * message ) { mInputsStream.push_back( q_assert_ptr( message ) ); }, Qt::UniqueConnection ) );
 
-        mInputs.insert( id, input );
+        mInputs.insert( input->uid(), input );
+        return input->uid();
     }
 
-	emit streamStateChanged(id, state);
-    return ( state == HbLoggerStream::INOUT_ADD_SUCCESS );
+    if( error )
+    {
+        ( *error ) = HbLoggerStream::MetaState::toString( state );
+    }
+    return 0;
 }
 
-bool HbLoggerPool::removeInput( quint32 id )
+bool HbLoggerPool::removeInput( loguid uid, QString * error )
 {
     QWriteLocker locker( &mInputsLock );
     HbLoggerStream::State state = HbLoggerStream::INOUT_DEL_FAIL;
 
-    HbLogAbstractInput * input = mInputs.take( id );
+    HbLogAbstractInput * input = mInputs.take( uid );
 
     if( input )
     {
@@ -127,18 +134,18 @@ bool HbLoggerPool::removeInput( quint32 id )
         state = HbLoggerStream::INOUT_DEL_SUCCESS;
     }
 
-	emit streamStateChanged(id, state);
+    if( error )
+    {
+        ( *error ) = HbLoggerStream::MetaState::toString( state );
+    }
     return ( state == HbLoggerStream::INOUT_DEL_SUCCESS );
 }
 
 
-bool HbLoggerPool::addConsoleOutput( quint32 id )
+loguid HbLoggerPool::addConsoleOutput( QString * error )
 {
     QWriteLocker locker( &mOutputsLock );
 	HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
-
-    if( mOutputs.contains( id ) ) 
-        state = HbLoggerStream::INOUT_ID_ALREADY_EXISTS;
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
@@ -155,20 +162,21 @@ bool HbLoggerPool::addConsoleOutput( quint32 id )
 	if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
         HbLogConsoleOutput * output = q_assert_ptr( new HbLogConsoleOutput( HbLogger::LEVEL_ALL ) );
-        mOutputs.insert( id, output );
+        mOutputs.insert( output->uid(), output );
+        return output->uid();
     }
 
-	emit streamStateChanged(id, state);
-    return ( state == HbLoggerStream::INOUT_ADD_SUCCESS );
+    if( error )
+    {
+        ( *error ) = HbLoggerStream::MetaState::toString( state );
+    }
+    return 0;
 }
 
-bool HbLoggerPool::addGuiOutput( quint32 id, HbLogGuiNotifier * notifier )
+loguid HbLoggerPool::addGuiOutput( HbLogGuiNotifier * notifier, QString * error )
 {
     QWriteLocker locker( &mOutputsLock );
     HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
-
-    if( mOutputs.contains( id ) ) 
-        state = HbLoggerStream::INOUT_ID_ALREADY_EXISTS;
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
         if( !notifier ) state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
@@ -176,20 +184,21 @@ bool HbLoggerPool::addGuiOutput( quint32 id, HbLogGuiNotifier * notifier )
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
         HbLogGuiOutput * output = q_check_ptr( new HbLogGuiOutput( notifier, HbLogger::LEVEL_ALL ) );
-        mOutputs.insert( id, output );
+        mOutputs.insert( output->uid(), output );
+        return output->uid();
     }
 
-	emit streamStateChanged(id, state);
-    return ( state == HbLoggerStream::INOUT_ADD_SUCCESS );
+    if( error )
+    {
+        ( *error ) = HbLoggerStream::MetaState::toString( state );
+    }
+    return 0;
 }
 
-bool HbLoggerPool::addFileOutput( quint32 id, const QString & path, quint32 max_size )
+loguid HbLoggerPool::addFileOutput( const QString & path, quint32 max_size, QString * error )
 {
     QWriteLocker locker( &mOutputsLock );
 	HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
-
-    if( mOutputs.contains( id ) ) 
-        state = HbLoggerStream::INOUT_ID_ALREADY_EXISTS;
 	
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
         if( path.isEmpty() ) state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
@@ -199,20 +208,21 @@ bool HbLoggerPool::addFileOutput( quint32 id, const QString & path, quint32 max_
 	if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
         HbLogFileOutput * output = q_check_ptr( new HbLogFileOutput( path, max_size, HbLogger::LEVEL_ALL ) );
-		mOutputs.insert( id, output );
+        mOutputs.insert( output->uid(), output );
+        return output->uid();
     }
 
-	emit streamStateChanged(id, state);
-    return ( state == HbLoggerStream::INOUT_ADD_SUCCESS );
+    if( error )
+    {
+        ( *error ) = HbLoggerStream::MetaState::toString( state );
+    }
+    return 0;
 }
 
-bool HbLoggerPool::addTcpSocketOutput( quint32 id, const QString & ip, quint32 port )
+loguid HbLoggerPool::addTcpSocketOutput( const QString & ip, quint16 port, QString * error )
 {
     QWriteLocker locker( &mOutputsLock );
 	HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
-
-    if( mOutputs.contains( id ) ) 
-        state = HbLoggerStream::INOUT_ID_ALREADY_EXISTS;
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
@@ -239,20 +249,21 @@ bool HbLoggerPool::addTcpSocketOutput( quint32 id, const QString & ip, quint32 p
     {
         HbLogTcpSocketOutput * output = q_check_ptr( new HbLogTcpSocketOutput( ip, port, HbLogger::LEVEL_ALL ) );
         output->moveToThread( thread() );
-		mOutputs.insert( id, output );
+        mOutputs.insert( output->uid(), output );
+        return output->uid();
     }
 
-	emit streamStateChanged(id, state);
-    return ( state == HbLoggerStream::INOUT_ADD_SUCCESS );
+    if( error )
+    {
+        ( *error ) = HbLoggerStream::MetaState::toString( state );
+    }
+    return 0;
 }
 
-bool HbLoggerPool::addLocalSocketOutput( quint32 id, const QString & name )
+loguid HbLoggerPool::addLocalSocketOutput( const QString & name, QString * error )
 {
     QWriteLocker locker( &mOutputsLock );
 	HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
-
-	if( mOutputs.contains( id ) ) 
-        state = HbLoggerStream::INOUT_ID_ALREADY_EXISTS;
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
@@ -268,19 +279,23 @@ bool HbLoggerPool::addLocalSocketOutput( quint32 id, const QString & name )
     {
         HbLogLocalSocketOutput * output = q_check_ptr( new HbLogLocalSocketOutput( name, HbLogger::LEVEL_ALL ) );
         output->moveToThread( thread() );
-        mOutputs.insert( id, output );
+        mOutputs.insert( output->uid(), output );
+        return output->uid();
     }
 
-	emit streamStateChanged(id, state);
-    return ( state == HbLoggerStream::INOUT_ADD_SUCCESS );
+    if( error )
+    {
+        ( *error ) = HbLoggerStream::MetaState::toString( state );
+    }
+    return 0;
 }
 
-bool HbLoggerPool::removeOutput( quint32 id )
+bool HbLoggerPool::removeOutput( loguid uid, QString * error )
 {
     QWriteLocker locker( &mOutputsLock );
 	HbLoggerStream::State state = HbLoggerStream::INOUT_DEL_FAIL;
 
-    HbLogAbstractOutput * output = mOutputs.take( id );
+    HbLogAbstractOutput * output = mOutputs.take( uid );
 
     if( output )
     {
@@ -288,21 +303,24 @@ bool HbLoggerPool::removeOutput( quint32 id )
         state = HbLoggerStream::INOUT_DEL_SUCCESS;
     }
 
-	emit streamStateChanged(id, state);
+    if( error )
+    {
+        ( *error ) = HbLoggerStream::MetaState::toString( state );
+    }
     return ( state == HbLoggerStream::INOUT_DEL_SUCCESS );
 }
 
 
-IHbLoggerInput * HbLoggerPool::input( quint32 id )
+IHbLoggerInput * HbLoggerPool::input( loguid uid )
 {
     QReadLocker locker( &mInputsLock );
-    return mInputs.value( id );
+    return mInputs.value( uid, nullptr );
 }
 
-IHbLoggerOutput * HbLoggerPool::output( quint32 id )
+IHbLoggerOutput * HbLoggerPool::output( loguid uid )
 {
     QReadLocker locker( &mOutputsLock );
-    return mOutputs.value( id );
+    return mOutputs.value( uid, nullptr );
 }
 
 

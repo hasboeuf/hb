@@ -13,22 +13,22 @@ HbLoggerInputs::HbLoggerInputs( HbLogManager * parent ) :
 }
 
 
-bool HbLoggerInputs::addTcpSocketInput( quint32 id, quint32 port )
+loguid HbLoggerInputs::addTcpSocketInput( quint16 port, QString * error )
 {
-    return mpPool->addTcpSocketInput( id, port );
+    return mpPool->addTcpSocketInput( port, error );
 }
 
-bool HbLoggerInputs::addLocalSocketInput( quint32 id, const QString & name )
+loguid HbLoggerInputs::addLocalSocketInput( const QString & name, QString * error )
 {
-    return mpPool->addLocalSocketInput( id, name );
+    return mpPool->addLocalSocketInput( name, error );
 }
 
-bool HbLoggerInputs::removeInput( quint32 id )
+bool HbLoggerInputs::removeInput( loguid uid, QString * error )
 {
-    return mpPool->removeInput( id );
+    return mpPool->removeInput( uid, error );
 }
 
-IHbLoggerInput * HbLoggerInputs::input( quint32 id )
+IHbLoggerInput * HbLoggerInputs::input( loguid uid )
 {
-    return mpPool->input( id );
+    return mpPool->input( uid );
 }

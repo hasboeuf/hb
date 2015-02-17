@@ -9,7 +9,7 @@
 #ifndef IHBLOGGEROUTPUT_H
 #define IHBLOGGEROUTPUT_H
 
-// Hb
+// Local
 #include <HbLogger.h>
 
 namespace hb
@@ -24,7 +24,7 @@ namespace hb
             {
                 OUTPUT_CONSOLE       = 0,
                 OUTPUT_GUI           = 1,
-                OUTPUTmFile          = 2,
+                OUTPUT_FILE          = 2,
                 OUTPUT_LOCAL_SOCKET  = 3,
                 OUTPUT_TCP_SOCKET    = 4
             };

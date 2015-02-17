@@ -12,37 +12,37 @@ HbLoggerOutputs::HbLoggerOutputs( HbLogManager * parent ) :
     mpPool = parent->pool();
 }
 
-bool HbLoggerOutputs::addConsoleOutput( quint32 id )
+loguid HbLoggerOutputs::addConsoleOutput( QString * error )
 {
-    return mpPool->addConsoleOutput( id );
+    return mpPool->addConsoleOutput( error );
 }
 
-bool HbLoggerOutputs::addGuiOutput( quint32 id, HbLogGuiNotifier * notifier )
+loguid HbLoggerOutputs::addGuiOutput(HbLogGuiNotifier * notifier, QString * error )
 {
-    return mpPool->addGuiOutput( id, notifier );
+    return mpPool->addGuiOutput( notifier, error );
 }
 
-bool HbLoggerOutputs::addFileOutput( quint32 id, const QString & file, quint32 max_size )
+loguid HbLoggerOutputs::addFileOutput(const QString & file, quint32 max_size, QString * error )
 {
-    return mpPool->addFileOutput( id, file, max_size );
+    return mpPool->addFileOutput( file, max_size, error );
 }
 
-bool HbLoggerOutputs::addTcpSocketOutput( quint32 id, const QString & ip, quint32 port )
+loguid HbLoggerOutputs::addTcpSocketOutput( const QString & ip, quint16 port, QString * error )
 {
-    return mpPool->addTcpSocketOutput( id, ip, port );
+    return mpPool->addTcpSocketOutput( ip, port, error );
 }
 
-bool HbLoggerOutputs::addLocalSocketOutput( quint32 id, const QString & name )
+loguid HbLoggerOutputs::addLocalSocketOutput( const QString & name, QString * error )
 {
-    return mpPool->addLocalSocketOutput( id, name );
+    return mpPool->addLocalSocketOutput( name, error );
 }
 
-bool HbLoggerOutputs::removeOutput( quint32 id )
+bool HbLoggerOutputs::removeOutput( loguid id, QString * error )
 {
-    return mpPool->removeOutput( id );
+    return mpPool->removeOutput( id, error );
 }
 
-IHbLoggerOutput * HbLoggerOutputs::output( quint32 id )
+IHbLoggerOutput * HbLoggerOutputs::output( loguid id )
 {
     return mpPool->output( id );
 }

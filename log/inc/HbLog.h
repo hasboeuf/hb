@@ -12,7 +12,7 @@
 // Qt
 #include <QtCore/QtGlobal>
 
-typedef quint32 loguid;
+typedef quint16 loguid;
 
 const size_t CLASS_LOG = 30;
 

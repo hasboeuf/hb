@@ -15,6 +15,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QSet>
 // Hb
+#include <core/HbEnum.h>
 #include <HbLog.h>
 
 
@@ -42,24 +43,22 @@ namespace hb
 		{
 			Q_OBJECT
 			Q_DISABLE_COPY(HbLoggerStream)
-
-			Q_ENUMS(State)
+            Q_ENUMS_HANDLER( HbLoggerStream )
+            Q_ENUMS( State )
 
 		public :
 			static const char * DEFAULT_LOCAL_SERVER_NAME;
 
-            enum State : qint16
+            enum State : quint16
 			{
-				INOUT_ADD_SUCCESS             = 0,
-				INOUT_ID_ALREADY_EXISTS       = 1,
-				INOUT_WRONG_PARAMETERS        = 2,
-				INOUT_ALREADY_EXISTS          = 3,
-				INOUT_CONSOLE_ALREADY_EXISTS  = 4, // Specific to Output.
-				INOUT_DEL_SUCCESS             = 5,
-				INOUT_DEL_FAIL                = 6
+                INOUT_ADD_SUCCESS             = 0,
+                INOUT_WRONG_PARAMETERS,
+                INOUT_ALREADY_EXISTS,
+                INOUT_CONSOLE_ALREADY_EXISTS, // Specific to Output.
+                INOUT_DEL_SUCCESS,
+                INOUT_DEL_FAIL
 			};
-
-			quint32 unusedId() const;
+            Q_META_ENUMS( State )
 
         protected :
 
@@ -67,18 +66,6 @@ namespace hb
             HbLoggerStream( HbLogManager * parent );
             virtual ~HbLoggerStream() = default;
 
-			QSet<quint32> mUsedId;
-
-		public slots:
-			void onStreamStateChanged(quint32 id, HbLoggerStream::State state);
-
-        signals :
-
-            /*! 
-			* Triggered when an input has changed.
-            * Dedicated to nofify the final application.
-            */
-            void streamStateChanged( quint32 id, HbLoggerStream::State state );
 		};
 	}
 }

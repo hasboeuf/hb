@@ -12,7 +12,7 @@ const quint32 HbLogFileOutput::msMaxFileSize = 100000000; // 100 Mo.
 const QString HbLogFileOutput::msDefaultPath = "log";
 
 HbLogFileOutput::HbLogFileOutput( const QString & path, quint32 max_size, HbLogger::Levels level ) :
-    HbLogAbstractOutput( HbLogAbstractOutput::OUTPUTmFile, level )
+    HbLogAbstractOutput( HbLogAbstractOutput::OUTPUT_FILE, level )
 {
     mPath = ( path.isEmpty() ? msDefaultPath : path );
 

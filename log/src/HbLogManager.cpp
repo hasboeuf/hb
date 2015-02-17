@@ -29,7 +29,6 @@ HbLogManager::HbLogManager() :
 
     if( ++msInstances == 1 )
     {
-		qRegisterMetaType< hb::log::HbLoggerStream::State >( "HbLoggerStream::State" );
 		qRegisterMetaType< hb::log::HbLogMessage >( "HbLogMessage" );
 
         msThreadPool = q_check_ptr( new QThread() );
@@ -47,22 +46,6 @@ HbLogManager::HbLogManager() :
 
     mpInputs = q_check_ptr( new HbLoggerInputs( this ) );
     mpOutputs = q_check_ptr( new HbLoggerOutputs( this ) );
-
-    /*q_assert( connect( msLoggerPool, ( void ( HbLoggerPool::* )( quint32, HbLoggerStream::State ) ) &HbLoggerPool::streamState,
-        mpInputs, ( void ( HbLoggerStream::* )( quint32, HbLoggerStream::State ) ) &HbLoggerStream::streamState,
-        static_cast< Qt::ConnectionType >( Qt::DirectConnection | Qt::UniqueConnection ) ) );
-
-    q_assert( connect( msLoggerPool, ( void ( HbLoggerPool::* )( quint32, HbLoggerStream::State ) ) &HbLoggerPool::streamState,
-        mpOutputs, ( void ( HbLoggerStream::* )( quint32, HbLoggerStream::State ) ) &HbLoggerStream::streamState,
-        static_cast< Qt::ConnectionType >( Qt::DirectConnection | Qt::UniqueConnection ) ) );*/
-
-	q_assert(connect(msLoggerPool, &HbLoggerPool::streamStateChanged,
-		mpInputs, &HbLoggerStream::onStreamStateChanged,
-		static_cast< Qt::ConnectionType >(Qt::DirectConnection | Qt::UniqueConnection)));
-
-	q_assert(connect(msLoggerPool, &HbLoggerPool::streamStateChanged,
-		mpOutputs, &HbLoggerStream::onStreamStateChanged,
-		static_cast< Qt::ConnectionType >(Qt::DirectConnection | Qt::UniqueConnection)));
 }
 
 HbLogManager::~HbLogManager()

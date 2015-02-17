@@ -8,7 +8,7 @@
 
 using namespace hb::log;
 
-HbLogLocalSocketInput::HbLogLocalSocketInput(const QString & name) :
+HbLogLocalSocketInput::HbLogLocalSocketInput( const QString & name ) :
     QLocalServer(), HbLogAbstractInput( INPUT_LOCAL_SOCKET )
 {
 	mAvailable = 0;

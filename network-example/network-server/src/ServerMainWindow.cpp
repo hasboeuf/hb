@@ -28,7 +28,7 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
 
 	mpLogWidget = new HbLogWidget(this);
     mpLogWidget->hide();
-    q_assert(HbLogService::outputs()->addGuiOutput(HbLogService::outputs()->unusedId(), mpLogWidget->logNotifier())); // TODO Notifier must be handle by hblog ???
+    q_assert( HbLogService::outputs()->addGuiOutput( mpLogWidget->logNotifier()) > 0 ); // TODO Notifier must handle by hblog ???
 
     HbLogBegin();
 

@@ -35,26 +35,26 @@ namespace hb
 			* To check the success of the operation, please store the id and connect the streamState signal.
 			* \see streamState
             */
-			bool addTcpSocketInput( quint32 id, quint32 port );
+            loguid addTcpSocketInput( quint16 port, QString * error = nullptr );
 
             /*! 
             * Request the add of a local server input.
 			* To check the success of the operation, please store the id and connect the streamState signal.
 			* \see streamState
             */
-			bool addLocalSocketInput( quint32 id, const QString& name = QString() );
+            loguid addLocalSocketInput( const QString & name = QString(), QString * error = nullptr );
 
             /*! 
             * Request the deletion of an input specified by its id.
 			* To check the success of the operation, please store the id and connect the streamState signal.
 			* \see streamState
             */
-			bool removeInput( quint32 id );
+            bool removeInput(loguid uid, QString * error = nullptr );
 
             /*! 
             * Return the output specified by its id.
             */
-            IHbLoggerInput * input( quint32 id );
+            IHbLoggerInput * input( loguid id );
 
         private :
 

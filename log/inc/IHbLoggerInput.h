@@ -9,8 +9,8 @@
 #ifndef IHBLOGGERINPUT_H
 #define IHBLOGGERINPUT_H
 
-// Qt
-#include <QtCore/QtGlobal>
+// Local
+#include <HbLogger.h>
 
 namespace hb
 {

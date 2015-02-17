@@ -6,9 +6,12 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HbLogAbstractOutput_H
-#define HbLogAbstractOutput_H
+#ifndef HBLOGABSTRACTOUTPUT_H
+#define HBLOGABSTRACTOUTPUT_H
 
+// Hb
+#include <core/HbUid.h>
+// Local
 #include <IHbLoggerOutput.h>
 
 class QMutex;
@@ -20,8 +23,9 @@ namespace hb
 
         class HbLogMessage;
 
-		class HbLogAbstractOutput :
-            public virtual IHbLoggerOutput
+        class HbLogAbstractOutput :
+            public virtual IHbLoggerOutput, // TODO why virtual?
+            public HbUid< loguid, CLASS_LOG, true >
 		{
             Q_DISABLE_COPY( HbLogAbstractOutput )
 
@@ -40,7 +44,7 @@ namespace hb
 
         protected :
 
-            HbLogAbstractOutput() = delete;
+            HbLogAbstractOutput() = default;
             HbLogAbstractOutput( OutputType type, HbLogger::Levels level );
 
 
@@ -54,4 +58,4 @@ namespace hb
 	}
 }
 
-#endif
+#endif // HBLOGABSTRACTOUTPUT_H

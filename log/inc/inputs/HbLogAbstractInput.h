@@ -9,25 +9,32 @@
 #ifndef HBLOGABSTRACTINPUT_H
 #define HBLOGABSTRACTINPUT_H
 
+// Hb
+#include <core/HbUid.h>
+// Local
 #include <IHbLoggerInput.h>
+
+class toto
+{
+
+};
 
 namespace hb
 {
 	namespace log
 	{
-		class HbLogAbstractInput :
-            public virtual IHbLoggerInput
+        class HbLogAbstractInput :
+            public virtual IHbLoggerInput, // TODO why virtual?
+            public HbUid< loguid, CLASS_LOG, true >
 		{
             Q_DISABLE_COPY( HbLogAbstractInput )
 
 		public :
-
             virtual ~HbLogAbstractInput() = default;
 			virtual InputType type() const final;
 
         protected :
-
-            HbLogAbstractInput() = delete;
+            HbLogAbstractInput() = default;
             HbLogAbstractInput( InputType type );
 
         private :
@@ -36,4 +43,4 @@ namespace hb
 	}
 }
 
-#endif
+#endif // HBLOGABSTRACTINPUT_H

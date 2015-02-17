@@ -3,7 +3,6 @@
 
 using namespace hb::log;
 
-
 HbLogAbstractInput::HbLogAbstractInput( InputType type )
 {
     mType = type;
