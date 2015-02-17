@@ -18,8 +18,7 @@ HbServerAuthFacebookStrategy::HbServerAuthFacebookStrategy() :
 
 bool HbServerAuthFacebookStrategy::tryLogin( const HbAuthRequestContract * contract )
 {
-    const HbAuthFacebookRequestContract * facebook_auth =
-            dynamic_cast< const HbAuthFacebookRequestContract * >( contract );
+    const HbAuthFacebookRequestContract * facebook_auth = contract->value< HbAuthFacebookRequestContract >();
 
     if( !facebook_auth )
     {

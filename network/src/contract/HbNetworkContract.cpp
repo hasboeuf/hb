@@ -51,6 +51,18 @@ HbNetworkContract & HbNetworkContract::operator=( const HbNetworkContract & sour
     return ( *this );
 }
 
+void HbNetworkContract::setReply( HbNetworkContract * reply )
+{
+    if( reply )
+    {
+        mpReply = reply;
+        mpReply->takeUid( this );
+        mpReply->addReceiver( mUid );
+        mpReply->setNetworkType( mNetworkType );
+        mpReply->setRouting( HbNetworkProtocol::RoutingScheme::UNICAST ); // Replies only support unicast.
+    }
+}
+
 void HbNetworkContract::setHeader( const HbNetworkHeader & header )
 {
     mHeader = header;
@@ -120,23 +132,6 @@ void HbNetworkContract::setRouting( HbNetworkProtocol::RoutingScheme routing )
 {
     mRouting = routing;
     // TODO logique routing.
-}
-
-
-bool HbNetworkContract::setReply( HbNetworkContract * reply )
-{
-    if ( reply && ( mpReply != reply ) )
-	{
-        if ( mRouting != HbNetworkProtocol::RoutingScheme::UNICAST )
-		{
-            HbWarning( "Reply only supported in unicast mode." );
-			return false;
-		}
-
-        mpReply = reply;
-	}
-
-	return true;
 }
 
 HbNetworkContract * HbNetworkContract::reply() const

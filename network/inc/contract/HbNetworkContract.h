@@ -15,6 +15,7 @@
 #include <QtCore/QStringList>
 // Hb
 #include <HbGlobal.h>
+#include <core/HbUId.h>
 // Local
 #include <HbNetwork.h>
 #include <contract/HbNetworkProtocol.h>
@@ -26,7 +27,7 @@ namespace hb
 	{
         class HbNetworkHeader;
 
-		class HB_NETWORK_DECL HbNetworkContract
+        class HB_NETWORK_DECL HbNetworkContract : public HbUid< ctctuid, CLASS_CTCT >
         {
             Q_FRIEND_CLASS( HbNetworkExchanges )
 
@@ -44,15 +45,20 @@ namespace hb
             virtual HbNetworkProtocol::RoutingScheme routing() const final;
             virtual void setRouting( HbNetworkProtocol::RoutingScheme routing ) final;
 
-            virtual bool setReply( HbNetworkContract * reply ); // TODO DEL ?
-            virtual HbNetworkContract * reply() const; // TODO = 0
+            virtual HbNetworkContract * reply() const;
 
             virtual void setNetworkType( HbNetworkProtocol::NetworkType type ) final;
             virtual HbNetworkProtocol::NetworkType networkType() const final;
 
             template< typename T >
-            inline T * value() const final
+            inline const T * value() const final
 			{
+                return dynamic_cast< const T * >( this );
+            }
+
+            template< typename T >
+            inline T * value() final
+            {
                 return dynamic_cast< T * >( this );
             }
 
@@ -68,6 +74,8 @@ namespace hb
 
             virtual HbNetworkContract * create() const = 0;
 
+            virtual void setReply( HbNetworkContract * reply ) final;
+
             virtual bool addReceiver( sockuid receiver ) final ;
             virtual void resetReceivers() final;
 
@@ -76,10 +84,9 @@ namespace hb
 
         protected:
             HbNetworkHeader mHeader;
-
-        private:
             HbNetworkContract * mpReply;
 
+        private:
             // Internal use. Server side. TODO protect the client side.
             sockuid mSender;
             HbNetworkProtocol::NetworkType mNetworkType;

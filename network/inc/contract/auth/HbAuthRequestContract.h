@@ -17,11 +17,13 @@
 // Local
 #include <HbNetwork.h>
 #include <contract/HbNetworkContract.h>
+#include <contract/auth/HbAuthStatusContract.h> // Covariance.
 
 namespace hb
 {
     namespace network
     {
+
         class HB_NETWORK_DECL HbAuthRequestContract : public HbNetworkContract
         {
 
@@ -33,6 +35,8 @@ namespace hb
             HbAuthRequestContract & operator=( const HbAuthRequestContract & source );
 
             HbAuthRequestContract * create() const = 0;
+
+            HbAuthStatusContract * reply() const;
 
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;

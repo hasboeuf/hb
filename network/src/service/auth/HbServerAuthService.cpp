@@ -46,6 +46,12 @@ HbNetworkProtocol::NetworkTypes HbServerAuthService::enabledNetworkTypes() const
 void HbServerAuthService::timerEvent( QTimerEvent * )
 {
     // TODO check socket timeout.
+    auto it = mAuthTimeout.begin();
+    while( it != mAuthTimeout.end() )
+    {
+        auto current = it++;
+
+    }
 }
 
 void HbServerAuthService::onContractReceived( const HbNetworkContract * contract )
@@ -58,6 +64,7 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
         HbServerAuthStrategy * strategy = mStrategies.value( type, nullptr );
         if( strategy )
         {
+            HbAuthStatusContract * response = auth_contract->reply(); // TODO finish.
 
             if( strategy->tryLogin( auth_contract ) )
             {

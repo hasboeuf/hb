@@ -55,6 +55,8 @@ namespace hb
         private:
             QHash< authstgy, HbServerAuthStrategy * > mStrategies;
             qint32 mTimerId;
+
+
             // InOut.
             QSet< sockuid >          mPendingSocket;
             QHash< sockuid, quint8 > mAuthTries;

@@ -9,6 +9,7 @@ HbAuthRequestContract::HbAuthRequestContract() :
     HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_CLT_AUTH_REQUEST )
 {
     mType = HbAuthService::AUTH_NONE;
+    setReply( new HbAuthStatusContract() );
 }
 
 HbAuthRequestContract::HbAuthRequestContract( const HbAuthRequestContract & source ) :
@@ -31,6 +32,12 @@ HbAuthRequestContract & HbAuthRequestContract::operator=( const HbAuthRequestCon
 
     return ( *this );
 }
+
+HbAuthStatusContract * HbAuthRequestContract::reply() const
+{
+    return HbNetworkContract::reply()->value< HbAuthStatusContract >();
+}
+
 
 bool HbAuthRequestContract::read( QDataStream & stream )
 {
