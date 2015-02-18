@@ -47,7 +47,6 @@ HbLogManager::HbLogManager() :
 
 HbLogManager::~HbLogManager()
 {
-	// Send via signals/slots log message that remains in the buffer.
     dequeuePendingMessages();
 
     QMutexLocker locker( &msMutex );
@@ -92,6 +91,8 @@ void HbLogManager::dequeuePendingMessages()
     if( !mMessages.isEmpty() )
     {
         while( !msLoggerPool->enqueueMessage( mMessages ) )
+        {
             QThread::yieldCurrentThread();
+        }
     }
 }

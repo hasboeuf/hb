@@ -42,6 +42,7 @@ HbLogWidget::HbLogWidget(QWidget *parent) :
 
 HbLogWidget::~HbLogWidget()
 {
+    // mpLogNotifier is deleted by HbLog.
 }
 
 HbLogGuiNotifier* HbLogWidget::logNotifier()
