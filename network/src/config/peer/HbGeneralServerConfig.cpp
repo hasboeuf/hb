@@ -9,7 +9,9 @@ HbGeneralServerConfig::HbGeneralServerConfig(const HbGeneralServerConfig & confi
 {
 	if (this != &config)
 	{
-
+        mAuthConfig     = config.mAuthConfig;
+        mChannelConfig  = config.mChannelConfig;
+        mPresenceConfig = config.mPresenceConfig;
 	}
 }
 
@@ -19,6 +21,10 @@ HbGeneralServerConfig & HbGeneralServerConfig::operator =(const HbGeneralServerC
 	if (this != &config)
 	{
         HbGeneralConfig::operator=( config );
+
+        mAuthConfig     = config.mAuthConfig;
+        mChannelConfig  = config.mChannelConfig;
+        mPresenceConfig = config.mPresenceConfig;
 	}
 
 	return *this;
