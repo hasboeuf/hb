@@ -57,9 +57,10 @@ void HbNetworkContract::setReply( HbNetworkContract * reply )
     {
         mpReply = reply;
         mpReply->takeUid( this );
-        mpReply->addReceiver( mUid );
+        mpReply->resetSocketReceivers();
         mpReply->setNetworkType( mNetworkType );
         mpReply->setRouting( HbNetworkProtocol::RoutingScheme::UNICAST ); // Replies only support unicast.
+        mpReply->addSocketReceiver( mUid );
     }
 }
 
@@ -88,7 +89,7 @@ void HbNetworkContract::addPendingReceiver( const QString & user_uid )
     mPendingReceivers.insert( user_uid );
 }
 
-bool HbNetworkContract::addReceiver( sockuid receiver )
+bool HbNetworkContract::addSocketReceiver( sockuid receiver )
 {
     if( mRouting == HbNetworkProtocol::RoutingScheme::UNICAST )
     {
@@ -113,14 +114,23 @@ bool HbNetworkContract::addReceiver( sockuid receiver )
     }
 }
 
-void HbNetworkContract::resetReceivers()
+void HbNetworkContract::resetSocketReceivers()
 {
     mSocketReceivers.clear();
 }
 
-const QSet< sockuid > & HbNetworkContract::receivers() const
+const QSet< sockuid > & HbNetworkContract::socketReceivers() const
 {
     return mSocketReceivers;
+}
+
+sockuid HbNetworkContract::socketReceiver() const
+{
+    if( mSocketReceivers.size() > 0 )
+    {
+        return *mSocketReceivers.begin();
+    }
+    return 0; // 0 is an invalid sockuid.
 }
 
 HbNetworkProtocol::RoutingScheme HbNetworkContract::routing() const

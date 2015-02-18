@@ -30,7 +30,7 @@ namespace hb
             };
 
             HbAuthService() = default;
-            virtual ~HbAuthService( ) = default;
+            virtual ~HbAuthService() = default;
 
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract ) = 0;

@@ -25,6 +25,7 @@ namespace hb
 
         class HbServerAuthStrategy;
         class HbAuthRequestContract;
+        class HbAuthStatusContract;
 
         class HB_NETWORK_DECL HbServerAuthService : public HbAuthService, public IHbSocketListener
 		{
@@ -39,6 +40,10 @@ namespace hb
 
         private:
             void timerEvent( QTimerEvent * event );
+            bool checkSocket( sockuid socket_uid );
+            void addSocket  ( sockuid socket_uid );
+            void delSocket  ( sockuid socket_uid, bool delete_responses = true );
+            void kickSocket ( sockuid socket_uid, HbNetworkProtocol::KickCode reason );
 
         public callbacks:
             // From HbConnectionPool.
@@ -46,8 +51,8 @@ namespace hb
             virtual void onSocketConnected   ( sockuid socket_uid );
             virtual void onSocketDisconnected( sockuid socket_uid );
             // From HbServerAuthStrategy.
-            void onLoginSucceed( sockuid sender, const HbNetworkUserInfo & user_info );
-            void onLoginFailed ( sockuid sender, HbNetworkProtocol::AuthStatus, const QString & description );
+            void onLoginSucceed( sockuid socket_uid, const HbNetworkUserInfo & user_info );
+            void onLoginFailed ( sockuid socket_uid, HbNetworkProtocol::AuthStatus, const QString & description );
 
         signals:
             void userConnected( sockuid socket_id, const HbNetworkUserInfo & user_info );
@@ -61,6 +66,7 @@ namespace hb
             QSet< sockuid >          mPendingSocket;
             QHash< sockuid, quint8 > mAuthTries;
             QHash< sockuid, quint8 > mAuthTimeout;
+            QHash< sockuid, HbAuthStatusContract * > mResponses;
         };
 	}
 }

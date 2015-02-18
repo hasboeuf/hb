@@ -54,25 +54,80 @@ void HbServerAuthService::timerEvent( QTimerEvent * )
     }
 }
 
+bool HbServerAuthService::checkSocket( sockuid socket_uid )
+{
+    quint8 flags = 0x0;
+    if( mPendingSocket.contains( socket_uid ) ) flags |= 0x1;
+    if( mAuthTimeout.contains  ( socket_uid ) ) flags |= 0x2;
+    if( mAuthTries.contains    ( socket_uid ) ) flags |= 0x4;
+
+    if( flags == 0x7 ) // All contains socket_uid.
+    {
+        return true;
+    }
+    else if( flags != 0x0 ) // Something incoherent is here, socket_uid is not present everywhere.
+    {
+        kickSocket( socket_uid, HbNetworkProtocol::KICK_INTERNAL_ERROR );
+    }
+
+    return false;
+}
+
+void HbServerAuthService::addSocket( sockuid socket_uid )
+{
+    mPendingSocket.insert( socket_uid );
+    mAuthTimeout.insert  ( socket_uid, 30 ); // TODO config
+    mAuthTries.insert    ( socket_uid, 0 );
+}
+
+void HbServerAuthService::delSocket( sockuid socket_uid, bool delete_responses )
+{
+    mPendingSocket.remove( socket_uid );
+    mAuthTries.remove    ( socket_uid );
+    mAuthTimeout.remove  ( socket_uid );
+
+    // If auth is in process.
+    if( delete_responses &&
+        mResponses.value( socket_uid, nullptr ) )
+    {
+        delete mResponses.take( socket_uid );
+    }
+}
+
+void HbServerAuthService::kickSocket( sockuid socket_uid, HbNetworkProtocol::KickCode reason )
+{
+    delSocket( socket_uid );
+    // TODO kick
+}
+
 void HbServerAuthService::onContractReceived( const HbNetworkContract * contract )
 {
     const HbAuthRequestContract * auth_contract = contract->value< const HbAuthRequestContract >();
     if( auth_contract )
     {
-        authstgy type = auth_contract->type();
+        authstgy type      = auth_contract->type();
+        sockuid socket_uid = auth_contract->sender();
 
         HbServerAuthStrategy * strategy = mStrategies.value( type, nullptr );
         if( strategy )
         {
-            HbAuthStatusContract * response = auth_contract->reply(); // TODO finish.
-
-            if( strategy->tryLogin( auth_contract ) )
+            HbAuthStatusContract * response = auth_contract->reply();
+            if( response &&
+                response->socketReceiver() == socket_uid )
             {
-                // TODO retrieve reply now ?
+
+                mResponses.insert( socket_uid, response );
+
+                if( !strategy->tryLogin( auth_contract ) )
+                {
+                    HbError( "Bad contract." );
+                    delete mResponses.take( socket_uid );
+                    // TODO kick?
+                }
             }
             else
             {
-                HbError( "Bad contract." );
+                HbError( "Bad reply contract." );
                 // TODO kick?
             }
         }
@@ -81,6 +136,8 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
             HbError( "No user auth strategy defined." );
             // TODO kick?
         }
+
+        delete auth_contract;
     }
     else
     {
@@ -91,44 +148,66 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
 
 void HbServerAuthService::onSocketConnected   ( sockuid socket_uid )
 {
-    mPendingSocket.insert( socket_uid );
+    addSocket( socket_uid );
 }
 
 void HbServerAuthService::onSocketDisconnected( sockuid socket_uid )
 {
-    mPendingSocket.remove( socket_uid );
+    delSocket( socket_uid );
 }
 
-void HbServerAuthService::onLoginSucceed( sockuid sender, const HbNetworkUserInfo & user_info )
+void HbServerAuthService::onLoginSucceed( sockuid socket_uid, const HbNetworkUserInfo & user_info )
 {
-    if( mPendingSocket.contains( sender ) )
+    if( checkSocket( socket_uid ) )
     {
-        emit userConnected( sender, user_info );
+        HbAuthStatusContract * response = mResponses.value( socket_uid, nullptr );
+        if( !response )
+        {
+            kickSocket( socket_uid, HbNetworkProtocol::KICK_INTERNAL_ERROR );
+            return;
+        }
 
-        HbAuthStatusContract * response = new HbAuthStatusContract();
+        emit userConnected( socket_uid, user_info );
+
         response->setStatus( HbNetworkProtocol::AUTH_OK );
         response->setTryNumber( 1 ); // TODO store try number.
         response->setMaxTries( 3 ); // TODO config.
 
-        mPendingSocket.remove( sender );
+        delSocket( socket_uid, false );
+
+        // TODO emit contract.
     }
     else
     {
-        HbWarning( "Socket %d disconnected before getting ok auth response.", sender );
+        HbWarning( "Socket %d disconnected before getting ok auth response.", socket_uid );
     }
 }
 
-void HbServerAuthService::onLoginFailed( sockuid sender, HbNetworkProtocol::AuthStatus, const QString & description )
+void HbServerAuthService::onLoginFailed( sockuid socket_uid, HbNetworkProtocol::AuthStatus status, const QString & description )
 {
-    if( mPendingSocket.contains( sender ) )
+    if( checkSocket( socket_uid ) )
     {
-        mPendingSocket.remove( sender );
+        HbAuthStatusContract * response = mResponses.value( socket_uid, nullptr );
+        if( !response )
+        {
+            kickSocket( socket_uid, HbNetworkProtocol::KICK_INTERNAL_ERROR );
+            return;
+        }
 
-        // TODO retrieve or create the reply.
-        // TODO think about number of tries.
+        if( 0 ) // Max tries.
+        {
+            kickSocket( socket_uid, HbNetworkProtocol::KICK_AUTH_LIMIT );
+        }
+
+        response->setStatus( status );
+        response->setDescription( description );
+        response->setTryNumber( 1 ); // TODO store try number.
+        response->setMaxTries( 3 ); // TODO config.
+
+        // TODO emit contract.
     }
     else
     {
-        HbWarning( "Socket %d disconnected before getting nok auth response.", sender );
+        HbWarning( "Socket %d disconnected before getting nok auth response.", socket_uid );
     }
 }

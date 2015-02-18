@@ -65,6 +65,9 @@ namespace hb
             virtual bool read( QDataStream & stream ) = 0;
             virtual bool write( QDataStream & stream ) const = 0;
 
+            const QSet< sockuid > & socketReceivers() const;
+            sockuid socketReceiver() const;
+
 		protected:
 
             HbNetworkContract();
@@ -76,11 +79,9 @@ namespace hb
 
             virtual void setReply( HbNetworkContract * reply ) final;
 
-            virtual bool addReceiver( sockuid receiver ) final ;
-            virtual void resetReceivers() final;
-
-		private:
-            const QSet< sockuid > & receivers() const;
+        private:
+            virtual bool addSocketReceiver( sockuid receiver ) final ;
+            virtual void resetSocketReceivers() final;
 
         protected:
             HbNetworkHeader mHeader;

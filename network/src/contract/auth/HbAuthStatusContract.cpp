@@ -17,9 +17,10 @@ HbAuthStatusContract::HbAuthStatusContract( const HbAuthStatusContract & source 
 {
     if( & source != this )
     {
-        mStatus    = source.mStatus;
-        mTryNumber = source.mTryNumber;
-        mMaxTries  = source.mMaxTries;
+        mStatus      = source.mStatus;
+        mDescription = source.mDescription;
+        mTryNumber   = source.mTryNumber;
+        mMaxTries    = source.mMaxTries;
     }
 }
 
@@ -29,9 +30,10 @@ HbAuthStatusContract & HbAuthStatusContract::operator=( const HbAuthStatusContra
     {
         HbNetworkContract::operator=( source );
 
-        mStatus    = source.mStatus;
-        mTryNumber = source.mTryNumber;
-        mMaxTries  = source.mMaxTries;
+        mStatus      = source.mStatus;
+        mDescription = source.mDescription;
+        mTryNumber   = source.mTryNumber;
+        mMaxTries    = source.mMaxTries;
     }
 
     return ( *this );
@@ -46,6 +48,7 @@ bool HbAuthStatusContract::read( QDataStream & stream )
 {
     netwcode status;
     stream >> status;
+    stream >> mDescription;
     stream >> mTryNumber;
     stream >> mMaxTries;
 
@@ -57,6 +60,7 @@ bool HbAuthStatusContract::read( QDataStream & stream )
 bool HbAuthStatusContract::write( QDataStream & stream ) const
 {
     stream << ( netwcode ) mStatus;
+    stream << mDescription;
     stream << mTryNumber;
     stream << mMaxTries;
 
@@ -66,6 +70,11 @@ bool HbAuthStatusContract::write( QDataStream & stream ) const
 void HbAuthStatusContract::setStatus( HbNetworkProtocol::AuthStatus status )
 {
     mStatus = status;
+}
+
+void HbAuthStatusContract::setDescription( const QString & description )
+{
+    mDescription = description;
 }
 
 void HbAuthStatusContract::setTryNumber( quint8 try_number )
@@ -81,6 +90,11 @@ void HbAuthStatusContract::setMaxTries ( quint8 max_tries )
 HbNetworkProtocol::AuthStatus HbAuthStatusContract::status() const
 {
     return mStatus;
+}
+
+const QString & HbAuthStatusContract::description() const
+{
+    return mDescription;
 }
 
 quint8 HbAuthStatusContract::tryNumber() const

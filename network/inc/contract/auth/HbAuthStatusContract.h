@@ -39,15 +39,18 @@ namespace hb
             virtual bool write( QDataStream & stream ) const;
 
             void setStatus   ( HbNetworkProtocol::AuthStatus status );
+            void setDescription( const QString & description );
             void setTryNumber( quint8 try_number );
             void setMaxTries ( quint8 max_tries );
 
             HbNetworkProtocol::AuthStatus status() const;
+            const QString & description() const;
             quint8 tryNumber() const;
             quint8 maxTries () const;
 
 		private:
             HbNetworkProtocol::AuthStatus mStatus;
+            QString mDescription;
             quint8 mTryNumber;
             quint8 mMaxTries;
         };

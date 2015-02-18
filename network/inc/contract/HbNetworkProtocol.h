@@ -76,10 +76,12 @@ namespace hb
 
             enum KickCode : kickcode
             {
-                PROTOCOL_DIFFERENT = 0,
-                AUTH_LIMIT,
-                PRESENCE_TIMEOUT,
-                CONTRACT_INVALID
+                KICK_INTERNAL_ERROR = 0,
+                KICK_PROTOCOL_DIFFERENT,
+                KICK_CONTRACT_INVALID,
+                KICK_AUTH_LIMIT,
+                KICK_PRESENCE_TIMEOUT
+
             };
             Q_META_ENUMS( KickCode )
 
