@@ -21,7 +21,7 @@ namespace hb
 {
 	namespace network
 	{
-        // TODO decl temp
+
         class HB_NETWORK_DECL HbNetworkProtocol final
 		{
             Q_GADGET

@@ -19,9 +19,8 @@ namespace hb
 {
 	namespace network
 	{
-        // TODO remove decl
 
-        class HB_NETWORK_DECL HbNetworkHeader final
+        class HbNetworkHeader final
 		{
             friend QDataStream & operator<<( QDataStream & stream, const HbNetworkHeader & header );
             friend QDataStream & operator>>( QDataStream & stream, HbNetworkHeader & header );

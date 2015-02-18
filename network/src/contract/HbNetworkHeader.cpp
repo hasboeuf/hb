@@ -31,7 +31,7 @@ HbNetworkHeader::HbNetworkHeader( const HbNetworkHeader & header )
     }
 }
 
-HbNetworkHeader & HbNetworkHeader::operator=( const HbNetworkHeader & header ) // TODO USEFUL ?
+HbNetworkHeader & HbNetworkHeader::operator=( const HbNetworkHeader & header )
 {
     if( &header != this )
     {

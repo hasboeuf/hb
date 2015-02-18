@@ -59,7 +59,7 @@ namespace hb
         };
 
 
-        class ModelFilter final
+        inner class ModelFilter final
         {
             Q_DEFAULT_COPY( ModelFilter )
 
@@ -147,9 +147,7 @@ namespace hb
                 return false;
             }
 
-
-        // TODO A REVOIR POUR CHANGER LE SCOPE EN PRIVATE
-        public :
+        public : // As is it an inner class, members are public for convenience.
             QVariant        mValue;
             qint32          mRole;
             Qt::MatchFlags  mFlags;
