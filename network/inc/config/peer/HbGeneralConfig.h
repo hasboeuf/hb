@@ -40,37 +40,11 @@ namespace hb
             void setAppName( const QString & app_name );
             void setProtocolVersion( quint16 protocol_version );
 
-            template< class A >
-            A * enableAuthentication()
-            {
-                A * strategy = new A();
-                if( dynamic_cast< HbServerAuthStrategy * >( strategy ) )
-                {
-                    mpAuthenticationStrategy = strategy;
-                    return strategy;
-                }
-                return nullptr;
-            }
-
-            template< class C >
-            C * registerChannel()
-            {
-                C * channel = new C();
-                if( dynamic_cast< HbNetworkChannel * >( channel ) )
-                {
-                    mChannels.append( channel );
-                    return channel;
-                }
-                return nullptr;
-            }
-
         protected:
 
         private:
             QString mAppName;
             quint16 mProtocolVersion;
-            HbServerAuthStrategy * mpAuthenticationStrategy;
-            QList< HbNetworkChannel * > mChannels;
         };
     }
 }

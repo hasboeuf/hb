@@ -16,6 +16,9 @@
 // Local
 #include <HbNetwork.h>
 #include <config/peer/HbGeneralConfig.h>
+#include <config/service/auth/HbServiceAuthClientConfig.h>
+#include <config/service/channel/HbServiceChannelClientConfig.h>
+#include <config/service/presence/HbServicePresenceClientConfig.h>
 
 namespace hb
 {
@@ -33,8 +36,16 @@ namespace hb
 
             virtual bool isValid() const;
 
+            HbServiceAuthClientConfig     & auth    ();
+            HbServiceChannelClientConfig  & channel ();
+            HbServicePresenceClientConfig & presence();
+
         protected:
 
+        private:
+            HbServiceAuthClientConfig     mAuthConfig;
+            HbServiceChannelClientConfig  mChannelConfig;
+            HbServicePresenceClientConfig mPresenceConfig;
         };
     }
 }

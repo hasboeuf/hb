@@ -36,7 +36,6 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     HbGeneralServerConfig config;
     config.setAppName("hb-network-example");
     config.setProtocolVersion( 1 );
-    config.enableAuthentication< ServerAuthStrategy >();
 
     mpHbServer = new HbServer( config );
 

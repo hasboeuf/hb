@@ -29,8 +29,23 @@ bool HbGeneralClientConfig::isValid() const
 {
     if( HbGeneralConfig::isValid() )
     {
-        // TODO check channel.
+        // TODO complete
         return true;
     }
     return false;
+}
+
+HbServiceAuthClientConfig & HbGeneralClientConfig::auth()
+{
+    return mAuthConfig;
+}
+
+HbServiceChannelClientConfig & HbGeneralClientConfig::channel()
+{
+    return mChannelConfig;
+}
+
+HbServicePresenceClientConfig & HbGeneralClientConfig::presence()
+{
+    return mPresenceConfig;
 }

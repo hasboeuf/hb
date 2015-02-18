@@ -18,7 +18,7 @@ HbGeneralServerConfig & HbGeneralServerConfig::operator =(const HbGeneralServerC
 {
 	if (this != &config)
 	{
-
+        HbGeneralConfig::operator=( config );
 	}
 
 	return *this;
@@ -29,8 +29,23 @@ bool HbGeneralServerConfig::isValid() const
 {
     if( HbGeneralConfig::isValid() )
     {
-        // TODO check channel.
+        // TODO complete
         return true;
     }
     return false;
+}
+
+HbServiceAuthServerConfig & HbGeneralServerConfig::auth()
+{
+    return mAuthConfig;
+}
+
+HbServiceChannelServerConfig & HbGeneralServerConfig::channel()
+{
+    return mChannelConfig;
+}
+
+HbServicePresenceServerConfig & HbGeneralServerConfig::presence()
+{
+    return mPresenceConfig;
 }

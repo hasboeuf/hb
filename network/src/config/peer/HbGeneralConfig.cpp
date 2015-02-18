@@ -8,7 +8,6 @@ HbGeneralConfig::HbGeneralConfig()
 {
     mAppName = "";
     mProtocolVersion = 0;
-    mpAuthenticationStrategy = nullptr;
 }
 
 HbGeneralConfig::HbGeneralConfig(const HbGeneralConfig & config)
@@ -17,8 +16,6 @@ HbGeneralConfig::HbGeneralConfig(const HbGeneralConfig & config)
 	{
         mAppName                 = config.mAppName;
         mProtocolVersion         = config.mProtocolVersion;
-        mpAuthenticationStrategy = config.mpAuthenticationStrategy; // TODO ptr
-        mChannels                = config.mChannels; // TODO ptr
 	}
 }
 
@@ -29,8 +26,6 @@ HbGeneralConfig & HbGeneralConfig::operator =(const HbGeneralConfig & config)
 	{
         mAppName                 = config.mAppName;
         mProtocolVersion         = config.mProtocolVersion;
-        mpAuthenticationStrategy = config.mpAuthenticationStrategy; // TODO ptr
-        mChannels                = config.mChannels; // TODO ptr
 	}
 
 	return *this;

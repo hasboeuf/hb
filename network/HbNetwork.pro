@@ -14,6 +14,10 @@ PROJECT.ID   =      network
 SUBDIRS +=  com \
             com/tcp \
             config/peer \
+            config/service \
+            config/service/auth \
+            config/service/channel \
+            config/service/presence \
             config/com \
             contract \
             contract/auth \
