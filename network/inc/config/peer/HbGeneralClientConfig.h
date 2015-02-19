@@ -29,7 +29,7 @@ namespace hb
         {
 
         public:
-            HbGeneralClientConfig();
+            HbGeneralClientConfig() = default;
             HbGeneralClientConfig( const HbGeneralClientConfig & config );
             virtual ~HbGeneralClientConfig() = default;
             virtual HbGeneralClientConfig & operator =( const HbGeneralClientConfig & config );

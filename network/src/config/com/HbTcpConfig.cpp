@@ -49,6 +49,22 @@ HbTcpConfig & HbTcpConfig::operator =(const HbTcpConfig & config)
     return ( *this );
 }
 
+bool HbTcpConfig::isValid() const
+{
+    if (!HbNetworkConfig::isValid())
+    {
+        return false;
+    }
+
+    if (mAddress.isNull())
+    {
+        HbError("Null address.");
+        return false;
+    }
+
+    return true;
+}
+
 void HbTcpConfig::setAddress(const QString & address)
 {
 	setAddress(QHostAddress(address));
@@ -82,20 +98,4 @@ void HbTcpConfig::setOptions(SocketOptions options)
 HbTcpConfig::SocketOptions HbTcpConfig::options() const
 {
     return mOptions;
-}
-
-bool HbTcpConfig::isValid() const
-{
-	if (!HbNetworkConfig::isValid())
-	{
-		return false;
-	}
-
-    if (mAddress.isNull())
-	{
-		HbError("Null address.");
-		return false;
-	}
-
-	return true;
 }

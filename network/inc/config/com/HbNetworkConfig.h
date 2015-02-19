@@ -29,13 +29,15 @@ namespace hb
             HbNetworkConfig(const HbNetworkConfig & config);
             virtual HbNetworkConfig & operator =(const HbNetworkConfig & config);
 
+            virtual bool isValid() const;
+
 			virtual void setOpenMode(QIODevice::OpenMode mode) final;
 			virtual QIODevice::OpenMode openMode() const final;
 			
             virtual const HbNetworkExchanges & exchanges() const final;
             virtual HbNetworkExchanges & exchanges() final;
 
-			virtual bool isValid() const;
+
 
         protected:
             HbNetworkExchanges mExchanges;

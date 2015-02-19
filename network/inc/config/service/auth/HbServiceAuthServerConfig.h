@@ -31,10 +31,17 @@ namespace hb
 
             virtual bool isValid() const;
 
+            virtual void setAuthMaxTries( quint16 max ) final;
+            virtual quint16 authMaxTries() const;
+
+            virtual void setAuthTimeout( quint16 timeout ) final;
+            virtual quint16 authTimeout() const;
+
         protected:
 
         private:
-
+            quint16 mAuthMaxTries;
+            quint16 mAuthTimeout;
         };
     }
 }

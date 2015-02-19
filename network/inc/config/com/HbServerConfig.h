@@ -31,22 +31,14 @@ namespace hb
 			HbServerConfig( const HbServerConfig & config );
 			HbServerConfig & operator =( const HbServerConfig & config );
 
+            bool isValid() const;
+
 			virtual void setMaxUsersPerThread( quint16 max_users ) final;
 			virtual quint16 maxUsersPerThread() const final;
 			virtual bool isThreaded() const final;
 
-            const HbTimeoutServerConfig & timeout() const;
-            void setTimeout( const HbTimeoutServerConfig & timeout );
-
-            virtual void setAuthTriesMax( quint16 max ) final;
-            virtual quint16 authTriesMax() const;
-
-			bool isValid() const;
-
 		private:
 			quint16 mMaxUsersPerThread;
-            HbTimeoutServerConfig mTimeout;
-            quint16 mAuthTriesMax;
 		};
 	}
 }

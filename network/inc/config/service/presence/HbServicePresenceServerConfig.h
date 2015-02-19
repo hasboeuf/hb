@@ -31,9 +31,17 @@ namespace hb
 
             virtual bool isValid() const;
 
+            virtual void setWarningAliveThreshold( quint16 threshold ) final;
+            virtual quint16 warningAliveThreshold() const final;
+
+            virtual void setKickAliveThreshold( quint16 threshold ) final;
+            virtual quint16 kickAliveThreshold() const final;
+
         protected:
 
         private:
+            quint16 mWarningAliveThreshold;
+            quint16 mKickAliveThreshold;
 
         };
     }

@@ -243,7 +243,7 @@ void HbAbstractClient::onSocketContractReceived( const HbNetworkContract * contr
 
 void HbAbstractClient::onSocketDisconnected()
 {
-    qint16 retry_delay = configuration().timeout().reconnectionDelay();
+    qint16 retry_delay = configuration().reconnectionDelay();
     if( retry_delay > 0 )
     {
         killTimer( mRetry );

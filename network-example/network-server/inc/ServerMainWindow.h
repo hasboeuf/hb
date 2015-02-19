@@ -40,7 +40,6 @@ namespace hb
             hb::log::HbLogWidget* mpLogWidget;
 
             // Network
-            hb::network::HbTcpServer mTcpServer;
             hb::network::HbServer * mpHbServer;
 
         private:

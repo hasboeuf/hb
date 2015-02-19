@@ -31,10 +31,13 @@ namespace hb
 
             virtual bool isValid() const;
 
+            virtual void setKeepAliveInterval( quint16 interval ) final;
+            virtual quint16 keepAliveInterval() const final;
+
         protected:
 
         private:
-
+            quint16 mKeepAliveInterval;
         };
     }
 }

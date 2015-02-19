@@ -15,7 +15,7 @@ namespace hb
 {
     namespace network
     {
-        //class HbTcpClient;
+        class HbClient;
     }
 
 	namespace log
@@ -44,6 +44,7 @@ namespace hb
             hb::log::HbLogWidget* mpLogWidget;
             // Network
             hb::network::HbTcpClient mTcpClient;
+            hb::network::HbClient * mpHbClient;
             // Link
             hb::link::HbO2ClientFacebook * mpFacebookClient;
 

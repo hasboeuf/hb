@@ -36,6 +36,10 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     HbGeneralServerConfig config;
     config.setAppName("hb-network-example");
     config.setProtocolVersion( 1 );
+    config.auth().setAuthMaxTries( 3 );
+    config.auth().setAuthTimeout( 60 );
+    config.presence().setKickAliveThreshold( 20 );
+    config.presence().setWarningAliveThreshold( 10 );
 
     mpHbServer = new HbServer( config );
 
@@ -83,13 +87,6 @@ void ServerMainWindow::onStartClicked()
     config.setAddress(QHostAddress::Any);
     config.setPort( 4000 );
     config.setMaxUsersPerThread( 1 );
-
-    HbTimeoutServerConfig timeout;
-    timeout.setTickInterval( 1 );
-    timeout.setWarningThreshold( 5 );
-    timeout.setKickThreshold( 10 );
-
-    config.setTimeout( timeout );
 
     quint16 server_uid = mpHbServer->joinTcpServer( config );
     if( server_uid > 0 )

@@ -1,3 +1,5 @@
+// Hb
+#include <HbLogService.h>
 // Local
 #include <config/service/presence/HbServicePresenceClientConfig.h>
 
@@ -7,7 +9,7 @@ using namespace hb::network;
 HbServicePresenceClientConfig::HbServicePresenceClientConfig() :
     HbServicePresenceConfig()
 {
-
+    mKeepAliveInterval = 0;
 }
 
 HbServicePresenceClientConfig::HbServicePresenceClientConfig(const HbServicePresenceClientConfig & config) :
@@ -15,7 +17,7 @@ HbServicePresenceClientConfig::HbServicePresenceClientConfig(const HbServicePres
 {
     if (this != &config)
     {
-
+        mKeepAliveInterval = config.mKeepAliveInterval;
     }
 }
 
@@ -26,6 +28,7 @@ HbServicePresenceClientConfig & HbServicePresenceClientConfig::operator =(const 
     {
         HbServicePresenceConfig::operator =( config );
 
+        mKeepAliveInterval = config.mKeepAliveInterval;
     }
 
     return *this;
@@ -33,5 +36,26 @@ HbServicePresenceClientConfig & HbServicePresenceClientConfig::operator =(const 
 
 bool HbServicePresenceClientConfig::isValid() const
 {
-    return HbServicePresenceConfig::isValid();
+    if( !HbServicePresenceConfig::isValid() )
+    {
+        return false;
+    }
+
+    if( mKeepAliveInterval == 0 )
+    {
+        HbError( "KeepAliveInterval must be > 0." );
+        return true;
+    }
+
+    return true;
+}
+
+void HbServicePresenceClientConfig::setKeepAliveInterval( quint16 interval )
+{
+    mKeepAliveInterval = interval;
+}
+
+quint16 HbServicePresenceClientConfig::keepAliveInterval() const
+{
+    return mKeepAliveInterval;
 }

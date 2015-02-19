@@ -14,6 +14,7 @@
 #include <HbLogService.h>
 #include <gui/HbLogWidget.h>
 #include <HbLoggerOutputs.h>
+#include <HbClient.h>
 #include <contract/auth/HbAuthFacebookRequestContract.h>
 #include <contract/HbNetworkHeader.h>
 #include <contract/HbNetworkProtocol.h>
@@ -36,6 +37,13 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     q_assert( HbLogService::outputs()->addGuiOutput( mpLogWidget->logNotifier() ) > 0 );
 
     HbLogBegin();
+
+    HbGeneralClientConfig config;
+    config.setAppName("hb-network-example");
+    config.setProtocolVersion( 1 );
+    config.presence().setKeepAliveInterval( 1 );
+
+    mpHbClient = new HbClient( config );
 
     // Ui
     setupUi( this );
@@ -103,12 +111,7 @@ void UserMainWindow::onStartClicked()
     HbTcpClientConfig config;
     config.setAddress( QHostAddress::LocalHost );
     config.setPort( 4000 );
-
-    HbTimeoutClientConfig timeout;
-    timeout.setReconnectionDelay( 1000 );
-    timeout.setTickInterval( 1 );
-
-    config.setTimeout( timeout );
+    config.setReconnectionDelay( 1000 );
 
     mTcpClient.setConfiguration( config );
     mTcpClient.join();

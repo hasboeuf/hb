@@ -14,7 +14,6 @@
 // Local
 #include <HbNetwork.h>
 #include <config/com/HbNetworkConfig.h>
-#include <config/com/HbTimeoutClientConfig.h>
 
 namespace hb
 {
@@ -25,20 +24,19 @@ namespace hb
         {
 
         public:
-            HbClientConfig() = default;
+            HbClientConfig();
             virtual ~HbClientConfig() = default;
             HbClientConfig( const HbClientConfig & config );
             HbClientConfig & operator =( const HbClientConfig & config );
 
-            const HbTimeoutClientConfig & timeout() const;
-            void setTimeout( const HbTimeoutClientConfig & timeout );
-
             bool isValid() const;
 
-        private:
-            HbTimeoutClientConfig mTimeout;
-        };
+            virtual void setReconnectionDelay( quint16 duration ) final;
+            virtual quint16 reconnectionDelay() const final;
 
+        private:
+            quint16 mReconnectionDelay;
+        };
     }
 }
 

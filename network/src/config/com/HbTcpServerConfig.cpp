@@ -23,15 +23,15 @@ HbTcpServerConfig & HbTcpServerConfig::operator =( const HbTcpServerConfig & con
 
 bool HbTcpServerConfig::isValid( ) const
 {
-	if ( !HbTcpConfig::isValid() )
-	{
-		return false;
-	}
+    if ( !HbTcpConfig::isValid() )
+    {
+        return false;
+    }
 
-	if ( !HbServerConfig::isValid() )
-	{
-		return false;
-	}
+    if ( !HbServerConfig::isValid() )
+    {
+        return false;
+    }
 
-	return true;
+    return true;
 }

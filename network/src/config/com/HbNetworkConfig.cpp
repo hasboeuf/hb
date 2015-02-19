@@ -30,6 +30,11 @@ HbNetworkConfig & HbNetworkConfig::operator =(const HbNetworkConfig & config)
 	return *this;
 }
 
+bool HbNetworkConfig::isValid() const
+{
+    return ( mOpenMode != QIODevice::NotOpen );
+}
+
 void HbNetworkConfig::setOpenMode(QIODevice::OpenMode mode)
 {
     if (mOpenMode != mode)
@@ -70,9 +75,4 @@ const HbNetworkExchanges & HbNetworkConfig::exchanges() const
 HbNetworkExchanges & HbNetworkConfig::exchanges()
 {
     return mExchanges;
-}
-
-bool HbNetworkConfig::isValid() const
-{
-    return ( mOpenMode != QIODevice::NotOpen );
 }

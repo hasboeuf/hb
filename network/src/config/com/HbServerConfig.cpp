@@ -7,7 +7,6 @@ HbServerConfig::HbServerConfig( ) :
     HbNetworkConfig()
 {
 	mMaxUsersPerThread = 0; // Not threaded.
-    mAuthTriesMax = 0; // No authentication.
 }
 
 HbServerConfig::HbServerConfig( const HbServerConfig & config ) :
@@ -16,7 +15,6 @@ HbServerConfig::HbServerConfig( const HbServerConfig & config ) :
 	if (this != &config)
 	{
 		mMaxUsersPerThread = config.mMaxUsersPerThread;
-        mAuthTriesMax      = config.mAuthTriesMax;
 	}
 }
 
@@ -27,10 +25,14 @@ HbServerConfig & HbServerConfig::operator =( const HbServerConfig & config )
 	{
 		HbNetworkConfig::operator=( config );
 		mMaxUsersPerThread = config.mMaxUsersPerThread;
-        mAuthTriesMax      = config.mAuthTriesMax;
 	}
 
 	return *this;
+}
+
+bool HbServerConfig::isValid() const
+{
+    return HbNetworkConfig::isValid();
 }
 
 void HbServerConfig::setMaxUsersPerThread( quint16 max_users )
@@ -48,27 +50,3 @@ bool HbServerConfig::isThreaded() const
 	return ( mMaxUsersPerThread > 0 );
 }
 
-const HbTimeoutServerConfig & HbServerConfig::timeout() const
-{
-    return mTimeout;
-}
-
-void HbServerConfig::setTimeout( const HbTimeoutServerConfig & timeout )
-{
-    mTimeout = timeout;
-}
-
-void HbServerConfig::setAuthTriesMax( quint16 max )
-{
-    mAuthTriesMax = max;
-}
-
-quint16 HbServerConfig::authTriesMax() const
-{
-    return mAuthTriesMax;
-}
-
-bool HbServerConfig::isValid() const
-{
-	return HbNetworkConfig::isValid();
-}

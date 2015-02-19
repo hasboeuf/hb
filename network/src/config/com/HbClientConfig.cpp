@@ -1,12 +1,18 @@
 // Local
 #include <config/com/HbClientConfig.h>
 
+HbClientConfig::HbClientConfig() :
+    HbNetworkConfig()
+{
+    mReconnectionDelay = 0;
+}
+
 HbClientConfig::HbClientConfig( const HbClientConfig & config ) :
     HbNetworkConfig( config )
 {
     if( &config != this )
     {
-        mTimeout = config.mTimeout;
+        mReconnectionDelay = config.mReconnectionDelay;
     }
 }
 
@@ -14,27 +20,29 @@ HbClientConfig & HbClientConfig::operator =( const HbClientConfig & config )
 {
     if( &config != this )
     {
-        mTimeout = config.mTimeout;
+        HbNetworkConfig::operator =( config );
+
+        mReconnectionDelay = config.mReconnectionDelay;
     }
     return ( *this);
 }
 
-const HbTimeoutClientConfig & HbClientConfig::timeout() const
-{
-    return mTimeout;
-}
-
-void HbClientConfig::setTimeout( const HbTimeoutClientConfig & timeout )
-{
-    mTimeout = timeout;
-}
-
 bool HbClientConfig::isValid() const
 {
-    if( HbNetworkConfig::isValid() )
+    if( !HbNetworkConfig::isValid() )
     {
-        return mTimeout.isValid();
+        return false;
     }
 
-    return false;
+    return true;
+}
+
+void HbClientConfig::setReconnectionDelay( quint16 duration )
+{
+    mReconnectionDelay = duration;
+}
+
+quint16 HbClientConfig::reconnectionDelay() const
+{
+    return mReconnectionDelay;
 }
