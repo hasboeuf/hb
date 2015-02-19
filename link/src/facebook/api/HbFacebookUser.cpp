@@ -58,73 +58,73 @@ const QString HbFacebookUser::toString() const
 
 const QString & HbFacebookUser::firstName() const
 {
-	return mFirstName;
+    return mFirstName;
 }
 
 const QString & HbFacebookUser::lastName() const
 {
-	return mLastName;
+    return mLastName;
 }
 
 const QString & HbFacebookUser::link() const
 {
-	return mLink;
+    return mLink;
 }
 
 const QString & HbFacebookUser::email() const
 {
-	return mEmail;
+    return mEmail;
 }
 
 const QString & HbFacebookUser::gender() const
 {
-	return mGender;
+    return mGender;
 }
 
 const QString & HbFacebookUser::locale() const
 {
-	return mLocale;
+    return mLocale;
 }
 
 bool HbFacebookUser::isVerified() const
 {
-	return mVerified;
+    return mVerified;
 }
 
 qint8 HbFacebookUser::timezone() const
 {
-	return mTimezone;
+    return mTimezone;
 }
 
 void HbFacebookUser::setFirstName( const QString & first_name )
 {
-	mFirstName = first_name;
+    mFirstName = first_name;
 }
 void HbFacebookUser::setLastName ( const QString & last_name  )
 {
-	mLastName = last_name;
+    mLastName = last_name;
 }
 void HbFacebookUser::setLink     ( const QString & link       )
 {
-	mLink = link;
+    mLink = link;
 }
 void HbFacebookUser::setEmail    ( const QString & email      )
 {
-	mEmail = email;
+    mEmail = email;
 }
 void HbFacebookUser::setGender   ( const QString & gender     )
 {
-	mGender = gender;
+    mGender = gender;
 }
 void HbFacebookUser::setLocale   ( const QString & locale     )
 {
-	mLocale = locale;
+    mLocale = locale;
 }
 void HbFacebookUser::setVerified ( bool            verified   )
 {
-	mVerified = verified;
+    mVerified = verified;
 }
 void HbFacebookUser::setTimezone ( qint8           timezone   )
 {
-	mTimezone = timezone;
+    mTimezone = timezone;
 }

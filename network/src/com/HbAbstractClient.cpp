@@ -12,7 +12,7 @@ using namespace hb::network;
 
 
 HbAbstractClient::HbAbstractClient(QObject * parent) :
-	HbAbstractNetwork(parent)
+    HbAbstractNetwork(parent)
 {
     mRetry = 0;
     mReady = false;
@@ -21,14 +21,14 @@ HbAbstractClient::HbAbstractClient(QObject * parent) :
 
 bool HbAbstractClient::join()
 {
-	if ( !currentConnection() )
-	{
-		if ( !this->configuration( ).isValid( ) )
-		{
+    if ( !currentConnection() )
+    {
+        if ( !this->configuration( ).isValid( ) )
+        {
             HbError( "Invalid client configuration." );
 
-			return false;
-		}
+            return false;
+        }
 
         HbAbstractSocket * socket = pendingConnection();
 
@@ -39,40 +39,40 @@ bool HbAbstractClient::join()
                 this,   &HbAbstractClient::onSocketDisconnected, Qt::UniqueConnection);
 
         if( !connectToNetwork() )
-		{
+        {
             HbError( "Can not connect to network." );
-			return false;
-		}
-	}
+            return false;
+        }
+    }
 
-	return true;
+    return true;
 }
 
 bool HbAbstractClient::leave()
 {
-	if ( currentConnection() )
-	{
+    if ( currentConnection() )
+    {
         if ( mRetry )
-		{
+        {
             killTimer( mRetry );
             mRetry = 0;
-		}
+        }
 
-		HbAbstractSocket * socket = currentConnection();
+        HbAbstractSocket * socket = currentConnection();
 
         socket->disconnect();
 
-		if ( !disconnectFromNetwork() )
-		{
+        if ( !disconnectFromNetwork() )
+        {
             HbError( "Can not disconnect from network." );
-			return false;
-		}
+            return false;
+        }
 
         mReady = false;
-		emit disconnected();
-	}
+        emit disconnected();
+    }
 
-	return true;
+    return true;
 }
 
 bool HbAbstractClient::isReady() const
@@ -87,60 +87,60 @@ bool HbAbstractClient::send( HbNetworkContract *contract )
     {
         HbWarning( "Try to send a null contract." );
     }
-	else
-	{
-		HbAbstractSocket * socket = currentConnection();
+    else
+    {
+        HbAbstractSocket * socket = currentConnection();
 
         if ( !socket || !socket->isListening() )
-		{
+        {
             HbError( "Unable to send contract on null/inactive socket." );
-		}
+        }
 
         else if( !this->configuration().openMode().testFlag( QIODevice::WriteOnly ) )
-		{
+        {
             HbError( "Unable to send contract on read only socket." );
-		}
+        }
 
-		else
-		{
+        else
+        {
             if ( !configuration().exchanges().registered( contract->header().service(), contract->header().code() ) )
-			{
+            {
                 HbError( "Try to send an unregistered contract [service=%d, code=%d", contract->header().service(), contract->header().code() );
 
-				return false;
-			}
+                return false;
+            }
 
             //if ( socket->type() == HbNetworkProtocol::NETWORK_UDP )
             //{
             //    contract->setRouting( HbNetworkProtocol::RoutingScheme::BROADCAST );
             //}
 
-			QByteArray buffer;
-			QString socketError;
+            QByteArray buffer;
+            QString socketError;
 
-			QDataStream stream(&buffer, QIODevice::WriteOnly);
+            QDataStream stream(&buffer, QIODevice::WriteOnly);
             stream << contract->header();
 
             if ( !contract->write( stream ) )
             {
                 HbError( "Invalid contract format." );
             }
-			else
-			{
-				qint64 bytesWritten = socket->writePacket(buffer);
+            else
+            {
+                qint64 bytesWritten = socket->writePacket(buffer);
 
                 if ( bytesWritten > 0 )
-					return true;
+                    return true;
 
                 q_assert( bytesWritten );
-				socketError = socket->errorString();
-			}
+                socketError = socket->errorString();
+            }
 
-			q_assert(stream.status() == QDataStream::Ok);
-		}
-	}
+            q_assert(stream.status() == QDataStream::Ok);
+        }
+    }
 
-	return false;
+    return false;
 }
 
 const HbClientConfig & HbAbstractClient::configuration() const
@@ -150,24 +150,24 @@ const HbClientConfig & HbAbstractClient::configuration() const
 
 /*bool HbAbstractClient::reply(int sender, const HbNetworkContract * contract)
 {
-	if (!contract || !contract->reply())
-		qWarning("HbAbstractClient::reply() -> try to send a null contract");
+    if (!contract || !contract->reply())
+        qWarning("HbAbstractClient::reply() -> try to send a null contract");
 
-	else
-	{
-		HbNetworkContract * reply = contract->reply();
+    else
+    {
+        HbNetworkContract * reply = contract->reply();
 
-		if (reply->setReceiver(sender))
-			return send(reply);
-	}
+        if (reply->setReceiver(sender))
+            return send(reply);
+    }
 
-	return false;
+    return false;
 }*/
 
 
 void HbAbstractClient::timerEvent(QTimerEvent * event)
 {
-	Q_UNUSED(event);
+    Q_UNUSED(event);
 
     if( !connectToNetwork() )
     {
@@ -179,66 +179,66 @@ void HbAbstractClient::timerEvent(QTimerEvent * event)
 void HbAbstractClient::onSocketConnected()
 {
     if ( mRetry )
-	{
+    {
         killTimer( mRetry );
         mRetry = 0;
-	}
+    }
 
-	emit connected();
+    emit connected();
 
 }
 
 void HbAbstractClient::onSocketContractReceived( const HbNetworkContract * contract)
 {
-	HbAbstractSocket * socket = q_assert_ptr(currentConnection());
-	bool available = (socket->isListening() && socket->packetAvailable());
+    HbAbstractSocket * socket = q_assert_ptr(currentConnection());
+    bool available = (socket->isListening() && socket->packetAvailable());
 
-	while (available)
-	{
-		QByteArray packet = socket->readPacket();
+    while (available)
+    {
+        QByteArray packet = socket->readPacket();
 
-		if( !this->configuration( ).openMode( ).testFlag( QIODevice::ReadOnly ) )
-		{
+        if( !this->configuration( ).openMode( ).testFlag( QIODevice::ReadOnly ) )
+        {
             HbError( "Unable to receive contract on write only socket." );
-		}
+        }
 
-		else
-		{
-			QDataStream stream(&packet, QIODevice::ReadOnly);
+        else
+        {
+            QDataStream stream(&packet, QIODevice::ReadOnly);
 
-			HbNetworkHeader header;
-			q_assert((stream >> header).status() == QDataStream::Ok);
+            HbNetworkHeader header;
+            q_assert((stream >> header).status() == QDataStream::Ok);
 
             //if( header.routing() != HbNetworkProtocol::RoutingScheme::BROADCAST )
             //{
-            //	q_assert(header.receivers().contains(configuration().uid()));
+            //    q_assert(header.receivers().contains(configuration().uid()));
             //}
 
             HbNetworkContract * contract = configuration().exchanges().contract( header );
 
             if ( !contract )
-			{
+            {
                 HbError( "Try to read unregistered contract." );
-			}
+            }
 
-			else if (!contract->read(stream))
-			{
+            else if (!contract->read(stream))
+            {
                 q_assert( stream.status() == QDataStream::Ok );
 
                 HbError( "Error occurred while reading contract [service=%d, code=%d", header.service(), header.code() );
-			}
+            }
 
-			else
-			{
-				//foreach(IHbNetworkListener * listener, listeners())
-				//{
-				//	listener->receive(header.sender(), contract);
-				//}
-			}
-		}
+            else
+            {
+                //foreach(IHbNetworkListener * listener, listeners())
+                //{
+                //    listener->receive(header.sender(), contract);
+                //}
+            }
+        }
 
-		available = (socket->isListening() && socket->packetAvailable());
-	}
+        available = (socket->isListening() && socket->packetAvailable());
+    }
 }
 
 void HbAbstractClient::onSocketDisconnected()

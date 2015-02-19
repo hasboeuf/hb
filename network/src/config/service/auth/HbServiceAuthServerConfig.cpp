@@ -16,26 +16,26 @@ HbServiceAuthServerConfig::HbServiceAuthServerConfig() :
 HbServiceAuthServerConfig::HbServiceAuthServerConfig(const HbServiceAuthServerConfig & config) :
     HbServiceAuthConfig( config )
 {
-	if (this != &config)
-	{
+    if (this != &config)
+    {
         HbServiceAuthConfig::operator =( config );
 
         mAuthMaxTries = config.mAuthMaxTries;
         mAuthTimeout  = config.mAuthTimeout;
-	}
+    }
 }
 
 
 HbServiceAuthServerConfig & HbServiceAuthServerConfig::operator =(const HbServiceAuthServerConfig & config)
 {
-	if (this != &config)
-	{
+    if (this != &config)
+    {
         HbServiceAuthConfig::operator =( config );
         mAuthMaxTries = config.mAuthMaxTries;
         mAuthTimeout  = config.mAuthTimeout;
-	}
+    }
 
-	return *this;
+    return *this;
 }
 
 bool HbServiceAuthServerConfig::isValid() const

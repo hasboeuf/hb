@@ -11,23 +11,23 @@ HbNetworkConfig::HbNetworkConfig()
 
 HbNetworkConfig::HbNetworkConfig(const HbNetworkConfig & config)
 {
-	if (this != &config)
-	{
+    if (this != &config)
+    {
         mOpenMode = config.mOpenMode;
         mExchanges = config.mExchanges;
-	}
+    }
 }
 
 
 HbNetworkConfig & HbNetworkConfig::operator =(const HbNetworkConfig & config)
 {
-	if (this != &config)
-	{
+    if (this != &config)
+    {
         mOpenMode = config.mOpenMode;
         mExchanges = config.mExchanges;
-	}
+    }
 
-	return *this;
+    return *this;
 }
 
 bool HbNetworkConfig::isValid() const
@@ -38,28 +38,28 @@ bool HbNetworkConfig::isValid() const
 void HbNetworkConfig::setOpenMode(QIODevice::OpenMode mode)
 {
     if (mOpenMode != mode)
-	{
-		switch (mode)
-		{
-		case QIODevice::ReadOnly:
-		case QIODevice::WriteOnly:
-		case QIODevice::ReadWrite:
+    {
+        switch (mode)
+        {
+        case QIODevice::ReadOnly:
+        case QIODevice::WriteOnly:
+        case QIODevice::ReadWrite:
 
             mOpenMode = mode;
-			break;
+            break;
 
-		case QIODevice::Append:
-		case QIODevice::Truncate:
+        case QIODevice::Append:
+        case QIODevice::Truncate:
 
             mOpenMode = QIODevice::WriteOnly;
-			break;
+            break;
 
-		default:
+        default:
 
             mOpenMode = QIODevice::NotOpen;
-			break;
-		}
-	}
+            break;
+        }
+    }
 }
 
 QIODevice::OpenMode HbNetworkConfig::openMode() const

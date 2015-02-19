@@ -37,7 +37,7 @@ HbNetworkProtocol::NetworkType HbTcpSocket::type() const
 bool HbTcpSocket::connectToHost(const HbTcpConfig & config)
 {
     if ( state() == QAbstractSocket::UnconnectedState)
-	{
+    {
         mConfig = config;
         mpDevice->connectToHost( mConfig.address(), mConfig.port(), QIODevice::ReadWrite );
 
@@ -50,10 +50,10 @@ bool HbTcpSocket::connectToHost(const HbTcpConfig & config)
 bool HbTcpSocket::disconnectFromHost()
 {
     if ( state() != QAbstractSocket::UnconnectedState)
-	{
+    {
         mpDevice->disconnectFromHost();
         return true;
-	}
+    }
 
     return false;
 }
@@ -67,34 +67,34 @@ bool HbTcpSocket::isListening() const
 
 void HbTcpSocket::setSocketOption(QAbstractSocket::SocketOption option, bool enable)
 {
-	switch (option)
-	{
-	case QAbstractSocket::LowDelayOption:
-	case QAbstractSocket::KeepAliveOption:
-	case QAbstractSocket::MulticastLoopbackOption:
+    switch (option)
+    {
+    case QAbstractSocket::LowDelayOption:
+    case QAbstractSocket::KeepAliveOption:
+    case QAbstractSocket::MulticastLoopbackOption:
 
         mpDevice->setSocketOption(option, enable);
-		break;
+        break;
 
-	default:
+    default:
 
-		Q_UNREACHABLE();
-		break;
-	}
+        Q_UNREACHABLE();
+        break;
+    }
 }
 
 bool HbTcpSocket::socketOption(QAbstractSocket::SocketOption option) const
 {
-	switch (option)
-	{
-	case QAbstractSocket::LowDelayOption:
-	case QAbstractSocket::KeepAliveOption:
-	case QAbstractSocket::MulticastLoopbackOption:
+    switch (option)
+    {
+    case QAbstractSocket::LowDelayOption:
+    case QAbstractSocket::KeepAliveOption:
+    case QAbstractSocket::MulticastLoopbackOption:
         return mpDevice->socketOption(option).toBool();
 
-	default:
-		return false;
-	}
+    default:
+        return false;
+    }
 }
 
 

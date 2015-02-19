@@ -12,6 +12,6 @@ HbLogGuiNotifier::HbLogGuiNotifier() :
 
 void HbLogGuiNotifier::onNewLogMessage( const HbLogMessage & message )
 {
-	emit newLogMessage( message );
+    emit newLogMessage( message );
 }
 

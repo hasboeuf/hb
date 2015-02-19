@@ -13,22 +13,22 @@ HbServiceAuthConfig::HbServiceAuthConfig() :
 HbServiceAuthConfig::HbServiceAuthConfig(const HbServiceAuthConfig & config) :
     HbServiceConfig( config )
 {
-	if (this != &config)
-	{
+    if (this != &config)
+    {
 
-	}
+    }
 }
 
 
 HbServiceAuthConfig & HbServiceAuthConfig::operator =(const HbServiceAuthConfig & config)
 {
-	if (this != &config)
-	{
+    if (this != &config)
+    {
         HbServiceConfig::operator =( config );
 
-	}
+    }
 
-	return *this;
+    return *this;
 }
 
 bool HbServiceAuthConfig::isValid() const

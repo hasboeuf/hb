@@ -24,27 +24,27 @@ HbTcpConfig::HbTcpConfig() :
 }
 
 HbTcpConfig::HbTcpConfig(const HbTcpConfig & config) :
-	HbNetworkConfig(config)
+    HbNetworkConfig(config)
 {
-	if (this != &config)
-	{
+    if (this != &config)
+    {
         mAddress = config.mAddress;
         mPort    = config.mPort;
         mOptions = config.mOptions;
-	}
+    }
 }
 
 
 HbTcpConfig & HbTcpConfig::operator =(const HbTcpConfig & config)
 {
     if (this != &config)
-	{
-		HbNetworkConfig::operator =(config);
+    {
+        HbNetworkConfig::operator =(config);
 
         mAddress = config.mAddress;
         mPort    = config.mPort;
         mOptions = config.mOptions;
-	}
+    }
 
     return ( *this );
 }
@@ -67,7 +67,7 @@ bool HbTcpConfig::isValid() const
 
 void HbTcpConfig::setAddress(const QString & address)
 {
-	setAddress(QHostAddress(address));
+    setAddress(QHostAddress(address));
 }
 
 void HbTcpConfig::setAddress(const QHostAddress & address)

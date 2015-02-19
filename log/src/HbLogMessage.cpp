@@ -53,16 +53,16 @@ const QString HbLogMessage::toRaw(const HbLogMessage &msg)
 }
 
 HbLogMessage::HbLogMessage() :
-	QObject()
+    QObject()
 {
-	mLevel     = HbLogger::LEVEL_NONE;
+    mLevel     = HbLogger::LEVEL_NONE;
     mFormat    = HbLogger::OUTPUT_ALL;
     mTimestamp = 0;
 }
 
 HbLogMessage::HbLogMessage(HbLogger::Level level, HbLogger::Formats format,
                             const HbLogContext & context, qint64 timestamp, const QString & message ) :
-	QObject()
+    QObject()
 {
     mLevel     = level;
     mFormat    = format;
@@ -143,7 +143,7 @@ const QString & HbLogMessage::message() const
 
 QString HbLogMessage::toString() const
 {
-	QString buffer;
+    QString buffer;
 
     if( mFormat & HbLogger::OUTPUT_LEVEL )
     {
@@ -204,13 +204,13 @@ QByteArray HbLogMessage::toByteArray() const
 
 void HbLogMessage::fromDataStream( QDataStream & stream )
 {
-	// ASB: How to test the integrity of the stream?
+    // ASB: How to test the integrity of the stream?
     qint32 enum_stream = 0;
 
     stream >> enum_stream;
     stream >> mContext;
     stream >> mTimestamp;
-	stream >> mMessage;
+    stream >> mMessage;
 
     mLevel = ( HbLogger::Level ) enum_stream;
 }

@@ -47,7 +47,7 @@ int HbPluginManager::unload()
     mPluginsInfos.clear();
     mPluginsLoaders.clear();
 
-	return 0;
+    return 0;
 }
 
 void HbPluginManager::loadPluginFromPath(QString plugin_path)

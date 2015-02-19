@@ -18,12 +18,12 @@ using namespace hb::log;
 LogViewer::LogViewer( QWidget * parent ) : 
     QWidget( parent ), Ui::LogViewer()
 {
-	setupUi( this );
+    setupUi( this );
 
     mTabIds = 0;
-	mpLogNotifier = q_check_ptr( new HbLogGuiNotifier() );
+    mpLogNotifier = q_check_ptr( new HbLogGuiNotifier() );
 
-	mConfig.loadSettings();
+    mConfig.loadSettings();
 
     connect( mpLogNotifier,    &HbLogGuiNotifier::newLogMessage, this, &LogViewer::onNewLogMessage, Qt::UniqueConnection );
     connect( &mProcessTimer,   &QTimer::timeout,                 this, &LogViewer::processLogMessage );
@@ -35,9 +35,9 @@ LogViewer::LogViewer( QWidget * parent ) :
 
     LogViewerTab * tab_general = q_check_ptr( new LogViewerTab( mTabIds++, mConfig ) );
 
-	connect( tab_general, &LogViewerTab::newTabRequest, this, &LogViewer::onNewTabRequest );
+    connect( tab_general, &LogViewerTab::newTabRequest, this, &LogViewer::onNewTabRequest );
 
-	mTabs.insert( tab_general->id(), tab_general );
+    mTabs.insert( tab_general->id(), tab_general );
     qtw_main->insertTab( tab_general->id(), tab_general, QStringLiteral( "General" ) );
 
     mProcessTimer.start( qsb_refresh_time->value() );
@@ -155,26 +155,26 @@ void LogViewer::processLogMessage()
 {
     QMutexLocker locker( &mMutexBuffer );
 
-	while( !mTempBuffer.isEmpty() )
-	{
-		HbLogMessage * message = mTempBuffer.takeFirst();
-	
-		foreach( LogViewerTab* tab, mTabs )
+    while( !mTempBuffer.isEmpty() )
+    {
+        HbLogMessage * message = mTempBuffer.takeFirst();
+    
+        foreach( LogViewerTab* tab, mTabs )
         {
-			tab->addEntry( message );
+            tab->addEntry( message );
         }
 
         delete message;
-	}
+    }
 }
 
 
 void LogViewer::onNewTabRequest( quint8 column, const QString & value )
 {
     ModelFilter * filter = q_check_ptr( new ModelFilter() );
-	filter->mValue = value;
-	filter->mRole  = Qt::DisplayRole;
-	filter->mFlags = Qt::MatchExactly;
+    filter->mValue = value;
+    filter->mRole  = Qt::DisplayRole;
+    filter->mFlags = Qt::MatchExactly;
 
     LogViewerTab * tab = q_check_ptr( new LogViewerTab( mTabIds++, mConfig, false, filter, ( LogViewerTab::ColumnId ) column ) );
     connect( tab, &LogViewerTab::newTabRequest, this, &LogViewer::onNewTabRequest );

@@ -10,7 +10,7 @@ using namespace hb::log;
 HbLogTcpSocketInput::HbLogTcpSocketInput( quint32 port ) :
     QTcpServer(), HbLogAbstractInput( INPUT_TCP_SOCKET )
 {
-	mAvailable = 0;
+    mAvailable = 0;
 
     if( !listen( QHostAddress::Any, mPort = port ) )
         fprintf( stderr, "HbLogTcpSocketInput: Unable to start the TCP server\n" );
@@ -22,7 +22,7 @@ HbLogTcpSocketInput::~HbLogTcpSocketInput()
     foreach( QTcpSocket * client, mClients.values() )
         q_assert_ptr( client )->close();    
 
-	mClients.clear();
+    mClients.clear();
 }
 
 
@@ -66,10 +66,10 @@ void HbLogTcpSocketInput::onReadyRead()
             return;
 
         HbLogMessage * message = q_check_ptr( new HbLogMessage() );
-		message->fromDataStream( stream );
-		emit inputMessageReceived( message );
+        message->fromDataStream( stream );
+        emit inputMessageReceived( message );
 
-		mAvailable = 0;
+        mAvailable = 0;
     }
 
     while( socket->bytesAvailable() > 0 );
@@ -80,5 +80,5 @@ void HbLogTcpSocketInput::onClientDisconnected()
     QTcpSocket * socket = q_dynamic_cast( QTcpSocket *, sender() );
 
     mClients.remove( q_assert_ptr( socket ) );
-	socket->deleteLater();
+    socket->deleteLater();
 }

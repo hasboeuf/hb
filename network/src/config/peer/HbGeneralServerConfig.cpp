@@ -7,27 +7,27 @@ using namespace hb::network;
 HbGeneralServerConfig::HbGeneralServerConfig(const HbGeneralServerConfig & config) :
     HbGeneralConfig( config )
 {
-	if (this != &config)
-	{
+    if (this != &config)
+    {
         mAuthConfig     = config.mAuthConfig;
         mChannelConfig  = config.mChannelConfig;
         mPresenceConfig = config.mPresenceConfig;
-	}
+    }
 }
 
 
 HbGeneralServerConfig & HbGeneralServerConfig::operator =(const HbGeneralServerConfig & config)
 {
-	if (this != &config)
-	{
+    if (this != &config)
+    {
         HbGeneralConfig::operator=( config );
 
         mAuthConfig     = config.mAuthConfig;
         mChannelConfig  = config.mChannelConfig;
         mPresenceConfig = config.mPresenceConfig;
-	}
+    }
 
-	return *this;
+    return *this;
 }
 
 

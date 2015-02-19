@@ -16,7 +16,7 @@ using namespace hb::tools;
 LogViewerMainWindow::LogViewerMainWindow( QWidget * parent ) : 
     QMainWindow( parent )
 {
-	setupUi(this);
+    setupUi(this);
 
     q_assert( HbLogService::outputs()->addGuiOutput( qw_log->logNotifier() ) > 0 );
 }

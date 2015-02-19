@@ -8,8 +8,8 @@ using namespace hb::log;
 
 HbLogAbstractOutput::HbLogAbstractOutput( OutputType type, HbLogger::Levels level )
 {
-	mType = type;
-	mLevel = level;
+    mType = type;
+    mLevel = level;
 
     mpMutex = q_check_ptr( new QMutex() );
 }
@@ -40,5 +40,5 @@ void HbLogAbstractOutput::setLevel( HbLogger::Levels level )
 HbLogger::Levels HbLogAbstractOutput::level() const
 {
     QMutexLocker locker( mpMutex );
-	return mLevel;
+    return mLevel;
 }

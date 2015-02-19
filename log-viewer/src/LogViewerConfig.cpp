@@ -13,9 +13,9 @@ using namespace hb::logviewer;
 
 
 LogViewerConfig::LogViewerConfig() : 
-	HbLogConfig()
+    HbLogConfig()
 {
-	
+    
 }
 
 LogViewerConfig::LogViewerConfig( const LogViewerConfig & config ) :
@@ -47,22 +47,22 @@ void LogViewerConfig::buildDomFromConfig(QDomElement& root) const
 {
     HbLogConfig::buildDomFromConfig( root );
 
-	QDomDocument dom = root.ownerDocument();
+    QDomDocument dom = root.ownerDocument();
 
-	// Project dir
+    // Project dir
     QDomElement project_folders = dom.createElement( QStringLiteral( "projectFolders" ) );
     foreach( QString folder, mProjectFolders )
-	{
+    {
         QDomElement project_folder = dom.createElement( QStringLiteral( "projectFolder" ) );
         project_folder.setAttribute( QStringLiteral( "path" ), folder );
         project_folders.appendChild( project_folder );
-	}
+    }
 
-	// Editors
+    // Editors
     QDomElement editors = dom.createElement( QStringLiteral( "editors" ) );
-	QMap<QString, QString>::const_iterator it_e = mEditorCommands.constBegin();
+    QMap<QString, QString>::const_iterator it_e = mEditorCommands.constBegin();
     while ( it_e != mEditorCommands.constEnd() )
-	{
+    {
         QDomElement editor = dom.createElement( QStringLiteral( "editor" ) );
 
         QString editor_default = QString::number( ( mEditorDefault == it_e.key() ) ? 1 : 0 );
@@ -73,8 +73,8 @@ void LogViewerConfig::buildDomFromConfig(QDomElement& root) const
 
         editors.appendChild( editor );
 
-		++it_e;
-	}
+        ++it_e;
+    }
 
     root.appendChild( project_folders );
     root.appendChild( editors );
@@ -84,10 +84,10 @@ bool LogViewerConfig::exportConfigXml( const QString & file_path, const LogViewe
 {
     QFile xml_doc( file_path );
     if( !xml_doc.open( QIODevice::WriteOnly ) )
-	{
-		qDebug() << "Erreur à l'écriture du document XML : " << xml_doc.errorString();
-		return false;
-	}
+    {
+        qDebug() << "Erreur à l'écriture du document XML : " << xml_doc.errorString();
+        return false;
+    }
 
     QDomDocument dom( QStringLiteral( "hbLogViewerConfig" ) );
     QDomElement root = dom.createElement( QStringLiteral( "hbLogViewerConfig" ) );
@@ -107,78 +107,78 @@ void LogViewerConfig::buildConfigFromDom( QDomElement & root )
 {
     HbLogConfig::buildConfigFromDom( root );
 
-	QDomNode node = root.firstChild();
+    QDomNode node = root.firstChild();
 
     while ( !node.isNull() )
-	{
-		QString tag = node.nodeName();
+    {
+        QString tag = node.nodeName();
 
         if( tag == QLatin1String( "projectFolders" ) )
-		{
-			QDomNodeList project_folders_children = node.childNodes();
+        {
+            QDomNodeList project_folders_children = node.childNodes();
 
             for( qint32 i = 0; i < project_folders_children.size(); ++i )
-			{
+            {
                 QString child_tag = project_folders_children.at( i ).toElement().tagName();
                 if( child_tag == QLatin1String( "projectFolder" ) )
-				{
+                {
                     QDomNode project_folder = project_folders_children.at( i );
 
                     QString project_folder_path = project_folder.toElement().attribute( QStringLiteral( "path" ) );
                     mProjectFolders.append( project_folder_path );
-				}
-			}
-		}
+                }
+            }
+        }
         else if (tag == QLatin1String( "editors" ) )
-		{
-			QDomNodeList editors_children = node.childNodes();
+        {
+            QDomNodeList editors_children = node.childNodes();
 
             for( qint32 i = 0; i < editors_children.size(); ++i )
-			{
+            {
                 QString child_tag = editors_children.at( i ).toElement().tagName();
                 if ( child_tag == QLatin1String( "editor" ) )
-				{
+                {
                     QDomNode editor = editors_children.at( i );
 
                     QString editor_name = editor.toElement().attribute( QStringLiteral( "name" ) );
                     qint32 editor_default = editor.toElement().attribute( QStringLiteral( "default" ) ).toInt();
 
                     if( editor_default == 1 )
-					{
-						mEditorDefault = editor_name;
-					}
+                    {
+                        mEditorDefault = editor_name;
+                    }
 
                     mEditorCommands.insert( editor_name, editor.toElement().text() );
-				}
-				else
-				{
+                }
+                else
+                {
                     // qDebug() << QStringLiteral("Unknown tag: logger > editors > ") + tag;
-				}
-			}
-		}
-		else
-		{
-			//qDebug() << QStringLiteral("Unknown tag: logger > ") + tag;
-		}
+                }
+            }
+        }
+        else
+        {
+            //qDebug() << QStringLiteral("Unknown tag: logger > ") + tag;
+        }
 
-		node = node.nextSibling();
-	}
+        node = node.nextSibling();
+    }
 }
 
 const LogViewerConfig LogViewerConfig::importConfigXml( const QString & file_path )
 {
-	LogViewerConfig config;
+    LogViewerConfig config;
 
     QFile xml_doc( file_path );
     if( !xml_doc.open( QIODevice::ReadOnly ) )
-	{
+    {
         qDebug() << QStringLiteral( "Erreur#%1[%2] à l'ouverture du document XML %3" )
             .arg( xml_doc.error() )
             .arg( xml_doc.errorString() )
             .arg( xml_doc.fileName() );
 
-		return config;
-	}
+        return config;
+    }
 
     QDomDocument * dom = q_check_ptr( new QDomDocument( QStringLiteral( "hbLogViewerConfig" ) ) );
 
@@ -194,7 +194,7 @@ const LogViewerConfig LogViewerConfig::importConfigXml( const QString & file_pat
     QDomElement root = dom->documentElement();
     QDomNode node = root.firstChild();
 
-	config.buildConfigFromDom(root);
+    config.buildConfigFromDom(root);
 
     return config;
 }
@@ -210,13 +210,13 @@ void LogViewerConfig::loadSettings()
         return;
     }
 
-	HbLogConfig::loadSettings();
+    HbLogConfig::loadSettings();
 
-	// Project folders
-	mProjectFolders.clear();
+    // Project folders
+    mProjectFolders.clear();
     mProjectFolders = settings.value( QStringLiteral( "general/paths" ) ).toStringList();
 
-	// Editors
+    // Editors
     mEditorDefault = settings.value( QStringLiteral( "editors/default" ) ).toString();
 
     mEditorCommands.clear();
@@ -232,14 +232,14 @@ void LogViewerConfig::loadSettings()
 
 void LogViewerConfig::saveSettings()
 {
-	HbLogConfig::saveSettings();
+    HbLogConfig::saveSettings();
 
     QSettings settings;
 
-	// Project folders
+    // Project folders
     settings.setValue( QStringLiteral( "general/paths" ), mProjectFolders );
 
-	// Editors
+    // Editors
     settings.setValue( QStringLiteral( "editors/default" ), mEditorDefault );
 
     QMap<QString, QString>::const_iterator icommands = mEditorCommands.constBegin();
@@ -272,12 +272,12 @@ const QString LogViewerConfig::editorCommand( const QString & editor_name ) cons
 
 void LogViewerConfig::resetEditors()
 {
-	return mEditorCommands.clear();
+    return mEditorCommands.clear();
 }
 
 QMap< QString, QString > LogViewerConfig::editors() const
 {
-	return mEditorCommands;
+    return mEditorCommands;
 }
 
 QString LogViewerConfig::defaultEditor() const
@@ -292,7 +292,7 @@ void LogViewerConfig::setDefaultEditor( const QString & editor)
 
 void LogViewerConfig::resetProjectFolders()
 {
-	mProjectFolders.clear();
+    mProjectFolders.clear();
 }
 
 QStringList LogViewerConfig::projectFolders() const

@@ -43,7 +43,7 @@ void qtHbLogHandler( QtMsgType type, const QMessageLogContext & context, const Q
 
         case QtFatalMsg :
 
-			fprintf(stderr, "%s\n", HbLatin1(message));
+            fprintf(stderr, "%s\n", HbLatin1(message));
             break;
 
         default :
@@ -126,10 +126,10 @@ void HbLogger::print( Level level, const HbLogContext & context, const char * me
         {
             QString buffer = QString().vsprintf( message, args );
 
-			if (!buffer.isEmpty())
-			{
-				enqueueMessage(level, format(), context, buffer);
-			}
+            if (!buffer.isEmpty())
+            {
+                enqueueMessage(level, format(), context, buffer);
+            }
         }
     }
 }

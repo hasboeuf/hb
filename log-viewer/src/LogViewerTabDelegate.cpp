@@ -17,54 +17,54 @@ QWidget * LogViewerTabDelegate::createEditor( QWidget * parent,
                                               const QModelIndex & index ) const
 {
     if( index.column() == LogViewerTab::COLUMN_TEXT ) // Text
-	{
+    {
         QTextEdit * editor = q_check_ptr( new QTextEdit( parent ) );
         editor->setReadOnly( true );
 
-		return editor;
-	}
-	else
-	{
+        return editor;
+    }
+    else
+    {
         return QStyledItemDelegate::createEditor( parent, option, index );
-	}
+    }
 }
 
 
 void LogViewerTabDelegate::setEditorData( QWidget * editor, const QModelIndex & index ) const
 {
-	// It is the same procedure for all comboboxes having an integer type as item data.
+    // It is the same procedure for all comboboxes having an integer type as item data.
 
     if( index.column() == LogViewerTab::COLUMN_TEXT ) // Text
-	{
+    {
         QTextEdit * text_edit = qobject_cast< QTextEdit * >( editor );
         if ( text_edit )
-		{
+        {
             const QString text = index.model()->data( index ).toString();
             text_edit->setPlainText( text );
-		}
-	}
-	else
-	{
+        }
+    }
+    else
+    {
         QStyledItemDelegate::setEditorData( editor, index );
-	}
+    }
 }
 
 void LogViewerTabDelegate::setModelData( QWidget * editor, QAbstractItemModel * model, const QModelIndex & index ) const
 {
-	// It is the same procedure for all comboboxes having an integer type as item data.
+    // It is the same procedure for all comboboxes having an integer type as item data.
 
     if( index.column() == LogViewerTab::COLUMN_TEXT ) // Text
-	{
+    {
         QTextEdit * text_edit = qobject_cast< QTextEdit * >( editor );
         if ( text_edit )
-		{
+        {
             model->setData( index, text_edit->toPlainText() );
-		}
-	}
-	else
-	{
+        }
+    }
+    else
+    {
         QStyledItemDelegate::setModelData( editor, model, index );
-	}
+    }
 }
 
 void LogViewerTabDelegate::updateEditorGeometry( QWidget* editor,

@@ -19,5 +19,5 @@ int main(int argc, char *argv[])
     hb::linkexample::LinkMainWindow w;
     w.show();
 
-	return a.exec();
+    return a.exec();
 }

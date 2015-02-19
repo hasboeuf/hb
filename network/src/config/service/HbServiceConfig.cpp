@@ -11,21 +11,21 @@ HbServiceConfig::HbServiceConfig()
 
 HbServiceConfig::HbServiceConfig(const HbServiceConfig & config)
 {
-	if (this != &config)
-	{
+    if (this != &config)
+    {
 
-	}
+    }
 }
 
 
 HbServiceConfig & HbServiceConfig::operator =(const HbServiceConfig & config)
 {
-	if (this != &config)
-	{
+    if (this != &config)
+    {
 
-	}
+    }
 
-	return *this;
+    return *this;
 }
 
 bool HbServiceConfig::isValid() const

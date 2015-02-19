@@ -22,8 +22,8 @@ HbSocketHandler::HbSocketHandler( HbAbstractServer * server ) :
 {
     HbLogBegin();
 
-	mState = NOT_THREADED;
-	mpServer = q_assert_ptr( server );
+    mState = NOT_THREADED;
+    mpServer = q_assert_ptr( server );
 
     HbLogEnd();
 }
@@ -35,7 +35,7 @@ HbSocketHandler::~HbSocketHandler()
 
 HbAbstractServer * HbSocketHandler::server() const
 {
-	return mpServer;
+    return mpServer;
 }
 
 void HbSocketHandler::init()
@@ -71,29 +71,29 @@ bool HbSocketHandler::canHandleNewConnection()
     bool is_threaded = mpServer->configuration().isThreaded();
     if( !is_threaded ||
         (is_threaded &&
-		 mState == THREADED &&
-		 mSocketById.size() < mpServer->configuration().maxUsersPerThread() ) )
-	{
-		return true;
-	}
+         mState == THREADED &&
+         mSocketById.size() < mpServer->configuration().maxUsersPerThread() ) )
+    {
+        return true;
+    }
 
     HbError("SocketHandler#%d: Cannot handle new socket. [state=%d, size=%d, max=%d].",
             mUid,
-			mState,
-			mSocketById.size(),
-			mpServer->configuration().maxUsersPerThread() );
+            mState,
+            mSocketById.size(),
+            mpServer->configuration().maxUsersPerThread() );
 
     HbLogEnd();
-	return false;
+    return false;
 }
 
 bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_uid )
 {
     QMutexLocker locker( &mSocketMutex );
 
-	// Q_ASSERT( socket->type( ) != HbAbstractSocket::UdpSocket );
+    // Q_ASSERT( socket->type( ) != HbAbstractSocket::UdpSocket );
 
-	q_assert_ptr( socket );
+    q_assert_ptr( socket );
 
     mSocketById.insert( socket->uid( ), socket );
     mIdBySocket.insert( socket, socket->uid( ) );
@@ -109,7 +109,7 @@ bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_
 
     emit socketConnected( previous_uid, socket->uid() ); // To Server.
 
-	return true;
+    return true;
 }
 
 
@@ -143,28 +143,28 @@ void HbSocketHandler::onSocketReadyPacket()
 
     bool available = ( socket->isListening() && socket->packetAvailable() );
 
-	while( available )
-	{
-		QByteArray packet = socket->readPacket( );
+    while( available )
+    {
+        QByteArray packet = socket->readPacket( );
 
-		if( !mpServer->configuration().openMode( ).testFlag( QIODevice::ReadOnly ) )
-		{
+        if( !mpServer->configuration().openMode( ).testFlag( QIODevice::ReadOnly ) )
+        {
             HbError( "Unable to receive contract on write only socket %d.", socket->uid() );
-		}
-		else
-		{
-			QDataStream stream( &packet, QIODevice::ReadOnly );
+        }
+        else
+        {
+            QDataStream stream( &packet, QIODevice::ReadOnly );
 
-			HbNetworkHeader header;
+            HbNetworkHeader header;
             stream >> header;
             q_assert( stream.status() == QDataStream::Ok );
 
             HbNetworkContract * contract = mpServer->configuration().exchanges().contract( header );
 
-			if( !contract )
-			{
+            if( !contract )
+            {
                 HbError( "Try to read unregistered contract [service=%d, code=%d].", header.service(), header.code() );
-			}
+            }
             else
             {
                 if( !contract->read( stream ) )
@@ -179,10 +179,10 @@ void HbSocketHandler::onSocketReadyPacket()
                     emit socketContractReceived( socket->uid(), contract );
                 }
             }
-		}
+        }
 
         available = ( socket->isListening() && socket->packetAvailable() );
-	}
+    }
 }
 
 void HbSocketHandler::onSocketDisconnected()
@@ -191,16 +191,16 @@ void HbSocketHandler::onSocketDisconnected()
 
     QMutexLocker locker( &mSocketMutex );
 
-	HbAbstractSocket * socket = q_assert_ptr( dynamic_cast<HbAbstractSocket *>(sender() ) );
+    HbAbstractSocket * socket = q_assert_ptr( dynamic_cast<HbAbstractSocket *>(sender() ) );
 
-	q_assert( mIdBySocket.contains( socket ) );
+    q_assert( mIdBySocket.contains( socket ) );
     q_assert( mSocketById.contains( socket->uid( ) ) );
 
     HbInfo("SocketPool%d: Socket#%d disconnected.", mUid, socket->uid() );
 
     sockuid uid = socket->uid();
 
-	mIdBySocket.remove( socket );
+    mIdBySocket.remove( socket );
     mSocketById.remove( uid );
 
     socket->disconnect();

@@ -11,15 +11,15 @@ using namespace hb::log;
 HbLogLocalSocketInput::HbLogLocalSocketInput( const QString & name ) :
     QLocalServer(), HbLogAbstractInput( INPUT_LOCAL_SOCKET )
 {
-	mAvailable = 0;
+    mAvailable = 0;
 
     setSocketOptions( QLocalServer::UserAccessOption );
 
-	mName = name;
-	if (mName.isEmpty())
-	{
-		mName = QString::fromLatin1(HbLoggerStream::DEFAULT_LOCAL_SERVER_NAME);
-	}
+    mName = name;
+    if (mName.isEmpty())
+    {
+        mName = QString::fromLatin1(HbLoggerStream::DEFAULT_LOCAL_SERVER_NAME);
+    }
 
     if( !listen( mName ) )
         fprintf( stderr, "HbLogLocalSocketInput: Unable to start the local server\n" );
@@ -61,10 +61,10 @@ void HbLogLocalSocketInput::onReadyRead()
             return;
 
         HbLogMessage * message = q_check_ptr( new HbLogMessage() );
-		message->fromDataStream( stream );
+        message->fromDataStream( stream );
         emit inputMessageReceived( message );
 
-		mAvailable = 0;
+        mAvailable = 0;
     }
 
     while( socket->bytesAvailable() > 0 );

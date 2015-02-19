@@ -10,21 +10,21 @@ using namespace hb::log;
 HbLogLocalSocketOutput::HbLogLocalSocketOutput( const QString & name, HbLogger::Levels level ) :
     QLocalSocket(), HbLogAbstractOutput( HbLogAbstractOutput::OUTPUT_LOCAL_SOCKET, level )
 {
-	mName = name;
-	if (mName.isEmpty())
-	{
-		mName = QString::fromLatin1(HbLoggerStream::DEFAULT_LOCAL_SERVER_NAME);
-	}
+    mName = name;
+    if (mName.isEmpty())
+    {
+        mName = QString::fromLatin1(HbLoggerStream::DEFAULT_LOCAL_SERVER_NAME);
+    }
 
     q_assert( connect( this, &QLocalSocket::disconnected, this,
         &HbLogLocalSocketOutput::onDisconnected, Qt::UniqueConnection ) );
 
-	onReconnection();
+    onReconnection();
 }
 
 HbLogLocalSocketOutput::~HbLogLocalSocketOutput()
 {
-	close();
+    close();
 }
 
 
@@ -36,11 +36,11 @@ bool HbLogLocalSocketOutput::isValid() const
 
 void HbLogLocalSocketOutput::processMessage( const HbLogMessage & message )
 {
-	if( state() == QLocalSocket::ConnectedState )
-	{
+    if( state() == QLocalSocket::ConnectedState )
+    {
         write( message.toByteArray() );
         flush();
-	}
+    }
 }
 
 

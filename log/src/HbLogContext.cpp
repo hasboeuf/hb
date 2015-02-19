@@ -16,7 +16,7 @@ HbLogContext::HbLogContext()
 
         Q_ASSERT( !msApplicationName.isEmpty() );
     }
-	
+    
     mOwner = msApplicationName;
     mLine = -1;
 }
@@ -111,7 +111,7 @@ void HbLogContext::system( HbLogger::Level level, const char * message, ... ) co
 namespace hb
 {    
     namespace log
-	{
+    {
         QDataStream & operator <<( QDataStream & stream, const HbLogContext & context )
         {
             stream << context.mOwner << context.mFile << context.mLine << context.mFunction;

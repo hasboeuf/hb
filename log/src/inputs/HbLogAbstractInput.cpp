@@ -11,5 +11,5 @@ HbLogAbstractInput::HbLogAbstractInput( InputType type )
 
 HbLogAbstractInput::InputType HbLogAbstractInput::type() const
 {
-	return mType;
+    return mType;
 }

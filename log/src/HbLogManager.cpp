@@ -29,7 +29,7 @@ HbLogManager::HbLogManager() :
 
     if( ++msInstances == 1 )
     {
-		qRegisterMetaType< hb::log::HbLogMessage >( "HbLogMessage" );
+        qRegisterMetaType< hb::log::HbLogMessage >( "HbLogMessage" );
 
         msThreadPool = q_check_ptr( new QThread() );
         msLoggerPool = q_check_ptr( new HbLoggerPool( msThreadPool ) );
@@ -39,7 +39,7 @@ HbLogManager::HbLogManager() :
 
         msLoggerPool->moveToThread( msThreadPool );
         msThreadPool->start();
-	}
+    }
 
     mpInputs = q_check_ptr( new HbLoggerInputs( this ) );
     mpOutputs = q_check_ptr( new HbLoggerOutputs( this ) );
@@ -51,13 +51,13 @@ HbLogManager::~HbLogManager()
 
     QMutexLocker locker( &msMutex );
 
-	if( --msInstances == 0 )
-	{
-		msThreadPool->exit();
-		msThreadPool->wait();
+    if( --msInstances == 0 )
+    {
+        msThreadPool->exit();
+        msThreadPool->wait();
 
         q_delete_ptr( &msLoggerPool );
-	}
+    }
 }
 
 
@@ -83,7 +83,7 @@ void HbLogManager::enqueueMessage( Level level, Formats format, const HbLogConte
     HbLogMessage * message = q_check_ptr( new HbLogMessage( level, format, context, timestamp, text ) );
 
     mMessages.push_back( message );
-	msLoggerPool->enqueueMessage( mMessages );
+    msLoggerPool->enqueueMessage( mMessages );
 }
 
 void HbLogManager::dequeuePendingMessages()

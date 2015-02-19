@@ -12,23 +12,23 @@ HbGeneralConfig::HbGeneralConfig()
 
 HbGeneralConfig::HbGeneralConfig(const HbGeneralConfig & config)
 {
-	if (this != &config)
-	{
+    if (this != &config)
+    {
         mAppName                 = config.mAppName;
         mProtocolVersion         = config.mProtocolVersion;
-	}
+    }
 }
 
 
 HbGeneralConfig & HbGeneralConfig::operator =(const HbGeneralConfig & config)
 {
-	if (this != &config)
-	{
+    if (this != &config)
+    {
         mAppName                 = config.mAppName;
         mProtocolVersion         = config.mProtocolVersion;
-	}
+    }
 
-	return *this;
+    return *this;
 }
 
 

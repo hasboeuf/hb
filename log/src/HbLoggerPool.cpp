@@ -22,7 +22,7 @@ HbLoggerPool::HbLoggerPool( QThread * thread ) :
 {
     mAtomic = 0;
     mpClock = nullptr;
-	mCapacity = MAX_CAPACITY;
+    mCapacity = MAX_CAPACITY;
 
     q_assert( connect( q_assert_ptr( thread ), &QThread::started,
         this, &HbLoggerPool::running, Qt::UniqueConnection ) );
@@ -158,21 +158,21 @@ bool HbLoggerPool::removeInput( loguid uid, QString * error )
 loguid HbLoggerPool::addConsoleOutput( QString * error )
 {
     QWriteLocker locker( &mOutputsLock );
-	HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
+    HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
-		foreach(HbLogAbstractOutput * output, mOutputs)
-		{
-			if (q_assert_ptr(output)->type() == HbLogAbstractOutput::OUTPUT_CONSOLE)
-			{
-				state = HbLoggerStream::INOUT_CONSOLE_ALREADY_EXISTS;
-				break;
-			}
-		}
+        foreach(HbLogAbstractOutput * output, mOutputs)
+        {
+            if (q_assert_ptr(output)->type() == HbLogAbstractOutput::OUTPUT_CONSOLE)
+            {
+                state = HbLoggerStream::INOUT_CONSOLE_ALREADY_EXISTS;
+                break;
+            }
+        }
     }
 
-	if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
+    if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
         HbLogConsoleOutput * output = q_assert_ptr( new HbLogConsoleOutput( HbLogger::LEVEL_ALL ) );
         mOutputs.insert( output->uid(), output );
@@ -211,14 +211,14 @@ loguid HbLoggerPool::addGuiOutput( HbLogGuiNotifier * notifier, QString * error 
 loguid HbLoggerPool::addFileOutput( const QString & path, quint32 max_size, QString * error )
 {
     QWriteLocker locker( &mOutputsLock );
-	HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
-	
+    HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
+    
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
         if( path.isEmpty() ) state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
 
-	// No existing check as the file_name will never be the same at the end in HbLogFileOutput.
+    // No existing check as the file_name will never be the same at the end in HbLogFileOutput.
 
-	if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
+    if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
         HbLogFileOutput * output = q_check_ptr( new HbLogFileOutput( path, max_size, HbLogger::LEVEL_ALL ) );
         mOutputs.insert( output->uid(), output );
@@ -235,12 +235,12 @@ loguid HbLoggerPool::addFileOutput( const QString & path, quint32 max_size, QStr
 loguid HbLoggerPool::addTcpSocketOutput( const QString & ip, quint16 port, QString * error )
 {
     QWriteLocker locker( &mOutputsLock );
-	HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
+    HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
         if( ip.isEmpty() ) state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
-		else if (port < TCP_PORT_MIN || port > TCP_PORT_MAX) state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
+        else if (port < TCP_PORT_MIN || port > TCP_PORT_MAX) state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
     }
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
@@ -258,7 +258,7 @@ loguid HbLoggerPool::addTcpSocketOutput( const QString & ip, quint16 port, QStri
             }
     }
 
-	if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
+    if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
         HbLogTcpSocketOutput * output = q_check_ptr( new HbLogTcpSocketOutput( ip, port, HbLogger::LEVEL_ALL ) );
         output->moveToThread( thread() );
@@ -276,7 +276,7 @@ loguid HbLoggerPool::addTcpSocketOutput( const QString & ip, quint16 port, QStri
 loguid HbLoggerPool::addLocalSocketOutput( const QString & name, QString * error )
 {
     QWriteLocker locker( &mOutputsLock );
-	HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
+    HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
@@ -288,7 +288,7 @@ loguid HbLoggerPool::addLocalSocketOutput( const QString & name, QString * error
             }
     }
 
-	if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
+    if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
         HbLogLocalSocketOutput * output = q_check_ptr( new HbLogLocalSocketOutput( name, HbLogger::LEVEL_ALL ) );
         output->moveToThread( thread() );
@@ -306,7 +306,7 @@ loguid HbLoggerPool::addLocalSocketOutput( const QString & name, QString * error
 bool HbLoggerPool::removeOutput( loguid uid, QString * error )
 {
     QWriteLocker locker( &mOutputsLock );
-	HbLoggerStream::State state = HbLoggerStream::INOUT_DEL_FAIL;
+    HbLoggerStream::State state = HbLoggerStream::INOUT_DEL_FAIL;
 
     HbLogAbstractOutput * output = mOutputs.take( uid );
 
@@ -345,9 +345,9 @@ bool HbLoggerPool::enqueueMessage( QList< HbLogMessage * > & buffer )
         while( !buffer.isEmpty() )
         {
             if ( mLoggerStream.size() == mCapacity )
-			{
-				delete mLoggerStream.takeFirst();
-			}
+            {
+                delete mLoggerStream.takeFirst();
+            }
 
             mLoggerStream.push_back( buffer.takeFirst() );
         }

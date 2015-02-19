@@ -65,21 +65,21 @@ HbNetworkProtocol::Code HbNetworkHeader::code() const
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
-		QDataStream & operator <<(QDataStream & stream, const HbNetworkHeader & header)
-		{
+        QDataStream & operator <<(QDataStream & stream, const HbNetworkHeader & header)
+        {
             stream << header.mAppName;
             stream << header.mProtocolVersion;
             stream << ( quint16 ) header.mService;
             stream << ( quint16 ) header.mCode;
 
-			return stream;
-		}
+            return stream;
+        }
 
-		QDataStream & operator >>(QDataStream & stream, HbNetworkHeader & header)
-		{
+        QDataStream & operator >>(QDataStream & stream, HbNetworkHeader & header)
+        {
 
             quint16 service = HbNetworkProtocol::SERVICE_UNDEFINED;
             quint16 code = HbNetworkProtocol::CODE_UNDEFINED;
@@ -92,9 +92,9 @@ namespace hb
             header.mService = ( HbNetworkProtocol::Service ) service;
             header.mCode = ( HbNetworkProtocol::Code ) code;
 
-			return stream;
-		}
-	}
+            return stream;
+        }
+    }
 }
 
 /*void HbNetworkContract::setRouting( HbNetworkProtocol::RoutingScheme routing)

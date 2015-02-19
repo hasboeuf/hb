@@ -8,28 +8,28 @@ using namespace hb::log;
 
 
 HbLogTcpSocketOutput::HbLogTcpSocketOutput( const QString & ip, quint32 port, HbLogger::Levels level ) :
-	QTcpSocket(), HbLogAbstractOutput( HbLogAbstractOutput::OUTPUT_TCP_SOCKET, level )
+    QTcpSocket(), HbLogAbstractOutput( HbLogAbstractOutput::OUTPUT_TCP_SOCKET, level )
 {
     mIp = ip;
     mPort = port;
-	
+    
     q_assert( connect( this, &QTcpSocket::disconnected, this,
         &HbLogTcpSocketOutput::onDisconnected, Qt::UniqueConnection ) );
 
     q_assert( connect( this, ( void ( QTcpSocket::* )( QAbstractSocket::SocketError ) ) &QTcpSocket::error,
         this, [this]( QAbstractSocket::SocketError )
         {
-		fprintf(stderr, "%s\n", HbLatin1(errorString()));
+        fprintf(stderr, "%s\n", HbLatin1(errorString()));
             QTimer::singleShot( 1000, this, SLOT( onReconnection() ) );
 
         }, Qt::UniqueConnection ) );
 
-	onReconnection();
+    onReconnection();
 }
 
 HbLogTcpSocketOutput::~HbLogTcpSocketOutput()
 {
-	close();
+    close();
 }
 
 
@@ -52,11 +52,11 @@ quint32 HbLogTcpSocketOutput::port() const
 
 void HbLogTcpSocketOutput::processMessage( const HbLogMessage & message )
 {
-	if( state() == QAbstractSocket::ConnectedState )
-	{
+    if( state() == QAbstractSocket::ConnectedState )
+    {
         write( message.toByteArray() );
         flush();
-	}
+    }
 }
 
 

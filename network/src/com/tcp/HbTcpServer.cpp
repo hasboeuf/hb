@@ -12,17 +12,17 @@
 using namespace hb::network;
 
 TcpServer::TcpServer(QObject * parent) :
-	QTcpServer( parent )
+    QTcpServer( parent )
 {
 }
 
 void TcpServer::incomingConnection(qint32 socket_descriptor)
 {
-	HbLogBegin();
+    HbLogBegin();
 
-	emit newConnection( socket_descriptor );
+    emit newConnection( socket_descriptor );
 
-	HbLogEnd();
+    HbLogEnd();
 }
 
 HbTcpServer::HbTcpServer( QObject * parent ) :
@@ -59,7 +59,7 @@ bool HbTcpServer::setConfiguration( const HbTcpServerConfig & config )
         return false;
     }
 
-	reset();
+    reset();
 
     mConfig = config;
 
@@ -121,7 +121,7 @@ bool HbTcpServer::disconnectFromNetwork(quint16 uid )
 
 void HbTcpServer::onNewConnection(qint32 socket_descriptor)
 {
-	HbLogBegin();
+    HbLogBegin();
 
     if( !isReady() )
     {
@@ -131,19 +131,19 @@ void HbTcpServer::onNewConnection(qint32 socket_descriptor)
 
     HbSocketHandler * handler = nullptr;
 
-	// Seeking an available handler.
+    // Seeking an available handler.
     foreach( HbSocketHandler * h , mHandlerById.values() )
-	{
+    {
         if ( h->canHandleNewConnection() )
-		{
+        {
             handler = h;
-		}
-	}
+        }
+    }
 
-	// We must create one.
+    // We must create one.
     if ( !handler )
-	{
-		handler = new HbTcpSocketHandler( this );
+    {
+        handler = new HbTcpSocketHandler( this );
 
         connect( handler, &HbSocketHandler::socketConnected,        this, &HbAbstractServer::onSocketConnected );
         connect( handler, &HbSocketHandler::socketDisconnected,     this, &HbAbstractServer::onSocketDisconnected );
@@ -151,28 +151,28 @@ void HbTcpServer::onNewConnection(qint32 socket_descriptor)
         connect( handler, &HbSocketHandler::handlerIdled,           this, &HbAbstractServer::onHandlerIdled );
 
         bool is_threaded = mConfig.maxUsersPerThread() > 0;
-		// Must be threaded.
-		if (is_threaded)
-		{
-			QThread * t = new QThread();
+        // Must be threaded.
+        if (is_threaded)
+        {
+            QThread * t = new QThread();
             handler->moveToThread( t );
 
             // TODO better.
             connect(t,       &QThread::started,         handler, &HbSocketHandler::init);
             connect(handler, &QObject::destroyed,       t,       &QThread::quit);
-			connect(t,       &QThread::finished,        t,       &QThread::deleteLater);
+            connect(t,       &QThread::finished,        t,       &QThread::deleteLater);
 
-			t->start();
-		}
+            t->start();
+        }
 
         mHandlerById.insert( handler->uid(), handler );
 
         HbInfo( "New HbTcpSocketHandler#%d created to handle socket#%d added.", handler->uid(), socket_descriptor );
-	}
+    }
 
     mPending.append( socket_descriptor );
     q_assert( QMetaObject::invokeMethod(handler, "onNewPendingConnection", Q_ARG( qint32, socket_descriptor ) ) );
 
-	HbLogEnd();
+    HbLogEnd();
 }
 

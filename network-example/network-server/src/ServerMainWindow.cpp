@@ -26,7 +26,7 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
 
-	mpLogWidget = new HbLogWidget(this);
+    mpLogWidget = new HbLogWidget(this);
     mpLogWidget->hide();
     q_assert( HbLogService::outputs()->addGuiOutput( mpLogWidget->logNotifier() ) > 0 );
 

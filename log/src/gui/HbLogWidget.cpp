@@ -11,26 +11,26 @@ HbLogWidget::HbLogWidget(QWidget *parent) :
     setupUi(this);
     setWindowFlags(Qt::Tool);
     setWindowModality(Qt::NonModal);
-	setWindowTitle("Log console");
-	setVisible(true);
+    setWindowTitle("Log console");
+    setVisible(true);
 
-	mpLogNotifier = q_check_ptr(new HbLogGuiNotifier());
+    mpLogNotifier = q_check_ptr(new HbLogGuiNotifier());
 
-	mConfig.loadSettings(); // Init config from settings or default xml config file.
+    mConfig.loadSettings(); // Init config from settings or default xml config file.
 
     foreach(QString level, HbLogger::MetaLevel::toString())
-	{
-		if (!level.contains(QLatin1String("_ALL")) && !level.contains(QLatin1String("_NONE")))
-		{
-			HbLogger::Level enum_level = HbLogger::MetaLevel::fromString(level, HbLogger::LEVEL_TRACE);
+    {
+        if (!level.contains(QLatin1String("_ALL")) && !level.contains(QLatin1String("_NONE")))
+        {
+            HbLogger::Level enum_level = HbLogger::MetaLevel::fromString(level, HbLogger::LEVEL_TRACE);
 
-			qcb_level->addItem(level, enum_level);
-		}
+            qcb_level->addItem(level, enum_level);
+        }
     }
 
-	updateGui();
+    updateGui();
 
-	connect(mpLogNotifier, &HbLogGuiNotifier::newLogMessage, this, &HbLogWidget::onNewLogMessage, Qt::UniqueConnection);
+    connect(mpLogNotifier, &HbLogGuiNotifier::newLogMessage, this, &HbLogWidget::onNewLogMessage, Qt::UniqueConnection);
     connect(qpb_reset,      &QPushButton::clicked, this, &HbLogWidget::onResetClicked);
     connect(qpb_save_as,    &QPushButton::clicked, this, &HbLogWidget::onSaveAsClicked);
     connect(qpb_configure,  &QPushButton::clicked, this, &HbLogWidget::onConfigureClicked);
@@ -98,7 +98,7 @@ void HbLogWidget::onSaveAsClicked()
 
 void HbLogWidget::onNewLogMessage(const HbLogMessage& msg)
 {
-	HbLogMessage* local_msg = new HbLogMessage(msg);
+    HbLogMessage* local_msg = new HbLogMessage(msg);
 
     if(mLoggerMessages.size() == mConfig.maxBuffer())
     {
@@ -122,24 +122,24 @@ void HbLogWidget::displayNewMessage(const HbLogMessage * msg)
 
 void HbLogWidget::updateGui()
 {
-	// Icons color
-	for (qint32 index = 0; index < qcb_level->count(); ++index)
-	{
-		QColor color = mConfig.colorByIdLevel(qcb_level->itemData(index).toInt());
-		QPixmap pix(10, 10);
-		pix.fill(color);
-		qcb_level->setItemIcon(index, QIcon(pix));
-	}
+    // Icons color
+    for (qint32 index = 0; index < qcb_level->count(); ++index)
+    {
+        QColor color = mConfig.colorByIdLevel(qcb_level->itemData(index).toInt());
+        QPixmap pix(10, 10);
+        pix.fill(color);
+        qcb_level->setItemIcon(index, QIcon(pix));
+    }
 
-	// Font
+    // Font
     qte_log->setFont(mConfig.font());
 
-	// Background color
+    // Background color
     qte_log->setStyleSheet("background-color: " + mConfig.backgroundColor().name());
 
-	// Log entries colors
+    // Log entries colors
     qte_log->clear();
-	foreach(HbLogMessage* msg, mLoggerMessages)
+    foreach(HbLogMessage* msg, mLoggerMessages)
     {
         displayNewMessage(msg);
     }
