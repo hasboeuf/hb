@@ -42,8 +42,8 @@ namespace hb
             virtual const HbClientConfig & configuration() const; // SUB
 
         signals:
-            void connected();
-            void disconnected();
+            void clientConnected   ( sockuid client_uid );
+            void clientDisconnected( sockuid client_uid );
 
         protected:
             HbAbstractClient(QObject * parent = nullptr);

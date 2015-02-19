@@ -26,6 +26,7 @@ namespace hb
 
         class HB_NETWORK_DECL HbServer final : public HbPeer
         {
+            Q_OBJECT
             Q_DISABLE_COPY( HbServer )
         public:
 

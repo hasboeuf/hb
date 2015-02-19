@@ -69,7 +69,7 @@ bool HbAbstractClient::leave()
         }
 
         mReady = false;
-        emit disconnected();
+        emit clientDisconnected( uid() );
     }
 
     return true;
@@ -184,7 +184,7 @@ void HbAbstractClient::onSocketConnected()
         mRetry = 0;
     }
 
-    emit connected();
+    emit clientConnected( uid() );
 
 }
 
@@ -256,5 +256,5 @@ void HbAbstractClient::onSocketDisconnected()
 
     mReady = false;
 
-    emit disconnected();
+    emit clientDisconnected( uid() );
 }

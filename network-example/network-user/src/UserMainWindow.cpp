@@ -51,8 +51,8 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
 
     mpFacebookClient = nullptr;
 
-    connect( &mTcpClient, &HbTcpClient::connected,    this, &UserMainWindow::onClientConnected );
-    connect( &mTcpClient, &HbTcpClient::disconnected, this, &UserMainWindow::onClientDisconnected );
+    //connect( &mTcpClient, &HbTcpClient::connected,    this, &UserMainWindow::onClientConnected );
+    //connect( &mTcpClient, &HbTcpClient::disconnected, this, &UserMainWindow::onClientDisconnected );
 
     // Internal connects
     connect( ui_qa_logs,   &QAction::triggered,   this, &UserMainWindow::showLogs );
@@ -105,16 +105,17 @@ void UserMainWindow::onStartClicked()
 {
     HbLogBegin();
 
-    HbNetworkProtocol::msAppName = "hb-network-example";
-    HbNetworkProtocol::msProtocolVersion = 1;
 
     HbTcpClientConfig config;
     config.setAddress( QHostAddress::LocalHost );
     config.setPort( 4000 );
     config.setReconnectionDelay( 1000 );
 
-    mTcpClient.setConfiguration( config );
-    mTcpClient.join();
+    quint16 server_uid = mpHbClient->joinTcpClient( config );
+    if( server_uid > 0 )
+    {
+        HbInfo( "Client #%d started.", server_uid );
+    }
 
     HbLogEnd();
 }

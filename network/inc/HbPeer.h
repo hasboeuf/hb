@@ -20,8 +20,9 @@ namespace hb
     namespace network
     {
 
-        class HB_NETWORK_DECL HbPeer
+        class HB_NETWORK_DECL HbPeer : public QObject
         {
+            Q_OBJECT
             Q_DISABLE_COPY( HbPeer )
 
         public:
