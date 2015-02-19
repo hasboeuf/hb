@@ -257,7 +257,7 @@ namespace HbPrivate
     {
         if( !typeName )
         {
-			qWarning("HbNullableTypeId<%s>() -> null type name not supported", HbLatin1(qScopeName< Type >()));
+            qWarning("HbNullableTypeId<%s>() -> null type name not supported", HbLatin1(qScopeName< Type >()));
             return 0;
         }
 

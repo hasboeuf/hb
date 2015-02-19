@@ -19,9 +19,9 @@
 
 namespace hb
 {
-	namespace log
-	{
-		/*! \namespace hb::log */
+    namespace log
+    {
+        /*! \namespace hb::log */
 
         class HbLogMessage;
 
@@ -33,13 +33,13 @@ namespace hb
         * %HbLogLocalSocketInput inherits from HbLogAbstractInput.\n
         */
         class HbLogLocalSocketInput final : public QLocalServer, public HbLogAbstractInput
-		{
-			Q_OBJECT
+        {
+            Q_OBJECT
             Q_DISABLE_COPY( HbLogLocalSocketInput )
 
         private :
 
-		public :
+        public :
 
             HbLogLocalSocketInput(const QString & name = QString() );
             virtual ~HbLogLocalSocketInput() = default;
@@ -48,19 +48,19 @@ namespace hb
 
             void inputMessageReceived( HbLogMessage * message );
 
-		private callbacks :
+        private callbacks :
 
-			void incomingConnection();
-			void onReadyRead();
-			void onClientDisconnected();
+            void incomingConnection();
+            void onReadyRead();
+            void onClientDisconnected();
 
 
         private :
-			QString mName;
+            QString mName;
             qint32 mAvailable;
             QSet< QLocalSocket * > mClients;
-		};
-	}
+        };
+    }
 }
 
 #endif

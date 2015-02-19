@@ -18,19 +18,19 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HB_NETWORK_DECL HbClient final : public HbPeer
-		{
+        {
             Q_DISABLE_COPY( HbClient )
-		public:
+        public:
 
             HbClient() = delete;
             HbClient( const HbGeneralClientConfig & config );
             virtual ~HbClient() = default;
-		};
-	}
+        };
+    }
 }
 
 #endif // HBCLIENT_H

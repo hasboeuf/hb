@@ -20,54 +20,54 @@ class QPluginLoader;
 
 namespace hb
 {
-	namespace plugin
-	{
-		class HbPluginInterface;
-		class HbPlatformService;
+    namespace plugin
+    {
+        class HbPluginInterface;
+        class HbPlatformService;
 
         class HB_PLUGIN_DECL HbPluginManager : public QObject
-		{
-			Q_OBJECT
-		public:
+        {
+            Q_OBJECT
+        public:
             explicit HbPluginManager( HbPlatformService* platformService, QObject * parent = nullptr );
 
-			void load(QString folder_path);
-			int  unload();
+            void load(QString folder_path);
+            int  unload();
 
-			void loadPluginFromPath(QString plugin_path);
-			void loadPluginFromName(QString plugin_name);
-			void unloadPlugin(QString plugin_name, bool clear = true);
+            void loadPluginFromPath(QString plugin_path);
+            void loadPluginFromName(QString plugin_name);
+            void unloadPlugin(QString plugin_name, bool clear = true);
 
-			QHash<QString, QString> mLoadedPlugins; // Name Version.
+            QHash<QString, QString> mLoadedPlugins; // Name Version.
 
-			HbPluginInterface* plugin(QString name) const;
+            HbPluginInterface* plugin(QString name) const;
 
-			const QList<const HbPluginInfos*> pluginInfoList();
+            const QList<const HbPluginInfos*> pluginInfoList();
 
-		private:
-			void         scanFolder(QString folder_path);
-			HbPluginInfos* scanPlugin(QString plugin_path);
+        private:
+            void         scanFolder(QString folder_path);
+            HbPluginInfos* scanPlugin(QString plugin_path);
             bool         loadPlugin(QString name, const HbPluginInfos* child = nullptr );
 
-		signals:
-			void pluginLoaded(const HbPluginInfos* plugin_infos);
-			void pluginLoadingFailed(const HbPluginInfos* plugin_infos);
-			void pluginUnloaded(QString            plugin_name);
+        signals:
+            void pluginLoaded(const HbPluginInfos* plugin_infos);
+            void pluginLoadingFailed(const HbPluginInfos* plugin_infos);
+            void pluginUnloaded(QString            plugin_name);
 
-			public slots:
+            public slots:
 
 
-		private:
-			HbPlatformService* mpPlatformService;
+        private:
+            HbPlatformService* mpPlatformService;
 
-			QString mPath;
+            QString mPath;
 
-			QHash<QString, HbPluginInfos*>     mPluginsInfos;
-			QHash<QString, QPluginLoader*>   mPluginsLoaders;
-			QHash<QString, HbPluginInterface*> mPlugins;
+            QHash<QString, HbPluginInfos*>     mPluginsInfos;
+            QHash<QString, QPluginLoader*>   mPluginsLoaders;
+            QHash<QString, HbPluginInterface*> mPlugins;
 
-		};
-	}
+        };
+    }
 }
 
 #endif // HBPLUGINMANAGER_H

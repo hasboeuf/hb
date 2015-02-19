@@ -18,9 +18,9 @@
 
 namespace hb
 {
-	namespace log
-	{
-		/*! \namespace hb::log */
+    namespace log
+    {
+        /*! \namespace hb::log */
 
         class HbLogMessage;
 
@@ -32,31 +32,31 @@ namespace hb
         * %HbLogTcpSocketInput inherits from HbLogAbstractInput.\n
         */
         class HbLogTcpSocketInput final : public QTcpServer, public HbLogAbstractInput
-		{
-			Q_OBJECT
+        {
+            Q_OBJECT
             Q_DISABLE_COPY( HbLogTcpSocketInput )
 
 
-		public :
+        public :
 
             HbLogTcpSocketInput() = delete;
             HbLogTcpSocketInput( quint32 port );
             virtual ~HbLogTcpSocketInput();
 
-			quint32 port() const;
+            quint32 port() const;
 
         signals :
 
             void inputMessageReceived( HbLogMessage * message );
 
-		private :
+        private :
 
-			void incomingConnection( qint32 descriptor );
+            void incomingConnection( qint32 descriptor );
 
-		private callbacks :
+        private callbacks :
 
-			void onReadyRead();
-			void onClientDisconnected();
+            void onReadyRead();
+            void onClientDisconnected();
 
 
         private :
@@ -65,8 +65,8 @@ namespace hb
 
             qint32 mAvailable;
             QSet< QTcpSocket * > mClients;
-		};
-	}
+        };
+    }
 }
 
 #endif

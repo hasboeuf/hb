@@ -13,11 +13,11 @@
 #include <HbLogger.h>
 
 namespace hb
-{	
-	namespace log
-	{
+{    
+    namespace log
+    {
         class IHbLoggerOutput
-		{
+        {
         public :
 
             enum OutputType : qint16
@@ -29,7 +29,7 @@ namespace hb
                 OUTPUT_TCP_SOCKET    = 4
             };
 
-		public :
+        public :
 
             virtual OutputType type() const = 0;
 
@@ -39,8 +39,8 @@ namespace hb
         protected :
 
             virtual ~IHbLoggerOutput() = default;
-		};
-	}
+        };
+    }
 }
 
 #endif // IHBLOGGEROUTPUT_H

@@ -136,7 +136,7 @@ namespace HbPrivate
 public : \
 \
     template< typename Enum > \
-	class HbEnum : public HbPrivate::HbEnumHelper< Class, Enum > {}; \
+    class HbEnum : public HbPrivate::HbEnumHelper< Class, Enum > {}; \
 \
 private :
 

@@ -28,14 +28,14 @@ namespace hb
 
     using namespace link;
 
-	namespace network
-	{
+    namespace network
+    {
         class HbAuthRequestContract;
 
         class HB_NETWORK_DECL HbServerAuthFacebookStrategy : public HbServerAuthStrategy
-		{
+        {
             Q_OBJECT
-		public:
+        public:
 
             HbServerAuthFacebookStrategy();
             virtual ~HbServerAuthFacebookStrategy() = default;
@@ -52,8 +52,8 @@ namespace hb
             HbFacebookRequester                     mRequester;
             QHash< HbO2ServerFacebook *, sockuid > mPendingToken;
             QHash< quint64, sockuid >              mPendingRequest;
-		};
-	}
+        };
+    }
 }
 
 using hb::network::HbServerAuthFacebookStrategy;

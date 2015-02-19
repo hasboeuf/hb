@@ -21,24 +21,24 @@ namespace hb
     namespace network
     {
 
-		class HB_NETWORK_DECL HbNetworkError
-		{
+        class HB_NETWORK_DECL HbNetworkError
+        {
 
-		public:
+        public:
 
-			// TODO static
-			enum Code
-			{
-				G_SUCCESS = 0,
-				G_FAILLURE,
-				G_ERROR_WTF,
+            // TODO static
+            enum Code
+            {
+                G_SUCCESS = 0,
+                G_FAILLURE,
+                G_ERROR_WTF,
 
-				TCPSOCKETHANDLER_FULL,
-				TCPSOCKETHANDLER_ALREADY_PRESENT,
-				TCPSOCKETHANDLER_UNTHREADED_YET,
-				TCPSOCKETHANDLER_BAD_DESCRIPTOR
-			};
-		};
+                TCPSOCKETHANDLER_FULL,
+                TCPSOCKETHANDLER_ALREADY_PRESENT,
+                TCPSOCKETHANDLER_UNTHREADED_YET,
+                TCPSOCKETHANDLER_BAD_DESCRIPTOR
+            };
+        };
     }
 }
 

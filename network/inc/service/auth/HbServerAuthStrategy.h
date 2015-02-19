@@ -19,14 +19,14 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
         class HbAuthRequestContract;
 
         class HB_NETWORK_DECL HbServerAuthStrategy : public QObject
-		{
+        {
             Q_OBJECT
-		public:
+        public:
 
             HbServerAuthStrategy() = default;
             virtual ~HbServerAuthStrategy() = default;
@@ -40,8 +40,8 @@ namespace hb
             void loginFailed(  sockuid sender,
                                const HbNetworkProtocol::AuthStatus & status,
                                const QString & description );
-		};
-	}
+        };
+    }
 }
 
 using hb::network::HbServerAuthStrategy;

@@ -20,45 +20,45 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
-		class HbAbstractSocket;
+        class HbAbstractSocket;
         class HbSocketHandler;
 
         class HB_NETWORK_DECL HbAbstractServer : public HbAbstractNetwork, public HbUid< netwuid, CLASS_NETW >
-		{
-			Q_OBJECT
-			Q_DISABLE_COPY( HbAbstractServer )
-			Q_FRIEND_CLASS( HbSocketHandler )
+        {
+            Q_OBJECT
+            Q_DISABLE_COPY( HbAbstractServer )
+            Q_FRIEND_CLASS( HbSocketHandler )
 
-		public:
+        public:
             virtual ~HbAbstractServer() = default; // TODO CHECK
 
             virtual bool join () final;
-			virtual bool leave() final;
+            virtual bool leave() final;
             virtual bool leave( quint16 uid ) final;
             virtual bool isReady() const final;
             virtual HbNetworkProtocol::NetworkType type() const = 0;
 
             virtual bool send( HbNetworkContract * contract );
-			//virtual bool reply(int sender, const HbNetworkContract * contract);
-			//virtual bool forward(int receiver, HbNetworkContract * contract);
+            //virtual bool reply(int sender, const HbNetworkContract * contract);
+            //virtual bool forward(int receiver, HbNetworkContract * contract);
 
             virtual bool isUidConnected( quint16 uid ) const final;
 
-			//virtual const HbServerConfig & configuration() const = 0;
+            //virtual const HbServerConfig & configuration() const = 0;
             virtual const HbServerConfig & configuration() const; // SUB
-	
-		protected:
-			HbAbstractServer(QObject * parent = nullptr);
+    
+        protected:
+            HbAbstractServer(QObject * parent = nullptr);
 
 
-			virtual bool connectToNetwork() = 0;
-			virtual void disconnectFromNetwork() = 0;
-			virtual bool isListening() const = 0; // From device.
+            virtual bool connectToNetwork() = 0;
+            virtual void disconnectFromNetwork() = 0;
+            virtual bool isListening() const = 0; // From device.
 
-			//virtual void incomingConnection(HbAbstractSocket * socket); to handler
+            //virtual void incomingConnection(HbAbstractSocket * socket); to handler
             virtual bool disconnectFromNetwork( quint16 uid ) = 0;
 
             virtual void reset();
@@ -78,16 +78,16 @@ namespace hb
             void onSocketContractReceived( sockuid socket_uid, const HbNetworkContract * contract );
             void onHandlerIdled();
 
-		private:
+        private:
             HbServerConfig mConfig; // SUB
             bool mReady;
 
-		protected:
+        protected:
             QList< qint32 > mPending; // Socket descriptors not instanciated.
             QHash< sockuid, HbSocketHandler * > mHandlerBySocketId;
             QHash< netwuid, HbSocketHandler * > mHandlerById;
-		};
-	}
+        };
+    }
 }
 
 #endif // HBABSTRACTSERVER_H

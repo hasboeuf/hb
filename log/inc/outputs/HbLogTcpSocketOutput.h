@@ -17,9 +17,9 @@
 
 namespace hb
 {
-	namespace log
-	{
-		/*! \namespace hb::log */
+    namespace log
+    {
+        /*! \namespace hb::log */
 
 
         /*! 
@@ -29,12 +29,12 @@ namespace hb
         * %HbLogTcpSocketOutput inherits from HbLogAbstractOutput.\n
         */
         class HbLogTcpSocketOutput final : public QTcpSocket, public HbLogAbstractOutput
-		{
-			Q_OBJECT
+        {
+            Q_OBJECT
             Q_DISABLE_COPY( HbLogTcpSocketOutput )
 
 
-		public :
+        public :
 
             HbLogTcpSocketOutput() = delete;
             HbLogTcpSocketOutput( const QString & ip, quint32 port, HbLogger::Levels level = HbLogger::LEVEL_ALL );
@@ -42,25 +42,25 @@ namespace hb
 
             bool isValid() const;
 
-			const QString & ip() const;
-			quint32 port() const;
+            const QString & ip() const;
+            quint32 port() const;
 
-		private :
+        private :
 
             void processMessage( const HbLogMessage & message );
 
-		private slots :
+        private slots :
 
             void onReconnection();
-			void onDisconnected();
+            void onDisconnected();
 
 
-		private :
+        private :
 
-			QString mIp;
-			quint32 mPort;
-		};
-	}
+            QString mIp;
+            quint32 mPort;
+        };
+    }
 }
 
 #endif

@@ -16,12 +16,12 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HB_NETWORK_DECL HbAuthService : public HbNetworkService
-		{
-		public:
+        {
+        public:
             enum AuthType : authstgy
             {
                 AUTH_NONE = 0,
@@ -34,8 +34,8 @@ namespace hb
 
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
-		};
-	}
+        };
+    }
 }
 
 #endif // HBAUTHSERVICE_H

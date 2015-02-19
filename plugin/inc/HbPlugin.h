@@ -13,11 +13,11 @@
 #include <QtCore/QtGlobal>
 
 #if !defined( HB_PLUGIN_DECL )
-#	if defined( HB_PLUGIN_BUILD )
-#		define HB_PLUGIN_DECL Q_DECL_EXPORT
-#	else
-#		define HB_PLUGIN_DECL Q_DECL_IMPORT
-#	endif
+#    if defined( HB_PLUGIN_BUILD )
+#        define HB_PLUGIN_DECL Q_DECL_EXPORT
+#    else
+#        define HB_PLUGIN_DECL Q_DECL_IMPORT
+#    endif
 #endif
 
 #endif // HBNETWORK_H

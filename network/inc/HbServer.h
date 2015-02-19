@@ -19,15 +19,15 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
         class HbTcpServerConfig;
         class HbAbstractServer;
 
         class HB_NETWORK_DECL HbServer final : public HbPeer
-		{
+        {
             Q_DISABLE_COPY( HbServer )
-		public:
+        public:
 
             HbServer() = delete;
             HbServer( const HbGeneralServerConfig & config );
@@ -39,8 +39,8 @@ namespace hb
         private:
             HbConnectionPool mConnectionPool;
 
-		};
-	}
+        };
+    }
 }
 
 #endif // HBSERVER_H

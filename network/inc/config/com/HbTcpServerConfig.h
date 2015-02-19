@@ -18,25 +18,25 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
-		class HB_NETWORK_DECL HbTcpServerConfig final :
-			public virtual HbNetworkConfig,
-			public HbTcpConfig,
-			public HbServerConfig
-		{
-		public:
+        class HB_NETWORK_DECL HbTcpServerConfig final :
+            public virtual HbNetworkConfig,
+            public HbTcpConfig,
+            public HbServerConfig
+        {
+        public:
 
             HbTcpServerConfig() = default;
             virtual ~HbTcpServerConfig() = default;
-			HbTcpServerConfig( const HbTcpServerConfig & config );
-			HbTcpServerConfig & operator =( const HbTcpServerConfig & config );
+            HbTcpServerConfig( const HbTcpServerConfig & config );
+            HbTcpServerConfig & operator =( const HbTcpServerConfig & config );
 
-			bool isValid() const;
+            bool isValid() const;
 
-		};
-	}
+        };
+    }
 }
 
 using hb::network::HbTcpServerConfig;

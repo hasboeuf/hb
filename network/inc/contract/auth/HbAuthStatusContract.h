@@ -21,12 +21,12 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
         class HB_NETWORK_DECL HbAuthStatusContract final : public HbNetworkContract
-		{
+        {
 
-		public:
+        public:
 
             HbAuthStatusContract();
             virtual ~HbAuthStatusContract() = default;
@@ -48,13 +48,13 @@ namespace hb
             quint8 tryNumber() const;
             quint8 maxTries () const;
 
-		private:
+        private:
             HbNetworkProtocol::AuthStatus mStatus;
             QString mDescription;
             quint8 mTryNumber;
             quint8 mMaxTries;
         };
-	}
+    }
 }
 
 using hb::network::HbAuthStatusContract;

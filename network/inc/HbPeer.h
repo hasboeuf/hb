@@ -17,14 +17,14 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HB_NETWORK_DECL HbPeer
-		{
+        {
             Q_DISABLE_COPY( HbPeer )
 
-		public:
+        public:
 
             HbPeer() = delete;
             HbPeer( const HbGeneralConfig & config );
@@ -34,8 +34,8 @@ namespace hb
 
         private:
             bool mReady;
-		};
-	}
+        };
+    }
 }
 
 #endif // HBSERVER_H

@@ -14,33 +14,32 @@
 // Local
 #include <HbNetwork.h>
 #include <config/com/HbNetworkConfig.h>
-#include <config/com/HbTimeoutServerConfig.h>
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
-		class HB_NETWORK_DECL HbServerConfig : public virtual HbNetworkConfig
-		{
+        class HB_NETWORK_DECL HbServerConfig : public virtual HbNetworkConfig
+        {
 
-		public:
+        public:
 
-			HbServerConfig();
+            HbServerConfig();
             virtual ~HbServerConfig() = default;
-			HbServerConfig( const HbServerConfig & config );
-			HbServerConfig & operator =( const HbServerConfig & config );
+            HbServerConfig( const HbServerConfig & config );
+            HbServerConfig & operator =( const HbServerConfig & config );
 
             bool isValid() const;
 
-			virtual void setMaxUsersPerThread( quint16 max_users ) final;
-			virtual quint16 maxUsersPerThread() const final;
-			virtual bool isThreaded() const final;
+            virtual void setMaxUsersPerThread( quint16 max_users ) final;
+            virtual quint16 maxUsersPerThread() const final;
+            virtual bool isThreaded() const final;
 
-		private:
-			quint16 mMaxUsersPerThread;
-		};
-	}
+        private:
+            quint16 mMaxUsersPerThread;
+        };
+    }
 }
 
 using hb::network::HbServerConfig;

@@ -15,10 +15,10 @@
 
 namespace hb
 {
-	namespace log
-	{
+    namespace log
+    {
 
-		/*! \namespace hb::log */
+        /*! \namespace hb::log */
 
         class HbLogGuiNotifier;
 
@@ -30,11 +30,11 @@ namespace hb
         * %HbLogGuiOutput inherits from HbLogAbstractOutput.\n
         */
         class HbLogGuiOutput final : public HbLogAbstractOutput
-		{
+        {
             Q_DISABLE_COPY( HbLogGuiOutput )
 
 
-		public :
+        public :
 
             HbLogGuiOutput() = delete;
             HbLogGuiOutput( HbLogGuiNotifier * notifier, HbLogger::Levels level = HbLogger::LEVEL_ALL );
@@ -42,14 +42,14 @@ namespace hb
 
         private :
 
-		    void processMessage( const HbLogMessage & message );
+            void processMessage( const HbLogMessage & message );
 
 
         private :
 
             HbLogGuiNotifier * mpNotifier;
-		};
-	}
+        };
+    }
 }
 
 #endif

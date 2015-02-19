@@ -14,10 +14,10 @@
 
 namespace hb
 {
-	namespace log
-	{
+    namespace log
+    {
         class IHbLoggerInput
-		{
+        {
         public :
 
             enum InputType : qint16
@@ -27,15 +27,15 @@ namespace hb
             };
 
 
-		public :
+        public :
 
             virtual InputType type() const = 0;
 
         protected :
 
             virtual ~IHbLoggerInput() = default;
-		};
-	}
+        };
+    }
 }
 
 #endif // IHBLOGGERINPUT_H

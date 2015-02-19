@@ -18,21 +18,21 @@ class QMutex;
 
 namespace hb
 {
-	namespace log
-	{
+    namespace log
+    {
 
         class HbLogMessage;
 
         class HbLogAbstractOutput :
             public virtual IHbLoggerOutput, // TODO why virtual?
             public HbUid< loguid, CLASS_LOG, true >
-		{
+        {
             Q_DISABLE_COPY( HbLogAbstractOutput )
 
 
-		public :
+        public :
 
-			virtual ~HbLogAbstractOutput();
+            virtual ~HbLogAbstractOutput();
 
             virtual OutputType type() const final;
             virtual bool isValid() const;
@@ -48,14 +48,14 @@ namespace hb
             HbLogAbstractOutput( OutputType type, HbLogger::Levels level );
 
 
-		private :
+        private :
 
             QMutex * mpMutex;
 
             OutputType mType;
-			HbLogger::Levels mLevel;
-		};
-	}
+            HbLogger::Levels mLevel;
+        };
+    }
 }
 
 #endif // HBLOGABSTRACTOUTPUT_H

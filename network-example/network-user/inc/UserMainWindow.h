@@ -18,10 +18,10 @@ namespace hb
         class HbClient;
     }
 
-	namespace log
-	{
-		class HbLogWidget;
-	}
+    namespace log
+    {
+        class HbLogWidget;
+    }
 
     namespace link
     {

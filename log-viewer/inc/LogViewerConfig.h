@@ -11,7 +11,7 @@
 namespace hb
 {
     namespace logviewer
-	{
+    {
         using hb::log::HbLogConfig;
 
         class LogViewerConfig final : public HbLogConfig
@@ -30,20 +30,20 @@ namespace hb
 
             void addEditor( const QString & name, const QString & path);
             const QString editorCommand( const QString & editor_name ) const;
-			void resetEditors();
-			QMap< QString, QString > editors() const;
+            void resetEditors();
+            QMap< QString, QString > editors() const;
 
-			QString defaultEditor() const;
+            QString defaultEditor() const;
             void setDefaultEditor( const QString & editor );
 
-			void resetProjectFolders();
-			QStringList projectFolders() const;
+            void resetProjectFolders();
+            QStringList projectFolders() const;
             void addProjectFolder( const QString & folder);
 
             void loadSettings();
             void saveSettings();
 
-		protected:
+        protected:
             void buildDomFromConfig( QDomElement & root ) const;
             void buildConfigFromDom( QDomElement & root );
 

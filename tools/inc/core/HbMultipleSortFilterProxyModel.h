@@ -18,7 +18,7 @@
 namespace hb
 {
     namespace logviewer
-	{
+    {
         class ModelFilter;
 
 

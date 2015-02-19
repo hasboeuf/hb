@@ -35,8 +35,8 @@
 #endif
 
 #if defined( Q_CC_GNU ) || defined( Q_CC_MINGW )
-#	include <cxxabi.h>
-#	include <typeinfo>
+#    include <cxxabi.h>
+#    include <typeinfo>
 #endif
 
 
@@ -89,49 +89,49 @@
 namespace HbPrivate {
 
     inline QString hb_scopename(const char * type)
-	{
+    {
 #if defined( Q_CC_MSVC )
 
-		QString name;
-		name = QLatin1String(type);
+        QString name;
+        name = QLatin1String(type);
 #elif defined( Q_CC_GNU ) || defined( Q_CC_MINGW )
 
-		QString name;
-		qint32 status = 0;
+        QString name;
+        qint32 status = 0;
 
-		char * demangled = abi::__cxa_demangle(
-			type, nullptr, nullptr, &status);
+        char * demangled = abi::__cxa_demangle(
+            type, nullptr, nullptr, &status);
 
-		Q_ASSERT(status == 0);
+        Q_ASSERT(status == 0);
 
-		name = QLatin1String(demangled);
-		free(demangled);
+        name = QLatin1String(demangled);
+        free(demangled);
 
 #endif
 
-		return name;
-	}
+        return name;
+    }
 
     inline QString hb_typename(const char * type)
-	{
+    {
         QString name(hb_scopename(type));
 
-		if (!name.isEmpty())
-		{
-			qint32 truncate = 0;
+        if (!name.isEmpty())
+        {
+            qint32 truncate = 0;
 
-			if ((truncate = name.lastIndexOf(QLatin1String(" *"))) > 0)
-				name.truncate(truncate);
+            if ((truncate = name.lastIndexOf(QLatin1String(" *"))) > 0)
+                name.truncate(truncate);
 
-			if ((truncate = name.lastIndexOf(QChar::Space)) > 0)
-				name = name.right(name.length() - (truncate + 1));
+            if ((truncate = name.lastIndexOf(QChar::Space)) > 0)
+                name = name.right(name.length() - (truncate + 1));
 
-			if ((truncate = name.lastIndexOf(QLatin1Char(':'))) > 0)
-				name = name.right(name.length() - (truncate + 1));
-		}
+            if ((truncate = name.lastIndexOf(QLatin1Char(':'))) > 0)
+                name = name.right(name.length() - (truncate + 1));
+        }
 
-		return name;
-	}
+        return name;
+    }
 
 }
 
@@ -174,43 +174,43 @@ inline QString qTypeName(const T & expression)
 
 namespace HbPrivate {
 
-	template< typename T >
+    template< typename T >
     inline T * hb_assert_ptr(T * pointer, const char * file, qint32 line)
-	{
+    {
 #if !defined( QT_NO_DEBUG )
-		if (!pointer)
-			qFatal("Null %s pointer detected in file %s, line %d",
-			HbLatin1(qScopeName< T >()), file, line);
+        if (!pointer)
+            qFatal("Null %s pointer detected in file %s, line %d",
+            HbLatin1(qScopeName< T >()), file, line);
 #else
-		Q_UNUSED(file);
-		Q_UNUSED(line);
+        Q_UNUSED(file);
+        Q_UNUSED(line);
 #endif
 
-		return pointer;
-	}
+        return pointer;
+    }
 
-	template< typename U, typename T >
+    template< typename U, typename T >
     inline U hb_dynamic_cast(T * pointer, const char * file, qint32 line)
-	{
+    {
 #if !defined( QT_NO_DEBUG )
 
-		U ptr_cast = dynamic_cast< U >(pointer);
+        U ptr_cast = dynamic_cast< U >(pointer);
 
-		if (pointer && !ptr_cast)
-		{
-			qFatal("Invalid %s pointer cast detected in file %s, line %d",
-				HbLatin1(qScopeName< U >()), file, line);
-		}
+        if (pointer && !ptr_cast)
+        {
+            qFatal("Invalid %s pointer cast detected in file %s, line %d",
+                HbLatin1(qScopeName< U >()), file, line);
+        }
 
-		return ptr_cast;
+        return ptr_cast;
 
 #else
-		Q_UNUSED(file);
-		Q_UNUSED(line);
+        Q_UNUSED(file);
+        Q_UNUSED(line);
 
-		return dynamic_cast< U >(pointer);
+        return dynamic_cast< U >(pointer);
 #endif
-	}
+    }
 
 }
 
@@ -233,19 +233,19 @@ namespace HbPrivate {
 template< typename U, typename T >
 inline QList< U > qlist_dynamic_cast(const QList< T * > & list)
 {
-	QList< U > list_cast;
+    QList< U > list_cast;
 
-	foreach(T * item, list)
-		list_cast.append(q_dynamic_cast(U, item));
+    foreach(T * item, list)
+        list_cast.append(q_dynamic_cast(U, item));
 
-	return list_cast;
+    return list_cast;
 }
 
 template< typename T >
 inline void q_delete_ptr(T ** pointer)
 {
-	delete *pointer;
-	*pointer = nullptr;
+    delete *pointer;
+    *pointer = nullptr;
 }
 
 
@@ -254,7 +254,7 @@ inline void q_delete_ptr(T ** pointer)
 */
 inline void qExit()
 {
-	exit(EXIT_SUCCESS);
+    exit(EXIT_SUCCESS);
 }
 
 /*!
@@ -262,7 +262,7 @@ inline void qExit()
 */
 inline void qAbort()
 {
-	exit(EXIT_FAILURE);
+    exit(EXIT_FAILURE);
 }
 
 
@@ -270,19 +270,19 @@ inline void qAbort()
 #define inner
 
 #define Q_DEFAULT_COPY( Class ) \
-	public: \
-	Class(const Class &) Q_DECL_EQ_DEFAULT; \
-	Class & operator =(const Class &)Q_DECL_EQ_DEFAULT; \
-	private:
+    public: \
+    Class(const Class &) Q_DECL_EQ_DEFAULT; \
+    Class & operator =(const Class &)Q_DECL_EQ_DEFAULT; \
+    private:
 
 #define Q_STATIC_CLASS( Class ) \
-	Class() Q_DECL_EQ_DELETE; \
-	Class(const Class &) Q_DECL_EQ_DELETE; \
-	Class & operator =(const Class &)Q_DECL_EQ_DELETE; \
-	virtual ~Class() Q_DECL_EQ_DELETE;
+    Class() Q_DECL_EQ_DELETE; \
+    Class(const Class &) Q_DECL_EQ_DELETE; \
+    Class & operator =(const Class &)Q_DECL_EQ_DELETE; \
+    virtual ~Class() Q_DECL_EQ_DELETE;
 
 #define Q_FRIEND_CLASS( Class ) \
-	friend class Class;
+    friend class Class;
 
 
 #endif // HBGLOBAL_H

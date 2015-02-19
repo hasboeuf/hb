@@ -16,15 +16,15 @@
 
 namespace hb
 {
-	namespace log
-	{
+    namespace log
+    {
 
         class HbLogMessage;
 
 
         class HB_LOG_DECL HbLogGuiNotifier final : public QObject
-		{
-			Q_OBJECT
+        {
+            Q_OBJECT
             Q_DISABLE_COPY( HbLogGuiNotifier )
 
 
@@ -37,11 +37,11 @@ namespace hb
 
             void newLogMessage( const HbLogMessage & message );
 
-		private :
+        private :
 
             Q_INVOKABLE void onNewLogMessage( const HbLogMessage & message );
-		};
-	}
+        };
+    }
 }
 
 #endif // HBLOGGUINOTIFIER_H

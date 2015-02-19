@@ -26,11 +26,11 @@ const size_t CLASS_SERV = 22;
 const size_t CLASS_CTCT = 23;
 
 #if !defined( HB_NETWORK_DECL )
-#	if defined( HB_NETWORK_BUILD )
-#		define HB_NETWORK_DECL Q_DECL_EXPORT
-#	else
-#		define HB_NETWORK_DECL Q_DECL_IMPORT
-#	endif
+#    if defined( HB_NETWORK_BUILD )
+#        define HB_NETWORK_DECL Q_DECL_EXPORT
+#    else
+#        define HB_NETWORK_DECL Q_DECL_IMPORT
+#    endif
 #endif
 
 #endif // HBNETWORK_H

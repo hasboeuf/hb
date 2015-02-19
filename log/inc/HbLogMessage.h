@@ -15,10 +15,10 @@
 #include <HbLogContext.h>
 
 namespace hb
-{	
-	namespace log
-	{
-		/*! \namespace hb::log */
+{    
+    namespace log
+    {
+        /*! \namespace hb::log */
 
         /*! 
         * \class HbLogMessage
@@ -27,8 +27,8 @@ namespace hb
         * %HbLogMessage TODO DOC.\n
         */
         class HB_LOG_DECL HbLogMessage final : public QObject
-		{
-		public:
+        {
+        public:
 
             static const QString msFieldSeparator;
             static const HbLogMessage * fromRaw( const QString & raw); // Use for export.
@@ -39,7 +39,7 @@ namespace hb
                             const HbLogContext & context, qint64 timestamp, const QString & message );
             HbLogMessage( const HbLogMessage & message );
             virtual ~HbLogMessage() = default;
-				
+                
             HbLogMessage & operator =( const HbLogMessage & message );
 
             bool system() const;
@@ -54,19 +54,19 @@ namespace hb
             QString toString() const;
 
             QByteArray toByteArray() const;
-			void fromDataStream( QDataStream & stream );
+            void fromDataStream( QDataStream & stream );
 
 
-		private :
+        private :
 
             HbLogger::Level mLevel;
             HbLogger::Formats mFormat;
             HbLogContext mContext;
 
             qint64  mTimestamp;
-			QString mMessage;
-		};
-	}
+            QString mMessage;
+        };
+    }
 }
 
 Q_DECLARE_METATYPE( hb::log::HbLogMessage )

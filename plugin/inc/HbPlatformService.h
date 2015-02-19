@@ -20,52 +20,52 @@
 
 namespace hb
 {
-	namespace plugin
-	{
-		class HbPluginInterface;
-		class HbPluginService;
+    namespace plugin
+    {
+        class HbPluginInterface;
+        class HbPluginService;
 
         class HB_PLUGIN_DECL HbPlatformService : public QObject
-		{
-			Q_OBJECT
+        {
+            Q_OBJECT
 
-		public:
+        public:
 
             explicit HbPlatformService();
             virtual ~HbPlatformService();
 
-			void loadPlugins(QString plugin_folder);
-			void unloadPlugins();
+            void loadPlugins(QString plugin_folder);
+            void unloadPlugins();
 
-			const QList<const HbPluginInfos *> pluginInfoList();
+            const QList<const HbPluginInfos *> pluginInfoList();
 
-			virtual HbPluginService*               requestService(QString name) const;
-			virtual const HbPluginInterface* requestPlugin(QString name) const;
+            virtual HbPluginService*               requestService(QString name) const;
+            virtual const HbPluginInterface* requestPlugin(QString name) const;
 
-			virtual void                   registerService(HbPluginService* service);
+            virtual void                   registerService(HbPluginService* service);
 
-			virtual QString                isServiceRegistered(QString service_name) const;
+            virtual QString                isServiceRegistered(QString service_name) const;
 
-		protected:
-			bool                             mPluginLoaded;
+        protected:
+            bool                             mPluginLoaded;
             HbPluginManager                    mPluginManager;
-			QHash<QString, HbPluginService*>         mServices;
+            QHash<QString, HbPluginService*>         mServices;
 
-		signals:
-			// To GUI
-			void pluginLoaded(const HbPluginInfos* plugin_infos);
-			void pluginUnloaded(QString            plugin_name);
+        signals:
+            // To GUI
+            void pluginLoaded(const HbPluginInfos* plugin_infos);
+            void pluginUnloaded(QString            plugin_name);
 
-			public slots:
-			// From HbPluginManager
-			void onPluginLoaded(const HbPluginInfos* plugin_infos);
-			void onPluginUnloaded(QString plugin_name);
+            public slots:
+            // From HbPluginManager
+            void onPluginLoaded(const HbPluginInfos* plugin_infos);
+            void onPluginUnloaded(QString plugin_name);
 
-			// From GUI
-			void onLoadPluginRequest(QString plugin_name);
-			void onUnloadPluginRequest(QString plugin_name);
-		};
-	}
+            // From GUI
+            void onLoadPluginRequest(QString plugin_name);
+            void onUnloadPluginRequest(QString plugin_name);
+        };
+    }
 }
 
 #endif // HBPLATFORMSERVICE_H

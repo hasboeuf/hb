@@ -16,46 +16,46 @@
 
 namespace hb
 {
-	namespace log
-	{
+    namespace log
+    {
 
-		class HbLogConfigDialog : public QDialog, private Ui::HbLogConfigDialog
-		{
-			Q_OBJECT
-			Q_DISABLE_COPY(HbLogConfigDialog)
+        class HbLogConfigDialog : public QDialog, private Ui::HbLogConfigDialog
+        {
+            Q_OBJECT
+            Q_DISABLE_COPY(HbLogConfigDialog)
 
 
-		public:
+        public:
 
-			HbLogConfigDialog() = delete;
+            HbLogConfigDialog() = delete;
             HbLogConfigDialog( HbLogConfig & pConfig, QWidget *parent = nullptr );
-			virtual ~HbLogConfigDialog() = default;
+            virtual ~HbLogConfigDialog() = default;
 
-			const HbLogConfig & config() const;
+            const HbLogConfig & config() const;
 
-		private:
-			void saveConfig();
-			void updateGui();
+        private:
+            void saveConfig();
+            void updateGui();
 
-		private slots :
+        private slots :
 
-			void onFontClicked();
-			void onColorClicked(int color_id);
-			void onBackgroundColorClicked();
-			void onSaveClicked();
-			void onResetClicked();
-			void onImportClicked();
-			void onExportClicked();
+            void onFontClicked();
+            void onColorClicked(int color_id);
+            void onBackgroundColorClicked();
+            void onSaveClicked();
+            void onResetClicked();
+            void onImportClicked();
+            void onExportClicked();
 
 
-		private:
+        private:
 
-			HbLogConfig mConfig;
+            HbLogConfig mConfig;
 
-			QButtonGroup qbg_colors;
-			QList< QLineEdit * > qfl_editor_fields; // Use when saving.
-		};
-	}
+            QButtonGroup qbg_colors;
+            QList< QLineEdit * > qfl_editor_fields; // Use when saving.
+        };
+    }
 }
 
 #endif // HBLOGCONFIGDIALOG_H

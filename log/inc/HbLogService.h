@@ -18,8 +18,8 @@
 
 namespace hb
 {
-	namespace log
-	{
+    namespace log
+    {
 
         class HbLoggerInputs;
         class HbLoggerOutputs;
@@ -27,10 +27,10 @@ namespace hb
 
 
         class HB_LOG_DECL HbLogService
-		{
-		public :
+        {
+        public :
 
-			static HbLogger * logger();
+            static HbLogger * logger();
             static HbLoggerInputs * inputs();
             static HbLoggerOutputs * outputs();
 
@@ -52,52 +52,52 @@ namespace hb
         private : 
 
             static QThreadStorage< HbLogManager * > msManager;
-		};
-	}
+        };
+    }
 }
 
 #define HbLogBegin() HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \
-	.print(HbLogger::LEVEL_TRACE, "BEGIN")
+    .print(HbLogger::LEVEL_TRACE, "BEGIN")
 
 #define HbLogEnd() HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \
-	.print(HbLogger::LEVEL_TRACE, "END")
+    .print(HbLogger::LEVEL_TRACE, "END")
 
 /*!
 * Should be used to write a new log message of type DEBUG.
 */
 #define HbTrace( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \
-	.print(HbLogger::LEVEL_TRACE, message, ## __VA_ARGS__)
+    .print(HbLogger::LEVEL_TRACE, message, ## __VA_ARGS__)
 
 /*! 
 * Should be used to write a new log message of type DEBUG.
 */
 #define HbDebug( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \
-	.print(HbLogger::LEVEL_DEBUG, message, ## __VA_ARGS__)
+    .print(HbLogger::LEVEL_DEBUG, message, ## __VA_ARGS__)
 
 /*!
 * Should be used to write a new log message of type INFO.
 */
 #define HbInfo( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \
-	.print(HbLogger::LEVEL_INFO, message, ## __VA_ARGS__)
+    .print(HbLogger::LEVEL_INFO, message, ## __VA_ARGS__)
 
 
 /*! 
 * Should be used to write a new log message of type WARNING.
 */
 #define HbWarning( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \
-	.print(HbLogger::LEVEL_WARNING, message, ## __VA_ARGS__)
+    .print(HbLogger::LEVEL_WARNING, message, ## __VA_ARGS__)
 
 /*! 
 * Should be used to write a new log message of type ERROR.
 */
 #define HbError( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \
-	.print(HbLogger::LEVEL_ERROR, message, ## __VA_ARGS__)
+    .print(HbLogger::LEVEL_ERROR, message, ## __VA_ARGS__)
 
 /*! 
 * Should be used to write a new log message of type CRITICAL.
 */
 #define HbCritical( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \
-	.print(HbLogger::LEVEL_CRITICAL, message, ## __VA_ARGS__)
+    .print(HbLogger::LEVEL_CRITICAL, message, ## __VA_ARGS__)
 
 /*! 
 * Should be used to write a new log message of type FATAL.

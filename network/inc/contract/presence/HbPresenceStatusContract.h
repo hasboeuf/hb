@@ -20,12 +20,12 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
         class HB_NETWORK_DECL HbPresenceStatusContract final : public HbNetworkContract
-		{
+        {
 
-		public:
+        public:
 
             HbPresenceStatusContract();
             virtual ~HbPresenceStatusContract() = default;
@@ -37,10 +37,10 @@ namespace hb
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;
 
-		private:
+        private:
 
-		};
-	}
+        };
+    }
 }
 
 using hb::network::HbPresenceStatusContract;

@@ -10,11 +10,11 @@
 #define HBLINK_H
 
 #if !defined( HB_LINK_DECL )
-#	if defined( HB_LINK_BUILD )
-#		define HB_LINK_DECL Q_DECL_EXPORT
-#	else
-#		define HB_LINK_DECL Q_DECL_IMPORT
-#	endif
+#    if defined( HB_LINK_BUILD )
+#        define HB_LINK_DECL Q_DECL_EXPORT
+#    else
+#        define HB_LINK_DECL Q_DECL_IMPORT
+#    endif
 #endif
 
 #endif // HBLINK_H

@@ -19,27 +19,27 @@
 
 namespace hb
 {
-	namespace plugin
-	{
+    namespace plugin
+    {
         class HB_PLUGIN_DECL HbPluginInterface
-		{
-		public:
+        {
+        public:
 
-			enum PluginInitState
-			{
-				INIT_SUCCESS,
-				INIT_SUCCESS_PARTLY,
-				INIT_FAIL
-			};
+            enum PluginInitState
+            {
+                INIT_SUCCESS,
+                INIT_SUCCESS_PARTLY,
+                INIT_FAIL
+            };
 
 
-			virtual ~HbPluginInterface();
+            virtual ~HbPluginInterface();
 
             virtual PluginInitState init(const HbPlatformService * platform_service) = 0;
             virtual void unload() = 0;
 
-		};
-	}
+        };
+    }
 }
 
 Q_DECLARE_INTERFACE(hb::plugin::HbPluginInterface, "hb::plugin::HbPluginInterface")

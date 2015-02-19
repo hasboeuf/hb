@@ -8,9 +8,9 @@
 namespace hb
 {
     namespace logviewer
-	{
+    {
 
-		class LogViewerConfigDialog final : public QDialog, private Ui::LogViewerConfigDialog
+        class LogViewerConfigDialog final : public QDialog, private Ui::LogViewerConfigDialog
         {
             Q_OBJECT
             Q_DISABLE_COPY( LogViewerConfigDialog )

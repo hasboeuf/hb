@@ -20,43 +20,43 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
-		class IHbNetworkListener;
+        class IHbNetworkListener;
 
         class HB_NETWORK_DECL HbAbstractNetwork : public QObject
-		{
-			Q_OBJECT
-			Q_DISABLE_COPY( HbAbstractNetwork )
+        {
+            Q_OBJECT
+            Q_DISABLE_COPY( HbAbstractNetwork )
 
-		public:
+        public:
 
-			virtual bool join() = 0;
-			virtual bool leave() = 0;
+            virtual bool join() = 0;
+            virtual bool leave() = 0;
             virtual bool isReady() const = 0;
 
-			//virtual void addListener(IHbNetworkListener * listener) final;
-			//virtual void removeListener(IHbNetworkListener * listener) final;
+            //virtual void addListener(IHbNetworkListener * listener) final;
+            //virtual void removeListener(IHbNetworkListener * listener) final;
 
             virtual bool send( HbNetworkContract * contract ) = 0;
-			//virtual bool reply(int sender, const HbNetworkContract * contract) = 0;
+            //virtual bool reply(int sender, const HbNetworkContract * contract) = 0;
 
-			//virtual const HbNetworkConfig & configuration() const = 0; SUB
+            //virtual const HbNetworkConfig & configuration() const = 0; SUB
             virtual const HbNetworkConfig & configuration() const;
 
-		protected:
-			HbAbstractNetwork(QObject * parent = nullptr);
-			virtual ~HbAbstractNetwork() = default;
+        protected:
+            HbAbstractNetwork(QObject * parent = nullptr);
+            virtual ~HbAbstractNetwork() = default;
 
-			//virtual const QList< IHbNetworkListener * > & listeners() const final;
+            //virtual const QList< IHbNetworkListener * > & listeners() const final;
 
-		private:
+        private:
             HbNetworkConfig mConfig; // SUB
             //QList< IHbNetworkListener * > mListeners;
 
-		};
-	}
+        };
+    }
 }
 
 #endif // HBABSTRACTNETWORK_H

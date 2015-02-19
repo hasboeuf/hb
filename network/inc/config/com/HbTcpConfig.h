@@ -17,20 +17,20 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HB_NETWORK_DECL HbTcpConfig : public virtual HbNetworkConfig
-		{
-		public:
+        {
+        public:
 
-			enum class SocketOption : qint16
-			{
-				NoOptions = 0,
-				LowDelay = 1 << 0,
-				KeepAlive = 1 << 1,
-				MulticastLoopback = 1 << 2
-			};
+            enum class SocketOption : qint16
+            {
+                NoOptions = 0,
+                LowDelay = 1 << 0,
+                KeepAlive = 1 << 1,
+                MulticastLoopback = 1 << 2
+            };
             Q_DECLARE_FLAGS( SocketOptions, SocketOption )
 
             HbTcpConfig();
@@ -49,13 +49,13 @@ namespace hb
             quint16 port() const;
             SocketOptions options() const;
 
-		private:
+        private:
             QHostAddress  mAddress;
             quint16       mPort;
             SocketOptions mOptions;
-		};
+        };
 
-	}
+    }
 }
 
 using hb::network::HbTcpConfig;

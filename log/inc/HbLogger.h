@@ -20,13 +20,13 @@
 #include <core/HbEnum.h>
 
 namespace hb
-{	
-	namespace log
-	{
+{    
+    namespace log
+    {
 
-		/*! \namespace hb::log */
+        /*! \namespace hb::log */
 
-		class HbLogContext;
+        class HbLogContext;
 
 
         /*! 
@@ -34,11 +34,11 @@ namespace hb
         * \brief The %HbLogger class defines the front-end of the logger.
         *
         * %HbLogger is a threaded-singleton, that means it can be used from anywhere without any worries.\n
-		* %HbLogger provides convenient macros to push new logger message.\n
-		* Also, user can add different outputs and inputs.\n
+        * %HbLogger provides convenient macros to push new logger message.\n
+        * Also, user can add different outputs and inputs.\n
         */
         class HB_LOG_DECL HbLogger
-		{
+        {
             Q_GADGET
             Q_DISABLE_COPY ( HbLogger )
             Q_ENUMS_HANDLER( HbLogger )
@@ -80,13 +80,13 @@ namespace hb
             Q_DECLARE_FLAGS( Levels, Level )
 
 
-		public :
+        public :
 
             /*! 
             * Set the general level of the log service (affected to the current thread).
-			* Then all logger messages having a level which is not included in general level are ignored by HbLog.
+            * Then all logger messages having a level which is not included in general level are ignored by HbLog.
             */
-			virtual void setLevel( Levels level ) final;
+            virtual void setLevel( Levels level ) final;
 
             /*! 
             * Return the current general level of the current thread.
@@ -102,7 +102,7 @@ namespace hb
 
             /*! 
             * Push a log message into the log lib.
-			* Note that it is kindly recommended to use the convenient macro to call this method.
+            * Note that it is kindly recommended to use the convenient macro to call this method.
             */
             virtual void print( Level level, const char * message, ... ) final;
             virtual void print( Level level, const char * message, va_list args ) final;
@@ -112,8 +112,8 @@ namespace hb
             HbLogger() = default;
             virtual ~HbLogger() = default;
 
-			virtual void enqueueMessage( Level level, Formats format, const HbLogContext & context, const QString & message ) = 0;
-			virtual void dequeuePendingMessages() = 0;
+            virtual void enqueueMessage( Level level, Formats format, const HbLogContext & context, const QString & message ) = 0;
+            virtual void dequeuePendingMessages() = 0;
 
         private :
 
@@ -126,11 +126,11 @@ namespace hb
             static QReadWriteLock msLock;
             static Levels msLevel;
             static Formats msFormat;
-		};
+        };
 
-		Q_DECLARE_OPERATORS_FOR_FLAGS( HbLogger::Levels )
+        Q_DECLARE_OPERATORS_FOR_FLAGS( HbLogger::Levels )
         Q_DECLARE_OPERATORS_FOR_FLAGS( HbLogger::Formats )
-	}
+    }
 }
 
 using hb::log::HbLogger;

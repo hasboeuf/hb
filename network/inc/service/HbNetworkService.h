@@ -19,14 +19,14 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HB_NETWORK_DECL HbNetworkService : public QObject, public IHbContractListener
-		{
+        {
             Q_OBJECT
 
-		public:
+        public:
 
             HbNetworkService() = default;
             virtual ~HbNetworkService( ) = default;
@@ -41,8 +41,8 @@ namespace hb
 
         protected:
             servuid mId = HbNetworkProtocol::SERVICE_UNDEFINED;
-		};
-	}
+        };
+    }
 }
 
 #endif // HBNETWORKSERVICE_H

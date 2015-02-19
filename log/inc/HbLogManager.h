@@ -17,11 +17,11 @@
 #include <HbLogger.h>
 
 namespace hb
-{	
-	namespace log
-	{
+{    
+    namespace log
+    {
 
-		/*! \namespace hb::log */
+        /*! \namespace hb::log */
 
         class HbLoggerInputs;
         class HbLoggerOutputs;
@@ -35,27 +35,27 @@ namespace hb
         * \brief The %HbLogManager class defines the front-end of the logger.
         *
         * %HbLogManager is a threaded-singleton, that means it can be used from anywhere without any worries.\n
-		* %HbLogManager provides convenient macros to push new logger message.\n
-		* Also, user can add different outputs and inputs.\n
+        * %HbLogManager provides convenient macros to push new logger message.\n
+        * Also, user can add different outputs and inputs.\n
         */
         class HbLogManager final : public QObject, public HbLogger
-		{
+        {
             Q_DISABLE_COPY( HbLogManager )
 
 
-		public :
+        public :
 
             HbLogManager();
-			virtual ~HbLogManager();
+            virtual ~HbLogManager();
 
             HbLoggerInputs * inputs() const;
             HbLoggerOutputs * outputs() const;
             HbLoggerPool * pool() const;
 
-		private :
+        private :
 
-			void enqueueMessage( Level level, Formats format, const HbLogContext & context, const QString & text );
-			void dequeuePendingMessages();
+            void enqueueMessage( Level level, Formats format, const HbLogContext & context, const QString & text );
+            void dequeuePendingMessages();
 
         private :
 
@@ -68,8 +68,8 @@ namespace hb
             HbLoggerInputs * mpInputs;
             HbLoggerOutputs * mpOutputs;
             QList< HbLogMessage * > mMessages;
-		};
-	}
+        };
+    }
 }
 
 #endif // HBLOGMANAGER_H

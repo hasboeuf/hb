@@ -11,13 +11,13 @@
 namespace hb
 {
     namespace log
-	{
+    {
         class HbLogGuiNotifier;
         class HbLogMessage;
     }
 
     namespace logviewer
-	{
+    {
         class LogViewerTab;
 
         using hb::log::HbLogGuiNotifier;

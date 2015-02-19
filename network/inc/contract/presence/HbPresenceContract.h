@@ -20,12 +20,12 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
         class HB_NETWORK_DECL HbPresenceContract final : public HbNetworkContract
-		{
+        {
 
-		public:
+        public:
 
             HbPresenceContract();
             virtual ~HbPresenceContract() = default;
@@ -42,12 +42,12 @@ namespace hb
             void setUsername( QString username );
             void setPassword( QString password );
 
-		private:
+        private:
             QString mUsername;
             QString mPassword;
 
-		};
-	}
+        };
+    }
 }
 
 using hb::network::HbPresenceContract;

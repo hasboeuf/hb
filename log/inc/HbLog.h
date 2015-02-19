@@ -17,11 +17,11 @@ typedef quint16 loguid;
 const size_t CLASS_LOG = 30;
 
 #if !defined( HB_LOG_DECL )
-#	if defined( HB_LOG_BUILD )
-#		define HB_LOG_DECL Q_DECL_EXPORT
-#	else
-#		define HB_LOG_DECL Q_DECL_IMPORT
-#	endif
+#    if defined( HB_LOG_BUILD )
+#        define HB_LOG_DECL Q_DECL_EXPORT
+#    else
+#        define HB_LOG_DECL Q_DECL_IMPORT
+#    endif
 #endif
 
 #endif // HBLOG_H

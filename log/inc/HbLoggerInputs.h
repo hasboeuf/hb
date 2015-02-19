@@ -15,39 +15,39 @@
 #include <HbGlobal.h>
 
 namespace hb
-{	
-	namespace log
-	{
+{    
+    namespace log
+    {
 
         class IHbLoggerInput;
         class HbLoggerPool;
 
 
         class HB_LOG_DECL HbLoggerInputs : public HbLoggerStream
-		{
+        {
             Q_FRIEND_CLASS( HbLogManager )
 
 
-		public :
+        public :
 
             /*! 
             * Request the add of a tcp server input.
-			* To check the success of the operation, please store the id and connect the streamState signal.
-			* \see streamState
+            * To check the success of the operation, please store the id and connect the streamState signal.
+            * \see streamState
             */
             loguid addTcpSocketInput( quint16 port, QString * error = nullptr );
 
             /*! 
             * Request the add of a local server input.
-			* To check the success of the operation, please store the id and connect the streamState signal.
-			* \see streamState
+            * To check the success of the operation, please store the id and connect the streamState signal.
+            * \see streamState
             */
             loguid addLocalSocketInput( const QString & name = QString(), QString * error = nullptr );
 
             /*! 
             * Request the deletion of an input specified by its id.
-			* To check the success of the operation, please store the id and connect the streamState signal.
-			* \see streamState
+            * To check the success of the operation, please store the id and connect the streamState signal.
+            * \see streamState
             */
             bool removeInput(loguid uid, QString * error = nullptr );
 
@@ -66,8 +66,8 @@ namespace hb
         private :
 
             HbLoggerPool * mpPool;
-		};
-	}
+        };
+    }
 }
 
 #endif // HBLOGGERINPUTS_H

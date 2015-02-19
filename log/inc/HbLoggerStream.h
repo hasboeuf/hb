@@ -20,11 +20,11 @@
 
 
 namespace hb
-{	
-	namespace log
-	{
+{    
+    namespace log
+    {
 
-		/*! \namespace hb::log */
+        /*! \namespace hb::log */
 
         class HbLogManager;
 
@@ -38,26 +38,26 @@ namespace hb
         *   \li Level  : represents the log level of an output.
         *   \li State   : represents the return code of the log lib.
         * All others enums are used for internal purpose within the lib./n
-		*/
-		class HB_LOG_DECL HbLoggerStream : public QObject
-		{
-			Q_OBJECT
-			Q_DISABLE_COPY(HbLoggerStream)
+        */
+        class HB_LOG_DECL HbLoggerStream : public QObject
+        {
+            Q_OBJECT
+            Q_DISABLE_COPY(HbLoggerStream)
             Q_ENUMS_HANDLER( HbLoggerStream )
             Q_ENUMS( State )
 
-		public :
-			static const char * DEFAULT_LOCAL_SERVER_NAME;
+        public :
+            static const char * DEFAULT_LOCAL_SERVER_NAME;
 
             enum State : quint16
-			{
+            {
                 INOUT_ADD_SUCCESS             = 0,
                 INOUT_WRONG_PARAMETERS,
                 INOUT_ALREADY_EXISTS,
                 INOUT_CONSOLE_ALREADY_EXISTS, // Specific to Output.
                 INOUT_DEL_SUCCESS,
                 INOUT_DEL_FAIL
-			};
+            };
             Q_META_ENUMS( State )
 
         protected :
@@ -66,8 +66,8 @@ namespace hb
             HbLoggerStream( HbLogManager * parent );
             virtual ~HbLoggerStream() = default;
 
-		};
-	}
+        };
+    }
 }
 
 Q_DECLARE_METATYPE( hb::log::HbLoggerStream::State )

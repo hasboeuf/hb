@@ -19,16 +19,16 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
         class HbAbstractServer;
         class HbNetworkService;
         class HbNetworkUser;
 
         class HB_NETWORK_DECL HbConnectionPool: public QObject
-		{
+        {
             Q_OBJECT
-		public:
+        public:
 
             HbConnectionPool();
             virtual ~HbConnectionPool();
@@ -93,8 +93,8 @@ namespace hb
             QSet < sockuid > mPendingSockets;
             QHash< sockuid, netwuid > mServerBySocketId;
             QHash< sockuid, HbNetworkUser * > mUserBySocketId;
-		};
-	}
+        };
+    }
 }
 
 #endif // HBCONNECTIONPOOL_H

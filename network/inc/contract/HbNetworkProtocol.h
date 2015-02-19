@@ -19,11 +19,11 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HB_NETWORK_DECL HbNetworkProtocol final
-		{
+        {
             Q_GADGET
             Q_ENUMS_HANDLER( HbNetworkProtocol )
             Q_ENUMS( Service )
@@ -99,7 +99,7 @@ namespace hb
             };
 
         };
-	}
+    }
 }
 
 Q_DECLARE_OPERATORS_FOR_FLAGS( hb::network::HbNetworkProtocol::NetworkTypes )

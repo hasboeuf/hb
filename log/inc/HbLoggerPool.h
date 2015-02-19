@@ -19,9 +19,9 @@
 class QTimer;
 
 namespace hb
-{	
-	namespace log
-	{
+{    
+    namespace log
+    {
 
         class IHbLoggerInput;
         class IHbLoggerOutput;
@@ -32,8 +32,8 @@ namespace hb
 
 
         class HbLoggerPool final : public QObject
-		{
-			Q_OBJECT
+        {
+            Q_OBJECT
             Q_DISABLE_COPY( HbLoggerPool )
 
         private :
@@ -43,7 +43,7 @@ namespace hb
             static const quint16 TCP_PORT_MAX = 65535;
 
 
-		public :
+        public :
 
             HbLoggerPool() = delete;
             HbLoggerPool( QThread * thread );
@@ -72,9 +72,9 @@ namespace hb
             void process();
 
 
-		private :
+        private :
 
-			QAtomicInt mAtomic;
+            QAtomicInt mAtomic;
             QReadWriteLock mInputsLock;
             QReadWriteLock mOutputsLock;
 
@@ -85,9 +85,9 @@ namespace hb
             QList< HbLogMessage * > mInputsStream;
 
             QHash< quint32, HbLogAbstractInput * > mInputs;
-			QHash< quint32, HbLogAbstractOutput * > mOutputs;
-		};
-	}
+            QHash< quint32, HbLogAbstractOutput * > mOutputs;
+        };
+    }
 }
 
 #endif // HBLOGGERPOOL_H

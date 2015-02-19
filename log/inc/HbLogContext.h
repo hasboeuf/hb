@@ -14,12 +14,12 @@
 
 namespace hb
 {
-	namespace log
-	{
+    namespace log
+    {
 
         class HB_LOG_DECL HbLogContext final
-		{
-		public :
+        {
+        public :
 
             HbLogContext();
             HbLogContext( const HbLogContext & context );
@@ -48,8 +48,8 @@ namespace hb
             QString mFunction;
 
             static QString msApplicationName;
-		};
-	}
+        };
+    }
 }
 
 using hb::log::HbLogContext;

@@ -21,31 +21,31 @@
 
 namespace hb
 {
-	namespace network
+    namespace network
     {
-		class HbAbstractSocket;
+        class HbAbstractSocket;
 
         class HbSocketHandler : public QObject, public HbUid< netwuid, CLASS_NETW >
         {
-			Q_OBJECT
-			Q_DISABLE_COPY( HbSocketHandler )
-			Q_FRIEND_CLASS( HbAbstractServer )
+            Q_OBJECT
+            Q_DISABLE_COPY( HbSocketHandler )
+            Q_FRIEND_CLASS( HbAbstractServer )
 
         public:
             virtual bool canHandleNewConnection() final;
 
         protected:
-			enum HandlerState
-			{
-				NOT_THREADED = 0,
-				THREADED
-			};
+            enum HandlerState
+            {
+                NOT_THREADED = 0,
+                THREADED
+            };
 
-			HbSocketHandler( HbAbstractServer * server );
-			virtual ~HbSocketHandler();
+            HbSocketHandler( HbAbstractServer * server );
+            virtual ~HbSocketHandler();
 
-			//virtual HbAbstractServer * server( ) const = 0;
-			virtual HbAbstractServer * server() const;
+            //virtual HbAbstractServer * server( ) const = 0;
+            virtual HbAbstractServer * server() const;
 
             virtual bool storeNewSocket(HbAbstractSocket * socket , qint32 previous_uid ) final;
 
@@ -53,15 +53,15 @@ namespace hb
             virtual void reset();
 
         protected:
-			HandlerState       mState;
+            HandlerState       mState;
 
             QMap<sockuid, HbAbstractSocket *> mSocketById;
             QMap<HbAbstractSocket *, sockuid> mIdBySocket;
 
             QMutex       mSocketMutex;
 
-		private:
-			HbAbstractServer * mpServer; // SUB
+        private:
+            HbAbstractServer * mpServer; // SUB
 
         public slots:
             // From QThread
@@ -70,12 +70,12 @@ namespace hb
             virtual void onNewPendingConnection( qint32 socket_descriptor ) = 0;
             virtual void onDisconnectionRequest( quint16 uid );
             virtual void onServerLeft();
-			// From Socket
-			virtual void onSocketReadyPacket();
-			virtual void onSocketDisconnected();
+            // From Socket
+            virtual void onSocketReadyPacket();
+            virtual void onSocketDisconnected();
 
 
-		signals:
+        signals:
             // To Server.
             void handlerIdled          ();
             void socketConnected       ( qint32 socket_previous_id, sockuid socket_id );

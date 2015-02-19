@@ -7,7 +7,7 @@
 namespace hb
 {
     namespace logviewer
-	{
+    {
 
         class LogViewerTabDelegate final : public QStyledItemDelegate
         {

@@ -17,30 +17,30 @@
 namespace HbPrivate {
 
     template< typename Class >
-	class HbEnumerator
+    class HbEnumerator
     {
         Q_STATIC_CLASS( HbEnumerator )
 
 
     public :
 
-	    template< typename Enum >
+        template< typename Enum >
         static QString name()
-	    {
+        {
             const QMetaObject & metaObject = Class::staticMetaObject;
             QMetaEnum metaEnum = metaObject.enumerator( indexOfEnumerator< Enum >() );
 
             return QString::fromLatin1( ( isEnumerator< Enum >( metaEnum ) ) ? metaEnum.name() : nullptr );
-	    }
+        }
 
-	    template< typename Enum >
-	    static qint16 count()
-	    {
+        template< typename Enum >
+        static qint16 count()
+        {
             const QMetaObject & metaObject = Class::staticMetaObject;
             QMetaEnum metaEnum = metaObject.enumerator( indexOfEnumerator< Enum >() );
 
             return ( isEnumerator< Enum >( metaEnum ) ) ? metaEnum.keyCount() : 0;
-	    }
+        }
 
         template< typename Enum >
         static bool isFlag()
@@ -53,17 +53,17 @@ namespace HbPrivate {
 
         template< typename Enum >
         static nullable< Enum > value( qint16 index )
-	    {
+        {
             const QMetaObject & metaObject = Class::staticMetaObject;
             QMetaEnum metaEnum = metaObject.enumerator( indexOfEnumerator< Enum >() );
 
             qint32 value = ( isEnumerator< Enum >( metaEnum ) ) ? metaEnum.value( index ) : -1;
             return ( value >= 0 ) ? nullable< Enum >( ( Enum ) value ) : nullable< Enum >();
-	    }
+        }
 
-	    template< typename Enum >
-	    static qint16 index( Enum value )
-	    {
+        template< typename Enum >
+        static qint16 index( Enum value )
+        {
             const QMetaObject & metaObject = Class::staticMetaObject;
             QMetaEnum metaEnum = metaObject.enumerator( indexOfEnumerator< Enum >() );
 
@@ -74,16 +74,16 @@ namespace HbPrivate {
             }
 
             return -1;
-	    }
+        }
 
-	    template< typename Enum >
+        template< typename Enum >
         static QString toString( Enum value )
-	    {
+        {
             const QMetaObject & metaObject = Class::staticMetaObject;
             QMetaEnum metaEnum = metaObject.enumerator( indexOfEnumerator< Enum >() );
 
             return QString::fromLatin1( ( isEnumerator< Enum >( metaEnum ) ) ? metaEnum.valueToKey( ( qint32 ) value ) : nullptr );
-	    }
+        }
 
         template< typename Enum >
         static QStringList toString()
@@ -103,15 +103,15 @@ namespace HbPrivate {
             return keys;
         }
 
-	    template< typename Enum >
+        template< typename Enum >
         static nullable< Enum > fromString( const QString & label )
-	    {
+        {
             const QMetaObject & metaObject = Class::staticMetaObject;
             QMetaEnum metaEnum = metaObject.enumerator( indexOfEnumerator< Enum >() );
 
             qint32 value = ( !label.isEmpty() && isEnumerator< Enum >( metaEnum ) ) ? metaEnum.keyToValue( label.toLatin1().constData() ) : -1;
             return ( value >= 0 ) ? nullable< Enum >( ( Enum ) value ) : nullable< Enum >();
-	    }
+        }
 
     private :
 

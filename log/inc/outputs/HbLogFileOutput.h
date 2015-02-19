@@ -19,48 +19,48 @@
 
 namespace hb
 {
-	namespace log
-	{
+    namespace log
+    {
 
-		/*! \namespace hb::log */
+        /*! \namespace hb::log */
 
 
-		/*! 
-		* \class HbLogFileOutput
-		* \brief The %HbLogFileOutput class defines a file output.
-		*
-		* %HbLogFileOutput inherits from HbLogAbstractOutput.\n
-		*/
+        /*! 
+        * \class HbLogFileOutput
+        * \brief The %HbLogFileOutput class defines a file output.
+        *
+        * %HbLogFileOutput inherits from HbLogAbstractOutput.\n
+        */
         class HB_LOG_DECL HbLogFileOutput final : public HbLogAbstractOutput
-		{
-			Q_DISABLE_COPY( HbLogFileOutput )
+        {
+            Q_DISABLE_COPY( HbLogFileOutput )
 
 
-		public :
+        public :
             static const QString msDefaultPath;
             static const quint32 msMaxFileSize;
 
-		public :
+        public :
 
             HbLogFileOutput() = delete;
-			HbLogFileOutput(const QString & path, quint32 max_size = 0, HbLogger::Levels level = HbLogger::LEVEL_ALL);
+            HbLogFileOutput(const QString & path, quint32 max_size = 0, HbLogger::Levels level = HbLogger::LEVEL_ALL);
             virtual ~HbLogFileOutput();
 
-			bool isValid() const;
+            bool isValid() const;
 
-		private :
+        private :
             void closeLogFile();
             void createLogFile();
-			void processMessage( const HbLogMessage & message );
+            void processMessage( const HbLogMessage & message );
 
 
-		private :
+        private :
             QString mPath;
-			QFile mFile;
-			quint32 mMaxSize;
-			QTextStream mStream;
-		};
-	}
+            QFile mFile;
+            quint32 mMaxSize;
+            QTextStream mStream;
+        };
+    }
 }
 
 #endif

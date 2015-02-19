@@ -17,18 +17,18 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
         class HB_NETWORK_DECL HbNetworkUser
-		{
-		public:
+        {
+        public:
 
             HbNetworkUser() = default;
             virtual ~HbNetworkUser( ) = default;
 
             const HbNetworkUserInfo userInfo() const;
-		};
-	}
+        };
+    }
 }
 
 #endif // HBNETWORKUSER_H

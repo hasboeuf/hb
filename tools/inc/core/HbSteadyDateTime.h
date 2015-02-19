@@ -20,12 +20,12 @@ using namespace std::chrono;
 
 namespace hb
 {
-	namespace tools
-	{
+    namespace tools
+    {
         class HB_TOOLS_DECL HbSteadyDateTime
-		{
+        {
 
-		public:
+        public:
             static HbSteadyDateTime now();
             static HbSteadyDateTime fromDateTime( const QDateTime & datetime, quint64 steady = 0 );
             static HbSteadyDateTime fromString( const QString & format, const QString & value );
@@ -42,8 +42,8 @@ namespace hb
         private:
             QDateTime mDateTime;
             quint64   mSteady;
-		};
-	}
+        };
+    }
 }
 
 #endif // HBSTEADYDATETIME_H

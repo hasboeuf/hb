@@ -12,33 +12,33 @@ class QTcpServer;
 namespace hb
 {
     namespace network
-	{
-		class HbTcpSocketHandler;
+    {
+        class HbTcpSocketHandler;
 
-		class TcpServer final : public QTcpServer
-		{
-			Q_OBJECT
-			Q_DISABLE_COPY( TcpServer )
+        class TcpServer final : public QTcpServer
+        {
+            Q_OBJECT
+            Q_DISABLE_COPY( TcpServer )
             Q_FRIEND_CLASS( HbTcpServer )
 
-		protected:
+        protected:
             TcpServer( QObject * parent = nullptr );
             void incomingConnection( qint32 socket_descriptor );
-		signals:
+        signals:
             void newConnection( qint32 socket_descriptor );
-		};
+        };
 
-		class HB_NETWORK_DECL HbTcpServer : public HbAbstractServer
-		{
-			Q_OBJECT
-			Q_DISABLE_COPY( HbTcpServer )
+        class HB_NETWORK_DECL HbTcpServer : public HbAbstractServer
+        {
+            Q_OBJECT
+            Q_DISABLE_COPY( HbTcpServer )
 
         public :
 
             HbTcpServer( QObject * parent = nullptr );
             virtual ~HbTcpServer();
 
-			using HbAbstractServer::join;
+            using HbAbstractServer::join;
             virtual bool join( const HbTcpServerConfig & config ) final;
 
             virtual bool setConfiguration( const HbTcpServerConfig & config ) final;
@@ -59,7 +59,7 @@ namespace hb
             // From device.
             void onNewConnection( qint32 socket_descriptor );
 
-		signals:
+        signals:
             // To HbTcpSocketHandler.
             void newConnection( qint32 socket_descriptor );
 
@@ -67,8 +67,8 @@ namespace hb
 
             TcpServer * mpDevice;
             HbTcpServerConfig mConfig;
-		};
-	}
+        };
+    }
 }
 
 using hb::network::HbTcpServer;

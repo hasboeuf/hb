@@ -18,10 +18,10 @@ namespace hb
         class HbServer;
     }
 
-	namespace log
-	{
-		class HbLogWidget;
-	}
+    namespace log
+    {
+        class HbLogWidget;
+    }
 
     namespace networkexample
     {

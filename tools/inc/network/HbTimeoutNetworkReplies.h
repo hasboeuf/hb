@@ -18,10 +18,10 @@
 
 namespace hb
 {
-	namespace tools
-	{
+    namespace tools
+    {
         class HB_TOOLS_DECL HbTimeoutNetworkReplies : public QObject
-		{
+        {
             Q_OBJECT
 
         public:
@@ -38,8 +38,8 @@ namespace hb
             void onDestroyed();
         private:
             QHash< QNetworkReply *, HbTimeoutNetworkReply * > mReplies;
-		};
-	}
+        };
+    }
 }
 
 using hb::tools::HbTimeoutNetworkReplies;

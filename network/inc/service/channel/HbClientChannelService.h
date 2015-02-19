@@ -18,12 +18,12 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HB_NETWORK_DECL HbClientChannelService : public HbNetworkService
-		{
-		public:
+        {
+        public:
 
             HbClientChannelService() = default;
             virtual ~HbClientChannelService( ) = default;
@@ -32,8 +32,8 @@ namespace hb
 
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract );
-		};
-	}
+        };
+    }
 }
 
 #endif // HBCLIENTCHANNELSERVICE_H

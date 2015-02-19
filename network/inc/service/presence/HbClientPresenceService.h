@@ -17,13 +17,13 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HB_NETWORK_DECL HbClientPresenceService : public HbNetworkService
-		{
+        {
             Q_OBJECT
-		public:
+        public:
 
             HbClientPresenceService() = default;
             virtual ~HbClientPresenceService( ) = default;
@@ -32,8 +32,8 @@ namespace hb
 
         public callbacks:
             void onContractReceived( const HbNetworkContract * contract );
-		};
-	}
+        };
+    }
 }
 
 #endif // HbClientPresenceService_H

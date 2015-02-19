@@ -7,9 +7,9 @@
 namespace hb
 {
     namespace logviewer
-	{
+    {
 
-		class LogViewerMainWindow final : public QMainWindow, private Ui::LogViewerMainWindow
+        class LogViewerMainWindow final : public QMainWindow, private Ui::LogViewerMainWindow
         {
             Q_OBJECT
             Q_DISABLE_COPY( LogViewerMainWindow )

@@ -8,20 +8,20 @@
 namespace hb
 {
     namespace network
-	{
+    {
         class HbTcpSocket;
 
-		class HB_NETWORK_DECL HbTcpClient : public HbAbstractClient
-		{
+        class HB_NETWORK_DECL HbTcpClient : public HbAbstractClient
+        {
             Q_OBJECT
-			Q_DISABLE_COPY( HbTcpClient )
+            Q_DISABLE_COPY( HbTcpClient )
 
         public :
 
             HbTcpClient( QObject * parent = nullptr );
             virtual ~HbTcpClient();
 
-			using HbAbstractClient::join;
+            using HbAbstractClient::join;
             virtual bool join( const HbTcpClientConfig & config ) final;
             virtual sockuid uid() const final;
 
@@ -44,8 +44,8 @@ namespace hb
 
             HbTcpSocket * mpSocket;
             HbTcpClientConfig mConfig;
-		};
-	}
+        };
+    }
 }
 
 using hb::network::HbTcpClient;

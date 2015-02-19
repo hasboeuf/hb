@@ -17,12 +17,12 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HB_NETWORK_DECL HbNetworkUserInfo final
-		{
-		public:
+        {
+        public:
 
             enum Gender : quint8
             {
@@ -65,8 +65,8 @@ namespace hb
             quint8   mAge;
             Gender   mGender;
 
-		};
-	}
+        };
+    }
 }
 
 using hb::network::HbNetworkUserInfo;

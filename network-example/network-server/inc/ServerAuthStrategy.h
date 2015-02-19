@@ -19,11 +19,11 @@
 namespace hb
 {
     namespace networkexample
-	{
+    {
 
         class ServerAuthStrategy : public hb::network::HbServerAuthStrategy
-		{
-		public:
+        {
+        public:
 
             ServerAuthStrategy() = default;
             virtual ~ServerAuthStrategy() = default;
@@ -31,8 +31,8 @@ namespace hb
             virtual bool tryLogin( const HbAuthRequestContract * contract );
             virtual authstgy type() const;
 
-		};
-	}
+        };
+    }
 }
 
 #endif // SERVERAUTHSTRATEGY_H

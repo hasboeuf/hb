@@ -20,18 +20,18 @@ class QTimerEvent;
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HbServerAuthStrategy;
         class HbAuthRequestContract;
         class HbAuthStatusContract;
 
         class HB_NETWORK_DECL HbServerAuthService : public HbAuthService, public IHbSocketListener
-		{
+        {
             Q_OBJECT
 
-		public:
+        public:
 
             HbServerAuthService();
             virtual ~HbServerAuthService();
@@ -68,7 +68,7 @@ namespace hb
             QHash< sockuid, quint8 > mAuthTimeout;
             QHash< sockuid, HbAuthStatusContract * > mResponses;
         };
-	}
+    }
 }
 
 #endif // HBSERVERAUTHSERVICE_H

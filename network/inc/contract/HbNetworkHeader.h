@@ -17,11 +17,11 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HbNetworkHeader final
-		{
+        {
             friend QDataStream & operator<<( QDataStream & stream, const HbNetworkHeader & header );
             friend QDataStream & operator>>( QDataStream & stream, HbNetworkHeader & header );
 
@@ -45,11 +45,11 @@ namespace hb
             quint16 mProtocolVersion;
             HbNetworkProtocol::Service mService;
             HbNetworkProtocol::Code mCode;
-		};
+        };
 
         HB_NETWORK_DECL QDataStream & operator<<(QDataStream & stream, const HbNetworkHeader & header);
         HB_NETWORK_DECL QDataStream & operator>>(QDataStream & stream, HbNetworkHeader & header);
-	}
+    }
 }
 
 using hb::network::HbNetworkHeader;

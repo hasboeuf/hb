@@ -19,14 +19,14 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HB_NETWORK_DECL HbServerPresenceService : public HbNetworkService, public IHbSocketListener, public IHbUserListener
-		{
+        {
             Q_OBJECT
 
-		public:
+        public:
 
             HbServerPresenceService();
             virtual ~HbServerPresenceService( ) = default;
@@ -39,8 +39,8 @@ namespace hb
             void onUserConnected   ( const HbNetworkUserInfo & user_info );
             void onUserDisconnected( const HbNetworkUserInfo & user_info );
             void onContractReceived( const HbNetworkContract * contract );
-		};
-	}
+        };
+    }
 }
 
 #endif // HbServerPresenceService_H

@@ -16,27 +16,27 @@
 
 namespace hb
 {
-	namespace plugin
-	{
+    namespace plugin
+    {
         class HB_PLUGIN_DECL HbPluginService : public QObject
-		{
-			Q_OBJECT
-		public:
+        {
+            Q_OBJECT
+        public:
             explicit HbPluginService( QString name, QString version, QObject * parent = nullptr );
 
-			QString name() const;
-			QString version() const;
+            QString name() const;
+            QString version() const;
 
-		protected:
-			QString mName;
-			QString mVersion;
+        protected:
+            QString mName;
+            QString mVersion;
 
-		signals:
+        signals:
 
-			public slots :
+            public slots :
 
-		};
-	}
+        };
+    }
 }
 
 #endif // HBPLUGINSERVICE_H

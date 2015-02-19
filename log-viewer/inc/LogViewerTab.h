@@ -14,12 +14,12 @@ class QPropertyAnimation;
 namespace hb
 {
     namespace log
-	{
+    {
         class HbLogMessage;
     }
 
     namespace logviewer
-	{
+    {
         class LogViewerConfig;
 
         using hb::log::HbLogMessage;
@@ -110,7 +110,7 @@ namespace hb
 
             ModelFilter *                  mpFilter;
             quint8                         mFilterColumn;
-										 
+                                         
             qreal                          mFreezeAnimationValue;
             QPropertyAnimation *           mpFreezeAnimation;
         };

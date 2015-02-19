@@ -16,12 +16,12 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HB_NETWORK_DECL HbClientAuthService : public HbAuthService
-		{
-		public:
+        {
+        public:
 
             HbClientAuthService() = default;
             virtual ~HbClientAuthService( ) = default;
@@ -30,8 +30,8 @@ namespace hb
 
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract );
-		};
-	}
+        };
+    }
 }
 
 #endif // HBCLIENTAUTHSERVICE_H

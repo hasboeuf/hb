@@ -17,11 +17,11 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HB_NETWORK_DECL IHbSocketListener
-		{
+        {
 
         public callbacks:
             virtual void onSocketConnected   ( sockuid socket_uid ) = 0;
@@ -29,9 +29,9 @@ namespace hb
 
         protected:
             virtual ~IHbSocketListener() = default;
-		};
+        };
 
-	}
+    }
 }
 
 using hb::network::IHbSocketListener;

@@ -17,20 +17,20 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
         class HB_NETWORK_DECL IHbContractListener
-		{
+        {
 
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
 
         protected:
             virtual ~IHbContractListener() = default;
-		};
+        };
 
-	}
+    }
 }
 
 using hb::network::IHbContractListener;

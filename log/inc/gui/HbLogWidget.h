@@ -27,43 +27,43 @@
 namespace hb
 {
 
-	namespace log
-	{
-		class HbLogMessage;
+    namespace log
+    {
+        class HbLogMessage;
 
-		class HB_LOG_DECL HbLogWidget : public QDialog, private Ui::HbLogWidget
-		{
+        class HB_LOG_DECL HbLogWidget : public QDialog, private Ui::HbLogWidget
+        {
 
-			Q_OBJECT
+            Q_OBJECT
 
-		public:
+        public:
             explicit HbLogWidget(QWidget *parent = nullptr);
-			~HbLogWidget();
+            ~HbLogWidget();
 
-			HbLogGuiNotifier* logNotifier();
+            HbLogGuiNotifier* logNotifier();
 
-		public slots:
+        public slots:
 
-		private slots :
-			void onResetClicked();
-			void onSaveAsClicked();
-			void onConfigureClicked();
-			void onLevelChanged(int);
+        private slots :
+            void onResetClicked();
+            void onSaveAsClicked();
+            void onConfigureClicked();
+            void onLevelChanged(int);
 
-			void onNewLogMessage(const HbLogMessage& msg);
+            void onNewLogMessage(const HbLogMessage& msg);
 
-		private:
-			HbLogGuiNotifier* mpLogNotifier;
+        private:
+            HbLogGuiNotifier* mpLogNotifier;
 
-			QString mFileName;
-			HbLogConfig mConfig;
-			QList<HbLogMessage*> mLoggerMessages;
+            QString mFileName;
+            HbLogConfig mConfig;
+            QList<HbLogMessage*> mLoggerMessages;
 
-		private:
-			void displayNewMessage(const HbLogMessage *msg);
-			void updateGui();
-		};
-	}
+        private:
+            void displayNewMessage(const HbLogMessage *msg);
+            void updateGui();
+        };
+    }
 }
 
 #endif // HBLOGWIDGET_H

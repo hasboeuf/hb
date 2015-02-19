@@ -23,15 +23,15 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
         class HbNetworkHeader;
 
         class HB_NETWORK_DECL HbNetworkContract : public HbUid< ctctuid, CLASS_CTCT >
         {
             Q_FRIEND_CLASS( HbNetworkExchanges )
 
-		public:
+        public:
             virtual ~HbNetworkContract() = default;
 
             virtual void setHeader( const HbNetworkHeader & header ) final;
@@ -52,7 +52,7 @@ namespace hb
 
             template< typename T >
             inline const T * value() const final
-			{
+            {
                 return dynamic_cast< const T * >( this );
             }
 
@@ -68,7 +68,7 @@ namespace hb
             const QSet< sockuid > & socketReceivers() const;
             sockuid socketReceiver() const;
 
-		protected:
+        protected:
 
             HbNetworkContract();
             HbNetworkContract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code );
@@ -95,8 +95,8 @@ namespace hb
             QSet< QString > mPendingReceivers; // user_id, morph into SocketReceivers at sending time.
             QSet< sockuid > mSocketReceivers;
 
-		};
-	}
+        };
+    }
 }
 
 using hb::network::HbNetworkContract;

@@ -9,31 +9,31 @@ class QTcpSocket;
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
-		class HbTcpSocket final : public HbAbstractSocket
-		{
-			Q_OBJECT
-			Q_DISABLE_COPY( HbTcpSocket )
+        class HbTcpSocket final : public HbAbstractSocket
+        {
+            Q_OBJECT
+            Q_DISABLE_COPY( HbTcpSocket )
 
-		private:
+        private:
 
-		public:
+        public:
 
-			HbTcpSocket() = delete;
-			HbTcpSocket( QTcpSocket * device );
-			virtual ~HbTcpSocket();
+            HbTcpSocket() = delete;
+            HbTcpSocket( QTcpSocket * device );
+            virtual ~HbTcpSocket();
 
             HbNetworkProtocol::NetworkType type() const;
 
-			bool connectToHost(const HbTcpConfig & config);
-			bool disconnectFromHost();
+            bool connectToHost(const HbTcpConfig & config);
+            bool disconnectFromHost();
 
-			bool isListening() const;
+            bool isListening() const;
 
-			void setSocketOption(QAbstractSocket::SocketOption option, bool enable);
-			bool socketOption(QAbstractSocket::SocketOption option) const;
+            void setSocketOption(QAbstractSocket::SocketOption option, bool enable);
+            bool socketOption(QAbstractSocket::SocketOption option) const;
 
             QAbstractSocket::SocketError error() const;
             QAbstractSocket::SocketState state() const;
@@ -43,11 +43,11 @@ namespace hb
             void onReadyRead();
             void onStateChanged(QAbstractSocket::SocketState state);
 
-		private:
+        private:
             HbTcpConfig mConfig;
             QTcpSocket * mpDevice;
-		};
-	}
+        };
+    }
 }
 
 #endif // HBTCPSOCKET_H

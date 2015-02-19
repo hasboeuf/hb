@@ -19,8 +19,8 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
         class HB_NETWORK_DECL HbNetworkExchanges final
         {
             Q_FRIEND_CLASS( HbNetworkConfig )
@@ -67,7 +67,7 @@ namespace hb
             typedef QHash< HbNetworkProtocol::Code, HbNetworkContract * > Contracts;
             QHash< HbNetworkProtocol::Service, Contracts > mContracts;
         };
-	}
+    }
 }
 
 using hb::network::HbNetworkExchanges;

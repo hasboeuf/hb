@@ -16,8 +16,8 @@
 
 namespace hb
 {
-	namespace log
-	{
+    namespace log
+    {
 
         class IHbLoggerOutput;
         class HbLogGuiNotifier;
@@ -25,51 +25,51 @@ namespace hb
 
 
         class HB_LOG_DECL HbLoggerOutputs : public HbLoggerStream
-		{
+        {
             Q_FRIEND_CLASS( HbLogManager )
 
 
-		public :
+        public :
 
             /*! 
             * Request the add of a console output.
-			* To check the success of the operation, please store the id and connect the streamState signal.
-			* \see streamState
+            * To check the success of the operation, please store the id and connect the streamState signal.
+            * \see streamState
             */
             loguid addConsoleOutput( QString * error = nullptr );
 
             /*! 
             * Request the add of a gui output.
-			* To check the success of the operation, please store the id and connect the streamState signal.
-			* \see streamState
+            * To check the success of the operation, please store the id and connect the streamState signal.
+            * \see streamState
             */
             loguid addGuiOutput( HbLogGuiNotifier * notifier, QString * error = nullptr );
 
             /*! 
             * Request the add of a file output.
-			* To check the success of the operation, please store the id and connect the streamState signal.
-			* \see streamState
+            * To check the success of the operation, please store the id and connect the streamState signal.
+            * \see streamState
             */
             loguid addFileOutput( const QString & file, quint32 max_size = 0, QString * error = nullptr );
 
             /*! 
             * Request the add of a tcp socket output.
-			* To check the success of the operation, please store the id and connect the streamState signal.
-			* \see streamState
+            * To check the success of the operation, please store the id and connect the streamState signal.
+            * \see streamState
             */
             loguid addTcpSocketOutput( const QString & ip, quint16 port, QString * error = nullptr );
 
             /*! 
             * Request the add of a local socket output.
-			* To check the success of the operation, please store the id and connect the streamState signal.
-			* \see streamState
+            * To check the success of the operation, please store the id and connect the streamState signal.
+            * \see streamState
             */
             loguid addLocalSocketOutput( const QString & name = QString(), QString * error = nullptr );
 
             /*! 
             * Request the deletion of an output specified by its id.
-			* To check the success of the operation, please store the id and connect the streamState signal.
-			* \see streamState
+            * To check the success of the operation, please store the id and connect the streamState signal.
+            * \see streamState
             */
             bool removeOutput( loguid uid, QString * error = nullptr );
 
@@ -86,10 +86,10 @@ namespace hb
 
         private :
             HbLoggerPool * mpPool;
-		};
+        };
 
 
-	}
+    }
 
 }
 

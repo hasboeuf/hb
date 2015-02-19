@@ -17,10 +17,10 @@
 
 namespace hb
 {
-	namespace log
-	{
+    namespace log
+    {
 
-		/*! \namespace hb::log */
+        /*! \namespace hb::log */
 
 
         /*! 
@@ -30,30 +30,30 @@ namespace hb
         * %HbLogLocalSocketOutput inherits from HbLogAbstractOutput.\n
         */
         class HbLogLocalSocketOutput final : public QLocalSocket, public HbLogAbstractOutput
-		{
-			Q_OBJECT
+        {
+            Q_OBJECT
             Q_DISABLE_COPY( HbLogLocalSocketOutput )
 
         private :
-			QString mName;
+            QString mName;
 
-		public :
+        public :
 
             HbLogLocalSocketOutput( const QString & name = QString(), HbLogger::Levels level = HbLogger::LEVEL_ALL );
             virtual ~HbLogLocalSocketOutput();
-				
+                
             bool isValid() const;
 
-		private :
+        private :
 
             void processMessage( const HbLogMessage & message );
 
-		private slots :
+        private slots :
 
             void onReconnection();
             void onDisconnected();
-		};
-	}
+        };
+    }
 }
 
 #endif

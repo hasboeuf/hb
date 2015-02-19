@@ -21,17 +21,17 @@ class toto
 
 namespace hb
 {
-	namespace log
-	{
+    namespace log
+    {
         class HbLogAbstractInput :
             public virtual IHbLoggerInput, // TODO why virtual?
             public HbUid< loguid, CLASS_LOG, true >
-		{
+        {
             Q_DISABLE_COPY( HbLogAbstractInput )
 
-		public :
+        public :
             virtual ~HbLogAbstractInput() = default;
-			virtual InputType type() const final;
+            virtual InputType type() const final;
 
         protected :
             HbLogAbstractInput() = default;
@@ -39,8 +39,8 @@ namespace hb
 
         private :
             InputType mType;
-		};
-	}
+        };
+    }
 }
 
 #endif // HBLOGABSTRACTINPUT_H

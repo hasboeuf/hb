@@ -18,60 +18,60 @@
 
 namespace hb
 {
-	namespace network
-	{
+    namespace network
+    {
 
-		class HbAbstractSocket;
+        class HbAbstractSocket;
 
 
-		class HB_NETWORK_DECL HbAbstractClient : public HbAbstractNetwork
-		{
-			Q_OBJECT
+        class HB_NETWORK_DECL HbAbstractClient : public HbAbstractNetwork
+        {
+            Q_OBJECT
             Q_DISABLE_COPY( HbAbstractClient )
 
-		public:
+        public:
 
-			virtual bool join () final;
-			virtual bool leave() final;
+            virtual bool join () final;
+            virtual bool leave() final;
             virtual bool isReady() const final;
             virtual sockuid uid() const = 0;
 
             virtual bool send( HbNetworkContract * contract);
-			//virtual bool reply(int sender, const HbNetworkContract * contract);
+            //virtual bool reply(int sender, const HbNetworkContract * contract);
 
             virtual const HbClientConfig & configuration() const; // SUB
 
-		signals:
+        signals:
             void connected();
-			void disconnected();
+            void disconnected();
 
-		protected:
-			HbAbstractClient(QObject * parent = nullptr);
-			virtual ~HbAbstractClient() = default;
+        protected:
+            HbAbstractClient(QObject * parent = nullptr);
+            virtual ~HbAbstractClient() = default;
 
-			virtual bool connectToNetwork() = 0;
-			virtual bool disconnectFromNetwork() = 0;
+            virtual bool connectToNetwork() = 0;
+            virtual bool disconnectFromNetwork() = 0;
             virtual void deleteSocket() = 0;
 
-			virtual HbAbstractSocket * pendingConnection() = 0;
-			virtual HbAbstractSocket * currentConnection() const = 0;
+            virtual HbAbstractSocket * pendingConnection() = 0;
+            virtual HbAbstractSocket * currentConnection() const = 0;
 
-		private:
-			void timerEvent(QTimerEvent * event);
+        private:
+            void timerEvent(QTimerEvent * event);
 
-		private callbacks : // From device.
+        private callbacks : // From device.
             void onSocketConnected();
             void onSocketDisconnected();
             void onSocketContractReceived( const HbNetworkContract * contract );
 
-		private:
+        private:
             HbClientConfig mConfig; // SUB
             qint32 mRetry;
             bool mReady;
-		};
+        };
 
 
-	}
+    }
 }
 
 #endif // HBABSTRACTCLIENT_H
