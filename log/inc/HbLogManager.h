@@ -16,6 +16,8 @@
 // Hb
 #include <HbLogger.h>
 
+class QTimerEvent;
+
 namespace hb
 {    
     namespace log
@@ -52,8 +54,11 @@ namespace hb
             HbLoggerOutputs * outputs() const;
             HbLoggerPool * pool() const;
 
-        private :
+        protected:
+            void timerEvent( QTimerEvent * event );
 
+        private :
+            void tryEnqueueMessage();
             void enqueueMessage( Level level, Formats format, const HbLogContext & context, const QString & text );
             void dequeuePendingMessages();
 
@@ -68,6 +73,7 @@ namespace hb
             HbLoggerInputs * mpInputs;
             HbLoggerOutputs * mpOutputs;
             QList< HbLogMessage * > mMessages;
+            qint32 mRetry;
         };
     }
 }

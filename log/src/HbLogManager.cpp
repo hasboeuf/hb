@@ -43,10 +43,13 @@ HbLogManager::HbLogManager() :
 
     mpInputs = q_check_ptr( new HbLoggerInputs( this ) );
     mpOutputs = q_check_ptr( new HbLoggerOutputs( this ) );
+
+    mRetry = 0;
 }
 
 HbLogManager::~HbLogManager()
 {
+    if( mRetry ) killTimer( mRetry );
     dequeuePendingMessages();
 
     QMutexLocker locker( &msMutex );
@@ -76,6 +79,34 @@ HbLoggerPool * HbLogManager::pool() const
     return q_assert_ptr( msLoggerPool );
 }
 
+void HbLogManager::timerEvent( QTimerEvent * event )
+{
+    Q_UNUSED( event )
+
+    tryEnqueueMessage();
+}
+
+void HbLogManager::tryEnqueueMessage()
+{
+    if( msLoggerPool->enqueueMessage( mMessages ) )
+    {
+        if( mRetry )
+        {
+            //printf( "HbLogManager: push buffer ok.\n" );
+            killTimer( mRetry );
+            mRetry = 0;
+        }
+    }
+    else
+    {
+        if( !mRetry )
+        {
+            //printf( "HbLogManager: locked pool, %d message(s) in buffer, retry in 200 ms.\n", mMessages.size() );
+            mRetry = startTimer( 200 );
+        }
+    }
+}
+
 void HbLogManager::enqueueMessage( Level level, Formats format, const HbLogContext & context, const QString & text )
 {
     qint64 timestamp = HbSteadyDateTime::now().toNsSinceEpoch();
@@ -83,7 +114,7 @@ void HbLogManager::enqueueMessage( Level level, Formats format, const HbLogConte
     HbLogMessage * message = q_check_ptr( new HbLogMessage( level, format, context, timestamp, text ) );
 
     mMessages.push_back( message );
-    msLoggerPool->enqueueMessage( mMessages );
+    tryEnqueueMessage();
 }
 
 void HbLogManager::dequeuePendingMessages()
