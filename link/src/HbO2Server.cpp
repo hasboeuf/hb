@@ -42,9 +42,9 @@ bool HbO2Server::link()
 
     mReplies.add( token_reply );
 
-    connect( token_reply, &QNetworkReply::finished, this, &HbO2Server::onTokenResponseReceived );
+    connect( token_reply, &QNetworkReply::finished, this, &HbO2Server::onTokenResponseReceived, Qt::UniqueConnection );
     connect( token_reply, ( void ( QNetworkReply:: * )( QNetworkReply::NetworkError ) )( &QNetworkReply::error ),
-             this, &HbO2Server::onTokenResponseError );
+             this, &HbO2Server::onTokenResponseError, Qt::UniqueConnection );
 
     return true;
 }

@@ -15,7 +15,7 @@ using namespace hb::link;
 HbLinkLocalServer::HbLinkLocalServer( QObject * parent ) :
     QTcpServer( parent )
 {
-    connect( this, &QTcpServer::newConnection, this, &HbLinkLocalServer::onIncomingConnection );
+    connect( this, &QTcpServer::newConnection, this, &HbLinkLocalServer::onIncomingConnection, Qt::UniqueConnection );
 }
 
 void HbLinkLocalServer::onIncomingConnection()
@@ -23,7 +23,7 @@ void HbLinkLocalServer::onIncomingConnection()
     QTcpSocket * socket = nextPendingConnection();
 
     connect( socket, &QTcpSocket::readyRead, this, &HbLinkLocalServer::onReadyRead, Qt::UniqueConnection );
-    connect( socket, &QTcpSocket::disconnected, socket, &QObject::deleteLater );
+    connect( socket, &QTcpSocket::disconnected, socket, &QObject::deleteLater, Qt::UniqueConnection );
 }
 
 void HbLinkLocalServer::onReadyRead()

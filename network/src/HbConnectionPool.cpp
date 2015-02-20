@@ -80,8 +80,8 @@ quint16 HbConnectionPool::joinTcpServer( const HbTcpServerConfig & config )
 {
     HbTcpServer * server = new HbTcpServer();
 
-    connect( server, &HbAbstractServer::serverConnected,    this, &HbConnectionPool::onServerConnected );
-    connect( server, &HbAbstractServer::serverDisconnected, this, &HbConnectionPool::onServerDisconnected );
+    connect( server, &HbAbstractServer::serverConnected,    this, &HbConnectionPool::onServerConnected,    Qt::UniqueConnection );
+    connect( server, &HbAbstractServer::serverDisconnected, this, &HbConnectionPool::onServerDisconnected, Qt::UniqueConnection );
 
     q_assert( !mServers.contains( server->uid() ) );
 
@@ -103,11 +103,11 @@ void HbConnectionPool::onServerConnected( quint16 server_uid )
 
     HbInfo( "Server #%d connected.", server_uid );
 
-    connect( server, &HbAbstractServer::serverConnected,        this, &HbConnectionPool::onServerConnected );
-    connect( server, &HbAbstractServer::serverDisconnected,     this, &HbConnectionPool::onServerDisconnected );
-    connect( server, &HbAbstractServer::socketConnected,        this, &HbConnectionPool::onSocketConnected );
-    connect( server, &HbAbstractServer::socketDisconnected,     this, &HbConnectionPool::onSocketDisconnected );
-    connect( server, &HbAbstractServer::socketContractReceived, this, &HbConnectionPool::onSocketContractReceived );
+    connect( server, &HbAbstractServer::serverConnected,        this, &HbConnectionPool::onServerConnected,        Qt::UniqueConnection );
+    connect( server, &HbAbstractServer::serverDisconnected,     this, &HbConnectionPool::onServerDisconnected,     Qt::UniqueConnection );
+    connect( server, &HbAbstractServer::socketConnected,        this, &HbConnectionPool::onSocketConnected,        Qt::UniqueConnection );
+    connect( server, &HbAbstractServer::socketDisconnected,     this, &HbConnectionPool::onSocketDisconnected,     Qt::UniqueConnection );
+    connect( server, &HbAbstractServer::socketContractReceived, this, &HbConnectionPool::onSocketContractReceived, Qt::UniqueConnection );
 
     mServers.insert( server->uid(), server );
 }

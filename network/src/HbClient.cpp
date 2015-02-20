@@ -21,8 +21,8 @@ quint16 HbClient::joinTcpClient( const HbTcpClientConfig & config )
 {
     HbTcpClient * client = new HbTcpClient();
 
-    connect( client, &HbAbstractClient::clientConnected,    this, &HbClient::onClientConnected );
-    connect( client, &HbAbstractClient::clientDisconnected, this, &HbClient::onClientDisconnected );
+    connect( client, &HbAbstractClient::clientConnected,    this, &HbClient::onClientConnected,    Qt::UniqueConnection );
+    connect( client, &HbAbstractClient::clientDisconnected, this, &HbClient::onClientDisconnected, Qt::UniqueConnection );
 
     q_assert( !mClients.contains( client->uid() ) );
 

@@ -22,14 +22,15 @@ QDialog(parent), mConfig(pConfig)
     QAction* action_export = save_menu->addAction("Export...");
     qtb_save->setMenu(save_menu);
 
-    connect(qpb_cancel,    &QPushButton::clicked, this, &HbLogConfigDialog::reject);
-    connect(qtb_save,      &QToolButton::clicked, this, &HbLogConfigDialog::onSaveClicked);
-    connect(qpb_reset,     &QPushButton::clicked, this, &HbLogConfigDialog::onResetClicked);
-    connect(qpb_font,      &QPushButton::clicked, this, &HbLogConfigDialog::onFontClicked);
-    connect(qpb_bck_color, &QPushButton::clicked, this, &HbLogConfigDialog::onBackgroundColorClicked);
-    connect(action_import, &QAction::triggered,   this, &HbLogConfigDialog::onImportClicked);
-    connect(action_export, &QAction::triggered,   this, &HbLogConfigDialog::onExportClicked);
-    connect(&qbg_colors,   (void (QButtonGroup::*)(int)) &QButtonGroup::buttonClicked, this, &HbLogConfigDialog::onColorClicked);
+    connect(qpb_cancel,    &QPushButton::clicked, this, &HbLogConfigDialog::reject,                   Qt::UniqueConnection );
+    connect(qtb_save,      &QToolButton::clicked, this, &HbLogConfigDialog::onSaveClicked,            Qt::UniqueConnection );
+    connect(qpb_reset,     &QPushButton::clicked, this, &HbLogConfigDialog::onResetClicked,           Qt::UniqueConnection );
+    connect(qpb_font,      &QPushButton::clicked, this, &HbLogConfigDialog::onFontClicked,            Qt::UniqueConnection );
+    connect(qpb_bck_color, &QPushButton::clicked, this, &HbLogConfigDialog::onBackgroundColorClicked, Qt::UniqueConnection );
+    connect(action_import, &QAction::triggered,   this, &HbLogConfigDialog::onImportClicked,          Qt::UniqueConnection );
+    connect(action_export, &QAction::triggered,   this, &HbLogConfigDialog::onExportClicked,          Qt::UniqueConnection );
+    connect(&qbg_colors,   (void (QButtonGroup::*)(int)) &QButtonGroup::buttonClicked,
+            this, &HbLogConfigDialog::onColorClicked, Qt::UniqueConnection );
 
     
     // Level colors

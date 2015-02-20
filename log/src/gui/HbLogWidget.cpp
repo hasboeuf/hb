@@ -30,12 +30,12 @@ HbLogWidget::HbLogWidget(QWidget *parent) :
 
     updateGui();
 
-    connect(mpLogNotifier, &HbLogGuiNotifier::newLogMessage, this, &HbLogWidget::onNewLogMessage, Qt::UniqueConnection);
-    connect(qpb_reset,      &QPushButton::clicked, this, &HbLogWidget::onResetClicked);
-    connect(qpb_save_as,    &QPushButton::clicked, this, &HbLogWidget::onSaveAsClicked);
-    connect(qpb_configure,  &QPushButton::clicked, this, &HbLogWidget::onConfigureClicked);
+    connect(mpLogNotifier, &HbLogGuiNotifier::newLogMessage, this, &HbLogWidget::onNewLogMessage, Qt::UniqueConnection );
+    connect(qpb_reset,      &QPushButton::clicked, this, &HbLogWidget::onResetClicked,            Qt::UniqueConnection );
+    connect(qpb_save_as,    &QPushButton::clicked, this, &HbLogWidget::onSaveAsClicked,           Qt::UniqueConnection );
+    connect(qpb_configure,  &QPushButton::clicked, this, &HbLogWidget::onConfigureClicked,        Qt::UniqueConnection );
     connect(qcb_level,      (void (QComboBox::*)(int)) &QComboBox::currentIndexChanged,
-            this,           &HbLogWidget::onLevelChanged);
+            this,           &HbLogWidget::onLevelChanged, Qt::UniqueConnection );
 
 
 }

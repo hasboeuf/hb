@@ -13,7 +13,7 @@ using namespace hb::link;
 HbServerAuthFacebookStrategy::HbServerAuthFacebookStrategy() :
     HbServerAuthStrategy()
 {
-    connect( &mRequester, &HbFacebookRequester::requestCompleted, this, &HbServerAuthFacebookStrategy::onRequestCompleted );
+    connect( &mRequester, &HbFacebookRequester::requestCompleted, this, &HbServerAuthFacebookStrategy::onRequestCompleted, Qt::UniqueConnection );
 }
 
 bool HbServerAuthFacebookStrategy::tryLogin( const HbAuthRequestContract * contract )
@@ -28,7 +28,7 @@ bool HbServerAuthFacebookStrategy::tryLogin( const HbAuthRequestContract * contr
     HbO2ServerFacebook * server_auth = new HbO2ServerFacebook();
 
     connect( server_auth, &HbO2ServerFacebook::linkSucceed, this, &HbServerAuthFacebookStrategy::onLinkSucceed, Qt::UniqueConnection );
-    connect( server_auth, &HbO2ServerFacebook::linkFailed, this, &HbServerAuthFacebookStrategy::onLinkFailed, Qt::UniqueConnection );
+    connect( server_auth, &HbO2ServerFacebook::linkFailed,  this, &HbServerAuthFacebookStrategy::onLinkFailed,  Qt::UniqueConnection );
 
     server_auth->setClientId    ( facebook_auth->client().clientId() );
     server_auth->setRedirectUri ( facebook_auth->client().redirectUri() );

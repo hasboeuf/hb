@@ -15,7 +15,7 @@ quint64 HbTimeoutNetworkReplies::add( QNetworkReply * reply, quint32 timeout )
     {
         HbTimeoutNetworkReply * timeout_reply = new HbTimeoutNetworkReply( reply, timeout, this );
 
-        connect( timeout_reply, &QObject::destroyed, this, &HbTimeoutNetworkReplies::onDestroyed );
+        connect( timeout_reply, &QObject::destroyed, this, &HbTimeoutNetworkReplies::onDestroyed, Qt::UniqueConnection );
 
         mReplies.insert( reply, timeout_reply );
 

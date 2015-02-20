@@ -15,9 +15,9 @@ HbPlatformService::HbPlatformService() :
     mPluginLoaded = false;
 
     connect(&mPluginManager, &HbPluginManager::pluginLoaded,
-            this,            &HbPlatformService::onPluginLoaded);
+            this,            &HbPlatformService::onPluginLoaded, Qt::UniqueConnection );
     connect(&mPluginManager, &HbPluginManager::pluginUnloaded,
-            this,            &HbPlatformService::onPluginUnloaded);
+            this,            &HbPlatformService::onPluginUnloaded, Qt::UniqueConnection );
 }
 
 HbPlatformService::~HbPlatformService()

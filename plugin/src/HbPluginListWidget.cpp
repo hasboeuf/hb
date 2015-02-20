@@ -20,7 +20,7 @@ HbPluginListWidget::HbPluginListWidget(QWidget *parent) :
     mModel.setHorizontalHeaderLabels(mLabels);
     mProxy.setSourceModel(&mModel);
 
-    connect(&mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked);
+    connect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked, Qt::UniqueConnection );
 
     qtv_plugins->setModel(&mProxy);
     qtv_plugins->setAlternatingRowColors(true);
@@ -102,11 +102,11 @@ void HbPluginListWidget::onPluginLoaded  (const HbPluginInfos* plugin_infos)
         QStandardItem* item_load = getLoadItem(plugin_infos->name());
         if(item_load)
         {
-            disconnect(&mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked);
+            disconnect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked );
 
             item_load->setData(Qt::Checked,                     Qt::CheckStateRole);
 
-            connect(&mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked);
+            connect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked, Qt::UniqueConnection );
         }
     }
 }
@@ -116,11 +116,11 @@ void HbPluginListWidget::onPluginUnloaded(QString plugin_name)
     QStandardItem* item_load = getLoadItem(plugin_name);
     if(item_load)
     {
-        disconnect(&mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked);
+        disconnect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked );
 
         item_load->setData        (Qt::Unchecked,                   Qt::CheckStateRole);
 
-        connect(&mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked);
+        connect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked, Qt::UniqueConnection );
     }
 }
 
@@ -130,7 +130,7 @@ void HbPluginListWidget::onPluginChecked  (QStandardItem* item_load)
 
     QString plugin_name = item_load->data(Qt::UserRole).toString();
 
-    disconnect(&mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked);
+    disconnect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked );
 
     if(item_load->data(Qt::CheckStateRole).toInt() == Qt::Checked)
     {
@@ -143,5 +143,5 @@ void HbPluginListWidget::onPluginChecked  (QStandardItem* item_load)
         emit unloadPluginRequest(plugin_name);
     }
 
-    connect(&mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked);
+    connect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked, Qt::UniqueConnection );
 }

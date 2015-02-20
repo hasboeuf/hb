@@ -64,7 +64,7 @@ bool HbO2Client::link()
     }
 
     mReplyServer.listen( QHostAddress::Any, mLocalPort );
-    connect( &mReplyServer, &HbLinkLocalServer::responseReceived, this, &HbO2Client::onCodeResponseReceived );
+    connect( &mReplyServer, &HbLinkLocalServer::responseReceived, this, &HbO2Client::onCodeResponseReceived, Qt::UniqueConnection );
 
     QUrl url( endPoint() );
 

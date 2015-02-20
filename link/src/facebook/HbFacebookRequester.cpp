@@ -16,8 +16,8 @@ HbFacebookRequester::HbFacebookRequester() :
     HbHttpRequester()
 {
 
-    connect( this, &HbHttpRequester::requestFinished, this, &HbFacebookRequester::onRequestFinished );
-    connect( this, &HbHttpRequester::requestError,    this, &HbFacebookRequester::onRequestError );
+    connect( this, &HbHttpRequester::requestFinished, this, &HbFacebookRequester::onRequestFinished, Qt::UniqueConnection );
+    connect( this, &HbHttpRequester::requestError,    this, &HbFacebookRequester::onRequestError,    Qt::UniqueConnection );
 }
 
 quint64 HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )

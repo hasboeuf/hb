@@ -98,8 +98,8 @@ bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_
     mSocketById.insert( socket->uid( ), socket );
     mIdBySocket.insert( socket, socket->uid( ) );
 
-    connect( socket, &HbAbstractSocket::socketReadyPacket,  this, &HbSocketHandler::onSocketReadyPacket );
-    connect( socket, &HbAbstractSocket::socketDisconnected, this, &HbSocketHandler::onSocketDisconnected );
+    connect( socket, &HbAbstractSocket::socketReadyPacket,  this, &HbSocketHandler::onSocketReadyPacket,  Qt::UniqueConnection );
+    connect( socket, &HbAbstractSocket::socketDisconnected, this, &HbSocketHandler::onSocketDisconnected, Qt::UniqueConnection );
     connect( socket, &HbAbstractSocket::socketError,
              this, [this, socket]()
              {

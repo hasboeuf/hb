@@ -15,9 +15,9 @@ HbTimeoutNetworkReply::HbTimeoutNetworkReply( QNetworkReply * reply, quint32 tim
     q_assert_ptr( reply );
 
     connect( this, &HbTimeoutNetworkReply::error,
-             reply, ( void (QNetworkReply::*)( QNetworkReply::NetworkError ) )( &QNetworkReply::error ) );
-    connect( this, &QTimer::timeout, this, &HbTimeoutNetworkReply::onTimeout );
-    connect( reply, &QObject::destroyed, this, &QObject::deleteLater );
+             reply, ( void (QNetworkReply::*)( QNetworkReply::NetworkError ) )( &QNetworkReply::error ), Qt::UniqueConnection );
+    connect( this, &QTimer::timeout, this, &HbTimeoutNetworkReply::onTimeout, Qt::UniqueConnection );
+    connect( reply, &QObject::destroyed, this, &QObject::deleteLater, Qt::UniqueConnection );
 
     if( timeout < 100 )
     {
