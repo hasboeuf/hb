@@ -15,7 +15,7 @@ HbAbstractSocket::HbAbstractSocket(QIODevice * device)
     q_assert_ptr( device );
     mDevice = device;
 
-    connect( mDevice.data(), &QIODevice::readyRead, this, &HbAbstractSocket::onReadyRead, Qt::UniqueConnection);
+    connect( mDevice.data(), &QIODevice::readyRead, this, &HbAbstractSocket::onReadyRead, Qt::UniqueConnection );
 
     mBytesPending = 0;
     mPackets.clear();
