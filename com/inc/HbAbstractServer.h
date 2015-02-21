@@ -43,12 +43,9 @@ namespace hb
             virtual HbComProtocol::ComType type() const = 0;
 
             virtual bool send( ShConstHbComContract contract );
-            //virtual bool reply(int sender, const HbComContract * contract);
-            //virtual bool forward(int receiver, HbComContract * contract);
 
             virtual bool isUidConnected( quint16 uid ) const final;
 
-            //virtual const HbServerConfig & configuration() const = 0;
             virtual const HbServerConfig & configuration() const; // SUB
     
         protected:
@@ -59,7 +56,6 @@ namespace hb
             virtual void disconnectFromNetwork() = 0;
             virtual bool isListening() const = 0; // From device.
 
-            //virtual void incomingConnection(HbAbstractSocket * socket); to handler
             virtual bool disconnectFromNetwork( quint16 uid ) = 0;
 
             virtual void reset();

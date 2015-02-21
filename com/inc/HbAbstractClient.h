@@ -38,7 +38,6 @@ namespace hb
             virtual HbComProtocol::ComType type() const = 0;
 
             virtual bool send( ShConstHbComContract contract);
-            //virtual bool reply(int sender, const HbComContract * contract);
 
             virtual const HbClientConfig & configuration() const; // SUB
 

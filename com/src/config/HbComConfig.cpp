@@ -9,9 +9,9 @@ HbComConfig::HbComConfig()
     mOpenMode = QIODevice::ReadWrite;
 }
 
-HbComConfig::HbComConfig(const HbComConfig & config)
+HbComConfig::HbComConfig( const HbComConfig & config )
 {
-    if (this != &config)
+    if ( this != &config )
     {
         mOpenMode = config.mOpenMode;
         mExchanges = config.mExchanges;
@@ -19,9 +19,9 @@ HbComConfig::HbComConfig(const HbComConfig & config)
 }
 
 
-HbComConfig & HbComConfig::operator =(const HbComConfig & config)
+HbComConfig & HbComConfig::operator =( const HbComConfig & config )
 {
-    if (this != &config)
+    if ( this != &config )
     {
         mOpenMode = config.mOpenMode;
         mExchanges = config.mExchanges;
@@ -37,7 +37,7 @@ bool HbComConfig::isValid() const
 
 void HbComConfig::setOpenMode( QIODevice::OpenMode mode )
 {
-    if (mOpenMode != mode)
+    if ( mOpenMode != mode )
     {
         switch (mode)
         {

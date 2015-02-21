@@ -7,17 +7,17 @@ using namespace hb::com;
 
 HbComHeader::HbComHeader()
 {
-    mAppName = HbComProtocol::msAppName;
+    mAppName         = HbComProtocol::msAppName;
     mProtocolVersion = HbComProtocol::msProtocolVersion;
-    mService = HbComProtocol::SERVICE_UNDEFINED;
-    mCode    = HbComProtocol::CODE_UNDEFINED;
+    mService         = HbComProtocol::SERVICE_UNDEFINED;
+    mCode            = HbComProtocol::CODE_UNDEFINED;
 }
 
-HbComHeader::HbComHeader(servuid service, codeuid code ) :
+HbComHeader::HbComHeader( servuid service, codeuid code ) :
     HbComHeader()
 {
     mService = service;
-    mCode = code;
+    mCode    = code;
 }
 
 HbComHeader::HbComHeader( const HbComHeader & header )
@@ -99,43 +99,3 @@ namespace hb
     }
 }
 
-/*void HbComContract::setRouting( HbComProtocol::RoutingScheme routing)
-{
-    if (mRouting != routing)
-    {
-        mRouting = routing;
-
-        if ( mRouting == HbComProtocol::RoutingScheme::BROADCAST )
-        {
-            if ( mSocketReceivers.size() > 0)
-            {
-                HbWarning( "Predefined receivers will be cleared." );
-            }
-
-            resetReceivers();
-        }
-
-        if ( mRouting == HbComProtocol::RoutingScheme::UNICAST )
-        {
-            if ( mSocketReceivers.size() > 1 )
-            {
-                HbWarning( "Only the first receiver is kept." );
-
-                int receiver = *mSocketReceivers.begin();
-
-                resetReceivers();
-                mSocketReceivers.insert( receiver );
-            }
-        }
-    }
-}
-
-HbComProtocol::RoutingScheme HbComContract::routing() const
-{
-    if( mRouting == HbComProtocol::RoutingScheme::MULTICAST && mSocketReceivers.isEmpty() )
-    {
-        return HbComProtocol::RoutingScheme::BROADCAST;
-    }
-
-    return mRouting;
-}*/

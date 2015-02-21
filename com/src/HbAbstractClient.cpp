@@ -133,23 +133,6 @@ const HbClientConfig & HbAbstractClient::configuration() const
     return mConfig;
 }
 
-/*bool HbAbstractClient::reply(int sender, const HbComContract * contract)
-{
-    if (!contract || !contract->reply())
-        qWarning("HbAbstractClient::reply() -> try to send a null contract");
-
-    else
-    {
-        HbComContract * reply = contract->reply();
-
-        if (reply->setReceiver(sender))
-            return send(reply);
-    }
-
-    return false;
-}*/
-
-
 void HbAbstractClient::timerEvent(QTimerEvent * event)
 {
     Q_UNUSED(event);
@@ -159,7 +142,6 @@ void HbAbstractClient::timerEvent(QTimerEvent * event)
         HbError( "Can not connect to network." );
     }
 }
-
 
 void HbAbstractClient::onSocketConnected()
 {

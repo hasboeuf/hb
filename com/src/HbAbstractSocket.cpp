@@ -15,7 +15,7 @@ HbAbstractSocket::HbAbstractSocket(QIODevice * device)
     q_assert_ptr( device );
     mDevice = device;
 
-    connect( mDevice.data(), &QIODevice::readyRead, this, &HbAbstractSocket::onReadyRead, Qt::UniqueConnection);
+    connect( mDevice.data(), &QIODevice::readyRead, this, &HbAbstractSocket::onReadyRead, Qt::UniqueConnection );
 
     mBytesPending = 0;
     mPackets.clear();
@@ -69,7 +69,7 @@ QByteArray HbAbstractSocket::readPacket()
     return QByteArray();
 }
 
-qint64 HbAbstractSocket::writePacket(const QByteArray & packet) const
+qint64 HbAbstractSocket::writePacket( const QByteArray & packet ) const
 {
     if ( !packet.isEmpty() )
     {
@@ -107,7 +107,7 @@ QString HbAbstractSocket::errorString() const
 qint64 HbAbstractSocket::readStream( QDataStream & stream )
 {
     qint64 bytesRead = 0;
-    quint32 expected = sizeof(quint32);
+    quint32 expected = sizeof( quint32 );
     if( mBytesPending > 0 )
     {
         expected = mBytesPending;
@@ -117,7 +117,7 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
     {
         if ( mBytesPending == 0)
         {
-            QDataStream::Status status = (stream >> mBytesPending).status();
+            QDataStream::Status status = ( stream >> mBytesPending ).status();
             q_assert( status == QDataStream::Ok );
 
             expected = mBytesPending;
@@ -139,7 +139,7 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
                 }
 
                 mBytesPending = 0;
-                expected = sizeof(quint32);
+                expected = sizeof( quint32 );
             }
         }
 
@@ -161,15 +161,15 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
     return bytesRead;
 }
 
-qint64 HbAbstractSocket::writeBuffer(const QByteArray & buffer) const
+qint64 HbAbstractSocket::writeBuffer( const QByteArray & buffer ) const
 {
     q_assert( !mDevice.isNull() );
 
-    if( buffer.isEmpty())
+    if( buffer.isEmpty() )
     {
         HbWarning( "Try to write an empty buffer." );
         return 0;
     }
 
-    return mDevice->write(buffer);
+    return mDevice->write( buffer );
 }

@@ -37,25 +37,16 @@ namespace hb
             virtual bool isReady() const = 0;
             virtual HbComProtocol::ComType type() const = 0;
 
-            //virtual void addListener(IHbComListener * listener) final;
-            //virtual void removeListener(IHbComListener * listener) final;
-
             virtual bool send( ShConstHbComContract contract ) = 0; // TODO refresh
-            //virtual bool reply(int sender, const HbComContract * contract) = 0;
 
-            //virtual const HbComConfig & configuration() const = 0; SUB
-            virtual const HbComConfig & configuration() const;
+            virtual const HbComConfig & configuration() const; // SUB
 
         protected:
             HbAbstractCom( QObject * parent = nullptr );
             virtual ~HbAbstractCom() = default;
 
-            //virtual const QList< IHbComListener * > & listeners() const final;
-
         private:
             HbComConfig mConfig; // SUB
-            //QList< IHbComListener * > mListeners;
-
         };
     }
 }

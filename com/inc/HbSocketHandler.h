@@ -44,8 +44,7 @@ namespace hb
             HbSocketHandler( HbAbstractServer * server );
             virtual ~HbSocketHandler();
 
-            //virtual HbAbstractServer * server( ) const = 0;
-            virtual HbAbstractServer * server() const;
+            virtual HbAbstractServer * server() const; // TODO = 0 ???
 
             virtual bool storeNewSocket(HbAbstractSocket * socket , qint32 previous_uid ) final;
 

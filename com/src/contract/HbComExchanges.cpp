@@ -5,9 +5,9 @@ using namespace hb::com;
 
 HbComExchanges::~HbComExchanges()
 {
-    foreach(const Contracts & contracts, mContracts)
+    foreach( const Contracts & contracts, mContracts )
     {
-        foreach(HbComContract * contract, contracts)
+        foreach( HbComContract * contract, contracts )
         {
             delete contract;
         }
@@ -18,9 +18,9 @@ HbComExchanges & HbComExchanges::operator=( const HbComExchanges & source )
 {
     if( &source != this )
     {
-        foreach(const Contracts & contracts, source.mContracts)
+        foreach( const Contracts & contracts, source.mContracts )
         {
-            foreach(HbComContract * contract, contracts)
+            foreach( HbComContract * contract, contracts )
             {
                 add( contract->create() );
             }
@@ -30,14 +30,14 @@ HbComExchanges & HbComExchanges::operator=( const HbComExchanges & source )
 }
 
 
-bool HbComExchanges::add(HbComContract * contract)
+bool HbComExchanges::add( HbComContract * contract )
 {
     if( !contract )
     {
         return false;
     }
 
-    Contracts & contracts = mContracts[ contract->header().service() ];
+    Contracts & contracts = mContracts[contract->header().service()];
     HbComContract * existing_contract = contracts.value( contract->header().code(), nullptr );
 
     if ( existing_contract )
@@ -59,7 +59,7 @@ bool HbComExchanges::remove( HbComContract * contract )
         return false;
     }
 
-    Contracts & contracts = mContracts[ contract->header().service() ];
+    Contracts & contracts = mContracts[contract->header().service()];
     HbComContract * existing_contract = contracts.value( contract->header().code(), nullptr );
 
     delete contract;
@@ -103,5 +103,4 @@ HbComContract * HbComExchanges::contract( const HbComHeader & header ) const
         }
     }
     return contract;
-//    return _contracts.value( service ).value( code, nullptr );
 }

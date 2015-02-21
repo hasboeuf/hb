@@ -105,17 +105,9 @@ HbComProtocol::ComType HbTcpServer::type() const
     return HbComProtocol::COM_TCP;
 }
 
-
-/*void HbTcpServer::incomingConnection( HbAbstractSocket * socket )
-{
-    HbAbstractServer::incomingConnection( socket );
-}*/
-
-bool HbTcpServer::disconnectFromNetwork(quint16 uid )
+bool HbTcpServer::disconnectFromNetwork( quint16 uid )
 {
     // TODO
-    //HbTcpSocket * disconnected = q_dynamic_cast( HbTcpSocket *, uid );
-    //return q_assert_ptr( disconnected )->disconnectFromHost();
     return false;
 }
 

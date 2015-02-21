@@ -91,12 +91,12 @@ bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_
 {
     QMutexLocker locker( &mSocketMutex );
 
-    // Q_ASSERT( socket->type( ) != HbAbstractSocket::UdpSocket );
+    // q_assert( socket->type() != HbAbstractSocket::UdpSocket );
 
     q_assert_ptr( socket );
 
-    mSocketById.insert( socket->uid( ), socket );
-    mIdBySocket.insert( socket, socket->uid( ) );
+    mSocketById.insert( socket->uid(), socket );
+    mIdBySocket.insert( socket, socket->uid() );
 
     connect( socket, &HbAbstractSocket::socketReadyPacket,  this, &HbSocketHandler::onSocketReadyPacket,  Qt::UniqueConnection );
     connect( socket, &HbAbstractSocket::socketDisconnected, this, &HbSocketHandler::onSocketDisconnected, Qt::UniqueConnection );
@@ -124,7 +124,6 @@ void HbSocketHandler::onDisconnectionRequest(quint16 uid )
     if( socket )
     {
         // socket->leave();
-
         // onSocketDisconnected handles the rest.
     }
     else
