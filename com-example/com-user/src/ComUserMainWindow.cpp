@@ -54,9 +54,9 @@ void ComUserMainWindow::onStartClicked()
     config.setPort( 4001 );
     config.setReconnectionDelay( 1000 );
 
-    config.exchanges().plug< RequestContract >();
+    config.exchanges().plug< RequestContract  >();
     config.exchanges().plug< ResponseContract >();
-    config.exchanges().plug< MessageContract >();
+    config.exchanges().plug< MessageContract  >();
 
     mTcpClient.join( config );
 

@@ -57,9 +57,9 @@ void ComServerMainWindow::onStartClicked()
     config.setPort( 4001 );
     config.setMaxUsersPerThread( 1 );
 
-    config.exchanges().plug< RequestContract >();
+    config.exchanges().plug< RequestContract  >();
     config.exchanges().plug< ResponseContract >();
-    config.exchanges().plug< MessageContract >();
+    config.exchanges().plug< MessageContract  >();
 
     mTcpServer.join( config );
 
@@ -113,10 +113,10 @@ void ComServerMainWindow::onSocketContractReceived( servuid server_uid, sockuid 
     if( request )
     {
         ResponseContract * response = request->reply();
-        response->setResponse( "Universal response." );
 
         if( response )
         {
+            response->setResponse( "Universal response." );
             mTcpServer.send( ShConstHbComContract( response ) );
         }
     }
