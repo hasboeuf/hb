@@ -33,6 +33,8 @@ namespace hb
             HbComHeader & operator=( const HbComHeader & header );
             ~HbComHeader() = default;
 
+            const QString toString() const;
+
             const QString & appName() const;
             quint16 protocolVersion() const;
             servuid service() const;

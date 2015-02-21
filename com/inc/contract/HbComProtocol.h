@@ -26,8 +26,7 @@ namespace hb
         {
             Q_GADGET
             Q_ENUMS_HANDLER( HbComProtocol )
-            Q_ENUMS( Service )
-            Q_ENUMS( Code )
+            Q_ENUMS( ComType )
 
         public:
             static QString msAppName;
@@ -46,6 +45,7 @@ namespace hb
                 COM_LOCAL     = 1 << 4,
                 COM_BLUETOOTH = 1 << 5
             };
+            Q_META_ENUMS( ComType )
             Q_DECLARE_FLAGS( ComTypes, ComType )
 
             enum RoutingScheme : quint8

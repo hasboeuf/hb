@@ -76,7 +76,7 @@ void HbTcpServer::reset()
     HbAbstractServer::reset();
 }
 
-bool HbTcpServer::connectToCom()
+bool HbTcpServer::connectToNetwork()
 {
     quint16 port = this->configuration().port();
 
@@ -90,7 +90,7 @@ bool HbTcpServer::connectToCom()
     return true;
 }
 
-void HbTcpServer::disconnectFromCom()
+void HbTcpServer::disconnectFromNetwork()
 {
     mpDevice->close();
 }
@@ -111,7 +111,7 @@ HbComProtocol::ComType HbTcpServer::type() const
     HbAbstractServer::incomingConnection( socket );
 }*/
 
-bool HbTcpServer::disconnectFromCom(quint16 uid )
+bool HbTcpServer::disconnectFromNetwork(quint16 uid )
 {
     // TODO
     //HbTcpSocket * disconnected = q_dynamic_cast( HbTcpSocket *, uid );
@@ -145,10 +145,10 @@ void HbTcpServer::onNewConnection(qint32 socket_descriptor)
     {
         handler = new HbTcpSocketHandler( this );
 
-        connect( handler, &HbSocketHandler::socketConnected,        this, &HbAbstractServer::onSocketConnected );
-        connect( handler, &HbSocketHandler::socketDisconnected,     this, &HbAbstractServer::onSocketDisconnected );
-        connect( handler, &HbSocketHandler::socketContractReceived, this, &HbAbstractServer::onSocketContractReceived );
-        connect( handler, &HbSocketHandler::handlerIdled,           this, &HbAbstractServer::onHandlerIdled );
+        connect( handler, &HbSocketHandler::socketConnected,        this, &HbAbstractServer::onSocketConnected,        Qt::UniqueConnection );
+        connect( handler, &HbSocketHandler::socketDisconnected,     this, &HbAbstractServer::onSocketDisconnected,     Qt::UniqueConnection );
+        connect( handler, &HbSocketHandler::socketContractReceived, this, &HbAbstractServer::onSocketContractReceived, Qt::UniqueConnection );
+        connect( handler, &HbSocketHandler::handlerIdled,           this, &HbAbstractServer::onHandlerIdled,           Qt::UniqueConnection );
 
         bool is_threaded = mConfig.maxUsersPerThread() > 0;
         // Must be threaded.
@@ -158,16 +158,16 @@ void HbTcpServer::onNewConnection(qint32 socket_descriptor)
             handler->moveToThread( t );
 
             // TODO better.
-            connect(t,       &QThread::started,         handler, &HbSocketHandler::init);
-            connect(handler, &QObject::destroyed,       t,       &QThread::quit);
-            connect(t,       &QThread::finished,        t,       &QThread::deleteLater);
+            connect(t,       &QThread::started,         handler, &HbSocketHandler::init, Qt::UniqueConnection );
+            connect(handler, &QObject::destroyed,       t,       &QThread::quit,         Qt::UniqueConnection );
+            connect(t,       &QThread::finished,        t,       &QThread::deleteLater,  Qt::UniqueConnection );
 
             t->start();
         }
 
         mHandlerById.insert( handler->uid(), handler );
 
-        HbInfo( "New HbTcpSocketHandler#%d created to handle socket#%d added.", handler->uid(), socket_descriptor );
+        HbInfo( "Handler %d created to handle socket %d added.", handler->uid(), socket_descriptor );
     }
 
     mPending.append( socket_descriptor );

@@ -6,8 +6,8 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBABSTRACTCOM_H
-#define HBABSTRACTCOM_H
+#ifndef HbAbstractCom_H
+#define HbAbstractCom_H
 
 // Qt
 #include <QtNetwork/QAbstractSocket>
@@ -35,18 +35,19 @@ namespace hb
             virtual bool join() = 0;
             virtual bool leave() = 0;
             virtual bool isReady() const = 0;
+            virtual HbComProtocol::ComType type() const = 0;
 
             //virtual void addListener(IHbComListener * listener) final;
             //virtual void removeListener(IHbComListener * listener) final;
 
-            virtual bool send( HbComContract * contract ) = 0;
+            virtual bool send( ShConstHbComContract contract ) = 0; // TODO refresh
             //virtual bool reply(int sender, const HbComContract * contract) = 0;
 
             //virtual const HbComConfig & configuration() const = 0; SUB
             virtual const HbComConfig & configuration() const;
 
         protected:
-            HbAbstractCom(QObject * parent = nullptr);
+            HbAbstractCom( QObject * parent = nullptr );
             virtual ~HbAbstractCom() = default;
 
             //virtual const QList< IHbComListener * > & listeners() const final;
@@ -59,4 +60,4 @@ namespace hb
     }
 }
 
-#endif // HBABSTRACTCOM_H
+#endif // HbAbstractCom_H

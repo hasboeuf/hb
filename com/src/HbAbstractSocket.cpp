@@ -31,6 +31,33 @@ HbAbstractSocket::~HbAbstractSocket()
     }
 }
 
+bool HbAbstractSocket::sendContract( ShConstHbComContract contract )
+{
+    QByteArray buffer;
+    QDataStream stream( &buffer, QIODevice::WriteOnly );
+
+    stream << contract->header();
+    if ( !contract->write( stream ) )
+    {
+        HbError( "Invalid contract format." );
+    }
+    else
+    {
+        qint64 bytesWritten = writePacket( buffer );
+
+        if ( bytesWritten > 0 )
+        {
+            return true;
+        }
+
+        q_assert( bytesWritten );
+    }
+
+    q_assert( stream.status() == QDataStream::Ok );
+
+    return false;
+}
+
 QByteArray HbAbstractSocket::readPacket()
 {
     if( !mPackets.isEmpty() )
@@ -49,8 +76,8 @@ qint64 HbAbstractSocket::writePacket(const QByteArray & packet) const
         QByteArray buffer;
         QDataStream stream( &buffer, QIODevice::WriteOnly );
 
-        q_assert(stream.writeBytes(packet.constData(), packet.size()).status() == QDataStream::Ok);
-        return writeBuffer(buffer);
+        q_assert( stream.writeBytes( packet.constData(), packet.size() ).status() == QDataStream::Ok );
+        return writeBuffer( buffer );
     }
     else
     {

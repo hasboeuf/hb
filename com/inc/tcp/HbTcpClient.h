@@ -24,6 +24,7 @@ namespace hb
             using HbAbstractClient::join;
             virtual bool join( const HbTcpClientConfig & config ) final;
             virtual sockuid uid() const final;
+            virtual HbComProtocol::ComType type() const final;
 
             virtual bool setConfiguration( const HbTcpClientConfig & config ) final;
             virtual const HbTcpClientConfig & configuration() const final;
@@ -33,8 +34,8 @@ namespace hb
 
         private :
 
-            bool connectToCom();
-            bool disconnectFromCom();
+            bool connectToNetwork();
+            bool disconnectFromNetwork();
             void deleteSocket();
 
             HbAbstractSocket * pendingConnection();

@@ -45,13 +45,12 @@ namespace hb
             virtual const HbTcpServerConfig & configuration() const final;
 
         private :
-            virtual bool connectToCom();
-            virtual void disconnectFromCom();
+            virtual bool connectToNetwork();
+            virtual void disconnectFromNetwork();
             virtual bool isListening() const;
             virtual HbComProtocol::ComType type() const;
 
-            //void incomingConnection( HbAbstractSocket * socket ); to handler
-            bool disconnectFromCom( quint16 uid );
+            bool disconnectFromNetwork( quint16 uid );
 
             virtual void reset() final;
 

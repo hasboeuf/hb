@@ -43,6 +43,18 @@ sockuid HbTcpClient::uid() const
     }
 }
 
+HbComProtocol::ComType HbTcpClient::type() const
+{
+    if( mpSocket )
+    {
+        return mpSocket->type();
+    }
+    else
+    {
+        return HbComProtocol::COM_UNDEFINED;
+    }
+}
+
 
 bool HbTcpClient::setConfiguration( const HbTcpClientConfig & config )
 {
@@ -61,7 +73,7 @@ const HbTcpClientConfig &HbTcpClient::configuration() const
     return mConfig;
 }
 
-bool HbTcpClient::connectToCom()
+bool HbTcpClient::connectToNetwork()
 {
     q_assert_ptr( mpSocket );
     if( !mpSocket->connectToHost( this->configuration( ) ) )
@@ -73,7 +85,7 @@ bool HbTcpClient::connectToCom()
     return true;
 }
 
-bool HbTcpClient::disconnectFromCom()
+bool HbTcpClient::disconnectFromNetwork()
 {
     q_assert_ptr( mpSocket );
     if( !mpSocket->disconnectFromHost() )
@@ -107,7 +119,7 @@ HbAbstractSocket * HbTcpClient::pendingConnection()
     mpSocket = q_check_ptr( new HbTcpSocket( device ) );
 
     connect( mpSocket, &HbAbstractSocket::socketError,
-             this,    [this](){ emit socketError( mpSocket->error(), mpSocket->errorString() ); } );
+             this,    [this](){ emit socketError( mpSocket->error(), mpSocket->errorString() ); }, Qt::UniqueConnection );
 
     HbTcpConfig::SocketOptions options = mConfig.options();
 

@@ -55,8 +55,8 @@ namespace hb
         protected:
             HandlerState       mState;
 
-            QMap<sockuid, HbAbstractSocket *> mSocketById;
-            QMap<HbAbstractSocket *, sockuid> mIdBySocket;
+            QHash< sockuid, HbAbstractSocket * > mSocketById;
+            QHash< HbAbstractSocket *, sockuid > mIdBySocket;
 
             QMutex       mSocketMutex;
 
@@ -70,6 +70,8 @@ namespace hb
             virtual void onNewPendingConnection( qint32 socket_descriptor ) = 0;
             virtual void onDisconnectionRequest( quint16 uid );
             virtual void onServerLeft();
+            virtual void onSendContract( ShConstHbComContract contract ); // Send to all.
+            virtual void onSendContract( sockuid socket_uid, ShConstHbComContract contract );
             // From Socket
             virtual void onSocketReadyPacket();
             virtual void onSocketDisconnected();

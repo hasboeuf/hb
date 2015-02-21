@@ -11,6 +11,7 @@
 
 // Qt
 #include <QtCore/QObject>
+#include <QtCore/QSharedPointer>
 #include <QtCore/QSet>
 #include <QtCore/QStringList>
 // Hb
@@ -32,7 +33,7 @@ namespace hb
             Q_FRIEND_CLASS( HbComExchanges )
 
         public:
-            virtual ~HbComContract() = default;
+            virtual ~HbComContract();
 
             virtual void setHeader( const HbComHeader & header ) final;
             virtual const HbComHeader & header() const final;
@@ -46,6 +47,9 @@ namespace hb
             virtual void setRouting( HbComProtocol::RoutingScheme routing ) final;
 
             virtual HbComContract * reply() const;
+            virtual void updateReply() final;
+
+            virtual const QString toString() const;
 
             virtual void setComType( HbComProtocol::ComType type ) final;
             virtual HbComProtocol::ComType networkType() const final;
@@ -77,8 +81,6 @@ namespace hb
 
             virtual HbComContract * create() const = 0;
 
-            virtual void setReply( HbComContract * reply ) final;
-
         private:
             virtual bool addSocketReceiver( sockuid receiver ) final ;
             virtual void resetSocketReceivers() final;
@@ -96,6 +98,9 @@ namespace hb
             QSet< sockuid > mSocketReceivers;
 
         };
+
+        typedef QSharedPointer< const HbComContract > ShConstHbComContract;
+        typedef QSharedPointer< HbComContract >       ShHbComContract;
     }
 }
 

@@ -7,16 +7,21 @@ using namespace hb::com;
 
 HbComContract::HbComContract()
 {
-    mSender = 0;
+    mSender  = 0;
     mComType = HbComProtocol::COM_UNDEFINED;
     mRouting = HbComProtocol::RoutingScheme::UNICAST;
     mpReply  = nullptr;
 }
 
+HbComContract::~HbComContract()
+{
+    //HbDebug( "HbComContract::destructor()" );
+}
+
 HbComContract::HbComContract( servuid service, codeuid code ) :
     mHeader( service, code )
 {
-    mSender = 0;
+    mSender  = 0;
     mComType = HbComProtocol::COM_UNDEFINED;
     mRouting = HbComProtocol::RoutingScheme::UNICAST;
     mpReply  = nullptr;
@@ -28,7 +33,7 @@ HbComContract::HbComContract( const HbComContract & source )
     {
         mHeader           = source.mHeader;
         mSender           = source.mSender;
-        mComType      = source.mComType;
+        mComType          = source.mComType;
         mRouting          = source.mRouting;
         mPendingReceivers = source.mPendingReceivers;
         mSocketReceivers  = source.mSocketReceivers;
@@ -42,7 +47,7 @@ HbComContract & HbComContract::operator=( const HbComContract & source )
     {
         mHeader           = source.mHeader;
         mSender           = source.mSender;
-        mComType      = source.mComType;
+        mComType          = source.mComType;
         mRouting          = source.mRouting;
         mPendingReceivers = source.mPendingReceivers;
         mSocketReceivers  = source.mSocketReceivers;
@@ -51,16 +56,15 @@ HbComContract & HbComContract::operator=( const HbComContract & source )
     return ( *this );
 }
 
-void HbComContract::setReply( HbComContract * reply )
+void HbComContract::updateReply()
 {
-    if( reply )
+    if( mpReply )
     {
-        mpReply = reply;
         mpReply->takeUid( this );
         mpReply->resetSocketReceivers();
         mpReply->setComType( mComType );
         mpReply->setRouting( HbComProtocol::RoutingScheme::UNICAST ); // Replies only support unicast.
-        mpReply->addSocketReceiver( mUid );
+        mpReply->addSocketReceiver( mSender );
     }
 }
 
@@ -126,7 +130,7 @@ const QSet< sockuid > & HbComContract::socketReceivers() const
 
 sockuid HbComContract::socketReceiver() const
 {
-    if( mSocketReceivers.size() > 0 )
+    if( mSocketReceivers.size() == 1 )
     {
         return *mSocketReceivers.begin();
     }
@@ -147,6 +151,14 @@ void HbComContract::setRouting( HbComProtocol::RoutingScheme routing )
 HbComContract * HbComContract::reply() const
 {
     return mpReply;
+}
+
+const QString HbComContract::toString() const
+{
+    return QString("ctctuid=%1,type=%2,%3")
+            .arg( mUid )
+            .arg( HbComProtocol::MetaComType::toString( mComType ) )
+            .arg( mHeader.toString() );
 }
 
 void HbComContract::setComType( HbComProtocol::ComType type )

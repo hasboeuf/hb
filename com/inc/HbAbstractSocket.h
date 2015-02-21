@@ -16,6 +16,7 @@
 // Hb
 #include <HbGlobal.h>
 #include <core/HbUid.h>
+#include <contract/HbComContract.h>
 #include <contract/HbComProtocol.h>
 
 class QIODevice;
@@ -40,6 +41,7 @@ namespace hb
             virtual QAbstractSocket::SocketState state() const = 0;
             virtual QString errorString() const final;
 
+            bool               sendContract   ( ShConstHbComContract contract );
             virtual QByteArray readPacket     () final;
             virtual qint64     writePacket    (const QByteArray & packet) const final;
             virtual bool       packetAvailable() const final;

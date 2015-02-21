@@ -14,7 +14,7 @@ HbTcpSocket::HbTcpSocket( QTcpSocket * device ) :
     q_assert_ptr( device );
     mpDevice = device;
 
-    connect( mpDevice, &QTcpSocket::stateChanged, this, &HbTcpSocket::onStateChanged );
+    connect( mpDevice, &QTcpSocket::stateChanged, this, &HbTcpSocket::onStateChanged, Qt::UniqueConnection );
     connect( mpDevice, ( void (QTcpSocket::*)( QAbstractSocket::SocketError ) ) &QTcpSocket::error,
     [this]()
     {

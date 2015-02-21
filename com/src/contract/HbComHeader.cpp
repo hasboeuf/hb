@@ -43,6 +43,15 @@ HbComHeader & HbComHeader::operator=( const HbComHeader & header )
     return *this;
 }
 
+const QString HbComHeader::toString() const
+{
+    return QString("app=%1,protocol=%2,service=%3,code=%4" )
+            .arg( mAppName )
+            .arg( mProtocolVersion )
+            .arg( mService )
+            .arg( mCode );
+}
+
 const QString & HbComHeader::appName() const
 {
     return mAppName;

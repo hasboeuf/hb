@@ -35,22 +35,24 @@ namespace hb
             virtual bool leave() final;
             virtual bool isReady() const final;
             virtual sockuid uid() const = 0;
+            virtual HbComProtocol::ComType type() const = 0;
 
-            virtual bool send( HbComContract * contract);
+            virtual bool send( ShConstHbComContract contract);
             //virtual bool reply(int sender, const HbComContract * contract);
 
             virtual const HbClientConfig & configuration() const; // SUB
 
         signals:
-            void clientConnected   ( sockuid client_uid );
-            void clientDisconnected( sockuid client_uid );
+            void clientConnected         ( sockuid client_uid );
+            void clientDisconnected      ( sockuid client_uid );
+            void clientContractReceived  ( sockuid client_uid, const HbComContract * contract );
 
         protected:
             HbAbstractClient(QObject * parent = nullptr);
             virtual ~HbAbstractClient() = default;
 
-            virtual bool connectToCom() = 0;
-            virtual bool disconnectFromCom() = 0;
+            virtual bool connectToNetwork() = 0;
+            virtual bool disconnectFromNetwork() = 0;
             virtual void deleteSocket() = 0;
 
             virtual HbAbstractSocket * pendingConnection() = 0;
@@ -61,8 +63,8 @@ namespace hb
 
         private callbacks : // From device.
             void onSocketConnected();
-            void onSocketDisconnected();
-            void onSocketContractReceived( const HbComContract * contract );
+            void onSocketReadyPacket();
+            void onSocketDisconnected();            
 
         private:
             HbClientConfig mConfig; // SUB

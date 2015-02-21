@@ -35,7 +35,7 @@ bool HbComConfig::isValid() const
     return ( mOpenMode != QIODevice::NotOpen );
 }
 
-void HbComConfig::setOpenMode(QIODevice::OpenMode mode)
+void HbComConfig::setOpenMode( QIODevice::OpenMode mode )
 {
     if (mOpenMode != mode)
     {
