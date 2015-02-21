@@ -18,7 +18,7 @@ namespace hb
 
         public:
             explicit ComServerMainWindow( QWidget * parent = nullptr );
-            virtual ~ComServerMainWindow();
+            virtual ~ComServerMainWindow() = default;
 
         private:
             hb::com::HbTcpServer mTcpServer;

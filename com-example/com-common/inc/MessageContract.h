@@ -32,13 +32,16 @@ namespace hb
             MessageContract( const MessageContract & source );
             MessageContract & operator=( const MessageContract & source );
 
-            MessageContract * create() const;
+            virtual const QString toString() const;
 
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;
 
             virtual const QString & message() const final;
             virtual void setMessage( const QString & message ) final;
+
+        protected:
+            MessageContract * create() const;
 
         protected:
             QString mMessage;

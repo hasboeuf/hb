@@ -18,18 +18,19 @@ namespace hb
 
         public:
             explicit ComUserMainWindow(QWidget *parent = nullptr);
-            virtual ~ComUserMainWindow();
+            virtual ~ComUserMainWindow() = default;
 
         private:
             hb::com::HbTcpClient mTcpClient;
 
-        public slots:
-            void onClientConnected();
-            void onClientDisconnected();
-
         private slots:
             void onStartClicked();
+            void onSendContractClicked();
             void onStopClicked();
+
+            void onClientConnected       ( sockuid client_uid );
+            void onClientDisconnected    ( sockuid client_uid );
+            void onClientContractReceived( sockuid client_uid, const HbComContract * contract );
 
         signals:
 

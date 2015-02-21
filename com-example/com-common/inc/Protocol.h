@@ -11,6 +11,7 @@
 
 // Qt
 // Hb
+#include <contract/HbComProtocol.h>
 // Local
 
 

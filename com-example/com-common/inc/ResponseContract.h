@@ -32,13 +32,16 @@ namespace hb
             ResponseContract( const ResponseContract & source );
             ResponseContract & operator=( const ResponseContract & source );
 
-            ResponseContract * create() const;
+            virtual const QString toString() const;
 
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;
 
             virtual const QString & response() const final;
             virtual void setResponse( const QString & response ) final;
+
+        protected:
+            ResponseContract * create() const;
 
         protected:
             QString mResponse;

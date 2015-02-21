@@ -19,11 +19,11 @@ ComServerMainWindow::ComServerMainWindow(QWidget *parent) :
 {
 
     // Log
-    QString error;
+    /*QString error;
     if( HbLogService::outputs()->addConsoleOutput( &error ) == 0 )
     {
         qDebug() << "HbLog error: " << error;
-    }
+    }*/
 
 
     HbLogBegin();
@@ -48,21 +48,18 @@ ComServerMainWindow::ComServerMainWindow(QWidget *parent) :
     HbLogEnd();
 }
 
-ComServerMainWindow::~ComServerMainWindow()
-{
-    HbLogBegin();
-
-    HbLogEnd();
-}
-
 void ComServerMainWindow::onStartClicked()
 {
     HbLogBegin();
 
     HbTcpServerConfig config;
     config.setAddress(QHostAddress::Any);
-    config.setPort( 4000 );
+    config.setPort( 4001 );
     config.setMaxUsersPerThread( 1 );
+
+    config.exchanges().plug< RequestContract >();
+    config.exchanges().plug< ResponseContract >();
+    config.exchanges().plug< MessageContract >();
 
     mTcpServer.join( config );
 
@@ -71,46 +68,58 @@ void ComServerMainWindow::onStartClicked()
 
 void ComServerMainWindow::onSendContractClicked()
 {
-    HbLogBegin();
+    HbInfo( "Send message contract to all sockets." );
 
-    HbLogEnd();
+    MessageContract * message = new MessageContract();
+    message->setMessage( "Hello world" );
+    message->setRouting( HbComProtocol::BROADCAST ); // To all users.
+
+    mTcpServer.send( ShConstHbComContract( message ) );
 }
 
 void ComServerMainWindow::onStopClicked()
 {
-    HbLogBegin();
-
     mTcpServer.leave();
-
-    HbLogEnd();
 }
 
 void ComServerMainWindow::onServerConnected( servuid server_uid )
 {
-    HbLogBegin();
-    HbLogEnd();
+    HbInfo( "Server %d connected.", server_uid );
 }
 
 void ComServerMainWindow::onServerDisconnected( servuid server_uid )
 {
-    HbLogBegin();
-    HbLogEnd();
+    HbInfo( "Server %d disconnected.", server_uid );
 }
 
 void ComServerMainWindow::onSocketConnected( servuid server_uid, sockuid socket_uid )
 {
-    HbLogBegin();
-    HbLogEnd();
+    HbInfo( "Socket %d connected on server %d.", socket_uid, server_uid );
 }
 
 void ComServerMainWindow::onSocketDisconnected( servuid server_uid, sockuid socket_uid )
 {
-    HbLogBegin();
-    HbLogEnd();
+    HbInfo( "Socket %d disconnected on server %d.", socket_uid, server_uid );
 }
 
 void ComServerMainWindow::onSocketContractReceived( servuid server_uid, sockuid socket_uid, const HbComContract * contract )
 {
-    HbLogBegin();
-    HbLogEnd();
+    q_assert_ptr( contract );
+
+    HbInfo( "Contract received from socket %d on server %d.", socket_uid, server_uid );
+    HbInfo( "Contract details: %s", HbLatin1( contract->toString() ) );
+
+    const RequestContract * request = contract->value< RequestContract >();
+    if( request )
+    {
+        ResponseContract * response = request->reply();
+        response->setResponse( "Universal response." );
+
+        if( response )
+        {
+            mTcpServer.send( ShConstHbComContract( response ) );
+        }
+    }
+
+    delete contract;
 }
