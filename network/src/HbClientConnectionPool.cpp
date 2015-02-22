@@ -91,14 +91,15 @@ networkuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , b
     setExchanges( config.exchanges() );
 
     client->setConfiguration( config );
+
+    connect( client, &HbAbstractClient::clientConnected,    this, &HbClientConnectionPool::onClientConnected,    Qt::UniqueConnection );
+    connect( client, &HbAbstractClient::clientDisconnected, this, &HbClientConnectionPool::onClientDisconnected, Qt::UniqueConnection );
+
     if( !client->join() )
     {
         delete client;
         return 0;
     }
-
-    connect( client, &HbAbstractClient::clientConnected,    this, &HbClientConnectionPool::onClientConnected,    Qt::UniqueConnection );
-    connect( client, &HbAbstractClient::clientDisconnected, this, &HbClientConnectionPool::onClientDisconnected, Qt::UniqueConnection );
 
     uid = client->uid();
 
@@ -113,28 +114,28 @@ networkuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , b
 
 void HbClientConnectionPool::onClientConnected( networkuid client_uid )
 {
-    /*HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
-    q_assert_ptr( server );
-    q_assert( !mServers.contains( server_uid ) );
+    HbAbstractClient * client = dynamic_cast< HbAbstractClient * >( sender() );
+    q_assert_ptr( client );
+    q_assert( !mClients.contains( client_uid ) );
 
-    HbInfo( "Server #%d connected.", server_uid );
+    connect( client, &HbAbstractClient::clientContractReceived, this, &HbClientConnectionPool::onClientContractReceived, Qt::UniqueConnection );
 
-    connect( server, &HbAbstractServer::serverConnected,        this, &HbServerConnectionPool::onServerConnected,        Qt::UniqueConnection );
-    connect( server, &HbAbstractServer::serverDisconnected,     this, &HbServerConnectionPool::onServerDisconnected,     Qt::UniqueConnection );
-    connect( server, &HbAbstractServer::socketConnected,        this, &HbServerConnectionPool::onSocketConnected,        Qt::UniqueConnection );
-    connect( server, &HbAbstractServer::socketDisconnected,     this, &HbServerConnectionPool::onSocketDisconnected,     Qt::UniqueConnection );
-    connect( server, &HbAbstractServer::socketContractReceived, this, &HbServerConnectionPool::onSocketContractReceived, Qt::UniqueConnection );
+    mClients.insert( client->uid(), client );
 
-    mServers.insert( server->uid(), server );*/
+    HbInfo( "Client %d connected.", client_uid );
+
+    emit statusChanged( client_uid, ( netwint ) HbNetworkProtocol::CLIENT_CONNECTED );
 }
 
 void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
 {
-    /*HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
-    q_assert_ptr( server );
-    q_assert( mServers.contains( server_uid ) );
+    HbAbstractClient * client = dynamic_cast< HbAbstractClient * >( sender() );
+    q_assert_ptr( client );
+    q_assert( mClients.contains( client_uid ) );
 
-    HbInfo( "Server #%d disconnected.", server_uid );*/
+    HbInfo( "Client #%d disconnected.", client_uid );
+
+    emit statusChanged( client_uid, ( netwint ) HbNetworkProtocol::CLIENT_DISCONNECTED );
 }
 
 void HbClientConnectionPool::onClientContractReceived( networkuid client_uid, const HbNetworkContract * contract )

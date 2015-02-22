@@ -92,14 +92,15 @@ networkuid HbServerConnectionPool::joinTcpServer( HbTcpServerConfig & config , b
     setExchanges( config.exchanges() );
 
     server->setConfiguration( config );
+
+    connect( server, &HbAbstractServer::serverConnected,    this, &HbServerConnectionPool::onServerConnected,    Qt::UniqueConnection );
+    connect( server, &HbAbstractServer::serverDisconnected, this, &HbServerConnectionPool::onServerDisconnected, Qt::UniqueConnection );
+
     if( !server->join() )
     {
         delete server;
         return 0;
     }
-
-    connect( server, &HbAbstractServer::serverConnected,    this, &HbServerConnectionPool::onServerConnected,    Qt::UniqueConnection );
-    connect( server, &HbAbstractServer::serverDisconnected, this, &HbServerConnectionPool::onServerDisconnected, Qt::UniqueConnection );
 
     uid = server->uid();
 
@@ -118,15 +119,15 @@ void HbServerConnectionPool::onServerConnected( networkuid server_uid )
     q_assert_ptr( server );
     q_assert( !mServers.contains( server_uid ) );
 
-    HbInfo( "Server #%d connected.", server_uid );
-
-    connect( server, &HbAbstractServer::serverConnected,        this, &HbServerConnectionPool::onServerConnected,        Qt::UniqueConnection );
-    connect( server, &HbAbstractServer::serverDisconnected,     this, &HbServerConnectionPool::onServerDisconnected,     Qt::UniqueConnection );
     connect( server, &HbAbstractServer::socketConnected,        this, &HbServerConnectionPool::onSocketConnected,        Qt::UniqueConnection );
     connect( server, &HbAbstractServer::socketDisconnected,     this, &HbServerConnectionPool::onSocketDisconnected,     Qt::UniqueConnection );
     connect( server, &HbAbstractServer::socketContractReceived, this, &HbServerConnectionPool::onSocketContractReceived, Qt::UniqueConnection );
 
     mServers.insert( server->uid(), server );
+
+    HbInfo( "Server %d connected.", server_uid );
+
+    emit statusChanged( server_uid, ( netwint ) HbNetworkProtocol::SERVER_LISTENING );
 }
 
 void HbServerConnectionPool::onServerDisconnected( networkuid server_uid )
@@ -135,7 +136,17 @@ void HbServerConnectionPool::onServerDisconnected( networkuid server_uid )
     q_assert_ptr( server );
     q_assert( mServers.contains( server_uid ) );
 
-    HbInfo( "Server #%d disconnected.", server_uid );
+    mServers.remove( server_uid );
+    if( mMainServer == server_uid )
+    {
+        mMainServer = 0;
+    }
+
+    server->deleteLater();
+
+    HbInfo( "Server %d disconnected.", server_uid );
+
+    emit statusChanged( server_uid, ( netwint ) HbNetworkProtocol::SERVER_DISCONNECTED );
 }
 
 void HbServerConnectionPool::onSocketConnected( networkuid server_uid, networkuid socket_uid )

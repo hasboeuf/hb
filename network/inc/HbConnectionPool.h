@@ -81,6 +81,9 @@ namespace hb
 
         protected:
             QHash< serviceuid, HbNetworkService * > mServices;
+
+        signals:
+            void statusChanged( networkuid peer_uid, netwint peer_status );
         };
     }
 }

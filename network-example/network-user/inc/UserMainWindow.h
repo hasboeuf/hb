@@ -47,8 +47,7 @@ namespace hb
             void init();
 
         public slots:
-            void onClientConnected();
-            void onClientDisconnected();
+            void onStatusChanged( networkuid peer_uid, netwint peer_status );
 
         private slots:
             void onStartClicked();

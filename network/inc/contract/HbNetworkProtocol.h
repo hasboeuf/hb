@@ -29,6 +29,8 @@ namespace hb
             Q_ENUMS( NetworkType )
             Q_ENUMS( Service )
             Q_ENUMS( Code )
+            Q_ENUMS( ServerStatus )
+            Q_ENUMS( ClientStatus )
 
         public:
             static QString msAppName;
@@ -103,6 +105,23 @@ namespace hb
                 // Facebook
                 AUTH_FB_KO
             };
+
+            enum ServerStatus : netwint
+            {
+                SERVER_DISCONNECTED,
+                SERVER_LISTENING
+            };
+            Q_META_ENUMS( ServerStatus )
+
+            enum ClientStatus : netwint
+            {
+                CLIENT_DISCONNECTED,
+                CLIENT_CONNECTING,
+                CLIENT_CONNECTED,
+                CLIENT_AUTHENTICATING,
+                CLIENT_AUTHENTICATED
+            };
+            Q_META_ENUMS( ClientStatus )
 
         };
     }

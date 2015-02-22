@@ -58,6 +58,8 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     connect( ui_qpb_user_connection, &QPushButton::clicked, this, &UserMainWindow::onUserConnectionRequest );
     connect( ui_qpb_fb_connection,   &QPushButton::clicked, this, &UserMainWindow::onFacebookConnectionRequest );
 
+    connect( mpHbClient, &HbPeer::statusChanged, this, &UserMainWindow::onStatusChanged );
+
     HbLogEnd();
 }
 
@@ -67,18 +69,6 @@ UserMainWindow::~UserMainWindow()
 
     if( mpFacebookClient ) delete mpFacebookClient;
 
-    HbLogEnd();
-}
-
-void UserMainWindow::onClientConnected()
-{
-    HbLogBegin();
-    HbLogEnd();
-}
-
-void UserMainWindow::onClientDisconnected()
-{
-    HbLogBegin();
     HbLogEnd();
 }
 
@@ -102,7 +92,7 @@ void UserMainWindow::onStartClicked()
 
 void UserMainWindow::onStopClicked()
 {
-
+    mpHbClient->leave();
 }
 
 void UserMainWindow::onUserConnectionRequest()
@@ -157,4 +147,10 @@ void UserMainWindow::onFacebookLinked()
 
     HbAuthFacebookRequestContract * contract = new HbAuthFacebookRequestContract();
     contract->setClient( *mpFacebookClient );
+}
+
+
+void UserMainWindow::onStatusChanged( networkuid peer_uid, netwint peer_status )
+{
+    HbInfo( "Status changed on client %d: %s.", peer_uid, HbLatin1( HbNetworkProtocol::MetaClientStatus::toString( peer_status ) ) );
 }

@@ -10,16 +10,15 @@ using namespace hb::network;
 HbClient::HbClient( const HbGeneralClientConfig & config ) :
     HbPeer( config ), mConnectionPool( config )
 {
-    if( !isReady() )
+    if( isReady() )
     {
-
+        connect( &mConnectionPool, &HbConnectionPool::statusChanged, this, &HbPeer::statusChanged );
     }
 }
 
 bool HbClient::leave()
 {
-    mConnectionPool.leave();
-    return true;
+    return mConnectionPool.leave();
 }
 
 networkuid HbClient::joinTcpClient( HbTcpClientConfig & config , bool main )

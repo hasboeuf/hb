@@ -10,9 +10,9 @@ using namespace hb::network;
 HbServer::HbServer(const HbGeneralServerConfig & config ) :
     HbPeer( config ), mConnectionPool( config )
 {
-    if( !isReady() )
+    if( isReady() )
     {
-
+        connect( &mConnectionPool, &HbConnectionPool::statusChanged, this, &HbPeer::statusChanged );
     }
 }
 
@@ -23,6 +23,5 @@ networkuid HbServer::joinTcpServer( HbTcpServerConfig & config , bool main )
 
 bool HbServer::leave()
 {
-    mConnectionPool.leave();
-    return true;
+    return mConnectionPool.leave();
 }

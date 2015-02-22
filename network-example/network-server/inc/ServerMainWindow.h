@@ -34,6 +34,9 @@ namespace hb
             explicit ServerMainWindow( QWidget * parent = nullptr );
             virtual ~ServerMainWindow();
 
+        public slots:
+            void onStatusChanged( networkuid peer_uid, netwint peer_status );
+
         private slots:
             void onStartClicked();
             void onStopClicked ();
