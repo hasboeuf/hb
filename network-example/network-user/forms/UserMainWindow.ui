@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>560</width>
-    <height>320</height>
+    <width>191</width>
+    <height>177</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="ui_qpb_start">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>60</y>
+      <x>10</x>
+      <y>20</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="ui_qpb_stop">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>60</y>
+      <x>90</x>
+      <y>20</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -43,7 +43,7 @@
    <widget class="QPushButton" name="ui_qpb_fb_connection">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>30</x>
       <y>60</y>
       <width>111</width>
       <height>23</height>
@@ -56,8 +56,8 @@
    <widget class="QPushButton" name="ui_qpb_user_connection">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>60</y>
+      <x>30</x>
+      <y>90</y>
       <width>111</width>
       <height>23</height>
      </rect>
@@ -72,33 +72,10 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>560</width>
+     <width>191</width>
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <addaction name="ui_qa_exit"/>
-   </widget>
-   <widget class="QMenu" name="menuOptions">
-    <property name="title">
-     <string>Options</string>
-    </property>
-    <addaction name="ui_qa_logs"/>
-    <addaction name="ui_qa_preferences"/>
-   </widget>
-   <widget class="QMenu" name="menu">
-    <property name="title">
-     <string>?</string>
-    </property>
-    <addaction name="ui_qa_help"/>
-    <addaction name="ui_qa_about"/>
-   </widget>
-   <addaction name="menuFile"/>
-   <addaction name="menuOptions"/>
-   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="ui_qa_exit">

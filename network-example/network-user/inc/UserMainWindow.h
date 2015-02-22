@@ -36,23 +36,17 @@ namespace hb
             Q_OBJECT
 
         public:
-            explicit UserMainWindow(QWidget *parent = nullptr);
+            explicit UserMainWindow( QWidget * parent = nullptr );
             virtual ~UserMainWindow();
 
         private:
-            // Logger
-            hb::log::HbLogWidget* mpLogWidget;
-            // Network
-            hb::network::HbTcpClient mTcpClient;
             hb::network::HbClient * mpHbClient;
-            // Link
             hb::link::HbO2ClientFacebook * mpFacebookClient;
 
         private:
             void init();
 
         public slots:
-            void showLogs( bool visible );
             void onClientConnected();
             void onClientDisconnected();
 

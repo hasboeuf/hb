@@ -34,23 +34,12 @@ namespace hb
             explicit ServerMainWindow( QWidget * parent = nullptr );
             virtual ~ServerMainWindow();
 
-        private:
-
-            // Logger
-            hb::log::HbLogWidget* mpLogWidget;
-
-            // Network
-            hb::network::HbServer * mpHbServer;
-
-        private:
-            void init();
-
-        public slots:
-            void showLogs( bool visible );
-
         private slots:
             void onStartClicked();
-            void onStopClicked();
+            void onStopClicked ();
+
+        private:
+            hb::network::HbServer * mpHbServer;
 
         signals:
 

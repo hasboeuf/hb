@@ -26,9 +26,12 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
 
-    mpLogWidget = new HbLogWidget(this);
-    mpLogWidget->hide();
-    q_assert( HbLogService::outputs()->addGuiOutput( mpLogWidget->logNotifier() ) > 0 );
+    // Log
+    /*QString error;
+    if( HbLogService::outputs()->addConsoleOutput( &error ) == 0 )
+    {
+        qDebug() << "HbLog error: " << error;
+    }*/
 
     HbLogBegin();
 
@@ -47,12 +50,8 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     setupUi(this);
     setWindowTitle("Server");
 
-    // Internal connects
-    connect(ui_qa_logs,   &QAction::triggered,   this, &ServerMainWindow::showLogs);
     connect(ui_qpb_start, &QPushButton::clicked, this, &ServerMainWindow::onStartClicked);
     connect(ui_qpb_stop,  &QPushButton::clicked, this, &ServerMainWindow::onStopClicked);
-
-
 
     HbLogEnd();
 }
@@ -61,22 +60,7 @@ ServerMainWindow::~ServerMainWindow()
 {
     HbLogBegin();
 
-    if (mpLogWidget) delete mpLogWidget;
-
     HbLogEnd();
-}
-
-void ServerMainWindow::init()
-{
-    HbLogBegin();
-
-
-    HbLogEnd();
-}
-
-void ServerMainWindow::showLogs(bool visible)
-{
-    mpLogWidget->setVisible(visible);
 }
 
 void ServerMainWindow::onStartClicked()

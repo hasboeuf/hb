@@ -32,37 +32,31 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
 
-    mpLogWidget = new HbLogWidget( this );
-    mpLogWidget->hide();
-
-    q_assert( HbLogService::outputs()->addGuiOutput( mpLogWidget->logNotifier() ) > 0 );
+    // Log
+    /*QString error;
+    if( HbLogService::outputs()->addConsoleOutput( &error ) == 0 )
+    {
+        qDebug() << "HbLog error: " << error;
+    }*/
 
     HbLogBegin();
-
-    HbGeneralClientConfig config;
-    config.setAppName("hb-network-example");
-    config.setProtocolVersion( 1 );
-    config.presence().setKeepAliveInterval( 1 );
-
-    mpHbClient = new HbClient( config );
 
     // Ui
     setupUi( this );
     setWindowTitle( "User" );
 
+    HbGeneralClientConfig config;
+    config.setAppName( "hb-network-example" );
+    config.setProtocolVersion( 1 );
+    config.presence().setKeepAliveInterval( 1 );
+
+    mpHbClient       = new HbClient( config );
     mpFacebookClient = nullptr;
 
-    //connect( &mTcpClient, &HbTcpClient::connected,    this, &UserMainWindow::onClientConnected );
-    //connect( &mTcpClient, &HbTcpClient::disconnected, this, &UserMainWindow::onClientDisconnected );
-
-    // Internal connects
-    connect( ui_qa_logs,   &QAction::triggered,   this, &UserMainWindow::showLogs );
-    connect( ui_qpb_start, &QPushButton::clicked, this, &UserMainWindow::onStartClicked );
-    connect( ui_qpb_stop,       &QPushButton::clicked, this, &UserMainWindow::onStopClicked );
+    connect( ui_qpb_start,           &QPushButton::clicked, this, &UserMainWindow::onStartClicked );
+    connect( ui_qpb_stop,            &QPushButton::clicked, this, &UserMainWindow::onStopClicked );
     connect( ui_qpb_user_connection, &QPushButton::clicked, this, &UserMainWindow::onUserConnectionRequest );
-    connect( ui_qpb_fb_connection, &QPushButton::clicked, this, &UserMainWindow::onFacebookConnectionRequest );
-
-    init();
+    connect( ui_qpb_fb_connection,   &QPushButton::clicked, this, &UserMainWindow::onFacebookConnectionRequest );
 
     HbLogEnd();
 }
@@ -71,23 +65,9 @@ UserMainWindow::~UserMainWindow()
 {
     HbLogBegin();
 
-    if( mpLogWidget ) delete mpLogWidget;
     if( mpFacebookClient ) delete mpFacebookClient;
 
     HbLogEnd();
-}
-
-void UserMainWindow::init()
-{
-    HbLogBegin();
-
-    HbLogEnd();
-}
-
-
-void UserMainWindow::showLogs( bool visible )
-{
-    mpLogWidget->setVisible( visible );
 }
 
 void UserMainWindow::onClientConnected()
@@ -106,7 +86,6 @@ void UserMainWindow::onStartClicked()
 {
     HbLogBegin();
 
-
     HbTcpClientConfig config;
     config.setAddress( QHostAddress::LocalHost );
     config.setPort( 4000 );
@@ -123,7 +102,7 @@ void UserMainWindow::onStartClicked()
 
 void UserMainWindow::onStopClicked()
 {
-    mTcpClient.leave();
+
 }
 
 void UserMainWindow::onUserConnectionRequest()
@@ -178,5 +157,4 @@ void UserMainWindow::onFacebookLinked()
 
     HbAuthFacebookRequestContract * contract = new HbAuthFacebookRequestContract();
     contract->setClient( *mpFacebookClient );
-    mTcpClient.send( ShConstHbNetworkContract( contract ) );
 }
