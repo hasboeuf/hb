@@ -6,7 +6,8 @@ using namespace hb::network;
 using namespace hb::networkexample;
 
 RequestContract::RequestContract() :
-    HbNetworkContract( Protocol::SERVICE_QUESTION, Protocol::CODE_CLT_REQUEST )
+    HbNetworkContract( Protocol::SERVICE_QUESTION,
+                       Protocol::CODE_CLT_REQUEST )
 {
     mRequest = "";
     mpReply = new ResponseContract();

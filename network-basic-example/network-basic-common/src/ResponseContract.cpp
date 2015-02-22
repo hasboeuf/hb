@@ -6,7 +6,8 @@ using namespace hb::network;
 using namespace hb::networkexample;
 
 ResponseContract::ResponseContract() :
-    HbNetworkContract( Protocol::SERVICE_QUESTION, Protocol::CODE_SRV_RESPONSE )
+    HbNetworkContract( Protocol::SERVICE_QUESTION,
+                       Protocol::CODE_SRV_RESPONSE )
 {
     mResponse = "";
 }

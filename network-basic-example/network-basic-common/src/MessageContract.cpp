@@ -6,7 +6,8 @@ using namespace hb::network;
 using namespace hb::networkexample;
 
 MessageContract::MessageContract() :
-    HbNetworkContract( Protocol::SERVICE_MESSAGE, Protocol::CODE_SRV_MESSAGE )
+    HbNetworkContract( Protocol::SERVICE_MESSAGE,
+                       Protocol::CODE_SRV_MESSAGE )
 {
     mMessage = "";
 }
