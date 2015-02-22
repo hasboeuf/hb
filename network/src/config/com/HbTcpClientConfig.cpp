@@ -13,15 +13,15 @@ HbTcpClientConfig & HbTcpClientConfig::operator =( const HbTcpClientConfig & con
 {
     if (this != &config)
     {
-        HbNetworkConfig::operator=( config );
-        HbTcpConfig::operator =(config);
+        HbNetworkConfig::operator=    ( config );
+        HbTcpConfig::operator=    ( config );
         HbClientConfig::operator =( config );
     }
 
     return *this;
 }
 
-bool HbTcpClientConfig::isValid( ) const
+bool HbTcpClientConfig::isValid() const
 {
     if ( !HbTcpConfig::isValid() )
     {

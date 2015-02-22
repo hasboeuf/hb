@@ -9,6 +9,7 @@
 #include <QtWidgets/QMessageBox>
 #include <QtGui/QCloseEvent>
 #include <QtGui/QStandardItemModel>
+#include <QtCore/QSharedPointer>
 // Hb
 #include <HbGlobal.h>
 #include <HbLogService.h>
@@ -175,7 +176,7 @@ void UserMainWindow::onFacebookLinked()
         return;
     }
 
-    HbAuthFacebookRequestContract contract;
-    contract.setClient( *mpFacebookClient );
-    mTcpClient.send( &contract );
+    HbAuthFacebookRequestContract * contract = new HbAuthFacebookRequestContract();
+    contract->setClient( *mpFacebookClient );
+    mTcpClient.send( ShConstHbNetworkContract( contract ) );
 }

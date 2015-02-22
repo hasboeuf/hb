@@ -7,19 +7,24 @@ using namespace hb::network;
 
 HbNetworkContract::HbNetworkContract()
 {
-    mSender = 0;
+    mSender      = 0;
     mNetworkType = HbNetworkProtocol::NETWORK_UNDEFINED;
-    mRouting = HbNetworkProtocol::RoutingScheme::UNICAST;
-    mpReply  = nullptr;
+    mRouting     = HbNetworkProtocol::RoutingScheme::UNICAST;
+    mpReply      = nullptr;
 }
 
-HbNetworkContract::HbNetworkContract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code ) :
+HbNetworkContract::~HbNetworkContract()
+{
+    //HbDebug( "HbNetworkContract::destructor()" );
+}
+
+HbNetworkContract::HbNetworkContract( servuid service, codeuid code ) :
     mHeader( service, code )
 {
-    mSender = 0;
+    mSender      = 0;
     mNetworkType = HbNetworkProtocol::NETWORK_UNDEFINED;
-    mRouting = HbNetworkProtocol::RoutingScheme::UNICAST;
-    mpReply  = nullptr;
+    mRouting     = HbNetworkProtocol::RoutingScheme::UNICAST;
+    mpReply      = nullptr;
 }
 
 HbNetworkContract::HbNetworkContract( const HbNetworkContract & source )
@@ -51,16 +56,15 @@ HbNetworkContract & HbNetworkContract::operator=( const HbNetworkContract & sour
     return ( *this );
 }
 
-void HbNetworkContract::setReply( HbNetworkContract * reply )
+void HbNetworkContract::updateReply()
 {
-    if( reply )
+    if( mpReply )
     {
-        mpReply = reply;
         mpReply->takeUid( this );
         mpReply->resetSocketReceivers();
         mpReply->setNetworkType( mNetworkType );
         mpReply->setRouting( HbNetworkProtocol::RoutingScheme::UNICAST ); // Replies only support unicast.
-        mpReply->addSocketReceiver( mUid );
+        mpReply->addSocketReceiver( mSender );
     }
 }
 
@@ -126,7 +130,7 @@ const QSet< sockuid > & HbNetworkContract::socketReceivers() const
 
 sockuid HbNetworkContract::socketReceiver() const
 {
-    if( mSocketReceivers.size() > 0 )
+    if( mSocketReceivers.size() == 1 )
     {
         return *mSocketReceivers.begin();
     }
@@ -147,6 +151,14 @@ void HbNetworkContract::setRouting( HbNetworkProtocol::RoutingScheme routing )
 HbNetworkContract * HbNetworkContract::reply() const
 {
     return mpReply;
+}
+
+const QString HbNetworkContract::toString() const
+{
+    return QString("ctctuid=%1,type=%2,%3")
+            .arg( mUid )
+            .arg( HbNetworkProtocol::MetaNetworkType::toString( mNetworkType ) )
+            .arg( mHeader.toString() );
 }
 
 void HbNetworkContract::setNetworkType( HbNetworkProtocol::NetworkType type )

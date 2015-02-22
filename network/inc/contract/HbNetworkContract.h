@@ -11,6 +11,7 @@
 
 // Qt
 #include <QtCore/QObject>
+#include <QtCore/QSharedPointer>
 #include <QtCore/QSet>
 #include <QtCore/QStringList>
 // Hb
@@ -32,7 +33,7 @@ namespace hb
             Q_FRIEND_CLASS( HbNetworkExchanges )
 
         public:
-            virtual ~HbNetworkContract() = default;
+            virtual ~HbNetworkContract();
 
             virtual void setHeader( const HbNetworkHeader & header ) final;
             virtual const HbNetworkHeader & header() const final;
@@ -46,6 +47,9 @@ namespace hb
             virtual void setRouting( HbNetworkProtocol::RoutingScheme routing ) final;
 
             virtual HbNetworkContract * reply() const;
+            virtual void updateReply() final;
+
+            virtual const QString toString() const;
 
             virtual void setNetworkType( HbNetworkProtocol::NetworkType type ) final;
             virtual HbNetworkProtocol::NetworkType networkType() const final;
@@ -71,13 +75,11 @@ namespace hb
         protected:
 
             HbNetworkContract();
-            HbNetworkContract( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code );
+            HbNetworkContract( servuid service, codeuid code );
             HbNetworkContract( const HbNetworkContract & source );
             HbNetworkContract & operator=( const HbNetworkContract & source );
 
             virtual HbNetworkContract * create() const = 0;
-
-            virtual void setReply( HbNetworkContract * reply ) final;
 
         private:
             virtual bool addSocketReceiver( sockuid receiver ) final ;
@@ -96,6 +98,9 @@ namespace hb
             QSet< sockuid > mSocketReceivers;
 
         };
+
+        typedef QSharedPointer< const HbNetworkContract > ShConstHbNetworkContract;
+        typedef QSharedPointer< HbNetworkContract >       ShHbNetworkContract;
     }
 }
 

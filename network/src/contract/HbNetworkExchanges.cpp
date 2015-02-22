@@ -5,9 +5,9 @@ using namespace hb::network;
 
 HbNetworkExchanges::~HbNetworkExchanges()
 {
-    foreach(const Contracts & contracts, mContracts)
+    foreach( const Contracts & contracts, mContracts )
     {
-        foreach(HbNetworkContract * contract, contracts)
+        foreach( HbNetworkContract * contract, contracts )
         {
             delete contract;
         }
@@ -18,9 +18,9 @@ HbNetworkExchanges & HbNetworkExchanges::operator=( const HbNetworkExchanges & s
 {
     if( &source != this )
     {
-        foreach(const Contracts & contracts, source.mContracts)
+        foreach( const Contracts & contracts, source.mContracts )
         {
-            foreach(HbNetworkContract * contract, contracts)
+            foreach( HbNetworkContract * contract, contracts )
             {
                 add( contract->create() );
             }
@@ -30,14 +30,14 @@ HbNetworkExchanges & HbNetworkExchanges::operator=( const HbNetworkExchanges & s
 }
 
 
-bool HbNetworkExchanges::add(HbNetworkContract * contract)
+bool HbNetworkExchanges::add( HbNetworkContract * contract )
 {
     if( !contract )
     {
         return false;
     }
 
-    Contracts & contracts = mContracts[ contract->header().service() ];
+    Contracts & contracts = mContracts[contract->header().service()];
     HbNetworkContract * existing_contract = contracts.value( contract->header().code(), nullptr );
 
     if ( existing_contract )
@@ -59,7 +59,7 @@ bool HbNetworkExchanges::remove( HbNetworkContract * contract )
         return false;
     }
 
-    Contracts & contracts = mContracts[ contract->header().service() ];
+    Contracts & contracts = mContracts[contract->header().service()];
     HbNetworkContract * existing_contract = contracts.value( contract->header().code(), nullptr );
 
     delete contract;
@@ -82,7 +82,7 @@ bool HbNetworkExchanges::remove( HbNetworkContract * contract )
     }
 }
 
-bool HbNetworkExchanges::registered( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code ) const
+bool HbNetworkExchanges::registered( servuid service, codeuid code ) const
 {
     return mContracts.value( service ).contains( code );
 }
@@ -103,5 +103,4 @@ HbNetworkContract * HbNetworkExchanges::contract( const HbNetworkHeader & header
         }
     }
     return contract;
-//    return _contracts.value( service ).value( code, nullptr );
 }

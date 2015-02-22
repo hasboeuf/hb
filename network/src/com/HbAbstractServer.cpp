@@ -1,5 +1,6 @@
 // Qt
 #include <QtCore/QDataStream>
+#include <QtCore/QSharedPointer>
 // Hb
 #include <HbLogService.h>
 // Local
@@ -45,6 +46,7 @@ bool HbAbstractServer::leave()
     {
         disconnectFromNetwork();
         mReady = false;
+        reset();
         emit serverDisconnected( mUid );
 
         HbInfo( "Server stopped." );
@@ -54,7 +56,7 @@ bool HbAbstractServer::leave()
         HbInfo( "Server already stopped." );
     }
 
-    reset();
+
 
     /*QHash< quint32, HbSocketHandler * >::iterator it = mHandlerBySocketId.begin();
     while( it != mHandlerBySocketId.end() )
@@ -139,63 +141,76 @@ bool HbAbstractServer::isReady() const
     return mReady;
 }
 
-bool HbAbstractServer::send( HbNetworkContract * contract )
+bool HbAbstractServer::send( ShConstHbNetworkContract contract )
 {
-    if( !contract )
+    if( contract.isNull() )
     {
         HbWarning( "Try to send a null contract." );
     }
-
     else
     {
-        if (!isListening())
+        if ( !isListening() )
         {
             HbError( "Unable to send contract on inactive server" );
         }
         else
         {
-            return send( contract );
+            if ( !configuration().exchanges().registered( contract->header().service(), contract->header().code() ) )
+            {
+                HbError( "Try to send an unregistered contract [service=%d, code=%d]", contract->header().service(), contract->header().code() );
+
+                return false;
+            }
+
+            if( contract->routing() == HbNetworkProtocol::UNICAST )
+            {
+                sockuid receiver = contract->socketReceiver();
+                if( receiver != 0 )
+                {
+                    HbSocketHandler * handler = mHandlerBySocketId.value( receiver, nullptr );
+                    if( !handler )
+                    {
+                        HbWarning( "Unable to send contract, socket %d does not exist.", receiver );
+                    }
+                    else
+                    {
+                        q_assert( QMetaObject::invokeMethod( handler, "onSendContract", Q_ARG( sockuid, receiver ), Q_ARG( ShConstHbNetworkContract, contract ) ) );
+                    }
+                }
+                else
+                {
+                    HbError( "Try to send an incompatible UNICAST contract." );
+                }
+            }
+            else if( contract->routing() == HbNetworkProtocol::MULTICAST )
+            {
+                // Retrieve socket handler.
+                foreach( sockuid receiver, contract->socketReceivers() )
+                {
+                    HbSocketHandler * handler = mHandlerBySocketId.value( receiver, nullptr );
+                    if( !handler )
+                    {
+                        HbWarning( "Unable to send contract, socket %d does not exist.", receiver );
+                    }
+                    else
+                    {
+                        q_assert( QMetaObject::invokeMethod( handler, "onSendContract", Q_ARG( sockuid, receiver ), Q_ARG( ShConstHbNetworkContract, contract ) ) );
+                    }
+                }
+            }
+            else // HbNetworkProtocol::BROADCAST
+            {
+                foreach( HbSocketHandler * handler, mHandlerById.values() )
+                {
+                    q_assert_ptr( handler );
+                    q_assert( QMetaObject::invokeMethod( handler, "onSendContract", Q_ARG( ShConstHbNetworkContract, contract ) ) );
+                }
+            }
         }
     }
 
     return false;
 }
-
-/*bool HbAbstractServer::reply(int sender, const HbNetworkContract * contract)
-{
-    if (!contract || !contract->reply())
-        qWarning("HbAbstractServer::reply() -> try to send a null contract");
-
-    else
-    {
-        HbNetworkContract * reply = contract->reply();
-
-        if (reply->setReceiver(sender))
-            return send(reply);
-    }
-
-    return false;
-}*/
-
-//bool HbAbstractServer::forward(int receiver, HbNetworkContract * contract)
-//{
-//    if (!contract)
-//        qWarning("HbAbstractServer::forward() -> try to send a null contract");
-//
-//    else
-//    {
-//        if (contract->setReceiver(receiver))
-//            return send(contract);
-//    }
-//
-//    return false;
-//}
-
-
-/*QList< quint16 > HbAbstractServer::connected() const
-{
-    return mHandlerBySocketId.keys( );
-}*/
 
 bool HbAbstractServer::isUidConnected( quint16 uid ) const
 {
@@ -224,147 +239,6 @@ void HbAbstractServer::reset()
     mHandlerBySocketId.clear();
 }
 
-/*bool HbAbstractServer::send( HbNetworkContract * contract )
-{
-    if( !HbAbstractNetwork::configuration( ).openMode().testFlag( QIODevice::WriteOnly ) )
-    {
-        HbError( "Unable to send contract on read only server." );
-    }
-    else
-    {
-
-        const HbNetworkHeader * header = packet.header();
-
-        if (header->routing() == HbNetworkContract::RoutingScheme::Broadcast)
-        {
-            bool status = true;
-
-            //foreach(HbAbstractSocket * socket, _connected)
-            //{
-            //    if (socket->uid() != header->sender())
-            //    {
-            //        if (socket->isListening())
-            //            status &= send(socket, packet);
-            //    }
-
-            //    else if (_connected.size() == 1)
-            //        return false;
-            //}
-
-            return status;
-        }
-        else if (!header->receivers().isEmpty())
-        {
-            bool status = true;
-
-            if (header->receivers().size() == 1)
-            {
-                int addressee = *header->receivers().begin();
-                //HbAbstractSocket * socket = _connected.value(addressee);
-                //
-                //if (addressee == header->sender())
-                //{
-                //    raiseError(QAbstractSocket::UnknownSocketError,
-                //        QStringLiteral("unable to send a contract to owner"));
-                //
-                //    return false;
-                //}
-                //
-                //if (!socket)
-                //{
-                //    raiseError(QAbstractSocket::UnknownSocketError,
-                //        QStringLiteral("try to send to an unknown receiver"));
-                //
-                //    return false;
-                //}
-                //
-                //status = send(socket, packet);
-            }
-
-            else
-            {
-                foreach(int addressee, header->receivers())
-                {
-                    //HbAbstractSocket * socket = _connected.value(addressee);
-                    //
-                    //if (!socket)
-                    //{
-                    //    qWarning("HbAbstractServer::send() -> try to send to an unknown receiver");
-                    //    status &= false;
-                    //}
-                    //
-                    //else if (addressee != header->sender())
-                    //{
-                    //    if (socket->isListening())
-                    //        status &= send(socket, packet);
-                    //}
-                }
-            }
-
-            return status;
-        }
-
-        HbError( "Unable to send a contract without receivers." );
-
-    }
-
-    return false;
-}*/
-
-/*bool HbAbstractServer::send( int uid, const HbNetworkPacket & packet )
-{
-    return true;
-}*/
-
-//bool HbAbstractServer::send(HbAbstractSocket * socket, const HbNetworkPacket & packet)
-//{
-//    if (!socket->isListening())
-//    {
-//        raiseError(QAbstractSocket::OperationError,
-//            QStringLiteral("unable to send contract on inactive socket"));
-//    }
-//
-//    else
-//    {
-//        const HbNetworkContract * contract = packet.content();
-//
-//        if (!exchanges().registered(contract->service(), contract->code()))
-//        {
-//            raiseError(QAbstractSocket::UnknownSocketError,
-//                QStringLiteral("try to send unregistered contract %1::%2").arg(contract->service()).arg(contract->code()));
-//
-//            return false;
-//        }
-//
-//        QByteArray buffer;
-//        QString socketError;
-//
-//        QDataStream stream(&buffer, QIODevice::WriteOnly);
-//        stream << *packet.header();
-//
-//        if (!packet.content()->write(stream))
-//            socketError = QStringLiteral("invalid contract format");
-//
-//        else
-//        {
-//            qint64 bytesWritten = socket->writePacket(buffer);
-//
-//            if (bytesWritten > 0)
-//                return true;
-//
-//            Q_ASSERT(bytesWritten != 0);
-//            socketError = socket->errorString();
-//        }
-//
-//        Q_ASSERT(stream.status() == QDataStream::Ok);
-//
-//        raiseError(socket->error(), QStringLiteral("error occurred while sending contract %1::%2 on socket %3: %4").
-//            arg(packet.content()->service()).arg(packet.content()->code()).arg(socket->uid()).arg(socketError));
-//    }
-//
-//    return false;
-//}
-
 
 void HbAbstractServer::onSocketConnected( qint32 socket_descriptor, sockuid socket_uid )
 {
@@ -373,10 +247,13 @@ void HbAbstractServer::onSocketConnected( qint32 socket_descriptor, sockuid sock
         HbInfo( "Server not ready, no treatments for onSocketConnected()." );
         return;
     }
+
     HbSocketHandler * handler = qobject_cast< HbSocketHandler * >( sender() );
     q_assert_ptr( handler );
     q_assert( mPending.contains( socket_descriptor ) );
     q_assert( !mHandlerBySocketId.contains( socket_uid ) );
+
+    HbInfo( "New socket %d connected (descriptor=%d) on handler %d.", socket_uid, socket_descriptor, handler->uid() );
 
     mPending.removeOne( socket_descriptor );
     mHandlerBySocketId.insert( socket_uid, handler );

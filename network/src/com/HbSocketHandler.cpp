@@ -91,12 +91,12 @@ bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_
 {
     QMutexLocker locker( &mSocketMutex );
 
-    // Q_ASSERT( socket->type( ) != HbAbstractSocket::UdpSocket );
+    // q_assert( socket->type() != HbAbstractSocket::UdpSocket );
 
     q_assert_ptr( socket );
 
-    mSocketById.insert( socket->uid( ), socket );
-    mIdBySocket.insert( socket, socket->uid( ) );
+    mSocketById.insert( socket->uid(), socket );
+    mIdBySocket.insert( socket, socket->uid() );
 
     connect( socket, &HbAbstractSocket::socketReadyPacket,  this, &HbSocketHandler::onSocketReadyPacket,  Qt::UniqueConnection );
     connect( socket, &HbAbstractSocket::socketDisconnected, this, &HbSocketHandler::onSocketDisconnected, Qt::UniqueConnection );
@@ -106,6 +106,8 @@ bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_
                  HbError( "Error %d (%s) on socket %d.", socket->error(), HbLatin1( socket->errorString() ), socket->uid());
 
              }, Qt::UniqueConnection );
+
+    HbInfo( "Handler %d: socket %d (descriptor=%d) instanciated.", mUid, socket->uid(), previous_uid );
 
     emit socketConnected( previous_uid, socket->uid() ); // To Server.
 
@@ -122,7 +124,6 @@ void HbSocketHandler::onDisconnectionRequest(quint16 uid )
     if( socket )
     {
         // socket->leave();
-
         // onSocketDisconnected handles the rest.
     }
     else
@@ -135,6 +136,36 @@ void HbSocketHandler::onServerLeft()
 {
     HbInfo( "Server left -> deleting this handler #%d", mUid );
     reset();
+}
+
+void HbSocketHandler::onSendContract( ShConstHbNetworkContract contract )
+{
+    foreach( sockuid socket_uid, mSocketById.keys() )
+    {
+        onSendContract( socket_uid, contract );
+    }
+}
+
+void HbSocketHandler::onSendContract( sockuid socket_uid, ShConstHbNetworkContract contract )
+{
+    HbAbstractSocket * socket = mSocketById.value( socket_uid, nullptr );
+    if( !socket )
+    {
+        HbError( "Socket %d does not exist in this handler.", socket_uid );
+        return;
+    }
+
+    if (!socket->isListening())
+    {
+        HbError( "Unable to send contract on inactive socket." );
+        return;
+    }
+
+    if( !socket->sendContract( contract ) )
+    {
+        HbError( "Error writing contract %d in socket %d", contract->uid(), socket_uid );
+        // TODO socket error string
+    }
 }
 
 void HbSocketHandler::onSocketReadyPacket()
@@ -175,7 +206,10 @@ void HbSocketHandler::onSocketReadyPacket()
                 }
                 else
                 {
+                    contract->setSender ( socket->uid() );
                     contract->setNetworkType( server()->type() );
+                    contract->updateReply(); // In case of a reply-able contract.
+
                     emit socketContractReceived( socket->uid(), contract );
                 }
             }

@@ -29,22 +29,24 @@ namespace hb
 
             HbNetworkHeader(); // Used before streamed back.
             HbNetworkHeader( const HbNetworkHeader & header );
-            HbNetworkHeader( HbNetworkProtocol::Service service, HbNetworkProtocol::Code code );
+            HbNetworkHeader( servuid service, codeuid code );
             HbNetworkHeader & operator=( const HbNetworkHeader & header );
             ~HbNetworkHeader() = default;
 
+            const QString toString() const;
+
             const QString & appName() const;
             quint16 protocolVersion() const;
-            HbNetworkProtocol::Service service() const;
-            HbNetworkProtocol::Code code() const;
+            servuid service() const;
+            codeuid code() const;
 
             void setRouting( HbNetworkProtocol::RoutingScheme routing );
 
         private:
             QString mAppName;
             quint16 mProtocolVersion;
-            HbNetworkProtocol::Service mService;
-            HbNetworkProtocol::Code mCode;
+            servuid mService;
+            codeuid mCode;
         };
 
         HB_NETWORK_DECL QDataStream & operator<<(QDataStream & stream, const HbNetworkHeader & header);

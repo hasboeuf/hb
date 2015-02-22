@@ -26,6 +26,7 @@ namespace hb
         {
             Q_GADGET
             Q_ENUMS_HANDLER( HbNetworkProtocol )
+            Q_ENUMS( NetworkType )
             Q_ENUMS( Service )
             Q_ENUMS( Code )
 
@@ -43,6 +44,7 @@ namespace hb
                 NETWORK_LOCAL     = 1 << 4,
                 NETWORK_BLUETOOTH = 1 << 5
             };
+            Q_META_ENUMS( NetworkType )
             Q_DECLARE_FLAGS( NetworkTypes, NetworkType )
 
             enum RoutingScheme : quint8
@@ -55,26 +57,30 @@ namespace hb
             enum Service : servuid
             {
                 SERVICE_UNDEFINED = 0,
-                SERVICE_UPDATE = 1,
-                SERVICE_AUTH = 2,
-                SERVICE_PRESENCE = 3,
+                SERVICE_UPDATE    = 1,
+                SERVICE_AUTH      = 2,
+                SERVICE_PRESENCE  = 3,
+                SERVICE_CHANNEL   = 4,
 
-                SERVICE_CHANNEL = 255,
-                SERVICE_CHANNEL_USER
+                SERVICE_USER      = 255
             };
             Q_META_ENUMS( Service )
 
-            enum Code : netwcode
+            enum Code : codeuid
             {
-                CODE_UNDEFINED = 0,
+                CODE_UNDEFINED            = 0,
                 CODE_CLT_AUTH_REQUEST,
                 CODE_SRV_AUTH_STATUS,
                 CODE_CLT_PRESENCE,
-                CODE_SRV_PRESENCE_STATUS
+                CODE_SRV_PRESENCE_STATUS,
+
+                CODE_USER                 = 1989
+
+
             };
             Q_META_ENUMS( Code )
 
-            enum KickCode : kickcode
+            enum KickCode : netwint
             {
                 KICK_INTERNAL_ERROR = 0,
                 KICK_PROTOCOL_DIFFERENT,
@@ -85,7 +91,7 @@ namespace hb
             };
             Q_META_ENUMS( KickCode )
 
-            enum AuthStatus : netwcode
+            enum AuthStatus : netwint
             {
                 // General
                 AUTH_INTERNAL_ERROR = 0,

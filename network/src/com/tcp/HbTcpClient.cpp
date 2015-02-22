@@ -43,6 +43,18 @@ sockuid HbTcpClient::uid() const
     }
 }
 
+HbNetworkProtocol::NetworkType HbTcpClient::type() const
+{
+    if( mpSocket )
+    {
+        return mpSocket->type();
+    }
+    else
+    {
+        return HbNetworkProtocol::NETWORK_UNDEFINED;
+    }
+}
+
 
 bool HbTcpClient::setConfiguration( const HbTcpClientConfig & config )
 {
@@ -107,7 +119,7 @@ HbAbstractSocket * HbTcpClient::pendingConnection()
     mpSocket = q_check_ptr( new HbTcpSocket( device ) );
 
     connect( mpSocket, &HbAbstractSocket::socketError,
-             this,    [this](){ emit socketError( mpSocket->error(), mpSocket->errorString() ); } );
+             this,    [this](){ emit socketError( mpSocket->error(), mpSocket->errorString() ); }, Qt::UniqueConnection );
 
     HbTcpConfig::SocketOptions options = mConfig.options();
 

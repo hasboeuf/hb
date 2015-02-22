@@ -47,8 +47,8 @@ namespace hb
             // From services.
             void onContractSent( const HbNetworkContract * contract );
             void onContractSent( sockuid socket_uid, const HbNetworkContract * contract );
-            void onUserKick    ( const HbNetworkUser & user_info, kickcode reason );
-            void onSocketKick  ( sockuid socket_uid, kickcode reason );
+            void onUserKick    ( const HbNetworkUser & user_info, netwint reason );
+            void onSocketKick  ( sockuid socket_uid, netwint reason );
 
             // From HbAuthService.
             void onNewUserConnected( sockuid socket_id, const HbNetworkUserInfo & user_info );

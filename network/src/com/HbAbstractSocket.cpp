@@ -31,6 +31,33 @@ HbAbstractSocket::~HbAbstractSocket()
     }
 }
 
+bool HbAbstractSocket::sendContract( ShConstHbNetworkContract contract )
+{
+    QByteArray buffer;
+    QDataStream stream( &buffer, QIODevice::WriteOnly );
+
+    stream << contract->header();
+    if ( !contract->write( stream ) )
+    {
+        HbError( "Invalid contract format." );
+    }
+    else
+    {
+        qint64 bytesWritten = writePacket( buffer );
+
+        if ( bytesWritten > 0 )
+        {
+            return true;
+        }
+
+        q_assert( bytesWritten );
+    }
+
+    q_assert( stream.status() == QDataStream::Ok );
+
+    return false;
+}
+
 QByteArray HbAbstractSocket::readPacket()
 {
     if( !mPackets.isEmpty() )
@@ -42,15 +69,15 @@ QByteArray HbAbstractSocket::readPacket()
     return QByteArray();
 }
 
-qint64 HbAbstractSocket::writePacket(const QByteArray & packet) const
+qint64 HbAbstractSocket::writePacket( const QByteArray & packet ) const
 {
     if ( !packet.isEmpty() )
     {
         QByteArray buffer;
         QDataStream stream( &buffer, QIODevice::WriteOnly );
 
-        q_assert(stream.writeBytes(packet.constData(), packet.size()).status() == QDataStream::Ok);
-        return writeBuffer(buffer);
+        q_assert( stream.writeBytes( packet.constData(), packet.size() ).status() == QDataStream::Ok );
+        return writeBuffer( buffer );
     }
     else
     {
@@ -80,7 +107,7 @@ QString HbAbstractSocket::errorString() const
 qint64 HbAbstractSocket::readStream( QDataStream & stream )
 {
     qint64 bytesRead = 0;
-    quint32 expected = sizeof(quint32);
+    quint32 expected = sizeof( quint32 );
     if( mBytesPending > 0 )
     {
         expected = mBytesPending;
@@ -90,7 +117,7 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
     {
         if ( mBytesPending == 0)
         {
-            QDataStream::Status status = (stream >> mBytesPending).status();
+            QDataStream::Status status = ( stream >> mBytesPending ).status();
             q_assert( status == QDataStream::Ok );
 
             expected = mBytesPending;
@@ -112,7 +139,7 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
                 }
 
                 mBytesPending = 0;
-                expected = sizeof(quint32);
+                expected = sizeof( quint32 );
             }
         }
 
@@ -134,15 +161,15 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
     return bytesRead;
 }
 
-qint64 HbAbstractSocket::writeBuffer(const QByteArray & buffer) const
+qint64 HbAbstractSocket::writeBuffer( const QByteArray & buffer ) const
 {
     q_assert( !mDevice.isNull() );
 
-    if( buffer.isEmpty())
+    if( buffer.isEmpty() )
     {
         HbWarning( "Try to write an empty buffer." );
         return 0;
     }
 
-    return mDevice->write(buffer);
+    return mDevice->write( buffer );
 }

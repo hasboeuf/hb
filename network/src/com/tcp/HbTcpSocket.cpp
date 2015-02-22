@@ -14,7 +14,7 @@ HbTcpSocket::HbTcpSocket( QTcpSocket * device ) :
     q_assert_ptr( device );
     mpDevice = device;
 
-    connect( mpDevice, &QTcpSocket::stateChanged, this, &HbTcpSocket::onStateChanged );
+    connect( mpDevice, &QTcpSocket::stateChanged, this, &HbTcpSocket::onStateChanged, Qt::UniqueConnection );
     connect( mpDevice, ( void (QTcpSocket::*)( QAbstractSocket::SocketError ) ) &QTcpSocket::error,
     [this]()
     {
@@ -65,15 +65,15 @@ bool HbTcpSocket::isListening() const
 }
 
 
-void HbTcpSocket::setSocketOption(QAbstractSocket::SocketOption option, bool enable)
+void HbTcpSocket::setSocketOption( QAbstractSocket::SocketOption option, bool enable )
 {
-    switch (option)
+    switch ( option )
     {
     case QAbstractSocket::LowDelayOption:
     case QAbstractSocket::KeepAliveOption:
     case QAbstractSocket::MulticastLoopbackOption:
 
-        mpDevice->setSocketOption(option, enable);
+        mpDevice->setSocketOption( option, enable );
         break;
 
     default:
@@ -83,14 +83,14 @@ void HbTcpSocket::setSocketOption(QAbstractSocket::SocketOption option, bool ena
     }
 }
 
-bool HbTcpSocket::socketOption(QAbstractSocket::SocketOption option) const
+bool HbTcpSocket::socketOption( QAbstractSocket::SocketOption option ) const
 {
-    switch (option)
+    switch ( option )
     {
     case QAbstractSocket::LowDelayOption:
     case QAbstractSocket::KeepAliveOption:
     case QAbstractSocket::MulticastLoopbackOption:
-        return mpDevice->socketOption(option).toBool();
+        return mpDevice->socketOption( option ).toBool();
 
     default:
         return false;

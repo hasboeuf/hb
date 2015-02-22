@@ -8,8 +8,8 @@ using namespace hb::network;
 HbAuthRequestContract::HbAuthRequestContract() :
     HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_CLT_AUTH_REQUEST )
 {
-    mType = HbAuthService::AUTH_NONE;
-    setReply( new HbAuthStatusContract() );
+    mType   = HbAuthService::AUTH_NONE;
+    mpReply = new HbAuthStatusContract();
 }
 
 HbAuthRequestContract::HbAuthRequestContract( const HbAuthRequestContract & source ) :

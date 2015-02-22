@@ -6,27 +6,14 @@ using namespace hb::network;
 HbAbstractNetwork::HbAbstractNetwork(QObject * parent) :
     QObject(parent)
 {
-
+    qRegisterMetaType< sockuid >( "sockuid" );
+    qRegisterMetaType< netwuid >( "netwuid" );
+    qRegisterMetaType< servuid >( "servuid" );
+    qRegisterMetaType< codeuid >( "codeuid" );
+    qRegisterMetaType< ctctuid >( "ctctuid" );
+    qRegisterMetaType< ShConstHbNetworkContract >( "ShConstHbNetworkContract" );
+    qRegisterMetaType< ShHbNetworkContract >     ( "ShHbNetworkContract" );
 }
-
-//void HbAbstractNetwork::addListener(IHbNetworkListener * listener)
-//{
-//    if (listener)
-//    {
-//        if (!_listeners.contains(listener))
-//            _listeners.append(listener);
-//    }
-//}
-
-//void HbAbstractNetwork::removeListener(IHbNetworkListener * listener)
-//{
-//    _listeners.removeAll(listener);
-//}
-
-//const QList< IHbNetworkListener * > & HbAbstractNetwork::listeners() const
-//{
-//    return _listeners;
-//}
 
 const HbNetworkConfig & HbAbstractNetwork::configuration() const
 {

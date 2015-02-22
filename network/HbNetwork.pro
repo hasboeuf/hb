@@ -33,7 +33,7 @@ SUBDIRS +=  com \
 # Qt Settings
 # ------------
 
-QT *=		network sql
+QT *=		network
 
 # -----------------
 # Modules Settings

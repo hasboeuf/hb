@@ -9,9 +9,9 @@ HbNetworkConfig::HbNetworkConfig()
     mOpenMode = QIODevice::ReadWrite;
 }
 
-HbNetworkConfig::HbNetworkConfig(const HbNetworkConfig & config)
+HbNetworkConfig::HbNetworkConfig( const HbNetworkConfig & config )
 {
-    if (this != &config)
+    if ( this != &config )
     {
         mOpenMode = config.mOpenMode;
         mExchanges = config.mExchanges;
@@ -19,9 +19,9 @@ HbNetworkConfig::HbNetworkConfig(const HbNetworkConfig & config)
 }
 
 
-HbNetworkConfig & HbNetworkConfig::operator =(const HbNetworkConfig & config)
+HbNetworkConfig & HbNetworkConfig::operator =( const HbNetworkConfig & config )
 {
-    if (this != &config)
+    if ( this != &config )
     {
         mOpenMode = config.mOpenMode;
         mExchanges = config.mExchanges;
@@ -35,9 +35,9 @@ bool HbNetworkConfig::isValid() const
     return ( mOpenMode != QIODevice::NotOpen );
 }
 
-void HbNetworkConfig::setOpenMode(QIODevice::OpenMode mode)
+void HbNetworkConfig::setOpenMode( QIODevice::OpenMode mode )
 {
-    if (mOpenMode != mode)
+    if ( mOpenMode != mode )
     {
         switch (mode)
         {

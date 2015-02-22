@@ -13,8 +13,8 @@ HbTcpServerConfig & HbTcpServerConfig::operator =( const HbTcpServerConfig & con
 {
     if (this != &config)
     {
-        HbNetworkConfig::operator=( config );
-        HbTcpConfig::operator =(config);
+        HbNetworkConfig::operator=    ( config );
+        HbTcpConfig::operator =   ( config );
         HbServerConfig::operator =( config );
     }
 

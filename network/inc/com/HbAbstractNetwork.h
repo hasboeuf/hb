@@ -23,8 +23,6 @@ namespace hb
     namespace network
     {
 
-        class IHbNetworkListener;
-
         class HB_NETWORK_DECL HbAbstractNetwork : public QObject
         {
             Q_OBJECT
@@ -35,26 +33,18 @@ namespace hb
             virtual bool join() = 0;
             virtual bool leave() = 0;
             virtual bool isReady() const = 0;
+            virtual HbNetworkProtocol::NetworkType type() const = 0;
 
-            //virtual void addListener(IHbNetworkListener * listener) final;
-            //virtual void removeListener(IHbNetworkListener * listener) final;
+            virtual bool send( ShConstHbNetworkContract contract ) = 0; // TODO refresh
 
-            virtual bool send( HbNetworkContract * contract ) = 0;
-            //virtual bool reply(int sender, const HbNetworkContract * contract) = 0;
-
-            //virtual const HbNetworkConfig & configuration() const = 0; SUB
-            virtual const HbNetworkConfig & configuration() const;
+            virtual const HbNetworkConfig & configuration() const; // SUB
 
         protected:
-            HbAbstractNetwork(QObject * parent = nullptr);
+            HbAbstractNetwork( QObject * parent = nullptr );
             virtual ~HbAbstractNetwork() = default;
-
-            //virtual const QList< IHbNetworkListener * > & listeners() const final;
 
         private:
             HbNetworkConfig mConfig; // SUB
-            //QList< IHbNetworkListener * > mListeners;
-
         };
     }
 }

@@ -50,7 +50,7 @@ void HbTcpSocketHandler::onNewPendingConnection( qint32 socket_descriptor )
 
     if( !canHandleNewConnection() )
     {
-        HbError("SocketHandler#%d: Cannot handle socket#%d.", mUid, socket_descriptor);
+        HbError( "Handler %d: cannot handle socket descriptor %d.", mUid, socket_descriptor );
         // Creating a volatile socket to disconnect the descriptor.
         QTcpSocket * socket = new QTcpSocket();
         socket->setSocketDescriptor(socket_descriptor);
@@ -72,8 +72,6 @@ void HbTcpSocketHandler::onNewPendingConnection( qint32 socket_descriptor )
     socket->setSocketOption( QAbstractSocket::MulticastLoopbackOption, options.testFlag( HbTcpConfig::SocketOption::MulticastLoopback ) );
 
     storeNewSocket( socket, socket_descriptor );
-
-    HbInfo( "HbTcpSocketHandler#%d: New socket#%d added.", mUid, socket_descriptor );
 
     HbLogEnd();
 }

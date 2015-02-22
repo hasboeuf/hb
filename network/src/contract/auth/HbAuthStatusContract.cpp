@@ -46,7 +46,7 @@ HbAuthStatusContract * HbAuthStatusContract::create() const
 
 bool HbAuthStatusContract::read( QDataStream & stream )
 {
-    netwcode status;
+    netwint status;
     stream >> status;
     stream >> mDescription;
     stream >> mTryNumber;
@@ -59,7 +59,7 @@ bool HbAuthStatusContract::read( QDataStream & stream )
 
 bool HbAuthStatusContract::write( QDataStream & stream ) const
 {
-    stream << ( netwcode ) mStatus;
+    stream << ( netwint ) mStatus;
     stream << mDescription;
     stream << mTryNumber;
     stream << mMaxTries;

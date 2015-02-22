@@ -12,6 +12,7 @@
 // Qt
 #include <QtCore/QHash>
 #include <QtCore/QList>
+#include <QtCore/QSharedPointer>
 // Hb
 #include <core/HbUid.h>
 // Local
@@ -41,24 +42,20 @@ namespace hb
             virtual bool isReady() const final;
             virtual HbNetworkProtocol::NetworkType type() const = 0;
 
-            virtual bool send( HbNetworkContract * contract );
-            //virtual bool reply(int sender, const HbNetworkContract * contract);
-            //virtual bool forward(int receiver, HbNetworkContract * contract);
+            virtual bool send( ShConstHbNetworkContract contract );
 
             virtual bool isUidConnected( quint16 uid ) const final;
 
-            //virtual const HbServerConfig & configuration() const = 0;
             virtual const HbServerConfig & configuration() const; // SUB
-    
+
         protected:
-            HbAbstractServer(QObject * parent = nullptr);
+            HbAbstractServer( QObject * parent = nullptr );
 
 
             virtual bool connectToNetwork() = 0;
             virtual void disconnectFromNetwork() = 0;
             virtual bool isListening() const = 0; // From device.
 
-            //virtual void incomingConnection(HbAbstractSocket * socket); to handler
             virtual bool disconnectFromNetwork( quint16 uid ) = 0;
 
             virtual void reset();
