@@ -35,7 +35,7 @@ namespace hb
             virtual bool join () final;
             virtual bool leave() final;
             virtual bool isReady() const final;
-            virtual sockuid uid() const = 0;
+            virtual networkuid uid() const = 0;
             virtual HbNetworkProtocol::NetworkType type() const = 0;
 
             virtual bool send( ShConstHbNetworkContract contract);
@@ -43,9 +43,9 @@ namespace hb
             virtual const HbClientConfig & configuration() const; // SUB
 
         signals:
-            void clientConnected         ( sockuid client_uid );
-            void clientDisconnected      ( sockuid client_uid );
-            void clientContractReceived  ( sockuid client_uid, const HbNetworkContract * contract );
+            void clientConnected         ( networkuid client_uid );
+            void clientDisconnected      ( networkuid client_uid );
+            void clientContractReceived  ( networkuid client_uid, const HbNetworkContract * contract );
 
         protected:
             HbAbstractClient(QObject * parent = nullptr);

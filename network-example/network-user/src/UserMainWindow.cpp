@@ -91,7 +91,7 @@ void UserMainWindow::onStartClicked()
     config.setPort( 4000 );
     config.setReconnectionDelay( 1000 );
 
-    quint16 server_uid = mpHbClient->joinTcpClient( config, true );
+    networkuid server_uid = mpHbClient->joinTcpClient( config, true );
     if( server_uid > 0 )
     {
         HbInfo( "Client #%d started.", server_uid );

@@ -38,12 +38,12 @@ HbServerConnectionPool::HbServerConnectionPool( const HbGeneralServerConfig & co
         if( socket_listener )
         {
             connect( this, &HbConnectionPool::socketConnected,
-                    [socket_listener]( sockuid socket_uid )
+                    [socket_listener]( networkuid socket_uid )
                     {
                         socket_listener->onSocketConnected( socket_uid );
                     } );
             connect( this, &HbConnectionPool::socketDisconnected,
-                    [socket_listener]( sockuid socket_uid )
+                    [socket_listener]( networkuid socket_uid )
                     {
                         socket_listener->onSocketDisconnected( socket_uid );
                     } );
@@ -78,9 +78,9 @@ bool HbServerConnectionPool::leave()
     return true;
 }
 
-netwuid HbServerConnectionPool::joinTcpServer( HbTcpServerConfig & config , bool main )
+networkuid HbServerConnectionPool::joinTcpServer( HbTcpServerConfig & config , bool main )
 {
-    netwuid uid = 0;
+    networkuid uid = 0;
     if( main && mMainServer > 0 )
     {
         HbError( "Impossible to create two main clients." );
@@ -112,7 +112,7 @@ netwuid HbServerConnectionPool::joinTcpServer( HbTcpServerConfig & config , bool
     return uid;
 }
 
-void HbServerConnectionPool::onServerConnected( quint16 server_uid )
+void HbServerConnectionPool::onServerConnected( networkuid server_uid )
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
@@ -129,7 +129,7 @@ void HbServerConnectionPool::onServerConnected( quint16 server_uid )
     mServers.insert( server->uid(), server );
 }
 
-void HbServerConnectionPool::onServerDisconnected( quint16 server_uid )
+void HbServerConnectionPool::onServerDisconnected( networkuid server_uid )
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
@@ -138,7 +138,7 @@ void HbServerConnectionPool::onServerDisconnected( quint16 server_uid )
     HbInfo( "Server #%d disconnected.", server_uid );
 }
 
-void HbServerConnectionPool::onSocketConnected( quint16 server_uid, sockuid socket_uid )
+void HbServerConnectionPool::onSocketConnected( networkuid server_uid, networkuid socket_uid )
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
@@ -156,7 +156,7 @@ void HbServerConnectionPool::onSocketConnected( quint16 server_uid, sockuid sock
 
 }
 
-void HbServerConnectionPool::onSocketDisconnected( quint16 server_uid, sockuid socket_uid )
+void HbServerConnectionPool::onSocketDisconnected( networkuid server_uid, networkuid socket_uid )
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
@@ -194,7 +194,7 @@ void HbServerConnectionPool::onSocketDisconnected( quint16 server_uid, sockuid s
     }
 }
 
-void HbServerConnectionPool::onSocketContractReceived( quint16 server_uid, sockuid socket_uid, const HbNetworkContract * contract )
+void HbServerConnectionPool::onSocketContractReceived( networkuid server_uid, networkuid socket_uid, const HbNetworkContract * contract )
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
@@ -211,7 +211,7 @@ void HbServerConnectionPool::onSocketContractReceived( quint16 server_uid, socku
         return;
     }
 
-    servuid requested_service = contract->header().service();
+    serviceuid requested_service = contract->header().service();
 
     HbInfo( "Contract OK [socket=%d, server=%d, service=%s, code=%s].",
             socket_uid,
@@ -241,7 +241,7 @@ void HbServerConnectionPool::onContractSent( const HbNetworkContract * contract 
 
 }
 
-void HbServerConnectionPool::onContractSent( sockuid socket_uid, const HbNetworkContract * contract )
+void HbServerConnectionPool::onContractSent( networkuid socket_uid, const HbNetworkContract * contract )
 {
 
 }
@@ -251,17 +251,17 @@ void HbServerConnectionPool::onUserKick( const HbNetworkUser & user_info, netwin
 
 }
 
-void HbServerConnectionPool::onSocketKick( sockuid socket_uid, netwint reason )
+void HbServerConnectionPool::onSocketKick( networkuid socket_uid, netwint reason )
 {
 
 }
 
-void HbServerConnectionPool::onUserConnected( sockuid socket_id, const HbNetworkUserInfo & user_info )
+void HbServerConnectionPool::onUserConnected( networkuid socket_id, const HbNetworkUserInfo & user_info )
 {
 
 }
 
-HbNetworkUser * HbServerConnectionPool::isSocketAuthenticated( sockuid socket_uid )
+HbNetworkUser * HbServerConnectionPool::isSocketAuthenticated( networkuid socket_uid )
 {
     return mUserBySocketId.value( socket_uid, nullptr );
 }

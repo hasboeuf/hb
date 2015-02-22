@@ -23,12 +23,12 @@ void HbClientAuthService::onContractReceived( const HbNetworkContract * contract
 
 }
 
-void HbClientAuthService::onSocketConnected   ( sockuid socket_uid )
+void HbClientAuthService::onSocketConnected   ( networkuid socket_uid )
 {
 
 }
 
-void HbClientAuthService::onSocketDisconnected( sockuid socket_uid )
+void HbClientAuthService::onSocketDisconnected( networkuid socket_uid )
 {
 
 }

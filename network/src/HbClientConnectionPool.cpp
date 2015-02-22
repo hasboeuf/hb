@@ -37,12 +37,12 @@ HbClientConnectionPool::HbClientConnectionPool( const HbGeneralClientConfig & co
         if( socket_listener )
         {
             connect( this, &HbClientConnectionPool::socketConnected,
-                    [socket_listener]( sockuid socket_uid )
+                    [socket_listener]( networkuid socket_uid )
                     {
                         socket_listener->onSocketConnected( socket_uid );
                     } );
             connect( this, &HbClientConnectionPool::socketDisconnected,
-                    [socket_listener]( sockuid socket_uid )
+                    [socket_listener]( networkuid socket_uid )
                     {
                         socket_listener->onSocketDisconnected( socket_uid );
                     } );
@@ -77,9 +77,9 @@ bool HbClientConnectionPool::leave()
     return true;
 }
 
-sockuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , bool main )
+networkuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , bool main )
 {
-    sockuid uid = 0;
+    networkuid uid = 0;
     if( main && mMainClient > 0 )
     {
         HbError( "Impossible to create two main clients." );
@@ -111,7 +111,7 @@ sockuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , bool
     return uid;
 }
 
-void HbClientConnectionPool::onClientConnected( sockuid client_uid )
+void HbClientConnectionPool::onClientConnected( networkuid client_uid )
 {
     /*HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
@@ -128,7 +128,7 @@ void HbClientConnectionPool::onClientConnected( sockuid client_uid )
     mServers.insert( server->uid(), server );*/
 }
 
-void HbClientConnectionPool::onClientDisconnected( sockuid client_uid )
+void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
 {
     /*HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
@@ -137,7 +137,7 @@ void HbClientConnectionPool::onClientDisconnected( sockuid client_uid )
     HbInfo( "Server #%d disconnected.", server_uid );*/
 }
 
-void HbClientConnectionPool::onClientContractReceived( sockuid client_uid, const HbNetworkContract * contract )
+void HbClientConnectionPool::onClientContractReceived( networkuid client_uid, const HbNetworkContract * contract )
 {
     /*HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
@@ -184,7 +184,7 @@ void HbClientConnectionPool::onContractSent( const HbNetworkContract * contract 
 
 }
 
-void HbClientConnectionPool::onUserConnected( sockuid client_uid, const HbNetworkUserInfo & user_info )
+void HbClientConnectionPool::onUserConnected( networkuid client_uid, const HbNetworkUserInfo & user_info )
 {
 
 }

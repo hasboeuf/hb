@@ -13,18 +13,18 @@
 #include <QtCore/QtGlobal>
 
 // Com level
-typedef quint32 sockuid;
-typedef quint16 netwuid;
-typedef quint16 servuid;
+typedef quint32 networkuid;
+typedef quint16 serviceuid;
 typedef quint16 codeuid;
-typedef quint64 ctctuid;
+typedef quint64 contractuid;
 // High level
 typedef quint8  authstgy;
 typedef quint8  netwint;
 
-const size_t CLASS_SOCK = 20;
-const size_t CLASS_NETW = 21;
-const size_t CLASS_CTCT = 22;
+
+const size_t CLASS_SOCKET   = 20;
+const size_t CLASS_SERVER   = 21;
+const size_t CLASS_CONTRACT = 22;
 
 #if !defined( HB_NETWORK_DECL )
 #    if defined( HB_NETWORK_BUILD )

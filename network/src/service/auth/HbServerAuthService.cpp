@@ -59,7 +59,7 @@ void HbServerAuthService::timerEvent( QTimerEvent * )
     }
 }
 
-bool HbServerAuthService::checkSocket( sockuid socket_uid )
+bool HbServerAuthService::checkSocket( networkuid socket_uid )
 {
     quint8 flags = 0x0;
     if( mPendingSocket.contains( socket_uid ) ) flags |= 0x1;
@@ -78,14 +78,14 @@ bool HbServerAuthService::checkSocket( sockuid socket_uid )
     return false;
 }
 
-void HbServerAuthService::addSocket( sockuid socket_uid )
+void HbServerAuthService::addSocket( networkuid socket_uid )
 {
     mPendingSocket.insert( socket_uid );
     mAuthTimeout.insert  ( socket_uid, mConfig.authTimeout() );
     mAuthTries.insert    ( socket_uid, 0 );
 }
 
-void HbServerAuthService::delSocket( sockuid socket_uid, bool delete_responses )
+void HbServerAuthService::delSocket( networkuid socket_uid, bool delete_responses )
 {
     mPendingSocket.remove( socket_uid );
     mAuthTries.remove    ( socket_uid );
@@ -99,7 +99,7 @@ void HbServerAuthService::delSocket( sockuid socket_uid, bool delete_responses )
     }
 }
 
-void HbServerAuthService::kickSocket( sockuid socket_uid, HbNetworkProtocol::KickCode reason )
+void HbServerAuthService::kickSocket( networkuid socket_uid, HbNetworkProtocol::KickCode reason )
 {
     delSocket( socket_uid );
     // TODO kick
@@ -111,7 +111,7 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
     if( auth_contract )
     {
         authstgy type      = auth_contract->type();
-        sockuid socket_uid = auth_contract->sender();
+        networkuid socket_uid = auth_contract->sender();
 
         HbServerAuthStrategy * strategy = mStrategies.value( type, nullptr );
         if( strategy )
@@ -151,17 +151,17 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
     }
 }
 
-void HbServerAuthService::onSocketConnected   ( sockuid socket_uid )
+void HbServerAuthService::onSocketConnected   ( networkuid socket_uid )
 {
     addSocket( socket_uid );
 }
 
-void HbServerAuthService::onSocketDisconnected( sockuid socket_uid )
+void HbServerAuthService::onSocketDisconnected( networkuid socket_uid )
 {
     delSocket( socket_uid );
 }
 
-void HbServerAuthService::onLoginSucceed( sockuid socket_uid, const HbNetworkUserInfo & user_info )
+void HbServerAuthService::onLoginSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info )
 {
     if( checkSocket( socket_uid ) )
     {
@@ -188,7 +188,7 @@ void HbServerAuthService::onLoginSucceed( sockuid socket_uid, const HbNetworkUse
     }
 }
 
-void HbServerAuthService::onLoginFailed( sockuid socket_uid, HbNetworkProtocol::AuthStatus status, const QString & description )
+void HbServerAuthService::onLoginFailed( networkuid socket_uid, HbNetworkProtocol::AuthStatus status, const QString & description )
 {
     if( checkSocket( socket_uid ) )
     {

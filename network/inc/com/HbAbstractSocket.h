@@ -25,7 +25,7 @@ namespace hb
 {
     namespace network
     {
-        class HbAbstractSocket : public QObject, public HbUid< sockuid, CLASS_SOCK, true > // 0 is excluded, HbNetworkContract::sender() returns 0 when the server is the sender.
+        class HbAbstractSocket : public QObject, public HbUid< networkuid, CLASS_SOCKET, true > // 0 is excluded, HbNetworkContract::sender() returns 0 when the server is the sender.
         {
             Q_OBJECT
             Q_DISABLE_COPY( HbAbstractSocket )

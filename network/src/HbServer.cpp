@@ -16,7 +16,7 @@ HbServer::HbServer(const HbGeneralServerConfig & config ) :
     }
 }
 
-netwuid HbServer::joinTcpServer( HbTcpServerConfig & config , bool main )
+networkuid HbServer::joinTcpServer( HbTcpServerConfig & config , bool main )
 {
     return mConnectionPool.joinTcpServer( config, main );
 }

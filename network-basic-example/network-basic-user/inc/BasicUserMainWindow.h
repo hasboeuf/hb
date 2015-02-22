@@ -28,9 +28,9 @@ namespace hb
             void onSendContractClicked();
             void onStopClicked();
 
-            void onClientConnected       ( sockuid client_uid );
-            void onClientDisconnected    ( sockuid client_uid );
-            void onClientContractReceived( sockuid client_uid, const HbNetworkContract * contract );
+            void onClientConnected       ( networkuid client_uid );
+            void onClientDisconnected    ( networkuid client_uid );
+            void onClientContractReceived( networkuid client_uid, const HbNetworkContract * contract );
 
         signals:
 

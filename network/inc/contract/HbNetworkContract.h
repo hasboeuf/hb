@@ -28,7 +28,7 @@ namespace hb
     {
         class HbNetworkHeader;
 
-        class HB_NETWORK_DECL HbNetworkContract : public HbUid< ctctuid, CLASS_CTCT >
+        class HB_NETWORK_DECL HbNetworkContract : public HbUid< contractuid, CLASS_CONTRACT >
         {
             Q_FRIEND_CLASS( HbNetworkExchanges )
 
@@ -38,8 +38,8 @@ namespace hb
             virtual void setHeader( const HbNetworkHeader & header ) final;
             virtual const HbNetworkHeader & header() const final;
 
-            virtual void setSender( sockuid sender ) final;
-            virtual sockuid sender() const final;
+            virtual void setSender( networkuid sender ) final;
+            virtual networkuid sender() const final;
 
             virtual void addPendingReceiver( const QString & user_id ) final;
 
@@ -69,20 +69,20 @@ namespace hb
             virtual bool read( QDataStream & stream ) = 0;
             virtual bool write( QDataStream & stream ) const = 0;
 
-            const QSet< sockuid > & socketReceivers() const;
-            sockuid socketReceiver() const;
+            const QSet< networkuid > & socketReceivers() const;
+            networkuid socketReceiver() const;
 
         protected:
 
             HbNetworkContract();
-            HbNetworkContract( servuid service, codeuid code );
+            HbNetworkContract( serviceuid service, codeuid code );
             HbNetworkContract( const HbNetworkContract & source );
             HbNetworkContract & operator=( const HbNetworkContract & source );
 
             virtual HbNetworkContract * create() const = 0;
 
         private:
-            virtual bool addSocketReceiver( sockuid receiver ) final ;
+            virtual bool addSocketReceiver( networkuid receiver ) final ;
             virtual void resetSocketReceivers() final;
 
         protected:
@@ -91,11 +91,11 @@ namespace hb
 
         private:
             // Internal use. Server side. TODO protect the client side.
-            sockuid mSender;
+            networkuid mSender;
             HbNetworkProtocol::NetworkType mNetworkType;
             HbNetworkProtocol::RoutingScheme mRouting;
             QSet< QString > mPendingReceivers; // user_id, morph into SocketReceivers at sending time.
-            QSet< sockuid > mSocketReceivers;
+            QSet< networkuid > mSocketReceivers;
 
         };
 

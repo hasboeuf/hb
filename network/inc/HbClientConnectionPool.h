@@ -36,23 +36,23 @@ namespace hb
 
             virtual bool leave();
 
-            sockuid joinTcpClient( HbTcpClientConfig & config, bool main );
+            networkuid joinTcpClient( HbTcpClientConfig & config, bool main );
 
         public callbacks:
             // From HbAbstractClient.
-            void onClientConnected       ( sockuid client_uid );
-            void onClientDisconnected    ( sockuid client_uid );
-            void onClientContractReceived( sockuid client_uid, const HbNetworkContract * contract );
+            void onClientConnected       ( networkuid client_uid );
+            void onClientDisconnected    ( networkuid client_uid );
+            void onClientContractReceived( networkuid client_uid, const HbNetworkContract * contract );
 
             // From services.
             void onContractSent( const HbNetworkContract * contract );
             // From HbAuthService.
-            void onUserConnected( sockuid client_uid, const HbNetworkUserInfo & user_info );
+            void onUserConnected( networkuid client_uid, const HbNetworkUserInfo & user_info );
 
         private:
-            sockuid mMainClient;
-            QHash< sockuid, HbAbstractClient * > mClients;
-            QHash< sockuid, netwuid > mClientBySocketId;
+            networkuid mMainClient;
+            QHash< networkuid, HbAbstractClient * > mClients;
+            QHash< networkuid, networkuid > mClientBySocketId;
             HbNetworkUserInfo mUser; // TODO how to check if user is authenticated.
         };
     }

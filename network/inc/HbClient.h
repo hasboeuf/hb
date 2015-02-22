@@ -31,7 +31,7 @@ namespace hb
             HbClient( const HbGeneralClientConfig & config );
             virtual ~HbClient() = default;
 
-            sockuid joinTcpClient( HbTcpClientConfig & config, bool main );
+            networkuid joinTcpClient( HbTcpClientConfig & config, bool main );
             bool leave();
 
         private:

@@ -116,7 +116,7 @@ bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_
 
 
 
-void HbSocketHandler::onDisconnectionRequest(quint16 uid )
+void HbSocketHandler::onDisconnectionRequest( networkuid uid )
 {
     QMutexLocker locker( &mSocketMutex );
 
@@ -140,13 +140,13 @@ void HbSocketHandler::onServerLeft()
 
 void HbSocketHandler::onSendContract( ShConstHbNetworkContract contract )
 {
-    foreach( sockuid socket_uid, mSocketById.keys() )
+    foreach( networkuid socket_uid, mSocketById.keys() )
     {
         onSendContract( socket_uid, contract );
     }
 }
 
-void HbSocketHandler::onSendContract( sockuid socket_uid, ShConstHbNetworkContract contract )
+void HbSocketHandler::onSendContract( networkuid socket_uid, ShConstHbNetworkContract contract )
 {
     HbAbstractSocket * socket = mSocketById.value( socket_uid, nullptr );
     if( !socket )
@@ -232,7 +232,7 @@ void HbSocketHandler::onSocketDisconnected()
 
     HbInfo("SocketPool%d: Socket#%d disconnected.", mUid, socket->uid() );
 
-    sockuid uid = socket->uid();
+    networkuid uid = socket->uid();
 
     mIdBySocket.remove( socket );
     mSocketById.remove( uid );

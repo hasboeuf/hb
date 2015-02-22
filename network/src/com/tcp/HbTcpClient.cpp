@@ -31,7 +31,7 @@ bool HbTcpClient::join( const HbTcpClientConfig & config )
     return false;
 }
 
-sockuid HbTcpClient::uid() const
+networkuid HbTcpClient::uid() const
 {
     if( mpSocket )
     {

@@ -23,7 +23,7 @@ namespace hb
 
             using HbAbstractClient::join;
             virtual bool join( const HbTcpClientConfig & config ) final;
-            virtual sockuid uid() const final;
+            virtual networkuid uid() const final;
             virtual HbNetworkProtocol::NetworkType type() const final;
 
             virtual bool setConfiguration( const HbTcpClientConfig & config ) final;

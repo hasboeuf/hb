@@ -82,27 +82,27 @@ void BasicServerMainWindow::onStopClicked()
     mTcpServer.leave();
 }
 
-void BasicServerMainWindow::onServerConnected( servuid server_uid )
+void BasicServerMainWindow::onServerConnected( networkuid server_uid )
 {
     HbInfo( "Server %d connected.", server_uid );
 }
 
-void BasicServerMainWindow::onServerDisconnected( servuid server_uid )
+void BasicServerMainWindow::onServerDisconnected( networkuid server_uid )
 {
     HbInfo( "Server %d disconnected.", server_uid );
 }
 
-void BasicServerMainWindow::onSocketConnected( servuid server_uid, sockuid socket_uid )
+void BasicServerMainWindow::onSocketConnected( networkuid server_uid, networkuid socket_uid )
 {
     HbInfo( "Socket %d connected on server %d.", socket_uid, server_uid );
 }
 
-void BasicServerMainWindow::onSocketDisconnected( servuid server_uid, sockuid socket_uid )
+void BasicServerMainWindow::onSocketDisconnected( networkuid server_uid, networkuid socket_uid )
 {
     HbInfo( "Socket %d disconnected on server %d.", socket_uid, server_uid );
 }
 
-void BasicServerMainWindow::onSocketContractReceived( servuid server_uid, sockuid socket_uid, const HbNetworkContract * contract )
+void BasicServerMainWindow::onSocketContractReceived( networkuid server_uid, networkuid socket_uid, const HbNetworkContract * contract )
 {
     q_assert_ptr( contract );
 

@@ -37,35 +37,35 @@ namespace hb
 
             virtual bool leave();
 
-            netwuid joinTcpServer( HbTcpServerConfig & config, bool main );
+            networkuid joinTcpServer( HbTcpServerConfig & config, bool main );
 
         public callbacks:
             // From HbAbstractServer.
-            void onServerConnected       ( servuid server_uid );
-            void onServerDisconnected    ( servuid server_uid );
-            void onSocketConnected       ( servuid server_uid, sockuid socket_uid );
-            void onSocketDisconnected    ( servuid server_uid, sockuid socket_uid );
-            void onSocketContractReceived( servuid server_uid, sockuid socket_uid, const HbNetworkContract * contract );
+            void onServerConnected       ( networkuid server_uid );
+            void onServerDisconnected    ( networkuid server_uid );
+            void onSocketConnected       ( networkuid server_uid, networkuid socket_uid );
+            void onSocketDisconnected    ( networkuid server_uid, networkuid socket_uid );
+            void onSocketContractReceived( networkuid server_uid, networkuid socket_uid, const HbNetworkContract * contract );
 
             // From services.
             void onContractSent( const HbNetworkContract * contract );
-            void onContractSent( sockuid socket_uid, const HbNetworkContract * contract ); // TODO useless ???
+            void onContractSent( networkuid socket_uid, const HbNetworkContract * contract ); // TODO useless ???
             void onUserKick    ( const HbNetworkUser & user_info, netwint reason );
-            void onSocketKick  ( sockuid socket_uid, netwint reason );
+            void onSocketKick  ( networkuid socket_uid, netwint reason );
 
             // From HbAuthService.
-            void onUserConnected( sockuid socket_id, const HbNetworkUserInfo & user_info );
+            void onUserConnected( networkuid socket_id, const HbNetworkUserInfo & user_info );
 
         private:
-            HbNetworkUser * isSocketAuthenticated( sockuid socket_uid );
+            HbNetworkUser * isSocketAuthenticated( networkuid socket_uid );
 
         private:
-            netwuid mMainServer;
-            QHash< netwuid, HbAbstractServer * > mServers;
+            networkuid mMainServer;
+            QHash< networkuid, HbAbstractServer * > mServers;
 
-            QSet < sockuid > mPendingSockets;
-            QHash< sockuid, netwuid > mServerBySocketId;
-            QHash< sockuid, HbNetworkUser * > mUserBySocketId;
+            QSet < networkuid > mPendingSockets;
+            QHash< networkuid, networkuid > mServerBySocketId;
+            QHash< networkuid, HbNetworkUser * > mUserBySocketId;
         };
     }
 }

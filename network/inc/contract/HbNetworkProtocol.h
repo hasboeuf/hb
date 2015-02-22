@@ -34,7 +34,7 @@ namespace hb
             static QString msAppName;
             static quint16 msProtocolVersion;
 
-            enum NetworkType : quint8
+            enum NetworkType : netwint
             {
                 NETWORK_UNDEFINED = 0,
                 NETWORK_TCP       = 1 << 0,
@@ -47,14 +47,14 @@ namespace hb
             Q_META_ENUMS( NetworkType )
             Q_DECLARE_FLAGS( NetworkTypes, NetworkType )
 
-            enum RoutingScheme : quint8
+            enum RoutingScheme : netwint
             {
                 UNICAST = 0,
                 MULTICAST = 1,
                 BROADCAST = 2
             };
 
-            enum Service : servuid
+            enum Service : serviceuid
             {
                 SERVICE_UNDEFINED = 0,
                 SERVICE_UPDATE    = 1,

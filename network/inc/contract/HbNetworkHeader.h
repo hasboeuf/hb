@@ -29,7 +29,7 @@ namespace hb
 
             HbNetworkHeader(); // Used before streamed back.
             HbNetworkHeader( const HbNetworkHeader & header );
-            HbNetworkHeader( servuid service, codeuid code );
+            HbNetworkHeader( serviceuid service, codeuid code );
             HbNetworkHeader & operator=( const HbNetworkHeader & header );
             ~HbNetworkHeader() = default;
 
@@ -37,7 +37,7 @@ namespace hb
 
             const QString & appName() const;
             quint16 protocolVersion() const;
-            servuid service() const;
+            serviceuid service() const;
             codeuid code() const;
 
             void setRouting( HbNetworkProtocol::RoutingScheme routing );
@@ -45,7 +45,7 @@ namespace hb
         private:
             QString mAppName;
             quint16 mProtocolVersion;
-            servuid mService;
+            serviceuid mService;
             codeuid mCode;
         };
 

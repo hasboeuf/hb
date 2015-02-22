@@ -41,22 +41,22 @@ namespace hb
 
         private:
             void timerEvent( QTimerEvent * event );
-            bool checkSocket( sockuid socket_uid );
-            void addSocket  ( sockuid socket_uid );
-            void delSocket  ( sockuid socket_uid, bool delete_responses = true );
-            void kickSocket ( sockuid socket_uid, HbNetworkProtocol::KickCode reason );
+            bool checkSocket( networkuid socket_uid );
+            void addSocket  ( networkuid socket_uid );
+            void delSocket  ( networkuid socket_uid, bool delete_responses = true );
+            void kickSocket ( networkuid socket_uid, HbNetworkProtocol::KickCode reason );
 
         public callbacks:
             // From HbConnectionPool.
             virtual void onContractReceived( const HbNetworkContract * contract );
-            virtual void onSocketConnected   ( sockuid socket_uid );
-            virtual void onSocketDisconnected( sockuid socket_uid );
+            virtual void onSocketConnected   ( networkuid socket_uid );
+            virtual void onSocketDisconnected( networkuid socket_uid );
             // From HbServerAuthStrategy.
-            void onLoginSucceed( sockuid socket_uid, const HbNetworkUserInfo & user_info );
-            void onLoginFailed ( sockuid socket_uid, HbNetworkProtocol::AuthStatus, const QString & description );
+            void onLoginSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info );
+            void onLoginFailed ( networkuid socket_uid, HbNetworkProtocol::AuthStatus, const QString & description );
 
         signals:
-            void userConnected( sockuid socket_id, const HbNetworkUserInfo & user_info );
+            void userConnected( networkuid socket_id, const HbNetworkUserInfo & user_info );
 
         private:
             HbServiceAuthServerConfig mConfig;
@@ -65,10 +65,10 @@ namespace hb
 
 
             // InOut.
-            QSet< sockuid >          mPendingSocket;
-            QHash< sockuid, quint8 > mAuthTries;
-            QHash< sockuid, quint8 > mAuthTimeout;
-            QHash< sockuid, HbAuthStatusContract * > mResponses;
+            QSet< networkuid >          mPendingSocket;
+            QHash< networkuid, quint8 > mAuthTries;
+            QHash< networkuid, quint8 > mAuthTimeout;
+            QHash< networkuid, HbAuthStatusContract * > mResponses;
         };
     }
 }

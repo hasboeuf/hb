@@ -42,12 +42,12 @@ namespace hb
             // From services.
             virtual void onContractSent( const HbNetworkContract * contract ) = 0;
             // From HbAuthService.
-            virtual void onUserConnected( sockuid socket_id, const HbNetworkUserInfo & user_info ) = 0;
+            virtual void onUserConnected( networkuid socket_id, const HbNetworkUserInfo & user_info ) = 0;
 
         signals:
             // To services.
-            void socketConnected       ( sockuid socket_uid );
-            void socketDisconnected    ( sockuid socket_uid );
+            void socketConnected       ( networkuid socket_uid );
+            void socketDisconnected    ( networkuid socket_uid );
             void socketContractReceived( const HbNetworkContract * contract );
             void userConnected         ( const HbNetworkUserInfo & user_info );
             void userDisconnected      ( const HbNetworkUserInfo & user_info );
@@ -55,10 +55,10 @@ namespace hb
 
         protected:
             virtual bool checkContractReceived( const HbNetworkContract * contract ); // TODO in /com ???
-            HbNetworkService * getService( servuid service_uid );
+            HbNetworkService * getService( serviceuid service_uid );
 
             template< class T >
-            T * getService( servuid service_uid )
+            T * getService( serviceuid service_uid )
             {
                 return dynamic_cast< T * >( getService( service_uid ) );
             }
@@ -80,7 +80,7 @@ namespace hb
             }
 
         protected:
-            QHash< servuid, HbNetworkService * > mServices;
+            QHash< serviceuid, HbNetworkService * > mServices;
         };
     }
 }

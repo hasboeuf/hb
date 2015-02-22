@@ -6,11 +6,10 @@ using namespace hb::network;
 HbAbstractNetwork::HbAbstractNetwork(QObject * parent) :
     QObject(parent)
 {
-    qRegisterMetaType< sockuid >( "sockuid" );
-    qRegisterMetaType< netwuid >( "netwuid" );
-    qRegisterMetaType< servuid >( "servuid" );
+    qRegisterMetaType< networkuid >( "netwuid" );
+    qRegisterMetaType< serviceuid >( "servuid" );
     qRegisterMetaType< codeuid >( "codeuid" );
-    qRegisterMetaType< ctctuid >( "ctctuid" );
+    qRegisterMetaType< contractuid >( "ctctuid" );
     qRegisterMetaType< ShConstHbNetworkContract >( "ShConstHbNetworkContract" );
     qRegisterMetaType< ShHbNetworkContract >     ( "ShHbNetworkContract" );
 }

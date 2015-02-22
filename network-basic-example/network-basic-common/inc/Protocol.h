@@ -23,7 +23,7 @@ namespace hb
         class Protocol
         {
         public:
-            enum Service : servuid
+            enum Service : serviceuid
             {
                 SERVICE_QUESTION = hb::network::HbNetworkProtocol::SERVICE_USER,
                 SERVICE_MESSAGE

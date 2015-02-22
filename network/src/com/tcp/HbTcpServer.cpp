@@ -105,7 +105,7 @@ HbNetworkProtocol::NetworkType HbTcpServer::type() const
     return HbNetworkProtocol::NETWORK_TCP;
 }
 
-bool HbTcpServer::disconnectFromNetwork( quint16 uid )
+bool HbTcpServer::disconnectFromNetwork( networkuid uid )
 {
     // TODO
     return false;

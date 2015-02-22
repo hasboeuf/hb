@@ -25,7 +25,7 @@ namespace hb
     {
         class HbAbstractSocket;
 
-        class HbSocketHandler : public QObject, public HbUid< netwuid, CLASS_NETW >
+        class HbSocketHandler : public QObject, public HbUid< networkuid, CLASS_SERVER, true >
         {
             Q_OBJECT
             Q_DISABLE_COPY( HbSocketHandler )
@@ -54,8 +54,8 @@ namespace hb
         protected:
             HandlerState       mState;
 
-            QHash< sockuid, HbAbstractSocket * > mSocketById;
-            QHash< HbAbstractSocket *, sockuid > mIdBySocket;
+            QHash< networkuid, HbAbstractSocket * > mSocketById;
+            QHash< HbAbstractSocket *, networkuid > mIdBySocket;
 
             QMutex       mSocketMutex;
 
@@ -67,10 +67,10 @@ namespace hb
             virtual void init();
             // From Server
             virtual void onNewPendingConnection( qint32 socket_descriptor ) = 0;
-            virtual void onDisconnectionRequest( quint16 uid );
+            virtual void onDisconnectionRequest( networkuid uid );
             virtual void onServerLeft();
             virtual void onSendContract( ShConstHbNetworkContract contract ); // Send to all.
-            virtual void onSendContract( sockuid socket_uid, ShConstHbNetworkContract contract );
+            virtual void onSendContract( networkuid socket_uid, ShConstHbNetworkContract contract );
             // From Socket
             virtual void onSocketReadyPacket();
             virtual void onSocketDisconnected();
@@ -79,9 +79,9 @@ namespace hb
         signals:
             // To Server.
             void handlerIdled          ();
-            void socketConnected       ( qint32 socket_previous_id, sockuid socket_id );
-            void socketDisconnected    ( sockuid socket_uid );
-            void socketContractReceived( sockuid socket_uid, const HbNetworkContract * contract );
+            void socketConnected       ( qint32 socket_previous_id, networkuid socket_id );
+            void socketDisconnected    ( networkuid socket_uid );
+            void socketContractReceived( networkuid socket_uid, const HbNetworkContract * contract );
         };
     }
 }

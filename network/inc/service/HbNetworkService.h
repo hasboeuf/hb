@@ -36,13 +36,13 @@ namespace hb
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const = 0;
             virtual void plugContracts( HbNetworkExchanges & exchanges ) = 0;
 
-            virtual servuid id() const final
+            virtual serviceuid id() const final
             {
                 return mId;
             }
 
         protected:
-            servuid mId = HbNetworkProtocol::SERVICE_UNDEFINED;
+            serviceuid mId = HbNetworkProtocol::SERVICE_UNDEFINED;
         };
     }
 }

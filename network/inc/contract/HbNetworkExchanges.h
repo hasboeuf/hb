@@ -56,7 +56,7 @@ namespace hb
                 return remove( reference );
             }
 
-            bool registered( servuid service, codeuid code ) const;
+            bool registered( serviceuid service, codeuid code ) const;
             HbNetworkContract * contract( const HbNetworkHeader & header ) const;
 
         private:
@@ -65,7 +65,7 @@ namespace hb
 
         private:
             typedef QHash< codeuid, HbNetworkContract * > Contracts;
-            QHash< servuid, Contracts > mContracts;
+            QHash< serviceuid, Contracts > mContracts;
         };
     }
 }

@@ -28,11 +28,11 @@ namespace hb
             void onSendContractClicked();
             void onStopClicked();
 
-            void onServerConnected       ( servuid server_uid );
-            void onServerDisconnected    ( servuid server_uid );
-            void onSocketConnected       ( servuid server_uid, sockuid socket_uid );
-            void onSocketDisconnected    ( servuid server_uid, sockuid socket_uid );
-            void onSocketContractReceived( servuid server_uid, sockuid socket_uid, const HbNetworkContract * contract );
+            void onServerConnected       ( networkuid server_uid );
+            void onServerDisconnected    ( networkuid server_uid );
+            void onSocketConnected       ( networkuid server_uid, networkuid socket_uid );
+            void onSocketDisconnected    ( networkuid server_uid, networkuid socket_uid );
+            void onSocketContractReceived( networkuid server_uid, networkuid socket_uid, const HbNetworkContract * contract );
 
         signals:
 

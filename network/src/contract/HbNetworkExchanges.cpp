@@ -82,7 +82,7 @@ bool HbNetworkExchanges::remove( HbNetworkContract * contract )
     }
 }
 
-bool HbNetworkExchanges::registered( servuid service, codeuid code ) const
+bool HbNetworkExchanges::registered( serviceuid service, codeuid code ) const
 {
     return mContracts.value( service ).contains( code );
 }

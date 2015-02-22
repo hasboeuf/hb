@@ -72,7 +72,7 @@ void ServerMainWindow::onStartClicked()
     config.setPort( 4000 );
     config.setMaxUsersPerThread( 1 );
 
-    quint16 server_uid = mpHbServer->joinTcpServer( config );
+    networkuid server_uid = mpHbServer->joinTcpServer( config, true );
     if( server_uid > 0 )
     {
         HbInfo( "Server #%d started.", server_uid );

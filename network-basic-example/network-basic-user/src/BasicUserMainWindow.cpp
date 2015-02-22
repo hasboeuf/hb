@@ -78,17 +78,17 @@ void BasicUserMainWindow::onStopClicked()
     mTcpClient.leave();
 }
 
-void BasicUserMainWindow::onClientConnected( sockuid client_uid )
+void BasicUserMainWindow::onClientConnected( networkuid client_uid )
 {
     HbInfo( "Client %d connected.", client_uid );
 }
 
-void BasicUserMainWindow::onClientDisconnected( sockuid client_uid )
+void BasicUserMainWindow::onClientDisconnected( networkuid client_uid )
 {
     HbInfo( "Client %d disconnected.", client_uid );
 }
 
-void BasicUserMainWindow::onClientContractReceived( sockuid client_uid, const HbNetworkContract * contract )
+void BasicUserMainWindow::onClientContractReceived( networkuid client_uid, const HbNetworkContract * contract )
 {
     q_assert_ptr( contract );
 

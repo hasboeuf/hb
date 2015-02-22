@@ -9,7 +9,7 @@ HbNetworkChannel::HbNetworkChannel()
     mId = HbNetworkProtocol::SERVICE_CHANNEL;
 }
 
-servuid HbNetworkChannel::id() const
+serviceuid HbNetworkChannel::id() const
 {
     return mId;
 }

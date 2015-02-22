@@ -37,8 +37,8 @@ namespace hb
 
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
-            virtual void onSocketConnected   ( sockuid socket_uid ) = 0;
-            virtual void onSocketDisconnected( sockuid socket_uid ) = 0;
+            virtual void onSocketConnected   ( networkuid socket_uid ) = 0;
+            virtual void onSocketDisconnected( networkuid socket_uid ) = 0;
         };
     }
 }

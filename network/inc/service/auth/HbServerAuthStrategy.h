@@ -35,9 +35,9 @@ namespace hb
             virtual authstgy type() const = 0;
 
         signals:
-            void loginSucceed( sockuid sender,
+            void loginSucceed( networkuid sender,
                                const HbNetworkUserInfo & user );
-            void loginFailed(  sockuid sender,
+            void loginFailed(  networkuid sender,
                                const HbNetworkProtocol::AuthStatus & status,
                                const QString & description );
         };

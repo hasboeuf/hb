@@ -31,7 +31,7 @@ namespace hb
             HbServer( const HbGeneralServerConfig & config );
             virtual ~HbServer() = default;
 
-            netwuid joinTcpServer( HbTcpServerConfig & config, bool main = false );
+            networkuid joinTcpServer( HbTcpServerConfig & config, bool main );
             bool leave();
 
         private:

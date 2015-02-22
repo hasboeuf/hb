@@ -15,7 +15,7 @@ HbNetworkHeader::HbNetworkHeader()
     mCode            = HbNetworkProtocol::CODE_UNDEFINED;
 }
 
-HbNetworkHeader::HbNetworkHeader( servuid service, codeuid code ) :
+HbNetworkHeader::HbNetworkHeader( serviceuid service, codeuid code ) :
     HbNetworkHeader()
 {
     mService = service;
@@ -64,7 +64,7 @@ quint16 HbNetworkHeader::protocolVersion() const
     return mProtocolVersion;
 }
 
-servuid HbNetworkHeader::service() const
+serviceuid HbNetworkHeader::service() const
 {
     return mService;
 }

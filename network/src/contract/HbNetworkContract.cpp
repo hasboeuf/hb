@@ -18,7 +18,7 @@ HbNetworkContract::~HbNetworkContract()
     //HbDebug( "HbNetworkContract::destructor()" );
 }
 
-HbNetworkContract::HbNetworkContract( servuid service, codeuid code ) :
+HbNetworkContract::HbNetworkContract( serviceuid service, codeuid code ) :
     mHeader( service, code )
 {
     mSender      = 0;
@@ -78,12 +78,12 @@ const HbNetworkHeader & HbNetworkContract::header() const
     return mHeader;
 }
 
-void HbNetworkContract::setSender( sockuid sender )
+void HbNetworkContract::setSender( networkuid sender )
 {
     mSender = sender;
 }
 
-sockuid HbNetworkContract::sender() const
+networkuid HbNetworkContract::sender() const
 {
     return mSender;
 }
@@ -93,7 +93,7 @@ void HbNetworkContract::addPendingReceiver( const QString & user_uid )
     mPendingReceivers.insert( user_uid );
 }
 
-bool HbNetworkContract::addSocketReceiver( sockuid receiver )
+bool HbNetworkContract::addSocketReceiver( networkuid receiver )
 {
     if( mRouting == HbNetworkProtocol::RoutingScheme::UNICAST )
     {
@@ -123,18 +123,18 @@ void HbNetworkContract::resetSocketReceivers()
     mSocketReceivers.clear();
 }
 
-const QSet< sockuid > & HbNetworkContract::socketReceivers() const
+const QSet< networkuid > & HbNetworkContract::socketReceivers() const
 {
     return mSocketReceivers;
 }
 
-sockuid HbNetworkContract::socketReceiver() const
+networkuid HbNetworkContract::socketReceiver() const
 {
     if( mSocketReceivers.size() == 1 )
     {
         return *mSocketReceivers.begin();
     }
-    return 0; // 0 is an invalid sockuid.
+    return 0; // 0 is an invalid netwuid.
 }
 
 HbNetworkProtocol::RoutingScheme HbNetworkContract::routing() const

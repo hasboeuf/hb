@@ -22,18 +22,18 @@ bool HbClient::leave()
     return true;
 }
 
-sockuid HbClient::joinTcpClient( HbTcpClientConfig & config , bool main )
+networkuid HbClient::joinTcpClient( HbTcpClientConfig & config , bool main )
 {
     return mConnectionPool.joinTcpClient( config, main );
 }
 
-/*void HbClient::onClientConnected( sockuid client_uid )
+/*void HbClient::onClientConnected( netwuid client_uid )
 {
     HbInfo( "Client %d connected.", client_uid );
     emit clientConnected( client_uid );
 }
 
-void HbClient::onClientDisconnected    ( sockuid client_uid )
+void HbClient::onClientDisconnected    ( netwuid client_uid )
 {
     HbInfo( "Client %d disconnected.", client_uid );
 
