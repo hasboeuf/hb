@@ -12,21 +12,22 @@
 
 using namespace hb::network;
 
-HbServerConnectionPool::HbServerConnectionPool()
+HbServerConnectionPool::HbServerConnectionPool( const HbGeneralServerConfig & config ) :
+    HbConnectionPool( config )
 {
     mMainServer = 0;
 
-    HbServerPresenceService * service_timeout = new HbServerPresenceService();
-    HbServerAuthService     * service_auth    = new HbServerAuthService();
-    HbServerChannelService  * service_channel = new HbServerChannelService();
+    HbServerPresenceService * service_presence = new HbServerPresenceService();
+    HbServerAuthService     * service_auth     = new HbServerAuthService();
+    HbServerChannelService  * service_channel  = new HbServerChannelService();
 
-    q_assert( service_timeout->id() != HbNetworkProtocol::SERVICE_UNDEFINED );
-    q_assert( service_auth->id()    != HbNetworkProtocol::SERVICE_UNDEFINED );
-    q_assert( service_channel->id() != HbNetworkProtocol::SERVICE_UNDEFINED );
+    service_presence->setConfig( config.presence() );
+    service_auth->setConfig    ( config.auth    () );
+    service_channel->setConfig ( config.channel () );
 
-    mServices.insert( service_timeout->id(), service_timeout );
-    mServices.insert( service_auth->id(),    service_auth    );
-    mServices.insert( service_channel->id(), service_channel );
+    mServices.insert( service_presence->id(), service_presence );
+    mServices.insert( service_auth->id(),     service_auth    );
+    mServices.insert( service_channel->id(),  service_channel );
 
     //connect( service_auth, &HbServerAuthService::userConnected, this, &HbConnectionPool::onUserConnected );
 
@@ -75,11 +76,6 @@ bool HbServerConnectionPool::leave()
     qDeleteAll( mServers );
     mServers.clear();
     return true;
-}
-
-bool HbServerConnectionPool::setConfiguration( const HbGeneralServerConfig config )
-{
-    HbConnectionPool::setConfiguration( config );
 }
 
 netwuid HbServerConnectionPool::joinTcpServer( HbTcpServerConfig & config , bool main )
@@ -229,7 +225,7 @@ void HbServerConnectionPool::onSocketContractReceived( quint16 server_uid, socku
         q_assert( requested_service == HbNetworkProtocol::SERVICE_AUTH );
     }
 
-    HbNetworkService * service = mServices.value( requested_service, nullptr );
+    HbNetworkService * service = getService( requested_service );
     if( !service )
     {
         // TODO kick

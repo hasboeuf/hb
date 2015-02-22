@@ -9,7 +9,7 @@
 
 using namespace hb::network;
 
-bool HbConnectionPool::setConfiguration( const HbGeneralConfig config )
+HbConnectionPool::HbConnectionPool( const HbGeneralConfig & config )
 {
 
 }
@@ -35,4 +35,9 @@ bool HbConnectionPool::checkContractReceived( const HbNetworkContract * contract
     }
 
     return ok;
+}
+
+HbNetworkService * HbConnectionPool::getService( servuid service_uid )
+{
+    return mServices.value( service_uid, nullptr );
 }

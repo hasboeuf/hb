@@ -14,6 +14,7 @@
 // Local
 #include <HbNetwork.h>
 #include <service/channel/HbChannelService.h>
+#include <config/service/channel/HbServiceChannelClientConfig.h>
 
 namespace hb
 {
@@ -27,10 +28,16 @@ namespace hb
             HbClientChannelService() = default;
             virtual ~HbClientChannelService( ) = default;
 
+            const HbServiceChannelClientConfig & config() const;
+            void setConfig( const HbServiceChannelClientConfig & config );
+
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract  );
             virtual void onUserConnected   ( const HbNetworkUserInfo & user_info );
             virtual void onUserDisconnected( const HbNetworkUserInfo & user_info );
+
+        private:
+            HbServiceChannelClientConfig mConfig;
         };
     }
 }

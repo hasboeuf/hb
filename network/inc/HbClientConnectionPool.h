@@ -30,11 +30,11 @@ namespace hb
             Q_OBJECT
         public:
 
-            HbClientConnectionPool();
+            HbClientConnectionPool() = delete;
+            HbClientConnectionPool( const HbGeneralClientConfig & config );
             virtual ~HbClientConnectionPool();
 
             virtual bool leave();
-            virtual bool setConfiguration( const HbGeneralClientConfig config );
 
             sockuid joinTcpClient( HbTcpClientConfig & config, bool main );
 

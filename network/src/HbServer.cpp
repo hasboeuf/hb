@@ -7,10 +7,13 @@
 
 using namespace hb::network;
 
-HbServer::HbServer(const HbGeneralServerConfig &config ) :
-    HbPeer( config )
+HbServer::HbServer(const HbGeneralServerConfig & config ) :
+    HbPeer( config ), mConnectionPool( config )
 {
-    mConnectionPool.setConfiguration( config );
+    if( !isReady() )
+    {
+
+    }
 }
 
 netwuid HbServer::joinTcpServer( HbTcpServerConfig & config , bool main )

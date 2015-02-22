@@ -8,9 +8,12 @@
 using namespace hb::network;
 
 HbClient::HbClient( const HbGeneralClientConfig & config ) :
-    HbPeer( config )
+    HbPeer( config ), mConnectionPool( config )
 {
-    mConnectionPool.setConfiguration( config );
+    if( !isReady() )
+    {
+
+    }
 }
 
 bool HbClient::leave()

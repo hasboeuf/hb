@@ -14,6 +14,7 @@
 // Local
 #include <HbNetwork.h>
 #include <service/presence/HbPresenceService.h>
+#include <config/service/presence/HbServicePresenceClientConfig.h>
 
 namespace hb
 {
@@ -29,10 +30,16 @@ namespace hb
             HbClientPresenceService() = default;
             virtual ~HbClientPresenceService( ) = default;
 
+            const HbServicePresenceClientConfig & config() const;
+            void setConfig( const HbServicePresenceClientConfig & config );
+
         public callbacks:
             void onUserConnected   ( const HbNetworkUserInfo & user_info );
             void onUserDisconnected( const HbNetworkUserInfo & user_info );
             void onContractReceived( const HbNetworkContract * contract );
+
+        private:
+            HbServicePresenceClientConfig mConfig;
         };
     }
 }

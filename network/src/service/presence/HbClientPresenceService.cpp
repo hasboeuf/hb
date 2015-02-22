@@ -5,6 +5,19 @@
 
 using namespace hb::network;
 
+const HbServicePresenceClientConfig & HbClientPresenceService::config() const
+{
+    return mConfig;
+}
+
+void HbClientPresenceService::setConfig( const HbServicePresenceClientConfig & config )
+{
+    if( config.isValid() )
+    {
+        mConfig = config;
+    }
+}
+
 void HbClientPresenceService::onUserConnected   ( const HbNetworkUserInfo & user_info )
 {
 

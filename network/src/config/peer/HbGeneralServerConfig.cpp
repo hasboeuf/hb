@@ -55,3 +55,18 @@ HbServicePresenceServerConfig & HbGeneralServerConfig::presence()
 {
     return mPresenceConfig;
 }
+
+const HbServiceAuthServerConfig & HbGeneralServerConfig::auth() const
+{
+    return mAuthConfig;
+}
+
+const HbServiceChannelServerConfig & HbGeneralServerConfig::channel() const
+{
+    return mChannelConfig;
+}
+
+const HbServicePresenceServerConfig & HbGeneralServerConfig::presence() const
+{
+    return mPresenceConfig;
+}

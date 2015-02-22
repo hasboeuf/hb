@@ -14,6 +14,7 @@
 // Local
 #include <service/auth/HbAuthService.h>
 #include <user/HbNetworkUserInfo.h>
+#include <config/service/auth/HbServiceAuthServerConfig.h>
 
 class QTimerEvent;
 
@@ -35,6 +36,9 @@ namespace hb
             HbServerAuthService();
             virtual ~HbServerAuthService();
 
+            const HbServiceAuthServerConfig & config() const;
+            void setConfig( const HbServiceAuthServerConfig & config );
+
         private:
             void timerEvent( QTimerEvent * event );
             bool checkSocket( sockuid socket_uid );
@@ -55,6 +59,7 @@ namespace hb
             void userConnected( sockuid socket_id, const HbNetworkUserInfo & user_info );
 
         private:
+            HbServiceAuthServerConfig mConfig;
             QHash< authstgy, HbServerAuthStrategy * > mStrategies;
             qint32 mTimerId;
 

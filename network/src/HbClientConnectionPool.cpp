@@ -13,16 +13,22 @@
 using namespace hb::network;
 
 
-HbClientConnectionPool::HbClientConnectionPool()
+HbClientConnectionPool::HbClientConnectionPool( const HbGeneralClientConfig & config ) :
+    HbConnectionPool( config )
 {
     mMainClient = 0;
-    /*HbClientPresenceService * service_timeout = new HbClientPresenceService();
-    HbClientAuthService     * service_auth    = new HbClientAuthService();
-    HbClientChannelService  * service_channel = new HbClientChannelService();
 
-    mServices.insert( service_timeout->id(), service_timeout );
-    mServices.insert( service_auth->id(),    service_auth    );
-    mServices.insert( service_channel->id(), service_channel );
+    HbClientPresenceService * service_presence = new HbClientPresenceService();
+    HbClientAuthService     * service_auth     = new HbClientAuthService();
+    HbClientChannelService  * service_channel  = new HbClientChannelService();
+
+    service_presence->setConfig( config.presence() );
+    service_auth->setConfig    ( config.auth    () );
+    service_channel->setConfig ( config.channel () );
+
+    mServices.insert( service_presence->id(), service_presence );
+    mServices.insert( service_auth->id(),     service_auth    );
+    mServices.insert( service_channel->id(),  service_channel );
 
     foreach( HbNetworkService * service, mServices )
     {
@@ -30,12 +36,12 @@ HbClientConnectionPool::HbClientConnectionPool()
         IHbSocketListener * socket_listener = dynamic_cast< IHbSocketListener * >( service );
         if( socket_listener )
         {
-            connect( this, &HbServerConnectionPool::socketConnected,
+            connect( this, &HbClientConnectionPool::socketConnected,
                     [socket_listener]( sockuid socket_uid )
                     {
                         socket_listener->onSocketConnected( socket_uid );
                     } );
-            connect( this, &HbServerConnectionPool::socketDisconnected,
+            connect( this, &HbClientConnectionPool::socketDisconnected,
                     [socket_listener]( sockuid socket_uid )
                     {
                         socket_listener->onSocketDisconnected( socket_uid );
@@ -45,18 +51,18 @@ HbClientConnectionPool::HbClientConnectionPool()
         IHbUserListener * user_listener = dynamic_cast< IHbUserListener * >( service );
         if( user_listener )
         {
-            connect( this, &HbServerConnectionPool::userConnected,
+            connect( this, &HbClientConnectionPool::userConnected,
                     [user_listener]( const HbNetworkUserInfo & user_info )
                     {
                         user_listener->onUserConnected( user_info );
                     } );
-            connect( this, &HbServerConnectionPool::userDisconnected,
+            connect( this, &HbClientConnectionPool::userDisconnected,
                     [user_listener]( const HbNetworkUserInfo & user_info )
                     {
                         user_listener->onUserDisconnected( user_info );
                     } );
         }
-    }*/
+    }
 }
 
 HbClientConnectionPool::~HbClientConnectionPool()
@@ -69,11 +75,6 @@ bool HbClientConnectionPool::leave()
     qDeleteAll( mClients );
     mClients.clear();
     return true;
-}
-
-bool HbClientConnectionPool::setConfiguration( const HbGeneralClientConfig config )
-{
-    HbConnectionPool::setConfiguration( config );
 }
 
 sockuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , bool main )

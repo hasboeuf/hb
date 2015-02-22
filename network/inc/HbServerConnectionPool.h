@@ -31,11 +31,11 @@ namespace hb
             Q_OBJECT
         public:
 
-            HbServerConnectionPool();
+            HbServerConnectionPool() = delete;
+            HbServerConnectionPool( const HbGeneralServerConfig & config );
             virtual ~HbServerConnectionPool();
 
             virtual bool leave();
-            virtual bool setConfiguration(const HbGeneralServerConfig config );
 
             netwuid joinTcpServer( HbTcpServerConfig & config, bool main );
 

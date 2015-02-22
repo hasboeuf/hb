@@ -29,13 +29,13 @@ namespace hb
             Q_OBJECT
         public:
 
-            HbConnectionPool() = default;
+            HbConnectionPool() = delete;
+            HbConnectionPool( const HbGeneralConfig & config );
             virtual ~HbConnectionPool() = default;
 
             virtual bool leave() = 0;
 
         protected:
-            virtual bool setConfiguration( const HbGeneralConfig config );
             void setExchanges( HbNetworkExchanges & exchanges );
 
         public callbacks:
@@ -55,6 +55,13 @@ namespace hb
 
         protected:
             virtual bool checkContractReceived( const HbNetworkContract * contract ); // TODO in /com ???
+            HbNetworkService * getService( servuid service_uid );
+
+            template< class T >
+            T * getService( servuid service_uid )
+            {
+                return dynamic_cast< T * >( getService( service_uid ) );
+            }
 
             template< class T >
             QList< T * > getListeners()

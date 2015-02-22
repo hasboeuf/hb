@@ -40,6 +40,10 @@ namespace hb
             HbServiceChannelClientConfig  & channel ();
             HbServicePresenceClientConfig & presence();
 
+            const HbServiceAuthClientConfig     & auth    () const;
+            const HbServiceChannelClientConfig  & channel () const;
+            const HbServicePresenceClientConfig & presence() const;
+
         protected:
 
         private:

@@ -13,6 +13,7 @@
 // Hb
 // Local
 #include <service/auth/HbAuthService.h>
+#include <config/service/auth/HbServiceAuthClientConfig.h>
 
 namespace hb
 {
@@ -26,10 +27,17 @@ namespace hb
             HbClientAuthService() = default;
             virtual ~HbClientAuthService( ) = default;
 
+            const HbServiceAuthClientConfig & config() const;
+            void setConfig( const HbServiceAuthClientConfig & config );
+
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract );
             virtual void onSocketConnected   ( sockuid socket_uid );
             virtual void onSocketDisconnected( sockuid socket_uid );
+
+        private:
+            HbServiceAuthClientConfig mConfig;
+
         };
     }
 }

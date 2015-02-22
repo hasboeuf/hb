@@ -15,6 +15,7 @@ HbPeer::HbPeer( const HbGeneralConfig &config )
     {
         HbNetworkProtocol::msAppName = config.appName();
         HbNetworkProtocol::msProtocolVersion = config.protocolVersion();
+
         mReady = true;
     }
     else

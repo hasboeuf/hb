@@ -5,6 +5,19 @@
 
 using namespace hb::network;
 
+const HbServiceChannelServerConfig & HbServerChannelService::config() const
+{
+    return mConfig;
+}
+
+void HbServerChannelService::setConfig( const HbServiceChannelServerConfig & config )
+{
+    if( config.isValid() )
+    {
+        mConfig = config;
+    }
+}
+
 void HbServerChannelService::onContractReceived( const HbNetworkContract * contract )
 {
 

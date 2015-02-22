@@ -35,6 +35,19 @@ HbServerAuthService::~HbServerAuthService()
     qDeleteAll( mStrategies );
 }
 
+const HbServiceAuthServerConfig & HbServerAuthService::config() const
+{
+    return mConfig;
+}
+
+void HbServerAuthService::setConfig( const HbServiceAuthServerConfig & config )
+{
+    if( config.isValid() )
+    {
+        mConfig = config;
+    }
+}
+
 void HbServerAuthService::timerEvent( QTimerEvent * )
 {
     // TODO check socket timeout.
@@ -68,7 +81,7 @@ bool HbServerAuthService::checkSocket( sockuid socket_uid )
 void HbServerAuthService::addSocket( sockuid socket_uid )
 {
     mPendingSocket.insert( socket_uid );
-    mAuthTimeout.insert  ( socket_uid, 30 ); // TODO config
+    mAuthTimeout.insert  ( socket_uid, mConfig.authTimeout() );
     mAuthTries.insert    ( socket_uid, 0 );
 }
 
@@ -163,7 +176,7 @@ void HbServerAuthService::onLoginSucceed( sockuid socket_uid, const HbNetworkUse
 
         response->setStatus( HbNetworkProtocol::AUTH_OK );
         response->setTryNumber( 1 ); // TODO store try number.
-        response->setMaxTries( 3 ); // TODO config.
+        response->setMaxTries( mConfig.authMaxTries() );
 
         delSocket( socket_uid, false );
 
@@ -194,7 +207,7 @@ void HbServerAuthService::onLoginFailed( sockuid socket_uid, HbNetworkProtocol::
         response->setStatus( status );
         response->setDescription( description );
         response->setTryNumber( 1 ); // TODO store try number.
-        response->setMaxTries( 3 ); // TODO config.
+        response->setMaxTries( mConfig.authMaxTries() );
 
         // TODO emit contract.
     }
