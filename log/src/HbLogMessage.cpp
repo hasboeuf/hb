@@ -26,7 +26,7 @@ const HbLogMessage * HbLogMessage::fromRaw( const QString & raw)
 
         HbLogger::Level level = HbLogger::MetaLevel::fromString( level_str, HbLogger::LEVEL_NONE );
 
-        QTime  time    = QTime::fromString( time_str, QStringLiteral( "HH:mm:ss:zzz" ) );
+        QTime  time    = QTime::fromString( time_str, QStringLiteral( "HH:mm:ss:zzz.uuuuuu" ) );
         qint32 timetag = time.msec() + 1000 * ( time.second() + ( time.minute() * 60 ) + ( time.hour() * 3600 ) );
         qint32 line    = ( qint32 ) line_str.toInt();
 
