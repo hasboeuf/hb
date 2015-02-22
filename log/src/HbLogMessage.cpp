@@ -26,12 +26,12 @@ const HbLogMessage * HbLogMessage::fromRaw( const QString & raw)
 
         HbLogger::Level level = HbLogger::MetaLevel::fromString( level_str, HbLogger::LEVEL_NONE );
 
-        QTime  time    = QTime::fromString( time_str, QStringLiteral( "HH:mm:ss:zzz.uuuuuu" ) );
-        qint32 timetag = time.msec() + 1000 * ( time.second() + ( time.minute() * 60 ) + ( time.hour() * 3600 ) );
+        HbSteadyDateTime datetime = HbSteadyDateTime::fromString( QStringLiteral( "yyyy-MM-dd-HH:mm:ss:zzz.uuuuuu" ), time_str );
+        qint64 timestamp = datetime.toNsSinceEpoch();
         qint32 line    = ( qint32 ) line_str.toInt();
 
         HbLogContext context( owner, file.toStdString().c_str(), line, function.toStdString().c_str() );
-        msg = new HbLogMessage( level, HbLogger::OUTPUT_ALL, context, timetag, text );
+        msg = new HbLogMessage( level, HbLogger::OUTPUT_ALL, context, timestamp, text );
     }
 
     return msg;
@@ -42,7 +42,8 @@ const QString HbLogMessage::toRaw(const HbLogMessage &msg)
     QString raw;
 
     raw += msg.levelStr( false )                             + HbLogMessage::msFieldSeparator;
-    raw += msg.timestampStr()                                + HbLogMessage::msFieldSeparator;
+    raw += HbSteadyDateTime::fromNsSinceEpoch( msg.timestamp() ).toString( "yyyy-MM-dd-HH:mm:ss:zzz.uuuuuu" )
+                                                             + HbLogMessage::msFieldSeparator;
     raw += msg.mContext.owner()                              + HbLogMessage::msFieldSeparator;
     raw += QStringLiteral( "%1" ).arg( msg.mContext.line() ) + HbLogMessage::msFieldSeparator;
     raw += msg.mContext.file()                               + HbLogMessage::msFieldSeparator;
@@ -110,7 +111,7 @@ HbLogger::Level HbLogMessage::level() const
     return mLevel;
 }
 
-QString HbLogMessage::levelStr(bool spacing) const
+QString HbLogMessage::levelStr( bool spacing ) const
 {
     QString level = HbLogger::MetaLevel::toString( mLevel );
     if( spacing )

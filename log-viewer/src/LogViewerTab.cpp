@@ -426,7 +426,7 @@ void LogViewerTab::onSaveAsClicked()
         }
 
         qint16  level = ( qint16 ) item_level->data( Qt::UserRole ).toInt();
-        qint32  time  = ( qint32 ) item_time->data( Qt::UserRole ).toInt();
+        qint64  time  = ( qint64 ) item_time->data( Qt::UserRole ).toLongLong();
         QString owner = item_owner->data( Qt::DisplayRole ).toString();
         QString text  = item_text->data( Qt::DisplayRole ).toString();
         qint32  line  = ( qint32 ) item_line->data( Qt::DisplayRole ).toInt();
