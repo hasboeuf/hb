@@ -166,3 +166,4 @@ HB.sln
 */*.sln
 plugin-example/*.sln
 plugin-example/plugins/*.sln
+.gitattributes
