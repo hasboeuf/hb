@@ -13,7 +13,6 @@
 // Hb
 // Local
 #include <service/auth/HbAuthService.h>
-#include <listener/IHbSocketListener.h>
 #include <user/HbNetworkUserInfo.h>
 
 class QTimerEvent;
@@ -27,7 +26,7 @@ namespace hb
         class HbAuthRequestContract;
         class HbAuthStatusContract;
 
-        class HB_NETWORK_DECL HbServerAuthService : public HbAuthService, public IHbSocketListener
+        class HB_NETWORK_DECL HbServerAuthService : public HbAuthService
         {
             Q_OBJECT
 
@@ -35,8 +34,6 @@ namespace hb
 
             HbServerAuthService();
             virtual ~HbServerAuthService();
-
-            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
 
         private:
             void timerEvent( QTimerEvent * event );

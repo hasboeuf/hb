@@ -14,6 +14,7 @@
 // Hb
 // Local
 #include <HbNetwork.h>
+#include <config/peer/HbGeneralConfig.h>
 #include <config/com/HbTcpServerConfig.h>
 #include <user/HbNetworkUserInfo.h>
 
@@ -21,41 +22,27 @@ namespace hb
 {
     namespace network
     {
-        class HbAbstractServer;
         class HbNetworkService;
-        class HbNetworkUser;
 
         class HB_NETWORK_DECL HbConnectionPool: public QObject
         {
             Q_OBJECT
         public:
 
-            HbConnectionPool();
-            virtual ~HbConnectionPool();
+            HbConnectionPool() = default;
+            virtual ~HbConnectionPool() = default;
 
-            bool leave();
-            quint16 joinTcpServer( const HbTcpServerConfig & config );
+            virtual bool leave() = 0;
+
+        protected:
+            virtual bool setConfiguration( const HbGeneralConfig config );
+            void setExchanges( HbNetworkExchanges & exchanges );
 
         public callbacks:
-            // From HbAbstractServer.
-            void onServerConnected       ( servuid server_uid );
-            void onServerDisconnected    ( servuid server_uid );
-            void onSocketConnected       ( servuid server_uid, sockuid socket_uid );
-            void onSocketDisconnected    ( servuid server_uid, sockuid socket_uid );
-            void onSocketContractReceived( servuid server_uid, sockuid socket_uid, const HbNetworkContract * contract );
-
             // From services.
-            void onContractSent( const HbNetworkContract * contract );
-            void onContractSent( sockuid socket_uid, const HbNetworkContract * contract );
-            void onUserKick    ( const HbNetworkUser & user_info, netwint reason );
-            void onSocketKick  ( sockuid socket_uid, netwint reason );
-
+            virtual void onContractSent( const HbNetworkContract * contract ) = 0;
             // From HbAuthService.
-            void onNewUserConnected( sockuid socket_id, const HbNetworkUserInfo & user_info );
-            // From HbPresenceService.
-            void onUserWaited();
-
-
+            virtual void onUserConnected( sockuid socket_id, const HbNetworkUserInfo & user_info ) = 0;
 
         signals:
             // To services.
@@ -66,9 +53,8 @@ namespace hb
             void userDisconnected      ( const HbNetworkUserInfo & user_info );
             void userContractReceived  ( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract );
 
-        private:
-            bool checkContractReceived( const HbNetworkContract * contract );
-            HbNetworkUser * isSocketAuthenticated( sockuid socket_uid );
+        protected:
+            virtual bool checkContractReceived( const HbNetworkContract * contract ); // TODO in /com ???
 
             template< class T >
             QList< T * > getListeners()
@@ -86,13 +72,8 @@ namespace hb
                 return listeners;
             }
 
-        private:
-            QHash< netwuid, HbAbstractServer * > mServers;
+        protected:
             QHash< servuid, HbNetworkService * > mServices;
-
-            QSet < sockuid > mPendingSockets;
-            QHash< sockuid, netwuid > mServerBySocketId;
-            QHash< sockuid, HbNetworkUser * > mUserBySocketId;
         };
     }
 }

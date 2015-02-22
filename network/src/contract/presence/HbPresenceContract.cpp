@@ -3,7 +3,8 @@
 #include <contract/HbNetworkProtocol.h>
 
 HbPresenceContract::HbPresenceContract() :
-    HbNetworkContract( HbNetworkProtocol::SERVICE_PRESENCE, HbNetworkProtocol::CODE_CLT_PRESENCE )
+    HbNetworkContract( HbNetworkProtocol::SERVICE_PRESENCE,
+                       HbNetworkProtocol::CODE_CLT_PRESENCE )
 {
 
 }

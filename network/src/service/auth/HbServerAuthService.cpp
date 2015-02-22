@@ -13,8 +13,6 @@ using namespace hb::network;
 
 HbServerAuthService::HbServerAuthService()
 {
-    mId = HbNetworkProtocol::SERVICE_AUTH;
-
     HbServerAuthFacebookStrategy * fb_strategy = new HbServerAuthFacebookStrategy();
     mStrategies.insert( fb_strategy->type(), fb_strategy );
 
@@ -35,12 +33,6 @@ HbServerAuthService::HbServerAuthService()
 HbServerAuthService::~HbServerAuthService()
 {
     qDeleteAll( mStrategies );
-}
-
-HbNetworkProtocol::NetworkTypes HbServerAuthService::enabledNetworkTypes() const
-{
-    return HbNetworkProtocol::NETWORK_TCP |
-           HbNetworkProtocol::NETWORK_SSL;
 }
 
 void HbServerAuthService::timerEvent( QTimerEvent * )

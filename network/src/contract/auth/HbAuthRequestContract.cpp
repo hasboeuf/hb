@@ -6,7 +6,8 @@
 using namespace hb::network;
 
 HbAuthRequestContract::HbAuthRequestContract() :
-    HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_CLT_AUTH_REQUEST )
+    HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH,
+                       HbNetworkProtocol::CODE_CLT_AUTH_REQUEST )
 {
     mType   = HbAuthService::AUTH_NONE;
     mpReply = new HbAuthStatusContract();
@@ -31,6 +32,11 @@ HbAuthRequestContract & HbAuthRequestContract::operator=( const HbAuthRequestCon
     }
 
     return ( *this );
+}
+
+HbAuthRequestContract * HbAuthRequestContract::create() const
+{
+    return new HbAuthRequestContract();
 }
 
 HbAuthStatusContract * HbAuthRequestContract::reply() const

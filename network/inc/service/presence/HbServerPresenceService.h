@@ -6,36 +6,30 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HbServerPresenceService_H
-#define HbServerPresenceService_H
+#ifndef HBSERVERPRESENCESERVICE_H
+#define HBSERVERPRESENCESERVICE_H
 
 // Qt
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <service/HbNetworkService.h>
-#include <listener/IHbSocketListener.h>
-#include <listener/IHbUserListener.h>
+#include <service/presence/HbPresenceService.h>
 
 namespace hb
 {
     namespace network
     {
 
-        class HB_NETWORK_DECL HbServerPresenceService : public HbNetworkService, public IHbSocketListener, public IHbUserListener
+        class HB_NETWORK_DECL HbServerPresenceService : public HbPresenceService
         {
             Q_OBJECT
 
         public:
 
-            HbServerPresenceService();
+            HbServerPresenceService() = default;
             virtual ~HbServerPresenceService( ) = default;
 
-            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
-
         public callbacks:
-            void onSocketConnected   ( sockuid socket_uid );
-            void onSocketDisconnected( sockuid socket_uid );
             void onUserConnected   ( const HbNetworkUserInfo & user_info );
             void onUserDisconnected( const HbNetworkUserInfo & user_info );
             void onContractReceived( const HbNetworkContract * contract );
@@ -43,4 +37,4 @@ namespace hb
     }
 }
 
-#endif // HbServerPresenceService_H
+#endif // HBSERVERPRESENCESERVICE_H

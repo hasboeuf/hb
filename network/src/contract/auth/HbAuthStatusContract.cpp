@@ -5,7 +5,8 @@
 using namespace hb::network;
 
 HbAuthStatusContract::HbAuthStatusContract() :
-    HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_SRV_AUTH_STATUS )
+    HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH,
+                       HbNetworkProtocol::CODE_SRV_AUTH_STATUS )
 {
     mStatus    = HbNetworkProtocol::AUTH_BAD;
     mTryNumber = 0;

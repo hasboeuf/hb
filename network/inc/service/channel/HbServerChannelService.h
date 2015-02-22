@@ -13,22 +13,19 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <service/HbNetworkService.h>
-#include <listener/IHbUserListener.h>
+#include <service/channel/HbChannelService.h>
 
 namespace hb
 {
     namespace network
     {
 
-        class HB_NETWORK_DECL HbServerChannelService : public HbNetworkService, public IHbUserListener
+        class HB_NETWORK_DECL HbServerChannelService : public HbChannelService
         {
         public:
 
-            HbServerChannelService();
+            HbServerChannelService() = default;
             virtual ~HbServerChannelService() = default;
-
-            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
 
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract );

@@ -15,6 +15,7 @@
 // Local
 #include <HbNetwork.h>
 #include <contract/HbNetworkContract.h>
+#include <contract/HbNetworkExchanges.h>
 #include <listener/IHbContractListener.h>
 
 namespace hb
@@ -33,6 +34,7 @@ namespace hb
 
             virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const = 0;
+            virtual void plugContracts( HbNetworkExchanges & exchanges ) = 0;
 
             virtual servuid id() const final
             {

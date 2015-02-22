@@ -6,41 +6,35 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBAUTHSERVICE_H
-#define HBAUTHSERVICE_H
+#ifndef HBCHANNELSERVICE_H
+#define HBCHANNELSERVICE_H
 
 // Qt
 // Hb
 // Local
 #include <service/HbNetworkService.h>
-#include <listener/IHbSocketListener.h>
+#include <listener/IHbUserListener.h>
 
 namespace hb
 {
     namespace network
     {
 
-        class HB_NETWORK_DECL HbAuthService : public HbNetworkService, public IHbSocketListener
+        class HB_NETWORK_DECL HbChannelService : public HbNetworkService, public IHbUserListener
         {
         public:
-            enum AuthType : authstgy
-            {
-                AUTH_NONE = 0,
-                AUTH_FACEBOOK,
-                AUTH_USER = 255
-            };
 
-            HbAuthService();
-            virtual ~HbAuthService() = default;
+            HbChannelService();
+            virtual ~HbChannelService() = default;
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
             virtual void plugContracts( HbNetworkExchanges & exchanges );
 
         public callbacks:
-            virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
-            virtual void onSocketConnected   ( sockuid socket_uid ) = 0;
-            virtual void onSocketDisconnected( sockuid socket_uid ) = 0;
+            virtual void onContractReceived( const HbNetworkContract * contract )  = 0;
+            virtual void onUserConnected   ( const HbNetworkUserInfo & user_info ) = 0;
+            virtual void onUserDisconnected( const HbNetworkUserInfo & user_info ) = 0;
         };
     }
 }
 
-#endif // HBAUTHSERVICE_H
+#endif // HBCHANNELSERVICE_H

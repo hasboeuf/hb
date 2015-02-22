@@ -5,13 +5,17 @@
 
 using namespace hb::network;
 
-HbNetworkProtocol::NetworkTypes HbClientAuthService::enabledNetworkTypes() const
+void HbClientAuthService::onContractReceived( const HbNetworkContract * contract )
 {
-    return HbNetworkProtocol::NETWORK_TCP |
-           HbNetworkProtocol::NETWORK_SSL;
+
 }
 
-void HbClientAuthService::onContractReceived( const HbNetworkContract * contract )
+void HbClientAuthService::onSocketConnected   ( sockuid socket_uid )
+{
+
+}
+
+void HbClientAuthService::onSocketDisconnected( sockuid socket_uid )
 {
 
 }

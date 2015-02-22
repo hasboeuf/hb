@@ -14,16 +14,13 @@
 // Local
 #include <HbNetwork.h>
 #include <HbPeer.h>
-#include <HbConnectionPool.h>
+#include <HbServerConnectionPool.h>
 #include <config/peer/HbGeneralServerConfig.h>
 
 namespace hb
 {
     namespace network
     {
-        class HbTcpServerConfig;
-        class HbAbstractServer;
-
         class HB_NETWORK_DECL HbServer final : public HbPeer
         {
             Q_OBJECT
@@ -34,11 +31,11 @@ namespace hb
             HbServer( const HbGeneralServerConfig & config );
             virtual ~HbServer() = default;
 
-            quint16 joinTcpServer( const HbTcpServerConfig & config );
+            netwuid joinTcpServer( HbTcpServerConfig & config, bool main = false );
             bool leave();
 
         private:
-            HbConnectionPool mConnectionPool;
+            HbServerConnectionPool mConnectionPool;
 
         };
     }

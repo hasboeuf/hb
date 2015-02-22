@@ -1,5 +1,6 @@
 // Qt
 // Hb
+#include <HbLogService.h>
 // Local
 #include <HbClient.h>
 #include <com/tcp/HbTcpClient.h>
@@ -9,61 +10,40 @@ using namespace hb::network;
 HbClient::HbClient( const HbGeneralClientConfig & config ) :
     HbPeer( config )
 {
-
+    mConnectionPool.setConfiguration( config );
 }
 
 bool HbClient::leave()
 {
-
+    mConnectionPool.leave();
+    return true;
 }
 
-quint16 HbClient::joinTcpClient( const HbTcpClientConfig & config )
+sockuid HbClient::joinTcpClient( HbTcpClientConfig & config , bool main )
 {
-    HbTcpClient * client = new HbTcpClient();
-
-    connect( client, &HbAbstractClient::clientConnected,    this, &HbClient::onClientConnected,    Qt::UniqueConnection );
-    connect( client, &HbAbstractClient::clientDisconnected, this, &HbClient::onClientDisconnected, Qt::UniqueConnection );
-
-    q_assert( !mClients.contains( client->uid() ) );
-
-    client->setConfiguration( config );
-
-    if( !client->join() )
-    {
-        delete client;
-        return 0;
-    }
-    return client->uid();
+    return mConnectionPool.joinTcpClient( config, main );
 }
 
-void HbClient::onClientConnected       ( sockuid client_uid )
+/*void HbClient::onClientConnected( sockuid client_uid )
 {
-
+    HbInfo( "Client %d connected.", client_uid );
+    emit clientConnected( client_uid );
 }
 
 void HbClient::onClientDisconnected    ( sockuid client_uid )
 {
+    HbInfo( "Client %d disconnected.", client_uid );
 
-}
+    q_assert( mClients.contains( client_uid ) );
 
-void HbClient::onClientContractReceived( sockuid client_uid, const HbNetworkContract * contract )
-{
+    HbAbstractClient * client = mClients.take( client_uid );
+    if( mMainClient == client )
+    {
+        mMainClient = nullptr;
+    }
+    client->deleteLater();
 
-}
-
-void HbClient::onContractSent( const HbNetworkContract * contract )
-{
-
-}
-
-void HbClient::onUserConnected   ( sockuid client_uid )
-{
-
-}
-
-void HbClient::onUserDisconnected( sockuid client_uid )
-{
-
-}
+    emit clientDisconnected( client_uid );
+}*/
 
 

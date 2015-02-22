@@ -34,7 +34,7 @@ namespace hb
             HbAuthRequestContract( const HbAuthRequestContract & source );
             HbAuthRequestContract & operator=( const HbAuthRequestContract & source );
 
-            HbAuthRequestContract * create() const = 0;
+            HbAuthRequestContract * create() const;
 
             HbAuthStatusContract * reply() const;
 

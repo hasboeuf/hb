@@ -30,6 +30,7 @@ namespace hb
             Q_DISABLE_COPY( HbAbstractClient )
 
         public:
+            virtual ~HbAbstractClient() = default;
 
             virtual bool join () final;
             virtual bool leave() final;
@@ -48,7 +49,6 @@ namespace hb
 
         protected:
             HbAbstractClient(QObject * parent = nullptr);
-            virtual ~HbAbstractClient() = default;
 
             virtual bool connectToNetwork() = 0;
             virtual bool disconnectFromNetwork() = 0;

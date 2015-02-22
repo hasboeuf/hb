@@ -10,12 +10,12 @@ using namespace hb::network;
 HbServer::HbServer(const HbGeneralServerConfig &config ) :
     HbPeer( config )
 {
-
+    mConnectionPool.setConfiguration( config );
 }
 
-quint16 HbServer::joinTcpServer( const HbTcpServerConfig & config )
+netwuid HbServer::joinTcpServer( HbTcpServerConfig & config , bool main )
 {
-    return mConnectionPool.joinTcpServer( config );
+    return mConnectionPool.joinTcpServer( config, main );
 }
 
 bool HbServer::leave()

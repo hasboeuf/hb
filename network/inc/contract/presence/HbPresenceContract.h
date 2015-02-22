@@ -37,14 +37,7 @@ namespace hb
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;
 
-            QString username() const;
-            QString passwork() const;
-            void setUsername( QString username );
-            void setPassword( QString password );
-
         private:
-            QString mUsername;
-            QString mPassword;
 
         };
     }
