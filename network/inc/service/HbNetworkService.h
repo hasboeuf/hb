@@ -41,6 +41,9 @@ namespace hb
                 return mId;
             }
 
+        signals:
+            // TODO contractSent
+
         protected:
             serviceuid mId = HbNetworkProtocol::SERVICE_UNDEFINED;
         };

@@ -27,5 +27,9 @@ HbPeer::HbPeer( const HbGeneralConfig &config )
 
 bool HbPeer::isReady() const
 {
+    if( !mReady )
+    {
+        HbWarning( "HbPeer not ready. Invalid config." );
+    }
     return mReady;
 }

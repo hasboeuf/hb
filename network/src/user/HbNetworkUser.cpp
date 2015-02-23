@@ -8,6 +8,7 @@ using namespace hb::network;
 HbNetworkUser::HbNetworkUser()
 {
     mStatus = HbNetworkProtocol::USER_DISCONNECTED;
+    mSocketUid = 0;
 }
 
 const HbNetworkUserInfo & HbNetworkUser::info() const
@@ -29,4 +30,14 @@ void HbNetworkUser::setStatus( HbNetworkProtocol::UserStatus status )
 {
     mStatus = status;
     emit statusChanged( status );
+}
+
+networkuid HbNetworkUser::socketUid() const
+{
+    return mSocketUid;
+}
+
+void HbNetworkUser::setSocketUid( networkuid socket_uid )
+{
+    mSocketUid = socket_uid;
 }

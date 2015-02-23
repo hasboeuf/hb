@@ -19,6 +19,11 @@
 
 namespace hb
 {
+    namespace link
+    {
+        class HbO2ClientFacebook;
+    }
+
     namespace network
     {
         class HB_NETWORK_DECL HbClient final : public HbPeer
@@ -32,6 +37,7 @@ namespace hb
             virtual ~HbClient() = default;
 
             networkuid joinTcpClient( HbTcpClientConfig & config, bool main );
+            bool authRequest( hb::link::HbO2ClientFacebook * facebook_client );
             bool leave();
 
         signals:

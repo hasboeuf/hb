@@ -146,8 +146,7 @@ void UserMainWindow::onFacebookLinked()
         return;
     }
 
-    HbAuthFacebookRequestContract * contract = new HbAuthFacebookRequestContract();
-    contract->setClient( *mpFacebookClient );
+    mpHbClient->authRequest( mpFacebookClient );
 }
 
 

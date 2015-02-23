@@ -13,6 +13,7 @@
 // Hb
 // Local
 #include <service/HbNetworkService.h>
+#include <user/HbNetworkUserInfo.h>
 #include <listener/IHbSocketListener.h>
 
 namespace hb
@@ -22,6 +23,7 @@ namespace hb
 
         class HB_NETWORK_DECL HbAuthService : public HbNetworkService, public IHbSocketListener
         {
+            Q_OBJECT
         public:
             enum AuthType : authstgy
             {
@@ -35,10 +37,17 @@ namespace hb
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
             virtual void plugContracts( HbNetworkExchanges & exchanges );
 
+        signals:
+            void userAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info );
+            void userUnauthenticated( networkuid socket_uid, const QString reason = QString() );
+
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
             virtual void onSocketConnected   ( networkuid socket_uid ) = 0;
             virtual void onSocketDisconnected( networkuid socket_uid ) = 0;
+
+        protected:
+            QSet< networkuid > mPendingSocket;
         };
     }
 }

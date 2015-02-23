@@ -172,7 +172,7 @@ void HbServerAuthService::onLoginSucceed( networkuid socket_uid, const HbNetwork
             return;
         }
 
-        emit userConnected( socket_uid, user_info );
+        emit userAuthenticated( socket_uid, user_info );
 
         response->setStatus( HbNetworkProtocol::AUTH_OK );
         response->setTryNumber( 1 ); // TODO store try number.

@@ -21,6 +21,10 @@
 
 namespace hb
 {
+    namespace link
+    {
+        class HbO2ClientFacebook;
+    }
     namespace network
     {
         class HbAbstractClient;
@@ -35,6 +39,7 @@ namespace hb
             virtual ~HbClientConnectionPool();
 
             virtual bool leave();
+            bool authRequest( hb::link::HbO2ClientFacebook * facebook_client );
 
             networkuid joinTcpClient( HbTcpClientConfig & config, bool main );
 
@@ -57,7 +62,6 @@ namespace hb
             void meStatusChanged( HbNetworkProtocol::UserStatus status );
 
         private:
-            networkuid mMainClient;
             QHash< networkuid, HbAbstractClient * > mClients;
             QHash< networkuid, networkuid > mClientBySocketId;
             HbNetworkUser mUser;

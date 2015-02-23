@@ -2,6 +2,7 @@
 // Hb
 #include <HbGlobal.h>
 #include <HbLogService.h>
+#include <facebook/HbO2ClientFacebook.h>
 // Local
 #include <HbClientConnectionPool.h>
 #include <com/tcp/HbTcpClient.h>
@@ -16,8 +17,6 @@ using namespace hb::network;
 HbClientConnectionPool::HbClientConnectionPool( const HbGeneralClientConfig & config ) :
     HbConnectionPool( config )
 {
-    mMainClient = 0;
-
     HbClientPresenceService * service_presence = new HbClientPresenceService();
     HbClientAuthService     * service_auth     = new HbClientAuthService();
     HbClientChannelService  * service_channel  = new HbClientChannelService();
@@ -79,10 +78,33 @@ bool HbClientConnectionPool::leave()
     return true;
 }
 
+bool HbClientConnectionPool::authRequest( hb::link::HbO2ClientFacebook * facebook_client )
+{
+    if( !facebook_client )
+    {
+        HbError( "Bad pointer." );
+        return false;
+    }
+
+    if( !mUser.status() != HbNetworkProtocol::USER_CONNECTED )
+    {
+        HbError( "User not in a connected state." );
+        return false;
+    }
+
+    HbClientAuthService * auth_service = getService< HbClientAuthService >( HbNetworkProtocol::SERVICE_AUTH );
+    q_assert_ptr( auth_service );
+
+    mUser.setStatus( HbNetworkProtocol::USER_AUTHENTICATING );
+    auth_service->onAuthRequest( mUser.socketUid(), facebook_client );
+
+    return true;
+}
+
 networkuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , bool main )
 {
     networkuid uid = 0;
-    if( main && mMainClient > 0 )
+    if( mUser.socketUid() > 0 )
     {
         HbError( "Impossible to create two main clients." );
         return uid;
@@ -108,7 +130,7 @@ networkuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , b
     mClients.insert( uid, client );
     if( main )
     {
-        mMainClient = uid;
+        mUser.setSocketUid( uid );
     }
 
     return uid;

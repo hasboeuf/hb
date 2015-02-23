@@ -1,11 +1,13 @@
 // Qt
 // Hb
 #include <HbLogService.h>
+#include <facebook/HbO2ClientFacebook.h>
 // Local
 #include <HbClient.h>
 #include <com/tcp/HbTcpClient.h>
 
 using namespace hb::network;
+using namespace hb::link;
 
 HbClient::HbClient( const HbGeneralClientConfig & config ) :
     HbPeer( config ), mConnectionPool( config )
@@ -17,13 +19,21 @@ HbClient::HbClient( const HbGeneralClientConfig & config ) :
     }
 }
 
+bool HbClient::authRequest( HbO2ClientFacebook * facebook_client )
+{
+    if( !isReady() ) return false;
+    return mConnectionPool.authRequest( facebook_client );
+}
+
 bool HbClient::leave()
 {
+    if( !isReady() ) return false;
     return mConnectionPool.leave();
 }
 
 networkuid HbClient::joinTcpClient( HbTcpClientConfig & config , bool main )
 {
+    if( !isReady() ) return false;
     return mConnectionPool.joinTcpClient( config, main );
 }
 

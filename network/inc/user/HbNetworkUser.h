@@ -35,12 +35,16 @@ namespace hb
             HbNetworkProtocol::UserStatus status() const;
             void setStatus( HbNetworkProtocol::UserStatus status );
 
+            networkuid socketUid() const;
+            void setSocketUid( networkuid socket_uid );
+
         signals:
             statusChanged( HbNetworkProtocol::UserStatus status );
 
         private:
             HbNetworkUserInfo mInfo;
             HbNetworkProtocol::UserStatus mStatus;
+            networkuid mSocketUid;
         };
     }
 }

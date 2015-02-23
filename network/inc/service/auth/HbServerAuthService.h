@@ -13,7 +13,6 @@
 // Hb
 // Local
 #include <service/auth/HbAuthService.h>
-#include <user/HbNetworkUserInfo.h>
 #include <config/service/auth/HbServiceAuthServerConfig.h>
 
 class QTimerEvent;
@@ -55,9 +54,6 @@ namespace hb
             void onLoginSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info );
             void onLoginFailed ( networkuid socket_uid, HbNetworkProtocol::AuthStatus, const QString & description );
 
-        signals:
-            void userConnected( networkuid socket_id, const HbNetworkUserInfo & user_info );
-
         private:
             HbServiceAuthServerConfig mConfig;
             QHash< authstgy, HbServerAuthStrategy * > mStrategies;
@@ -65,7 +61,6 @@ namespace hb
 
 
             // InOut.
-            QSet< networkuid >          mPendingSocket;
             QHash< networkuid, quint8 > mAuthTries;
             QHash< networkuid, quint8 > mAuthTimeout;
             QHash< networkuid, HbAuthStatusContract * > mResponses;

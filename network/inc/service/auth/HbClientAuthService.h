@@ -17,6 +17,10 @@
 
 namespace hb
 {
+    namespace link
+    {
+        class HbO2ClientFacebook;
+    }
     namespace network
     {
 
@@ -34,6 +38,8 @@ namespace hb
             virtual void onContractReceived( const HbNetworkContract * contract );
             virtual void onSocketConnected   ( networkuid socket_uid );
             virtual void onSocketDisconnected( networkuid socket_uid );
+
+            void onAuthRequest( networkuid socket_id, hb::link::HbO2ClientFacebook * facebook_client );
 
         private:
             HbServiceAuthClientConfig mConfig;
