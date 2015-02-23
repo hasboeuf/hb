@@ -10,23 +10,37 @@
 #define HBNETWORKUSER_H
 
 // Qt
+#include <QtCore/QObject>
 // Hb
 // Local
 #include <HbNetwork.h>
 #include <user/HbNetworkUserInfo.h>
+#include <contract/HbNetworkProtocol.h>
 
 namespace hb
 {
     namespace network
     {
-        class HB_NETWORK_DECL HbNetworkUser
+        class HB_NETWORK_DECL HbNetworkUser : public QObject
         {
+            Q_OBJECT
         public:
 
-            HbNetworkUser() = default;
+            HbNetworkUser();
             virtual ~HbNetworkUser( ) = default;
 
-            const HbNetworkUserInfo userInfo() const;
+            const HbNetworkUserInfo & info() const;
+            void setInfo( const HbNetworkUserInfo & info );
+
+            HbNetworkProtocol::UserStatus status() const;
+            void setStatus( HbNetworkProtocol::UserStatus status );
+
+        signals:
+            statusChanged( HbNetworkProtocol::UserStatus status );
+
+        private:
+            HbNetworkUserInfo mInfo;
+            HbNetworkProtocol::UserStatus mStatus;
         };
     }
 }

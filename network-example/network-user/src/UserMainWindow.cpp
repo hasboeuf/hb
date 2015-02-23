@@ -58,7 +58,8 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     connect( ui_qpb_user_connection, &QPushButton::clicked, this, &UserMainWindow::onUserConnectionRequest );
     connect( ui_qpb_fb_connection,   &QPushButton::clicked, this, &UserMainWindow::onFacebookConnectionRequest );
 
-    connect( mpHbClient, &HbPeer::statusChanged, this, &UserMainWindow::onStatusChanged );
+    connect( mpHbClient, &HbClient::clientStatusChanged, this, &UserMainWindow::onClientStatusChanged );
+    connect( mpHbClient, &HbClient::meStatusChanged,     this, &UserMainWindow::onMeStatusChanged );
 
     HbLogEnd();
 }
@@ -150,7 +151,12 @@ void UserMainWindow::onFacebookLinked()
 }
 
 
-void UserMainWindow::onStatusChanged( networkuid peer_uid, netwint peer_status )
+void UserMainWindow::onClientStatusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status )
 {
-    HbInfo( "Status changed on client %d: %s.", peer_uid, HbLatin1( HbNetworkProtocol::MetaClientStatus::toString( peer_status ) ) );
+    HbInfo( "Status changed on client %d: %s.", client_uid, HbLatin1( HbNetworkProtocol::MetaClientStatus::toString( status ) ) );
+}
+
+void UserMainWindow::onMeStatusChanged( HbNetworkProtocol::UserStatus status )
+{
+    HbInfo( "My status changed: %s.", HbLatin1( HbNetworkProtocol::MetaUserStatus::toString( status ) ) );
 }

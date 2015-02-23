@@ -33,9 +33,6 @@ namespace hb
 
             virtual bool isReady() const final;
 
-        signals:
-            void statusChanged( networkuid peer_uid, netwint peer_status );
-
         private:
             bool mReady;
         };

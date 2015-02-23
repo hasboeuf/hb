@@ -12,7 +12,7 @@ HbServer::HbServer(const HbGeneralServerConfig & config ) :
 {
     if( isReady() )
     {
-        connect( &mConnectionPool, &HbConnectionPool::statusChanged, this, &HbPeer::statusChanged );
+        connect( &mConnectionPool, &HbServerConnectionPool::statusChanged, this, &HbServer::serverStatusChanged );
     }
 }
 

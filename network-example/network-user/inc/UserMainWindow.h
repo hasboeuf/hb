@@ -47,7 +47,8 @@ namespace hb
             void init();
 
         public slots:
-            void onStatusChanged( networkuid peer_uid, netwint peer_status );
+            void onClientStatusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status );
+            void onMeStatusChanged    ( HbNetworkProtocol::UserStatus status );
 
         private slots:
             void onStartClicked();

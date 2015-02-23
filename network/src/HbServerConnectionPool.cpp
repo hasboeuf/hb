@@ -127,7 +127,7 @@ void HbServerConnectionPool::onServerConnected( networkuid server_uid )
 
     HbInfo( "Server %d connected.", server_uid );
 
-    emit statusChanged( server_uid, ( netwint ) HbNetworkProtocol::SERVER_LISTENING );
+    emit statusChanged( server_uid, HbNetworkProtocol::SERVER_LISTENING );
 }
 
 void HbServerConnectionPool::onServerDisconnected( networkuid server_uid )
@@ -146,7 +146,7 @@ void HbServerConnectionPool::onServerDisconnected( networkuid server_uid )
 
     HbInfo( "Server %d disconnected.", server_uid );
 
-    emit statusChanged( server_uid, ( netwint ) HbNetworkProtocol::SERVER_DISCONNECTED );
+    emit statusChanged( server_uid, HbNetworkProtocol::SERVER_DISCONNECTED );
 }
 
 void HbServerConnectionPool::onSocketConnected( networkuid server_uid, networkuid socket_uid )
@@ -194,7 +194,7 @@ void HbServerConnectionPool::onSocketDisconnected( networkuid server_uid, networ
     {
         mUserBySocketId.remove( socket_uid );
 
-        const HbNetworkUserInfo user_info = user->userInfo();
+        const HbNetworkUserInfo user_info = user->info();
         delete user;
 
         QList< IHbUserListener * > listeners = getListeners< IHbUserListener >();

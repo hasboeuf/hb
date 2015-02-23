@@ -17,7 +17,7 @@
 #include <HbConnectionPool.h>
 #include <config/peer/HbGeneralClientConfig.h>
 #include <config/com/HbTcpClientConfig.h>
-#include <user/HbNetworkUserInfo.h>
+#include <user/HbNetworkUser.h>
 
 namespace hb
 {
@@ -49,11 +49,18 @@ namespace hb
             // From HbAuthService.
             void onUserConnected( networkuid client_uid, const HbNetworkUserInfo & user_info );
 
+            // From HbNetworkUser.
+            void onMeStatusChanged( HbNetworkProtocol::UserStatus status );
+
+        signals:
+            void statusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status );
+            void meStatusChanged( HbNetworkProtocol::UserStatus status );
+
         private:
             networkuid mMainClient;
             QHash< networkuid, HbAbstractClient * > mClients;
             QHash< networkuid, networkuid > mClientBySocketId;
-            HbNetworkUserInfo mUser; // TODO how to check if user is authenticated.
+            HbNetworkUser mUser;
         };
     }
 }

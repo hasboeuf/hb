@@ -35,7 +35,7 @@ namespace hb
             virtual ~ServerMainWindow();
 
         public slots:
-            void onStatusChanged( networkuid peer_uid, netwint peer_status );
+            void onServerStatusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status );
 
         private slots:
             void onStartClicked();

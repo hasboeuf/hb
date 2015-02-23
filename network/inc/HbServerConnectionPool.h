@@ -56,6 +56,9 @@ namespace hb
             // From HbAuthService.
             void onUserConnected( networkuid socket_id, const HbNetworkUserInfo & user_info );
 
+        signals:
+            void statusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status );
+
         private:
             HbNetworkUser * isSocketAuthenticated( networkuid socket_uid );
 

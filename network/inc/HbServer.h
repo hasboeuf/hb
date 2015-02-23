@@ -34,6 +34,9 @@ namespace hb
             networkuid joinTcpServer( HbTcpServerConfig & config, bool main );
             bool leave();
 
+        signals:
+            void serverStatusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status );
+
         private:
             HbServerConnectionPool mConnectionPool;
 

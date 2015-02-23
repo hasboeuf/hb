@@ -123,6 +123,17 @@ namespace hb
             };
             Q_META_ENUMS( ClientStatus )
 
+            enum UserStatus : netwint
+            {
+                USER_DISCONNECTED,
+                USER_CONNECTING,
+                USER_CONNECTED,
+                USER_AUTHENTICATING,
+                USER_AUTHENTICATED,
+
+            };
+            Q_META_ENUMS( UserStatus )
+
         };
     }
 }

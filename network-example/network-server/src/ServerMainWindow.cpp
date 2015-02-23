@@ -53,7 +53,7 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     connect(ui_qpb_start, &QPushButton::clicked, this, &ServerMainWindow::onStartClicked);
     connect(ui_qpb_stop,  &QPushButton::clicked, this, &ServerMainWindow::onStopClicked);
 
-    connect( mpHbServer, &HbPeer::statusChanged, this, &ServerMainWindow::onStatusChanged );
+    connect( mpHbServer, &HbServer::serverStatusChanged, this, &ServerMainWindow::onServerStatusChanged );
 
     HbLogEnd();
 }
@@ -92,7 +92,7 @@ void ServerMainWindow::onStopClicked()
     HbLogEnd();
 }
 
-void ServerMainWindow::onStatusChanged( networkuid peer_uid, netwint peer_status )
+void ServerMainWindow::onServerStatusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status )
 {
-    HbInfo( "Status changed on server %d: %s.", peer_uid, HbLatin1( HbNetworkProtocol::MetaServerStatus::toString( peer_status ) ) );
+    HbInfo( "Status changed on server %d: %s.", server_uid, HbLatin1( HbNetworkProtocol::MetaServerStatus::toString( status ) ) );
 }

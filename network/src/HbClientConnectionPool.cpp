@@ -63,6 +63,8 @@ HbClientConnectionPool::HbClientConnectionPool( const HbGeneralClientConfig & co
                     } );
         }
     }
+
+    connect( &mUser, &HbNetworkUser::statusChanged, this, &HbClientConnectionPool::onMeStatusChanged );
 }
 
 HbClientConnectionPool::~HbClientConnectionPool()
@@ -124,7 +126,7 @@ void HbClientConnectionPool::onClientConnected( networkuid client_uid )
 
     HbInfo( "Client %d connected.", client_uid );
 
-    emit statusChanged( client_uid, ( netwint ) HbNetworkProtocol::CLIENT_CONNECTED );
+    emit statusChanged( client_uid, HbNetworkProtocol::CLIENT_CONNECTED );
 }
 
 void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
@@ -135,7 +137,7 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
 
     HbInfo( "Client #%d disconnected.", client_uid );
 
-    emit statusChanged( client_uid, ( netwint ) HbNetworkProtocol::CLIENT_DISCONNECTED );
+    emit statusChanged( client_uid, HbNetworkProtocol::CLIENT_DISCONNECTED );
 }
 
 void HbClientConnectionPool::onClientContractReceived( networkuid client_uid, const HbNetworkContract * contract )
@@ -188,4 +190,9 @@ void HbClientConnectionPool::onContractSent( const HbNetworkContract * contract 
 void HbClientConnectionPool::onUserConnected( networkuid client_uid, const HbNetworkUserInfo & user_info )
 {
 
+}
+
+void HbClientConnectionPool::onMeStatusChanged( HbNetworkProtocol::UserStatus status )
+{
+    emit meStatusChanged( status );
 }

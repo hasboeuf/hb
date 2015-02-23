@@ -12,7 +12,8 @@ HbClient::HbClient( const HbGeneralClientConfig & config ) :
 {
     if( isReady() )
     {
-        connect( &mConnectionPool, &HbConnectionPool::statusChanged, this, &HbPeer::statusChanged );
+        connect( &mConnectionPool, &HbClientConnectionPool::statusChanged,   this, &HbClient::clientStatusChanged );
+        connect( &mConnectionPool, &HbClientConnectionPool::meStatusChanged, this, &HbClient::meStatusChanged );
     }
 }
 
