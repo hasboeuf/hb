@@ -16,7 +16,7 @@ HbServerAuthFacebookStrategy::HbServerAuthFacebookStrategy() :
     connect( &mRequester, &HbFacebookRequester::requestCompleted, this, &HbServerAuthFacebookStrategy::onRequestCompleted, Qt::UniqueConnection );
 }
 
-bool HbServerAuthFacebookStrategy::tryLogin( const HbAuthRequestContract * contract )
+bool HbServerAuthFacebookStrategy::checkLogin( const HbAuthRequestContract * contract )
 {
     const HbAuthFacebookRequestContract * facebook_auth = contract->value< HbAuthFacebookRequestContract >();
 

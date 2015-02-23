@@ -6,37 +6,36 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBSERVERAUTHSTRATEGY_H
-#define HBSERVERAUTHSTRATEGY_H
+#ifndef HBCLIENTAUTHSTRATEGY_H
+#define HBCLIENTAUTHSTRATEGY_H
 
 // Qt
 // Hb
 // Local
 #include <service/auth/HbAuthStrategy.h>
-#include <contract/auth/HbAuthRequestContract.h> // Template.
-
 
 namespace hb
 {
     namespace network
     {
-        class HbAuthRequestContract;
+        class HbClientAuthLoginObject;
 
-        class HB_NETWORK_DECL HbServerAuthStrategy : public HbAuthStrategy
+        class HB_NETWORK_DECL HbClientAuthStrategy : public HbAuthStrategy
         {
             Q_OBJECT
         public:
 
-            HbServerAuthStrategy() = default;
-            virtual ~HbServerAuthStrategy() = default;
+            HbClientAuthStrategy() = default;
+            virtual ~HbClientAuthStrategy() = default;
 
             virtual authstgy type() const = 0;
-            virtual bool checkLogin( const HbAuthRequestContract * contract ) = 0;
+
+            virtual bool tryLogin( HbClientAuthLoginObject * login_object ) = 0;
 
         };
     }
 }
 
-using hb::network::HbServerAuthStrategy;
+using hb::network::HbClientAuthStrategy;
 
-#endif // HBSERVERAUTHSTRATEGY_H
+#endif // HBCLIENTAUTHSTRATEGY_H

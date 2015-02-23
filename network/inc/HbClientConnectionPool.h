@@ -28,6 +28,7 @@ namespace hb
     namespace network
     {
         class HbAbstractClient;
+        class HbClientAuthLoginObject;
 
         class HB_NETWORK_DECL HbClientConnectionPool: public HbConnectionPool
         {
@@ -39,9 +40,8 @@ namespace hb
             virtual ~HbClientConnectionPool();
 
             virtual bool leave();
-            bool authRequest( hb::link::HbO2ClientFacebook * facebook_client );
-
             networkuid joinTcpClient( HbTcpClientConfig & config, bool main );
+            bool authRequest( HbClientAuthLoginObject * login_object );
 
         public callbacks:
             // From HbAbstractClient.

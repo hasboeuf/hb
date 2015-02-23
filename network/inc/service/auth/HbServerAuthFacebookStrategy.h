@@ -40,8 +40,8 @@ namespace hb
             HbServerAuthFacebookStrategy();
             virtual ~HbServerAuthFacebookStrategy() = default;
 
-            virtual bool tryLogin( const HbAuthRequestContract * contract );
             virtual authstgy type() const final;
+            virtual bool checkLogin( const HbAuthRequestContract * contract );
 
         public slots:
             void onLinkSucceed();
@@ -49,7 +49,7 @@ namespace hb
             void onRequestCompleted( quint64 request_id, HbFacebookObject * object );
 
         private:
-            HbFacebookRequester                     mRequester;
+            HbFacebookRequester                       mRequester;
             QHash< HbO2ServerFacebook *, networkuid > mPendingToken;
             QHash< quint64, networkuid >              mPendingRequest;
         };

@@ -7,7 +7,7 @@
 using namespace hb::network;
 using namespace hb::networkexample;
 
-bool ServerAuthStrategy::tryLogin( const HbAuthRequestContract * contract )
+bool ServerAuthStrategy::checkLogin( const HbAuthRequestContract * contract )
 {
     return true;
 }

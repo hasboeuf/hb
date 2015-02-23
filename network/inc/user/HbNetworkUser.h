@@ -39,7 +39,7 @@ namespace hb
             void setSocketUid( networkuid socket_uid );
 
         signals:
-            statusChanged( HbNetworkProtocol::UserStatus status );
+            void statusChanged( HbNetworkProtocol::UserStatus status );
 
         private:
             HbNetworkUserInfo mInfo;

@@ -4,6 +4,7 @@
 #include <facebook/HbO2ClientFacebook.h>
 // Local
 #include <HbClient.h>
+#include <service/auth/HbClientAuthLoginObject.h>
 #include <com/tcp/HbTcpClient.h>
 
 using namespace hb::network;
@@ -19,12 +20,6 @@ HbClient::HbClient( const HbGeneralClientConfig & config ) :
     }
 }
 
-bool HbClient::authRequest( HbO2ClientFacebook * facebook_client )
-{
-    if( !isReady() ) return false;
-    return mConnectionPool.authRequest( facebook_client );
-}
-
 bool HbClient::leave()
 {
     if( !isReady() ) return false;
@@ -35,6 +30,20 @@ networkuid HbClient::joinTcpClient( HbTcpClientConfig & config , bool main )
 {
     if( !isReady() ) return false;
     return mConnectionPool.joinTcpClient( config, main );
+}
+
+bool HbClient::authRequest( HbClientAuthLoginObject * login_object )
+{
+    if( !isReady() ) return false;
+    return mConnectionPool.authRequest( login_object );
+}
+
+bool HbClient::facebookAuthRequest()
+{
+    if( !isReady() ) return false;
+
+    HbClientAuthLoginObject * login_object = new HbClientAuthLoginObject( HbAuthService::AUTH_FACEBOOK );
+    return mConnectionPool.authRequest( login_object );
 }
 
 /*void HbClient::onClientConnected( netwuid client_uid )

@@ -23,13 +23,15 @@ namespace hb
     }
     namespace network
     {
+        class HbClientAuthStrategy;
+        class HbClientAuthLoginObject;
 
         class HB_NETWORK_DECL HbClientAuthService : public HbAuthService
         {
         public:
 
-            HbClientAuthService() = default;
-            virtual ~HbClientAuthService( ) = default;
+            HbClientAuthService();
+            virtual ~HbClientAuthService() = default;
 
             const HbServiceAuthClientConfig & config() const;
             void setConfig( const HbServiceAuthClientConfig & config );
@@ -39,10 +41,16 @@ namespace hb
             virtual void onSocketConnected   ( networkuid socket_uid );
             virtual void onSocketDisconnected( networkuid socket_uid );
 
-            void onAuthRequest( networkuid socket_id, hb::link::HbO2ClientFacebook * facebook_client );
+            // From ClientConnectionPool.
+            void onAuthRequest( networkuid socket_uid, HbClientAuthLoginObject * login_object );
+
+            // From HbServerAuthStrategy.
+            void onLoginSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info );
+            void onLoginFailed ( networkuid socket_uid, HbNetworkProtocol::AuthStatus, const QString & description );
 
         private:
             HbServiceAuthClientConfig mConfig;
+            QHash< authstgy, HbClientAuthStrategy * > mStrategies;
 
         };
     }

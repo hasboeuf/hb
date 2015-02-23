@@ -9,6 +9,7 @@
 #include <service/presence/HbClientPresenceService.h>
 #include <service/auth/HbClientAuthService.h>
 #include <service/channel/HbClientChannelService.h>
+#include <service/auth/HbClientAuthLoginObject.h>
 #include <user/HbNetworkUser.h>
 
 using namespace hb::network;
@@ -78,29 +79,6 @@ bool HbClientConnectionPool::leave()
     return true;
 }
 
-bool HbClientConnectionPool::authRequest( hb::link::HbO2ClientFacebook * facebook_client )
-{
-    if( !facebook_client )
-    {
-        HbError( "Bad pointer." );
-        return false;
-    }
-
-    if( !mUser.status() != HbNetworkProtocol::USER_CONNECTED )
-    {
-        HbError( "User not in a connected state." );
-        return false;
-    }
-
-    HbClientAuthService * auth_service = getService< HbClientAuthService >( HbNetworkProtocol::SERVICE_AUTH );
-    q_assert_ptr( auth_service );
-
-    mUser.setStatus( HbNetworkProtocol::USER_AUTHENTICATING );
-    auth_service->onAuthRequest( mUser.socketUid(), facebook_client );
-
-    return true;
-}
-
 networkuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , bool main )
 {
     networkuid uid = 0;
@@ -134,6 +112,29 @@ networkuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , b
     }
 
     return uid;
+}
+
+bool HbClientConnectionPool::authRequest( HbClientAuthLoginObject * login_object )
+{
+    if( !login_object )
+    {
+        HbError( "Login object null." );
+        return false;
+    }
+
+    if( !mUser.status() != HbNetworkProtocol::USER_CONNECTED )
+    {
+        HbError( "User not in a connected state." );
+        return false;
+    }
+
+    HbClientAuthService * auth_service = getService< HbClientAuthService >( HbNetworkProtocol::SERVICE_AUTH );
+    q_assert_ptr( auth_service );
+
+    mUser.setStatus( HbNetworkProtocol::USER_AUTHENTICATING );
+    auth_service->onAuthRequest( mUser.socketUid(), login_object );
+
+    return true;
 }
 
 void HbClientConnectionPool::onClientConnected( networkuid client_uid )

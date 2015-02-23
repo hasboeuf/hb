@@ -20,9 +20,9 @@ HbServerAuthService::HbServerAuthService()
     {
         if( strategy )
         {
-            connect( strategy, &HbServerAuthStrategy::loginFailed,
+            connect( strategy, &HbAuthStrategy::loginFailed,
                      this,     &HbServerAuthService::onLoginFailed, Qt::UniqueConnection );
-            connect( strategy, &HbServerAuthStrategy::loginSucceed,
+            connect( strategy, &HbAuthStrategy::loginSucceed,
                      this,     &HbServerAuthService::onLoginSucceed, Qt::UniqueConnection );
         }
     }
@@ -110,7 +110,7 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
     const HbAuthRequestContract * auth_contract = contract->value< const HbAuthRequestContract >();
     if( auth_contract )
     {
-        authstgy type      = auth_contract->type();
+        authstgy   type       = auth_contract->type();
         networkuid socket_uid = auth_contract->sender();
 
         HbServerAuthStrategy * strategy = mStrategies.value( type, nullptr );
@@ -123,7 +123,7 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
 
                 mResponses.insert( socket_uid, response );
 
-                if( !strategy->tryLogin( auth_contract ) )
+                if( !strategy->checkLogin( auth_contract ) )
                 {
                     HbError( "Bad contract." );
                     delete mResponses.take( socket_uid );

@@ -26,6 +26,8 @@ namespace hb
 
     namespace network
     {
+        class HbClientAuthLoginObject;
+
         class HB_NETWORK_DECL HbClient final : public HbPeer
         {
             Q_OBJECT
@@ -36,9 +38,11 @@ namespace hb
             HbClient( const HbGeneralClientConfig & config );
             virtual ~HbClient() = default;
 
-            networkuid joinTcpClient( HbTcpClientConfig & config, bool main );
-            bool authRequest( hb::link::HbO2ClientFacebook * facebook_client );
             bool leave();
+            networkuid joinTcpClient( HbTcpClientConfig & config, bool main );
+            bool authRequest( HbClientAuthLoginObject * login_object );
+            bool facebookAuthRequest();
+
 
         signals:
             void clientStatusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status );
