@@ -33,6 +33,12 @@ namespace hb
             virtual authstgy type() const = 0;
             virtual bool checkLogin( const HbAuthRequestContract * contract ) = 0;
 
+        signals:
+            void authSucceed( networkuid sender,
+                              const HbNetworkUserInfo & user );
+            void authFailed(  networkuid sender,
+                              const HbNetworkProtocol::AuthStatus & status,
+                              const QString & description );
         };
     }
 }

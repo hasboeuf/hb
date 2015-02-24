@@ -20,10 +20,10 @@ HbServerAuthService::HbServerAuthService()
     {
         if( strategy )
         {
-            connect( strategy, &HbAuthStrategy::loginFailed,
-                     this,     &HbServerAuthService::onLoginFailed, Qt::UniqueConnection );
-            connect( strategy, &HbAuthStrategy::loginSucceed,
-                     this,     &HbServerAuthService::onLoginSucceed, Qt::UniqueConnection );
+            connect( strategy, &HbServerAuthStrategy::authFailed,
+                     this,     &HbServerAuthService::onAuthFailed, Qt::UniqueConnection );
+            connect( strategy, &HbServerAuthStrategy::authSucceed,
+                     this,     &HbServerAuthService::onAuthSucceed, Qt::UniqueConnection );
         }
     }
 
@@ -161,7 +161,7 @@ void HbServerAuthService::onSocketDisconnected( networkuid socket_uid )
     delSocket( socket_uid );
 }
 
-void HbServerAuthService::onLoginSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info )
+void HbServerAuthService::onAuthSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info )
 {
     if( checkSocket( socket_uid ) )
     {
@@ -172,7 +172,7 @@ void HbServerAuthService::onLoginSucceed( networkuid socket_uid, const HbNetwork
             return;
         }
 
-        emit userAuthenticated( socket_uid, user_info );
+        emit socketAuthenticated( socket_uid, user_info );
 
         response->setStatus( HbNetworkProtocol::AUTH_OK );
         response->setTryNumber( 1 ); // TODO store try number.
@@ -188,7 +188,7 @@ void HbServerAuthService::onLoginSucceed( networkuid socket_uid, const HbNetwork
     }
 }
 
-void HbServerAuthService::onLoginFailed( networkuid socket_uid, HbNetworkProtocol::AuthStatus status, const QString & description )
+void HbServerAuthService::onAuthFailed( networkuid socket_uid, HbNetworkProtocol::AuthStatus status, const QString & description )
 {
     if( checkSocket( socket_uid ) )
     {

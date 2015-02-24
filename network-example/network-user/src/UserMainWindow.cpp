@@ -146,7 +146,7 @@ void UserMainWindow::onFacebookLinked()
         return;
     }
 
-    mpHbClient->facebookAuthRequest();
+    mpHbClient->facebookAuthRequested();
 }
 
 

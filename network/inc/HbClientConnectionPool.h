@@ -41,7 +41,7 @@ namespace hb
 
             virtual bool leave();
             networkuid joinTcpClient( HbTcpClientConfig & config, bool main );
-            bool authRequest( HbClientAuthLoginObject * login_object );
+            bool authRequested( HbClientAuthLoginObject * login_object );
 
         public callbacks:
             // From HbAbstractClient.
@@ -51,6 +51,7 @@ namespace hb
 
             // From services.
             void onContractSent( const HbNetworkContract * contract );
+            void onContractSent( networkuid receiver, HbNetworkContract * contract );
             // From HbAuthService.
             void onUserConnected( networkuid client_uid, const HbNetworkUserInfo & user_info );
 

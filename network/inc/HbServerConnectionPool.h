@@ -49,7 +49,7 @@ namespace hb
 
             // From services.
             void onContractSent( const HbNetworkContract * contract );
-            void onContractSent( networkuid socket_uid, const HbNetworkContract * contract ); // TODO useless ???
+            void onContractSent( networkuid receiver, HbNetworkContract * contract );
             void onUserKick    ( const HbNetworkUser & user_info, netwint reason );
             void onSocketKick  ( networkuid socket_uid, netwint reason );
 

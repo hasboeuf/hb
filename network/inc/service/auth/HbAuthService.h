@@ -38,8 +38,8 @@ namespace hb
             virtual void plugContracts( HbNetworkExchanges & exchanges );
 
         signals:
-            void userAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info );
-            void userUnauthenticated( networkuid socket_uid, const QString reason = QString() );
+            void socketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info );
+            void socketUnauthenticated( networkuid socket_uid, const QString reason = QString() );
 
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract ) = 0;

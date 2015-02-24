@@ -64,7 +64,7 @@ void HbServerAuthFacebookStrategy::onLinkSucceed()
     }
     else
     {
-        emit loginFailed( sender, HbNetworkProtocol::AUTH_INTERNAL_ERROR, "" );
+        emit authFailed( sender, HbNetworkProtocol::AUTH_INTERNAL_ERROR, "" );
     }
 
     server_auth->deleteLater();
@@ -81,7 +81,7 @@ void HbServerAuthFacebookStrategy::onLinkFailed(const QString & error )
     networkuid sender = mPendingToken.take( server_auth );
     server_auth->deleteLater();
 
-    emit loginFailed( sender, HbNetworkProtocol::AUTH_FB_KO, error );
+    emit authFailed( sender, HbNetworkProtocol::AUTH_FB_KO, error );
 }
 
 void HbServerAuthFacebookStrategy::onRequestCompleted( quint64 request_id, HbFacebookObject * object )
@@ -112,12 +112,12 @@ void HbServerAuthFacebookStrategy::onRequestCompleted( quint64 request_id, HbFac
             user_info.setGender( HbNetworkUserInfo::GENDER_FEMALE );
         }
 
-        emit loginSucceed( sender, user_info );
+        emit authSucceed( sender, user_info );
     }
     else
     {
         HbError( "Bad dynamic cast HbFacebookObject -> HbFacebookUser." );
-        emit loginFailed( sender, HbNetworkProtocol::AUTH_FB_KO, "" );
+        emit authFailed( sender, HbNetworkProtocol::AUTH_FB_KO, "" );
     }
 
     if( object )

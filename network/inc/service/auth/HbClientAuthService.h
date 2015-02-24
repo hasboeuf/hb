@@ -25,6 +25,7 @@ namespace hb
     {
         class HbClientAuthStrategy;
         class HbClientAuthLoginObject;
+        class HbAuthRequestContract;
 
         class HB_NETWORK_DECL HbClientAuthService : public HbAuthService
         {
@@ -42,11 +43,11 @@ namespace hb
             virtual void onSocketDisconnected( networkuid socket_uid );
 
             // From ClientConnectionPool.
-            void onAuthRequest( HbClientAuthLoginObject * login_object );
+            void onAuthRequested( HbClientAuthLoginObject * login_object );
 
-            // From HbServerAuthStrategy.
-            void onLoginSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info );
-            void onLoginFailed ( networkuid socket_uid, HbNetworkProtocol::AuthStatus, const QString & description );
+            // From HbClientAuthStrategy.
+            void onAuthContractReady ( networkuid socket_uid, const HbAuthRequestContract * contract );
+            void onAuthContractFailed( networkuid socket_uid, const QString & description );
 
         private:
             networkuid mPendingSocket;

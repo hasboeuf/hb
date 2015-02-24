@@ -114,7 +114,7 @@ networkuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , b
     return uid;
 }
 
-bool HbClientConnectionPool::authRequest( HbClientAuthLoginObject * login_object )
+bool HbClientConnectionPool::authRequested( HbClientAuthLoginObject * login_object )
 {
     if( !login_object )
     {
@@ -134,7 +134,7 @@ bool HbClientConnectionPool::authRequest( HbClientAuthLoginObject * login_object
     login_object->setSocketUid( mUser.socketUid() );
     mUser.setStatus( HbNetworkProtocol::USER_AUTHENTICATING );
 
-    auth_service->onAuthRequest( login_object );
+    auth_service->onAuthRequested( login_object );
 
     return false;
 }
@@ -167,47 +167,47 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
 
 void HbClientConnectionPool::onClientContractReceived( networkuid client_uid, const HbNetworkContract * contract )
 {
-    /*HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
-    q_assert_ptr( server );
-    q_assert( mServers.contains( server_uid ) );
+    HbAbstractClient * client = dynamic_cast< HbAbstractClient * >( sender() );
+    q_assert_ptr( client );
+    q_assert( mClients.contains( client_uid ) );
 
-    HbInfo( "Contract received from socket #%d on server #%d.", socket_uid, server_uid );
-
+    HbInfo( "Contract received from client %d.", client_uid );
 
     if( !checkContractReceived( contract ) )
     {
-        HbWarning( "Invalid contract received from socket #%d on server #%d. Kick scheduled.", socket_uid, server_uid );
-        // TODO kick
+        HbWarning( "Invalid contract received from client %d.", client_uid );
         delete contract;
         return;
     }
 
-    servuid requested_service = contract->header().service();
+    serviceuid requested_service = contract->header().service();
 
-    HbInfo( "Contract OK [socket=%d, server=%d, service=%s, code=%s].",
-            socket_uid,
-            server_uid,
+    HbInfo( "Contract OK [client=%d, service=%s, code=%s].",
+            client_uid,
             HbLatin1( HbNetworkProtocol::MetaService::toString( requested_service ) ),
             HbLatin1( HbNetworkProtocol::MetaCode::toString( contract->header().code() ) ) );
 
-    HbNetworkUser * user = isSocketAuthenticated( socket_uid );
-    if( !user )
+    if( mUser.status() != HbNetworkProtocol::USER_AUTHENTICATED )
     {
         q_assert( requested_service == HbNetworkProtocol::SERVICE_AUTH );
     }
 
-    HbNetworkService * service = mServices.value( requested_service, nullptr );
+    HbNetworkService * service = getService( requested_service );
     if( !service )
     {
-        // TODO kick
         HbError( "Service %s is not instanciated.", HbLatin1( HbNetworkProtocol::MetaService::toString( contract->header().service() ) ) );
         return;
     }
 
-    service->onContractReceived( contract );*/
+    service->onContractReceived( contract );
 }
 
 void HbClientConnectionPool::onContractSent( const HbNetworkContract * contract )
+{
+
+}
+
+void HbClientConnectionPool::onContractSent( networkuid receiver, HbNetworkContract * contract )
 {
 
 }

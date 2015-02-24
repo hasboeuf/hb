@@ -13,7 +13,12 @@
 using namespace hb::network;
 using namespace hb::link;
 
-bool HbClientAuthFacebookStrategy::tryLogin( HbClientAuthLoginObject * login_object )
+authstgy HbClientAuthFacebookStrategy::type() const
+{
+    return HbAuthService::AUTH_FACEBOOK;
+}
+
+bool HbClientAuthFacebookStrategy::prepareAuthContract( HbClientAuthLoginObject * login_object )
 {
     HbO2ClientFacebook * facebook_client = new HbO2ClientFacebook();
 
@@ -34,11 +39,6 @@ bool HbClientAuthFacebookStrategy::tryLogin( HbClientAuthLoginObject * login_obj
     facebook_client->link();
 }
 
-authstgy HbClientAuthFacebookStrategy::type() const
-{
-    return HbAuthService::AUTH_FACEBOOK;
-}
-
 void HbClientAuthFacebookStrategy::onFacebookOpenBrower( const QUrl & url )
 {
     HbInfo( "Opening browser on %s", HbLatin1( url.toString() ) );
@@ -51,17 +51,29 @@ void HbClientAuthFacebookStrategy::onFacebookLinkSucceed()
     q_assert_ptr( facebook_client );
     q_assert( mPendingCodes.contains( facebook_client ) );
 
-    networkuid sender = mPendingCodes.value( facebook_client );
+    networkuid socket_uid = mPendingCodes.value( facebook_client );
 
-    // TODO send contract.
+    HbAuthFacebookRequestContract * contract = new HbAuthFacebookRequestContract();
+    contract->setClient( *facebook_client );
 
     mPendingCodes.remove( facebook_client );
     facebook_client->deleteLater();
+
+    emit authContractReady( socket_uid, contract );
 }
 
 void HbClientAuthFacebookStrategy::onFacebookLinkFailed()
 {
-    // TODO notify fail.
+    HbO2ClientFacebook * facebook_client = dynamic_cast< HbO2ClientFacebook * >( sender() );
+    q_assert_ptr( facebook_client );
+    q_assert( mPendingCodes.contains( facebook_client ) );
+
+    networkuid socket_uid = mPendingCodes.value( facebook_client );
+
+    mPendingCodes.remove( facebook_client );
+    facebook_client->deleteLater();
+
+    emit authContractFailed( socket_uid, "Facebook link failed." );
 }
 
 

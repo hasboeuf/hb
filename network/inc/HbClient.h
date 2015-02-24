@@ -41,7 +41,7 @@ namespace hb
             bool leave();
             networkuid joinTcpClient( HbTcpClientConfig & config, bool main );
             bool authRequest( HbClientAuthLoginObject * login_object );
-            bool facebookAuthRequest();
+            bool facebookAuthRequested();
 
 
         signals:

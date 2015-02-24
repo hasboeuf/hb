@@ -252,7 +252,7 @@ void HbServerConnectionPool::onContractSent( const HbNetworkContract * contract 
 
 }
 
-void HbServerConnectionPool::onContractSent( networkuid socket_uid, const HbNetworkContract * contract )
+void HbServerConnectionPool::onContractSent( networkuid receiver, HbNetworkContract * contract )
 {
 
 }

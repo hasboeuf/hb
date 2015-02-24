@@ -37,7 +37,7 @@ namespace hb
 
             virtual authstgy type() const final;
 
-            virtual bool tryLogin( HbClientAuthLoginObject * login_object );
+            virtual bool prepareAuthContract( HbClientAuthLoginObject * login_object );
 
         public slots:
             void onFacebookOpenBrower( const QUrl & url );

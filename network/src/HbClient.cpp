@@ -35,16 +35,16 @@ networkuid HbClient::joinTcpClient( HbTcpClientConfig & config , bool main )
 bool HbClient::authRequest( HbClientAuthLoginObject * login_object )
 {
     if( !isReady() ) return false;
-    return mConnectionPool.authRequest( login_object );
+    return mConnectionPool.authRequested( login_object );
 }
 
-bool HbClient::facebookAuthRequest()
+bool HbClient::facebookAuthRequested()
 {
     if( !isReady() ) return false;
 
     HbClientAuthLoginObject * login_object = new HbClientAuthLoginObject();
     login_object->setStrategy( HbAuthService::AUTH_FACEBOOK );
-    return mConnectionPool.authRequest( login_object );
+    return mConnectionPool.authRequested( login_object );
 }
 
 /*void HbClient::onClientConnected( netwuid client_uid )

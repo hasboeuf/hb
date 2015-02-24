@@ -18,6 +18,7 @@ namespace hb
 {
     namespace network
     {
+        class HbAuthRequestContract;
         class HbClientAuthLoginObject;
 
         class HB_NETWORK_DECL HbClientAuthStrategy : public HbAuthStrategy
@@ -30,8 +31,11 @@ namespace hb
 
             virtual authstgy type() const = 0;
 
-            virtual bool tryLogin( HbClientAuthLoginObject * login_object ) = 0;
+            virtual bool prepareAuthContract( HbClientAuthLoginObject * login_object ) = 0;
 
+        signals:
+            void authContractReady ( networkuid socket_uid, const HbAuthRequestContract * contract );
+            void authContractFailed( networkuid socket_uid, const QString & description );
         };
     }
 }

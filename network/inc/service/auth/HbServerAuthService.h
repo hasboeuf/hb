@@ -51,8 +51,8 @@ namespace hb
             virtual void onSocketConnected   ( networkuid socket_uid );
             virtual void onSocketDisconnected( networkuid socket_uid );
             // From HbServerAuthStrategy.
-            void onLoginSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info );
-            void onLoginFailed ( networkuid socket_uid, HbNetworkProtocol::AuthStatus, const QString & description );
+            void onAuthSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info );
+            void onAuthFailed ( networkuid socket_uid, HbNetworkProtocol::AuthStatus, const QString & description );
 
         private:
             HbServiceAuthServerConfig mConfig;
