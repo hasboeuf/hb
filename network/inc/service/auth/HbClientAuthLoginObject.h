@@ -24,14 +24,18 @@ namespace hb
 
         public:
 
-            HbClientAuthLoginObject( authstgy strategy );
-            HbClientAuthLoginObject() = delete;
+            HbClientAuthLoginObject();
             virtual ~HbClientAuthLoginObject() = default;
 
-            virtual authstgy strategy() const final;
+            virtual void setStrategy ( authstgy strategy ) final;
+            virtual void setSocketUid( networkuid socket_uid ) final;
+
+            virtual authstgy   strategy() const final;
+            virtual networkuid socketUid() const final;
 
         protected:
             authstgy mStrategy;
+            networkuid mSocketUid;
         };
     }
 }

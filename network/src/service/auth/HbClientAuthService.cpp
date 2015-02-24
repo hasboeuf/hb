@@ -55,9 +55,11 @@ void HbClientAuthService::onSocketDisconnected( networkuid socket_uid )
 
 }
 
-void HbClientAuthService::onAuthRequest( networkuid socket_uid, HbClientAuthLoginObject * login_object )
+void HbClientAuthService::onAuthRequest( HbClientAuthLoginObject * login_object )
 {
     q_assert_ptr( login_object );
+    q_assert( mPendingSocket == 0 );
+
     authstgy strategy_id = login_object->strategy();
 
     HbClientAuthStrategy * strategy = mStrategies.value( strategy_id, nullptr );
@@ -65,18 +67,16 @@ void HbClientAuthService::onAuthRequest( networkuid socket_uid, HbClientAuthLogi
     {
         if( strategy->tryLogin( login_object ) )
         {
-            mPendingSocket.insert( socket_uid );
+            mPendingSocket = login_object->socketUid();
         }
         else
         {
             HbError( "Fail trying to log." );
         }
-
     }
     else
     {
         HbError( "No user auth strategy defined." );
-        // TODO kick?
     }
 
     delete login_object;
@@ -84,6 +84,7 @@ void HbClientAuthService::onAuthRequest( networkuid socket_uid, HbClientAuthLogi
 
 void HbClientAuthService::onLoginSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info )
 {
+    mPendingSocket = 0;
     /*if( checkSocket( socket_uid ) )
     {
         HbAuthStatusContract * response = mResponses.value( socket_uid, nullptr );
@@ -111,6 +112,7 @@ void HbClientAuthService::onLoginSucceed( networkuid socket_uid, const HbNetwork
 
 void HbClientAuthService::onLoginFailed( networkuid socket_uid, HbNetworkProtocol::AuthStatus status, const QString & description )
 {
+    mPendingSocket = 0;
     /*if( checkSocket( socket_uid ) )
     {
         HbAuthStatusContract * response = mResponses.value( socket_uid, nullptr );

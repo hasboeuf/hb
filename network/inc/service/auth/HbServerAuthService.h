@@ -61,6 +61,7 @@ namespace hb
 
 
             // InOut.
+            QSet< networkuid > mPendingSocket;
             QHash< networkuid, quint8 > mAuthTries;
             QHash< networkuid, quint8 > mAuthTimeout;
             QHash< networkuid, HbAuthStatusContract * > mResponses;

@@ -21,11 +21,6 @@
 
 namespace hb
 {
-    namespace link
-    {
-        class HbO2ClientFacebook;
-    }
-
     using namespace link;
 
     namespace network
@@ -46,7 +41,8 @@ namespace hb
 
         public slots:
             void onFacebookOpenBrower( const QUrl & url );
-            void onFacebookLinked();
+            void onFacebookLinkSucceed();
+            void onFacebookLinkFailed();
         private:
             QHash< HbO2ClientFacebook *, networkuid > mPendingCodes;
         };

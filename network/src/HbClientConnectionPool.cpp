@@ -131,10 +131,12 @@ bool HbClientConnectionPool::authRequest( HbClientAuthLoginObject * login_object
     HbClientAuthService * auth_service = getService< HbClientAuthService >( HbNetworkProtocol::SERVICE_AUTH );
     q_assert_ptr( auth_service );
 
+    login_object->setSocketUid( mUser.socketUid() );
     mUser.setStatus( HbNetworkProtocol::USER_AUTHENTICATING );
-    auth_service->onAuthRequest( mUser.socketUid(), login_object );
 
-    return true;
+    auth_service->onAuthRequest( login_object );
+
+    return false;
 }
 
 void HbClientConnectionPool::onClientConnected( networkuid client_uid )

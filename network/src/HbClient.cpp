@@ -42,7 +42,8 @@ bool HbClient::facebookAuthRequest()
 {
     if( !isReady() ) return false;
 
-    HbClientAuthLoginObject * login_object = new HbClientAuthLoginObject( HbAuthService::AUTH_FACEBOOK );
+    HbClientAuthLoginObject * login_object = new HbClientAuthLoginObject();
+    login_object->setStrategy( HbAuthService::AUTH_FACEBOOK );
     return mConnectionPool.authRequest( login_object );
 }
 

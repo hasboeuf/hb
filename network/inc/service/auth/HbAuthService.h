@@ -47,7 +47,7 @@ namespace hb
             virtual void onSocketDisconnected( networkuid socket_uid ) = 0;
 
         protected:
-            QSet< networkuid > mPendingSocket;
+
         };
     }
 }

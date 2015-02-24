@@ -42,13 +42,14 @@ namespace hb
             virtual void onSocketDisconnected( networkuid socket_uid );
 
             // From ClientConnectionPool.
-            void onAuthRequest( networkuid socket_uid, HbClientAuthLoginObject * login_object );
+            void onAuthRequest( HbClientAuthLoginObject * login_object );
 
             // From HbServerAuthStrategy.
             void onLoginSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info );
             void onLoginFailed ( networkuid socket_uid, HbNetworkProtocol::AuthStatus, const QString & description );
 
         private:
+            networkuid mPendingSocket;
             HbServiceAuthClientConfig mConfig;
             QHash< authstgy, HbClientAuthStrategy * > mStrategies;
 
