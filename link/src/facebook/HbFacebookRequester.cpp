@@ -20,6 +20,11 @@ HbFacebookRequester::HbFacebookRequester() :
     connect( this, &HbHttpRequester::requestError,    this, &HbFacebookRequester::onRequestError,    Qt::UniqueConnection );
 }
 
+HbFacebookRequester::~HbFacebookRequester()
+{
+    printf( "~HbFacebookRequester\n");
+}
+
 quint64 HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )
 {
 

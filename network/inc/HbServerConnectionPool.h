@@ -48,13 +48,13 @@ namespace hb
             void onSocketContractReceived( networkuid server_uid, networkuid socket_uid, const HbNetworkContract * contract );
 
             // From services.
-            void onContractSent( const HbNetworkContract * contract );
+            //void onContractSent( const HbNetworkContract * contract );
             void onContractSent( networkuid receiver, HbNetworkContract * contract );
             void onUserKick    ( const HbNetworkUser & user_info, netwint reason );
             void onSocketKick  ( networkuid socket_uid, netwint reason );
 
             // From HbAuthService.
-            void onUserConnected( networkuid socket_id, const HbNetworkUserInfo & user_info );
+            void onSocketAuthenticated( networkuid socket_id, const HbNetworkUserInfo & user_info );
 
         signals:
             void statusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status );

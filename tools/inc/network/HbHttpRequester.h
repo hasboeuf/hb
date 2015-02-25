@@ -26,7 +26,7 @@ namespace hb
 
         public:
             HbHttpRequester();
-            virtual ~HbHttpRequester() = default;
+            virtual ~HbHttpRequester();
 
             quint64 processRequest( const QUrl & url, quint32 timeout = hb::tools::HbTimeoutNetworkReply::msDefaultTimeout );
 

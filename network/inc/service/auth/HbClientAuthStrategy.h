@@ -34,7 +34,7 @@ namespace hb
             virtual bool prepareAuthContract( HbClientAuthLoginObject * login_object ) = 0;
 
         signals:
-            void authContractReady ( networkuid socket_uid, const HbAuthRequestContract * contract );
+            void authContractReady ( networkuid socket_uid, HbAuthRequestContract * contract );
             void authContractFailed( networkuid socket_uid, const QString & description );
         };
     }

@@ -28,7 +28,7 @@ namespace hb
         public:
 
             HbO2Server() = default;
-            virtual ~HbO2Server() = default;
+            virtual ~HbO2Server();
 
             virtual bool isValid() const;
 

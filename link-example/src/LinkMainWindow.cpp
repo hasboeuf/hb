@@ -115,6 +115,9 @@ void LinkMainWindow::onServerLinkSucceed()
     {
         HbError( "Request user failed." );
     }
+
+    mpFacebookServer->deleteLater();
+    mpFacebookServer = nullptr;
 }
 
 void LinkMainWindow::onRequestCompleted( quint64 request_id, hb::link::HbFacebookObject * object )

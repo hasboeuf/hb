@@ -13,6 +13,7 @@ using namespace hb::network;
 
 HbClientAuthService::HbClientAuthService()
 {
+    mPendingSocket = 0;
     HbClientAuthFacebookStrategy * fb_strategy = new HbClientAuthFacebookStrategy();
     mStrategies.insert( fb_strategy->type(), fb_strategy );
 
@@ -113,9 +114,9 @@ void HbClientAuthService::onAuthRequested( HbClientAuthLoginObject * login_objec
     delete login_object;
 }
 
-void HbClientAuthService::onAuthContractReady( networkuid socket_uid, const HbAuthRequestContract * contract )
+void HbClientAuthService::onAuthContractReady( networkuid socket_uid, HbAuthRequestContract * contract )
 {
-    mPendingSocket = 0;
+    emit contractSent( socket_uid, contract );
     /*if( checkSocket( socket_uid ) )
     {
         HbAuthStatusContract * response = mResponses.value( socket_uid, nullptr );

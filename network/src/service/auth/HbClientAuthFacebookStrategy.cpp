@@ -54,6 +54,7 @@ void HbClientAuthFacebookStrategy::onFacebookLinkSucceed()
     networkuid socket_uid = mPendingCodes.value( facebook_client );
 
     HbAuthFacebookRequestContract * contract = new HbAuthFacebookRequestContract();
+    contract->setType( HbAuthService::AUTH_FACEBOOK );
     contract->setClient( *facebook_client );
 
     mPendingCodes.remove( facebook_client );

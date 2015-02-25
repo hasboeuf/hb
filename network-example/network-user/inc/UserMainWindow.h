@@ -41,10 +41,8 @@ namespace hb
 
         private:
             hb::network::HbClient * mpHbClient;
-            hb::link::HbO2ClientFacebook * mpFacebookClient;
 
         private:
-            void init();
 
         public slots:
             void onClientStatusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status );
@@ -55,8 +53,6 @@ namespace hb
             void onStopClicked();
             void onUserConnectionRequest();
             void onFacebookConnectionRequest();
-            void onFacebookOpenBrower( const QUrl & url );
-            void onFacebookLinked();
 
         signals:
 

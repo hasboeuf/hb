@@ -26,12 +26,20 @@ HbClientConnectionPool::HbClientConnectionPool( const HbGeneralClientConfig & co
     service_auth->setConfig    ( config.auth    () );
     service_channel->setConfig ( config.channel () );
 
+    connect( service_auth, &HbClientAuthService::socketAuthenticated,
+             this, &HbClientConnectionPool::onSocketAuthenticated );
+    connect( service_auth, &HbClientAuthService::socketUnauthenticated,
+             this, &HbClientConnectionPool::onSocketUnauthenticated );
+
     mServices.insert( service_presence->id(), service_presence );
     mServices.insert( service_auth->id(),     service_auth    );
     mServices.insert( service_channel->id(),  service_channel );
 
     foreach( HbNetworkService * service, mServices )
     {
+        connect( service, &HbNetworkService::contractSent,
+                 this, &HbClientConnectionPool::onContractSent );
+
         // Socket.
         IHbSocketListener * socket_listener = dynamic_cast< IHbSocketListener * >( service );
         if( socket_listener )
@@ -122,7 +130,7 @@ bool HbClientConnectionPool::authRequested( HbClientAuthLoginObject * login_obje
         return false;
     }
 
-    if( !mUser.status() != HbNetworkProtocol::USER_CONNECTED )
+    if( mUser.status() != HbNetworkProtocol::USER_CONNECTED )
     {
         HbError( "User not in a connected state." );
         return false;
@@ -143,15 +151,18 @@ void HbClientConnectionPool::onClientConnected( networkuid client_uid )
 {
     HbAbstractClient * client = dynamic_cast< HbAbstractClient * >( sender() );
     q_assert_ptr( client );
-    q_assert( !mClients.contains( client_uid ) );
+    q_assert( mClients.contains( client_uid ) );
 
     connect( client, &HbAbstractClient::clientContractReceived, this, &HbClientConnectionPool::onClientContractReceived, Qt::UniqueConnection );
-
-    mClients.insert( client->uid(), client );
 
     HbInfo( "Client %d connected.", client_uid );
 
     emit statusChanged( client_uid, HbNetworkProtocol::CLIENT_CONNECTED );
+
+    if( client_uid == mUser.socketUid() )
+    {
+        mUser.setStatus( HbNetworkProtocol::USER_CONNECTED );
+    }
 }
 
 void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
@@ -163,6 +174,11 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
     HbInfo( "Client #%d disconnected.", client_uid );
 
     emit statusChanged( client_uid, HbNetworkProtocol::CLIENT_DISCONNECTED );
+
+    if( client_uid == mUser.socketUid() )
+    {
+        mUser.setStatus( HbNetworkProtocol::USER_DISCONNECTED );
+    }
 }
 
 void HbClientConnectionPool::onClientContractReceived( networkuid client_uid, const HbNetworkContract * contract )
@@ -202,17 +218,32 @@ void HbClientConnectionPool::onClientContractReceived( networkuid client_uid, co
     service->onContractReceived( contract );
 }
 
-void HbClientConnectionPool::onContractSent( const HbNetworkContract * contract )
+/*void HbClientConnectionPool::onContractSent( const HbNetworkContract * contract )
 {
 
-}
+}*/
 
 void HbClientConnectionPool::onContractSent( networkuid receiver, HbNetworkContract * contract )
 {
+    q_assert_ptr( contract );
+
+    HbAbstractClient * client = mClients.value( receiver, nullptr );
+    if( !client )
+    {
+        HbWarning( "Client disconnected, can not send contract." );
+        delete contract;
+        return;
+    }
+
+    client->send( ShHbNetworkContract( contract ) );
+}
+
+void HbClientConnectionPool::onSocketAuthenticated( networkuid socket_uid, const HbNetworkUserInfo & user_info )
+{
 
 }
 
-void HbClientConnectionPool::onUserConnected( networkuid client_uid, const HbNetworkUserInfo & user_info )
+void HbClientConnectionPool::onSocketUnauthenticated( networkuid socket_uid, const QString reason )
 {
 
 }

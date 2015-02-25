@@ -13,6 +13,7 @@ HbConnectionPool::HbConnectionPool( const HbGeneralConfig & config )
 {
     qRegisterMetaType< HbNetworkProtocol::ServerStatus >( "HbNetworkProtocol::ServerStatus" );
     qRegisterMetaType< HbNetworkProtocol::ClientStatus >( "HbNetworkProtocol::ClientStatus" );
+    qRegisterMetaType< HbNetworkProtocol::UserStatus >  ( "HbNetworkProtocol::UserStatus" );
 }
 
 void HbConnectionPool::setExchanges( HbNetworkExchanges & exchanges )

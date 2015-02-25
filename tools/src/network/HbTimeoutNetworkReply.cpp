@@ -1,4 +1,3 @@
-// Hb
 // Local
 #include <HbGlobal.h>
 #include <network/HbTimeoutNetworkReply.h>
@@ -17,17 +16,23 @@ HbTimeoutNetworkReply::HbTimeoutNetworkReply( QNetworkReply * reply, quint32 tim
     connect( this, &HbTimeoutNetworkReply::error,
              reply, ( void (QNetworkReply::*)( QNetworkReply::NetworkError ) )( &QNetworkReply::error ), Qt::UniqueConnection );
     connect( this, &QTimer::timeout, this, &HbTimeoutNetworkReply::onTimeout, Qt::UniqueConnection );
-    connect( reply, &QObject::destroyed, this, &QObject::deleteLater, Qt::UniqueConnection );
+    connect( reply, &QObject::destroyed, this,
+             [this]()
+             {
+                printf( "Reply %d destroyed by QNetworkReply.", uid() );
+                deleteLater();
+             }, Qt::UniqueConnection );
 
     if( timeout < 100 )
     {
         timeout = 100;
     }
-    start( timeout );
+    start( 1 );
 }
 
 HbTimeoutNetworkReply::~HbTimeoutNetworkReply()
 {
+    printf( "~HbTimeoutNetworkReply\n");
 }
 
 void HbTimeoutNetworkReply::onTimeout()

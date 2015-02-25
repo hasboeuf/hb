@@ -42,7 +42,7 @@ namespace hb
             }
 
         signals:
-            // TODO contractSent
+            void contractSent( networkuid receiver, HbNetworkContract * contract );
 
         protected:
             serviceuid mId = HbNetworkProtocol::SERVICE_UNDEFINED;

@@ -247,10 +247,10 @@ void HbServerConnectionPool::onSocketContractReceived( networkuid server_uid, ne
     service->onContractReceived( contract );
 }
 
-void HbServerConnectionPool::onContractSent( const HbNetworkContract * contract )
+/*void HbServerConnectionPool::onContractSent( const HbNetworkContract * contract )
 {
 
-}
+}*/
 
 void HbServerConnectionPool::onContractSent( networkuid receiver, HbNetworkContract * contract )
 {
@@ -267,7 +267,7 @@ void HbServerConnectionPool::onSocketKick( networkuid socket_uid, netwint reason
 
 }
 
-void HbServerConnectionPool::onUserConnected( networkuid socket_id, const HbNetworkUserInfo & user_info )
+void HbServerConnectionPool::onSocketAuthenticated( networkuid socket_id, const HbNetworkUserInfo & user_info )
 {
 
 }

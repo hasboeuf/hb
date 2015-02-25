@@ -9,6 +9,11 @@
 
 using namespace hb::link;
 
+HbO2Server::~HbO2Server()
+{
+    printf( "~HbO2Server\n");
+}
+
 bool HbO2Server::isValid() const
 {
     if( !HbO2::isValid() )
@@ -86,7 +91,7 @@ void HbO2Server::onTokenResponseReceived()
         emit linkFailed( mErrorString );
     }
 
-    token_reply->deleteLater();
+    //token_reply->deleteLater(); TODO TMP
 }
 
 void HbO2Server::onTokenResponseError( QNetworkReply::NetworkError error )
@@ -99,9 +104,9 @@ void HbO2Server::onTokenResponseError( QNetworkReply::NetworkError error )
 
     HbInfo( "Token response error. (%s)", HbLatin1( mErrorString ) );
 
-    token_reply->deleteLater();
-
     emit linkFailed( mErrorString );
+
+    //token_reply->deleteLater(); TODO TMP
 }
 
 void HbO2Server::setClientSecret( const QString & client_secret )

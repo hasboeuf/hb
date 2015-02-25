@@ -29,6 +29,8 @@ namespace hb
 
         class HB_NETWORK_DECL HbClientAuthService : public HbAuthService
         {
+            Q_OBJECT
+
         public:
 
             HbClientAuthService();
@@ -46,7 +48,7 @@ namespace hb
             void onAuthRequested( HbClientAuthLoginObject * login_object );
 
             // From HbClientAuthStrategy.
-            void onAuthContractReady ( networkuid socket_uid, const HbAuthRequestContract * contract );
+            void onAuthContractReady ( networkuid socket_uid, HbAuthRequestContract * contract );
             void onAuthContractFailed( networkuid socket_uid, const QString & description );
 
         private:

@@ -47,7 +47,7 @@ HbAuthStatusContract * HbAuthRequestContract::reply() const
 
 bool HbAuthRequestContract::read( QDataStream & stream )
 {
-    quint8 type;
+    authstgy type;
     stream >> type;
 
     mType = ( HbAuthService::AuthType ) type;
@@ -57,7 +57,7 @@ bool HbAuthRequestContract::read( QDataStream & stream )
 
 bool HbAuthRequestContract::write( QDataStream & stream ) const
 {
-    stream << ( qint32 ) mType;
+    stream << ( authstgy ) mType;
 
     return true;
 }

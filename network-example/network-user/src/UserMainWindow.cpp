@@ -51,7 +51,6 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     config.presence().setKeepAliveInterval( 1 );
 
     mpHbClient       = new HbClient( config );
-    mpFacebookClient = nullptr;
 
     connect( ui_qpb_start,           &QPushButton::clicked, this, &UserMainWindow::onStartClicked );
     connect( ui_qpb_stop,            &QPushButton::clicked, this, &UserMainWindow::onStopClicked );
@@ -67,8 +66,6 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
 UserMainWindow::~UserMainWindow()
 {
     HbLogBegin();
-
-    if( mpFacebookClient ) delete mpFacebookClient;
 
     HbLogEnd();
 }
@@ -109,46 +106,10 @@ void UserMainWindow::onFacebookConnectionRequest()
 {
     HbLogBegin();
 
-    if( !mpFacebookClient )
-    {
-        mpFacebookClient = new HbO2ClientFacebook();
-
-        connect( mpFacebookClient, &HbO2Client::openBrowser, this, &UserMainWindow::onFacebookOpenBrower );
-        connect( mpFacebookClient, &HbO2::linkSucceed,       this, &UserMainWindow::onFacebookLinked );
-    }
-
-    if( mpFacebookClient->linkStatus() == HbO2Client::UNLINKED )
-    {
-        mpFacebookClient->setClientId( "940633959281250" );
-        mpFacebookClient->setLocalPort( 8080 );
-        mpFacebookClient->addScope( FB_PERMISSION_EMAIL );
-        mpFacebookClient->addScope( FB_PERMISSION_FRIENDS );
-        mpFacebookClient->link();
-    }
-    else
-    {
-        HbWarning( "Facebook client already linked or linking." );
-    }
+    mpHbClient->facebookAuthRequested();
 
     HbLogEnd();
 }
-
-void UserMainWindow::onFacebookOpenBrower( const QUrl & url )
-{
-    HbInfo( "Opening browser on %s", HbLatin1( url.toString() ) );
-    QDesktopServices::openUrl( url );
-}
-
-void UserMainWindow::onFacebookLinked()
-{
-    if( sender() != mpFacebookClient )
-    {
-        return;
-    }
-
-    mpHbClient->facebookAuthRequested();
-}
-
 
 void UserMainWindow::onClientStatusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status )
 {

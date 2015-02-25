@@ -5,6 +5,7 @@ using namespace hb::tools;
 
 HbTimeoutNetworkReplies::~HbTimeoutNetworkReplies()
 {
+    printf( "~HbTimeoutNetworkReplies mReplies=%d\n", mReplies.size() );
     qDeleteAll( mReplies );
     mReplies.clear();
 }
@@ -52,5 +53,7 @@ quint64 HbTimeoutNetworkReplies::id( QNetworkReply * reply ) const
 void HbTimeoutNetworkReplies::onDestroyed()
 {
     QObject * object = sender();
+    printf( "onDestroyed before mReplies=%d\n", mReplies.size() );
     mReplies.remove( mReplies.key( static_cast< HbTimeoutNetworkReply * >( object ) ) );
+    printf( "onDestroyed after mReplies=%d\n", mReplies.size() );
 }

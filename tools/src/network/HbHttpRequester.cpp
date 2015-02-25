@@ -12,6 +12,11 @@ HbHttpRequester::HbHttpRequester()
 
 }
 
+HbHttpRequester::~HbHttpRequester()
+{
+    printf( "~HbHttpRequester\n");
+}
+
 quint64 HbHttpRequester::processRequest( const QUrl &url, quint32 timeout )
 {
     QNetworkRequest request( url );

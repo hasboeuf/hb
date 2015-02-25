@@ -16,6 +16,11 @@ HbServerAuthFacebookStrategy::HbServerAuthFacebookStrategy() :
     connect( &mRequester, &HbFacebookRequester::requestCompleted, this, &HbServerAuthFacebookStrategy::onRequestCompleted, Qt::UniqueConnection );
 }
 
+authstgy HbServerAuthFacebookStrategy::type() const
+{
+    return HbAuthService::AUTH_FACEBOOK;
+}
+
 bool HbServerAuthFacebookStrategy::checkLogin( const HbAuthRequestContract * contract )
 {
     const HbAuthFacebookRequestContract * facebook_auth = contract->value< HbAuthFacebookRequestContract >();
@@ -43,13 +48,12 @@ bool HbServerAuthFacebookStrategy::checkLogin( const HbAuthRequestContract * con
 
 }
 
-authstgy HbServerAuthFacebookStrategy::type() const
-{
-    return HbAuthService::AUTH_FACEBOOK;
-}
+// Problem: onLinkSucceed and onLinkFailed are both called. That causes problems
+// as deleterLater is called in each of them.
 
 void HbServerAuthFacebookStrategy::onLinkSucceed()
 {
+    HbLogBegin();
     HbO2ServerFacebook * server_auth = dynamic_cast< HbO2ServerFacebook * >( sender() );
     q_assert_ptr( server_auth );
     q_assert( mPendingToken.contains( server_auth ) );
@@ -67,11 +71,14 @@ void HbServerAuthFacebookStrategy::onLinkSucceed()
         emit authFailed( sender, HbNetworkProtocol::AUTH_INTERNAL_ERROR, "" );
     }
 
-    server_auth->deleteLater();
+    //server_auth->deleteLater(); TODO TMP
+
+    HbLogEnd();
 }
 
 void HbServerAuthFacebookStrategy::onLinkFailed(const QString & error )
 {
+    HbLogBegin();
     HbO2ServerFacebook * server_auth = dynamic_cast< HbO2ServerFacebook * >( sender() );
     q_assert_ptr( server_auth );
     q_assert( mPendingToken.contains( server_auth ) );
@@ -79,9 +86,11 @@ void HbServerAuthFacebookStrategy::onLinkFailed(const QString & error )
     HbInfo( "Server link failed for user %s ( %s ).", HbLatin1( server_auth->clientId() ), HbLatin1( error ) );
 
     networkuid sender = mPendingToken.take( server_auth );
-    server_auth->deleteLater();
+
+    //server_auth->deleteLater(); TODO TMP
 
     emit authFailed( sender, HbNetworkProtocol::AUTH_FB_KO, error );
+    HbLogEnd();
 }
 
 void HbServerAuthFacebookStrategy::onRequestCompleted( quint64 request_id, HbFacebookObject * object )
