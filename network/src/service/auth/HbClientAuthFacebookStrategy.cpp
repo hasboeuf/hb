@@ -37,6 +37,8 @@ bool HbClientAuthFacebookStrategy::prepareAuthContract( HbClientAuthLoginObject 
     mPendingCodes.insert( facebook_client, login_object->socketUid() );
 
     facebook_client->link();
+
+    return true;
 }
 
 void HbClientAuthFacebookStrategy::onFacebookOpenBrower( const QUrl & url )

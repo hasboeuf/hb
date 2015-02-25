@@ -61,6 +61,7 @@ namespace hb
         private:
             QNetworkAccessManager mManager;
             HbTimeoutNetworkReplies mReplies;
+            QSet< quint64 > mPendingReplies;
         };
     }
 }

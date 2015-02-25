@@ -71,7 +71,7 @@ void HbServerAuthFacebookStrategy::onLinkSucceed()
         emit authFailed( sender, HbNetworkProtocol::AUTH_INTERNAL_ERROR, "" );
     }
 
-    //server_auth->deleteLater(); TODO TMP
+    server_auth->deleteLater();
 
     HbLogEnd();
 }
@@ -87,7 +87,7 @@ void HbServerAuthFacebookStrategy::onLinkFailed(const QString & error )
 
     networkuid sender = mPendingToken.take( server_auth );
 
-    //server_auth->deleteLater(); TODO TMP
+    server_auth->deleteLater();
 
     emit authFailed( sender, HbNetworkProtocol::AUTH_FB_KO, error );
     HbLogEnd();

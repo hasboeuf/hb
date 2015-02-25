@@ -243,11 +243,6 @@ void HbClientConnectionPool::onSocketAuthenticated( networkuid socket_uid, const
 
 }
 
-void HbClientConnectionPool::onSocketAuthenticated( networkuid socket_uid, const HbNetworkUserInfo & user_info )
-{
-
-}
-
 void HbClientConnectionPool::onSocketUnauthenticated( networkuid socket_uid, const QString reason )
 {
 

@@ -18,7 +18,7 @@
 
 namespace hb
 {
-    namespace link
+    namespace tools
     {
         class HB_TOOLS_DECL HbHttpRequester : public QObject
         {
@@ -45,6 +45,6 @@ namespace hb
     }
 }
 
-using hb::link::HbHttpRequester;
+using hb::tools::HbHttpRequester;
 
 #endif // HbHttpRequester_H

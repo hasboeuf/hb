@@ -6,8 +6,17 @@ using namespace hb::tools;
 HbTimeoutNetworkReplies::~HbTimeoutNetworkReplies()
 {
     printf( "~HbTimeoutNetworkReplies mReplies=%d\n", mReplies.size() );
-    qDeleteAll( mReplies );
-    mReplies.clear();
+    auto it = mReplies.begin();
+    while( it != mReplies.end() )
+    {
+        QNetworkReply * reply                 = it.key();
+        HbTimeoutNetworkReply * timeout_reply = it.value();
+
+        if( reply ) delete reply;
+        if( timeout_reply ) delete timeout_reply;
+
+        ++it;
+    }
 }
 
 quint64 HbTimeoutNetworkReplies::add( QNetworkReply * reply, quint32 timeout )
@@ -16,7 +25,7 @@ quint64 HbTimeoutNetworkReplies::add( QNetworkReply * reply, quint32 timeout )
     {
         HbTimeoutNetworkReply * timeout_reply = new HbTimeoutNetworkReply( reply, timeout, this );
 
-        connect( timeout_reply, &QObject::destroyed, this, &HbTimeoutNetworkReplies::onDestroyed, Qt::UniqueConnection );
+        connect( reply, &QNetworkReply::finished, this, &HbTimeoutNetworkReplies::onFinished );
 
         mReplies.insert( reply, timeout_reply );
 
@@ -33,7 +42,7 @@ void HbTimeoutNetworkReplies::remove( QNetworkReply * reply )
         return;
     }
 
-    mReplies.remove( reply );
+    reply->close(); // onFinished will handle the rest.
 }
 
 quint64 HbTimeoutNetworkReplies::id( QNetworkReply * reply ) const
@@ -50,10 +59,18 @@ quint64 HbTimeoutNetworkReplies::id( QNetworkReply * reply ) const
     return 0;
 }
 
-void HbTimeoutNetworkReplies::onDestroyed()
+void HbTimeoutNetworkReplies::onFinished()
 {
-    QObject * object = sender();
-    printf( "onDestroyed before mReplies=%d\n", mReplies.size() );
-    mReplies.remove( mReplies.key( static_cast< HbTimeoutNetworkReply * >( object ) ) );
-    printf( "onDestroyed after mReplies=%d\n", mReplies.size() );
+    QNetworkReply * reply = dynamic_cast< QNetworkReply * >( sender() );
+    if( !reply )
+    {
+        return;
+    }
+
+    HbTimeoutNetworkReply * timeout_reply = mReplies.value( reply, nullptr );
+    if( timeout_reply )
+    {
+        mReplies.remove( reply);
+        delete timeout_reply;
+    }
 }

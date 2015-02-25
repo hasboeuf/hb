@@ -5,7 +5,7 @@
 #include <HbGlobal.h>
 #include <network/HbHttpRequester.h>
 
-using namespace hb::link;
+using namespace hb::tools;
 
 HbHttpRequester::HbHttpRequester()
 {
@@ -14,7 +14,7 @@ HbHttpRequester::HbHttpRequester()
 
 HbHttpRequester::~HbHttpRequester()
 {
-    printf( "~HbHttpRequester\n");
+
 }
 
 quint64 HbHttpRequester::processRequest( const QUrl &url, quint32 timeout )

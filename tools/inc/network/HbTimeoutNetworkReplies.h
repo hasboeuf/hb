@@ -35,7 +35,7 @@ namespace hb
             quint64 id( QNetworkReply * reply ) const;
 
         public slots:
-            void onDestroyed();
+            void onFinished();
         private:
             QHash< QNetworkReply *, HbTimeoutNetworkReply * > mReplies;
         };
