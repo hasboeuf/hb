@@ -212,7 +212,12 @@ void HbClientConnectionPool::onContractSent( networkuid receiver, HbNetworkContr
 
 }
 
-void HbClientConnectionPool::onUserConnected( networkuid client_uid, const HbNetworkUserInfo & user_info )
+void HbClientConnectionPool::onSocketAuthenticated( networkuid socket_uid, const HbNetworkUserInfo & user_info )
+{
+
+}
+
+void HbClientConnectionPool::onSocketUnauthenticated( networkuid socket_uid, const QString reason )
 {
 
 }

@@ -54,7 +54,11 @@ namespace hb
             void onSocketKick  ( networkuid socket_uid, netwint reason );
 
             // From HbAuthService.
-            void onUserConnected( networkuid socket_id, const HbNetworkUserInfo & user_info );
+            void onSocketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info );
+            void onSocketUnauthenticated( networkuid socket_uid, const QString reason );
+
+            // From HbPresenceService
+            void onSocketLagged( networkuid socket_uid, quint16 last_presence, quint16 kick_threshold );
 
         signals:
             void statusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status );

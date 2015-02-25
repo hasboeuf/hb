@@ -22,9 +22,12 @@ namespace hb
 
         class HB_NETWORK_DECL HbNetworkUserInfo final
         {
+            friend QDataStream & operator<<( QDataStream & stream, const HbNetworkUserInfo & header );
+            friend QDataStream & operator>>( QDataStream & stream, HbNetworkUserInfo & header );
+
         public:
 
-            enum Gender : quint8
+            enum Gender : netwint
             {
                 GENDER_NONE = 0,
                 GENDER_MALE,
@@ -66,6 +69,9 @@ namespace hb
             Gender   mGender;
 
         };
+
+        QDataStream & operator<<(QDataStream & stream, const HbNetworkUserInfo & header );
+        QDataStream & operator>>(QDataStream & stream, HbNetworkUserInfo & header );
     }
 }
 

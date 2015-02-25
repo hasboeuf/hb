@@ -15,6 +15,7 @@
 // Hb
 #include <HbGlobal.h>
 #include <contract/HbNetworkProtocol.h>
+#include <user/HbNetworkUserInfo.h>
 // Local
 #include <HbNetwork.h>
 #include <contract/HbNetworkContract.h>
@@ -42,17 +43,20 @@ namespace hb
             void setDescription( const QString & description );
             void setTryNumber( quint8 try_number );
             void setMaxTries ( quint8 max_tries );
+            void setUserInfo( const HbNetworkUserInfo & user_info );
 
             HbNetworkProtocol::AuthStatus status() const;
             const QString & description() const;
             quint8 tryNumber() const;
             quint8 maxTries () const;
+            const HbNetworkUserInfo & userInfo() const;
 
         private:
             HbNetworkProtocol::AuthStatus mStatus;
             QString mDescription;
             quint8 mTryNumber;
             quint8 mMaxTries;
+            HbNetworkUserInfo mUserInfo;
         };
     }
 }
