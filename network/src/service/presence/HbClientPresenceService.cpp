@@ -1,9 +1,17 @@
 // Qt
+#include <QtCore/QTimerEvent>
 // Hb
+#include <HbLogService.h>
 // Local
 #include <service/presence/HbClientPresenceService.h>
+#include <contract/presence/HbPresenceStatusContract.h>
 
 using namespace hb::network;
+
+
+HbClientPresenceService::HbClientPresenceService()
+{
+}
 
 const HbServicePresenceClientConfig & HbClientPresenceService::config() const
 {
@@ -18,17 +26,43 @@ void HbClientPresenceService::setConfig( const HbServicePresenceClientConfig & c
     }
 }
 
-void HbClientPresenceService::onUserConnected   ( const HbNetworkUserInfo & user_info )
+void HbClientPresenceService::timerEvent( QTimerEvent * event )
 {
+    qint32 timer_id = event->timerId();
 
+    networkuid socket_uid = mSocketByTimerId.value( timer_id, 0 );
+
+    q_assert( socket_uid > 0 );
+
+    HbPresenceStatusContract * presence = new HbPresenceStatusContract();
+    // emit contract sent.
 }
 
-void HbClientPresenceService::onUserDisconnected( const HbNetworkUserInfo & user_info )
+void HbClientPresenceService::onSocketAuthenticated( networkuid socket_uid )
 {
+    q_assert( !mTimerBySocketUid.contains( socket_uid ) );
 
+    HbInfo( "Socket authenticated, start keep alive timer." );
+    qint32 timer_id = startTimer( mConfig.keepAliveInterval() * 1000 );
+
+    mTimerBySocketUid.insert( socket_uid, timer_id );
+    mSocketByTimerId.insert ( timer_id, socket_uid );
+}
+
+void HbClientPresenceService::onSocketUnauthenticated( networkuid socket_uid )
+{
+    qint32 timer_id = mTimerBySocketUid.value( socket_uid, 0 );
+    if( timer_id != 0 )
+    {
+        HbInfo( "Socket unauthenticated, stop keep alive timer." );
+        killTimer( timer_id );
+        mSocketByTimerId.remove( timer_id );
+    }
+
+    mTimerBySocketUid.remove( socket_uid );
 }
 
 void HbClientPresenceService::onContractReceived( const HbNetworkContract * contract )
 {
-
+    // Useless.
 }

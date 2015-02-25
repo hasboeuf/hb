@@ -82,7 +82,7 @@ void UserMainWindow::onStartClicked()
     networkuid server_uid = mpHbClient->joinTcpClient( config, true );
     if( server_uid > 0 )
     {
-        HbInfo( "Client #%d started.", server_uid );
+        HbInfo( "Client %d started.", server_uid );
     }
 
     HbLogEnd();

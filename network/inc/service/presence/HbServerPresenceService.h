@@ -16,6 +16,8 @@
 #include <service/presence/HbPresenceService.h>
 #include <config/service/presence/HbServicePresenceServerConfig.h>
 
+class QTimerEvent;
+
 namespace hb
 {
     namespace network
@@ -27,19 +29,27 @@ namespace hb
 
         public:
 
-            HbServerPresenceService() = default;
+            HbServerPresenceService();
             virtual ~HbServerPresenceService() = default;
 
             const HbServicePresenceServerConfig & config() const;
             void setConfig( const HbServicePresenceServerConfig & config );
 
+        protected:
+            void timerEvent( QTimerEvent * );
+
         public callbacks:
-            void onUserConnected   ( const HbNetworkUserInfo & user_info );
-            void onUserDisconnected( const HbNetworkUserInfo & user_info );
+            void onSocketAuthenticated  ( networkuid socket_uid );
+            void onSocketUnauthenticated( networkuid socket_uid );
             void onContractReceived( const HbNetworkContract * contract );
+
+        signals:
+            void socketLagged( networkuid socket_uid, quint16 last_presence, quint16 kick_threshold );
 
         private:
             HbServicePresenceServerConfig mConfig;
+            qint32 mTickTimer;
+            QHash< networkuid, quint16 > mClientAliveTick;
         };
     }
 }

@@ -18,10 +18,12 @@ HbServer::HbServer(const HbGeneralServerConfig & config ) :
 
 networkuid HbServer::joinTcpServer( HbTcpServerConfig & config , bool main )
 {
+    if( !isReady() ) return false;
     return mConnectionPool.joinTcpServer( config, main );
 }
 
 bool HbServer::leave()
 {
+    if( !isReady() ) return false;
     return mConnectionPool.leave();
 }

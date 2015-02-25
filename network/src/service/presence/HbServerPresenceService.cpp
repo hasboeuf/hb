@@ -1,9 +1,16 @@
 // Qt
 // Hb
+#include <HbLogService.h>
 // Local
 #include <service/presence/HbServerPresenceService.h>
+#include <contract/presence/HbPresenceContract.h>
 
 using namespace hb::network;
+
+HbServerPresenceService::HbServerPresenceService()
+{
+    mTickTimer = 0;
+}
 
 const HbServicePresenceServerConfig & HbServerPresenceService::config() const
 {
@@ -18,17 +25,63 @@ void HbServerPresenceService::setConfig( const HbServicePresenceServerConfig & c
     }
 }
 
-void HbServerPresenceService::onUserConnected   ( const HbNetworkUserInfo & user_info )
+void HbServerPresenceService::timerEvent( QTimerEvent * )
 {
+    auto it = mClientAliveTick.begin();
+    while( it != mClientAliveTick.end() )
+    {
+        networkuid socket_uid = it.key();
+        quint16 last_presence = ++( it.value() ); // Add one second to the last presence.
 
+        if( last_presence >= mConfig.kickAliveThreshold() )
+        {
+            // TODO kick
+        }
+        else if( last_presence >= mConfig.warningAliveThreshold() )
+        {
+            emit socketLagged( socket_uid, last_presence, mConfig.kickAliveThreshold() );
+        }
+
+        ++it;
+    }
 }
 
-void HbServerPresenceService::onUserDisconnected( const HbNetworkUserInfo & user_info )
+void HbServerPresenceService::onSocketAuthenticated( networkuid socket_uid )
 {
+    q_assert( !mClientAliveTick.contains( socket_uid ) );
 
+    if( mTickTimer == 0 ) // No timer started yet.
+    {
+        mTickTimer = startTimer( 1000 );
+    }
+
+    mClientAliveTick.insert( socket_uid, 0 );
+}
+
+void HbServerPresenceService::onSocketUnauthenticated( networkuid socket_uid )
+{
+    q_assert( mClientAliveTick.contains( socket_uid ) );
+
+    mClientAliveTick.remove( socket_uid );
+
+    if( mClientAliveTick.size() == 0 ) // No clients => stop the timer.
+    {
+        killTimer( mTickTimer );
+        mTickTimer = 0;
+    }
 }
 
 void HbServerPresenceService::onContractReceived( const HbNetworkContract * contract )
 {
-
+    const HbPresenceContract * presence_contract = contract->value< HbPresenceContract >();
+    if( presence_contract )
+    {
+        networkuid socket_uid = presence_contract->sender();
+        mClientAliveTick[socket_uid] = 0; // Update client tick.
+    }
+    else
+    {
+        HbError( "Presence contract type not recognized." );
+        // TODO kick?
+    }
 }

@@ -49,8 +49,8 @@ namespace hb
             codeuid mCode;
         };
 
-        HB_NETWORK_DECL QDataStream & operator<<(QDataStream & stream, const HbNetworkHeader & header);
-        HB_NETWORK_DECL QDataStream & operator>>(QDataStream & stream, HbNetworkHeader & header);
+        QDataStream & operator<<(QDataStream & stream, const HbNetworkHeader & header);
+        QDataStream & operator>>(QDataStream & stream, HbNetworkHeader & header);
     }
 }
 

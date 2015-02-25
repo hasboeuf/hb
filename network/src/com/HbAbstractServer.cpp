@@ -230,7 +230,7 @@ void HbAbstractServer::reset()
     foreach( HbSocketHandler * handler, mHandlerById.values() )
     {
         q_assert_ptr( handler );
-        HbInfo( "Deleting handler #%d", handler->uid() );
+        HbInfo( "Deleting handler %d", handler->uid() );
         handler->disconnect();
         handler->deleteLater();
     }

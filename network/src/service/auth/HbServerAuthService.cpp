@@ -107,7 +107,8 @@ void HbServerAuthService::kickSocket( networkuid socket_uid, HbNetworkProtocol::
 
 void HbServerAuthService::onContractReceived( const HbNetworkContract * contract )
 {
-    const HbAuthRequestContract * auth_contract = contract->value< const HbAuthRequestContract >();
+
+    const HbAuthRequestContract * auth_contract = contract->value< HbAuthRequestContract >();
     if( auth_contract )
     {
         authstgy   type       = auth_contract->type();
@@ -177,10 +178,11 @@ void HbServerAuthService::onAuthSucceed( networkuid socket_uid, const HbNetworkU
         response->setStatus( HbNetworkProtocol::AUTH_OK );
         response->setTryNumber( 1 ); // TODO store try number.
         response->setMaxTries( mConfig.authMaxTries() );
+        response->setUserInfo( user_info );
 
         delSocket( socket_uid, false );
 
-        // TODO emit contract.
+        // emit contract.
     }
     else
     {

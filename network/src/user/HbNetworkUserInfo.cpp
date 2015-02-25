@@ -125,3 +125,42 @@ void HbNetworkUserInfo::setGender   ( Gender gender )
     if( gender != GENDER_NONE ) mGender = gender;
 }
 
+namespace hb
+{
+    namespace network
+    {
+
+        QDataStream & operator <<( QDataStream & stream, const HbNetworkUserInfo & user_info )
+        {
+            stream << user_info.mId;
+            stream << user_info.mType;
+            stream << user_info.mEmail;
+            stream << user_info.mNickname;
+            stream << user_info.mFirstName;
+            stream << user_info.mLastName;
+            stream << user_info.mAge;
+            stream << ( netwint ) user_info.mGender;
+
+            return stream;
+        }
+
+        QDataStream & operator >>( QDataStream & stream, HbNetworkUserInfo & user_info )
+        {
+            netwint gender;
+            stream >> user_info.mId;
+            stream >> user_info.mType;
+            stream >> user_info.mEmail;
+            stream >> user_info.mNickname;
+            stream >> user_info.mFirstName;
+            stream >> user_info.mLastName;
+            stream >> user_info.mAge;
+            stream >> gender;
+
+            user_info.mGender = ( HbNetworkUserInfo::Gender ) gender;
+
+            return stream;
+        }
+    }
+}
+
+

@@ -44,11 +44,14 @@ namespace hb
             virtual void onContractSent( networkuid receiver, HbNetworkContract * contract ) = 0;
             // From HbAuthService.
             virtual void onSocketAuthenticated( networkuid socket_id, const HbNetworkUserInfo & user_info ) = 0;
+            virtual void onSocketUnauthenticated( networkuid socket_uid, const QString reason ) = 0;
 
         signals:
             // To services.
             void socketConnected       ( networkuid socket_uid );
             void socketDisconnected    ( networkuid socket_uid );
+            void socketAuthenticated   ( networkuid socket_uid );
+            void socketUnauthenticated ( networkuid socket_uid );
             void socketContractReceived( const HbNetworkContract * contract );
             void userConnected         ( const HbNetworkUserInfo & user_info );
             void userDisconnected      ( const HbNetworkUserInfo & user_info );

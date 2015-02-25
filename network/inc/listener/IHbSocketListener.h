@@ -6,10 +6,9 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef IHBSOCKETTLISTENER_H
-#define IHBSOCKETTLISTENER_H
+#ifndef IHBSOCKETLISTENER_H
+#define IHBSOCKETLISTENER_H
 
-#include <QtCore/QtPlugin>
 // Hb
 #include <HbGlobal.h>
 // Local
@@ -36,4 +35,4 @@ namespace hb
 
 using hb::network::IHbSocketListener;
 
-#endif // IHBSOCKETTLISTENER_H
+#endif // IHBSOCKETLISTENER_H
