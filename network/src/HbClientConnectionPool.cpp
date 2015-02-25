@@ -160,7 +160,7 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
     q_assert_ptr( client );
     q_assert( mClients.contains( client_uid ) );
 
-    HbInfo( "Client #%d disconnected.", client_uid );
+    HbInfo( "Client %d disconnected.", client_uid );
 
     emit statusChanged( client_uid, HbNetworkProtocol::CLIENT_DISCONNECTED );
 }

@@ -172,7 +172,7 @@ const LogViewerConfig LogViewerConfig::importConfigXml( const QString & file_pat
     QFile xml_doc( file_path );
     if( !xml_doc.open( QIODevice::ReadOnly ) )
     {
-        qDebug() << QStringLiteral( "Erreur#%1[%2] à l'ouverture du document XML %3" )
+        qDebug() << QStringLiteral( "Erreur %1[%2] à l'ouverture du document XML %3" )
             .arg( xml_doc.error() )
             .arg( xml_doc.errorString() )
             .arg( xml_doc.fileName() );

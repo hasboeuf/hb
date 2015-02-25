@@ -49,12 +49,12 @@ void HbSocketHandler::init()
 
 void HbSocketHandler::reset()
 {
-    HbInfo( "Reset socket handler #%d", mUid );
+    HbInfo( "Reset socket handler %d", mUid );
     QMutexLocker locker( &mSocketMutex );
 
     foreach( HbAbstractSocket * socket, mSocketById.values() )
     {
-        HbInfo( "Delete socket #%d.", socket->uid() );
+        HbInfo( "Delete socket %d.", socket->uid() );
         delete socket;
     }
 
@@ -77,7 +77,7 @@ bool HbSocketHandler::canHandleNewConnection()
         return true;
     }
 
-    HbError("SocketHandler#%d: Cannot handle new socket. [state=%d, size=%d, max=%d].",
+    HbError("SocketHandler %d: Cannot handle new socket. [state=%d, size=%d, max=%d].",
             mUid,
             mState,
             mSocketById.size(),
@@ -128,13 +128,13 @@ void HbSocketHandler::onDisconnectionRequest( networkuid uid )
     }
     else
     {
-        HbWarning( "Socket #%d does not exist for hander #%d.", uid, mUid );
+        HbWarning( "Socket %d does not exist for hander %d.", uid, mUid );
     }
 }
 
 void HbSocketHandler::onServerLeft()
 {
-    HbInfo( "Server left -> deleting this handler #%d", mUid );
+    HbInfo( "Server left -> deleting this handler %d", mUid );
     reset();
 }
 
@@ -230,7 +230,7 @@ void HbSocketHandler::onSocketDisconnected()
     q_assert( mIdBySocket.contains( socket ) );
     q_assert( mSocketById.contains( socket->uid( ) ) );
 
-    HbInfo("SocketPool%d: Socket#%d disconnected.", mUid, socket->uid() );
+    HbInfo("SocketPool%d: Socket %d disconnected.", mUid, socket->uid() );
 
     networkuid uid = socket->uid();
 

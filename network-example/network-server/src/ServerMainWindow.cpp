@@ -77,7 +77,7 @@ void ServerMainWindow::onStartClicked()
     networkuid server_uid = mpHbServer->joinTcpServer( config, true );
     if( server_uid > 0 )
     {
-        HbInfo( "Server #%d started.", server_uid );
+        HbInfo( "Server %d started.", server_uid );
     }
 
     HbLogEnd();

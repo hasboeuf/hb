@@ -160,7 +160,7 @@ void HbServerConnectionPool::onSocketConnected( networkuid server_uid, networkui
     q_assert_ptr( server );
     q_assert( mServers.contains( server_uid ) );
 
-    HbInfo( "Socket #%d on server #%d connected.", server_uid, socket_uid );
+    HbInfo( "Socket %d on server %d connected.", server_uid, socket_uid );
 
     mPendingSockets.insert( socket_uid );
 
@@ -185,7 +185,7 @@ void HbServerConnectionPool::onSocketDisconnected( networkuid server_uid, networ
     HbNetworkUser * user = isSocketAuthenticated( socket_uid );
     if( !user )
     {
-        HbInfo( "Unauthenticated socket #%d on server #%d disconnected.", server_uid, socket_uid );
+        HbInfo( "Unauthenticated socket %d on server %d disconnected.", server_uid, socket_uid );
 
         mPendingSockets.remove( socket_uid );
 
@@ -216,12 +216,12 @@ void HbServerConnectionPool::onSocketContractReceived( networkuid server_uid, ne
     q_assert_ptr( server );
     q_assert( mServers.contains( server_uid ) );
 
-    HbInfo( "Contract received from socket #%d on server #%d.", socket_uid, server_uid );
+    HbInfo( "Contract received from socket %d on server %d.", socket_uid, server_uid );
 
 
     if( !checkContractReceived( contract ) )
     {
-        HbWarning( "Invalid contract received from socket #%d on server #%d. Kick scheduled.", socket_uid, server_uid );
+        HbWarning( "Invalid contract received from socket %d on server %d. Kick scheduled.", socket_uid, server_uid );
         // TODO kick
         delete contract;
         return;
