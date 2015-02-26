@@ -116,7 +116,7 @@ void HbClientAuthService::onAuthRequested( HbClientAuthLoginObject * login_objec
 
 void HbClientAuthService::onAuthContractReady( networkuid socket_uid, HbAuthRequestContract * contract )
 {
-    emit contractSent( socket_uid, contract );
+    emit socketContractToSend( socket_uid, contract );
     /*if( checkSocket( socket_uid ) )
     {
         HbAuthStatusContract * response = mResponses.value( socket_uid, nullptr );

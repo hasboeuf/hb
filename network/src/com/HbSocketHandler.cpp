@@ -123,7 +123,7 @@ void HbSocketHandler::onDisconnectionRequest( networkuid uid )
     HbAbstractSocket * socket = mSocketById.value( uid, nullptr );
     if( socket )
     {
-        // socket->leave();
+        // socket->leave(); TODO
         // onSocketDisconnected handles the rest.
     }
     else

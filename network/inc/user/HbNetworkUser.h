@@ -11,6 +11,7 @@
 
 // Qt
 #include <QtCore/QObject>
+#include <QtCore/QSet>
 // Hb
 // Local
 #include <HbNetwork.h>
@@ -35,8 +36,10 @@ namespace hb
             HbNetworkProtocol::UserStatus status() const;
             void setStatus( HbNetworkProtocol::UserStatus status );
 
-            networkuid socketUid() const;
-            void setSocketUid( networkuid socket_uid );
+            networkuid mainSocketUid() const;
+            void setMainSocketUid( networkuid socket_uid );
+
+            const QSet< networkuid > & socketsUid() const;
 
         signals:
             void statusChanged( HbNetworkProtocol::UserStatus status );
@@ -44,7 +47,8 @@ namespace hb
         private:
             HbNetworkUserInfo mInfo;
             HbNetworkProtocol::UserStatus mStatus;
-            networkuid mSocketUid;
+            networkuid mMainSocketUid;
+            QSet< networkuid > mSocketsUid;
         };
     }
 }

@@ -48,10 +48,11 @@ namespace hb
             void onSocketContractReceived( networkuid server_uid, networkuid socket_uid, const HbNetworkContract * contract );
 
             // From services.
-            //void onContractSent( const HbNetworkContract * contract );
-            void onContractSent( networkuid receiver, HbNetworkContract * contract );
-            void onUserKick    ( const HbNetworkUser & user_info, netwint reason );
-            void onSocketKick  ( networkuid socket_uid, netwint reason );
+            void onSocketContractToSend( networkuid receiver, HbNetworkContract * contract );
+            void onUserContractToSend  ( const HbNetworkUserInfo & user, HbNetworkContract * contract );
+            void onReadyContractToSend ( const HbNetworkContract * contract );
+            void onUserToKick  ( const HbNetworkUserInfo &user_info, netwint reason, const QString & description );
+            void onSocketToKick( networkuid socket_uid, netwint reason, const QString & description );
 
             // From HbAuthService.
             void onSocketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info );
@@ -65,6 +66,8 @@ namespace hb
 
         private:
             HbNetworkUser * isSocketAuthenticated( networkuid socket_uid );
+            void kickUser  ( HbNetworkUser * user,  netwint reason, const QString & description );
+            void kickSocket( networkuid socket_uid, netwint reason, const QString & description );
 
         private:
             networkuid mMainServer;

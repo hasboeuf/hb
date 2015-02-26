@@ -100,40 +100,9 @@ bool HbAbstractServer::leave( networkuid uid )
     HbSocketHandler * handler = mHandlerBySocketId.value( uid, nullptr );
     q_assert_ptr( handler );
 
-    bool result = false;
+
     q_assert( QMetaObject::invokeMethod( handler, "onDisconnectionRequest", Q_ARG( networkuid, uid ) ) );
-    return result;
-
-    //QMetaObject::invokeMethod(    handler,
-    //                            QStringLiteral("onDisconnectRequest"),
-    //                            Q_ARG( quint16, uid ) );
-
-    //HbAbstractSocket * socket = _connected.take(uid);
-    //
-    //if (!socket)
-    //{
-    //    raiseError(QAbstractSocket::OperationError,
-    //        QStringLiteral("try to close an unregistered client"));
-    //}
-    //
-    //else
-    //{
-    //    disconnect( socket, &HbAbstractSocket::readyPacket, this, nullptr );
-    //    disconnect(socket, &HbAbstractSocket::disconnected, this, nullptr);
-    //
-    //    if (!disconnectFromNetwork(socket))
-    //    {
-    //        //connect(socket, &HbAbstractSocket::disconnected, this,
-    //        //    [this, socket]() { onClientDisconnect(socket); }, Qt::UniqueConnection);
-    //    }
-    //
-    //    else
-    //    {
-    //        emit disconnected(uid);
-    //        return true;
-    //    }
-    //}
-
+    return true;
 }
 
 bool HbAbstractServer::isReady() const

@@ -14,6 +14,7 @@
 // Hb
 // Local
 #include <HbNetwork.h>
+#include <user/HbNetworkUserInfo.h>
 #include <contract/HbNetworkContract.h>
 #include <contract/HbNetworkExchanges.h>
 #include <listener/IHbContractListener.h>
@@ -42,7 +43,13 @@ namespace hb
             }
 
         signals:
-            void contractSent( networkuid receiver, HbNetworkContract * contract );
+            void socketContractToSend( networkuid receiver, HbNetworkContract * contract );
+            void userContractToSend  ( const HbNetworkUserInfo & user, HbNetworkContract * contract );
+            void readyContractToSend ( const HbNetworkContract * contract );
+
+            // Only used in server side.
+            void userToKick  ( const HbNetworkUserInfo &user_info, netwint reason, const QString & description = QString() );
+            void socketToKick( networkuid socket_uid, netwint reason, const QString & description = QString() );
 
         protected:
             serviceuid mId = HbNetworkProtocol::SERVICE_UNDEFINED;
