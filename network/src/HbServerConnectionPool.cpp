@@ -283,7 +283,9 @@ void HbServerConnectionPool::onSocketContractToSend( networkuid receiver, HbNetw
 {
     q_assert_ptr( contract );
 
-    HbAbstractServer * server = mServerBySocketId.value( receiver, 0 );
+    networkuid server_uid = mServerBySocketId.value( receiver, 0 );
+
+    HbAbstractServer * server = mServers.value( server_uid, nullptr );
 
     q_assert_ptr( server );
 
