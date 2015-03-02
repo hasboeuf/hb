@@ -33,9 +33,9 @@ const QHash< QString, QString > HbO2ClientFacebook::codeRequest() const
 {
     QHash< QString, QString > request;
     request.insert( OAUTH2_RESPONSE_TYPE, OAUTH2_GRANT_CODE );
-    request.insert( OAUTH2_CLIENT_ID,     mClientId );
+    request.insert( OAUTH2_CLIENT_ID,     mConfig.clientId() );
     request.insert( OAUTH2_REDIRECT_URI,  mRedirectUri );
-    request.insert( OAUTH2_SCOPE,         mScope );
+    request.insert( OAUTH2_SCOPE,         mConfig.scope() );
 
     return request;
 }

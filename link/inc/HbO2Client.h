@@ -14,6 +14,7 @@
 #include <QtCore/QUrl>
 // Local
 #include <HbO2.h>
+#include <config/HbO2ClientConfig.h>
 #include <HbLinkLocalServer.h>
 
 namespace hb
@@ -25,7 +26,7 @@ namespace hb
             Q_OBJECT
 
         public:
-            HbO2Client();
+            HbO2Client() = default;
             virtual ~HbO2Client() = default;
             HbO2Client( const HbO2Client & source );
             HbO2Client & operator=( const HbO2Client & source );
@@ -34,14 +35,11 @@ namespace hb
 
             virtual bool link();
 
-            virtual void setLocalPort( quint16 local_port ) final;
-            virtual quint16 localPort() const final;
-
-            virtual void addScope( const QString & permission ) final;
-            virtual const QString & scope() const final;
-
             virtual bool read( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;
+
+            virtual HbO2ClientConfig & config();
+            virtual const HbO2ClientConfig & config() const;
 
         protected:
             // Target specific.
@@ -56,8 +54,7 @@ namespace hb
             void openBrowser( const QUrl & url );
 
         protected:
-            QString mScope;
-            quint16 mLocalPort;
+            HbO2ClientConfig mConfig;
 
         private:
             HbLinkLocalServer mReplyServer;
@@ -65,7 +62,5 @@ namespace hb
         };
     }
 }
-
-using hb::link::HbO2Client;
 
 #endif // HBO2CLIENT_H

@@ -35,8 +35,8 @@ const QUrl HbO2ServerFacebook::endPoint() const
 const QHash< QString, QString > HbO2ServerFacebook::tokenRequest() const
 {
     QHash< QString, QString > request;
-    request.insert( OAUTH2_CLIENT_ID,     mClientId );
-    request.insert( OAUTH2_CLIENT_SECRET, mClientSecret);
+    request.insert( OAUTH2_CLIENT_ID,     mConfig.clientId() );
+    request.insert( OAUTH2_CLIENT_SECRET, mConfig.clientSecret() );
     request.insert( OAUTH2_CODE,          mCode);
     request.insert( OAUTH2_REDIRECT_URI,  mRedirectUri);
     return request;

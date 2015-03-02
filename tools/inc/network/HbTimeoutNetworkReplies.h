@@ -37,7 +37,7 @@ namespace hb
         public slots:
             void onFinished();
         private:
-            QHash< QNetworkReply *, HbTimeoutNetworkReply * > mReplies;
+            QHash< QNetworkReply *, quint64 > mReplies;
         };
     }
 }

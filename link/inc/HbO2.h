@@ -23,6 +23,7 @@ namespace hb
 {
     namespace link
     {
+
         class HB_LINK_DECL HbO2 : public QObject
         {
             Q_OBJECT
@@ -53,8 +54,6 @@ namespace hb
             virtual const QString & errorString() const final;
             virtual LinkStatus      linkStatus() const final;
 
-            virtual void setClientId( const QString & client_id ) final;
-            virtual const QString & clientId() const final;
             virtual const QString & redirectUri() const final;
             virtual const QString & code() const final;
 
@@ -76,8 +75,6 @@ namespace hb
             QString mCode;
 
             QString mRedirectUri;
-            QString mClientId;
-
         };
 
         HB_LINK_DECL QDataStream & operator<<( QDataStream & stream, const HbO2 & o2 );

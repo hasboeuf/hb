@@ -35,10 +35,10 @@ bool HbServerAuthFacebookStrategy::checkLogin( const HbAuthRequestContract * con
     connect( server_auth, &HbO2ServerFacebook::linkSucceed, this, &HbServerAuthFacebookStrategy::onLinkSucceed, Qt::UniqueConnection );
     connect( server_auth, &HbO2ServerFacebook::linkFailed,  this, &HbServerAuthFacebookStrategy::onLinkFailed,  Qt::UniqueConnection );
 
-    server_auth->setClientId    ( facebook_auth->client().clientId() );
+    /*server_auth->setClientId    ( facebook_auth->client().clientId() );
     server_auth->setRedirectUri ( facebook_auth->client().redirectUri() );
     server_auth->setCode        ( facebook_auth->client().code() );
-    server_auth->setClientSecret( "74621eedf9aa2cde9cd31dc5c4d3c440" ); // TODO in config.
+    server_auth->setClientSecret( "74621eedf9aa2cde9cd31dc5c4d3c440" ); // TODO in config. LINK TMP*/
 
     mPendingToken.insert( server_auth, contract->sender() );
 
@@ -58,7 +58,7 @@ void HbServerAuthFacebookStrategy::onLinkSucceed()
     q_assert_ptr( server_auth );
     q_assert( mPendingToken.contains( server_auth ) );
 
-    HbInfo( "Server link succeed. Requesting Facebook user object %s...", HbLatin1( server_auth->clientId() ) );
+    HbInfo( "Server link succeed. Requesting Facebook user object %s...", HbLatin1( server_auth->config().clientId() ) );
 
     networkuid sender = mPendingToken.take( server_auth );
     quint64 request_id = mRequester.requestUser( server_auth );
@@ -83,7 +83,7 @@ void HbServerAuthFacebookStrategy::onLinkFailed(const QString & error )
     q_assert_ptr( server_auth );
     q_assert( mPendingToken.contains( server_auth ) );
 
-    HbInfo( "Server link failed for user %s ( %s ).", HbLatin1( server_auth->clientId() ), HbLatin1( error ) );
+    HbInfo( "Server link failed for user %s ( %s ).", HbLatin1( server_auth->config().clientId() ), HbLatin1( error ) );
 
     networkuid sender = mPendingToken.take( server_auth );
 

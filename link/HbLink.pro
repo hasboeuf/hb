@@ -11,8 +11,9 @@ MODULE.PATH =		..
 
 PROJECT.ID   =      link
 
-SUBDIRS +=  facebook \
-			facebook/api
+SUBDIRS +=  config \
+            facebook \
+            facebook/api
 
 # ------------
 # Qt Settings

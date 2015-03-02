@@ -20,11 +20,6 @@ HbFacebookRequester::HbFacebookRequester() :
     connect( this, &HbHttpRequester::requestError,    this, &HbFacebookRequester::onRequestError,    Qt::UniqueConnection );
 }
 
-HbFacebookRequester::~HbFacebookRequester()
-{
-    printf( "~HbFacebookRequester\n");
-}
-
 quint64 HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )
 {
 
@@ -34,7 +29,6 @@ quint64 HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )
         return false;
     }
 
-    // Test
     QUrl url( "https://graph.facebook.com/me" );
     QUrlQuery request( url );
 

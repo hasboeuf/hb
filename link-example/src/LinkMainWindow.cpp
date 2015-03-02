@@ -5,6 +5,7 @@
 #include <QtNetwork/QNetworkReply>
 // Hb
 #include <HbLogService.h>
+#include <HbLoggerOutputs.h>
 #include <core/HbDictionaryHelper.h>
 #include <facebook/HbO2ClientFacebook.h>
 #include <facebook/HbO2ServerFacebook.h>
@@ -12,13 +13,20 @@
 // Local
 #include <LinkMainWindow.h>
 
-
+using namespace hb::log;
 using namespace hb::link;
 using namespace hb::linkexample;
 
 LinkMainWindow::LinkMainWindow(QWidget * parent) :
     QMainWindow( parent )
 {
+
+    // Log
+    QString error;
+    if( HbLogService::outputs()->addConsoleOutput( &error ) == 0 )
+    {
+        printf( "HbLog error: %s", HbLatin1( error ) );
+    }
 
     HbLogBegin();
 
@@ -52,15 +60,17 @@ void LinkMainWindow::onConnectClicked()
 {
     HbLogBegin();
 
+
     mpFacebookClient = new HbO2ClientFacebook();
 
     connect( mpFacebookClient, &HbO2Client::openBrowser, this, &LinkMainWindow::onOpenBrower );
     connect( mpFacebookClient, &HbO2::linkSucceed, this, &LinkMainWindow::onClientLinkSucceed );
 
-    mpFacebookClient->setClientId( "940633959281250" );
-    mpFacebookClient->setLocalPort( 8080 );
-    mpFacebookClient->addScope( FB_PERMISSION_EMAIL );
-    mpFacebookClient->addScope( FB_PERMISSION_FRIENDS );
+    mpFacebookClient->config().setClientId( "940633959281250" );
+    mpFacebookClient->config().setLocalPort( 8080 );
+    mpFacebookClient->config().addScope( FB_PERMISSION_EMAIL );
+    mpFacebookClient->config().addScope( FB_PERMISSION_FRIENDS );
+
     mpFacebookClient->link();
 
     HbLogEnd();
@@ -86,10 +96,10 @@ void LinkMainWindow::onClientLinkSucceed()
 
     connect( mpFacebookServer, &HbO2ServerFacebook::linkSucceed, this, &LinkMainWindow::onServerLinkSucceed, Qt::UniqueConnection );
 
-    mpFacebookServer->setClientId( mpFacebookClient->clientId() );
+    mpFacebookServer->config().setClientId( mpFacebookClient->config().clientId() );
+    mpFacebookServer->config().setClientSecret( "74621eedf9aa2cde9cd31dc5c4d3c440" );
     mpFacebookServer->setRedirectUri( mpFacebookClient->redirectUri() );
     mpFacebookServer->setCode( mpFacebookClient->code() );
-    mpFacebookServer->setClientSecret( "74621eedf9aa2cde9cd31dc5c4d3c440" );
 
     mpFacebookClient->deleteLater();
     mpFacebookClient = nullptr;

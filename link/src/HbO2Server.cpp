@@ -9,11 +9,6 @@
 
 using namespace hb::link;
 
-HbO2Server::~HbO2Server()
-{
-    printf( "~HbO2Server\n");
-}
-
 bool HbO2Server::isValid() const
 {
     if( !HbO2::isValid() )
@@ -21,12 +16,27 @@ bool HbO2Server::isValid() const
         return false;
     }
 
-    if( mCode.isEmpty() || mClientSecret.isEmpty() )
+    if( mCode.isEmpty() )
+    {
+        return false;
+    }
+
+    if( !mConfig.isValid() )
     {
         return false;
     }
 
     return true;
+}
+
+HbO2ServerConfig & HbO2Server::config()
+{
+    return mConfig;
+}
+
+const HbO2ServerConfig & HbO2Server::config() const
+{
+    return mConfig;
 }
 
 bool HbO2Server::link()
@@ -45,8 +55,7 @@ bool HbO2Server::link()
     QNetworkRequest token_request( url );
     QNetworkReply * token_reply = mManager.get( token_request );
 
-    quint64 reply_id = mReplies.add( token_reply );
-    mPendingReplies.insert( reply_id );
+    mReplies.add( token_reply );
 
     connect( token_reply, &QNetworkReply::finished, this, &HbO2Server::onTokenResponseReceived, Qt::UniqueConnection );
     connect( token_reply, ( void ( QNetworkReply:: * )( QNetworkReply::NetworkError ) )( &QNetworkReply::error ),
@@ -59,15 +68,6 @@ void HbO2Server::onTokenResponseReceived()
 {
     QNetworkReply * token_reply = dynamic_cast< QNetworkReply * >( sender() );
     q_assert_ptr( token_reply );
-
-    quint64 reply_id = mReplies.id( token_reply );
-    if( !mPendingReplies.contains( reply_id ) )
-    {
-        // TODO THINK MORE BE ELEGANT. To avoid that slots 'succeed' and 'failed' fired both.
-        HbWarning( "Reply already finished on error." );
-        return;
-    }
-    mPendingReplies.remove( reply_id );
 
     HbInfo( "Token response received.");
 
@@ -109,15 +109,6 @@ void HbO2Server::onTokenResponseError( QNetworkReply::NetworkError error )
     QNetworkReply * token_reply = dynamic_cast< QNetworkReply * >( sender() );
     q_assert_ptr( token_reply );
 
-    quint64 reply_id = mReplies.id( token_reply );
-    if( !mPendingReplies.contains( reply_id ) )
-    {
-        // TODO THINK MORE BE ELEGANT. To avoid that slots 'succeed' and 'failed' fired both.
-        HbWarning( "Reply already finished." );
-        return;
-    }
-    mPendingReplies.remove( reply_id );
-
     mLinkStatus = UNLINKED;
     mErrorString = token_reply->errorString();
 
@@ -126,16 +117,6 @@ void HbO2Server::onTokenResponseError( QNetworkReply::NetworkError error )
     emit linkFailed( mErrorString );
 
     token_reply->deleteLater();
-}
-
-void HbO2Server::setClientSecret( const QString & client_secret )
-{
-    mClientSecret = client_secret;
-}
-
-const QString & HbO2Server::clientSecret() const
-{
-    return mClientSecret;
 }
 
 void HbO2Server::setRedirectUri( const QString & redirect_uri )

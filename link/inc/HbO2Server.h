@@ -15,6 +15,7 @@
 #include <network/HbTimeoutNetworkReplies.h>
 // Local
 #include <HbO2.h>
+#include <config/HbO2ServerConfig.h>
 
 
 namespace hb
@@ -28,14 +29,14 @@ namespace hb
         public:
 
             HbO2Server() = default;
-            virtual ~HbO2Server();
+            virtual ~HbO2Server() = default;
 
             virtual bool isValid() const;
 
-            virtual bool link();
+            virtual HbO2ServerConfig & config();
+            virtual const HbO2ServerConfig & config() const;
 
-            virtual void setClientSecret( const QString & client_secret ) final;
-            virtual const QString & clientSecret() const final;
+            virtual bool link();
 
             void setRedirectUri( const QString & redirect_uri );
             void setCode( const QString & code );
@@ -54,14 +55,13 @@ namespace hb
             void onTokenResponseError( QNetworkReply::NetworkError error );
 
         protected:
-            QString mClientSecret;
+            HbO2ServerConfig mConfig;
             QString mToken;
             qint32  mTokenExpiration;
 
         private:
             QNetworkAccessManager mManager;
             HbTimeoutNetworkReplies mReplies;
-            QSet< quint64 > mPendingReplies;
         };
     }
 }

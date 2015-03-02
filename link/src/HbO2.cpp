@@ -24,7 +24,6 @@ HbO2::HbO2( const HbO2 & source ) :
         mErrorString = source.mErrorString;
         mCode        = source.mCode;
         mRedirectUri = source.mRedirectUri;
-        mClientId    = source.mClientId;
     }
 }
 
@@ -36,14 +35,13 @@ HbO2 & HbO2::operator=( const HbO2 & source )
         mErrorString = source.mErrorString;
         mCode        = source.mCode;
         mRedirectUri = source.mRedirectUri;
-        mClientId    = source.mClientId;
     }
     return ( *this );
 }
 
 bool HbO2::isValid() const
 {
-    if( !QUrl( mRedirectUri ).isValid() || mClientId.isEmpty() || endPoint().isEmpty() )
+    if( !QUrl( mRedirectUri ).isValid() || endPoint().isEmpty() )
     {
         return false;
     }
@@ -88,16 +86,6 @@ auto HbO2::linkStatus() const -> LinkStatus
     return mLinkStatus;
 }
 
-void HbO2::setClientId( const QString & client_id )
-{
-    mClientId = client_id;
-}
-
-const QString & HbO2::clientId() const
-{
-    return mClientId;
-}
-
 const QString & HbO2::redirectUri() const
 {
     return mRedirectUri;
@@ -115,7 +103,6 @@ bool HbO2::read( QDataStream & stream )
     stream >> mErrorString;
     stream >> mCode;
     stream >> mRedirectUri;
-    stream >> mClientId;
 
     mLinkStatus = ( LinkStatus ) status;
 
@@ -128,7 +115,6 @@ bool HbO2::write( QDataStream & stream ) const
     stream << mErrorString;
     stream << mCode;
     stream << mRedirectUri;
-    stream << mClientId;
 
     return ( stream.status() == QDataStream::Ok );
 }

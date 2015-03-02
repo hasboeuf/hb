@@ -29,10 +29,10 @@ bool HbClientAuthFacebookStrategy::prepareAuthContract( HbClientAuthLoginObject 
     connect( facebook_client, &HbO2::linkFailed,
              this, &HbClientAuthFacebookStrategy::onFacebookLinkFailed );
 
-    facebook_client->setClientId( "940633959281250" ); // TODO config
+    /*facebook_client->setClientId( "940633959281250" ); // TODO config LINK TMP
     facebook_client->setLocalPort( 8080 );
     facebook_client->addScope( FB_PERMISSION_EMAIL );
-    facebook_client->addScope( FB_PERMISSION_FRIENDS );
+    facebook_client->addScope( FB_PERMISSION_FRIENDS );*/
 
     mPendingCodes.insert( facebook_client, login_object->socketUid() );
 

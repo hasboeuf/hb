@@ -21,6 +21,8 @@ namespace hb
     namespace network
     {
 
+        class HbClientChannel;
+
         class HB_NETWORK_DECL HbClientChannelService : public HbChannelService
         {
         public:
@@ -38,6 +40,9 @@ namespace hb
 
         private:
             HbServiceChannelClientConfig mConfig;
+
+            QHash< serviceuid, HbClientChannel * > mChannels;
+
         };
     }
 }

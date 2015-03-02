@@ -23,7 +23,7 @@ quint64 HbHttpRequester::processRequest( const QUrl &url, quint32 timeout )
     QNetworkReply * reply = mManager.get( request );
 
     quint64 id = mReplies.add( reply, timeout );
-    if( id > 0)
+    if( id > 0 )
     {
         connect( reply, &QNetworkReply::finished, this, &HbHttpRequester::onFinished, Qt::UniqueConnection );
         connect( reply, ( void ( QNetworkReply:: * )( QNetworkReply::NetworkError ) )( &QNetworkReply::error ),
@@ -39,10 +39,10 @@ void HbHttpRequester::onFinished()
     q_assert_ptr( reply );
 
     quint64 id = mReplies.id( reply );
+    mReplies.remove( reply );
 
-    if ( reply->error() == QNetworkReply::NoError)
+    if( reply->error() == QNetworkReply::NoError )
     {
-
         QString data( reply->readAll() );
         QJsonDocument doc = QJsonDocument::fromJson( data.toUtf8() );
 

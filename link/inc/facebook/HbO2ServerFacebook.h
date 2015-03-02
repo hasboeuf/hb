@@ -24,7 +24,6 @@ namespace hb
             Q_OBJECT
 
         public:
-
             HbO2ServerFacebook() = default;
             virtual ~HbO2ServerFacebook() = default;
 

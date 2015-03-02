@@ -36,7 +36,7 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     /*QString error;
     if( HbLogService::outputs()->addConsoleOutput( &error ) == 0 )
     {
-        qDebug() << "HbLog error: " << error;
+        printf( "HbLog error: %s", HbLatin1( error ) );
     }*/
 
     HbLogBegin();

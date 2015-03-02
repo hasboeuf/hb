@@ -9,18 +9,12 @@
 
 using namespace hb::link;
 
-HbO2Client::HbO2Client()
-{
-    mLocalPort = 0;
-}
-
 HbO2Client::HbO2Client( const HbO2Client & source ) :
     HbO2( source )
 {
     if( &source != this )
     {
-        mScope     = source.mScope;
-        mLocalPort = source.mLocalPort;
+        mConfig = source.mConfig;
     }
 }
 
@@ -30,8 +24,7 @@ HbO2Client & HbO2Client::operator=( const HbO2Client & source )
     {
         HbO2::operator =( source );
 
-        mScope     = source.mScope;
-        mLocalPort = source.mLocalPort;
+        mConfig = source.mConfig;
     }
     return ( *this );
 }
@@ -43,16 +36,23 @@ bool HbO2Client::isValid() const
         return false;
     }
 
-    if( mLocalPort == 0 )
-    {
-        return false;
-    }
+    return mConfig.isValid();
+}
 
-    return true;
+HbO2ClientConfig & HbO2Client::config()
+{
+    return mConfig;
+}
+
+const HbO2ClientConfig & HbO2Client::config() const
+{
+    return mConfig;
 }
 
 bool HbO2Client::link()
 {
+    mRedirectUri = REDIRECT_URI.arg( mConfig.localPort() ); // Complete uri with the port.
+
     if( !HbO2::link() )
     {
         return false;
@@ -63,7 +63,7 @@ bool HbO2Client::link()
         mReplyServer.close();
     }
 
-    mReplyServer.listen( QHostAddress::Any, mLocalPort );
+    mReplyServer.listen( QHostAddress::Any, mConfig.localPort() );
     connect( &mReplyServer, &HbLinkLocalServer::responseReceived, this, &HbO2Client::onCodeResponseReceived, Qt::UniqueConnection );
 
     QUrl url( endPoint() );
@@ -97,40 +97,11 @@ void HbO2Client::onCodeResponseReceived( const QHash< QString, QString > respons
     }
 }
 
-void HbO2Client::setLocalPort( quint16 local_port )
-{
-    mLocalPort = local_port;
-    mRedirectUri = REDIRECT_URI.arg( mLocalPort );
-}
-
-quint16 HbO2Client::localPort() const
-{
-    return mLocalPort;
-}
-
-void HbO2Client::addScope( const QString & permission )
-{
-    if( !permission.isEmpty() )
-    {
-        if( !mScope.isEmpty() )
-        {
-            mScope += QStringLiteral( "," );
-        }
-        mScope += permission;
-    }
-}
-
-const QString & HbO2Client::scope() const
-{
-    return mScope;
-}
-
 bool HbO2Client::read( QDataStream & stream )
 {
     if( HbO2::read( stream ) )
     {
-        stream >> mScope;
-        stream >> mLocalPort;
+        stream >> mConfig;
 
         return ( stream.status() == QDataStream::Ok );
     }
@@ -142,8 +113,7 @@ bool HbO2Client::write( QDataStream & stream ) const
 {
     if( HbO2::write( stream ) )
     {
-        stream << mScope;
-        stream << mLocalPort;
+        stream << mConfig;
 
         return ( stream.status() == QDataStream::Ok );
     }

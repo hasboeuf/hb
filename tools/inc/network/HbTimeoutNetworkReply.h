@@ -26,7 +26,7 @@ namespace hb
             Q_OBJECT
 
         public:
-            HbTimeoutNetworkReply( QNetworkReply * reply, quint32 timeout = msDefaultTimeout, QObject * parent = nullptr );
+            HbTimeoutNetworkReply( QNetworkReply * reply, quint32 timeout = msDefaultTimeout );
             ~HbTimeoutNetworkReply();
 
         signals:
@@ -39,7 +39,7 @@ namespace hb
             static quint32 msDefaultTimeout;
 
         private:
-            QNetworkReply * mpReply;
+
         };
     }
 }

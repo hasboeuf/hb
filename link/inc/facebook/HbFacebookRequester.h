@@ -31,7 +31,7 @@ namespace hb
             // TODO hide HbHttpRequester signals.
         public:
             HbFacebookRequester();
-            virtual ~HbFacebookRequester();
+            virtual ~HbFacebookRequester() = default;
 
             quint64 requestUser( HbO2ServerFacebook * auth );
 
