@@ -48,7 +48,7 @@ namespace hb
 
         QDataStream & operator <<( QDataStream & stream, const HbO2Config & config )
         {
-            stream << config.mClientId;
+            // stream << config.mClientId; ClientId is also set on server side.
             config.write( stream );
 
             return stream;
@@ -56,7 +56,7 @@ namespace hb
 
         QDataStream & operator >>( QDataStream & stream, HbO2Config & config )
         {
-            stream >> config.mClientId;
+            // stream >> config.mClientId; ClientId is also set on server side.
             config.read( stream );
 
             return stream;

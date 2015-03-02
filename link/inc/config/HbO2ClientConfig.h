@@ -36,7 +36,8 @@ namespace hb
             virtual void setLocalPort( quint16 local_port ) final;
             virtual quint16 localPort() const final;
 
-            virtual void addScope( const QString & permission ) final;
+            virtual void addScope( const QString & permission  ) final;
+            virtual void setScope( const QString & permissions ) final;
             virtual const QString & scope() const final;
 
         private:

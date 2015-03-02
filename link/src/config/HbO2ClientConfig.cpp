@@ -1,3 +1,5 @@
+// Hb
+#include <HbLogService.h>
 // Local
 #include <config/HbO2ClientConfig.h>
 
@@ -76,6 +78,18 @@ void HbO2ClientConfig::addScope( const QString & permission )
             mScope += QStringLiteral( "," );
         }
         mScope += permission;
+    }
+}
+
+void HbO2ClientConfig::setScope( const QString & permissions )
+{
+    if( mScope.isEmpty() )
+    {
+        mScope = permissions;
+    }
+    else
+    {
+        HbWarning( "Scope is not empty." );
     }
 }
 

@@ -38,16 +38,14 @@ quint64 HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )
     request.setQueryItems( HbDictionaryHelper::toPairList< QString, QString >( params ) );
     url.setQuery( request );
 
-    qint64 id = processRequest( url );
-    if( id < 0 )
+    quint64 id = processRequest( url );
+    if( id > 0 )
     {
-        return false;
+        mRequestTypes.insert( id, HbFacebookObject::OBJECT_USER );
+        HbInfo( "Request %lld is sent (%s).", id, HbLatin1( url.toString() ) );
     }
 
-    mRequestTypes.insert( id, HbFacebookObject::OBJECT_USER );
-    HbInfo( "Request %lld is sent (%s).", id, HbLatin1( url.toString() ) );
-
-    return true;
+    return id;
 }
 
 void HbFacebookRequester::onRequestFinished( quint64 request_id, const QJsonDocument & doc )
