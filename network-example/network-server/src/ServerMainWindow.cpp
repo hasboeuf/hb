@@ -19,6 +19,7 @@
 
 
 using namespace hb::log;
+using namespace hb::link;
 using namespace hb::network;
 using namespace hb::networkexample;
 
@@ -35,12 +36,16 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
 
     HbLogBegin();
 
+    HbO2ServerConfig facebook_config;
+    facebook_config.setClientId( "940633959281250" );
+    facebook_config.setClientSecret( "74621eedf9aa2cde9cd31dc5c4d3c440" );
 
     HbGeneralServerConfig config;
     config.setAppName("hb-network-example");
     config.setProtocolVersion( 1 );
     config.auth().setAuthMaxTries( 3 );
     config.auth().setAuthTimeout( 60 );
+    config.auth().enableFacebookAuth( facebook_config );
     config.presence().setKickAliveThreshold( 20 );
     config.presence().setWarningAliveThreshold( 10 );
 

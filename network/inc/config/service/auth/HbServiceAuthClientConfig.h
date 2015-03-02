@@ -11,6 +11,7 @@
 
 // Qt
 // Hb
+#include <config/HbO2ClientConfig.h>
 // Local
 #include <HbNetwork.h>
 #include <config/service/auth/HbServiceAuthConfig.h>
@@ -19,7 +20,6 @@ namespace hb
 {
     namespace network
     {
-
         class HB_NETWORK_DECL HbServiceAuthClientConfig : public HbServiceAuthConfig
         {
 
@@ -31,10 +31,13 @@ namespace hb
 
             virtual bool isValid() const;
 
+            void enableFacebookAuth( const hb::link::HbO2ClientConfig & config );
+            const hb::link::HbO2ClientConfig & facebookAuthConfig() const;
+
         protected:
 
         private:
-
+            hb::link::HbO2ClientConfig mFacebookAuthConfig;
         };
     }
 }

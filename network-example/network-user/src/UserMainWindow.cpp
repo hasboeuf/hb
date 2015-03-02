@@ -25,6 +25,7 @@
 
 using namespace hb::tools;
 using namespace hb::log;
+using namespace hb::link;
 using namespace hb::network;
 using namespace hb::networkexample;
 
@@ -45,9 +46,16 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     setupUi( this );
     setWindowTitle( "User" );
 
+    HbO2ClientConfig facebook_config;
+    facebook_config.setClientId( "940633959281250" );
+    facebook_config.setLocalPort( 8080 );
+    facebook_config.addScope( FB_PERMISSION_EMAIL );
+    facebook_config.addScope( FB_PERMISSION_FRIENDS );
+
     HbGeneralClientConfig config;
     config.setAppName( "hb-network-example" );
     config.setProtocolVersion( 1 );
+    config.auth().enableFacebookAuth( facebook_config );
     config.presence().setKeepAliveInterval( 1 );
 
     mpHbClient       = new HbClient( config );

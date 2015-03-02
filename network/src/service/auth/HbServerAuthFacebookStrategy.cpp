@@ -16,6 +16,11 @@ HbServerAuthFacebookStrategy::HbServerAuthFacebookStrategy() :
     connect( &mRequester, &HbFacebookRequester::requestCompleted, this, &HbServerAuthFacebookStrategy::onRequestCompleted, Qt::UniqueConnection );
 }
 
+void HbServerAuthFacebookStrategy::setConfig( const HbO2ServerConfig & config )
+{
+    mConfig = config;
+}
+
 authstgy HbServerAuthFacebookStrategy::type() const
 {
     return HbAuthService::AUTH_FACEBOOK;
@@ -35,10 +40,10 @@ bool HbServerAuthFacebookStrategy::checkLogin( const HbAuthRequestContract * con
     connect( server_auth, &HbO2ServerFacebook::linkSucceed, this, &HbServerAuthFacebookStrategy::onLinkSucceed, Qt::UniqueConnection );
     connect( server_auth, &HbO2ServerFacebook::linkFailed,  this, &HbServerAuthFacebookStrategy::onLinkFailed,  Qt::UniqueConnection );
 
-    /*server_auth->setClientId    ( facebook_auth->client().clientId() );
-    server_auth->setRedirectUri ( facebook_auth->client().redirectUri() );
-    server_auth->setCode        ( facebook_auth->client().code() );
-    server_auth->setClientSecret( "74621eedf9aa2cde9cd31dc5c4d3c440" ); // TODO in config. LINK TMP*/
+    server_auth->config().setClientId    ( mConfig.clientId() );
+    server_auth->config().setClientSecret( mConfig.clientSecret() );
+    server_auth->setRedirectUri        ( facebook_auth->client().redirectUri() );
+    server_auth->setCode               ( facebook_auth->client().code() );
 
     mPendingToken.insert( server_auth, contract->sender() );
 

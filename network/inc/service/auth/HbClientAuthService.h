@@ -39,6 +39,8 @@ namespace hb
             const HbServiceAuthClientConfig & config() const;
             void setConfig( const HbServiceAuthClientConfig & config );
 
+            void addStrategy( HbClientAuthStrategy * strategy );
+
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract );
             virtual void onSocketConnected   ( networkuid socket_uid );

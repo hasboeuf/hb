@@ -7,6 +7,7 @@
 #include <com/tcp/HbTcpServer.h>
 #include <service/presence/HbServerPresenceService.h>
 #include <service/auth/HbServerAuthService.h>
+#include <service/auth/HbServerAuthFacebookStrategy.h>
 #include <service/channel/HbServerChannelService.h>
 #include <user/HbNetworkUser.h>
 
@@ -24,6 +25,14 @@ HbServerConnectionPool::HbServerConnectionPool( const HbGeneralServerConfig & co
     service_presence->setConfig( config.presence() );
     service_auth->setConfig    ( config.auth    () );
     service_channel->setConfig ( config.channel () );
+
+    // Facebook auth
+    if( config.auth().facebookAuthConfig().isValid() )
+    {
+        HbServerAuthFacebookStrategy * fb_strategy = new HbServerAuthFacebookStrategy();
+        fb_strategy->setConfig( config.auth().facebookAuthConfig() );
+        service_auth->addStrategy( fb_strategy );
+    }
 
     connect( service_auth, &HbServerAuthService::socketAuthenticated,   this, &HbServerConnectionPool::onSocketAuthenticated );
     connect( service_auth, &HbServerAuthService::socketUnauthenticated, this, &HbServerConnectionPool::onSocketUnauthenticated );

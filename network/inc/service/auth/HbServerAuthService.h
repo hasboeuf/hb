@@ -38,6 +38,8 @@ namespace hb
             const HbServiceAuthServerConfig & config() const;
             void setConfig( const HbServiceAuthServerConfig & config );
 
+            void addStrategy( HbServerAuthStrategy * strategy );
+
         private:
             void timerEvent( QTimerEvent * event );
             bool checkSocket( networkuid socket_uid );

@@ -3,8 +3,8 @@
 // Local
 #include <config/service/auth/HbServiceAuthServerConfig.h>
 
+using namespace hb::link;
 using namespace hb::network;
-
 
 HbServiceAuthServerConfig::HbServiceAuthServerConfig() :
     HbServiceAuthConfig()
@@ -59,6 +59,17 @@ bool HbServiceAuthServerConfig::isValid() const
 
     return true;
 }
+
+void HbServiceAuthServerConfig::enableFacebookAuth( const HbO2ServerConfig & config )
+{
+    mFacebookAuthConfig = config;
+}
+
+const hb::link::HbO2ServerConfig & HbServiceAuthServerConfig::facebookAuthConfig() const
+{
+    return mFacebookAuthConfig;
+}
+
 
 void HbServiceAuthServerConfig::setAuthMaxTries( quint16 max )
 {

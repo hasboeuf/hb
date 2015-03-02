@@ -5,8 +5,8 @@
 // Local
 #include <service/auth/HbClientAuthService.h>
 #include <service/auth/HbClientAuthLoginObject.h>
-#include <service/auth/HbClientAuthFacebookStrategy.h>
-#include <contract/auth/HbAuthFacebookRequestContract.h>
+#include <service/auth/HbClientAuthStrategy.h>
+#include <contract/auth/HbAuthRequestContract.h>
 #include <contract/auth/HbAuthStatusContract.h>
 
 using namespace hb::network;
@@ -14,19 +14,6 @@ using namespace hb::network;
 HbClientAuthService::HbClientAuthService()
 {
     mPendingSocket = 0;
-    HbClientAuthFacebookStrategy * fb_strategy = new HbClientAuthFacebookStrategy();
-    mStrategies.insert( fb_strategy->type(), fb_strategy );
-
-    foreach( HbClientAuthStrategy * strategy, mStrategies )
-    {
-        if( strategy )
-        {
-            connect( strategy, &HbClientAuthStrategy::authContractReady,
-                     this,     &HbClientAuthService::onAuthContractReady, Qt::UniqueConnection );
-            connect( strategy, &HbClientAuthStrategy::authContractFailed,
-                     this,     &HbClientAuthService::onAuthContractFailed, Qt::UniqueConnection );
-        }
-    }
 }
 
 const HbServiceAuthClientConfig & HbClientAuthService::config() const
@@ -39,6 +26,23 @@ void HbClientAuthService::setConfig( const HbServiceAuthClientConfig & config )
     if( config.isValid() )
     {
         mConfig = config;
+    }
+}
+
+void HbClientAuthService::addStrategy( HbClientAuthStrategy * strategy )
+{
+    if( strategy && !mStrategies.contains( strategy->type() ) )
+    {
+        connect( strategy, &HbClientAuthStrategy::authContractReady,
+                 this,     &HbClientAuthService::onAuthContractReady, Qt::UniqueConnection );
+        connect( strategy, &HbClientAuthStrategy::authContractFailed,
+                 this,     &HbClientAuthService::onAuthContractFailed, Qt::UniqueConnection );
+
+        mStrategies.insert( strategy->type(), strategy );
+    }
+    else
+    {
+        HbWarning( "Strategy already defined or null." );
     }
 }
 

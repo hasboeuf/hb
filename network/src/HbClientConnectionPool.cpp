@@ -8,6 +8,7 @@
 #include <com/tcp/HbTcpClient.h>
 #include <service/presence/HbClientPresenceService.h>
 #include <service/auth/HbClientAuthService.h>
+#include <service/auth/HbClientAuthFacebookStrategy.h>
 #include <service/channel/HbClientChannelService.h>
 #include <service/auth/HbClientAuthLoginObject.h>
 #include <user/HbNetworkUser.h>
@@ -25,6 +26,14 @@ HbClientConnectionPool::HbClientConnectionPool( const HbGeneralClientConfig & co
     service_presence->setConfig( config.presence() );
     service_auth->setConfig    ( config.auth    () );
     service_channel->setConfig ( config.channel () );
+
+    // Facebook auth
+    if( config.auth().facebookAuthConfig().isValid() )
+    {
+        HbClientAuthFacebookStrategy * fb_strategy = new HbClientAuthFacebookStrategy();
+        fb_strategy->setConfig( config.auth().facebookAuthConfig() );
+        service_auth->addStrategy( fb_strategy );
+    }
 
     connect( service_auth, &HbClientAuthService::socketAuthenticated,
              this, &HbClientConnectionPool::onSocketAuthenticated );

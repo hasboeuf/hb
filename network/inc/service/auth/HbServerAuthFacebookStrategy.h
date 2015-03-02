@@ -13,6 +13,7 @@
 #include <QtCore/QHash>
 // Hb
 #include <facebook/HbFacebookRequester.h>
+#include <config/HbO2ServerConfig.h>
 // Local
 #include <HbNetwork.h>
 #include <service/auth/HbServerAuthStrategy.h>
@@ -40,6 +41,8 @@ namespace hb
             HbServerAuthFacebookStrategy();
             virtual ~HbServerAuthFacebookStrategy() = default;
 
+            void setConfig( const HbO2ServerConfig & config );
+
             virtual authstgy type() const final;
             virtual bool checkLogin( const HbAuthRequestContract * contract );
 
@@ -52,6 +55,7 @@ namespace hb
             HbFacebookRequester                       mRequester;
             QHash< HbO2ServerFacebook *, networkuid > mPendingToken;
             QHash< quint64, networkuid >              mPendingRequest;
+            HbO2ServerConfig                          mConfig;
         };
     }
 }

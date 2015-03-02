@@ -11,6 +11,7 @@
 
 // Qt
 // Hb
+#include <config/HbO2ServerConfig.h>
 // Local
 #include <HbNetwork.h>
 #include <config/service/auth/HbServiceAuthConfig.h>
@@ -31,17 +32,19 @@ namespace hb
 
             virtual bool isValid() const;
 
+            void enableFacebookAuth( const hb::link::HbO2ServerConfig & config );
+            const hb::link::HbO2ServerConfig & facebookAuthConfig() const;
+
             virtual void setAuthMaxTries( quint16 max ) final;
             virtual quint16 authMaxTries() const;
 
             virtual void setAuthTimeout( quint16 timeout ) final;
             virtual quint16 authTimeout() const;
 
-        protected:
-
         private:
             quint16 mAuthMaxTries;
             quint16 mAuthTimeout;
+            hb::link::HbO2ServerConfig mFacebookAuthConfig;
         };
     }
 }

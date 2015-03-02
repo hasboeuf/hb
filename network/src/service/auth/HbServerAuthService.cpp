@@ -13,20 +13,6 @@ using namespace hb::network;
 
 HbServerAuthService::HbServerAuthService()
 {
-    HbServerAuthFacebookStrategy * fb_strategy = new HbServerAuthFacebookStrategy();
-    mStrategies.insert( fb_strategy->type(), fb_strategy );
-
-    foreach( HbServerAuthStrategy * strategy, mStrategies )
-    {
-        if( strategy )
-        {
-            connect( strategy, &HbServerAuthStrategy::authFailed,
-                     this,     &HbServerAuthService::onAuthFailed, Qt::UniqueConnection );
-            connect( strategy, &HbServerAuthStrategy::authSucceed,
-                     this,     &HbServerAuthService::onAuthSucceed, Qt::UniqueConnection );
-        }
-    }
-
     mTimerId = startTimer( 1000 );
 }
 
@@ -45,6 +31,23 @@ void HbServerAuthService::setConfig( const HbServiceAuthServerConfig & config )
     if( config.isValid() )
     {
         mConfig = config;
+    }
+}
+
+void HbServerAuthService::addStrategy( HbServerAuthStrategy * strategy )
+{
+    if( strategy && !mStrategies.contains( strategy->type() ) )
+    {
+        mStrategies.insert( strategy->type(), strategy );
+
+        connect( strategy, &HbServerAuthStrategy::authFailed,
+                 this,     &HbServerAuthService::onAuthFailed, Qt::UniqueConnection );
+        connect( strategy, &HbServerAuthStrategy::authSucceed,
+                 this,     &HbServerAuthService::onAuthSucceed, Qt::UniqueConnection );
+    }
+    else
+    {
+        HbWarning( "Strategy already defined or null." );
     }
 }
 

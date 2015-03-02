@@ -35,3 +35,13 @@ bool HbServiceAuthClientConfig::isValid() const
 {
     return HbServiceAuthConfig::isValid();
 }
+
+void HbServiceAuthClientConfig::enableFacebookAuth( const hb::link::HbO2ClientConfig & config )
+{
+    mFacebookAuthConfig = config;
+}
+
+const hb::link::HbO2ClientConfig & HbServiceAuthClientConfig::facebookAuthConfig() const
+{
+    return mFacebookAuthConfig;
+}

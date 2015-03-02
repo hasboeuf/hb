@@ -35,6 +35,8 @@ namespace hb
             HbClientAuthFacebookStrategy() = default;
             virtual ~HbClientAuthFacebookStrategy() = default;
 
+            void setConfig( const HbO2ClientConfig & config );
+
             virtual authstgy type() const final;
 
             virtual bool prepareAuthContract( HbClientAuthLoginObject * login_object );
@@ -45,6 +47,7 @@ namespace hb
             void onFacebookLinkFailed();
         private:
             QHash< HbO2ClientFacebook *, networkuid > mPendingCodes;
+            HbO2ClientConfig mConfig;
         };
     }
 }
