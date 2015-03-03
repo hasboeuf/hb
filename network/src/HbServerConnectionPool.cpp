@@ -5,6 +5,7 @@
 // Local
 #include <HbServerConnectionPool.h>
 #include <com/tcp/HbTcpServer.h>
+#include <contract/general/HbKickContract.h>
 #include <service/presence/HbServerPresenceService.h>
 #include <service/auth/HbServerAuthService.h>
 #include <service/auth/HbServerAuthFacebookStrategy.h>
@@ -233,6 +234,8 @@ void HbServerConnectionPool::onSocketDisconnected( networkuid server_uid, networ
     }
     else
     {
+        q_assert( mUserByEmail.contains( user->info().email() ) );
+        mUserByEmail.remove( user->info().email() );
         mUserBySocketId.remove( socket_uid );
 
         const HbNetworkUserInfo user_info = user->info();
@@ -280,7 +283,7 @@ void HbServerConnectionPool::onSocketContractReceived( networkuid server_uid, ne
     HbNetworkService * service = getService( requested_service );
     if( !service )
     {
-        // TODO kick
+        kickSocket( socket_uid, HbNetworkProtocol::KICK_CONTRACT_INVALID, "Bad service." );
         HbError( "Service %s is not instanciated.", HbLatin1( HbNetworkProtocol::MetaService::toString( contract->header().service() ) ) );
         return;
     }
@@ -298,7 +301,9 @@ void HbServerConnectionPool::onSocketContractToSend( networkuid receiver, HbNetw
 
     q_assert_ptr( server );
 
-    // TODO
+    // TODO SEND
+
+    server->send( ShConstHbNetworkContract( contract ) );
 }
 
 void HbServerConnectionPool::onUserContractToSend  ( const HbNetworkUserInfo & user, HbNetworkContract * contract )
@@ -315,7 +320,10 @@ void HbServerConnectionPool::onReadyContractToSend ( const HbNetworkContract * c
 
 void HbServerConnectionPool::onUserToKick  ( const HbNetworkUserInfo & user_info, netwint reason, const QString & description )
 {
-    // TODO store user by email or uid.
+    HbNetworkUser * user = getUser( user_info );
+    q_assert_ptr( user );
+
+    kickSocket( user->mainSocketUid(), reason, description ); // TODO kick other sockets.
 }
 
 void HbServerConnectionPool::onSocketToKick( networkuid socket_uid, netwint reason, const QString & description )
@@ -352,8 +360,12 @@ void HbServerConnectionPool::kickSocket( networkuid socket_uid , netwint reason,
 
     q_assert( server );
 
-    // TODO send kick contract.
+    HbKickContract * kick_contract = new HbKickContract();
+    kick_contract->setReason     ( reason );
+    kick_contract->setDescription( description );
+    // TODO receiver
 
+    server->send( ShConstHbNetworkContract( kick_contract ) );
     server->leave( socket_uid );
 }
 
@@ -371,6 +383,7 @@ void HbServerConnectionPool::onSocketAuthenticated  ( networkuid socket_uid, con
 
     mPendingSockets.remove( socket_uid );
     mUserBySocketId.insert( socket_uid, user );
+    mUserByEmail.insert( user_info.email(), user );
 
     emit socketAuthenticated( socket_uid );
 }
@@ -394,4 +407,9 @@ void HbServerConnectionPool::onSocketLagged( networkuid socket_uid, quint16 last
 HbNetworkUser * HbServerConnectionPool::isSocketAuthenticated( networkuid socket_uid )
 {
     return mUserBySocketId.value( socket_uid, nullptr );
+}
+
+HbNetworkUser * HbServerConnectionPool::getUser( const HbNetworkUserInfo & user_info )
+{
+    return mUserByEmail.value( user_info.email(), nullptr );
 }

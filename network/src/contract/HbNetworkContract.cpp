@@ -9,13 +9,8 @@ HbNetworkContract::HbNetworkContract()
 {
     mSender      = 0;
     mNetworkType = HbNetworkProtocol::NETWORK_UNDEFINED;
-    mRouting     = HbNetworkProtocol::RoutingScheme::UNICAST;
+    mRouting     = HbNetworkProtocol::ROUTING_UNDEFINED;
     mpReply      = nullptr;
-}
-
-HbNetworkContract::~HbNetworkContract()
-{
-    //HbDebug( "HbNetworkContract::destructor()" );
 }
 
 HbNetworkContract::HbNetworkContract( serviceuid service, codeuid code ) :
@@ -23,7 +18,7 @@ HbNetworkContract::HbNetworkContract( serviceuid service, codeuid code ) :
 {
     mSender      = 0;
     mNetworkType = HbNetworkProtocol::NETWORK_UNDEFINED;
-    mRouting     = HbNetworkProtocol::RoutingScheme::UNICAST;
+    mRouting     = HbNetworkProtocol::ROUTING_UNDEFINED;
     mpReply      = nullptr;
 }
 
@@ -35,9 +30,9 @@ HbNetworkContract::HbNetworkContract( const HbNetworkContract & source )
         mSender           = source.mSender;
         mNetworkType      = source.mNetworkType;
         mRouting          = source.mRouting;
-        mPendingReceivers = source.mPendingReceivers;
-        mSocketReceivers  = source.mSocketReceivers;
-        mpReply           = nullptr; // TODO CHECK
+        mReceivers   = source.mReceivers;
+        mPendingReceivers     = source.mPendingReceivers;
+        mpReply           = ( source.mpReply ? source.mpReply->create() : nullptr );
     }
 }
 
@@ -49,9 +44,9 @@ HbNetworkContract & HbNetworkContract::operator=( const HbNetworkContract & sour
         mSender           = source.mSender;
         mNetworkType      = source.mNetworkType;
         mRouting          = source.mRouting;
+        mReceivers        = source.mReceivers;
         mPendingReceivers = source.mPendingReceivers;
-        mSocketReceivers  = source.mSocketReceivers;
-        mpReply           = nullptr; // TODO CHECK
+        mpReply           = ( source.mpReply ? source.mpReply->create() : nullptr );
     }
     return ( *this );
 }
@@ -61,9 +56,8 @@ void HbNetworkContract::updateReply()
     if( mpReply )
     {
         mpReply->takeUid( this );
-        mpReply->resetSocketReceivers();
         mpReply->setNetworkType( mNetworkType );
-        mpReply->setRouting( HbNetworkProtocol::RoutingScheme::UNICAST ); // Replies only support unicast.
+        mpReply->setRouting( HbNetworkProtocol::RoutingScheme::ROUTING_UNICAST ); // Replies only support unicast.
         mpReply->addSocketReceiver( mSender );
     }
 }
@@ -93,48 +87,69 @@ void HbNetworkContract::addPendingReceiver( const QString & user_uid )
     mPendingReceivers.insert( user_uid );
 }
 
-bool HbNetworkContract::addSocketReceiver( networkuid receiver )
+void HbNetworkContract::addSocketReceiver( networkuid socket_uid )
 {
-    if( mRouting == HbNetworkProtocol::RoutingScheme::UNICAST )
-    {
-        if ( !mSocketReceivers.isEmpty() )
-        {
-            HbWarning( "A receiver is already defined in unicast mode." );
-            return false;
-        }
-
-        mSocketReceivers.insert( receiver );
-        return true;
-    }
-    else if( mRouting == HbNetworkProtocol::RoutingScheme::MULTICAST )
-    {
-        mSocketReceivers.insert( receiver );
-        return true;
-    }
-    else
-    {
-        HbWarning( "Unable to add a receiver in broadcast mode." );
-        return false;
-    }
+    mReceivers.insert( socket_uid );
 }
 
-void HbNetworkContract::resetSocketReceivers()
+void HbNetworkContract::resetReceivers()
 {
-    mSocketReceivers.clear();
+    mReceivers.clear();
+}
+
+const QSet< QString > & HbNetworkContract::pendingReceivers() const
+{
+    return mPendingReceivers;
 }
 
 const QSet< networkuid > & HbNetworkContract::socketReceivers() const
 {
-    return mSocketReceivers;
+    return mReceivers;
 }
 
 networkuid HbNetworkContract::socketReceiver() const
 {
-    if( mSocketReceivers.size() == 1 )
+    if( mReceivers.size() == 1 )
     {
-        return *mSocketReceivers.begin();
+        return *mReceivers.begin();
     }
     return 0; // 0 is an invalid netwuid.
+}
+
+bool HbNetworkContract::isValid() const
+{
+    if( mRouting == HbNetworkProtocol::ROUTING_UNDEFINED )
+    {
+        HbError( "Routing is not defined." );
+        return false;
+    }
+
+    if( mRouting == HbNetworkProtocol::ROUTING_UNICAST )
+    {
+        if ( mReceivers.size() != 1 )
+        {
+            HbError( "Only one receiver is allowed with unicast mode." );
+            return false;
+        }
+    }
+    else if( mRouting == HbNetworkProtocol::ROUTING_MULTICAST )
+    {
+        if( mReceivers.isEmpty() )
+        {
+            HbError( "No receivers set in multicast mode." );
+            return false;
+        }
+        return true;
+    }
+    else // ROUTING_BROADCAST
+    {
+        if( mReceivers.size() > 0 )
+        {
+            HbWarning( "Receivers set in broadcast mode are ignored." );
+        }
+    }
+
+    return true;
 }
 
 HbNetworkProtocol::RoutingScheme HbNetworkContract::routing() const
@@ -142,10 +157,16 @@ HbNetworkProtocol::RoutingScheme HbNetworkContract::routing() const
     return mRouting;
 }
 
-void HbNetworkContract::setRouting( HbNetworkProtocol::RoutingScheme routing )
+bool HbNetworkContract::setRouting( HbNetworkProtocol::RoutingScheme routing )
 {
-    mRouting = routing;
-    // TODO logique routing.
+    if( mRouting == HbNetworkProtocol::ROUTING_UNDEFINED )
+    {
+        mRouting = routing;
+        return true;
+    }
+
+    HbWarning( "Routing is already set." );
+    return false;
 }
 
 HbNetworkContract * HbNetworkContract::reply() const

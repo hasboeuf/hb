@@ -20,6 +20,7 @@ SUBDIRS +=  com \
             config/service/presence \
             config/com \
             contract \
+            contract/general \
             contract/auth \
             contract/presence \
             service \

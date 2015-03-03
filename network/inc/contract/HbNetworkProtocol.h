@@ -52,18 +52,20 @@ namespace hb
 
             enum RoutingScheme : netwint
             {
-                UNICAST = 0,
-                MULTICAST = 1,
-                BROADCAST = 2
+                ROUTING_UNDEFINED = 0,
+                ROUTING_UNICAST,
+                ROUTING_MULTICAST,
+                ROUTING_BROADCAST
             };
 
             enum Service : serviceuid
             {
                 SERVICE_UNDEFINED = 0,
                 SERVICE_UPDATE    = 1,
-                SERVICE_AUTH      = 2,
-                SERVICE_PRESENCE  = 3,
-                SERVICE_CHANNEL   = 4,
+                SERVICE_KICK      = 2,
+                SERVICE_AUTH      = 3,
+                SERVICE_PRESENCE  = 4,
+                SERVICE_CHANNEL   = 5,
 
                 SERVICE_USER      = 255
             };
@@ -76,6 +78,7 @@ namespace hb
                 CODE_SRV_AUTH_STATUS,
                 CODE_CLT_PRESENCE,
                 CODE_SRV_PRESENCE_STATUS,
+                CODE_SRV_KICK,
 
                 CODE_USER                 = 1989
 
@@ -85,7 +88,8 @@ namespace hb
 
             enum KickCode : netwint
             {
-                KICK_INTERNAL_ERROR = 0,
+                KICK_UNDEFINED = 0,
+                KICK_INTERNAL_ERROR,
                 KICK_PROTOCOL_DIFFERENT,
                 KICK_CONTRACT_INVALID,
                 KICK_AUTH_LIMIT,

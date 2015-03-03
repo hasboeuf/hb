@@ -66,6 +66,7 @@ namespace hb
 
         private:
             HbNetworkUser * isSocketAuthenticated( networkuid socket_uid );
+            HbNetworkUser * getUser( const HbNetworkUserInfo & user_info );
             void kickUser  ( HbNetworkUser * user,  netwint reason, const QString & description );
             void kickSocket( networkuid socket_uid, netwint reason, const QString & description );
 
@@ -76,6 +77,7 @@ namespace hb
             QSet < networkuid > mPendingSockets;
             QHash< networkuid, networkuid > mServerBySocketId;
             QHash< networkuid, HbNetworkUser * > mUserBySocketId;
+            QHash< QString,    HbNetworkUser * > mUserByEmail;
         };
     }
 }

@@ -100,7 +100,6 @@ bool HbAbstractServer::leave( networkuid uid )
     HbSocketHandler * handler = mHandlerBySocketId.value( uid, nullptr );
     q_assert_ptr( handler );
 
-
     q_assert( QMetaObject::invokeMethod( handler, "onDisconnectionRequest", Q_ARG( networkuid, uid ) ) );
     return true;
 }
@@ -131,7 +130,7 @@ bool HbAbstractServer::send( ShConstHbNetworkContract contract )
                 return false;
             }
 
-            if( contract->routing() == HbNetworkProtocol::UNICAST )
+            if( contract->routing() == HbNetworkProtocol::ROUTING_UNICAST )
             {
                 networkuid receiver = contract->socketReceiver();
                 if( receiver != 0 )
@@ -151,7 +150,7 @@ bool HbAbstractServer::send( ShConstHbNetworkContract contract )
                     HbError( "Try to send an incompatible UNICAST contract." );
                 }
             }
-            else if( contract->routing() == HbNetworkProtocol::MULTICAST )
+            else if( contract->routing() == HbNetworkProtocol::ROUTING_MULTICAST )
             {
                 // Retrieve socket handler.
                 foreach( networkuid receiver, contract->socketReceivers() )

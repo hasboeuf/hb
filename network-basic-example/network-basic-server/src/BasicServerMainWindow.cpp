@@ -72,7 +72,7 @@ void BasicServerMainWindow::onSendContractClicked()
 
     MessageContract * message = new MessageContract();
     message->setMessage( "Hello world" );
-    message->setRouting( HbNetworkProtocol::BROADCAST ); // To all users.
+    message->setRouting( HbNetworkProtocol::ROUTING_BROADCAST ); // To all users.
 
     mTcpServer.send( ShConstHbNetworkContract( message ) );
 }
