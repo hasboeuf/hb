@@ -102,12 +102,12 @@ const QSet< QString > & HbNetworkContract::pendingReceivers() const
     return mPendingReceivers;
 }
 
-const QSet< networkuid > & HbNetworkContract::socketReceivers() const
+const QSet< networkuid > & HbNetworkContract::receivers() const
 {
     return mReceivers;
 }
 
-networkuid HbNetworkContract::socketReceiver() const
+networkuid HbNetworkContract::receiver() const
 {
     if( mReceivers.size() == 1 )
     {

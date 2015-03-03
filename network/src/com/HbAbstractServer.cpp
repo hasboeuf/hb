@@ -19,7 +19,6 @@ HbAbstractServer::HbAbstractServer(QObject * parent) :
     mReady = false;
 }
 
-
 bool HbAbstractServer::join()
 {
     if ( !isListening() )
@@ -55,8 +54,6 @@ bool HbAbstractServer::leave()
     {
         HbInfo( "Server already stopped." );
     }
-
-
 
     /*QHash< quint32, HbSocketHandler * >::iterator it = mHandlerBySocketId.begin();
     while( it != mHandlerBySocketId.end() )
@@ -132,7 +129,7 @@ bool HbAbstractServer::send( ShConstHbNetworkContract contract )
 
             if( contract->routing() == HbNetworkProtocol::ROUTING_UNICAST )
             {
-                networkuid receiver = contract->socketReceiver();
+                networkuid receiver = contract->receiver();
                 if( receiver != 0 )
                 {
                     HbSocketHandler * handler = mHandlerBySocketId.value( receiver, nullptr );
@@ -153,7 +150,7 @@ bool HbAbstractServer::send( ShConstHbNetworkContract contract )
             else if( contract->routing() == HbNetworkProtocol::ROUTING_MULTICAST )
             {
                 // Retrieve socket handler.
-                foreach( networkuid receiver, contract->socketReceivers() )
+                foreach( networkuid receiver, contract->receivers() )
                 {
                     HbSocketHandler * handler = mHandlerBySocketId.value( receiver, nullptr );
                     if( !handler )
@@ -225,6 +222,8 @@ void HbAbstractServer::onSocketConnected( qint32 socket_descriptor, networkuid s
 
     mPending.removeOne( socket_descriptor );
     mHandlerBySocketId.insert( socket_uid, handler );
+
+    emit socketConnected( mUid, socket_uid );
 }
 
 void HbAbstractServer::onSocketDisconnected( networkuid socket_uid )
@@ -239,6 +238,8 @@ void HbAbstractServer::onSocketDisconnected( networkuid socket_uid )
     q_assert( mHandlerBySocketId.value( socket_uid ) == handler );
 
     mHandlerBySocketId.remove( socket_uid );
+
+    emit socketDisconnected( mUid, socket_uid );
 }
 
 void HbAbstractServer::onSocketContractReceived( networkuid socket_uid, const HbNetworkContract * contract )

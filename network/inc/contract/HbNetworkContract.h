@@ -46,8 +46,8 @@ namespace hb
             virtual void addPendingReceiver( const QString & user_id ) final;
             virtual void addSocketReceiver ( networkuid socket_uid ) final;
             virtual const QSet< QString > & pendingReceivers() const final;
-            virtual const QSet< networkuid > & socketReceivers() const final;
-            virtual networkuid socketReceiver() const final;
+            virtual const QSet< networkuid > & receivers() const final;
+            virtual networkuid receiver() const final;
 
             virtual HbNetworkProtocol::RoutingScheme routing() const final;
             virtual bool setRouting( HbNetworkProtocol::RoutingScheme routing ) final;

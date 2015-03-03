@@ -120,35 +120,13 @@ void HbClientAuthService::onAuthRequested( HbClientAuthLoginObject * login_objec
 
 void HbClientAuthService::onAuthContractReady( networkuid socket_uid, HbAuthRequestContract * contract )
 {
-    emit socketContractToSend( socket_uid, contract );
-    /*if( checkSocket( socket_uid ) )
-    {
-        HbAuthStatusContract * response = mResponses.value( socket_uid, nullptr );
-        if( !response )
-        {
-            kickSocket( socket_uid, HbNetworkProtocol::KICK_INTERNAL_ERROR );
-            return;
-        }
-
-        emit userAuthenticated( socket_uid, user_info );
-
-        response->setStatus( HbNetworkProtocol::AUTH_OK );
-        response->setTryNumber( 1 ); // TODO store try number.
-        response->setMaxTries( mConfig.authMaxTries() );
-
-        delSocket( socket_uid, false );
-
-        // TODO emit contract.
-    }
-    else
-    {
-        HbWarning( "Socket %d disconnected before getting ok auth response.", socket_uid );
-    }*/
+    mPendingSocket = 0;
+    contract->addSocketReceiver( socket_uid );
+    emit readyContractToSend( contract );
 }
 
 void HbClientAuthService::onAuthContractFailed( networkuid socket_uid, const QString & description )
 {
     mPendingSocket = 0;
-
     emit socketUnauthenticated( socket_uid, description );
 }

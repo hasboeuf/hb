@@ -6,7 +6,6 @@ HbPresenceContract::HbPresenceContract() :
     HbNetworkContract( HbNetworkProtocol::SERVICE_PRESENCE,
                        HbNetworkProtocol::CODE_CLT_PRESENCE )
 {
-
 }
 
 HbPresenceContract::HbPresenceContract( const HbPresenceContract & source ) :

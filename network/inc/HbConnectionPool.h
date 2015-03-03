@@ -40,8 +40,8 @@ namespace hb
 
         public callbacks:
             // From services.
-            virtual void onSocketContractToSend( networkuid receiver, HbNetworkContract * contract )            = 0;
-            virtual void onUserContractToSend  ( const HbNetworkUserInfo & user, HbNetworkContract * contract ) = 0;
+            //virtual void onSocketContractToSend( networkuid receiver, HbNetworkContract * contract )            = 0;
+            //virtual void onUserContractToSend  ( const HbNetworkUserInfo & user, HbNetworkContract * contract ) = 0;
             virtual void onReadyContractToSend ( const HbNetworkContract * contract )                           = 0;
             // From HbAuthService.
             virtual void onSocketAuthenticated( networkuid socket_id, const HbNetworkUserInfo & user_info )     = 0;

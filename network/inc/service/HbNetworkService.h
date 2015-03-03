@@ -43,8 +43,8 @@ namespace hb
             }
 
         signals:
-            void socketContractToSend( networkuid receiver, HbNetworkContract * contract );
-            void userContractToSend  ( const HbNetworkUserInfo & user, HbNetworkContract * contract );
+            //void socketContractToSend( networkuid receiver, HbNetworkContract * contract );
+            //void userContractToSend  ( const HbNetworkUserInfo & user, HbNetworkContract * contract );
             void readyContractToSend ( const HbNetworkContract * contract );
 
             // Only used in server side.

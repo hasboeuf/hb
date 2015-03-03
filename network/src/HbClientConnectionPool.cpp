@@ -50,8 +50,8 @@ HbClientConnectionPool::HbClientConnectionPool( const HbGeneralClientConfig & co
     foreach( HbNetworkService * service, mServices )
     {
         // Contract.
-        connect( service, &HbNetworkService::socketContractToSend, this, &HbConnectionPool::onSocketContractToSend );
-        connect( service, &HbNetworkService::userContractToSend,   this, &HbConnectionPool::onUserContractToSend   );
+        //connect( service, &HbNetworkService::socketContractToSend, this, &HbConnectionPool::onSocketContractToSend );
+        //connect( service, &HbNetworkService::userContractToSend,   this, &HbConnectionPool::onUserContractToSend   );
         connect( service, &HbNetworkService::readyContractToSend,  this, &HbConnectionPool::onReadyContractToSend  );
 
         // Socket.
@@ -114,7 +114,7 @@ HbClientConnectionPool::~HbClientConnectionPool()
 bool HbClientConnectionPool::leave()
 {
     qDeleteAll( mClients );
-    mClients.clear();
+    // mClients.clear(); Handled in onClientDisconnected.
     return true;
 }
 
@@ -249,7 +249,7 @@ void HbClientConnectionPool::onClientContractReceived( networkuid client_uid, co
     service->onContractReceived( contract );
 }
 
-void HbClientConnectionPool::onSocketContractToSend( networkuid receiver, HbNetworkContract * contract )
+/*void HbClientConnectionPool::onSocketContractToSend( networkuid receiver, HbNetworkContract * contract )
 {
     q_assert_ptr( contract );
 
@@ -267,11 +267,30 @@ void HbClientConnectionPool::onSocketContractToSend( networkuid receiver, HbNetw
 void HbClientConnectionPool::onUserContractToSend  ( const HbNetworkUserInfo & user, HbNetworkContract * contract )
 {
 
-}
+}*/
 
 void HbClientConnectionPool::onReadyContractToSend ( const HbNetworkContract * contract )
 {
-
+    if( contract->isValid() )
+    {
+        auto receivers = contract->receivers();
+        foreach( networkuid receiver, receivers )
+        {
+            HbAbstractClient * client = mClients.value( receiver, nullptr );
+            if( client )
+            {
+                client->send( ShConstHbNetworkContract( contract ) );
+            }
+            else
+            {
+                HbWarning( "Receiver %d does not exist.", receiver );
+            }
+        }
+    }
+    else
+    {
+        HbWarning( "Try to send an invalid contract." );
+    }
 }
 
 void HbClientConnectionPool::onSocketAuthenticated( networkuid socket_uid, const HbNetworkUserInfo & user_info )

@@ -8,6 +8,7 @@ HbAuthStatusContract::HbAuthStatusContract() :
     HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH,
                        HbNetworkProtocol::CODE_SRV_AUTH_STATUS )
 {
+    setRouting( HbNetworkProtocol::ROUTING_MULTICAST );
     mStatus    = HbNetworkProtocol::AUTH_BAD;
     mTryNumber = 0;
     mMaxTries  = 0;

@@ -8,7 +8,6 @@ HbKickContract::HbKickContract() :
                        HbNetworkProtocol::CODE_SRV_KICK )
 {
     setRouting( HbNetworkProtocol::ROUTING_UNICAST );
-
     mReason    = HbNetworkProtocol::KICK_UNDEFINED;
 }
 

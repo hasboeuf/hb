@@ -9,6 +9,7 @@ HbAuthRequestContract::HbAuthRequestContract() :
     HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH,
                        HbNetworkProtocol::CODE_CLT_AUTH_REQUEST )
 {
+    setRouting( HbNetworkProtocol::ROUTING_UNICAST );
     mType   = HbAuthService::AUTH_NONE;
     mpReply = new HbAuthStatusContract();
 }

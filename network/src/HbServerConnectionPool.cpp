@@ -49,8 +49,8 @@ HbServerConnectionPool::HbServerConnectionPool( const HbGeneralServerConfig & co
     foreach( HbNetworkService * service, mServices )
     {
         // Contract.
-        connect( service, &HbNetworkService::socketContractToSend, this, &HbConnectionPool::onSocketContractToSend );
-        connect( service, &HbNetworkService::userContractToSend,   this, &HbConnectionPool::onUserContractToSend   );
+        //connect( service, &HbNetworkService::socketContractToSend, this, &HbConnectionPool::onSocketContractToSend );
+        //connect( service, &HbNetworkService::userContractToSend,   this, &HbConnectionPool::onUserContractToSend   );
         connect( service, &HbNetworkService::readyContractToSend,  this, &HbConnectionPool::onReadyContractToSend  );
 
         // Kick
@@ -213,7 +213,7 @@ void HbServerConnectionPool::onSocketDisconnected( networkuid server_uid, networ
 {
     HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
     q_assert_ptr( server );
-    q_assert( !mServers.contains( server_uid ) );
+    q_assert( mServers.contains( server_uid ) );
     q_assert( mServerBySocketId.contains( socket_uid ) );
     q_assert( mPendingSockets.contains( socket_uid ) || mUserBySocketId.contains( socket_uid ) );
 
@@ -301,21 +301,60 @@ void HbServerConnectionPool::onSocketContractToSend( networkuid receiver, HbNetw
 
     q_assert_ptr( server );
 
-    // TODO SEND
+    contract->setRouting( HbNetworkProtocol::ROUTING_UNICAST );
+    contract->addSocketReceiver( receiver );
 
     server->send( ShConstHbNetworkContract( contract ) );
 }
 
-void HbServerConnectionPool::onUserContractToSend  ( const HbNetworkUserInfo & user, HbNetworkContract * contract )
+void HbServerConnectionPool::onUserContractToSend  ( const HbNetworkUserInfo & user_info, HbNetworkContract * contract )
 {
-    // TODO
+    HbNetworkUser * user = getUser( user_info );
+    if( !user )
+    {
+        HbWarning( "User %d is disconnected. Contract not sent." );
+        delete contract;
+        return;
+    }
+
+    foreach( networkuid socket_uid, user->socketsUid() )
+    {
+        contract->addSocketReceiver( socket_uid );
+    }
 }
 
 void HbServerConnectionPool::onReadyContractToSend ( const HbNetworkContract * contract )
 {
     q_assert_ptr( contract );
 
-    // TODO
+    if( contract->isValid() )
+    {
+        auto receivers = contract->receivers();
+        foreach( networkuid receiver, receivers )
+        {
+            networkuid server_uid = mServerBySocketId.value( receiver, 0 );
+            if( server_uid > 0 )
+            {
+                HbAbstractServer * server = mServers.value( server_uid, nullptr ); // TODO will send many times the same contract if there are several servers.
+                if( server )
+                {
+                    server->send( ShConstHbNetworkContract( contract ) );
+                }
+                else
+                {
+                    HbWarning( "Server %d does not exist.", server_uid );
+                }
+            }
+            else
+            {
+                HbWarning( "Receiver %d has no associated server.", receiver );
+            }
+        }
+    }
+    else
+    {
+        HbWarning( "Try to send an invalid contract." );
+    }
 }
 
 void HbServerConnectionPool::onUserToKick  ( const HbNetworkUserInfo & user_info, netwint reason, const QString & description )

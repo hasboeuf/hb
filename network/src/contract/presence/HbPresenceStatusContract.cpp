@@ -6,7 +6,7 @@ HbPresenceStatusContract::HbPresenceStatusContract() :
     HbNetworkContract( HbNetworkProtocol::SERVICE_PRESENCE,
                        HbNetworkProtocol::CODE_SRV_PRESENCE_STATUS )
 {
-
+    setRouting( HbNetworkProtocol::ROUTING_MULTICAST );
 }
 
 HbPresenceStatusContract::HbPresenceStatusContract( const HbPresenceStatusContract & source ) :

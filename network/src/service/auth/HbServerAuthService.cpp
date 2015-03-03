@@ -122,7 +122,7 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
         {
             HbAuthStatusContract * response = auth_contract->reply();
             if( response &&
-                response->socketReceiver() == socket_uid )
+                response->receiver() == socket_uid )
             {
 
                 mResponses.insert( socket_uid, response );
