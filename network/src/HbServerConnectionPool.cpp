@@ -200,7 +200,7 @@ void HbServerConnectionPool::onSocketConnected( networkuid server_uid, networkui
     mPendingSockets.insert( socket_uid );
     mServerBySocketId.insert( socket_uid, server_uid );
 
-    QList< IHbSocketListener * > listeners = getListeners< IHbSocketListener >();
+    auto listeners = getListeners< IHbSocketListener >();
     foreach( IHbSocketListener * listener, listeners )
     {
         listener->onSocketConnected( socket_uid );

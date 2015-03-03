@@ -127,7 +127,12 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
 
                 mResponses.insert( socket_uid, response );
 
-                if( !strategy->checkLogin( auth_contract ) )
+                if( strategy->checkLogin( auth_contract ) )
+                {
+                    q_assert( mAuthTries.contains( socket_uid ) );
+                    mAuthTries[socket_uid]++;
+                }
+                else
                 {
                     HbError( "Bad contract." );
                     delete mResponses.take( socket_uid );
@@ -185,7 +190,7 @@ void HbServerAuthService::onAuthSucceed( networkuid socket_uid, const HbNetworkU
 
         delSocket( socket_uid, false );
 
-        // emit contract.
+        emit readyContractToSend( response );
     }
     else
     {
@@ -204,17 +209,19 @@ void HbServerAuthService::onAuthFailed( networkuid socket_uid, HbNetworkProtocol
             return;
         }
 
-        if( 0 ) // Max tries.
-        {
-            kickSocket( socket_uid, HbNetworkProtocol::KICK_AUTH_LIMIT );
-        }
+        q_assert( mAuthTries.contains( socket_uid ) );
 
         response->setStatus( status );
         response->setDescription( description );
-        response->setTryNumber( 1 ); // TODO store try number.
+        response->setTryNumber( mAuthTries[socket_uid] );
         response->setMaxTries( mConfig.authMaxTries() );
 
-        // TODO emit contract.
+        emit readyContractToSend( response );
+
+        if( mAuthTries[socket_uid] == mConfig.authMaxTries() )
+        {
+            kickSocket( socket_uid, HbNetworkProtocol::KICK_AUTH_LIMIT );
+        }
     }
     else
     {
