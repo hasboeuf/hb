@@ -35,16 +35,13 @@ HbServerConnectionPool::HbServerConnectionPool( const HbGeneralServerConfig & co
         service_auth->addStrategy( fb_strategy );
     }
 
-    connect( service_auth, &HbServerAuthService::socketAuthenticated,   this, &HbServerConnectionPool::onSocketAuthenticated );
-    connect( service_auth, &HbServerAuthService::socketUnauthenticated, this, &HbServerConnectionPool::onSocketUnauthenticated );
-
     mServices.insert( service_presence->id(), service_presence );
     mServices.insert( service_auth->id(),     service_auth    );
     mServices.insert( service_channel->id(),  service_channel );
 
-    connect( service_auth,     &HbAuthService::socketAuthenticated,    this, &HbConnectionPool::onSocketAuthenticated );
-    connect( service_auth,     &HbAuthService::socketUnauthenticated,  this, &HbConnectionPool::onSocketUnauthenticated );
-    connect( service_presence, &HbServerPresenceService::socketLagged, this, &HbServerConnectionPool::onSocketLagged );
+    connect( service_auth,     &HbAuthService::socketAuthenticated,    this, &HbConnectionPool::onSocketAuthenticated,   Qt::UniqueConnection );
+    connect( service_auth,     &HbAuthService::socketUnauthenticated,  this, &HbConnectionPool::onSocketUnauthenticated, Qt::UniqueConnection );
+    connect( service_presence, &HbServerPresenceService::socketLagged, this, &HbServerConnectionPool::onSocketLagged,    Qt::UniqueConnection );
 
     foreach( HbNetworkService * service, mServices )
     {

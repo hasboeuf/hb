@@ -35,17 +35,12 @@ HbClientConnectionPool::HbClientConnectionPool( const HbGeneralClientConfig & co
         service_auth->addStrategy( fb_strategy );
     }
 
-    connect( service_auth, &HbClientAuthService::socketAuthenticated,
-             this, &HbClientConnectionPool::onSocketAuthenticated );
-    connect( service_auth, &HbClientAuthService::socketUnauthenticated,
-             this, &HbClientConnectionPool::onSocketUnauthenticated );
-
     mServices.insert( service_presence->id(), service_presence );
     mServices.insert( service_auth->id(),     service_auth    );
     mServices.insert( service_channel->id(),  service_channel );
 
-    connect( service_auth, &HbAuthService::socketAuthenticated,   this, &HbConnectionPool::onSocketAuthenticated   );
-    connect( service_auth, &HbAuthService::socketUnauthenticated, this, &HbConnectionPool::onSocketUnauthenticated );
+    connect( service_auth, &HbAuthService::socketAuthenticated,   this, &HbConnectionPool::onSocketAuthenticated,   Qt::UniqueConnection );
+    connect( service_auth, &HbAuthService::socketUnauthenticated, this, &HbConnectionPool::onSocketUnauthenticated, Qt::UniqueConnection );
 
     foreach( HbNetworkService * service, mServices )
     {
