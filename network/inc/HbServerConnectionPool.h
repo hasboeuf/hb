@@ -56,7 +56,7 @@ namespace hb
 
             // From HbAuthService.
             void onSocketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info );
-            void onSocketUnauthenticated( networkuid socket_uid, const QString reason );
+            void onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason );
 
             // From HbPresenceService
             void onSocketLagged( networkuid socket_uid, quint16 last_presence, quint16 kick_threshold );

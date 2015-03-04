@@ -290,12 +290,40 @@ void HbClientConnectionPool::onReadyContractToSend ( const HbNetworkContract * c
 
 void HbClientConnectionPool::onSocketAuthenticated( networkuid socket_uid, const HbNetworkUserInfo & user_info )
 {
+    q_assert( socket_uid > 0 );
 
+    if( mUser.mainSocketUid() == socket_uid )
+    {
+        mUser.setInfo( user_info );
+        mUser.setStatus( HbNetworkProtocol::USER_AUTHENTICATED );
+        HbInfo( "User %s (me) is authenticated.", HbLatin1( user_info.email() ) );
+    }
+
+    HbInfo( "Socket %d authenticated.", socket_uid );
+
+    emit socketAuthenticated( socket_uid );
 }
 
-void HbClientConnectionPool::onSocketUnauthenticated( networkuid socket_uid, const QString reason )
+void HbClientConnectionPool::onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason )
 {
+    q_assert( socket_uid > 0 );
 
+    if( mUser.mainSocketUid() == socket_uid )
+    {
+        mUser.setInfo( HbNetworkUserInfo() );
+        mUser.setStatus( HbNetworkProtocol::USER_CONNECTED );
+        HbInfo( "User (me) is unauthenticated." );
+    }
+
+    HbInfo( "Socket %d unauthenticated (try_number=%d, max_tries=%d, reason=%s).",
+            socket_uid,
+            try_number,
+            max_tries,
+            HbLatin1( reason ) );
+
+    // TODO send reason to HbClient.
+
+    emit socketUnauthenticated( socket_uid );
 }
 
 void HbClientConnectionPool::onMeStatusChanged( HbNetworkProtocol::UserStatus status )

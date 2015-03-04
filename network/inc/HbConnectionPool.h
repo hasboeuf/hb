@@ -44,8 +44,8 @@ namespace hb
             //virtual void onUserContractToSend  ( const HbNetworkUserInfo & user, HbNetworkContract * contract ) = 0;
             virtual void onReadyContractToSend ( const HbNetworkContract * contract )                           = 0;
             // From HbAuthService.
-            virtual void onSocketAuthenticated( networkuid socket_id, const HbNetworkUserInfo & user_info )     = 0;
-            virtual void onSocketUnauthenticated( networkuid socket_uid, const QString reason )                 = 0;
+            virtual void onSocketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info )     = 0;
+            virtual void onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason ) = 0;
 
         signals:
             // To services.

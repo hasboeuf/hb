@@ -39,7 +39,7 @@ namespace hb
 
         signals:
             void socketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info );
-            void socketUnauthenticated( networkuid socket_uid, const QString reason = QString() );
+            void socketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason );
 
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract ) = 0;

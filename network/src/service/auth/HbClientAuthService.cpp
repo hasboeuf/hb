@@ -53,21 +53,23 @@ void HbClientAuthService::onContractReceived( const HbNetworkContract * contract
     const HbAuthStatusContract * auth_status = contract->value< HbAuthStatusContract >();
     if( auth_status )
     {
+
         networkuid sender = auth_status->sender();
         HbNetworkProtocol::AuthStatus status = auth_status->status();
 
         if( status == HbNetworkProtocol::AUTH_OK )
         {
-            // emit socketAuthenticated( sender, user_info );
-            return;
+            emit socketAuthenticated( sender, auth_status->userInfo() );
         }
+        else
+        {
+            quint8 try_number = auth_status->tryNumber();
+            quint8 max_tries  = auth_status->maxTries();
+            QString error     = auth_status->description();
 
-        quint8 try_number = auth_status->tryNumber(); // TODO
-        quint8 max_tries  = auth_status->maxTries(); // TODO
-        QString error     = auth_status->description();
-
-        emit socketUnauthenticated( sender, error );
-
+            emit socketUnauthenticated( sender, try_number, max_tries, error );
+        }
+        mPendingSocket = 0;
     }
     else
     {
@@ -120,13 +122,13 @@ void HbClientAuthService::onAuthRequested( HbClientAuthLoginObject * login_objec
 
 void HbClientAuthService::onAuthContractReady( networkuid socket_uid, HbAuthRequestContract * contract )
 {
-    mPendingSocket = 0;
     contract->addSocketReceiver( socket_uid );
     emit readyContractToSend( contract );
+    // mPendingSocket will be reset on auth status contract reception.
 }
 
 void HbClientAuthService::onAuthContractFailed( networkuid socket_uid, const QString & description )
 {
     mPendingSocket = 0;
-    emit socketUnauthenticated( socket_uid, description );
+    emit socketUnauthenticated( socket_uid, 0, 0, description );
 }

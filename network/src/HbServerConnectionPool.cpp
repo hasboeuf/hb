@@ -414,7 +414,7 @@ void HbServerConnectionPool::onSocketAuthenticated  ( networkuid socket_uid, con
     }
 
     HbNetworkUser * user = new HbNetworkUser();
-    user->setInfo( user_info ); // TODO user_info valid?
+    user->setInfo( user_info );
     user->setMainSocketUid( socket_uid );
 
     mPendingSockets.remove( socket_uid );
@@ -424,12 +424,28 @@ void HbServerConnectionPool::onSocketAuthenticated  ( networkuid socket_uid, con
     emit socketAuthenticated( socket_uid );
 }
 
-void HbServerConnectionPool::onSocketUnauthenticated( networkuid socket_uid, const QString reason )
+void HbServerConnectionPool::onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason )
 {
+    q_assert( mUserBySocketId.contains( socket_uid ) );
+
     HbNetworkUser * user = mUserBySocketId.value( socket_uid, nullptr );
     q_assert_ptr( user );
+    q_assert( user->mainSocketUid() == socket_uid );
+    q_assert( mUserByEmail.contains( user->info().email() ) );
 
-    // TODO disconnect all socket relative to this user.
+    user->setMainSocketUid( 0 );
+    mUserByEmail.remove( user->info().email() );
+
+    foreach( networkuid socket, user->socketsUid() )
+    {
+        mUserBySocketId.remove( socket );
+    }
+
+    delete user;
+
+    // TODO send reason to HbServer.
+
+    emit socketUnauthenticated( socket_uid );
 }
 
 void HbServerConnectionPool::onSocketLagged( networkuid socket_uid, quint16 last_presence, quint16 kick_threshold )

@@ -55,7 +55,7 @@ namespace hb
             void onReadyContractToSend ( const HbNetworkContract * contract );
             // From HbAuthService.
             void onSocketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info );
-            void onSocketUnauthenticated( networkuid socket_uid, const QString reason );
+            void onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason );
 
             // From HbNetworkUser.
             void onMeStatusChanged( HbNetworkProtocol::UserStatus status );
