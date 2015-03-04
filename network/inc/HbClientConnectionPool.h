@@ -60,6 +60,9 @@ namespace hb
             // From HbNetworkUser.
             void onMeStatusChanged( HbNetworkProtocol::UserStatus status );
 
+        private:
+            bool checkKickReceived( const HbNetworkContract * contract );
+
         signals:
             void statusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status );
             void meStatusChanged( HbNetworkProtocol::UserStatus status );

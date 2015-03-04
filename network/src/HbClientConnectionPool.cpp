@@ -12,6 +12,7 @@
 #include <service/channel/HbClientChannelService.h>
 #include <service/auth/HbClientAuthLoginObject.h>
 #include <user/HbNetworkUser.h>
+#include <contract/general/HbKickContract.h>
 
 using namespace hb::network;
 
@@ -229,6 +230,12 @@ void HbClientConnectionPool::onClientContractReceived( networkuid client_uid, co
             HbLatin1( HbNetworkProtocol::MetaService::toString( requested_service ) ),
             HbLatin1( HbNetworkProtocol::MetaCode::toString( contract->header().code() ) ) );
 
+    if( checkKickReceived( contract ) )
+    {
+        delete contract;
+        return;
+    }
+
     if( mUser.status() != HbNetworkProtocol::USER_AUTHENTICATED )
     {
         q_assert( requested_service == HbNetworkProtocol::SERVICE_AUTH );
@@ -329,4 +336,26 @@ void HbClientConnectionPool::onSocketUnauthenticated( networkuid socket_uid, qui
 void HbClientConnectionPool::onMeStatusChanged( HbNetworkProtocol::UserStatus status )
 {
     emit meStatusChanged( status );
+}
+
+bool HbClientConnectionPool::checkKickReceived( const HbNetworkContract * contract )
+{
+    q_assert_ptr( contract );
+
+    if( contract->header().service() == HbNetworkProtocol::SERVICE_KICK &&
+        contract->header().code()    == HbNetworkProtocol::CODE_SRV_KICK )
+    {
+        const HbKickContract * kick_contract = contract->value< HbKickContract >();
+        q_assert_ptr( kick_contract );
+
+        HbError( "Kick contract received! (reason=%s, description=%s)",
+                 HbLatin1( HbNetworkProtocol::MetaKickCode::toString( kick_contract->reason() ) ),
+                 HbLatin1( kick_contract->description() ) );
+
+        // TODO tell it to HbClient.
+
+        return true;
+    }
+
+    return false;
 }

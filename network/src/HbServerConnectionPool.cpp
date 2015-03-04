@@ -359,7 +359,7 @@ void HbServerConnectionPool::onUserToKick  ( const HbNetworkUserInfo & user_info
     HbNetworkUser * user = getUser( user_info );
     q_assert_ptr( user );
 
-    kickSocket( user->mainSocketUid(), reason, description ); // TODO kick other sockets.
+    kickUser( user, reason, description );
 }
 
 void HbServerConnectionPool::onSocketToKick( networkuid socket_uid, netwint reason, const QString & description )
@@ -397,9 +397,9 @@ void HbServerConnectionPool::kickSocket( networkuid socket_uid , netwint reason,
     q_assert( server );
 
     HbKickContract * kick_contract = new HbKickContract();
+    kick_contract->addSocketReceiver( socket_uid );
     kick_contract->setReason     ( reason );
     kick_contract->setDescription( description );
-    // TODO receiver
 
     server->send( ShConstHbNetworkContract( kick_contract ) );
     server->leave( socket_uid );

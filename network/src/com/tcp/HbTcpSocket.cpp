@@ -47,7 +47,7 @@ bool HbTcpSocket::connectToHost(const HbTcpConfig & config)
     return false;
 }
 
-bool HbTcpSocket::disconnectFromHost()
+bool HbTcpSocket::leave()
 {
     if ( state() != QAbstractSocket::UnconnectedState)
     {

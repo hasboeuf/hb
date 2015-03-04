@@ -88,7 +88,7 @@ bool HbTcpClient::connectToNetwork()
 bool HbTcpClient::disconnectFromNetwork()
 {
     q_assert_ptr( mpSocket );
-    if( !mpSocket->disconnectFromHost() )
+    if( !mpSocket->leave() )
     {
         HbError( "Can not disconnect from host." );
     }

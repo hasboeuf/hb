@@ -36,6 +36,7 @@ namespace hb
 
             virtual HbNetworkProtocol::NetworkType type() const = 0;
             virtual bool isListening() const = 0;
+            virtual bool leave() = 0;
 
             virtual QAbstractSocket::SocketError error() const = 0;
             virtual QAbstractSocket::SocketState state() const = 0;

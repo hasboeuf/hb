@@ -27,8 +27,9 @@ namespace hb
 
             HbNetworkProtocol::NetworkType type() const;
 
+            bool leave();
             bool connectToHost(const HbTcpConfig & config);
-            bool disconnectFromHost();
+
 
             bool isListening() const;
 

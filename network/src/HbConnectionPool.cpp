@@ -5,7 +5,7 @@
 // Local
 #include <HbConnectionPool.h>
 #include <service/HbNetworkService.h>
-
+#include <contract/general/HbKickContract.h>
 
 using namespace hb::network;
 
@@ -18,6 +18,8 @@ HbConnectionPool::HbConnectionPool( const HbGeneralConfig & config )
 
 void HbConnectionPool::setExchanges( HbNetworkExchanges & exchanges )
 {
+    exchanges.plug< HbKickContract >();
+
     foreach( HbNetworkService * service, mServices )
     {
         service->plugContracts( exchanges );
