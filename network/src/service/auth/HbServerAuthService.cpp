@@ -102,10 +102,10 @@ void HbServerAuthService::delSocket( networkuid socket_uid, bool delete_response
     }
 }
 
-void HbServerAuthService::kickSocket( networkuid socket_uid, HbNetworkProtocol::KickCode reason )
+void HbServerAuthService::kickSocket(networkuid socket_uid, HbNetworkProtocol::KickCode reason , const QString & description )
 {
     delSocket( socket_uid );
-    // TODO kick
+    emit socketToKick( socket_uid, reason, description );
 }
 
 void HbServerAuthService::onContractReceived( const HbNetworkContract * contract )
@@ -135,20 +135,19 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
                 else
                 {
                     HbError( "Bad contract." );
-                    delete mResponses.take( socket_uid );
-                    // TODO kick?
+                    kickSocket( socket_uid, HbNetworkProtocol::KICK_CONTRACT_INVALID, "Bad contract." );
                 }
             }
             else
             {
                 HbError( "Bad reply contract." );
-                // TODO kick?
+                kickSocket( socket_uid, HbNetworkProtocol::KICK_CONTRACT_INVALID, "Bad reply contract." );
             }
         }
         else
         {
             HbError( "No user auth strategy defined." );
-            // TODO kick?
+            kickSocket( socket_uid, HbNetworkProtocol::KICK_CONTRACT_INVALID, "No user auth strategy defined." );
         }
 
         delete auth_contract;
@@ -156,7 +155,7 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
     else
     {
         HbError( "Auth contract type not recognized." );
-        // TODO kick?
+        // TODO how to kick?
     }
 }
 

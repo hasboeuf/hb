@@ -35,7 +35,7 @@ void HbServerPresenceService::timerEvent( QTimerEvent * )
 
         if( last_presence >= mConfig.kickAliveThreshold() )
         {
-            // TODO kick
+            emit socketToKick( socket_uid, HbNetworkProtocol::KICK_PRESENCE_TIMEOUT );
         }
         else if( last_presence >= mConfig.warningAliveThreshold() )
         {
@@ -77,11 +77,13 @@ void HbServerPresenceService::onContractReceived( const HbNetworkContract * cont
     if( presence_contract )
     {
         networkuid socket_uid = presence_contract->sender();
+
+        q_assert( mClientAliveTick.contains( socket_uid ) );
         mClientAliveTick[socket_uid] = 0; // Update client tick.
     }
     else
     {
         HbError( "Presence contract type not recognized." );
-        // TODO kick?
+        // TODO how to kick?
     }
 }

@@ -45,7 +45,7 @@ namespace hb
             bool checkSocket( networkuid socket_uid );
             void addSocket  ( networkuid socket_uid );
             void delSocket  ( networkuid socket_uid, bool delete_responses = true );
-            void kickSocket ( networkuid socket_uid, HbNetworkProtocol::KickCode reason );
+            void kickSocket ( networkuid socket_uid, HbNetworkProtocol::KickCode reason, const QString & description = QString() );
 
         public callbacks:
             // From HbConnectionPool.
