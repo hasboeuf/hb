@@ -177,7 +177,7 @@ void HbAbstractClient::onSocketReadyPacket()
             stream >> header;
             q_assert( stream.status() == QDataStream::Ok );
 
-            if( !mConfig.isBadHeaderTolerant() )
+            if( !configuration().isBadHeaderTolerant() )
             {
                 if( !HbAbstractNetwork::checkHeader( header ) )
                 {
