@@ -190,6 +190,18 @@ void HbSocketHandler::onSocketReadyPacket()
             stream >> header;
             q_assert( stream.status() == QDataStream::Ok );
 
+            if( !server()->configuration().isBadHeaderTolerant() )
+            {
+                if( !HbAbstractNetwork::checkHeader( header ) )
+                {
+                    HbError( "Bad contract header (app=%s, protocol=%d. Kick.",
+                             HbLatin1( header.appName() ),
+                             header.protocolVersion() );
+                    socket->leave();
+                    return;
+                }
+            }
+
             HbNetworkContract * contract = mpServer->configuration().exchanges().contract( header );
 
             if( !contract )

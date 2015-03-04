@@ -254,15 +254,6 @@ void HbServerConnectionPool::onSocketContractReceived( networkuid server_uid, ne
 
     HbInfo( "Contract received from socket %d on server %d.", socket_uid, server_uid );
 
-
-    if( !checkContractReceived( contract ) ) // TODO migrate in HbAbstractServer.
-    {
-        HbWarning( "Invalid contract received from socket %d on server %d. Kick scheduled.", socket_uid, server_uid );
-        // TODO kick
-        delete contract;
-        return;
-    }
-
     serviceuid requested_service = contract->header().service();
 
     HbInfo( "Contract OK [socket=%d, server=%d, service=%s, code=%s].",

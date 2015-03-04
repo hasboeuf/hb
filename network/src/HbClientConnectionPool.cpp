@@ -216,13 +216,6 @@ void HbClientConnectionPool::onClientContractReceived( networkuid client_uid, co
 
     HbInfo( "Contract received from client %d.", client_uid );
 
-    if( !checkContractReceived( contract ) )
-    {
-        HbWarning( "Invalid contract received from client %d.", client_uid );
-        delete contract;
-        return;
-    }
-
     serviceuid requested_service = contract->header().service();
 
     HbInfo( "Contract OK [client=%d, service=%s, code=%s].",

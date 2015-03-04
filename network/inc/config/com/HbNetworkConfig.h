@@ -34,6 +34,9 @@ namespace hb
             virtual void setOpenMode(QIODevice::OpenMode mode) final;
             virtual QIODevice::OpenMode openMode() const final;
 
+            virtual void setBadHeaderTolerant( bool tolerant ) final;
+            virtual bool isBadHeaderTolerant() const final;
+
             virtual const HbNetworkExchanges & exchanges() const final;
             virtual HbNetworkExchanges & exchanges() final;
 
@@ -44,6 +47,7 @@ namespace hb
 
         private:
             QIODevice::OpenMode mOpenMode;
+            bool mBadHeaderTolerant;
 
         };
     }

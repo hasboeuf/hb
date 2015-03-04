@@ -26,21 +26,6 @@ void HbConnectionPool::setExchanges( HbNetworkExchanges & exchanges )
     }
 }
 
-bool HbConnectionPool::checkContractReceived( const HbNetworkContract * contract )
-{
-    q_assert_ptr( contract );
-
-    bool ok = true;
-
-    if( ( contract->header().appName()         != HbNetworkProtocol::msAppName ) ||
-        ( contract->header().protocolVersion() != HbNetworkProtocol::msProtocolVersion ) )
-    {
-        ok = false;
-    }
-
-    return ok;
-}
-
 HbNetworkService * HbConnectionPool::getService( serviceuid service_uid )
 {
     return mServices.value( service_uid, nullptr );

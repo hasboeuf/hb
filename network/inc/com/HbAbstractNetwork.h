@@ -30,6 +30,8 @@ namespace hb
 
         public:
 
+            static bool checkHeader( const HbNetworkHeader & header );
+
             virtual bool join() = 0;
             virtual bool leave() = 0;
             virtual bool isReady() const = 0;

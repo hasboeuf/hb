@@ -7,6 +7,7 @@ using namespace hb::network;
 HbNetworkConfig::HbNetworkConfig()
 {
     mOpenMode = QIODevice::ReadWrite;
+    mBadHeaderTolerant = true;
 }
 
 HbNetworkConfig::HbNetworkConfig( const HbNetworkConfig & config )
@@ -14,6 +15,7 @@ HbNetworkConfig::HbNetworkConfig( const HbNetworkConfig & config )
     if ( this != &config )
     {
         mOpenMode = config.mOpenMode;
+        mBadHeaderTolerant = config.mBadHeaderTolerant;
         mExchanges = config.mExchanges;
     }
 }
@@ -24,6 +26,7 @@ HbNetworkConfig & HbNetworkConfig::operator =( const HbNetworkConfig & config )
     if ( this != &config )
     {
         mOpenMode = config.mOpenMode;
+        mBadHeaderTolerant = config.mBadHeaderTolerant;
         mExchanges = config.mExchanges;
     }
 
@@ -65,6 +68,16 @@ void HbNetworkConfig::setOpenMode( QIODevice::OpenMode mode )
 QIODevice::OpenMode HbNetworkConfig::openMode() const
 {
     return mOpenMode;
+}
+
+void HbNetworkConfig::setBadHeaderTolerant( bool tolerant )
+{
+    mBadHeaderTolerant = tolerant;
+}
+
+bool HbNetworkConfig::isBadHeaderTolerant() const
+{
+    return mBadHeaderTolerant;
 }
 
 const HbNetworkExchanges & HbNetworkConfig::exchanges() const

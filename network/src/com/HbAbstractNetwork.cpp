@@ -1,5 +1,6 @@
 // Local
 #include <com/HbAbstractNetwork.h>
+#include <contract/HbNetworkContract.h>
 
 using namespace hb::network;
 
@@ -17,4 +18,15 @@ HbAbstractNetwork::HbAbstractNetwork(QObject * parent) :
 const HbNetworkConfig & HbAbstractNetwork::configuration() const
 {
     return mConfig;
+}
+
+bool HbAbstractNetwork::checkHeader( const HbNetworkHeader & header )
+{
+    if( ( header.appName()         != HbNetworkProtocol::msAppName ) ||
+        ( header.protocolVersion() != HbNetworkProtocol::msProtocolVersion ) )
+    {
+        return false;
+    }
+
+    return true;
 }

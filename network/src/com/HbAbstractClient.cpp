@@ -177,6 +177,18 @@ void HbAbstractClient::onSocketReadyPacket()
             stream >> header;
             q_assert( stream.status() == QDataStream::Ok );
 
+            if( !mConfig.isBadHeaderTolerant() )
+            {
+                if( !HbAbstractNetwork::checkHeader( header ) )
+                {
+                    HbError( "Bad contract header (app=%s, protocol=%d. Disconnection.",
+                             HbLatin1( header.appName() ),
+                             header.protocolVersion() );
+                    leave();
+                    return;
+                }
+            }
+
             HbNetworkContract * contract = configuration().exchanges().contract( header );
 
             if( !contract )

@@ -59,7 +59,6 @@ namespace hb
             void userContractReceived  ( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract );
 
         protected:
-            virtual bool checkContractReceived( const HbNetworkContract * contract ); // TODO in /com ???
             HbNetworkService * getService( serviceuid service_uid );
 
             template< class T >
