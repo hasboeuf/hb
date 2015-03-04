@@ -11,6 +11,8 @@ using namespace hb::network;
 
 HbConnectionPool::HbConnectionPool( const HbGeneralConfig & config )
 {
+    Q_UNUSED( config )
+
     qRegisterMetaType< HbNetworkProtocol::ServerStatus >( "HbNetworkProtocol::ServerStatus" );
     qRegisterMetaType< HbNetworkProtocol::ClientStatus >( "HbNetworkProtocol::ClientStatus" );
     qRegisterMetaType< HbNetworkProtocol::UserStatus >  ( "HbNetworkProtocol::UserStatus" );

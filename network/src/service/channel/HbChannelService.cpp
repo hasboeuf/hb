@@ -22,5 +22,5 @@ HbNetworkProtocol::NetworkTypes HbChannelService::enabledNetworkTypes() const
 
 void HbChannelService::plugContracts( HbNetworkExchanges & exchanges )
 {
-
+    Q_UNUSED( exchanges )
 }

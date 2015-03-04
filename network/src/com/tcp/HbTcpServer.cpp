@@ -107,6 +107,8 @@ HbNetworkProtocol::NetworkType HbTcpServer::type() const
 
 bool HbTcpServer::disconnectFromNetwork( networkuid uid )
 {
+    Q_UNUSED( uid )
+
     // TODO
     return false;
 }

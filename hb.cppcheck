@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="1">
+    <paths>
+        <dir name="C:/Projects/ng3/hb/link"/>
+        <dir name="C:/Projects/ng3/hb/link-example"/>
+        <dir name="C:/Projects/ng3/hb/log"/>
+        <dir name="C:/Projects/ng3/hb/log-viewer"/>
+        <dir name="C:/Projects/ng3/hb/network"/>
+        <dir name="C:/Projects/ng3/hb/network-basic-example"/>
+        <dir name="C:/Projects/ng3/hb/network-example"/>
+        <dir name="C:/Projects/ng3/hb/plugin"/>
+        <dir name="C:/Projects/ng3/hb/plugin-example"/>
+        <dir name="C:/Projects/ng3/hb/tools"/>
+    </paths>
+</project>

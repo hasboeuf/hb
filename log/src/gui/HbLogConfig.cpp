@@ -18,13 +18,13 @@ HbLogConfig::HbLogConfig() :
     mMaxBuffer = 5000;
     mFont = QFont(QStringLiteral("Courier New"));
 
-    qint32 currentmLevel = 1;
-    while (currentmLevel <= msMaxLevel)
+    quint32 currentmLevel = 1;
+    while ( currentmLevel <= msMaxLevel )
     {
-        mLevelColors.insert(currentmLevel, QColor(0, 0, 0));
+        mLevelColors.insert( currentmLevel, QColor( 0, 0, 0 ) );
         currentmLevel <<= 1;
     }
-    mBackgroundColor = QColor(255, 255, 255);
+    mBackgroundColor = QColor( 255, 255, 255 );
 }
 
 HbLogConfig::HbLogConfig(const HbLogConfig & config) :

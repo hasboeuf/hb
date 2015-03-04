@@ -106,6 +106,8 @@ void HbO2Server::onTokenResponseReceived()
 
 void HbO2Server::onTokenResponseError( QNetworkReply::NetworkError error )
 {
+    Q_UNUSED( error )
+
     QNetworkReply * token_reply = dynamic_cast< QNetworkReply * >( sender() );
     q_assert_ptr( token_reply );
 

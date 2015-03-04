@@ -45,6 +45,8 @@ LogViewer::LogViewer( QWidget * parent ) :
 
 void LogViewer::loadConfigPath( const QString & path )
 {
+    Q_UNUSED( path );
+
     foreach( LogViewerTab * tab, mTabs )
     {
         if( tab ) tab->updateView();

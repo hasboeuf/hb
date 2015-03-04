@@ -52,7 +52,7 @@ loguid HbLoggerPool::addTcpSocketInput( quint16 port, QString * error )
     QWriteLocker locker( &mInputsLock );
     HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
 
-    if ( port < TCP_PORT_MIN || port > TCP_PORT_MAX )
+    if ( port < TCP_PORT_MIN /*|| port > TCP_PORT_MAX*/ )
     {
         state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
     }
@@ -240,7 +240,7 @@ loguid HbLoggerPool::addTcpSocketOutput( const QString & ip, quint16 port, QStri
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
         if( ip.isEmpty() ) state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
-        else if (port < TCP_PORT_MIN || port > TCP_PORT_MAX) state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
+        else if( port < TCP_PORT_MIN /*|| port > TCP_PORT_MAX*/) state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
     }
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )

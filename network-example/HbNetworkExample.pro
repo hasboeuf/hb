@@ -19,8 +19,8 @@ SUBDIRS += \
     network-server/HbNetworkServer.pro \
     network-user/HbNetworkUser.pro
 
-network-server.depends = tools log network
-network-user.depends = tools log network
+network-server.depends = network
+network-user.depends = network
 
 # ---------------
 # QMake Includes

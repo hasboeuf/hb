@@ -40,7 +40,7 @@ namespace hb
 
             static const quint16 MAX_CAPACITY = 500;
             static const quint16 TCP_PORT_MIN = 1024;
-            static const quint16 TCP_PORT_MAX = 65535;
+            // static const quint16 TCP_PORT_MAX = 65535; Useless as quint16 protects the max value.
 
 
         public :

@@ -418,6 +418,10 @@ void HbServerConnectionPool::onSocketAuthenticated  ( networkuid socket_uid, con
 
 void HbServerConnectionPool::onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason )
 {
+    Q_UNUSED( try_number )
+    Q_UNUSED( max_tries )
+    Q_UNUSED( reason )
+
     q_assert( mUserBySocketId.contains( socket_uid ) );
 
     HbNetworkUser * user = mUserBySocketId.value( socket_uid, nullptr );

@@ -9,6 +9,7 @@ using namespace hb::networkexample;
 
 bool ServerAuthStrategy::checkLogin( const HbAuthRequestContract * contract )
 {
+    Q_UNUSED( contract )
     return true;
 }
 

@@ -57,7 +57,7 @@ void HbServerAuthService::timerEvent( QTimerEvent * )
     auto it = mAuthTimeout.begin();
     while( it != mAuthTimeout.end() )
     {
-        auto current = it++;
+        //auto current = it++;
 
     }
 }

@@ -20,15 +20,15 @@ void HbServerChannelService::setConfig( const HbServiceChannelServerConfig & con
 
 void HbServerChannelService::onContractReceived( const HbNetworkContract * contract )
 {
-
+    Q_UNUSED( contract )
 }
 
 void HbServerChannelService::onUserConnected   ( const HbNetworkUserInfo & user_info )
 {
-
+    Q_UNUSED( user_info )
 }
 
 void HbServerChannelService::onUserDisconnected( const HbNetworkUserInfo & user_info )
 {
-
+    Q_UNUSED( user_info )
 }

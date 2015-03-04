@@ -36,14 +36,14 @@ HbPresenceContract * HbPresenceContract::create() const
 
 bool HbPresenceContract::read( QDataStream & stream )
 {
-
+    Q_UNUSED( stream )
 
     return true;
 }
 
 bool HbPresenceContract::write( QDataStream & stream ) const
 {
-
+    Q_UNUSED( stream )
 
     return true;
 }

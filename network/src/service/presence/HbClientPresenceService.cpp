@@ -34,7 +34,7 @@ void HbClientPresenceService::timerEvent( QTimerEvent * event )
 
     q_assert( socket_uid > 0 );
 
-    HbPresenceStatusContract * presence = new HbPresenceStatusContract();
+    //HbPresenceStatusContract * presence = new HbPresenceStatusContract();
     // emit contract sent.
 }
 
@@ -64,5 +64,6 @@ void HbClientPresenceService::onSocketUnauthenticated( networkuid socket_uid )
 
 void HbClientPresenceService::onContractReceived( const HbNetworkContract * contract )
 {
+    Q_UNUSED( contract )
     // Useless.
 }

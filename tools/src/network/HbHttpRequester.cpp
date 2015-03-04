@@ -58,6 +58,8 @@ void HbHttpRequester::onFinished()
 
 void HbHttpRequester::onError( const QNetworkReply::NetworkError & error )
 {
+    Q_UNUSED( error )
+
     QNetworkReply * reply = dynamic_cast< QNetworkReply * >( sender() );
     q_assert_ptr( reply );
 

@@ -20,8 +20,8 @@ SUBDIRS += \
     network-basic-server/HbNetworkBasicServer.pro \
     network-basic-user/HbNetworkBasicUser.pro
 
-network-basic-server.depends = tools log network network-basic-common
-network-basic-user.depends = tools log network network-basic-common
+network-basic-server.depends = network network-basic-common
+network-basic-user.depends = network network-basic-common
 
 # ---------------
 # QMake Includes

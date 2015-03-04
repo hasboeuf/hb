@@ -100,7 +100,7 @@ void HbLogWidget::onNewLogMessage(const HbLogMessage& msg)
 {
     HbLogMessage* local_msg = new HbLogMessage(msg);
 
-    if(mLoggerMessages.size() == mConfig.maxBuffer())
+    if( mLoggerMessages.size() == ( qint32 ) mConfig.maxBuffer() )
     {
         delete mLoggerMessages.takeFirst();
     }
