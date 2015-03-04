@@ -61,13 +61,13 @@ namespace hb
             virtual HbNetworkProtocol::NetworkType networkType() const final;
 
             template< typename T >
-            inline const T * value() const final
+            inline const T * value() const
             {
                 return dynamic_cast< const T * >( this );
             }
 
             template< typename T >
-            inline T * value() final
+            inline T * value()
             {
                 return dynamic_cast< T * >( this );
             }

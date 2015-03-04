@@ -77,8 +77,8 @@ namespace hb
             QString mRedirectUri;
         };
 
-        HB_LINK_DECL QDataStream & operator<<( QDataStream & stream, const HbO2 & o2 );
-        HB_LINK_DECL QDataStream & operator>>( QDataStream & stream, HbO2 & o2 );
+        QDataStream & operator<<( QDataStream & stream, const HbO2 & o2 );
+        QDataStream & operator>>( QDataStream & stream, HbO2 & o2 );
     }
 }
 

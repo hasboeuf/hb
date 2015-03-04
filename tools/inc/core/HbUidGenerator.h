@@ -25,14 +25,16 @@ namespace hb
     namespace tools
     {
         template< typename T = qint32, size_t C = CLASS_DEFAULT >
-        class HB_TOOLS_DECL HbUidGenerator : public HbSingleton< HbUidGenerator< T, C > >
+        class HbUidGenerator : public HbSingleton< HbUidGenerator< T, C > >
         {
             using I = typename std::conditional< std::is_integral< T >::value, T, qint32 >::type;
 
             Q_DISABLE_COPY( HbUidGenerator )
 
-            friend HbUidGenerator * HbSingleton< HbUidGenerator >::get();
-            friend void HbSingleton< HbUidGenerator >::kill();
+            // https://connect.microsoft.com/VisualStudio/feedbackdetail/view/731937/friend-template-bug-in-msvc
+            //friend HbUidGenerator< T, C > * HbSingleton< HbUidGenerator< T, C > >::get();
+            //friend void HbSingleton< HbUidGenerator< T, C > >::kill();
+            friend class HbSingleton< HbUidGenerator< T, C > >;
 
         private:
             QMutex mMutex;
