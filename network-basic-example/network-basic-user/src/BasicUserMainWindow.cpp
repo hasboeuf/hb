@@ -53,6 +53,7 @@ void BasicUserMainWindow::onStartClicked()
     config.setAddress( QHostAddress::LocalHost );
     config.setPort( 4001 );
     config.setReconnectionDelay( 1000 );
+    config.setBadHeaderTolerant( false );
 
     config.exchanges().plug< RequestContract  >();
     config.exchanges().plug< ResponseContract >();

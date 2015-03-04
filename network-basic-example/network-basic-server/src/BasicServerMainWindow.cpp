@@ -56,6 +56,7 @@ void BasicServerMainWindow::onStartClicked()
     config.setAddress(QHostAddress::Any);
     config.setPort( 4001 );
     config.setMaxUsersPerThread( 1 );
+    config.setBadHeaderTolerant( false );
 
     config.exchanges().plug< RequestContract  >();
     config.exchanges().plug< ResponseContract >();

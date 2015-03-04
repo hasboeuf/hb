@@ -127,6 +127,7 @@ networkuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , b
 
     setExchanges( config.exchanges() );
 
+    config.setBadHeaderTolerant( false ); // Force header checking.
     client->setConfiguration( config );
 
     connect( client, &HbAbstractClient::clientConnected,    this, &HbClientConnectionPool::onClientConnected,    Qt::UniqueConnection );

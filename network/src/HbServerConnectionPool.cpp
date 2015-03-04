@@ -129,6 +129,7 @@ networkuid HbServerConnectionPool::joinTcpServer( HbTcpServerConfig & config , b
 
     setExchanges( config.exchanges() );
 
+    config.setBadHeaderTolerant( false ); // Force header checking.
     server->setConfiguration( config );
 
     connect( server, &HbAbstractServer::serverConnected,    this, &HbServerConnectionPool::onServerConnected,    Qt::UniqueConnection );

@@ -86,6 +86,7 @@ void UserMainWindow::onStartClicked()
     config.setAddress( QHostAddress::LocalHost );
     config.setPort( 4000 );
     config.setReconnectionDelay( 1000 );
+    config.setBadHeaderTolerant( false );
 
     networkuid server_uid = mpHbClient->joinTcpClient( config, true );
     if( server_uid > 0 )
