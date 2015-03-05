@@ -28,6 +28,8 @@ namespace hb
             HbServerChannelService() = default;
             virtual ~HbServerChannelService() = default;
 
+            void plugContracts( HbNetworkExchanges & exchanges );
+
             const HbServiceChannelServerConfig & config() const;
             void setConfig( const HbServiceChannelServerConfig & config );
 

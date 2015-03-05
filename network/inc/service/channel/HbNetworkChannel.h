@@ -13,25 +13,29 @@
 // Hb
 // Local
 #include <HbNetwork.h>
+#include <service/HbNetworkService.h>
 
 namespace hb
 {
     namespace network
     {
 
-        class HB_NETWORK_DECL HbNetworkChannel
+        class HB_NETWORK_DECL HbNetworkChannel : public HbNetworkService
         {
         public:
 
-            HbNetworkChannel();
+            HbNetworkChannel() = default;
             virtual ~HbNetworkChannel() = default;
 
-            virtual serviceuid id() const final;
+            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const = 0;
+            virtual void plugContracts( HbNetworkExchanges & exchanges ) = 0;
 
             virtual void reset() = 0;
 
+        public callbacks:
+            virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
+
         protected:
-            serviceuid mId;
 
         };
     }

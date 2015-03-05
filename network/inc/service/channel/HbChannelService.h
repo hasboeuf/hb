@@ -27,7 +27,7 @@ namespace hb
             HbChannelService();
             virtual ~HbChannelService() = default;
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
-            virtual void plugContracts( HbNetworkExchanges & exchanges );
+            virtual void plugContracts( HbNetworkExchanges & exchanges ) = 0;
 
         public callbacks:
             virtual void onContractReceived( const HbNetworkContract * contract )  = 0;

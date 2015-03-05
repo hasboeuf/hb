@@ -19,8 +19,3 @@ HbNetworkProtocol::NetworkTypes HbChannelService::enabledNetworkTypes() const
            HbNetworkProtocol::NETWORK_LOCAL |
            HbNetworkProtocol::NETWORK_BLUETOOTH;
 }
-
-void HbChannelService::plugContracts( HbNetworkExchanges & exchanges )
-{
-    Q_UNUSED( exchanges )
-}

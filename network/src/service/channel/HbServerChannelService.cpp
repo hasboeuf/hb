@@ -5,6 +5,11 @@
 
 using namespace hb::network;
 
+void HbServerChannelService::plugContracts( HbNetworkExchanges & exchanges )
+{
+    Q_UNUSED( exchanges )
+}
+
 const HbServiceChannelServerConfig & HbServerChannelService::config() const
 {
     return mConfig;

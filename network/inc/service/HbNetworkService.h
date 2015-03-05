@@ -33,7 +33,6 @@ namespace hb
             HbNetworkService() = default;
             virtual ~HbNetworkService( ) = default;
 
-            virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const = 0;
             virtual void plugContracts( HbNetworkExchanges & exchanges ) = 0;
 
@@ -41,6 +40,9 @@ namespace hb
             {
                 return mId;
             }
+
+        public callbacks:
+            virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
 
         signals:
             //void socketContractToSend( networkuid receiver, HbNetworkContract * contract );
