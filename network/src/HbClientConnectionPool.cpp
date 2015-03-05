@@ -109,8 +109,16 @@ HbClientConnectionPool::~HbClientConnectionPool()
 
 bool HbClientConnectionPool::leave()
 {
-    qDeleteAll( mClients );
-    // mClients.clear(); Handled in onClientDisconnected.
+    mLeaving = true;
+
+    QHash< networkuid, HbAbstractClient * > copy = mClients;
+    // Local copy as onClientDisconnected remove items of mClients bit by bit.
+    qDeleteAll( copy );
+    // onClientDisconnected is called there.
+
+    mUser.reset();
+
+    mLeaving = false;
     return true;
 }
 
@@ -199,13 +207,39 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
     q_assert_ptr( client );
     q_assert( mClients.contains( client_uid ) );
 
-    HbInfo( "Client %d disconnected.", client_uid );
-
     emit statusChanged( client_uid, HbNetworkProtocol::CLIENT_DISCONNECTED );
 
-    if( client_uid == mUser.mainSocketUid() )
+    bool reconnecting = ( client->configuration().reconnectionDelay() > 0 ? true : false );
+    if( mLeaving ) // If HbClient is leaving.
     {
-        mUser.setStatus( HbNetworkProtocol::USER_DISCONNECTED );
+        HbInfo( "HbClient is leaving. Client %d removed.", client_uid );
+        mClients.remove( client_uid );
+        // Deletion is handled in leave().
+        // User reset is done in leave().
+    }
+    else
+    {
+        HbInfo( "Client %d disconnected.", client_uid );
+        if( !reconnecting )
+        {
+            HbInfo( "Client %d will not reconnect, deletion...", client_uid );
+            mClients.remove( client_uid );
+            client->deleteLater();
+
+            if( client_uid == mUser.mainSocketUid( ) )
+            {
+                HbInfo( "Client %d was the main client, reset.", client_uid );
+                mUser.reset();
+            }
+        }
+        else
+        {
+            if( client_uid == mUser.mainSocketUid() )
+            {
+                mUser.reset();
+                mUser.setMainSocketUid( client_uid ); // Keep the main socket as it will reconnect.
+            }
+        }
     }
 }
 

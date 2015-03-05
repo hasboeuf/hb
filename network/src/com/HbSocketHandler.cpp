@@ -50,7 +50,7 @@ void HbSocketHandler::init()
 void HbSocketHandler::reset()
 {
     HbInfo( "Reset socket handler %d", mUid );
-    QMutexLocker locker( &mSocketMutex );
+    //QMutexLocker locker( &mSocketMutex );
 
     foreach( HbAbstractSocket * socket, mSocketById.values() )
     {
@@ -66,7 +66,7 @@ bool HbSocketHandler::canHandleNewConnection()
 {
     HbLogBegin();
 
-    QMutexLocker locker( &mSocketMutex );
+    //QMutexLocker locker( &mSocketMutex );
 
     bool is_threaded = mpServer->configuration().isThreaded();
     if( !is_threaded ||
@@ -89,7 +89,7 @@ bool HbSocketHandler::canHandleNewConnection()
 
 bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_uid )
 {
-    QMutexLocker locker( &mSocketMutex );
+    //QMutexLocker locker( &mSocketMutex );
 
     // q_assert( socket->type() != HbAbstractSocket::UdpSocket );
 
@@ -118,7 +118,7 @@ bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_
 
 void HbSocketHandler::onDisconnectionRequest( networkuid uid )
 {
-    QMutexLocker locker( &mSocketMutex );
+    //QMutexLocker locker( &mSocketMutex );
 
     HbAbstractSocket * socket = mSocketById.value( uid, nullptr );
     if( socket )
@@ -235,7 +235,7 @@ void HbSocketHandler::onSocketDisconnected()
 {
     HbLogBegin();
 
-    QMutexLocker locker( &mSocketMutex );
+    //QMutexLocker locker( &mSocketMutex );
 
     HbAbstractSocket * socket = q_assert_ptr( dynamic_cast<HbAbstractSocket *>(sender() ) );
 
@@ -253,7 +253,6 @@ void HbSocketHandler::onSocketDisconnected()
     socket->deleteLater();
 
     emit socketDisconnected( uid );
-
 
     if( mSocketById.isEmpty() )
     {

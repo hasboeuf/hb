@@ -7,8 +7,14 @@ using namespace hb::network;
 
 HbNetworkUser::HbNetworkUser()
 {
-    mStatus = HbNetworkProtocol::USER_DISCONNECTED;
+    reset();
+}
+
+void HbNetworkUser::reset()
+{
+    setStatus( HbNetworkProtocol::USER_DISCONNECTED );
     mMainSocketUid = 0;
+    mInfo = HbNetworkUserInfo();
 }
 
 const HbNetworkUserInfo & HbNetworkUser::info() const
@@ -39,11 +45,16 @@ networkuid HbNetworkUser::mainSocketUid() const
 
 void HbNetworkUser::setMainSocketUid( networkuid socket_uid )
 {
-    if( socket_uid > 0 )
+    if( socket_uid == 0 )
     {
-        mMainSocketUid = socket_uid;
+        mSocketsUid.remove( mMainSocketUid );
+    }
+    else
+    {
         mSocketsUid.insert( socket_uid );
     }
+
+    mMainSocketUid = socket_uid;
 }
 
 const QSet< networkuid > & HbNetworkUser::socketsUid() const

@@ -65,6 +65,8 @@ bool HbAbstractClient::leave()
 
         socket->disconnect();
 
+        networkuid uid = this->uid(); // Store uid before socket deletion.
+
         if ( !disconnectFromNetwork() )
         {
             HbError( "Can not disconnect from network." );
@@ -72,7 +74,7 @@ bool HbAbstractClient::leave()
         }
 
         mReady = false;
-        emit clientDisconnected( uid() );
+        emit clientDisconnected( uid );
     }
 
     return true;
@@ -220,6 +222,8 @@ void HbAbstractClient::onSocketReadyPacket()
 
 void HbAbstractClient::onSocketDisconnected()
 {
+    networkuid uid = this->uid(); // Store uid before socket deletion.
+
     qint16 retry_delay = configuration().reconnectionDelay();
     if( retry_delay > 0 )
     {
@@ -233,5 +237,5 @@ void HbAbstractClient::onSocketDisconnected()
 
     mReady = false;
 
-    emit clientDisconnected( uid() );
+    emit clientDisconnected( uid );
 }

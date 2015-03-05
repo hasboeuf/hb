@@ -34,7 +34,7 @@ namespace hb
             Q_FRIEND_CLASS( HbSocketHandler )
 
         public:
-            virtual ~HbAbstractServer() = default; // TODO CHECK
+            virtual ~HbAbstractServer() = default; // Keep it, inherited classes should handle deletion to avoid pure virtual calls.
 
             virtual bool join () final;
             virtual bool leave() final;

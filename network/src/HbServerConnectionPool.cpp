@@ -111,8 +111,15 @@ HbServerConnectionPool::~HbServerConnectionPool()
 
 bool HbServerConnectionPool::leave()
 {
-    qDeleteAll( mServers );
-    mServers.clear();
+    mLeaving = true;
+
+    QHash< networkuid, HbAbstractServer * > copy = mServers;
+    // Local copy as onClientDisconnected remove items of mServers bit by bit.
+    qDeleteAll( copy );
+    // onServerDisconnected is called there.
+
+    mLeaving = false;
+
     return true;
 }
 
@@ -175,17 +182,26 @@ void HbServerConnectionPool::onServerDisconnected( networkuid server_uid )
     q_assert_ptr( server );
     q_assert( mServers.contains( server_uid ) );
 
+    emit statusChanged( server_uid, HbNetworkProtocol::SERVER_DISCONNECTED );
+
     mServers.remove( server_uid );
+
+    if( mLeaving )
+    {
+        HbInfo( "HbServer is leaving. Server %d removed.", server_uid );
+        // Deletion is handled in leave().
+    }
+    else
+    {
+        HbInfo( "Server %d disconnected.", server_uid );
+        server->deleteLater( );
+    }
+    
     if( mMainServer == server_uid )
     {
+        HbInfo( "Server %d was the main server, reset.", server_uid );
         mMainServer = 0;
     }
-
-    server->deleteLater();
-
-    HbInfo( "Server %d disconnected.", server_uid );
-
-    emit statusChanged( server_uid, HbNetworkProtocol::SERVER_DISCONNECTED );
 }
 
 void HbServerConnectionPool::onSocketConnected( networkuid server_uid, networkuid socket_uid )
@@ -202,9 +218,8 @@ void HbServerConnectionPool::onSocketConnected( networkuid server_uid, networkui
     auto listeners = getListeners< IHbSocketListener >();
     foreach( IHbSocketListener * listener, listeners )
     {
-        listener->onSocketConnected( socket_uid );
+        listener->onSocketConnected( socket_uid ); // Issue here. Make the server freeze when a client connects.
     }
-
 }
 
 void HbServerConnectionPool::onSocketDisconnected( networkuid server_uid, networkuid socket_uid )

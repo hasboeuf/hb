@@ -30,6 +30,8 @@ namespace hb
             HbNetworkUser();
             virtual ~HbNetworkUser( ) = default;
 
+            void reset(); // Used on client side.
+
             const HbNetworkUserInfo & info() const;
             void setInfo( const HbNetworkUserInfo & info );
 

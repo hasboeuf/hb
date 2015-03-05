@@ -139,14 +139,9 @@ void HbTcpServer::onNewConnection(qint32 socket_descriptor)
     {
         handler = new HbTcpSocketHandler( this );
 
-        connect( handler, &HbSocketHandler::socketConnected,        this, &HbAbstractServer::onSocketConnected,        Qt::UniqueConnection );
-        connect( handler, &HbSocketHandler::socketDisconnected,     this, &HbAbstractServer::onSocketDisconnected,     Qt::UniqueConnection );
-        connect( handler, &HbSocketHandler::socketContractReceived, this, &HbAbstractServer::onSocketContractReceived, Qt::UniqueConnection );
-        connect( handler, &HbSocketHandler::handlerIdled,           this, &HbAbstractServer::onHandlerIdled,           Qt::UniqueConnection );
-
         bool is_threaded = mConfig.maxUsersPerThread() > 0;
         // Must be threaded.
-        if (is_threaded)
+        if ( is_threaded )
         {
             QThread * t = new QThread();
             handler->moveToThread( t );
@@ -158,6 +153,11 @@ void HbTcpServer::onNewConnection(qint32 socket_descriptor)
 
             t->start();
         }
+
+        connect( handler, &HbSocketHandler::socketConnected, this, &HbAbstractServer::onSocketConnected, Qt::UniqueConnection );
+        connect( handler, &HbSocketHandler::socketDisconnected, this, &HbAbstractServer::onSocketDisconnected, Qt::UniqueConnection );
+        connect( handler, &HbSocketHandler::socketContractReceived, this, &HbAbstractServer::onSocketContractReceived, Qt::UniqueConnection );
+        connect( handler, &HbSocketHandler::handlerIdled, this, &HbAbstractServer::onHandlerIdled, Qt::UniqueConnection );
 
         mHandlerById.insert( handler->uid(), handler );
 

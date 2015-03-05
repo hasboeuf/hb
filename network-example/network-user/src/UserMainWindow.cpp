@@ -85,7 +85,7 @@ void UserMainWindow::onStartClicked()
     HbTcpClientConfig config;
     config.setAddress( QHostAddress::LocalHost );
     config.setPort( 4000 );
-    config.setReconnectionDelay( 1000 );
+    config.setReconnectionDelay( 0 );
     config.setBadHeaderTolerant( false );
 
     networkuid server_uid = mpHbClient->joinTcpClient( config, true );

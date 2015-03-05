@@ -84,6 +84,7 @@ namespace hb
             }
 
         protected:
+            bool mLeaving;
             QHash< serviceuid, HbNetworkService * > mServices;
         };
     }
