@@ -93,6 +93,7 @@ namespace hb
                 KICK_PROTOCOL_DIFFERENT,
                 KICK_CONTRACT_INVALID,
                 KICK_AUTH_LIMIT,
+                KICK_AUTH_TIMEOUT,
                 KICK_PRESENCE_TIMEOUT
 
             };

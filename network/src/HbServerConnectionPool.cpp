@@ -218,7 +218,7 @@ void HbServerConnectionPool::onSocketConnected( networkuid server_uid, networkui
     auto listeners = getListeners< IHbSocketListener >();
     foreach( IHbSocketListener * listener, listeners )
     {
-        listener->onSocketConnected( socket_uid ); // Issue here. Make the server freeze when a client connects.
+        listener->onSocketConnected( socket_uid );
     }
 }
 

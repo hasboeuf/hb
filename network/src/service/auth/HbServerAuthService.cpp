@@ -53,12 +53,22 @@ void HbServerAuthService::addStrategy( HbServerAuthStrategy * strategy )
 
 void HbServerAuthService::timerEvent( QTimerEvent * )
 {
-    // TODO check socket timeout.
     auto it = mAuthTimeout.begin();
     while( it != mAuthTimeout.end() )
     {
-        //auto current = it++;
+        auto current = it++;
 
+        networkuid socket_uid = current.key();
+        mAuthTimeout[socket_uid]++; // Increment one second.
+
+        quint8 timeout        = current.value();
+
+        if( timeout > mConfig.authTimeout() )
+        {
+            delSocket( socket_uid );
+            emit socketToKick( socket_uid, HbNetworkProtocol::KICK_AUTH_TIMEOUT, QString( "Reach %1 seconds auth timeout." ) );
+            // TODO check deletion.
+        }
     }
 }
 
