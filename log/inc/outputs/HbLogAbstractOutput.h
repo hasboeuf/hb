@@ -24,7 +24,7 @@ namespace hb
         class HbLogMessage;
 
         class HbLogAbstractOutput :
-            public virtual IHbLoggerOutput, // TODO why virtual?
+            public IHbLoggerOutput,
             public HbUid< loguid, CLASS_LOG, true >
         {
             Q_DISABLE_COPY( HbLogAbstractOutput )

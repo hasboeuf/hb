@@ -10,20 +10,18 @@
 #include <com/HbAbstractServer.h>
 #include <com/HbAbstractSocket.h>
 #include <config/com/HbNetworkConfig.h>
-#include <HbNetworkError.h>
 #include <contract/HbNetworkHeader.h>
 
 using namespace hb::tools;
 using namespace hb::log;
 using namespace hb::network;
 
-HbSocketHandler::HbSocketHandler( HbAbstractServer * server ) :
+HbSocketHandler::HbSocketHandler() :
     QObject( nullptr )
 {
     HbLogBegin();
 
     mState = NOT_THREADED;
-    mpServer = q_assert_ptr( server );
 
     HbLogEnd();
 }
@@ -31,11 +29,6 @@ HbSocketHandler::HbSocketHandler( HbAbstractServer * server ) :
 HbSocketHandler::~HbSocketHandler()
 {
     reset();
-}
-
-HbAbstractServer * HbSocketHandler::server() const
-{
-    return mpServer;
 }
 
 void HbSocketHandler::init()
@@ -50,7 +43,7 @@ void HbSocketHandler::init()
 void HbSocketHandler::reset()
 {
     HbInfo( "Reset socket handler %d", mUid );
-    //QMutexLocker locker( &mSocketMutex );
+    QMutexLocker locker( &mSocketMutex );
 
     foreach( HbAbstractSocket * socket, mSocketById.values() )
     {
@@ -66,13 +59,13 @@ bool HbSocketHandler::canHandleNewConnection()
 {
     HbLogBegin();
 
-    //QMutexLocker locker( &mSocketMutex );
+    QMutexLocker locker( &mSocketMutex );
 
-    bool is_threaded = mpServer->configuration().isThreaded();
+    bool is_threaded = server()->configuration().isThreaded();
     if( !is_threaded ||
         (is_threaded &&
          mState == THREADED &&
-         mSocketById.size() < mpServer->configuration().maxUsersPerThread() ) )
+         mSocketById.size() < server()->configuration().maxUsersPerThread() ) )
     {
         return true;
     }
@@ -81,7 +74,7 @@ bool HbSocketHandler::canHandleNewConnection()
             mUid,
             mState,
             mSocketById.size(),
-            mpServer->configuration().maxUsersPerThread() );
+            server()->configuration().maxUsersPerThread() );
 
     HbLogEnd();
     return false;
@@ -89,7 +82,7 @@ bool HbSocketHandler::canHandleNewConnection()
 
 bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_uid )
 {
-    //QMutexLocker locker( &mSocketMutex );
+    QMutexLocker locker( &mSocketMutex );
 
     // q_assert( socket->type() != HbAbstractSocket::UdpSocket );
 
@@ -118,7 +111,7 @@ bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_
 
 void HbSocketHandler::onDisconnectionRequest( networkuid uid )
 {
-    //QMutexLocker locker( &mSocketMutex );
+    QMutexLocker locker( &mSocketMutex );
 
     HbAbstractSocket * socket = mSocketById.value( uid, nullptr );
     if( socket )
@@ -178,7 +171,7 @@ void HbSocketHandler::onSocketReadyPacket()
     {
         QByteArray packet = socket->readPacket( );
 
-        if( !mpServer->configuration().openMode( ).testFlag( QIODevice::ReadOnly ) )
+        if( !server()->configuration().openMode( ).testFlag( QIODevice::ReadOnly ) )
         {
             HbError( "Unable to receive contract on write only socket %d.", socket->uid() );
         }
@@ -202,7 +195,7 @@ void HbSocketHandler::onSocketReadyPacket()
                 }
             }
 
-            HbNetworkContract * contract = mpServer->configuration().exchanges().contract( header );
+            HbNetworkContract * contract = server()->configuration().exchanges().contract( header );
 
             if( !contract )
             {
@@ -235,7 +228,7 @@ void HbSocketHandler::onSocketDisconnected()
 {
     HbLogBegin();
 
-    //QMutexLocker locker( &mSocketMutex );
+    QMutexLocker locker( &mSocketMutex );
 
     HbAbstractSocket * socket = q_assert_ptr( dynamic_cast<HbAbstractSocket *>(sender() ) );
 

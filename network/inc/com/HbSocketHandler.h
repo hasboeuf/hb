@@ -41,10 +41,10 @@ namespace hb
                 THREADED
             };
 
-            HbSocketHandler( HbAbstractServer * server );
+            HbSocketHandler();
             virtual ~HbSocketHandler();
 
-            virtual HbAbstractServer * server() const; // TODO = 0 ???
+            virtual HbAbstractServer * server() const = 0;
 
             virtual bool storeNewSocket(HbAbstractSocket * socket , qint32 previous_uid ) final;
 
@@ -58,9 +58,6 @@ namespace hb
             QHash< HbAbstractSocket *, networkuid > mIdBySocket;
 
             QMutex       mSocketMutex;
-
-        private:
-            HbAbstractServer * mpServer; // SUB
 
         public slots:
             // From QThread

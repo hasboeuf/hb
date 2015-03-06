@@ -66,7 +66,9 @@ void HbServerAuthService::timerEvent( QTimerEvent * )
         if( timeout > mConfig.authTimeout() )
         {
             delSocket( socket_uid );
-            emit socketToKick( socket_uid, HbNetworkProtocol::KICK_AUTH_TIMEOUT, QString( "Reach %1 seconds auth timeout." ) );
+            emit socketToKick( socket_uid, HbNetworkProtocol::KICK_AUTH_TIMEOUT,
+                               QString( "Reach %1 seconds auth timeout." ).arg( timeout ) );
+
             // TODO check deletion.
         }
     }
@@ -193,7 +195,7 @@ void HbServerAuthService::onAuthSucceed( networkuid socket_uid, const HbNetworkU
         emit socketAuthenticated( socket_uid, user_info );
 
         response->setStatus( HbNetworkProtocol::AUTH_OK );
-        response->setTryNumber( 1 ); // TODO store try number.
+        response->setTryNumber( mAuthTries[socket_uid] );
         response->setMaxTries( mConfig.authMaxTries() );
         response->setUserInfo( user_info );
 

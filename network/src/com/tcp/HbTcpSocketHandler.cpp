@@ -8,14 +8,13 @@
 #include <com/tcp/HbTcpSocketHandler.h>
 #include <com/tcp/HbTcpServer.h>
 #include <com/tcp/HbTcpSocket.h>
-#include <HbNetworkError.h>
 
 using namespace hb::tools;
 using namespace hb::log;
 using namespace hb::network;
 
 HbTcpSocketHandler::HbTcpSocketHandler( HbTcpServer * server ) :
-    HbSocketHandler( server )
+    HbSocketHandler()
 {
     HbLogBegin();
 

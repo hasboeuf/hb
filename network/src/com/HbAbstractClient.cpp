@@ -227,8 +227,10 @@ void HbAbstractClient::onSocketDisconnected()
     qint16 retry_delay = configuration().reconnectionDelay();
     if( retry_delay > 0 )
     {
-        killTimer( mRetry );
-        mRetry = startTimer( retry_delay ); // TODO kill and start ???
+        if( mRetry == 0 )
+        {
+            mRetry = startTimer( retry_delay );
+        }
     }
     else
     {

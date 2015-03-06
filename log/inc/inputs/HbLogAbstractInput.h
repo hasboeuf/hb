@@ -24,7 +24,7 @@ namespace hb
     namespace log
     {
         class HbLogAbstractInput :
-            public virtual IHbLoggerInput, // TODO why virtual?
+            public IHbLoggerInput,
             public HbUid< loguid, CLASS_LOG, true >
         {
             Q_DISABLE_COPY( HbLogAbstractInput )
