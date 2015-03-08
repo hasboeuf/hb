@@ -23,8 +23,9 @@ void HbServerChannelService::setConfig( const HbServiceChannelServerConfig & con
     }
 }
 
-void HbServerChannelService::onContractReceived( const HbNetworkContract * contract )
+void HbServerChannelService::onUserContractReceived( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract )
 {
+    Q_UNUSED( user_info )
     Q_UNUSED( contract )
 }
 

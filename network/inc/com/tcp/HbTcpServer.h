@@ -50,7 +50,7 @@ namespace hb
             virtual bool isListening() const;
             virtual HbNetworkProtocol::NetworkType type() const;
 
-            bool disconnectFromNetwork( networkuid uid );
+            bool disconnectFromNetwork( networkuid uid ); // Unused.
 
             virtual void reset() final;
 

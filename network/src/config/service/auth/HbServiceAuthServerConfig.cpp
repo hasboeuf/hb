@@ -40,22 +40,29 @@ HbServiceAuthServerConfig & HbServiceAuthServerConfig::operator =(const HbServic
 
 bool HbServiceAuthServerConfig::isValid() const
 {
-    if( !HbServiceAuthConfig::isValid() )
+    if( HbServiceAuthConfig::isValid() )
     {
-        return false;
+
+        if( mAuthMaxTries < 1 )
+        {
+            HbError( "AuthMaxTries must be > 0." );
+            return false;
+        }
+
+        if( mAuthTimeout < 1 )
+        {
+            HbError( "mAuthTimeout must be > 0 second.");
+            return false;
+        }
+
+        if( !mFacebookAuthConfig.isValid() ) return false;
+
+        return true;
     }
 
-    if( mAuthMaxTries < 1 )
-    {
-        HbError( "AuthMaxTries must be > 0." );
-        return false;
-    }
+    return false;
 
-    if( mAuthTimeout < 1 )
-    {
-        HbError( "mAuthTimeout must be > 0 second.");
-        return false;
-    }
+
 
     return true;
 }

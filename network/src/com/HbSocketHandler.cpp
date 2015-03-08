@@ -107,8 +107,6 @@ bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_
     return true;
 }
 
-
-
 void HbSocketHandler::onDisconnectionRequest( networkuid uid )
 {
     QMutexLocker locker( &mSocketMutex );

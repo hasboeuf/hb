@@ -33,7 +33,12 @@ HbServiceAuthClientConfig & HbServiceAuthClientConfig::operator =(const HbServic
 
 bool HbServiceAuthClientConfig::isValid() const
 {
-    return HbServiceAuthConfig::isValid();
+    if( HbServiceAuthConfig::isValid() )
+    {
+        return mFacebookAuthConfig.isValid();
+    }
+
+    return false;
 }
 
 void HbServiceAuthClientConfig::enableFacebookAuth( const hb::link::HbO2ClientConfig & config )

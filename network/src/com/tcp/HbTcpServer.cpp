@@ -108,8 +108,7 @@ HbNetworkProtocol::NetworkType HbTcpServer::type() const
 bool HbTcpServer::disconnectFromNetwork( networkuid uid )
 {
     Q_UNUSED( uid )
-
-    // TODO
+    // Unused as socket is handled in HbSocketHandler.
     return false;
 }
 

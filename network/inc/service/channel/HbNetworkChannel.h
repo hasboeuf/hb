@@ -33,7 +33,7 @@ namespace hb
             virtual void reset() = 0;
 
         public callbacks:
-            virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
+            virtual void onContractReceived( const HbNetworkContract * contract );
 
         protected:
 

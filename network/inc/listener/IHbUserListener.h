@@ -13,6 +13,7 @@
 #include <HbGlobal.h>
 // Local
 #include <HbNetwork.h>
+#include <contract/HbNetworkContract.h>
 #include <user/HbNetworkUserInfo.h>
 
 namespace hb
@@ -24,8 +25,9 @@ namespace hb
         {
 
         public callbacks:
-            virtual void onUserConnected   ( const HbNetworkUserInfo & user_info ) = 0;
-            virtual void onUserDisconnected( const HbNetworkUserInfo & user_info ) = 0;
+            virtual void onUserContractReceived( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract ) = 0;
+            virtual void onUserConnected       ( const HbNetworkUserInfo & user_info ) = 0;
+            virtual void onUserDisconnected    ( const HbNetworkUserInfo & user_info ) = 0;
 
         protected:
             virtual ~IHbUserListener() = default;

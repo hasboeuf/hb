@@ -19,3 +19,10 @@ HbNetworkProtocol::NetworkTypes HbChannelService::enabledNetworkTypes() const
            HbNetworkProtocol::NETWORK_LOCAL |
            HbNetworkProtocol::NETWORK_BLUETOOTH;
 }
+
+void HbChannelService::onContractReceived( const HbNetworkContract * contract )
+{
+    Q_UNUSED( contract )
+
+    // Not used. Use onUserContractReceived() instead.
+}

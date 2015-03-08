@@ -55,39 +55,6 @@ bool HbAbstractServer::leave()
         HbInfo( "Server already stopped." );
     }
 
-    /*QHash< quint32, HbSocketHandler * >::iterator it = mHandlerBySocketId.begin();
-    while( it != mHandlerBySocketId.end() )
-    {
-        quint16 socket_uid = it.key();
-        HbSocketHandler * handler = q_assert_ptr( it.value() );
-
-        leave( socket_uid ); // TODO delete thread etc.
-
-        ++it;
-    }*/
-
-
-        // TODO
-        //foreach(HbAbstractSocket * socket, _pending)
-        //{
-        //    disconnect( socket, &HbAbstractSocket::readyPacket, this, nullptr );
-        //    disconnect(socket, &HbAbstractSocket::disconnected, this, nullptr);
-        //}
-        //
-        //foreach(HbAbstractSocket * socket, _connected)
-        //{
-        //    disconnect( socket, &HbAbstractSocket::readyPacket, this, nullptr );
-        //    disconnect(socket, &HbAbstractSocket::disconnected, this, nullptr);
-        //
-        //    emit disconnected(socket->uid());
-        //}
-
-        //qDeleteAll(_pending);
-        //qDeleteAll(_connected);
-
-
-
-
     return true;
 }
 

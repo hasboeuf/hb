@@ -36,7 +36,10 @@ bool HbGeneralClientConfig::isValid() const
 {
     if( HbGeneralConfig::isValid() )
     {
-        // TODO complete
+        if( !mAuthConfig.isValid()     ) return false;
+        if( !mChannelConfig.isValid()  ) return false;
+        if( !mPresenceConfig.isValid() ) return false;
+
         return true;
     }
     return false;

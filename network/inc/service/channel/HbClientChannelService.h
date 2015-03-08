@@ -30,15 +30,15 @@ namespace hb
             HbClientChannelService() = default;
             virtual ~HbClientChannelService( ) = default;
 
-            void plugContracts( HbNetworkExchanges & exchanges );
+            virtual void plugContracts( HbNetworkExchanges & exchanges );
 
             const HbServiceChannelClientConfig & config() const;
             void setConfig( const HbServiceChannelClientConfig & config );
 
         public callbacks:
-            virtual void onContractReceived( const HbNetworkContract * contract  );
-            virtual void onUserConnected   ( const HbNetworkUserInfo & user_info );
-            virtual void onUserDisconnected( const HbNetworkUserInfo & user_info );
+            virtual void onUserContractReceived( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract );
+            virtual void onUserConnected       ( const HbNetworkUserInfo & user_info );
+            virtual void onUserDisconnected    ( const HbNetworkUserInfo & user_info );
 
         private:
             HbServiceChannelClientConfig mConfig;

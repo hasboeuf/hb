@@ -30,9 +30,13 @@ namespace hb
             virtual void plugContracts( HbNetworkExchanges & exchanges ) = 0;
 
         public callbacks:
-            virtual void onContractReceived( const HbNetworkContract * contract )  = 0;
-            virtual void onUserConnected   ( const HbNetworkUserInfo & user_info ) = 0;
-            virtual void onUserDisconnected( const HbNetworkUserInfo & user_info ) = 0;
+            virtual void onContractReceived    ( const HbNetworkContract * contract ) final;
+            virtual void onUserContractReceived( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract ) = 0;
+            virtual void onUserConnected       ( const HbNetworkUserInfo & user_info ) = 0;
+            virtual void onUserDisconnected    ( const HbNetworkUserInfo & user_info ) = 0;
+
+        signals:
+            void userContractToSend( const HbNetworkUserInfo & user, HbNetworkContract * contract );
         };
     }
 }

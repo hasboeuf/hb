@@ -220,7 +220,7 @@ const HbLogConfig HbLogConfig::importConfigXml(QString file_path)
 
 bool HbLogConfig::isValid() const
 {
-    return true; // TODO
+    return true;
 }
 
 void HbLogConfig::loadSettings()

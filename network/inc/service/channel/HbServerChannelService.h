@@ -34,7 +34,7 @@ namespace hb
             void setConfig( const HbServiceChannelServerConfig & config );
 
         public callbacks:
-            virtual void onContractReceived( const HbNetworkContract * contract );
+            virtual void onUserContractReceived( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract );
             virtual void onUserConnected   ( const HbNetworkUserInfo & user_info );
             virtual void onUserDisconnected( const HbNetworkUserInfo & user_info );
 
