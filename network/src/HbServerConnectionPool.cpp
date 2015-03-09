@@ -215,11 +215,7 @@ void HbServerConnectionPool::onSocketConnected( networkuid server_uid, networkui
     mPendingSockets.insert( socket_uid );
     mServerBySocketId.insert( socket_uid, server_uid );
 
-    auto listeners = getListeners< IHbSocketListener >();
-    foreach( IHbSocketListener * listener, listeners )
-    {
-        listener->onSocketConnected( socket_uid );
-    }
+    emit socketConnected( socket_uid ); // To IHbSocketListener.
 }
 
 void HbServerConnectionPool::onSocketDisconnected( networkuid server_uid, networkuid socket_uid )
@@ -239,11 +235,7 @@ void HbServerConnectionPool::onSocketDisconnected( networkuid server_uid, networ
 
         mPendingSockets.remove( socket_uid );
 
-        QList< IHbSocketListener * > listeners = getListeners< IHbSocketListener >();
-        foreach( IHbSocketListener * listener, listeners )
-        {
-            listener->onSocketDisconnected( socket_uid );
-        }
+        emit socketDisconnected( socket_uid ); // To IHbSocketListener.
     }
     else
     {
@@ -254,11 +246,9 @@ void HbServerConnectionPool::onSocketDisconnected( networkuid server_uid, networ
         const HbNetworkUserInfo user_info = user->info();
         delete user;
 
-        QList< IHbUserListener * > listeners = getListeners< IHbUserListener >();
-        foreach( IHbUserListener * listener, listeners )
-        {
-            listener->onUserDisconnected( user_info );
-        }
+        // Notifying...
+        emit socketUnauthenticated( socket_uid ); // To IHbSocketAuthListener.
+        emit userDisconnected( user_info ); // To IHbUserListener.
     }
 }
 
@@ -428,7 +418,7 @@ void HbServerConnectionPool::onSocketAuthenticated  ( networkuid socket_uid, con
     mUserBySocketId.insert( socket_uid, user );
     mUserByEmail.insert( user_info.email(), user );
 
-    emit socketAuthenticated( socket_uid );
+    emit socketAuthenticated( socket_uid ); // To IHbUserListener.
 }
 
 void HbServerConnectionPool::onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason )

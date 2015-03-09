@@ -4,7 +4,7 @@
 #include <HbLogService.h>
 // Local
 #include <service/presence/HbClientPresenceService.h>
-#include <contract/presence/HbPresenceStatusContract.h>
+#include <contract/presence/HbPresenceContract.h>
 
 using namespace hb::network;
 
@@ -34,8 +34,9 @@ void HbClientPresenceService::timerEvent( QTimerEvent * event )
 
     q_assert( socket_uid > 0 );
 
-    //HbPresenceStatusContract * presence = new HbPresenceStatusContract();
-    // emit contract sent.
+    HbPresenceContract * presence = new HbPresenceContract( );
+    presence->addSocketReceiver( socket_uid );
+    //emit readyContractToSend( presence );
 }
 
 void HbClientPresenceService::onSocketAuthenticated( networkuid socket_uid )
@@ -52,7 +53,7 @@ void HbClientPresenceService::onSocketAuthenticated( networkuid socket_uid )
 void HbClientPresenceService::onSocketUnauthenticated( networkuid socket_uid )
 {
     qint32 timer_id = mTimerBySocketUid.value( socket_uid, 0 );
-    if( timer_id != 0 )
+    if( timer_id > 0 )
     {
         HbInfo( "Socket unauthenticated, stop keep alive timer." );
         killTimer( timer_id );

@@ -44,7 +44,7 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     config.setAppName("hb-network-example");
     config.setProtocolVersion( 1 );
     config.auth().setAuthMaxTries( 3 );
-    config.auth().setAuthTimeout( 60 );
+    config.auth().setAuthTimeout( 300 );
     config.auth().enableFacebookAuth( facebook_config );
     config.presence().setKickAliveThreshold( 20 );
     config.presence().setWarningAliveThreshold( 10 );

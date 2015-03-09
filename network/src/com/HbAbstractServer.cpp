@@ -64,7 +64,7 @@ bool HbAbstractServer::leave( networkuid uid )
     HbSocketHandler * handler = mHandlerBySocketId.value( uid, nullptr );
     q_assert_ptr( handler );
 
-    q_assert( QMetaObject::invokeMethod( handler, "onDisconnectionRequest", Q_ARG( networkuid, uid ) ) );
+    bool ok = QMetaObject::invokeMethod( handler, "onDisconnectionRequest", Q_ARG( networkuid, uid ) );
     return true;
 }
 

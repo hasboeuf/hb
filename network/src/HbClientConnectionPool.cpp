@@ -207,6 +207,11 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
     q_assert_ptr( client );
     q_assert( mClients.contains( client_uid ) );
 
+    if( mUser.status() > HbNetworkProtocol::USER_CONNECTED )
+    {
+        emit socketUnauthenticated( client_uid );
+    }
+
     emit statusChanged( client_uid, HbNetworkProtocol::CLIENT_DISCONNECTED );
 
     bool reconnecting = ( client->configuration().reconnectionDelay() > 0 ? true : false );
@@ -336,7 +341,7 @@ void HbClientConnectionPool::onSocketAuthenticated( networkuid socket_uid, const
 
     HbInfo( "Socket %d authenticated.", socket_uid );
 
-    emit socketAuthenticated( socket_uid );
+    emit socketAuthenticated( socket_uid ); // To IHbSocketAuthListener.
 }
 
 void HbClientConnectionPool::onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason )
@@ -358,7 +363,7 @@ void HbClientConnectionPool::onSocketUnauthenticated( networkuid socket_uid, qui
 
     // TODO send reason to HbClient.
 
-    emit socketUnauthenticated( socket_uid );
+    emit socketUnauthenticated( socket_uid ); // To IHbSocketAuthListener.
 }
 
 void HbClientConnectionPool::onMeStatusChanged( HbNetworkProtocol::UserStatus status )

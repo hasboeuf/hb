@@ -33,9 +33,9 @@ void HbServerPresenceService::timerEvent( QTimerEvent * )
         networkuid socket_uid = it.key();
         quint16 last_presence = ++( it.value() ); // Add one second to the last presence.
 
-        if( last_presence >= mConfig.kickAliveThreshold() )
+        if( last_presence == mConfig.kickAliveThreshold() ) // Emit kick only once.
         {
-            emit socketToKick( socket_uid, HbNetworkProtocol::KICK_PRESENCE_TIMEOUT );
+            emit socketToKick( socket_uid, HbNetworkProtocol::KICK_PRESENCE_TIMEOUT, QString( "Not alive since %1 second(s)" ).arg( last_presence ) );
         }
         else if( last_presence >= mConfig.warningAliveThreshold() )
         {

@@ -32,6 +32,7 @@ namespace hb
             Q_ENUMS( ServerStatus )
             Q_ENUMS( ClientStatus )
             Q_ENUMS( UserStatus )
+            Q_ENUMS( KickCode )
 
         public:
             static QString msAppName;

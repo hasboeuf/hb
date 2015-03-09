@@ -4,7 +4,7 @@
 using namespace hb::network;
 
 HbKickContract::HbKickContract() :
-    HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH,
+    HbNetworkContract( HbNetworkProtocol::SERVICE_KICK,
                        HbNetworkProtocol::CODE_SRV_KICK )
 {
     setRouting( HbNetworkProtocol::ROUTING_UNICAST );

@@ -40,7 +40,7 @@ void HbTcpSocketHandler::init()
 
 void HbTcpSocketHandler::reset()
 {
-    HbSocketHandler::reset();
+
 }
 
 void HbTcpSocketHandler::onNewPendingConnection( qint32 socket_descriptor )

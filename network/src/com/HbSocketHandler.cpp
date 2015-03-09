@@ -109,9 +109,14 @@ bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_
 
 void HbSocketHandler::onDisconnectionRequest( networkuid uid )
 {
-    QMutexLocker locker( &mSocketMutex );
+    
+    HbAbstractSocket * socket = nullptr;
 
-    HbAbstractSocket * socket = mSocketById.value( uid, nullptr );
+    { // Scoped mutex to avoid deadlock with onSocketDisconnected slot.
+        QMutexLocker locker( &mSocketMutex );
+        socket = mSocketById.value( uid, nullptr );
+    }
+
     if( socket )
     {
         socket->leave();
