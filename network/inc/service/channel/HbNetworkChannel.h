@@ -13,14 +13,14 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <service/HbNetworkService.h>
+#include <service/channel/HbChannelService.h>
 
 namespace hb
 {
     namespace network
     {
 
-        class HB_NETWORK_DECL HbNetworkChannel : public HbNetworkService
+        class HB_NETWORK_DECL HbNetworkChannel : public HbChannelService
         {
         public:
 
@@ -33,7 +33,9 @@ namespace hb
             virtual void reset() = 0;
 
         public callbacks:
-            virtual void onContractReceived( const HbNetworkContract * contract );
+            virtual void onUserContractReceived( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract ) = 0;
+            virtual void onUserConnected       ( const HbNetworkUserInfo & user_info ) = 0;
+            virtual void onUserDisconnected    ( const HbNetworkUserInfo & user_info ) = 0;
 
         protected:
 

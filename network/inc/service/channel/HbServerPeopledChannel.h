@@ -33,7 +33,9 @@ namespace hb
             virtual void reset() = 0;
 
         public callbacks:
-            virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
+            virtual void onUserContractReceived( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract ) = 0;
+            virtual void onUserConnected       ( const HbNetworkUserInfo & user_info ) = 0;
+            virtual void onUserDisconnected    ( const HbNetworkUserInfo & user_info ) = 0;
         };
     }
 }
