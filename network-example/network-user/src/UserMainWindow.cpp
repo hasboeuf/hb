@@ -60,10 +60,10 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
 
     mpHbClient       = new HbClient( config );
 
-    connect( ui_qpb_start,           &QPushButton::clicked, this, &UserMainWindow::onStartClicked );
-    connect( ui_qpb_stop,            &QPushButton::clicked, this, &UserMainWindow::onStopClicked );
-    connect( ui_qpb_user_connection, &QPushButton::clicked, this, &UserMainWindow::onUserConnectionRequest );
-    connect( ui_qpb_fb_connection,   &QPushButton::clicked, this, &UserMainWindow::onFacebookConnectionRequest );
+    connect( ui_qpb_start,             &QPushButton::clicked, this, &UserMainWindow::onStartClicked );
+    connect( ui_qpb_stop,              &QPushButton::clicked, this, &UserMainWindow::onStopClicked );
+    //connect( ui_qpb_user_connection, &QPushButton::clicked, this, &UserMainWindow::onUserConnectionRequest );
+    connect( ui_qpb_fb_authentication, &QPushButton::clicked, this, &UserMainWindow::onFacebookConnectionRequest );
 
     connect( mpHbClient, &HbClient::clientStatusChanged, this, &UserMainWindow::onClientStatusChanged );
     connect( mpHbClient, &HbClient::meStatusChanged,     this, &UserMainWindow::onMeStatusChanged );
