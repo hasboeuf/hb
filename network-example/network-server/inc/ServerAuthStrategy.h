@@ -28,6 +28,8 @@ namespace hb
             ServerAuthStrategy() = default;
             virtual ~ServerAuthStrategy() = default;
 
+            virtual void reset();
+
             virtual bool checkLogin( const HbAuthRequestContract * contract );
             virtual authstgy type() const;
 

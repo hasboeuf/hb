@@ -18,6 +18,11 @@ void HbClientAuthFacebookStrategy::setConfig( const HbO2ClientConfig & config )
     mConfig = config;
 }
 
+void HbClientAuthFacebookStrategy::reset()
+{
+    mPendingCodes.clear();
+}
+
 authstgy HbClientAuthFacebookStrategy::type() const
 {
     return HbAuthService::AUTH_FACEBOOK;

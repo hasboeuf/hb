@@ -12,6 +12,17 @@ HbServerPresenceService::HbServerPresenceService()
     mTickTimer = 0;
 }
 
+void HbServerPresenceService::reset()
+{
+    if( mTickTimer > 0 )
+    {
+        killTimer( mTickTimer );
+        mTickTimer = 0;
+    }
+
+    mClientAliveTick.clear();
+}
+
 const HbServicePresenceServerConfig & HbServerPresenceService::config() const
 {
     return mConfig;

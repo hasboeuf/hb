@@ -36,6 +36,7 @@ namespace hb
             HbClientAuthService();
             virtual ~HbClientAuthService() = default;
 
+            virtual void reset();
             const HbServiceAuthClientConfig & config() const;
             void setConfig( const HbServiceAuthClientConfig & config );
 

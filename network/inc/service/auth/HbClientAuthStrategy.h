@@ -29,6 +29,8 @@ namespace hb
             HbClientAuthStrategy() = default;
             virtual ~HbClientAuthStrategy() = default;
 
+            virtual void reset() = 0;
+
             virtual authstgy type() const = 0;
 
             virtual bool prepareAuthContract( HbClientAuthLoginObject * login_object ) = 0;

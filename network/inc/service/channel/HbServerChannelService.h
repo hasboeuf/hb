@@ -21,12 +21,16 @@ namespace hb
     namespace network
     {
 
+        class HbServerChannel;
+
         class HB_NETWORK_DECL HbServerChannelService : public HbChannelService
         {
         public:
 
             HbServerChannelService() = default;
             virtual ~HbServerChannelService() = default;
+
+            virtual void reset();
 
             void plugContracts( HbNetworkExchanges & exchanges );
 
@@ -40,6 +44,8 @@ namespace hb
 
         private:
             HbServiceChannelServerConfig mConfig;
+
+            QHash< serviceuid, HbServerChannel * > mChannels;
         };
     }
 }

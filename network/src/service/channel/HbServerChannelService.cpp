@@ -2,8 +2,17 @@
 // Hb
 // Local
 #include <service/channel/HbServerChannelService.h>
+#include <service/channel/HbServerChannel.h>
 
 using namespace hb::network;
+
+void HbServerChannelService::reset()
+{
+    foreach( HbServerChannel * channel, mChannels )
+    {
+        channel->reset();
+    }
+}
 
 void HbServerChannelService::plugContracts( HbNetworkExchanges & exchanges )
 {

@@ -13,12 +13,25 @@ using namespace hb::network;
 
 HbServerAuthService::HbServerAuthService()
 {
-    mTimerId = startTimer( 1000 );
+    mTimerId = 0;
 }
 
 HbServerAuthService::~HbServerAuthService()
 {
     qDeleteAll( mStrategies );
+}
+
+void HbServerAuthService::reset()
+{
+    foreach( HbServerAuthStrategy * strategy, mStrategies )
+    {
+        strategy->reset();
+    }
+
+    foreach( networkuid socket_uid, mPendingSocket )
+    {
+        delSocket( socket_uid );
+    }
 }
 
 const HbServiceAuthServerConfig & HbServerAuthService::config() const
@@ -95,6 +108,11 @@ bool HbServerAuthService::checkSocket( networkuid socket_uid )
 
 void HbServerAuthService::addSocket( networkuid socket_uid )
 {
+    if( mPendingSocket.isEmpty() )
+    {
+        mTimerId = startTimer( 1000 );
+    }
+
     mPendingSocket.insert( socket_uid );
     mAuthTimeout.insert  ( socket_uid, mConfig.authTimeout() );
     mAuthTries.insert    ( socket_uid, 0 );
@@ -105,6 +123,12 @@ void HbServerAuthService::delSocket( networkuid socket_uid, bool delete_response
     mPendingSocket.remove( socket_uid );
     mAuthTries.remove    ( socket_uid );
     mAuthTimeout.remove  ( socket_uid );
+
+    if( mPendingSocket.isEmpty() && mTimerId )
+    {
+        killTimer( mTimerId );
+        mTimerId = 0;
+    }
 
     // If auth is in process.
     if( delete_responses &&

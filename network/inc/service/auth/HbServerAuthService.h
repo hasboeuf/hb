@@ -35,6 +35,7 @@ namespace hb
             HbServerAuthService();
             virtual ~HbServerAuthService();
 
+            virtual void reset();
             const HbServiceAuthServerConfig & config() const;
             void setConfig( const HbServiceAuthServerConfig & config );
 

@@ -33,6 +33,7 @@ namespace hb
             HbNetworkService() = default;
             virtual ~HbNetworkService() = default;
 
+            virtual void reset() = 0;
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const = 0;
             virtual void plugContracts( HbNetworkExchanges & exchanges ) = 0;
 

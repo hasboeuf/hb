@@ -41,6 +41,8 @@ namespace hb
             HbServerAuthFacebookStrategy();
             virtual ~HbServerAuthFacebookStrategy() = default;
 
+            virtual void reset();
+
             void setConfig( const HbO2ServerConfig & config );
 
             virtual authstgy type() const final;

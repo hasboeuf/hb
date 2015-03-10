@@ -69,7 +69,6 @@ namespace hb
 
         private:
             QHash< networkuid, HbAbstractClient * > mClients;
-            QHash< networkuid, networkuid > mClientBySocketId;
             HbNetworkUser mUser;
         };
     }

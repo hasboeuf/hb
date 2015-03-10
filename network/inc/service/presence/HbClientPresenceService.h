@@ -32,6 +32,8 @@ namespace hb
             HbClientPresenceService();
             virtual ~HbClientPresenceService() = default;
 
+            virtual void reset();
+
             const HbServicePresenceClientConfig & config() const;
             void setConfig( const HbServicePresenceClientConfig & config );
 

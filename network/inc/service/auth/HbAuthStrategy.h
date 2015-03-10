@@ -28,6 +28,8 @@ namespace hb
             HbAuthStrategy() = default;
             virtual ~HbAuthStrategy() = default;
 
+            virtual void reset() = 0;
+
             virtual authstgy type() const = 0;
 
         };

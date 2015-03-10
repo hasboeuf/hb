@@ -16,6 +16,12 @@ HbServerAuthFacebookStrategy::HbServerAuthFacebookStrategy() :
     connect( &mRequester, &HbFacebookRequester::requestCompleted, this, &HbServerAuthFacebookStrategy::onRequestCompleted, Qt::UniqueConnection );
 }
 
+void HbServerAuthFacebookStrategy::reset()
+{
+    mPendingToken.clear();
+    mPendingRequest.clear();
+}
+
 void HbServerAuthFacebookStrategy::setConfig( const HbO2ServerConfig & config )
 {
     mConfig = config;

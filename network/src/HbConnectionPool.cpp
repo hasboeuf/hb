@@ -31,6 +31,14 @@ void HbConnectionPool::setExchanges( HbNetworkExchanges & exchanges )
     }
 }
 
+void HbConnectionPool::reset()
+{
+    foreach( HbNetworkService * service, mServices )
+    {
+        service->reset();
+    }
+}
+
 HbNetworkService * HbConnectionPool::getService( serviceuid service_uid )
 {
     return mServices.value( service_uid, nullptr );

@@ -26,6 +26,8 @@ namespace hb
 
             HbPresenceService();
             virtual ~HbPresenceService() = default;
+
+            virtual void reset() = 0;
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
             virtual void plugContracts( HbNetworkExchanges & exchanges );            
 

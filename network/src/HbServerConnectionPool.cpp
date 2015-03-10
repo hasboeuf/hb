@@ -116,9 +116,27 @@ bool HbServerConnectionPool::leave()
     QHash< networkuid, HbAbstractServer * > copy = mServers;
     // Local copy as onClientDisconnected remove items of mServers bit by bit.
     qDeleteAll( copy );
-    // onServerDisconnected is called there.
+
+    // onServerDisconnected is called there and handles:
+    // - mMainServer
+    // - mServers
+    // onSocketDisconnected is called there and handles:
+    // - mPendingSockets
+    // - mServerBySocketId
+    // - mUserBySocketId
+    // - mUserByEmail
+
+    // Reset
+    HbConnectionPool::reset(); // Reset services.
 
     mLeaving = false;
+
+    q_assert( mMainServer == 0 );
+    q_assert( mServers.isEmpty() );
+    q_assert( mPendingSockets.isEmpty() );
+    q_assert( mServerBySocketId.isEmpty() );
+    q_assert( mUserBySocketId.isEmpty() );
+    q_assert( mUserByEmail.isEmpty() );
 
     return true;
 }

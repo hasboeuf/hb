@@ -114,11 +114,18 @@ bool HbClientConnectionPool::leave()
     QHash< networkuid, HbAbstractClient * > copy = mClients;
     // Local copy as onClientDisconnected remove items of mClients bit by bit.
     qDeleteAll( copy );
-    // onClientDisconnected is called there.
 
+    // onClientDisconnected is called there and handles:
+    // - mClients
+
+    // Reset
     mUser.reset();
+    HbConnectionPool::reset(); // Reset services.
 
     mLeaving = false;
+
+    q_assert( mClients.isEmpty() );
+
     return true;
 }
 

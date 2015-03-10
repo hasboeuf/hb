@@ -16,6 +16,16 @@ HbClientAuthService::HbClientAuthService()
     mPendingSocket = 0;
 }
 
+void HbClientAuthService::reset()
+{
+    foreach( HbClientAuthStrategy * strategy, mStrategies )
+    {
+        strategy->reset();
+    }
+
+    mPendingSocket = 0;
+}
+
 const HbServiceAuthClientConfig & HbClientAuthService::config() const
 {
     return mConfig;
