@@ -57,7 +57,7 @@ void HbNetworkContract::updateReply()
     {
         mpReply->takeUid( this );
         mpReply->setNetworkType( mNetworkType );
-        mpReply->setRouting( HbNetworkProtocol::RoutingScheme::ROUTING_UNICAST ); // Replies only support unicast.
+        mpReply->setRouting( HbNetworkProtocol::ROUTING_UNICAST ); // Replies only support unicast.
         mpReply->addSocketReceiver( mSender );
     }
 }
@@ -165,7 +165,7 @@ bool HbNetworkContract::setRouting( HbNetworkProtocol::RoutingScheme routing )
         return true;
     }
 
-    HbWarning( "Routing is already set." );
+    // HbWarning( "Routing is already set." );
     return false;
 }
 

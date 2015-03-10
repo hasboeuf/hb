@@ -47,7 +47,7 @@ void HbClientPresenceService::timerEvent( QTimerEvent * event )
 
     HbPresenceContract * presence = new HbPresenceContract( );
     presence->addSocketReceiver( socket_uid );
-    //emit readyContractToSend( presence );
+    emit readyContractToSend( presence );
 }
 
 void HbClientPresenceService::onSocketAuthenticated( networkuid socket_uid )

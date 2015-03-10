@@ -56,7 +56,7 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     config.setAppName( "hb-network-example" );
     config.setProtocolVersion( 1 );
     config.auth().enableFacebookAuth( facebook_config );
-    config.presence().setKeepAliveInterval( 1 );
+    config.presence().setKeepAliveInterval( 4 );
 
     mpHbClient       = new HbClient( config );
 

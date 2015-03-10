@@ -130,11 +130,19 @@ void HbServerAuthService::delSocket( networkuid socket_uid, bool delete_response
         mTimerId = 0;
     }
 
-    // If auth is in process.
-    if( delete_responses &&
-        mResponses.value( socket_uid, nullptr ) )
+
+    HbNetworkContract * response = mResponses.value( socket_uid, nullptr );
+    if( response )
     {
-        delete mResponses.take( socket_uid );
+        mResponses.remove( socket_uid );
+        if( delete_responses )
+        {
+            delete response;
+        }
+        else
+        {
+            // Response is now being sent, deletion is handled in sending mechanism.
+        }
     }
 }
 

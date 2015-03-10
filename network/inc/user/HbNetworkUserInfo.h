@@ -35,7 +35,7 @@ namespace hb
             };
 
             HbNetworkUserInfo();
-            virtual ~HbNetworkUserInfo( ) = default;
+            virtual ~HbNetworkUserInfo() = default;
             HbNetworkUserInfo( const HbNetworkUserInfo & source );
             HbNetworkUserInfo & operator=( const HbNetworkUserInfo & source );
 

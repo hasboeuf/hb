@@ -120,11 +120,13 @@ bool HbServerConnectionPool::leave()
     // onServerDisconnected is called there and handles:
     // - mMainServer
     // - mServers
-    // onSocketDisconnected is called there and handles:
-    // - mPendingSockets
-    // - mServerBySocketId
-    // - mUserBySocketId
-    // - mUserByEmail
+    // onSocketDisconnected will not be fired.
+
+    mPendingSockets.clear();
+    qDeleteAll( mUserBySocketId );
+    mUserBySocketId.clear();
+    mUserByEmail.clear();
+    mServerBySocketId.clear();
 
     // Reset
     HbConnectionPool::reset(); // Reset services.
