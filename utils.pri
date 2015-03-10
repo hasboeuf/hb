@@ -56,9 +56,15 @@ defineTest( checkFilepath ) {
 
 defineTest( isRelativePath ) {
 
+        message( $$QMAKE_PLATFORM )
 	filepath = $$first( $$1 )
-	win32: relative = $$find( filepath, ^[A-Za-z]:.* )
-	unix: relative = $$find( filepath, ^/.* )
+
+        contains( QMAKE_HOST.os, Windows ){
+            relative = $$find( filepath, ^[A-Za-z]:.* )
+        }
+        else { # uname -o
+            relative = $$find( filepath, ^/.* )
+        }
 
 	isEmpty( relative ): relative = true
 	else: relative = false

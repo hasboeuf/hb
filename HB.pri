@@ -16,7 +16,6 @@ isEmpty( MODULE.NAME ) {
 }
 
 !isEmpty( MODULE.PATH ) {
-
 	!isRelativePath( MODULE.PATH ) {
             error( "$$basename( _PRO_FILE_ ) : ${MODULE.PATH} must define a relative path" )
 	}

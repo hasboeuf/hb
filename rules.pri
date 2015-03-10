@@ -112,6 +112,9 @@
     CONFIG -= ordered no_empty_targets
     CONFIG += qt warn_on thread largefile
 
+    android: {
+        CONFIG += mobility
+    }
 
     contains( PROJECT.TYPE, dynlib ): CONFIG += shared
     contains( PROJECT.TYPE, staticlib ): CONFIG += static
@@ -130,7 +133,7 @@
     message( QMake-ing $${PROJECT.NAME} projects. )
     message( ------------------------------------ )
 
-    win32-msvc*|win32-g++: {
+    win32-msvc*|win32-g++|android-g++: {
         message( "Compilator supported." )
     } else {
         error( "Compilator not supported." )
@@ -666,3 +669,11 @@ message( UI FILES3 )
 # Debug
 win32-g++: message ( post_build=$$INSTALLS )
 win32-msvc*: message ( post_build=$$QMAKE_POST_LINK )
+
+
+# -------------------
+# Deployment Settings
+# -------------------
+
+# Default rules for deployment.
+include(deployment.pri)
