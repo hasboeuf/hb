@@ -60,10 +60,12 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
 
     mpHbClient       = new HbClient( config );
 
-    connect( ui_qpb_start,             &QPushButton::clicked, this, &UserMainWindow::onStartClicked );
-    connect( ui_qpb_stop,              &QPushButton::clicked, this, &UserMainWindow::onStopClicked );
-    //connect( ui_qpb_user_connection, &QPushButton::clicked, this, &UserMainWindow::onUserConnectionRequest );
-    connect( ui_qpb_fb_authentication, &QPushButton::clicked, this, &UserMainWindow::onFacebookConnectionRequest );
+    connect( ui_qpb_start,               &QPushButton::clicked, this, &UserMainWindow::onStartClicked );
+    connect( ui_qpb_stop,                &QPushButton::clicked, this, &UserMainWindow::onStopClicked );
+    connect( ui_qpb_fb_authentication,   &QPushButton::clicked, this, &UserMainWindow::onFacebookAuthRequest );
+    connect( ui_qpb_fb_unauthentication, &QPushButton::clicked, this, &UserMainWindow::onFacebookUnauthRequest );
+    connect( ui_qpb_send,                &QPushButton::clicked, this, &UserMainWindow::onSendClicked );
+    connect( ui_qpb_compute,             &QPushButton::clicked, this, &UserMainWindow::onComputeClicked );
 
     connect( mpHbClient, &HbClient::clientStatusChanged, this, &UserMainWindow::onClientStatusChanged );
     connect( mpHbClient, &HbClient::meStatusChanged,     this, &UserMainWindow::onMeStatusChanged );
@@ -102,22 +104,24 @@ void UserMainWindow::onStopClicked()
     mpHbClient->leave();
 }
 
-void UserMainWindow::onUserConnectionRequest()
+void UserMainWindow::onSendClicked()
 {
-    HbLogBegin();
-
     HbWarning( "TODO" );
-
-    HbLogEnd();
 }
 
-void UserMainWindow::onFacebookConnectionRequest()
+void UserMainWindow::onComputeClicked()
 {
-    HbLogBegin();
+    HbWarning( "TODO" );
+}
 
+void UserMainWindow::onFacebookAuthRequest()
+{
     mpHbClient->facebookAuthRequested();
+}
 
-    HbLogEnd();
+void UserMainWindow::onFacebookUnauthRequest()
+{
+    HbWarning( "TODO" );
 }
 
 void UserMainWindow::onClientStatusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status )
@@ -128,4 +132,56 @@ void UserMainWindow::onClientStatusChanged( networkuid client_uid, HbNetworkProt
 void UserMainWindow::onMeStatusChanged( HbNetworkProtocol::UserStatus status )
 {
     HbInfo( "My status changed: %s.", HbLatin1( HbNetworkProtocol::MetaUserStatus::toString( status ) ) );
+
+    if( status == HbNetworkProtocol::USER_DISCONNECTED )
+    {
+        ui_qsw_stack->setCurrentIndex( PAGE_WELCOME );
+    }
+    else if( status == HbNetworkProtocol::USER_CONNECTING )
+    {
+    }
+    else if( status == HbNetworkProtocol::USER_CONNECTED )
+    {
+        ui_qsw_stack->setCurrentIndex( PAGE_AUTH );
+    }
+    else if( status == HbNetworkProtocol::USER_AUTHENTICATING )
+    {
+    }
+    else if( status == HbNetworkProtocol::USER_AUTHENTICATED )
+    {
+        resetGui();
+        ui_qsw_stack->setCurrentIndex( PAGE_APP );
+    }
 }
+
+void UserMainWindow::onChatUserJoined( const HbNetworkUserInfo & user_info )
+{
+    ui_qte_chat->append( QString( "%1 joined." ).arg( user_info.nickname() ) );
+}
+
+void UserMainWindow::onChatUserLeft  ( const HbNetworkUserInfo & user_info )
+{
+    ui_qte_chat->append( QString( "%1 left." ).arg( user_info.nickname() ) );
+}
+
+void UserMainWindow::onChatMessageReceived( const QString & author, const QString & message )
+{
+    ui_qte_chat->append( QString( "%1> %2" )
+                         .arg( author )
+                         .arg( message ) );
+}
+
+void UserMainWindow::onComputationReceived( qint32 result )
+{
+    ui_qsb_sum->setValue( result );
+}
+
+void UserMainWindow::resetGui()
+{
+    ui_qle_text->clear();
+    ui_qte_chat->clear();
+    ui_qsb_a->clear();
+    ui_qsb_b->clear();
+    ui_qsb_sum->clear();
+}
+

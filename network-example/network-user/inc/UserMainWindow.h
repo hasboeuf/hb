@@ -6,8 +6,8 @@
 #include <QtCore/QSortFilterProxyModel>
 #include <QtGui/QStandardItemModel>
 // Hb
-//#include <HbNetGlobal.h>
 #include <com/tcp/HbTcpClient.h>
+#include <user/HbNetworkUserInfo.h>
 // Local
 #include <ui_UserMainWindow.h>
 
@@ -36,6 +36,10 @@ namespace hb
             Q_OBJECT
 
         public:
+            const qint32 PAGE_WELCOME = 0;
+            const qint32 PAGE_AUTH    = 1;
+            const qint32 PAGE_APP     = 2;
+
             explicit UserMainWindow( QWidget * parent = nullptr );
             virtual ~UserMainWindow();
 
@@ -51,8 +55,20 @@ namespace hb
         private slots:
             void onStartClicked();
             void onStopClicked();
-            void onUserConnectionRequest();
-            void onFacebookConnectionRequest();
+            void onSendClicked();
+            void onComputeClicked();
+            void onFacebookAuthRequest();
+            void onFacebookUnauthRequest();
+
+            // From chat channel
+            void onChatUserJoined( const HbNetworkUserInfo & user_info );
+            void onChatUserLeft  ( const HbNetworkUserInfo & user_info );
+            void onChatMessageReceived( const QString & author, const QString & message );
+            // From math channel
+            void onComputationReceived( qint32 result );
+
+        private:
+            void resetGui();
 
         signals:
 
