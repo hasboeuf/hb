@@ -9,6 +9,8 @@
 #ifndef HBUID_H
 #define HBUID_H
 
+/*! \file HbUid.h */
+
 // Local
 #include <HbTools.h>
 #include <HbGlobal.h>

@@ -9,6 +9,8 @@
 #ifndef HBHTTPREQUESTER_H
 #define HBHTTPREQUESTER_H
 
+//! \file HbHttpRequester.h
+
 // Qt
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtCore/QJsonDocument>

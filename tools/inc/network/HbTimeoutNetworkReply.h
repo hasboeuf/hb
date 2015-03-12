@@ -9,6 +9,8 @@
 #ifndef HBTIMEOUTNETWORKREPLY_H
 #define HBTIMEOUTNETWORKREPLY_H
 
+//! \file HbTimeoutNetworkReply.h
+
 // Qt
 #include <QtCore/QTimer>
 #include <QtNetwork/QNetworkReply>

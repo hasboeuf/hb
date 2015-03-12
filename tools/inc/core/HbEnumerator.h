@@ -9,18 +9,19 @@
 #ifndef HBENUMERATOR_H
 #define HBENUMERATOR_H
 
+/*! \file HbEnumerator.h */
+
 // Qt
 #include <QtCore/QMetaEnum>
 // Hb
 #include <core/HbNullable.h>
 
-namespace HbPrivate {
-
+namespace HbPrivate
+{
     template< typename Class >
     class HbEnumerator
     {
         Q_STATIC_CLASS( HbEnumerator )
-
 
     public :
 
@@ -137,8 +138,6 @@ namespace HbPrivate {
             }
         }
     };
-
-
 }
 
 #endif // HBENUMERATOR_H

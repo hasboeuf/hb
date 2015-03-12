@@ -9,6 +9,8 @@
 #ifndef MULTIPLESORTFILTERPROXYMODEL_H
 #define MULTIPLESORTFILTERPROXYMODEL_H
 
+/*! \file HbMultipleSortFilterProxyModel.h */
+
 // Qt
 #include <QtCore/QSortFilterProxyModel>
 // Hb

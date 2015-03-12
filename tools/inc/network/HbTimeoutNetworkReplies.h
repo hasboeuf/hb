@@ -9,6 +9,8 @@
 #ifndef HBTIMEOUTNETWORKREPLIES_H
 #define HBTIMEOUTNETWORKREPLIES_H
 
+//! \file HbTimeoutNetworkReplies.h
+
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QList>

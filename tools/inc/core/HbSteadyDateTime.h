@@ -9,6 +9,8 @@
 #ifndef HBSTEADYDATETIME_H
 #define HBSTEADYDATETIME_H
 
+/*! \file HbSteadyDateTime.h */
+
 // System
 #include <chrono>
 // Qt

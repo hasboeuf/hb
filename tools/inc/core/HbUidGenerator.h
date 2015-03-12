@@ -9,6 +9,8 @@
 #ifndef HBUIDGENERATOR_H
 #define HBUIDGENERATOR_H
 
+/*! \file HbUidGenerator.h */
+
 // System
 #include <limits>
 // Qt

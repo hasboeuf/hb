@@ -9,6 +9,8 @@
 #ifndef HBSINGLETON_H
 #define HBSINGLETON_H
 
+/*! \file HbSingleton.h */
+
 // System
 #include <iostream>
 

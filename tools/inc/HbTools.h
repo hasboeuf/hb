@@ -9,13 +9,18 @@
 #ifndef HBTOOLS_H
 #define HBTOOLS_H
 
+//! \file HbTools.h
+
 // Qt
 #include <QtCore/QtGlobal>
 
+/*! \typedef replyuid
+ * Integer range for replies.
+ */
 typedef quint64 replyuid;
 
-const size_t CLASS_DEFAULT = 0;
-const size_t CLASS_REPLIES = 10;
+const size_t CLASS_DEFAULT = 0; //!< Default class identifier for uids.
+const size_t CLASS_REPLIES = 10; //!< Identifier for replies uids class.
 
 #if !defined( HB_TOOLS_DECL )
 #   if defined( HB_TOOLS_BUILD )

@@ -1,6 +1,8 @@
 #ifndef HBDICTIONARYHELPER
 #define HBDICTIONARYHELPER
 
+//! \file HbDictionaryHelper.h
+
 // Qt
 #include <QtCore/QMap>
 #include <QtCore/QString>

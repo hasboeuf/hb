@@ -9,6 +9,8 @@
 #ifndef HBAPPLICATIONHELPER_H
 #define HBAPPLICATIONHELPER_H
 
+//! \file HbApplicationHelper.h
+
 // Local
 #include <HbTools.h>
 
