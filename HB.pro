@@ -7,6 +7,7 @@ PROJECT.TYPE =			subdirs
 
 SUBDIRS += \
     tools/HbTools.pro \
+    tools-example/HbToolsExample.pro \
     link/HbLink.pro \
     link-example/HbLinkExample.pro \
     log/HbLog.pro \
@@ -18,6 +19,7 @@ SUBDIRS += \
     plugin-example/HbPluginExample.pro
 
 log.depends = tools
+tools-example.depends = tools log
 network.depends = tools log link
 network-example.depends = network
 network-basic-example.depends = network
