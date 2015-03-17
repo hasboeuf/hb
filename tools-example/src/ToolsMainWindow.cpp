@@ -15,7 +15,7 @@ ToolsMainWindow::ToolsMainWindow( QWidget * parent ) :
 
     // Log
     QString error;
-    if( HbLogService::outputs()->addConsoleOutput( &error ) == 0 )
+    if( HbLogService::outputs()->addGuiOutput( ui_qw_log->logNotifier() ) )
     {
         printf( "HbLog error: %s", HbLatin1( error ) );
     }
@@ -26,6 +26,19 @@ ToolsMainWindow::ToolsMainWindow( QWidget * parent ) :
     setupUi( this );
     setWindowTitle( "Tools" );
 
+    testApplicationHelper();
+    testDictionnaryHelper();
+    testEnum();
+    testErrorCode();
+    testMultipleSortFilterProxyModel();
+    testNullable();
+    testSingleton();
+    testSteadyDateTime();
+    testUid();
+    testUidGenerator();
+    testHttpRequester();
+    testTimeoutNetworkReplies();
+
     HbLogEnd();
 }
 
@@ -35,3 +48,64 @@ ToolsMainWindow::~ToolsMainWindow()
 
     HbLogEnd();
 }
+
+void ToolsMainWindow::testApplicationHelper()
+{
+
+}
+
+void ToolsMainWindow::testDictionnaryHelper()
+{
+
+}
+
+void ToolsMainWindow::testEnum()
+{
+
+}
+
+void ToolsMainWindow::testErrorCode()
+{
+
+}
+
+void ToolsMainWindow::testMultipleSortFilterProxyModel()
+{
+
+}
+
+void ToolsMainWindow::testNullable()
+{
+
+}
+
+void ToolsMainWindow::testSingleton()
+{
+
+}
+
+void ToolsMainWindow::testSteadyDateTime()
+{
+
+}
+
+void ToolsMainWindow::testUid()
+{
+
+}
+
+void ToolsMainWindow::testUidGenerator()
+{
+
+}
+
+void ToolsMainWindow::testHttpRequester()
+{
+
+}
+
+void ToolsMainWindow::testTimeoutNetworkReplies()
+{
+
+}
+

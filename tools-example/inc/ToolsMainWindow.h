@@ -6,8 +6,6 @@
 // Local
 #include <ui_ToolsMainWindow.h>
 
-class QNetworkAccessManager;
-
 namespace hb
 {
     namespace toolsexample
@@ -22,6 +20,21 @@ namespace hb
             virtual ~ToolsMainWindow();
 
         private:
+            // core
+            void testApplicationHelper();
+            void testDictionnaryHelper();
+            void testEnum();
+            void testErrorCode();
+            void testMultipleSortFilterProxyModel();
+            void testNullable();
+            void testSingleton();
+            void testSteadyDateTime();
+            void testUid();
+            void testUidGenerator();
+
+            // network
+            void testHttpRequester();
+            void testTimeoutNetworkReplies();
 
         public slots:
 
