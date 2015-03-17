@@ -19,6 +19,9 @@ namespace hb
     namespace tools
     {
 
+        /*!
+         * TODOC
+         */
         template < class T >
         class HbSingleton
         {

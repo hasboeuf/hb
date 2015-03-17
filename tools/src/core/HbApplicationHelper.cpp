@@ -13,7 +13,7 @@ void HbApplicationHelper::initApp(const QString & company, const QString & domai
 {
     // New seed for the app
     QTime time = QTime::currentTime();
-    qsrand((uint)time.msec());
+    qsrand( ( uint ) time.msec() );
 
     QCoreApplication* app = QCoreApplication::instance();
     if (!app)
@@ -22,12 +22,12 @@ void HbApplicationHelper::initApp(const QString & company, const QString & domai
     }
 
     // QSettings
-    QCoreApplication::setOrganizationName(company);
-    QCoreApplication::setOrganizationDomain(domain);
-    if (!name.isEmpty()) QCoreApplication::setApplicationName(name);
+    QCoreApplication::setOrganizationName( company );
+    QCoreApplication::setOrganizationDomain( domain );
+    if (!name.isEmpty()) QCoreApplication::setApplicationName( name );
 }
 
-void HbApplicationHelper::initSkin(const QString& skin)
+void HbApplicationHelper::initSkin( const QString & skin )
 {
 
     // Style

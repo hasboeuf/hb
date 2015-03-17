@@ -9,7 +9,7 @@
 #ifndef HBTIMEOUTNETWORKREPLIES_H
 #define HBTIMEOUTNETWORKREPLIES_H
 
-//! \file HbTimeoutNetworkReplies.h
+/*! \file HbTimeoutNetworkReplies.h */
 
 // Qt
 #include <QtCore/QObject>
@@ -22,6 +22,9 @@ namespace hb
 {
     namespace tools
     {
+        /*!
+         * TODOC
+         */
         class HB_TOOLS_DECL HbTimeoutNetworkReplies : public QObject
         {
             Q_OBJECT

@@ -9,7 +9,19 @@
 #ifndef HBTOOLS_H
 #define HBTOOLS_H
 
-//! \file HbTools.h
+/*! \file HbTools.h */
+
+/*! \namespace hbprivate
+ * TODOC
+ */
+
+/*! \namespace hb
+ * TODOC
+ */
+
+/*! \namespace hb::tools
+ * TODOC
+ */
 
 // Qt
 #include <QtCore/QtGlobal>

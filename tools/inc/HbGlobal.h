@@ -9,7 +9,9 @@
 #ifndef HBGLOBAL_H
 #define HBGLOBAL_H
 
-//! \file HbGlobal.h
+/*! \file HbGlobal.h
+ * TODO
+ */
 
 // Qt
 #include <QtCore/QString>
@@ -77,7 +79,7 @@
 #endif
 
 
-namespace HbPrivate // TODO anonymous
+namespace // Anonymous.
 {
 
     inline QString hb_scopename(const char * type)
@@ -127,7 +129,7 @@ namespace HbPrivate // TODO anonymous
 template< typename T >
 inline QString qScopeName()
 {
-    return HbPrivate::hb_scopename(typeid(T).name());
+    return hb_scopename(typeid(T).name());
 }
 
 
@@ -136,7 +138,7 @@ inline QString qScopeName()
 template< typename T >
 inline QString qScopeName(T * pointer)
 {
-    return (pointer) ? HbPrivate::hb_scopename(typeid(*pointer).name()) : QString();
+    return (pointer) ? hb_scopename(typeid(*pointer).name()) : QString();
 }
 
 
@@ -145,7 +147,7 @@ inline QString qScopeName(T * pointer)
 template< typename T >
 inline QString qScopeName(const T & expression)
 {
-    return HbPrivate::hb_scopename(typeid(expression).name());
+    return hb_scopename(typeid(expression).name());
 }
 
 
@@ -154,7 +156,7 @@ inline QString qScopeName(const T & expression)
 template< typename T >
 inline QString qTypeName()
 {
-    return HbPrivate::hb_typename(typeid(T).name());
+    return hb_typename(typeid(T).name());
 }
 
 
@@ -163,7 +165,7 @@ inline QString qTypeName()
 template< typename T >
 inline QString qTypeName(T * pointer)
 {
-    return (pointer) ? HbPrivate::hb_typename(typeid(*pointer).name()) : QString();
+    return (pointer) ? hb_typename(typeid(*pointer).name()) : QString();
 }
 
 
@@ -172,13 +174,13 @@ inline QString qTypeName(T * pointer)
 template< typename T >
 inline QString qTypeName(const T & expression)
 {
-    return HbPrivate::hb_typename(typeid(expression).name());
+    return hb_typename(typeid(expression).name());
 }
 
 
 
 
-namespace HbPrivate // TODO anonymous
+namespace // Anonymous
 {
 
     template< typename T >
@@ -223,11 +225,11 @@ namespace HbPrivate // TODO anonymous
 
 
 
-#define q_assert_ptr( pointer ) HbPrivate::hb_assert_ptr( pointer, __FILE__, __LINE__ )
+#define q_assert_ptr( pointer ) hb_assert_ptr( pointer, __FILE__, __LINE__ )
 
 
 
-#define q_dynamic_cast( Type, pointer ) HbPrivate::hb_dynamic_cast< Type >( pointer, __FILE__, __LINE__ )
+#define q_dynamic_cast( Type, pointer ) hb_dynamic_cast< Type >( pointer, __FILE__, __LINE__ )
 
 
 

@@ -26,6 +26,9 @@ namespace hb
 {
     namespace tools
     {
+        /*!
+         * TODOC
+         */
         template< typename T = qint32, size_t C = CLASS_DEFAULT >
         class HbUidGenerator : public HbSingleton< HbUidGenerator< T, C > >
         {

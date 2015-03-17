@@ -9,7 +9,7 @@
 #ifndef HBHTTPREQUESTER_H
 #define HBHTTPREQUESTER_H
 
-//! \file HbHttpRequester.h
+/*! \file HbHttpRequester.h */
 
 // Qt
 #include <QtNetwork/QNetworkAccessManager>
@@ -22,6 +22,9 @@ namespace hb
 {
     namespace tools
     {
+        /*!
+         * TODOC
+         */
         class HB_TOOLS_DECL HbHttpRequester : public QObject
         {
             Q_OBJECT

@@ -19,7 +19,7 @@
     Now the model will filter column 1 and 5, to be accepted by the filtermodel a row needs to pass all filters.
 */
 
-using namespace hb::logviewer;
+using namespace hb::tools;
 
 
 /*!

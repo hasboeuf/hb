@@ -15,9 +15,11 @@
 #include <HbTools.h>
 #include <core/HbEnumerator.h>
 
-namespace HbPrivate
+namespace hbprivate
 {
-
+    /*!
+     * Internal class, TODOC.
+     */
     template< typename Class, typename Enum >
     class HbEnumHelper
     {
@@ -28,32 +30,32 @@ namespace HbPrivate
 
         static QString name()
         {
-            return HbPrivate::HbEnumerator< Class >::template name< Enum >();
+            return hbprivate::HbEnumerator< Class >::template name< Enum >();
         }
 
         static qint16 count()
         {
-            return HbPrivate::HbEnumerator< Class >::template count< Enum >();
+            return hbprivate::HbEnumerator< Class >::template count< Enum >();
         }
 
         static bool isFlag()
         {
-            return HbPrivate::HbEnumerator< Class >::template isFlag< Enum >();
+            return hbprivate::HbEnumerator< Class >::template isFlag< Enum >();
         }
 
         static nullable< Enum > value( qint16 index )
         {
-            return HbPrivate::HbEnumerator< Class >::template value< Enum >( index );
+            return hbprivate::HbEnumerator< Class >::template value< Enum >( index );
         }
 
         static qint16 index( Enum value )
         {
-            return HbPrivate::HbEnumerator< Class >::index( value );
+            return hbprivate::HbEnumerator< Class >::index( value );
         }
 
         static QString toString( Enum value )
         {
-            QString texte = HbPrivate::HbEnumerator< Class >::toString( value );
+            QString texte = hbprivate::HbEnumerator< Class >::toString( value );
             if( texte.isEmpty() )
             {
                 texte = QString::number( ( int ) value );
@@ -68,27 +70,29 @@ namespace HbPrivate
 
         static QStringList toString()
         {
-            return HbPrivate::HbEnumerator< Class >::template toString< Enum >();
+            return hbprivate::HbEnumerator< Class >::template toString< Enum >();
         }
 
         static nullable< Enum > fromString( const QString & label )
         {
-            return HbPrivate::HbEnumerator< Class >::template fromString< Enum >( label );
+            return hbprivate::HbEnumerator< Class >::template fromString< Enum >( label );
         }
 
         static Enum fromString( const QString & label, Enum defaultValue )
         {
-            return HbPrivate::HbEnumerator< Class >::template fromString< Enum >( label ).value( defaultValue );
+            return hbprivate::HbEnumerator< Class >::template fromString< Enum >( label ).value( defaultValue );
         }
     };
 }
 
-
+/*! \def Q_ENUMS_HANDLER
+ * Q_ENUMS_HANDLER enables introspection of enums class.
+ */
 #define Q_ENUMS_HANDLER( Class ) \
 public : \
 \
     template< typename Enum > \
-    class HbEnum : public HbPrivate::HbEnumHelper< Class, Enum > {}; \
+    class HbEnum : public hbprivate::HbEnumHelper< Class, Enum > {}; \
 \
 private :
 

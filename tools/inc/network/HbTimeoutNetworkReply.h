@@ -9,7 +9,7 @@
 #ifndef HBTIMEOUTNETWORKREPLY_H
 #define HBTIMEOUTNETWORKREPLY_H
 
-//! \file HbTimeoutNetworkReply.h
+/*! \file HbTimeoutNetworkReply.h */
 
 // Qt
 #include <QtCore/QTimer>
@@ -23,6 +23,9 @@ namespace hb
 {
     namespace tools
     {
+        /*!
+         * TODOC
+         */
         class HB_TOOLS_DECL HbTimeoutNetworkReply final : public QTimer, public HbUid< replyuid, CLASS_REPLIES, true >
         {
             Q_OBJECT

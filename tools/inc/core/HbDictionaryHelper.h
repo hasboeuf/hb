@@ -1,7 +1,7 @@
 #ifndef HBDICTIONARYHELPER
 #define HBDICTIONARYHELPER
 
-//! \file HbDictionaryHelper.h
+/*! \file HbDictionaryHelper.h */
 
 // Qt
 #include <QtCore/QMap>
@@ -14,9 +14,18 @@ namespace hb
 {
     namespace tools
     {
+        /*!
+         * HbDictionaryHelper provides helper methods relatives to dictionary container.
+         * TODOC
+         */
         class HB_TOOLS_DECL HbDictionaryHelper
         {
         public:
+            /*!
+             * Morph a QHash into QList< QPair >.
+             * \param input QHash source.
+             * \return Ouput QList.
+             */
             template< class K, class V >
             static const QList< QPair< K, V > > toPairList( const QHash< K, V > & input )
             {
@@ -31,6 +40,11 @@ namespace hb
                 return output;
             }
 
+            /*!
+             * Morph a QList< QPair > into QHash.
+             * \param input QList< QPair > source.
+             * \return Ouput QHash.
+             */
             template< class K, class V >
             static const QHash< K, V > toHash( const QList< QPair< K, V > > & input )
             {

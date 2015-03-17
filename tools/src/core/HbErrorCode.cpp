@@ -1,5 +1,6 @@
 #include <core/HbErrorCode.h>
 
+using namespace hb::tools;
 
 bool HbErrorCode::add( qint32 code, const QString & message )
 {

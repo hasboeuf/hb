@@ -16,8 +16,11 @@
 // Hb
 #include <core/HbNullable.h>
 
-namespace HbPrivate
+namespace hbprivate
 {
+    /*!
+     * Internal class, TODOC.
+     */
     template< typename Class >
     class HbEnumerator
     {

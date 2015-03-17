@@ -21,6 +21,9 @@ namespace hb
 {
     namespace tools
     {
+        /*!
+         * TODOC
+         */
         template< typename T >
         class HbNullable final
         {
@@ -168,8 +171,7 @@ const HbNullable< T > HbNullable< T >::Null;
 template< typename T >
 using nullable = HbNullable< T >;
 
-
-namespace HbPrivate
+namespace hbprivate
 {
     template< typename Type >
     inline qint32 HbNullableTypeId( const char * typeName )
@@ -193,9 +195,9 @@ namespace HbPrivate
 }
 
 #define qRegisterNullableType( Type ) \
-    HbPrivate::qRegisterNullableType< Type >( #Type )
+    hbprivate::qRegisterNullableType< Type >( #Type )
 
 #define HbNullableTypeId( Type ) \
-    HbPrivate::HbNullableTypeId< Type >( #Type )
+    hbprivate::HbNullableTypeId< Type >( #Type )
 
 #endif // HBNULLABLE_H

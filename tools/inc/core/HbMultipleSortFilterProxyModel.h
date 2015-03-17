@@ -11,6 +11,7 @@
 
 /*! \file HbMultipleSortFilterProxyModel.h */
 
+
 // Qt
 #include <QtCore/QSortFilterProxyModel>
 // Hb
@@ -19,11 +20,13 @@
 
 namespace hb
 {
-    namespace logviewer
+    namespace tools
     {
         class ModelFilter;
 
-
+        /*!
+         * TODOC
+         */
         class HB_TOOLS_DECL HbMultipleSortFilterProxyModel final : public QSortFilterProxyModel
         {
             Q_OBJECT

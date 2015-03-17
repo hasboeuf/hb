@@ -24,6 +24,9 @@ namespace hb
 {
     namespace tools
     {
+        /*!
+         * TODOC
+         */
         class HB_TOOLS_DECL HbSteadyDateTime
         {
 
