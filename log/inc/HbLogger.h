@@ -23,14 +23,10 @@ namespace hb
 {    
     namespace log
     {
-
-        /*! \namespace hb::log */
-
         class HbLogContext;
 
-
         /*! 
-        * \class HbLogger
+        * TODOC
         * \brief The %HbLogger class defines the front-end of the logger.
         *
         * %HbLogger is a threaded-singleton, that means it can be used from anywhere without any worries.\n

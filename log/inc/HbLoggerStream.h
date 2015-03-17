@@ -24,13 +24,11 @@ namespace hb
     namespace log
     {
 
-        /*! \namespace hb::log */
-
         class HbLogManager;
 
 
         /*! 
-        * \class HbLoggerStream
+        * TODOC
         * \brief The %HbLoggerStream class defines all enums needed in the log lib.
         *
         * Useful enums for users within %HbLoggerStream are:\n

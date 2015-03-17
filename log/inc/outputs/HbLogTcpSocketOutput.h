@@ -19,11 +19,9 @@ namespace hb
 {
     namespace log
     {
-        /*! \namespace hb::log */
-
 
         /*! 
-        * \class HbLogTcpSocketOutput
+        * TODOC
         * \brief The %HbLogTcpSocketOutput class defines a tcp socket output.
         *
         * %HbLogTcpSocketOutput inherits from HbLogAbstractOutput.\n

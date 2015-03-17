@@ -9,6 +9,8 @@
 #ifndef HBLOGGERPOOL_H
 #define HBLOGGERPOOL_H
 
+/*! \file HbLoggerPool.h */
+
 // Qt
 #include <QtCore/QHash>
 #include <QtCore/QReadWriteLock>
@@ -30,7 +32,9 @@ namespace hb
         class HbLogGuiNotifier;
         class HbLogMessage;
 
-
+        /*!
+         * TODOC.
+         */
         class HbLoggerPool final : public QObject
         {
             Q_OBJECT

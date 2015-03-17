@@ -9,6 +9,8 @@
 #ifndef HBLOGWIDGET_H
 #define HBLOGWIDGET_H
 
+/*! \file HbLogWidget.h */
+
 // Qt
 #include <QtCore/QString>
 #include <QtCore/QMap>
@@ -26,11 +28,13 @@
 
 namespace hb
 {
-
     namespace log
     {
         class HbLogMessage;
 
+        /*!
+         * TODOC.
+         */
         class HB_LOG_DECL HbLogWidget : public QDialog, private Ui::HbLogWidget
         {
 

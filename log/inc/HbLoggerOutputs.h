@@ -9,6 +9,8 @@
 #ifndef HBLOGGEROUTPUTS_H
 #define HBLOGGEROUTPUTS_H
 
+/*! \file HbLoggerOutputs.h */
+
 #include <HbLoggerStream.h>
 
 #include <HbLog.h>
@@ -23,7 +25,9 @@ namespace hb
         class HbLogGuiNotifier;
         class HbLoggerPool;
 
-
+        /*!
+         * TODOC.
+         */
         class HB_LOG_DECL HbLoggerOutputs : public HbLoggerStream
         {
             Q_FRIEND_CLASS( HbLogManager )

@@ -9,6 +9,8 @@
 #ifndef HBLOGCONFIG_H
 #define HBLOGCONFIG_H
 
+/*! \file HbLogConfig.h */
+
 // Qt
 #include <QtGui/QColor>
 #include <QtGui/QFont>
@@ -21,7 +23,9 @@ namespace hb
 {
     namespace log
     {
-
+        /*!
+         * TODOC.
+         */
         class HB_LOG_DECL HbLogConfig : public QObject
         {
             Q_OBJECT

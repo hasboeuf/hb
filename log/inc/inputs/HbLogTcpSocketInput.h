@@ -20,13 +20,11 @@ namespace hb
 {
     namespace log
     {
-        /*! \namespace hb::log */
-
         class HbLogMessage;
 
 
         /*! 
-        * \class HbLogTcpSocketInput
+        * TODOC
         * \brief The %HbLogTcpSocketInput class defines a tcp server input.
         *
         * %HbLogTcpSocketInput inherits from HbLogAbstractInput.\n

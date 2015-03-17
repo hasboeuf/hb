@@ -9,6 +9,8 @@
 #ifndef HBLOGSERVICE_H
 #define HBLOGSERVICE_H
 
+/*! \file HbLogService.h */
+
 // Qt
 #include <QtCore/QThreadStorage>
 // Hb
@@ -25,9 +27,12 @@ namespace hb
         class HbLoggerOutputs;
         class HbLogManager;
 
-
+        /*!
+         * TODOC.
+         */
         class HB_LOG_DECL HbLogService
         {
+
         public :
 
             static HbLogger * logger();

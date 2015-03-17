@@ -9,6 +9,8 @@
 #ifndef IHBLOGGEROUTPUT_H
 #define IHBLOGGEROUTPUT_H
 
+/*! \file IHbLoggerOutput.h */
+
 // Local
 #include <HbLogger.h>
 
@@ -16,6 +18,9 @@ namespace hb
 {    
     namespace log
     {
+        /*!
+         * TODOC.
+         */
         class IHbLoggerOutput
         {
         public :

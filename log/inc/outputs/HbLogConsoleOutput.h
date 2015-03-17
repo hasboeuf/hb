@@ -18,11 +18,8 @@ namespace hb
     namespace log
     {
 
-        /*! \namespace hb::log */
-
-
         /*! 
-        * \class HbLogConsoleOutput
+        * TODOC
         * \brief The %HbLogConsoleOutput class defines a console output.
         *
         * %HbLogConsoleOutput inherits from HbLogAbstractOutput.\n

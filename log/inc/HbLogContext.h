@@ -9,6 +9,8 @@
 #ifndef HBLOGCONTEXT_H
 #define HBLOGCONTEXT_H
 
+/*! \file HbLogContext.h */
+
 // Hb
 #include <HbLogger.h>
 
@@ -16,7 +18,9 @@ namespace hb
 {
     namespace log
     {
-
+        /*!
+         * TODOC.
+         */
         class HB_LOG_DECL HbLogContext final
         {
         public :

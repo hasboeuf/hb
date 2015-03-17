@@ -22,9 +22,6 @@ namespace hb
 {    
     namespace log
     {
-
-        /*! \namespace hb::log */
-
         class HbLoggerInputs;
         class HbLoggerOutputs;
         class HbLoggerPool;
@@ -33,7 +30,7 @@ namespace hb
 
 
         /*! 
-        * \class HbLogManager
+        * TODOC
         * \brief The %HbLogManager class defines the front-end of the logger.
         *
         * %HbLogManager is a threaded-singleton, that means it can be used from anywhere without any worries.\n

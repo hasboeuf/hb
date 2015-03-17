@@ -18,13 +18,9 @@ namespace hb
 {    
     namespace log
     {
-        /*! \namespace hb::log */
-
         /*! 
-        * \class HbLogMessage
+        * TODOC
         * \brief The %HbLogMessage class defines a logger message.
-        *
-        * %HbLogMessage TODO DOC.\n
         */
         class HB_LOG_DECL HbLogMessage final : public QObject
         {

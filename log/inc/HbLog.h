@@ -9,6 +9,12 @@
 #ifndef HBLOG_H
 #define HBLOG_H
 
+/*! \file HbLog.h TODOC */
+
+/*! \namespace hb::log
+ * TODOC
+ */
+
 // Qt
 #include <QtCore/QtGlobal>
 

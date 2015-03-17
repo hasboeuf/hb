@@ -9,6 +9,8 @@
 #ifndef HBLOGCONFIGDIALOG_H
 #define HBLOGCONFIGDIALOG_H
 
+/*! \file HbLogConfigDialog.h */
+
 // Local
 #include <HbLog.h>
 #include <ui_HbLogConfigDialog.h>
@@ -18,7 +20,9 @@ namespace hb
 {
     namespace log
     {
-
+        /*!
+         * TODOC.
+         */
         class HbLogConfigDialog : public QDialog, private Ui::HbLogConfigDialog
         {
             Q_OBJECT

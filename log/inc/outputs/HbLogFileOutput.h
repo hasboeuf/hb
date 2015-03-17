@@ -21,12 +21,8 @@ namespace hb
 {
     namespace log
     {
-
-        /*! \namespace hb::log */
-
-
         /*! 
-        * \class HbLogFileOutput
+        * TODOC
         * \brief The %HbLogFileOutput class defines a file output.
         *
         * %HbLogFileOutput inherits from HbLogAbstractOutput.\n

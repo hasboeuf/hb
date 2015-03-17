@@ -19,12 +19,8 @@ namespace hb
 {
     namespace log
     {
-
-        /*! \namespace hb::log */
-
-
         /*! 
-        * \class HbLogLocalSocketOutput
+        * TODOC
         * \brief The %HbLogLocalSocketOutput class defines a local socket output.
         *
         * %HbLogLocalSocketOutput inherits from HbLogAbstractOutput.\n

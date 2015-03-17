@@ -18,13 +18,11 @@ namespace hb
     namespace log
     {
 
-        /*! \namespace hb::log */
-
         class HbLogGuiNotifier;
 
 
         /*! 
-        * \class HbLogGuiOutput
+        * TODOC
         * \brief The %HbLogGuiOutput class defines a GUI output.
         *
         * %HbLogGuiOutput inherits from HbLogAbstractOutput.\n

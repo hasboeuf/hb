@@ -9,6 +9,8 @@
 #ifndef HBLOGGERINPUTS_H
 #define HBLOGGERINPUTS_H
 
+/*! \file HbLoggerInputs.h */
+
 // Hb
 #include <HbLog.h>
 #include <HbLoggerStream.h>
@@ -22,7 +24,9 @@ namespace hb
         class IHbLoggerInput;
         class HbLoggerPool;
 
-
+        /*!
+         * TODOC.
+         */
         class HB_LOG_DECL HbLoggerInputs : public HbLoggerStream
         {
             Q_FRIEND_CLASS( HbLogManager )

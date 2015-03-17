@@ -9,6 +9,8 @@
 #ifndef HBLOGABSTRACTOUTPUT_H
 #define HBLOGABSTRACTOUTPUT_H
 
+/*! \file HbLogAbstractOutput.h */
+
 // Hb
 #include <core/HbUid.h>
 // Local
@@ -23,6 +25,9 @@ namespace hb
 
         class HbLogMessage;
 
+        /*!
+         * TODOC.
+         */
         class HbLogAbstractOutput :
             public IHbLoggerOutput,
             public HbUid< loguid, CLASS_LOG, true >

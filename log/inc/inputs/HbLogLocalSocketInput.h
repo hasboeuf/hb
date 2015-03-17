@@ -21,13 +21,11 @@ namespace hb
 {
     namespace log
     {
-        /*! \namespace hb::log */
-
         class HbLogMessage;
 
 
         /*! 
-        * \class HbLogLocalSocketInput
+        * TODOC
         * \brief The %HbLogLocalSocketInput class defines a local server input.
         *
         * %HbLogLocalSocketInput inherits from HbLogAbstractInput.\n

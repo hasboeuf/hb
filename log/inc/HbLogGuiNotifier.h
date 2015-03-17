@@ -9,6 +9,8 @@
 #ifndef HBLOGGUINOTIFIER_H
 #define HBLOGGUINOTIFIER_H
 
+/*! \file HbLogGuiNotifier.h */
+
 // Qt
 #include <QtCore/QObject>
 // Hb
@@ -21,7 +23,9 @@ namespace hb
 
         class HbLogMessage;
 
-
+        /*!
+         * TODOC.
+         */
         class HB_LOG_DECL HbLogGuiNotifier final : public QObject
         {
             Q_OBJECT

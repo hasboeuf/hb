@@ -9,20 +9,20 @@
 #ifndef HBLOGABSTRACTINPUT_H
 #define HBLOGABSTRACTINPUT_H
 
+/*! \file HbLogAbstractInput.h */
+
 // Hb
 #include <core/HbUid.h>
 // Local
 #include <IHbLoggerInput.h>
 
-class toto
-{
-
-};
-
 namespace hb
 {
     namespace log
     {
+        /*!
+         * TODOC.
+         */
         class HbLogAbstractInput :
             public IHbLoggerInput,
             public HbUid< loguid, CLASS_LOG, true >
