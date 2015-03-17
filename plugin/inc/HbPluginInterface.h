@@ -9,6 +9,8 @@
 #ifndef HBPLUGININTERFACE_H
 #define HBPLUGININTERFACE_H
 
+/*! \file HbPluginInterface.h */
+
 // Qt
 #include <QtCore/QtPlugin>
 #include <QtCore/QPluginLoader>
@@ -21,6 +23,9 @@ namespace hb
 {
     namespace plugin
     {
+        /*!
+         * TODOC
+         */
         class HB_PLUGIN_DECL HbPluginInterface
         {
         public:

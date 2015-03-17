@@ -9,6 +9,8 @@
 #ifndef HBPLATFORMSERVICE_H
 #define HBPLATFORMSERVICE_H
 
+/*! \file HbPlatformService.h */
+
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QHash>
@@ -25,6 +27,9 @@ namespace hb
         class HbPluginInterface;
         class HbPluginService;
 
+        /*!
+         * TODOC
+         */
         class HB_PLUGIN_DECL HbPlatformService : public QObject
         {
             Q_OBJECT

@@ -9,6 +9,8 @@
 #ifndef HBPLUGINLISTWIDGET_H
 #define HBPLUGINLISTWIDGET_H
 
+/*! \file HbPluginListWidget.h */
+
 // Qt
 #include <QtGui/QStandardItemModel>
 #include <QtCore/QStringList>
@@ -22,6 +24,9 @@ namespace hb
 {
     namespace plugin
     {
+        /*!
+         * TODOC
+         */
         class HB_PLUGIN_DECL HbPluginListWidget : public QWidget, private Ui::HbPluginListWidget
         {
             Q_OBJECT

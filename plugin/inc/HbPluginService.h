@@ -9,6 +9,8 @@
 #ifndef HBPLUGINSERVICE_H
 #define HBPLUGINSERVICE_H
 
+/*! \file HbPluginService.h */
+
 // Qt
 #include <QtCore/QObject>
 // Local
@@ -18,6 +20,9 @@ namespace hb
 {
     namespace plugin
     {
+        /*!
+         * TODOC
+         */
         class HB_PLUGIN_DECL HbPluginService : public QObject
         {
             Q_OBJECT

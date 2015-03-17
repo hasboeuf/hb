@@ -9,6 +9,8 @@
 #ifndef HBPLUGININFOS_H
 #define HBPLUGININFOS_H
 
+/*! \file HbPluginInfos.h */
+
 // Qt
 #include <QtCore/QHash>
 #include <QtCore/QString>
@@ -20,6 +22,9 @@ namespace hb
 {
     namespace plugin
     {
+        /*!
+         * TODOC
+         */
         class HB_PLUGIN_DECL HbPluginInfos
         {
             enum PluginState

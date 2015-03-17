@@ -9,6 +9,12 @@
 #ifndef HBPLUGIN_H
 #define HBPLUGIN_H
 
+/*! \file HbPlugin.h */
+
+/*! \namespace hb::plugin
+ * TODOC
+ */
+
 // Qt
 #include <QtCore/QtGlobal>
 
