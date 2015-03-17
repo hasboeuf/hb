@@ -23,6 +23,8 @@ namespace hb
         class LogViewerConfig;
 
         using hb::log::HbLogMessage;
+        using hb::tools::ModelFilter;
+        using hb::tools::HbMultipleSortFilterProxyModel;
 
 
         class LogViewerTab final : public QWidget, private hb::logviewer::Ui::LogViewerTab
