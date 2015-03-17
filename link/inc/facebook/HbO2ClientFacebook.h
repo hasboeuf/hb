@@ -9,6 +9,8 @@
 #ifndef HBO2CLIENTFACEBOOK_H
 #define HBO2CLIENTFACEBOOK_H
 
+/*! \file HbO2ClientFacebook.h */
+
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QUrl>
@@ -20,6 +22,9 @@ namespace hb
 {
     namespace link
     {
+        /*!
+         * TODOC
+         */
         class HB_LINK_DECL HbO2ClientFacebook : public HbO2Client
         {
             Q_OBJECT

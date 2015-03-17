@@ -9,6 +9,8 @@
 #ifndef HBO2CLIENT_H
 #define HBO2CLIENT_H
 
+/*! \file HbO2Client.h */
+
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QUrl>
@@ -21,6 +23,10 @@ namespace hb
 {
     namespace link
     {
+
+        /*!
+         * TODOC
+         */
         class HB_LINK_DECL HbO2Client : public HbO2
         {
             Q_OBJECT

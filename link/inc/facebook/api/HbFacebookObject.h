@@ -9,6 +9,8 @@
 #ifndef HBFACEBOOKOBJECT_H
 #define HBFACEBOOKOBJECT_H
 
+/*! \file HbFacebookObject.h */
+
 // Qt
 #include <QtCore/QString>
 // Hb
@@ -20,6 +22,9 @@ namespace hb
 {
     namespace link
     {
+        /*!
+         * TODOC
+         */
         class HB_LINK_DECL HbFacebookObject
         {
             Q_GADGET

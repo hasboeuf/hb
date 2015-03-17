@@ -9,6 +9,8 @@
 #ifndef HBO2CLIENTCONFIG_H
 #define HBO2CLIENTCONFIG_H
 
+/*! \file HbO2ClientConfig.h */
+
 // Qt
 // Hb
 // Local
@@ -19,6 +21,9 @@ namespace hb
     namespace link
     {
 
+        /*!
+         * TODOC
+         */
         class HB_LINK_DECL HbO2ClientConfig final : public HbO2Config
         {
 

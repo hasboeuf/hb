@@ -9,6 +9,8 @@
 #ifndef HBO2SERVERCONFIG_H
 #define HBO2SERVERCONFIG_H
 
+/*! \file HbO2ServerConfig.h */
+
 // Qt
 // Hb
 // Local
@@ -19,6 +21,9 @@ namespace hb
     namespace link
     {
 
+        /*!
+         * TODOC
+         */
         class HB_LINK_DECL HbO2ServerConfig final : public HbO2Config
         {
 

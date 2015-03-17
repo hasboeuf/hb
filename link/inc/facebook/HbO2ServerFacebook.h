@@ -9,6 +9,8 @@
 #ifndef HBO2SERVERFACEBOOK_H
 #define HBO2SERVERFACEBOOK_H
 
+/*! \file HbO2ServerFacebook.h */
+
 // Qt
 // Local
 #include <HbLink.h>
@@ -19,6 +21,9 @@ namespace hb
 {
     namespace link
     {
+        /*!
+         * TODOC
+         */
         class HB_LINK_DECL HbO2ServerFacebook : public HbO2Server
         {
             Q_OBJECT

@@ -9,6 +9,8 @@
 #ifndef HBO2SERVER_H
 #define HBO2SERVER_H
 
+/*! \file HbO2Server.h */
+
 // Qt
 #include <QtNetwork/QNetworkAccessManager>
 // Hb
@@ -22,6 +24,10 @@ namespace hb
 {
     namespace link
     {
+
+        /*!
+         * TODOC
+         */
         class HB_LINK_DECL HbO2Server : public HbO2
         {
             Q_OBJECT

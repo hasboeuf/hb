@@ -1,6 +1,8 @@
 #ifndef HBLINKLOCALSERVER_H
 #define HBLINKLOCALSERVER_H
 
+/*! \file HbLinkLocalServer.h */
+
 // Qt
 #include <QtCore/QMap>
 #include <QtCore/QString>
@@ -12,6 +14,10 @@ namespace hb
 {
     namespace link
     {
+
+        /*!
+         * TODOC
+         */
         class HB_LINK_DECL HbLinkLocalServer final: public QTcpServer
         {
             Q_OBJECT

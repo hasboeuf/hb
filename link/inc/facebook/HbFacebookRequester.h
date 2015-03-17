@@ -9,6 +9,8 @@
 #ifndef HBFACEBOOKREQUESTER_H
 #define HBFACEBOOKREQUESTER_H
 
+/*! \file HbFacebookRequester.h */
+
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QString>
@@ -21,9 +23,13 @@ namespace hb
 {
     namespace link
     {
+
         class HbO2ServerFacebook;
         class HbFacebookUser;
 
+        /*!
+         * TODOC
+         */
         class HB_LINK_DECL HbFacebookRequester : public HbHttpRequester
         {
             Q_OBJECT

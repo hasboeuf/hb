@@ -9,6 +9,12 @@
 #ifndef HBLINK_H
 #define HBLINK_H
 
+/*! \file HbLink.h */
+
+/*! \namespace hb::link
+ * TODOC
+ */
+
 #if !defined( HB_LINK_DECL )
 #    if defined( HB_LINK_BUILD )
 #        define HB_LINK_DECL Q_DECL_EXPORT

@@ -9,6 +9,8 @@
 #ifndef HBO2CONFIG_H
 #define HBO2CONFIG_H
 
+/*! \file HbO2Config.h */
+
 // Qt
 #include <QtCore/QString>
 #include <QtCore/QDataStream>
@@ -21,6 +23,9 @@ namespace hb
     namespace link
     {
 
+        /*!
+         * TODOC
+         */
         class HB_LINK_DECL HbO2Config
         {
             friend QDataStream & operator<<( QDataStream & stream, const HbO2Config & config );

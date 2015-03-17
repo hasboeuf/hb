@@ -9,6 +9,8 @@
 #ifndef HBLINKCONSTANT_H
 #define HBLINKCONSTANT_H
 
+/*! \file HbLinkConstant.h TODOC */
+
 #include <QtCore/QString>
 
 // General

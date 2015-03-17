@@ -9,6 +9,8 @@
 #ifndef HBFACEBOOKUSER_H
 #define HBFACEBOOKUSER_H
 
+/*! \file HbFacebookUser.h */
+
 // Qt
 #include <QtCore/QString>
 #include <QtCore/QJsonDocument>
@@ -20,6 +22,9 @@ namespace hb
 {
     namespace link
     {
+        /*!
+         * TODOC
+         */
         class HB_LINK_DECL HbFacebookUser : public HbFacebookObject
         {
 

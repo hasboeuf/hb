@@ -9,6 +9,8 @@
 #ifndef HBO2_H
 #define HBO2_H
 
+/*! \file HbO2.h */
+
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QUrl>
@@ -24,6 +26,9 @@ namespace hb
     namespace link
     {
 
+        /*!
+         * TODOC
+         */
         class HB_LINK_DECL HbO2 : public QObject
         {
             Q_OBJECT
