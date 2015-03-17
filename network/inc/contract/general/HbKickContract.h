@@ -9,6 +9,8 @@
 #ifndef HBKICKCONTRACT_H
 #define HBKICKCONTRACT_H
 
+/*! \file HbKickContract.h */
+
 // Qt
 // Hb
 #include <HbGlobal.h>
@@ -21,6 +23,9 @@ namespace hb
 {
     namespace network
     {
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbKickContract final : public HbNetworkContract
         {
 

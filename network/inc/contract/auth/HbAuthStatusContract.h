@@ -9,6 +9,8 @@
 #ifndef HBAUTHSTATUSCONTRACT_H
 #define HBAUTHSTATUSCONTRACT_H
 
+/*! \file HbAuthStatusContract.h */
+
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QSet>
@@ -24,6 +26,9 @@ namespace hb
 {
     namespace network
     {
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbAuthStatusContract final : public HbNetworkContract
         {
 

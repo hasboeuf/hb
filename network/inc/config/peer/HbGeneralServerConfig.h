@@ -9,6 +9,8 @@
 #ifndef HBGENERALSERVERCONFIG_H
 #define HBGENERALSERVERCONFIG_H
 
+/*! \file HbGeneralServerConfig.h */
+
 // Qt
 #include <QtCore/QString>
 #include <QtCore/QHash>
@@ -24,7 +26,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbGeneralServerConfig final : public HbGeneralConfig
         {
 

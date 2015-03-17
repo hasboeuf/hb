@@ -9,6 +9,8 @@
 #ifndef HBNETWORKCONTRACT_H
 #define HBNETWORKCONTRACT_H
 
+/*! \file HbNetworkContract.h */
+
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QSharedPointer>
@@ -28,6 +30,9 @@ namespace hb
     {
         class HbNetworkHeader;
 
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbNetworkContract : public HbUid< contractuid, CLASS_CONTRACT >
         {
             Q_FRIEND_CLASS( HbNetworkExchanges )

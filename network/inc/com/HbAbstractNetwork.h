@@ -9,6 +9,8 @@
 #ifndef HBABSTRACTNETWORK_H
 #define HBABSTRACTNETWORK_H
 
+/*! \file HbAbstractNetwork.h */
+
 // Qt
 #include <QtNetwork/QAbstractSocket>
 // Hb
@@ -22,7 +24,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbAbstractNetwork : public QObject
         {
             Q_OBJECT

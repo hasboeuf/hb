@@ -9,6 +9,8 @@
 #ifndef HBCLIENTAUTHFACEBOOKSTRATEGY_H
 #define HBCLIENTAUTHFACEBOOKSTRATEGY_H
 
+/*! \file HbClientAuthFacebookStrategy.h */
+
 // Qt
 #include <QtCore/QHash>
 // Hb
@@ -27,6 +29,9 @@ namespace hb
     {
         class HbAuthRequestContract;
 
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbClientAuthFacebookStrategy : public HbClientAuthStrategy
         {
             Q_OBJECT

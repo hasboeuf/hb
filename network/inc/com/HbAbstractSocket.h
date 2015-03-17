@@ -9,6 +9,8 @@
 #ifndef HBABSTRACTSOCKET_H
 #define HBABSTRACTSOCKET_H
 
+/*! \file HbAbstractSocket.h */
+
 // Qt
 #include <QtNetwork/QAbstractSocket>
 #include <QtCore/QQueue>
@@ -25,6 +27,9 @@ namespace hb
 {
     namespace network
     {
+        /*!
+         * TODOC
+         */
         class HbAbstractSocket : public QObject, public HbUid< networkuid, CLASS_SOCKET, true > // 0 is excluded, HbNetworkContract::sender() returns 0 when the server is the sender.
         {
             Q_OBJECT

@@ -1,6 +1,8 @@
 #ifndef HBTCPSOCKETHANDLER_H
 #define HBTCPSOCKETHANDLER_H
 
+/*! \file HbTcpSocketHandler.h */
+
 // Qt
 #include <QtCore/QObject>
 // Hb
@@ -15,6 +17,9 @@ namespace hb
     {
         class HbTcpSocket;
 
+        /*!
+         * TODOC
+         */
         class HbTcpSocketHandler : public HbSocketHandler
         {
             Q_OBJECT

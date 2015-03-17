@@ -9,6 +9,8 @@
 #ifndef HBSERVERCONFIG_H
 #define HBSERVERCONFIG_H
 
+/*! \file HbServerConfig.h */
+
 // Qt
 #include <QtCore/QtGlobal>
 // Local
@@ -19,7 +21,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbServerConfig : public virtual HbNetworkConfig
         {
 

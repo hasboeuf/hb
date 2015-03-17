@@ -9,6 +9,8 @@
 #ifndef HBSERVICEPRESENCESERVERCONFIG_H
 #define HBSERVICEPRESENCESERVERCONFIG_H
 
+/*! \file HbServicePresenceServerConfig.h */
+
 // Qt
 // Hb
 // Local

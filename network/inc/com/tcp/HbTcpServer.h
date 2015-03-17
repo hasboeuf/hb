@@ -1,6 +1,8 @@
 #ifndef HBTCPSERVER_H
 #define HBTCPSERVER_H
 
+/*! \file HbTcpServer.h */
+
 // Qt
 #include <QtNetwork/QTcpServer>
 // Local
@@ -15,6 +17,9 @@ namespace hb
     {
         class HbTcpSocketHandler;
 
+        /*!
+         * TODOC
+         */
         class TcpServer final : public QTcpServer
         {
             Q_OBJECT

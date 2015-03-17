@@ -9,6 +9,8 @@
 #ifndef HBNETWORKSERVICE_H
 #define HBNETWORKSERVICE_H
 
+/*! \file HbNetworkService.h */
+
 // Qt
 #include <QtCore/QObject>
 // Hb
@@ -23,7 +25,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbNetworkService : public QObject, public IHbContractListener
         {
             Q_OBJECT

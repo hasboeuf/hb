@@ -9,6 +9,8 @@
 #ifndef HBCLIENT_H
 #define HBCLIENT_H
 
+/*! \file HbClient.h */
+
 // Qt
 // Hb
 // Local
@@ -26,6 +28,9 @@ namespace hb
 
     namespace network
     {
+        /*!
+         * TODOC
+         */
         class HbClientAuthLoginObject;
 
         class HB_NETWORK_DECL HbClient final : public HbPeer

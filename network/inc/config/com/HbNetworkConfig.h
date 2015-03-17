@@ -9,6 +9,8 @@
 #ifndef HBNETWORKCONFIG_H
 #define HBNETWORKCONFIG_H
 
+/*! \file HbNetworkConfig.h */
+
 // Qt
 #include <QtCore/QIODevice>
 // Hb
@@ -21,6 +23,9 @@ namespace hb
 {
     namespace network
     {
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbNetworkConfig
         {
         public:

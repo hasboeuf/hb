@@ -9,6 +9,8 @@
 #ifndef HBSERVERCONNECTIONPOOL_H
 #define HBSERVERCONNECTIONPOOL_H
 
+/*! \file HbServerConnectionPool.h */
+
 // Qt
 #include <QtCore/QHash>
 // Hb
@@ -26,6 +28,9 @@ namespace hb
         class HbAbstractServer;
         class HbNetworkUser;
 
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbServerConnectionPool: public HbConnectionPool
         {
             Q_OBJECT

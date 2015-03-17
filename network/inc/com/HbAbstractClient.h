@@ -9,6 +9,8 @@
 #ifndef HBABSTRACTCLIENT_H
 #define HBABSTRACTCLIENT_H
 
+/*! \file HbAbstractClient.h */
+
 // Hb
 #include <HbGlobal.h>
 // Local
@@ -23,7 +25,9 @@ namespace hb
 
         class HbAbstractSocket;
 
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbAbstractClient : public HbAbstractNetwork
         {
             Q_OBJECT

@@ -9,6 +9,8 @@
 #ifndef HBCLIENTAUTHSERVICE_H
 #define HBCLIENTAUTHSERVICE_H
 
+/*! \file HbClientAuthService.h */
+
 // Qt
 // Hb
 // Local
@@ -27,6 +29,9 @@ namespace hb
         class HbClientAuthLoginObject;
         class HbAuthRequestContract;
 
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbClientAuthService : public HbAuthService
         {
             Q_OBJECT

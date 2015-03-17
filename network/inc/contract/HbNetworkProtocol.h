@@ -9,6 +9,8 @@
 #ifndef HBNETWORKPROTOCOL_H
 #define HBNETWORKPROTOCOL_H
 
+/*! \file HbNetworkProtocol.h */
+
 // Qt
 #include <QtCore/QString>
 // Hb
@@ -21,7 +23,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbNetworkProtocol final
         {
             Q_GADGET

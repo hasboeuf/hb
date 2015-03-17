@@ -9,6 +9,8 @@
 #ifndef HBCLIENTCONNECTIONPOOL_H
 #define HBCLIENTCONNECTIONPOOL_H
 
+/*! \file HbClientConnectionPool.h */
+
 // Qt
 #include <QtCore/QHash>
 // Hb
@@ -30,6 +32,9 @@ namespace hb
         class HbAbstractClient;
         class HbClientAuthLoginObject;
 
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbClientConnectionPool: public HbConnectionPool
         {
             Q_OBJECT

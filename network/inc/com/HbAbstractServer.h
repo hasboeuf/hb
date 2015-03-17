@@ -9,6 +9,8 @@
 #ifndef HBABSTRACTSERVER_H
 #define HBABSTRACTSERVER_H
 
+/*! \file HbAbstractServer.h */
+
 // Qt
 #include <QtCore/QHash>
 #include <QtCore/QList>
@@ -27,6 +29,9 @@ namespace hb
         class HbAbstractSocket;
         class HbSocketHandler;
 
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbAbstractServer : public HbAbstractNetwork, public HbUid< networkuid, CLASS_SERVER, true >
         {
             Q_OBJECT

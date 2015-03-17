@@ -9,6 +9,8 @@
 #ifndef HBSERVER_H
 #define HBSERVER_H
 
+/*! \file HbServer.h */
+
 // Qt
 // Hb
 // Local
@@ -21,6 +23,9 @@ namespace hb
 {
     namespace network
     {
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbServer final : public HbPeer
         {
             Q_OBJECT

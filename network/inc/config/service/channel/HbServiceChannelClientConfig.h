@@ -9,6 +9,8 @@
 #ifndef HBSERVICECHANNELCLIENTCONFIG_H
 #define HBSERVICECHANNELCLIENTCONFIG_H
 
+/*! \file HbServiceChannelClientConfig.h */
+
 // Qt
 // Hb
 // Local

@@ -9,6 +9,8 @@
 #ifndef HBSERVICEAUTHCONFIG_H
 #define HBSERVICEAUTHCONFIG_H
 
+/*! \file HbServiceAuthConfig.h */
+
 // Qt
 // Hb
 // Local

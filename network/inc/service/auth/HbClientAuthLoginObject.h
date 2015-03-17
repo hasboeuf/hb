@@ -9,6 +9,8 @@
 #ifndef HBCLIENTAUTHLOGINOBJECT_H
 #define HBCLIENTAUTHLOGINOBJECT_H
 
+/*! \file HbClientAuthLoginObject.h */
+
 // Qt
 // Hb
 // Local
@@ -18,7 +20,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbClientAuthLoginObject
         {
 

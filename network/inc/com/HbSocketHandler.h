@@ -9,6 +9,8 @@
 #ifndef HBSOCKETHANDLER_H
 #define HBSOCKETHANDLER_H
 
+/*! \file HbSocketHandler.h */
+
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QMap>
@@ -25,6 +27,9 @@ namespace hb
     {
         class HbAbstractSocket;
 
+        /*!
+         * TODOC
+         */
         class HbSocketHandler : public QObject, public HbUid< networkuid, CLASS_SERVER, true >
         {
             Q_OBJECT

@@ -9,6 +9,8 @@
 #ifndef HBAUTHSTRATEGY_H
 #define HBAUTHSTRATEGY_H
 
+/*! \file HbAuthStrategy.h */
+
 // Qt
 // Hb
 // Local
@@ -20,6 +22,9 @@ namespace hb
 {
     namespace network
     {
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbAuthStrategy : public QObject
         {
             Q_OBJECT

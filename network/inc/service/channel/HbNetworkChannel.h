@@ -9,6 +9,8 @@
 #ifndef HBNETWORKCHANNEL_H
 #define HBNETWORKCHANNEL_H
 
+/*! \file HbNetworkChannel.h */
+
 // Qt
 // Hb
 // Local
@@ -19,7 +21,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbNetworkChannel : public HbChannelService
         {
         public:

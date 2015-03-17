@@ -9,6 +9,8 @@
 #ifndef HBAUTHSERVICE_H
 #define HBAUTHSERVICE_H
 
+/*! \file HbAuthService.h */
+
 // Qt
 // Hb
 // Local
@@ -20,7 +22,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbAuthService : public HbNetworkService, public IHbSocketListener
         {
             Q_OBJECT

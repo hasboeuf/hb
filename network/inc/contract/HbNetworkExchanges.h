@@ -9,6 +9,8 @@
 #ifndef HBNETWORKEXCHANGES_H
 #define HBNETWORKEXCHANGES_H
 
+/*! \file HbNetworkExchanges.h */
+
 // Qt
 #include <QtCore/QIODevice>
 // Hb
@@ -21,6 +23,9 @@ namespace hb
 {
     namespace network
     {
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbNetworkExchanges final
         {
             Q_FRIEND_CLASS( HbNetworkConfig )

@@ -9,6 +9,8 @@
 #ifndef HBNETWORKHEADER_H
 #define HBNETWORKHEADER_H
 
+/*! \file HbNetworkHeader.h */
+
 // Hb
 #include <HbGlobal.h>
 // Local
@@ -19,7 +21,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HbNetworkHeader final
         {
             friend QDataStream & operator<<( QDataStream & stream, const HbNetworkHeader & header );

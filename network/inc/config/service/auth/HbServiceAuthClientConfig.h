@@ -9,6 +9,8 @@
 #ifndef HBSERVICEAUTHCLIENTCONFIG_H
 #define HBSERVICEAUTHCLIENTCONFIG_H
 
+/*! \file HbServiceAuthClientConfig.h */
+
 // Qt
 // Hb
 #include <config/HbO2ClientConfig.h>

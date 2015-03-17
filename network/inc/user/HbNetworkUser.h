@@ -9,6 +9,8 @@
 #ifndef HBNETWORKUSER_H
 #define HBNETWORKUSER_H
 
+/*! \file HbNetworkUser.h */
+
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QSet>
@@ -22,6 +24,9 @@ namespace hb
 {
     namespace network
     {
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbNetworkUser : public QObject
         {
             Q_OBJECT

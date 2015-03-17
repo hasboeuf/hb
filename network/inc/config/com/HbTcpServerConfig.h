@@ -9,6 +9,8 @@
 #ifndef HBTCPSERVERCONFIG_H
 #define HBTCPSERVERCONFIG_H
 
+/*! \file HbTcpServerConfig.h */
+
 // Qt
 #include <QtNetwork/QHostAddress>
 // Local
@@ -20,7 +22,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbTcpServerConfig final :
             public virtual HbNetworkConfig,
             public HbTcpConfig,

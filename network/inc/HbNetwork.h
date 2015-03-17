@@ -9,6 +9,12 @@
 #ifndef HBNETWORK_H
 #define HBNETWORK_H
 
+/*! \file HbNetwork.h TODOC */
+
+/*! \namespace hb::network
+ * TODOC
+ */
+
 // Qt
 #include <QtCore/QtGlobal>
 

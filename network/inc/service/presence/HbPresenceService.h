@@ -9,6 +9,8 @@
 #ifndef HBPRESENCESERVICE_H
 #define HBPRESENCESERVICE_H
 
+/*! \file HbPresenceService.h */
+
 // Qt
 // Hb
 // Local
@@ -19,7 +21,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbPresenceService : public HbNetworkService, public IHbSocketAuthListener
         {
         public:

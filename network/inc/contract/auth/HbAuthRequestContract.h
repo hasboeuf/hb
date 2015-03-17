@@ -9,6 +9,8 @@
 #ifndef HBAUTHREQUESTCONTRACT_H
 #define HBAUTHREQUESTCONTRACT_H
 
+/*! \file HbAuthRequestContract.h */
+
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QSet>
@@ -23,7 +25,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbAuthRequestContract : public HbNetworkContract
         {
 

@@ -9,6 +9,8 @@
 #ifndef IHBSOCKETLISTENER_H
 #define IHBSOCKETLISTENER_H
 
+/*! \file IHbSocketListener.h */
+
 // Hb
 #include <HbGlobal.h>
 // Local
@@ -18,7 +20,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL IHbSocketListener
         {
 

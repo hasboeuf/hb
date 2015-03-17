@@ -9,6 +9,8 @@
 #ifndef HBNETWORKUSERINFO_H
 #define HBNETWORKUSERINFO_H
 
+/*! \file HbNetworkUserInfo.h */
+
 // Qt
 #include <QtCore/QString>
 // Hb
@@ -19,7 +21,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbNetworkUserInfo final
         {
             friend QDataStream & operator<<( QDataStream & stream, const HbNetworkUserInfo & header );

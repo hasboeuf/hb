@@ -9,6 +9,8 @@
 #ifndef HBAUTHFACEBOOKREQUESTCONTRACT_H
 #define HBAUTHFACEBOOKREQUESTCONTRACT_H
 
+/*! \file HbAuthFacebookRequestContract.h */
+
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QSet>
@@ -23,6 +25,9 @@ namespace hb
 {
     namespace network
     {
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbAuthFacebookRequestContract : public HbAuthRequestContract
         {
 

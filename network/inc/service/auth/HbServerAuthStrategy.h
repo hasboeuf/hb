@@ -9,6 +9,8 @@
 #ifndef HBSERVERAUTHSTRATEGY_H
 #define HBSERVERAUTHSTRATEGY_H
 
+/*! \file HbServerAuthStrategy.h */
+
 // Qt
 // Hb
 // Local
@@ -22,6 +24,9 @@ namespace hb
     {
         class HbAuthRequestContract;
 
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbServerAuthStrategy : public HbAuthStrategy
         {
             Q_OBJECT

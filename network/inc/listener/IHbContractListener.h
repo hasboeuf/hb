@@ -9,6 +9,8 @@
 #ifndef IHBCONTRACTLISTENER_H
 #define IHBCONTRACTLISTENER_H
 
+/*! \file IHbContractListener.h */
+
 // Hb
 #include <HbGlobal.h>
 // Local
@@ -19,7 +21,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL IHbContractListener
         {
 

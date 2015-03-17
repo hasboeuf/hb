@@ -9,6 +9,8 @@
 #ifndef IHBUSERTLISTENER_H
 #define IHBUSERTLISTENER_H
 
+/*! \file IHbUserListener.h */
+
 // Hb
 #include <HbGlobal.h>
 // Local
@@ -20,7 +22,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL IHbUserListener
         {
 

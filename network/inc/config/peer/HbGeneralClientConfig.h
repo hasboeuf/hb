@@ -9,6 +9,8 @@
 #ifndef HBGENERALCLIENTCONFIG_H
 #define HBGENERALCLIENTCONFIG_H
 
+/*! \file HbGeneralClientConfig.h */
+
 // Qt
 #include <QtCore/QString>
 #include <QtCore/QHash>
@@ -24,7 +26,9 @@ namespace hb
 {
     namespace network
     {
-
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbGeneralClientConfig final : public HbGeneralConfig
         {
 

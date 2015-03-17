@@ -9,6 +9,8 @@
 #ifndef HBPRESENCESTATUSCONTRACT_H
 #define HBPRESENCESTATUSCONTRACT_H
 
+/*! \file HbPresenceStatusContract.h */
+
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QSet>
@@ -22,6 +24,9 @@ namespace hb
 {
     namespace network
     {
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbPresenceStatusContract final : public HbNetworkContract
         {
 

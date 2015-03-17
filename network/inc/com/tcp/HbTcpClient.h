@@ -1,6 +1,8 @@
 #ifndef HBTCPCLIENT_H
 #define HBTCPCLIENT_H
 
+/*! \file HbTcpClient.h */
+
 // Local
 #include <com/HbAbstractClient.h>
 #include <config/com/HbTcpClientConfig.h>
@@ -11,6 +13,9 @@ namespace hb
     {
         class HbTcpSocket;
 
+        /*!
+         * TODOC
+         */
         class HB_NETWORK_DECL HbTcpClient : public HbAbstractClient
         {
             Q_OBJECT
