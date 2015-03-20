@@ -23,7 +23,11 @@ namespace hb
     namespace tools
     {
         /*!
-         * TODOC
+         * HbHttpRequester makes HTTP request.
+         * As an HTTP request is not a synchrone event,
+         * it tracks a request, waits for the answer and
+         * notifies when the associated response is received.
+         * \sa HbTimeoutNetworkReplies
          */
         class HB_TOOLS_DECL HbHttpRequester : public QObject
         {

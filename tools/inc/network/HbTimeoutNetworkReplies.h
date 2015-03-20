@@ -23,7 +23,8 @@ namespace hb
     namespace tools
     {
         /*!
-         * TODOC
+         * HbTimeoutNetworkReplies manage multiple HbTimeoutNetworkReply.
+         * \sa HbTimeoutNetworkReply
          */
         class HB_TOOLS_DECL HbTimeoutNetworkReplies : public QObject
         {

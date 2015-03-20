@@ -15,8 +15,7 @@ namespace hb
     namespace tools
     {
         /*!
-         * HbDictionaryHelper provides helper methods relatives to dictionary container.
-         * TODOC
+         * HbDictionaryHelper provides helper methods relative to dictionary containers.
          */
         class HB_TOOLS_DECL HbDictionaryHelper
         {

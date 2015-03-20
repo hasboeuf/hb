@@ -16,7 +16,7 @@
 // Qt
 #include <QtCore/QString>
 
-
+//! Check compilator compatibility.
 #if defined( Q_OS_WIN32 )
 #   if !defined( Q_CC_MSVC ) && !defined( Q_CC_MINGW )
 #   error Windows compiler not supported
@@ -34,30 +34,22 @@
 #endif
 
 
-
+//! Android specifics.
 #if defined( Q_OS_ANDROID )
 #   define Q_OS_MOBILE
 #endif
 
 
-
+//! GCC specifics.
 #if defined( Q_CC_GNU ) || defined( Q_CC_MINGW )
 #    include <cxxabi.h>
 #    include <typeinfo>
 #endif
 
 
-
-#if !defined( Q_EXTERN_C )
-#   ifdef __cplusplus
-#       define Q_EXTERN_C extern "C"
-#   else
-#       define Q_EXTERN_C extern
-#   endif
-#endif
-
-
-
+/*!
+ * Convenient macro for qt_assert use.
+ */
 #if !defined( QT_NO_DEBUG )
 #   define q_assert( test ) ( ( test ) ? qt_noop() : qt_assert( #test, __FILE__, __LINE__ ) )
 #else
@@ -65,7 +57,9 @@
 #endif
 
 
-
+/*!
+ * Convenient macro for qt_assert_x use.
+ */
 #if !defined( QT_NO_DEBUG )
 #   define q_assert_x( test, where, what ) ( ( test ) ? qt_noop() : qt_assert_x( where, what, __FILE__, __LINE__ ) )
 #else
@@ -73,7 +67,9 @@
 #endif
 
 
-
+/*!
+ * Convenient macro used to convert QString into const char * (\0 terminated).
+ */
 #if !defined( HbLatin1 )
 #   define HbLatin1( string ) QString( string ).toLatin1().constData()
 #endif
@@ -81,7 +77,9 @@
 
 namespace // Anonymous.
 {
-
+    /*!
+     * TODOC
+     */
     inline QString hb_scopename(const char * type)
     {
 #if defined( Q_CC_MSVC )
@@ -102,6 +100,9 @@ namespace // Anonymous.
         return name;
     }
 
+    /*!
+     * TODOC
+     */
     inline QString hb_typename( const char * type )
     {
         QString name(hb_scopename(type));
@@ -124,53 +125,54 @@ namespace // Anonymous.
     }
 }
 
-
-
+/*!
+ * TODOC
+ */
 template< typename T >
 inline QString qScopeName()
 {
     return hb_scopename(typeid(T).name());
 }
 
-
-
-
+/*!
+ * TODOC
+ */
 template< typename T >
 inline QString qScopeName(T * pointer)
 {
     return (pointer) ? hb_scopename(typeid(*pointer).name()) : QString();
 }
 
-
-
-
+/*!
+ * TODOC
+ */
 template< typename T >
 inline QString qScopeName(const T & expression)
 {
     return hb_scopename(typeid(expression).name());
 }
 
-
-
-
+/*!
+ * TODOC
+ */
 template< typename T >
 inline QString qTypeName()
 {
     return hb_typename(typeid(T).name());
 }
 
-
-
-
+/*!
+ * TODOC
+ */
 template< typename T >
 inline QString qTypeName(T * pointer)
 {
     return (pointer) ? hb_typename(typeid(*pointer).name()) : QString();
 }
 
-
-
-
+/*!
+ * TODOC
+ */
 template< typename T >
 inline QString qTypeName(const T & expression)
 {
@@ -178,11 +180,12 @@ inline QString qTypeName(const T & expression)
 }
 
 
-
-
 namespace // Anonymous
 {
 
+    /*!
+     * TODOC
+     */
     template< typename T >
     inline T * hb_assert_ptr( T * pointer, const char * file, qint32 line )
     {
@@ -198,6 +201,9 @@ namespace // Anonymous
     }
 
 
+    /*!
+     * TODOC
+     */
     template< typename U, typename T >
     inline U hb_dynamic_cast( T * pointer, const char * file, qint32 line )
     {
@@ -223,17 +229,19 @@ namespace // Anonymous
 
 }
 
-
-
+/*!
+ * Convenient macro to assert a pointer.
+ */
 #define q_assert_ptr( pointer ) hb_assert_ptr( pointer, __FILE__, __LINE__ )
 
-
-
+/*!
+ * Convenient macro to dynamic cast a pointer.
+ */
 #define q_dynamic_cast( Type, pointer ) hb_dynamic_cast< Type >( pointer, __FILE__, __LINE__ )
 
-
-
-
+/*!
+ * Convenient function to dynamic cast an entire list of pointers.
+ */
 template< typename U, typename T >
 inline QList< U > qlist_dynamic_cast( const QList< T * > & list )
 {
@@ -245,6 +253,9 @@ inline QList< U > qlist_dynamic_cast( const QList< T * > & list )
     return list_cast;
 }
 
+/*!
+ * Convenient function to delete a pointer (reset nullptr).
+ */
 template< typename T >
 inline void q_delete_ptr( T ** pointer )
 {
@@ -252,43 +263,51 @@ inline void q_delete_ptr( T ** pointer )
     *pointer = nullptr;
 }
 
-
-inline void qExit()
-{
-    exit(EXIT_SUCCESS);
-}
-
-
-inline void qAbort()
-{
-    exit(EXIT_FAILURE);
-}
-
-
+/*!
+ * Convenient macro to scope a method used as a slot by using the new Qt5 connect syntax.
+ * class Object
+ * {
+ * public slots:
+ *     void myQt4Slot();
+ * public callbacks:
+ *     void myQt5Slot();
+ * };
+ */
 #define callbacks
 
-
+/*!
+ * Convenient macro to tag an inner class.
+ * class Car
+ * {
+ *     inner class Engine
+ *     {
+ *     };
+ * };
+ */
 #define inner
 
-
+/*!
+ * Convenient macro to declare a defaulted copyable class.
+ */
 #define Q_DEFAULT_COPY( Class ) \
     public: \
     Class(const Class &) Q_DECL_EQ_DEFAULT; \
     Class & operator =(const Class &)Q_DECL_EQ_DEFAULT; \
     private:
 
-
-
+/*!
+ * Convenient macro to declare a static class.
+ */
 #define Q_STATIC_CLASS( Class ) \
     Class() Q_DECL_EQ_DELETE; \
     Class(const Class &) Q_DECL_EQ_DELETE; \
     Class & operator =(const Class &)Q_DECL_EQ_DELETE; \
     virtual ~Class() Q_DECL_EQ_DELETE;
 
-
-
+/*!
+ * Convenient macro to declare a friend class.
+ */
 #define Q_FRIEND_CLASS( Class ) \
     friend class Class;
-
 
 #endif // HBGLOBAL_H

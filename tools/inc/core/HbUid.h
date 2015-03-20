@@ -21,7 +21,11 @@ namespace hb
     namespace tools
     {
         /*!
-         * TODOC
+         * HbUid provides a unique integer identifier.
+         * \param T Type of integer.
+         * \param C Uid belongings.
+         * \param Z Zero exclusion.
+         * \sa HbUidGenerator
          */
         template< typename T = qint32, size_t C = CLASS_DEFAULT, bool Z = false >
         class HbUid

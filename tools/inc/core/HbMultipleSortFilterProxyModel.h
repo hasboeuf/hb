@@ -25,7 +25,8 @@ namespace hb
         class ModelFilter;
 
         /*!
-         * TODOC
+         * HbMultipleSortFilterProxyModel is a multiple QSortFilterProxyModel.
+         * Used to set filters on several columns for example.
          */
         class HB_TOOLS_DECL HbMultipleSortFilterProxyModel final : public QSortFilterProxyModel
         {

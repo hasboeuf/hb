@@ -22,7 +22,7 @@ namespace hb
     namespace tools
     {
         /*!
-         * TODOC
+         * HbNullable provides a C++ version of C# Nullable.
          */
         template< typename T >
         class HbNullable final

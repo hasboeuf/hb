@@ -20,7 +20,7 @@ namespace hb
     {
 
         /*!
-         * TODOC
+         * HbSingleton represents a non-threadsafe singleton class.
          */
         template < class T >
         class HbSingleton

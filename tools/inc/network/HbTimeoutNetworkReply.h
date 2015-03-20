@@ -24,7 +24,9 @@ namespace hb
     namespace tools
     {
         /*!
-         * TODOC
+         * HbTimeoutNetworkReply invalidates a QNetworkReply if it times out.
+         * \bug Does not work as expected as QNetworkReply::abort does not
+         * cancel the reply. For now timeout feature is disable.
          */
         class HB_TOOLS_DECL HbTimeoutNetworkReply final : public QTimer, public HbUid< replyuid, CLASS_REPLIES, true >
         {

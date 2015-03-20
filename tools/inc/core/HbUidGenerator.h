@@ -27,7 +27,11 @@ namespace hb
     namespace tools
     {
         /*!
-         * TODOC
+         * HbUidGenerator maintains a list of unique integer identifiers for the application.
+         * It is a singleton class.
+         * \param T Type of integer.
+         * \param C Uid belongings.
+         * \sa HbUid
          */
         template< typename T = qint32, size_t C = CLASS_DEFAULT >
         class HbUidGenerator : public HbSingleton< HbUidGenerator< T, C > >

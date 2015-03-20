@@ -36,7 +36,7 @@ namespace hb
             virtual ~HbErrorCode() = default;
 
             template< typename T >
-            inline QString operator ()( T code ) const
+            inline QString operator()( T code ) const
             {
                 return get( ( qint32 ) code );
             }
@@ -59,7 +59,7 @@ namespace hb
 
         private :
 
-            bool add( qint32 code, const QString & message );
+            bool    add( qint32 code, const QString & message );
             QString get( qint32 code ) const;
 
 

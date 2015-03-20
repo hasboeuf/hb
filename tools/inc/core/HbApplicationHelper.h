@@ -20,14 +20,15 @@ namespace hb
     {
         /*!
          * TODOC
-         * HbApplicationHelper provides helper methods to initialize an app.
+         * HbApplicationHelper provides helper methods for the application.
          */
         class HB_TOOLS_DECL HbApplicationHelper
         {
 
         public:
             /*!
-             * Initialize app belongings in QSetting.
+             * Initialize app.
+             * Initialize QSetting.
              * Generate seed for qsrand.
              * Call it in main().
              * \param company Company name e.g.: MyCompany
