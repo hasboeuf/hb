@@ -42,12 +42,12 @@ namespace hb
                 COLUMN_OPTIONAL
             };
 
-            explicit HbPluginListWidget(QWidget *parent = nullptr);
+            explicit HbPluginListWidget( QWidget * parent = nullptr );
 
-            void setPlugins(QList<const HbPluginInfos *> plugins);
+            void setPlugins( QList< const HbPluginInfos * > plugins );
 
         private:
-            QStandardItem* getLoadItem(QString plugin_name);
+            QStandardItem * getLoadItem( const QString & plugin_name );
 
         private:
 
@@ -60,15 +60,15 @@ namespace hb
 
             public slots:
             // From PlatformService
-            void onPluginLoaded(const HbPluginInfos* plugin_infos);
-            void onPluginUnloaded(QString            plugin_name);
+            void onPluginLoaded  ( const HbPluginInfos* plugin_infos );
+            void onPluginUnloaded( const QString &      plugin_name );
 
             // From Delegate
-            void onPluginChecked(QStandardItem *item_load);
+            void onPluginChecked( QStandardItem * item_load );
 
         signals:
-            void loadPluginRequest(QString plugin_name);
-            void unloadPluginRequest(QString plugin_name);
+            void loadPluginRequest  ( const QString & plugin_name );
+            void unloadPluginRequest( const QString & plugin_name );
         };
     }
 }

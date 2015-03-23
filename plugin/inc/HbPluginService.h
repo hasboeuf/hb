@@ -27,18 +27,14 @@ namespace hb
         {
             Q_OBJECT
         public:
-            explicit HbPluginService( QString name, QString version, QObject * parent = nullptr );
+            explicit HbPluginService( const QString & name, const QString & version, QObject * parent = nullptr );
 
-            QString name() const;
-            QString version() const;
+            const QString & name   () const;
+            const QString & version() const;
 
         protected:
             QString mName;
             QString mVersion;
-
-        signals:
-
-            public slots :
 
         };
     }

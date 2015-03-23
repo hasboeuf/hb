@@ -3,7 +3,7 @@
 
 using namespace hb::pluginexample;
 
-AppService::AppService(QString name, QString version) :
-    HbPluginService(name, version)
+AppService::AppService( const QString & name, const QString & version) :
+    HbPluginService( name, version )
 {
 }

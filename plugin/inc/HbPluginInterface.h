@@ -40,13 +40,13 @@ namespace hb
 
             virtual ~HbPluginInterface();
 
-            virtual PluginInitState init(const HbPlatformService * platform_service) = 0;
+            virtual PluginInitState init( const HbPlatformService * platform_service ) = 0;
             virtual void unload() = 0;
 
         };
     }
 }
 
-Q_DECLARE_INTERFACE(hb::plugin::HbPluginInterface, "hb::plugin::HbPluginInterface")
+Q_DECLARE_INTERFACE( hb::plugin::HbPluginInterface, "hb::plugin::HbPluginInterface" )
 
 #endif // HBPLUGININTERFACE_H

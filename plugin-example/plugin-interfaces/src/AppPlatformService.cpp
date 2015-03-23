@@ -16,23 +16,23 @@ AppPlatformService::~AppPlatformService()
 
 }
 
-QString AppPlatformService::serviceName(ServiceID service_id)
+QString AppPlatformService::serviceName( ServiceID service_id )
 {
     if(service_id == SERVICE_MENU_BAR)
     {
-        return "ServiceMenuBar";
+        return QStringLiteral( "ServiceMenuBar" );
     }
     else if(service_id == SERVICE_TAB)
     {
-        return "ServiceTab";
+        return QStringLiteral( "ServiceTab" );
     }
     else
     {
-        return "ServiceUnknown";
+        return QStringLiteral( "ServiceUnknown" );
     }
 }
 
-AppService* AppPlatformService::requestService( QString service_name ) const
+AppService* AppPlatformService::requestService( const QString & service_name ) const
 {
     HbPluginService * service = HbPlatformService::requestService( service_name );
 

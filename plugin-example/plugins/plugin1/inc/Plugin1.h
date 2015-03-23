@@ -19,14 +19,14 @@ namespace hb
         class Plugin1 : public QObject, public AppPluginInterface
         {
             Q_OBJECT
-            Q_PLUGIN_METADATA(IID "Plugin1" FILE "Plugin1.json")
-            Q_INTERFACES(hb::pluginexample::AppPluginInterface)
+            Q_PLUGIN_METADATA( IID "Plugin1" FILE "Plugin1.json" )
+            Q_INTERFACES( hb::pluginexample::AppPluginInterface )
 
         public:
             explicit Plugin1();
             virtual ~Plugin1();
 
-            virtual PluginInitState init  (const HbPlatformService * platform_service);
+            virtual PluginInitState init  ( const HbPlatformService * platform_service );
             virtual void            unload();
 
         signals:

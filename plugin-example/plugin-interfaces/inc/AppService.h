@@ -16,7 +16,7 @@ namespace hb
 
         public:
 
-            explicit AppService(QString name, QString version);
+            explicit AppService( const QString & name, const QString & version );
 
         protected:
 

@@ -32,15 +32,15 @@ namespace hb
                 MENU_USER
             };
 
-            MenuService(QString name, QString version, QMenuBar* menuBar);
+            MenuService( const QString & name, const QString & version, QMenuBar * menuBar );
 
-            int       addMenu  (int menu_parent, QString title);
-            QAction*  addItem  (int menu_id,     QString title);
+            int       addMenu( qint32 menu_parent, const QString & title );
+            QAction*  addItem( qint32 menu_id,     const QString & title );
 
         private:
-            QMenuBar*          mMenuBar;
-            int                mCurrentMenuID;
-            QHash<int, QMenu*> mMenus;
+            QMenuBar*            mMenuBar;
+            qint32               mCurrentMenuId;
+            QHash<int, QMenu * > mMenus;
         };
     }
 }

@@ -3,7 +3,7 @@
 
 using namespace hb::plugin;
 
-HbPluginInfos::HbPluginInfos(QString path, QString author, QString name, QString version)
+HbPluginInfos::HbPluginInfos( const QString & path, const QString & author, const QString & name, const QString & version )
 {
     mPath    = path;
     mAuthor  = author;
@@ -12,7 +12,7 @@ HbPluginInfos::HbPluginInfos(QString path, QString author, QString name, QString
     mState   = PLUGIN_NOT_LOADED;
 }
 
-HbPluginInfos::HbPluginInfos(const HbPluginInfos& copy)
+HbPluginInfos::HbPluginInfos( const HbPluginInfos & copy )
 {
     mPath    = copy.mPath;
     mAuthor  = copy.mAuthor;
@@ -28,7 +28,7 @@ HbPluginInfos::HbPluginInfos(const HbPluginInfos& copy)
     mChildren = copy.mChildren;
 }
 
-HbPluginInfos& HbPluginInfos::operator=(const HbPluginInfos& copy)
+HbPluginInfos& HbPluginInfos::operator=( const HbPluginInfos & copy )
 {
     mPath    = copy.mPath;
     mAuthor  = copy.mAuthor;
@@ -43,30 +43,30 @@ HbPluginInfos& HbPluginInfos::operator=(const HbPluginInfos& copy)
 
     mChildren = copy.mChildren;
 
-    return (*this);
+    return ( *this );
 }
 
-QString HbPluginInfos::path() const
+const QString & HbPluginInfos::path() const
 {
     return mPath;
 }
 
-QString HbPluginInfos::author() const
+const QString & HbPluginInfos::author() const
 {
     return mAuthor;
 }
 
-QString HbPluginInfos::name() const
+const QString & HbPluginInfos::name() const
 {
     return mName;
 }
 
-QString HbPluginInfos::version() const
+const QString & HbPluginInfos::version() const
 {
     return mVersion;
 }
 
-QHash<QString, QString> HbPluginInfos::requiredPlugins() const
+const QHash< QString, QString > & HbPluginInfos::requiredPlugins() const
 {
     return mRequiredPlugins;
 }
@@ -75,7 +75,7 @@ QString HbPluginInfos::requiredPluginsStr() const
 {
     QString depends;
 
-    QHash<QString, QString>::const_iterator it = mRequiredPlugins.constBegin();
+    auto it = mRequiredPlugins.constBegin();
     while(it != mRequiredPlugins.constEnd())
     {
         depends += it.key() + " (" + it.value() + ") ";
@@ -86,7 +86,7 @@ QString HbPluginInfos::requiredPluginsStr() const
 
 }
 
-QHash<QString, QString> HbPluginInfos::optionalPlugins() const
+const QHash<QString, QString> & HbPluginInfos::optionalPlugins() const
 {
     return mOptionalPlugins;
 }
@@ -95,8 +95,8 @@ QString HbPluginInfos::optionalPluginsStr() const
 {
     QString depends;
 
-    QHash<QString, QString>::const_iterator it = mOptionalPlugins.constBegin();
-    while(it != mOptionalPlugins.constEnd())
+    auto it = mOptionalPlugins.constBegin();
+    while( it != mOptionalPlugins.constEnd() )
     {
         depends += it.key() + " (" + it.value() + ") ";
         ++it;
@@ -106,7 +106,7 @@ QString HbPluginInfos::optionalPluginsStr() const
 
 }
 
-QHash<QString, QString> HbPluginInfos::requiredServices() const
+const QHash< QString, QString > & HbPluginInfos::requiredServices() const
 {
     return mRequiredService;
 }
@@ -115,8 +115,8 @@ QString HbPluginInfos::requiredServicesStr() const
 {
     QString depends;
 
-    QHash<QString, QString>::const_iterator it = mRequiredService.constBegin();
-    while(it != mRequiredService.constEnd())
+    auto it = mRequiredService.constBegin();
+    while( it != mRequiredService.constEnd() )
     {
         depends += it.key() + " (" + it.value() + ") ";
         ++it;
@@ -126,7 +126,7 @@ QString HbPluginInfos::requiredServicesStr() const
 
 }
 
-QHash<QString, QString> HbPluginInfos::optionalServices() const
+const QHash< QString, QString > & HbPluginInfos::optionalServices() const
 {
     return mOptionalService;
 }
@@ -135,8 +135,8 @@ QString HbPluginInfos::optionalServicesStr() const
 {
     QString depends;
 
-    QHash<QString, QString>::const_iterator it = mOptionalService.constBegin();
-    while(it != mOptionalService.constEnd())
+    auto it = mOptionalService.constBegin();
+    while( it != mOptionalService.constEnd() )
     {
         depends += it.key() + " (" + it.value() + ") ";
         ++it;
@@ -153,10 +153,10 @@ HbPluginInfos::PluginState HbPluginInfos::state() const
 
 QString HbPluginInfos::stateStr() const
 {
-    if(mState == PLUGIN_NOT_LOADED)       return "Plugin not loaded.";
-    if(mState == PLUGIN_NOT_LOADED_ERROR) return "Plugin not loaded (errors occured).";
-    if(mState == PLUGIN_LOADED)           return "Plugin loaded.";
-    else                                  return "Plugin state unknown.";
+    if( mState == PLUGIN_NOT_LOADED       ) return QStringLiteral( "Plugin not loaded." );
+    if( mState == PLUGIN_NOT_LOADED_ERROR ) return QStringLiteral( "Plugin not loaded (errors occured)." );
+    if( mState == PLUGIN_LOADED           ) return QStringLiteral( "Plugin loaded." );
+    else                                    return QStringLiteral( "Plugin state unknown." );
 }
 
 const QStringList& HbPluginInfos::children() const
@@ -164,32 +164,32 @@ const QStringList& HbPluginInfos::children() const
     return mChildren;
 }
 
-bool HbPluginInfos::requiresPlugin(QString name) const
+bool HbPluginInfos::requiresPlugin( const QString & name ) const
 {
     return mRequiredPlugins.contains(name);
 }
 
-void HbPluginInfos::addRequiredPlugin(QString name, QString version)
+void HbPluginInfos::addRequiredPlugin( const QString & name, const QString & version )
 {
     mRequiredPlugins[name] = version;
 }
 
-void HbPluginInfos::addOptionalPlugin(QString name, QString version)
+void HbPluginInfos::addOptionalPlugin( const QString & name, const QString & version )
 {
     mOptionalPlugins[name] = version;
 }
 
-void HbPluginInfos::addRequiredService(QString name, QString version)
+void HbPluginInfos::addRequiredService( const QString & name, const QString & version )
 {
     mRequiredService[name] = version;
 }
 
-void HbPluginInfos::addOptionalService(QString name, QString version)
+void HbPluginInfos::addOptionalService( const QString & name, const QString & version )
 {
     mOptionalService[name] = version;
 }
 
-void HbPluginInfos::addChild(QString plugin_name)
+void HbPluginInfos::addChild( const QString & plugin_name )
 {
-    mChildren.append(plugin_name);
+    mChildren.append( plugin_name );
 }

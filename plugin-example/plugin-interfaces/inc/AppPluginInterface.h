@@ -24,7 +24,7 @@ namespace hb
             explicit AppPluginInterface();
             virtual ~AppPluginInterface();
 
-            virtual PluginInitState init  (const HbPlatformService * platform_service);
+            virtual PluginInitState init  ( const HbPlatformService * platform_service );
             virtual void            unload() = 0;
 
         protected:
@@ -33,6 +33,6 @@ namespace hb
     }
 }
 
-Q_DECLARE_INTERFACE(hb::pluginexample::AppPluginInterface, "hb::pluginexample::AppPluginInterface")
+Q_DECLARE_INTERFACE( hb::pluginexample::AppPluginInterface, "hb::pluginexample::AppPluginInterface" )
 
 #endif // APPPLUGININTERFACE_H

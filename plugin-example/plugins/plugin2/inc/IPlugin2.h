@@ -8,7 +8,7 @@ namespace hb
         class IPlugin2
         {
         public:
-            virtual bool makeSomething() const = 0;
+            virtual bool doSomething() const = 0;
         };
     }
 }

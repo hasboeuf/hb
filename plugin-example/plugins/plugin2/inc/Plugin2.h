@@ -21,17 +21,17 @@ namespace hb
         class Plugin2 : public QObject, public IPlugin2, public AppPluginInterface
         {
             Q_OBJECT
-            Q_PLUGIN_METADATA(IID "AppPluginInterface" FILE "Plugin2.json")
-            Q_INTERFACES(hb::pluginexample::AppPluginInterface)
+            Q_PLUGIN_METADATA( IID "AppPluginInterface" FILE "Plugin2.json" )
+            Q_INTERFACES( hb::pluginexample::AppPluginInterface )
 
         public:
             explicit Plugin2();
             virtual ~Plugin2();
 
-            virtual PluginInitState init  (const HbPlatformService * platform_service);
+            virtual PluginInitState init  ( const HbPlatformService * platform_service );
             virtual void            unload();
 
-            bool makeSomething() const;
+            bool doSomething() const;
         signals:
 
         public slots:

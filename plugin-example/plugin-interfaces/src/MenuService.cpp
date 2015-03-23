@@ -7,47 +7,47 @@
 
 using namespace hb::pluginexample;
 
-MenuService::MenuService(QString name, QString version, QMenuBar* menuBar) :
-    AppService(name, version)
+MenuService::MenuService( const QString & name, const QString & version, QMenuBar * menuBar ) :
+    AppService( name, version )
 {
     mMenuBar = menuBar;
-    mCurrentMenuID = MENU_USER;
+    mCurrentMenuId = MENU_USER;
 
-    if(mMenuBar)
+    if( mMenuBar )
     {
-        QList<QMenu*> menus = mMenuBar->findChildren<QMenu*>();
-        foreach(QMenu* menu, menus)
+        QList< QMenu * > menus = mMenuBar->findChildren< QMenu * >();
+        foreach( QMenu* menu, menus )
         {
-            if     (menu->title() == "File"   ) mMenus.insert(MENU_FILE,    menu);
-            else if(menu->title() == "Edit"   ) mMenus.insert(MENU_EDIT,    menu);
-            else if(menu->title() == "Tools"  ) mMenus.insert(MENU_TOOLS,   menu);
-            else if(menu->title() == "Window" ) mMenus.insert(MENU_WINDOW,  menu);
-            else if(menu->title() == "Plugins") mMenus.insert(MENU_PLUGINS, menu);
-            else if(menu->title() == "Help"   ) mMenus.insert(MENU_HELP,    menu);
+            if     ( menu->title() == QStringLiteral( "File"    ) ) mMenus.insert(MENU_FILE,    menu );
+            else if( menu->title() == QStringLiteral( "Edit"    ) ) mMenus.insert(MENU_EDIT,    menu );
+            else if( menu->title() == QStringLiteral( "Tools"   ) ) mMenus.insert(MENU_TOOLS,   menu );
+            else if( menu->title() == QStringLiteral( "Window"  ) ) mMenus.insert(MENU_WINDOW,  menu );
+            else if( menu->title() == QStringLiteral( "Plugins" ) ) mMenus.insert(MENU_PLUGINS, menu );
+            else if( menu->title() == QStringLiteral( "Help"    ) ) mMenus.insert(MENU_HELP,    menu );
 
         }
     }
 }
 
-int MenuService::addMenu  (int menu_parent_id, QString title)
+int MenuService::addMenu  ( qint32 menu_parent_id, const QString & title )
 {
-    if(!mMenuBar) return -1;
+    if( !mMenuBar ) return -1;
 
     if(menu_parent_id == MENU_NEW)
     {
-        QMenu* menu_new = mMenuBar->addMenu(title);
-        int    menu_id  = mCurrentMenuID++;
+        QMenu * menu_new = mMenuBar->addMenu( title );
+        qint32  menu_id  = mCurrentMenuId++;
 
-        mMenus.insert(menu_id, menu_new);
+        mMenus.insert( menu_id, menu_new );
 
         return menu_id;
     }
 
-    if(mMenus.contains(menu_parent_id) && mMenus.value(menu_parent_id))
+    if(mMenus.contains( menu_parent_id ) && mMenus.value( menu_parent_id ) )
     {
-        QMenu* menu_parent = mMenus.value(menu_parent_id);
-        QMenu* menu_new    = menu_parent->addMenu(title);
-        int menu_id        = mCurrentMenuID++;
+        QMenu * menu_parent = mMenus.value( menu_parent_id );
+        QMenu * menu_new    = menu_parent->addMenu( title );
+        qint32  menu_id     = mCurrentMenuId++;
 
         mMenus.insert(menu_id, menu_new);
 
@@ -57,15 +57,15 @@ int MenuService::addMenu  (int menu_parent_id, QString title)
     return -1;
 }
 
-QAction* MenuService::addItem  (int menu_id, QString title)
+QAction * MenuService::addItem( qint32 menu_id, const QString & title )
 {
-    if(!mMenus.contains(menu_id) || !mMenus.value(menu_id))
+    if( !mMenus.contains( menu_id ) || !mMenus.value( menu_id ) )
     {
-        return 0;
+        return nullptr;
     }
 
-    QMenu*   menu   = mMenus.value(menu_id);
-    QAction* action = menu->addAction(title);
+    QMenu *   menu   = mMenus.value( menu_id );
+    QAction * action = menu->addAction( title );
 
     return action;
 }

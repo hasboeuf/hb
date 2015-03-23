@@ -24,12 +24,12 @@ namespace hb
                 SERVICE_TAB
             };
 
-            static QString serviceName(ServiceID service_id);
+            static QString serviceName( ServiceID service_id );
 
             explicit AppPlatformService();
             virtual ~AppPlatformService();
 
-            virtual AppService * requestService (QString service_name) const;
+            virtual AppService * requestService ( const QString & service_name ) const;
 
 
         };

@@ -15,14 +15,14 @@ AppPluginInterface::~AppPluginInterface()
 
 }
 
-HbPluginInterface::PluginInitState AppPluginInterface::init(const HbPlatformService * platform_service)
+HbPluginInterface::PluginInitState AppPluginInterface::init( const HbPlatformService * platform_service )
 {
     if( !platform_service )
     {
         return INIT_FAIL;
     }
 
-    const AppPlatformService * app_platform_service = dynamic_cast< const AppPlatformService * >( platform_service);
+    const AppPlatformService * app_platform_service = dynamic_cast< const AppPlatformService * >( platform_service );
 
     if( !app_platform_service )
     {

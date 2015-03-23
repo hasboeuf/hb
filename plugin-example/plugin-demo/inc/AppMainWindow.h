@@ -14,7 +14,7 @@ namespace hb
             Q_OBJECT
 
         public:
-            explicit AppMainWindow(QWidget *parent = nullptr);
+            explicit AppMainWindow( const QString & plugin_dir, QWidget * parent = nullptr );
 
         private:
             AppPlatformService mPlatformServices;
