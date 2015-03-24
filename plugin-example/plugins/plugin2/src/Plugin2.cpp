@@ -46,7 +46,7 @@ HbPluginInterface::PluginInitState Plugin2::init( const HbPlatformService * plat
 
 void Plugin2::unload()
 {
-
+    // TODO remove menu.
 }
 
 void Plugin2::onAction1Triggered()

@@ -6,6 +6,9 @@
 #include <QtCore/QPluginLoader>
 #include <QtCore/QJsonObject>
 #include <QtCore/QJsonArray>
+// Hb
+#include <HbGlobal.h>
+#include <HbLogService.h>
 // Local
 #include <HbPluginManager.h>
 #include <HbPluginInterface.h>
@@ -38,10 +41,13 @@ void HbPluginManager::load( const QString & folder_path )
 
 int HbPluginManager::unload()
 {
-    foreach( QString plugin_name, mPluginsInfos.keys() )
+    QStringList names = mPluginsInfos.keys();
+    foreach( QString plugin_name, names )
     {
-        unloadPlugin( plugin_name, false );
+        unloadPlugin( plugin_name );
     }
+
+    qDeleteAll( mPluginsInfos ); // Delete HbPluginInfos.
 
     mPlugins.clear();
     mPluginsInfos.clear();
@@ -67,52 +73,39 @@ void HbPluginManager::loadPluginFromName( const QString & plugin_name )
     loadPlugin( plugin_name );
 }
 
-void HbPluginManager::unloadPlugin( const QString & plugin_name, bool clear )
+void HbPluginManager::unloadPlugin( const QString & plugin_name )
 {
-    if( !mLoadedPlugins.contains( plugin_name ) )
+    HbPluginInfos * infos  = mPluginsInfos.value( plugin_name, nullptr );
+    q_assert_ptr( infos );
+
+    if( infos->state() == HbPluginInfos::PLUGIN_NOT_LOADED )
     {
         return; // Plugin already unloaded.
     }
 
-    if( !mPluginsLoaders.contains( plugin_name ) || !mPluginsLoaders.value( plugin_name ) )
-    {
-        return;
-    }
-
-    if( !mPluginsInfos.contains  ( plugin_name ) || !mPluginsInfos.value( plugin_name ) )
-    {
-        return;
-    }
-
-    QPluginLoader * loader = mPluginsLoaders.value( plugin_name );
-    HbPluginInfos * infos  = mPluginsInfos.value  ( plugin_name );
+    QPluginLoader * loader = mPluginsLoaders.value( plugin_name, nullptr );
+    q_assert_ptr( loader );
 
     foreach( QString child_name, infos->children() )
     {
-        if( mLoadedPlugins.contains( child_name ) ) // Plugin already unloaded.
+        HbWarning( "Unload child plugin %s.", HbLatin1( child_name ) );
+        if( mPluginsInfos.contains( child_name ) )
         {
-            unloadPlugin( child_name, clear );
+            unloadPlugin( child_name );
         }
     }
 
-    emit pluginUnloaded( infos->name() ); // TODO shit !
-    qDebug() << QString( "Plugin %1 unloaded." ).arg( plugin_name );
+    emit pluginUnloaded( *infos );
+    HbInfo( "Plugin %s unloaded.", HbLatin1( plugin_name ) );
+
+    mPlugins.remove       ( plugin_name );
+    mPluginsLoaders.remove( plugin_name );
 
     loader->unload(); // Delete the plugin.
     delete loader;
-    //delete infos; In case of reloading previous loaded plugin.
-
     loader = 0;
-    //infos  = 0; In case of reloading previous loaded plugin.
 
-    if( clear ) // = false when called by unload().
-    {
-        mPlugins.remove       ( plugin_name );
-        mPluginsLoaders.remove( plugin_name );
-        //mPluginsInfos.remove  (plugin_name); In case of reloading previous loaded plugin.
-    }
-
-    mLoadedPlugins.remove( plugin_name );
+    infos->setState( HbPluginInfos::PLUGIN_NOT_LOADED );
 }
 
 HbPluginInterface* HbPluginManager::plugin( const QString & name ) const
@@ -126,16 +119,14 @@ HbPluginInterface* HbPluginManager::plugin( const QString & name ) const
     return 0;
 }
 
-const QList< const HbPluginInfos * > HbPluginManager::pluginInfoList()
+QList< HbPluginInfos > HbPluginManager::pluginInfoList()
 {
-    QList< const HbPluginInfos * > plugin_info_list;
+    QList< HbPluginInfos > plugin_info_list;
 
     foreach( const HbPluginInfos * info, mPluginsInfos )
     {
-        if( info )
-        {
-            plugin_info_list.append( info );
-        }
+        q_assert_ptr( info );
+        plugin_info_list.append( *info );
     }
 
     return plugin_info_list;
@@ -151,6 +142,8 @@ void HbPluginManager::scanFolder( const QString & path )
 
     QDir plugin_dir( path );
 
+    HbInfo( "Scan %s directory.", HbLatin1( path ) );
+
     QFileInfoList files = plugin_dir.entryInfoList();
 
     foreach( QFileInfo file, files )
@@ -159,30 +152,34 @@ void HbPluginManager::scanFolder( const QString & path )
 
         QString file_path = file.filePath();
 
-        qDebug() << "->" << file_path;
-        scanPlugin( file_path ); // Add the HbPluginInfos.
+        HbInfo( "Scan %s file.", HbLatin1( file_path ) );
+        scanPlugin( file_path ); // Add HbPluginInfos.
     }
 }
 
-HbPluginInfos* HbPluginManager::scanPlugin( const QString & plugin_path )
+HbPluginInfos * HbPluginManager::scanPlugin( const QString & plugin_path )
 {
-    if( !QLibrary::isLibrary( plugin_path ) ) return 0;
+    if( !QLibrary::isLibrary( plugin_path ) ) return nullptr;
 
     QPluginLoader loader;
 
     loader.setFileName( plugin_path );
 
-    QString      plugin_name         = loader.metaData().value("MetaData").toObject().value("name").toString();
-    QString      plugin_author       = loader.metaData().value("MetaData").toObject().value("author").toString();
-    QString      plugin_version      = loader.metaData().value("MetaData").toObject().value("version").toString();
-    QVariantList plugin_required     = loader.metaData().value("MetaData").toObject().value("plugin_required").toArray().toVariantList();
-    QVariantList plugin_optional     = loader.metaData().value("MetaData").toObject().value("plugin_optional").toArray().toVariantList();
-    QVariantList service_required    = loader.metaData().value("MetaData").toObject().value("service_required").toArray().toVariantList();
-    QVariantList service_optional    = loader.metaData().value("MetaData").toObject().value("service_optional").toArray().toVariantList();
+    QString      plugin_name      = loader.metaData().value( "MetaData" ).toObject().value( "name"             ).toString();
+    QString      plugin_author    = loader.metaData().value( "MetaData" ).toObject().value( "author"           ).toString();
+    QString      plugin_version   = loader.metaData().value( "MetaData" ).toObject().value( "version"          ).toString();
+    QVariantList plugin_required  = loader.metaData().value( "MetaData" ).toObject().value( "plugin_required"  ).toArray().toVariantList();
+    QVariantList plugin_optional  = loader.metaData().value( "MetaData" ).toObject().value( "plugin_optional"  ).toArray().toVariantList();
+    QVariantList service_required = loader.metaData().value( "MetaData" ).toObject().value( "service_required" ).toArray().toVariantList();
+    QVariantList service_optional = loader.metaData().value( "MetaData" ).toObject().value( "service_optional" ).toArray().toVariantList();
 
-    HbPluginInfos* info = new HbPluginInfos(plugin_path, plugin_author, plugin_name, plugin_version);
+    HbPluginInfos * infos = new HbPluginInfos();
+    infos->setPath   ( plugin_path    );
+    infos->setAuthor ( plugin_author  );
+    infos->setName   ( plugin_name    );
+    infos->setVersion( plugin_version );
 
-    if(!plugin_required.isEmpty())
+    if( !plugin_required.isEmpty() )
     {
         foreach( QVariant item, plugin_required )
         {
@@ -190,7 +187,7 @@ HbPluginInfos* HbPluginManager::scanPlugin( const QString & plugin_path )
             QString     name    = map.value( QStringLiteral( "name"    ) ).toString();
             QString     version = map.value( QStringLiteral( "version" ) ).toString();
 
-            info->addRequiredPlugin( name, version );
+            infos->addRequiredPlugin( name, version );
         }
     }
 
@@ -202,7 +199,7 @@ HbPluginInfos* HbPluginManager::scanPlugin( const QString & plugin_path )
             QString     name    = map.value( QStringLiteral( "name"    ) ).toString();
             QString     version = map.value( QStringLiteral( "version" ) ).toString();
 
-            info->addOptionalPlugin( name, version );
+            infos->addOptionalPlugin( name, version );
         }
     }
 
@@ -214,7 +211,7 @@ HbPluginInfos* HbPluginManager::scanPlugin( const QString & plugin_path )
             QString     name    = map.value( QStringLiteral( "name"    ) ).toString();
             QString     version = map.value( QStringLiteral( "version" ) ).toString();
 
-            info->addRequiredService( name, version );
+            infos->addRequiredService( name, version );
         }
     }
 
@@ -226,63 +223,68 @@ HbPluginInfos* HbPluginManager::scanPlugin( const QString & plugin_path )
             QString     name    = map.value( QStringLiteral( "name"    ) ).toString();
             QString     version = map.value( QStringLiteral( "version" ) ).toString();
 
-            info->addOptionalService( name, version );
+            infos->addOptionalService( name, version );
         }
     }
 
-    qDebug() << info->name() << "--" << info->requiredPluginsStr () << "-------" << info->optionalPluginsStr ();
-    qDebug() << info->name() << "--" << info->requiredServicesStr() << "-------" << info->optionalServicesStr();
+    mPluginsInfos.insert( plugin_name, infos );
 
-    mPluginsInfos.insert( plugin_name, info );
-
-    return info;
+    return infos;
 }
 
-bool HbPluginManager::loadPlugin( const QString & name, const HbPluginInfos * child )
+bool HbPluginManager::loadPlugin( const QString & plugin_name )
 {
-    if( mLoadedPlugins.contains( name ) )
+    HbInfo( "Loading plugin %s...", HbLatin1( plugin_name ) );
+    HbPluginInfos * infos = mPluginsInfos.value( plugin_name, nullptr );
+    if( !infos )
+    {
+        HbError( "Plugin %s absent.", HbLatin1( plugin_name ) );
+        return false;
+    }
+
+    if( infos->isLoaded() )
     {
         return true;
     }
 
-    if( !mPluginsInfos.contains( name ) )
-    {
-        // ERR WTF
-        return false;
-    }
-
-    HbPluginInfos * infos = mPluginsInfos.value( name );
-
-    QHash<QString, QString> required_plugins       = infos->requiredPlugins();
-    QHash<QString, QString>::const_iterator it_rp  = required_plugins.constBegin();
+    QHash< QString, QString > required_plugins = infos->requiredPlugins();
+    auto it_rp  = required_plugins.constBegin();
 
     bool required_plugins_ok = true;
     while( it_rp != required_plugins.constEnd() )
     {
-
         QString dep_name    = it_rp.key();
         QString dep_version = it_rp.value();
 
-        if( !mLoadedPlugins.contains( dep_name ) )
+        HbPluginInfos * dep = mPluginsInfos.value( dep_name, nullptr );
+        q_assert_ptr( dep );
+
+        dep->addChild( plugin_name );
+
+        if( !dep->isLoaded() )
         {
-            if( !loadPlugin( dep_name, infos ) )
+            HbInfo( "Loading dependency plugin %s...", HbLatin1( dep_name ) );
+            if( !loadPlugin( dep_name ) )
             {
-                qDebug() << QString( "Missing dependency for plugin %1: %2." ).arg( infos->name() ).arg( dep_name );
+                HbInfo( "Missing dependency for plugin %s: %s.", HbLatin1( infos->name() ), HbLatin1( dep_name ) );
                 required_plugins_ok = false;
             }
         }
 
-        if( mLoadedPlugins.value( dep_name ) != dep_version )
+        if( dep->isLoaded() )
         {
-            qDebug() << QString( "Version mismatch for plugin %1: current=%2, required=%3." )
-                        .arg( dep_name )
-                        .arg( mLoadedPlugins.value( dep_name ) )
-                        .arg( dep_version );
+            if( dep->version() != dep_version )
+            {
+                HbInfo( "Version mismatch for plugin %s: current=%s, required=%s.",
+                        HbLatin1( dep_name ),
+                        HbLatin1( dep->version() ),
+                        HbLatin1( dep_version ) );
 
-            required_plugins_ok = false;
+                required_plugins_ok = false;
+            }
         }
 
-        it_rp++;
+        ++it_rp;
     }
 
     QHash< QString, QString > required_services = infos->requiredServices();
@@ -298,22 +300,22 @@ bool HbPluginManager::loadPlugin( const QString & name, const HbPluginInfos * ch
         if( !mpPlatformService || mpPlatformService->isServiceRegistered( dep_name) != dep_version )
         {
             required_services_ok = false;
-            qDebug() << QString( "Missing service for plugin %1: %2." ).arg( infos->name() ).arg( dep_name );
+            HbInfo( "Missing service for plugin %s: %s.", HbLatin1( infos->name() ), HbLatin1( dep_name ) );
         }
 
-        it_rs++;
+        ++it_rs;
     }
 
     if( !required_plugins_ok || !required_services_ok )
     {
-        qDebug() << QString( "Plugin %1 not loaded." ).arg( infos->name() );
+        HbError( "Plugin %s not loaded.", HbLatin1( infos->name() ) );
         return false;
     }
 
 
     QPluginLoader * loader = new QPluginLoader( infos->path() );
-    loader->load();
-    if( !loader->isLoaded() )
+
+    if( !loader->load() )
     {
         return false;
     }
@@ -321,11 +323,6 @@ bool HbPluginManager::loadPlugin( const QString & name, const HbPluginInfos * ch
     HbPluginInterface * plugin = dynamic_cast< HbPluginInterface * >( loader->instance() );
     if( plugin )
     {
-        if( child )
-        {
-            infos->addChild( child->name() );
-        }
-
         if( plugin->init( mpPlatformService ) == HbPluginInterface::INIT_FAIL )
         {
             delete loader;
@@ -335,11 +332,11 @@ bool HbPluginManager::loadPlugin( const QString & name, const HbPluginInfos * ch
         mPlugins.insert       ( infos->name(), plugin );
         mPluginsLoaders.insert( infos->name(), loader );
 
-        mLoadedPlugins.insert( infos->name(), infos->version() );
+        infos->setState( HbPluginInfos::PLUGIN_LOADED );
 
-        qDebug() << QString( "Plugin %1 loaded." ).arg( infos->name() );
+        HbInfo( "Plugin %s loaded.", HbLatin1( infos->name() ) );
 
-        emit pluginLoaded( infos );
+        emit pluginLoaded( *infos );
         return true;
     }
     else

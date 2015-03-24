@@ -39,25 +39,23 @@ namespace hb
             void load  ( const QString & folder_path );
             int  unload();
 
-            void loadPluginFromPath( const QString & plugin_path);
-            void loadPluginFromName( const QString & plugin_name);
-            void unloadPlugin      ( const QString & plugin_name, bool clear = true );
-
-            QHash< QString, QString > mLoadedPlugins; // Name Version.
+            void loadPluginFromPath( const QString & plugin_path );
+            void loadPluginFromName( const QString & plugin_name );
+            void unloadPlugin      ( const QString & plugin_name );
 
             HbPluginInterface* plugin( const QString & name) const;
 
-            const QList< const HbPluginInfos * > pluginInfoList();
+            QList< HbPluginInfos > pluginInfoList();
 
         private:
             void           scanFolder( const QString & folder_path );
             HbPluginInfos* scanPlugin( const QString & plugin_path );
-            bool           loadPlugin( const QString & name, const HbPluginInfos * child = nullptr );
+            bool           loadPlugin( const QString & plugin_name );
 
         signals:
-            void pluginLoaded       ( const HbPluginInfos * plugin_infos );
-            void pluginLoadingFailed( const HbPluginInfos * plugin_infos );
-            void pluginUnloaded     ( const QString &       plugin_name  );
+            void pluginLoaded       ( const HbPluginInfos & plugin_infos );
+            void pluginLoadingFailed( const HbPluginInfos & plugin_infos );
+            void pluginUnloaded     ( const HbPluginInfos & plugin_infos );
 
             public slots:
 

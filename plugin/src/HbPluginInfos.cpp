@@ -1,49 +1,83 @@
+// Qt
+#include <QtCore/QDebug>
 // Local
 #include <HbPluginInfos.h>
 
 using namespace hb::plugin;
 
-HbPluginInfos::HbPluginInfos( const QString & path, const QString & author, const QString & name, const QString & version )
+HbPluginInfos::HbPluginInfos()
 {
-    mPath    = path;
-    mAuthor  = author;
-    mName    = name;
-    mVersion = version;
     mState   = PLUGIN_NOT_LOADED;
 }
 
 HbPluginInfos::HbPluginInfos( const HbPluginInfos & copy )
 {
-    mPath    = copy.mPath;
-    mAuthor  = copy.mAuthor;
-    mName    = copy.mName;
-    mVersion = copy.mVersion;
-    mState   = copy.mState;
+    if ( this != &copy )
+    {
+        mPath    = copy.mPath;
+        mAuthor  = copy.mAuthor;
+        mName    = copy.mName;
+        mVersion = copy.mVersion;
+        mState   = copy.mState;
 
-    mRequiredPlugins = copy.mRequiredPlugins;
-    mOptionalPlugins = copy.mOptionalPlugins;
-    mRequiredService = copy.mRequiredService;
-    mOptionalService = copy.mOptionalService;
+        mRequiredPlugins = copy.mRequiredPlugins;
+        mOptionalPlugins = copy.mOptionalPlugins;
+        mRequiredService = copy.mRequiredService;
+        mOptionalService = copy.mOptionalService;
 
-    mChildren = copy.mChildren;
+        mChildren = copy.mChildren;
+    }
 }
 
 HbPluginInfos& HbPluginInfos::operator=( const HbPluginInfos & copy )
 {
-    mPath    = copy.mPath;
-    mAuthor  = copy.mAuthor;
-    mName    = copy.mName;
-    mVersion = copy.mVersion;
-    mState   = copy.mState;
+    if ( this != &copy )
+    {
+        mPath    = copy.mPath;
+        mAuthor  = copy.mAuthor;
+        mName    = copy.mName;
+        mVersion = copy.mVersion;
+        mState   = copy.mState;
 
-    mRequiredPlugins = copy.mRequiredPlugins;
-    mOptionalPlugins = copy.mOptionalPlugins;
-    mRequiredService = copy.mRequiredService;
-    mOptionalService = copy.mOptionalService;
+        mRequiredPlugins = copy.mRequiredPlugins;
+        mOptionalPlugins = copy.mOptionalPlugins;
+        mRequiredService = copy.mRequiredService;
+        mOptionalService = copy.mOptionalService;
 
-    mChildren = copy.mChildren;
+        mChildren = copy.mChildren;
+    }
 
     return ( *this );
+}
+
+void HbPluginInfos::setPath   ( const QString & path    )
+{
+    mPath = path;
+}
+
+void HbPluginInfos::setAuthor ( const QString & author  )
+{
+    mAuthor = author;
+}
+
+void HbPluginInfos::setName   ( const QString & name    )
+{
+    mName = name;
+}
+
+void HbPluginInfos::setVersion( const QString & version )
+{
+    mVersion = version;
+}
+
+void HbPluginInfos::setState( PluginState state )
+{
+    mState = state;
+}
+
+bool HbPluginInfos::isLoaded() const
+{
+    return ( mState == PLUGIN_LOADED );
 }
 
 const QString & HbPluginInfos::path() const
@@ -151,15 +185,7 @@ HbPluginInfos::PluginState HbPluginInfos::state() const
     return mState;
 }
 
-QString HbPluginInfos::stateStr() const
-{
-    if( mState == PLUGIN_NOT_LOADED       ) return QStringLiteral( "Plugin not loaded." );
-    if( mState == PLUGIN_NOT_LOADED_ERROR ) return QStringLiteral( "Plugin not loaded (errors occured)." );
-    if( mState == PLUGIN_LOADED           ) return QStringLiteral( "Plugin loaded." );
-    else                                    return QStringLiteral( "Plugin state unknown." );
-}
-
-const QStringList& HbPluginInfos::children() const
+const QSet< QString > & HbPluginInfos::children() const
 {
     return mChildren;
 }
@@ -191,5 +217,5 @@ void HbPluginInfos::addOptionalService( const QString & name, const QString & ve
 
 void HbPluginInfos::addChild( const QString & plugin_name )
 {
-    mChildren.append( plugin_name );
+    mChildren.insert( plugin_name );
 }

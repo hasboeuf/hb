@@ -1,6 +1,9 @@
 // Qt
 #include <QtCore/QDebug>
 #include <QtWidgets/QApplication>
+// Hb
+#include <core/HbApplicationHelper.h>
+#include <HbLogService.h>
 // Local
 #include <AppMainWindow.h>
 
@@ -10,20 +13,11 @@ int main(int argc, char *argv[])
 {
     QApplication a( argc, argv );
 
-    QString plugin_dir;
-    if( argc > 1 )
-    {
-        plugin_dir = QString::fromLatin1( argv[1] );
-    }
+    hb::tools::HbApplicationHelper::initApp("hb-company", "hb-company.com");
+    hb::tools::HbApplicationHelper::initSkin("fusion");
+    hb::log::HbLogService::processArgs( argc, argv );
 
-    if( plugin_dir.isEmpty() )
-    {
-        plugin_dir = QCoreApplication::applicationDirPath() + "/plugins";
-    }
-
-    qDebug() << plugin_dir;
-
-    AppMainWindow w( plugin_dir );
+    AppMainWindow w;
     w.show();
     
     return a.exec();

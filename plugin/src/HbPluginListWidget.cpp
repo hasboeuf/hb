@@ -33,14 +33,11 @@ HbPluginListWidget::HbPluginListWidget( QWidget * parent ) :
     qtv_plugins->setSortingEnabled( true );
 }
 
-void HbPluginListWidget::setPlugins( QList< const HbPluginInfos * > plugins )
+void HbPluginListWidget::setPlugins( QList< HbPluginInfos > plugins )
 {
-    foreach( const HbPluginInfos * info, plugins )
+    foreach( HbPluginInfos info, plugins )
     {
-        if( info )
-        {
-            onPluginLoaded( info );
-        }
+        onPluginLoaded( info );
     }
 }
 
@@ -58,14 +55,9 @@ QStandardItem * HbPluginListWidget::getLoadItem( const QString & plugin_name )
 }
 
 
-void HbPluginListWidget::onPluginLoaded( const HbPluginInfos * plugin_infos )
+void HbPluginListWidget::onPluginLoaded( const HbPluginInfos & plugin_infos )
 {
-    if( !plugin_infos )
-    {
-        return;
-    }
-
-    if( !mPlugins.contains( plugin_infos->name() ) )
+    if( !mPlugins.contains( plugin_infos.name() ) )
     {
         QStandardItem * item_name     = new QStandardItem();
         QStandardItem * item_load     = new QStandardItem();
@@ -78,15 +70,15 @@ void HbPluginListWidget::onPluginLoaded( const HbPluginInfos * plugin_infos )
 
         item_load->setFlags( item_load->flags() | Qt::ItemIsUserCheckable /*| Qt::ItemIsEditable*/ );
 
-        item_name->setData        ( plugin_infos->name(),            Qt::DisplayRole );
-        item_load->setData        ( Qt::Checked,                     Qt::CheckStateRole );
-        item_load->setData        ( plugin_infos->name(),            Qt::UserRole ); // To retrieve efficiently the name of the plugin when the checkbox is un/checked.
-        item_version->setData     ( plugin_infos->version(),         Qt::DisplayRole );
-        item_author->setData      ( plugin_infos->author(),          Qt::DisplayRole );
-        item_required->setData    ( plugin_infos->requiredPluginsStr() + " " +
-                                    plugin_infos->requiredServicesStr(), Qt::DisplayRole );
-        item_optional->setData    ( plugin_infos->optionalPluginsStr() + " " +
-                                    plugin_infos->optionalServicesStr(), Qt::DisplayRole );
+        item_name->setData        ( plugin_infos.name(),            Qt::DisplayRole );
+        item_load->setData        ( Qt::Checked,                    Qt::CheckStateRole );
+        item_load->setData        ( plugin_infos.name(),            Qt::UserRole ); // To retrieve efficiently the name of the plugin when the checkbox is un/checked.
+        item_version->setData     ( plugin_infos.version(),         Qt::DisplayRole );
+        item_author->setData      ( plugin_infos.author(),          Qt::DisplayRole );
+        item_required->setData    ( plugin_infos.requiredPluginsStr() + " " +
+                                    plugin_infos.requiredServicesStr(), Qt::DisplayRole );
+        item_optional->setData    ( plugin_infos.optionalPluginsStr() + " " +
+                                    plugin_infos.optionalServicesStr(), Qt::DisplayRole );
 
 
         QList< QStandardItem * > plugin_row;
@@ -97,13 +89,13 @@ void HbPluginListWidget::onPluginLoaded( const HbPluginInfos * plugin_infos )
         plugin_row.append( item_required );
         plugin_row.append( item_optional );
 
-        mPlugins.insert( plugin_infos->name(), item_name );
+        mPlugins.insert( plugin_infos.name(), item_name );
 
         mModel.appendRow( plugin_row );
     }
     else
     {
-        QStandardItem * item_load = getLoadItem( plugin_infos->name() );
+        QStandardItem * item_load = getLoadItem( plugin_infos.name() );
         if( item_load )
         {
             disconnect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked );
@@ -115,9 +107,9 @@ void HbPluginListWidget::onPluginLoaded( const HbPluginInfos * plugin_infos )
     }
 }
 
-void HbPluginListWidget::onPluginUnloaded( const QString & plugin_name )
+void HbPluginListWidget::onPluginUnloaded( const HbPluginInfos & plugin_infos )
 {
-    QStandardItem * item_load = getLoadItem( plugin_name );
+    QStandardItem * item_load = getLoadItem( plugin_infos.name() );
     if( item_load )
     {
         disconnect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked );

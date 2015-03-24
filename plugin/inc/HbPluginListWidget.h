@@ -44,7 +44,7 @@ namespace hb
 
             explicit HbPluginListWidget( QWidget * parent = nullptr );
 
-            void setPlugins( QList< const HbPluginInfos * > plugins );
+            void setPlugins( QList< HbPluginInfos > plugins );
 
         private:
             QStandardItem * getLoadItem( const QString & plugin_name );
@@ -60,8 +60,8 @@ namespace hb
 
             public slots:
             // From PlatformService
-            void onPluginLoaded  ( const HbPluginInfos* plugin_infos );
-            void onPluginUnloaded( const QString &      plugin_name );
+            void onPluginLoaded  ( const HbPluginInfos & plugin_infos );
+            void onPluginUnloaded( const HbPluginInfos & plugin_infos );
 
             // From Delegate
             void onPluginChecked( QStandardItem * item_load );

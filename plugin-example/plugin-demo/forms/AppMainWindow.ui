@@ -16,6 +16,37 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="qpb_load">
+        <property name="text">
+         <string>Load plugins...</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="qpb_unload">
+        <property name="text">
+         <string>Unload plugins</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
      <widget class="hb::plugin::HbPluginListWidget" name="plw_plugins" native="true"/>
     </item>
    </layout>
@@ -77,7 +108,7 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>HbPluginListWidget</class>
+   <class>hb::plugin::HbPluginListWidget</class>
    <extends>QWidget</extends>
    <header>HbPluginListWidget.h</header>
    <container>1</container>

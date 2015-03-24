@@ -14,7 +14,7 @@
 // Qt
 #include <QtCore/QHash>
 #include <QtCore/QString>
-#include <QtCore/QStringList>
+#include <QtCore/QSet>
 // Local
 #include <HbPlugin.h>
 
@@ -27,18 +27,25 @@ namespace hb
          */
         class HB_PLUGIN_DECL HbPluginInfos
         {
+        public:
             enum PluginState
             {
                 PLUGIN_NOT_LOADED,
-                PLUGIN_NOT_LOADED_ERROR,
                 PLUGIN_LOADED
             };
 
-        public:
-            HbPluginInfos(  const QString & path, const QString & author, const QString & name, const QString & version );
-            HbPluginInfos( const HbPluginInfos & copy );
 
-            HbPluginInfos& operator=( const HbPluginInfos & copy );
+            HbPluginInfos();
+            HbPluginInfos( const HbPluginInfos & copy );
+            HbPluginInfos & operator=( const HbPluginInfos & copy );
+
+            void setPath   ( const QString & path    );
+            void setAuthor ( const QString & author  );
+            void setName   ( const QString & name    );
+            void setVersion( const QString & version );
+            void setState  ( PluginState state );
+
+            bool isLoaded() const;
 
             const QString &                  path               () const;
             const QString &                  author             () const;
@@ -54,7 +61,7 @@ namespace hb
             QString                          optionalServicesStr() const;
             HbPluginInfos::PluginState       state              () const;
             QString                          stateStr           () const;
-            const QStringList &              children           () const;
+            const QSet< QString > &          children           () const;
 
             bool requiresPlugin ( const QString & name ) const;
             bool requiresService( const QString & name ) const;
@@ -77,7 +84,7 @@ namespace hb
             QHash< QString, QString > mOptionalService;
             PluginState               mState;
 
-            QStringList               mChildren;
+            QSet< QString >           mChildren;
 
         };
     }

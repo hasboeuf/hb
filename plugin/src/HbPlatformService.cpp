@@ -1,5 +1,7 @@
 // Qt
 #include <QtCore/QDebug>
+// Hb
+#include <HbLogService.h>
 // Local
 #include <HbPlatformService.h>
 #include <HbPluginInterface.h>
@@ -43,7 +45,7 @@ void HbPlatformService::unloadPlugins()
     }
 }
 
-const QList< const HbPluginInfos * > HbPlatformService::pluginInfoList()
+QList< HbPluginInfos > HbPlatformService::pluginInfoList()
 {
     return mPluginManager.pluginInfoList();
 }
@@ -90,26 +92,24 @@ QString HbPlatformService::isServiceRegistered( const QString & service_name ) c
     return "-1";
 }
 
-void HbPlatformService::onPluginLoaded  ( const HbPluginInfos * plugin_infos )
+void HbPlatformService::onPluginLoaded  ( const HbPluginInfos & plugin_infos )
 {
-    if( !plugin_infos ) return;
-
     emit pluginLoaded( plugin_infos );
 }
 
-void HbPlatformService::onPluginUnloaded( const QString & plugin_name )
+void HbPlatformService::onPluginUnloaded( const HbPluginInfos & plugin_infos )
 {
-    emit pluginUnloaded( plugin_name );
+    emit pluginUnloaded( plugin_infos );
 }
 
 void HbPlatformService::onLoadPluginRequest  ( const QString & plugin_name )
 {
-    qDebug() << QString("Load request (plugin=%1)").arg( plugin_name );
+    HbInfo( "Load request (plugin=%s).", HbLatin1( plugin_name ) );
     mPluginManager.loadPluginFromName( plugin_name );
 }
 
 void HbPlatformService::onUnloadPluginRequest( const QString & plugin_name )
 {
-    qDebug() << QString( "Unload request (plugin=%1)" ).arg( plugin_name );
+    HbInfo( "Unload request (plugin=%s).", HbLatin1( plugin_name ) );
     mPluginManager.unloadPlugin( plugin_name );
 }

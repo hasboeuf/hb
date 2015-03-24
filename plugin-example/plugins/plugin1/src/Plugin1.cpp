@@ -52,12 +52,11 @@ HbPluginInterface::PluginInitState Plugin1::init( const HbPlatformService * plat
 
 void Plugin1::unload()
 {
-
+    // TODO remove menu.
 }
 
 void Plugin1::onAction1Triggered()
 {
-    qDebug() << "Action1 triggered";
     const IPlugin2* plugin = dynamic_cast< const IPlugin2 * >( mpPlatformService->requestPlugin( "Plugin2" ) );
 
     if( plugin )

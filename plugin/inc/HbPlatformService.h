@@ -42,7 +42,7 @@ namespace hb
             void loadPlugins  ( const QString & plugin_folder );
             void unloadPlugins();
 
-            const QList< const HbPluginInfos * > pluginInfoList();
+            QList< HbPluginInfos > pluginInfoList();
 
             virtual HbPluginService *         requestService( const QString & name ) const;
             virtual const HbPluginInterface * requestPlugin ( const QString & name ) const;
@@ -57,13 +57,13 @@ namespace hb
 
         signals:
             // To GUI
-            void pluginLoaded  ( const HbPluginInfos * plugin_infos );
-            void pluginUnloaded( const QString &       plugin_name  );
+            void pluginLoaded  ( const HbPluginInfos & plugin_infos );
+            void pluginUnloaded( const HbPluginInfos & plugin_infos );
 
             public slots:
             // From HbPluginManager
-            void onPluginLoaded  ( const HbPluginInfos * plugin_infos );
-            void onPluginUnloaded( const QString & plugin_name );
+            void onPluginLoaded  ( const HbPluginInfos & plugin_infos );
+            void onPluginUnloaded( const HbPluginInfos & plugin_infos );
 
             // From GUI
             void onLoadPluginRequest  ( const QString & plugin_name );

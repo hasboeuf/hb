@@ -23,7 +23,7 @@ QT *= gui widgets
 # Modules Settings
 # -----------------
 
-HB  += plugin plugin-interfaces
+HB  += tools log plugin plugin-interfaces
 
 # ---------------
 # QMake Includes
