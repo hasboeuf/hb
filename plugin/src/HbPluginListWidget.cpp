@@ -34,14 +34,6 @@ HbPluginListWidget::HbPluginListWidget( QWidget * parent ) :
     qtv_plugins->setSortingEnabled( true );
 }
 
-void HbPluginListWidget::setPlugins( QList< HbPluginInfos > plugins )
-{
-    foreach( HbPluginInfos info, plugins )
-    {
-        onPluginStateChanged( info );
-    }
-}
-
 QStandardItem * HbPluginListWidget::getLoadItem( const QString & plugin_name )
 {
     QStandardItem * item_name = mPlugins.value( plugin_name );
@@ -59,6 +51,7 @@ QStandardItem * HbPluginListWidget::getLoadItem( const QString & plugin_name )
 void HbPluginListWidget::onPluginStateChanged( const HbPluginInfos & plugin_infos )
 {
     HbInfo( "onPluginStateChanged state=%s", HbLatin1( plugin_infos.stateStr() ) );
+
     // Unregistered plugin.
     if( plugin_infos.state() == HbPluginInfos::PLUGIN_NOT_REGISTERED )
     {
@@ -85,7 +78,8 @@ void HbPluginListWidget::onPluginStateChanged( const HbPluginInfos & plugin_info
 
         item_name->setData        ( plugin_infos.name(),            Qt::DisplayRole );
         item_load->setData        ( Qt::Unchecked,                  Qt::CheckStateRole ); // Initial state.
-        item_load->setData        ( plugin_infos.name(),            Qt::UserRole ); // To retrieve efficiently the name of the plugin when the checkbox is un/checked.
+        item_load->setData        ( Qt::Unchecked,                  ROLE_PLUGIN_CHECKSTATE ); // Store previous checkstate to do a proper action.
+        item_load->setData        ( plugin_infos.name( ),           ROLE_PLUGIN_NAME ); // To retrieve efficiently the name of the plugin when the checkbox is un/checked.
         item_version->setData     ( plugin_infos.version(),         Qt::DisplayRole );
         item_author->setData      ( plugin_infos.author(),          Qt::DisplayRole );
         item_required->setData    ( plugin_infos.requiredPluginsStr() + " " +
@@ -106,12 +100,15 @@ void HbPluginListWidget::onPluginStateChanged( const HbPluginInfos & plugin_info
         mModel.appendRow( plugin_row );
     }
 
-    // Update checkbox state.
+    // Update checkbox.
     QStandardItem * item_load = getLoadItem( plugin_infos.name() );
     if( item_load )
     {
         disconnect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked ); // Avoid to call onPluginChecked.
 
+        // TODO use PLUGIN_CHANGING?
+
+        // Change state
         if( plugin_infos.state() == HbPluginInfos::PLUGIN_LOADED )
         {
             item_load->setData( Qt::Checked, Qt::CheckStateRole);
@@ -124,6 +121,7 @@ void HbPluginListWidget::onPluginStateChanged( const HbPluginInfos & plugin_info
         {
             item_load->setData( Qt::Unchecked, Qt::CheckStateRole);
         }
+        item_load->setData( item_load->data( Qt::CheckStateRole ), ROLE_PLUGIN_CHECKSTATE ); // Store previous state.
 
         connect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked, Qt::UniqueConnection );
     }
@@ -136,18 +134,18 @@ void HbPluginListWidget::onPluginChecked( QStandardItem * item_load )
         return;
     }
 
-    QString plugin_name = item_load->data( Qt::UserRole ).toString();
+    QString plugin_name = item_load->data( ROLE_PLUGIN_NAME ).toString();
 
     disconnect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked ); // Avoid to call onPluginChecked.
 
-    qint32 wanted_state = item_load->data( Qt::CheckStateRole ).toInt();
-    if( wanted_state == Qt::Unchecked )
+    qint32 previous_state = item_load->data( ROLE_PLUGIN_CHECKSTATE ).toInt( );
+    if( previous_state == Qt::Unchecked )
     {
-        emit unloadPluginRequest( plugin_name );
+        emit loadPluginRequest( plugin_name );
     }
     else
     {
-        emit loadPluginRequest( plugin_name );
+        emit unloadPluginRequest( plugin_name );
     }
 
     connect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked, Qt::UniqueConnection );

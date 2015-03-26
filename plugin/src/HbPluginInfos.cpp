@@ -87,7 +87,10 @@ void HbPluginInfos::setState( PluginState state )
 
 bool HbPluginInfos::isLoaded() const
 {
-    return ( mState > PLUGIN_REGISTERED );
+    if( mState == PLUGIN_LOADED )           return true;
+    if( mState == PLUGIN_LOADED_PARTIALLY ) return true;
+
+    return false;
 }
 
 const QString & HbPluginInfos::path() const

@@ -48,7 +48,6 @@ void AppMainWindow::onLoadClicked  ()
     }
 
     mPlatformServices.loadPlugins( plugin_dir );
-    //plw_plugins->setPlugins( mPlatformServices.pluginInfoList() );
 }
 
 void AppMainWindow::onUnloadClicked()

@@ -42,13 +42,13 @@ namespace hb
                 COLUMN_OPTIONAL
             };
 
-            explicit HbPluginListWidget( QWidget * parent = nullptr );
+            enum RoleId
+            {
+                ROLE_PLUGIN_NAME = Qt::UserRole,
+                ROLE_PLUGIN_CHECKSTATE
+            };
 
-            /*!
-             * Add plugins to the display list.
-             * \param plugins List of plugins infos.
-             */
-            void setPlugins( QList< HbPluginInfos > plugins );
+            explicit HbPluginListWidget( QWidget * parent = nullptr );
 
         public slots:
             /*!

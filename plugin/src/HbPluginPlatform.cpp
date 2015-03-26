@@ -14,8 +14,6 @@ HbPluginPlatform::HbPluginPlatform() :
     QObject(), mPluginManager( this )
 {
 
-    mPluginLoaded = false;
-
     connect( &mPluginManager, &HbPluginManager::pluginStateChanged,
              this,            &HbPluginPlatform::onPluginStateChanged, Qt::UniqueConnection );
 }
@@ -27,20 +25,12 @@ HbPluginPlatform::~HbPluginPlatform()
 
 void HbPluginPlatform::loadPlugins  ( const QString & plugin_folder )
 {
-    if( !mPluginLoaded )
-    {
-        mPluginManager.load( plugin_folder );
-        mPluginLoaded = true;
-    }
+    mPluginManager.load( plugin_folder );
 }
 
 void HbPluginPlatform::unloadPlugins()
 {
-    if( mPluginLoaded )
-    {
-        mPluginManager.unload();
-        mPluginLoaded = false;
-    }
+    mPluginManager.unload();
 }
 
 QList< HbPluginInfos > HbPluginPlatform::pluginInfoList()

@@ -41,6 +41,7 @@ namespace hb
             {
                 PLUGIN_NOT_REGISTERED,
                 PLUGIN_REGISTERED,
+                PLUGIN_CHANGING, // Transition when plugin is un/loading.
                 PLUGIN_LOADED_PARTIALLY,
                 PLUGIN_LOADED
             };
