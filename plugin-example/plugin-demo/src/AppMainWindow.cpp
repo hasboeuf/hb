@@ -36,7 +36,7 @@ AppMainWindow::AppMainWindow( QWidget * parent ) :
     connect( qpb_unload, &QAbstractButton::clicked, this, &AppMainWindow::onUnloadClicked );
 }
 
-void AppMainWindow::onLoadClicked  ()
+void AppMainWindow::onLoadClicked()
 {
     QString plugin_dir = QFileDialog::getExistingDirectory( this,
                                                             "Select a plugin folder",
