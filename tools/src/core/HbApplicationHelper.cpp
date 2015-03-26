@@ -1,8 +1,8 @@
 // Qt
-#include <QtCore/QCoreApplication>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QStyleFactory>
 #include <QtGui/QPalette>
+#include <QtGui/QIcon>
 #include <QtCore/QTime>
 // Local
 #include <core/HbApplicationHelper.h>
@@ -29,6 +29,8 @@ void HbApplicationHelper::initApp(const QString & company, const QString & domai
 
 void HbApplicationHelper::initSkin( const QString & skin )
 {
+    // Logo
+    QApplication::setWindowIcon( QIcon( ":/HbLogo.png" ) );
 
     // Style
     qApp->setStyle(QStyleFactory::create(skin));
