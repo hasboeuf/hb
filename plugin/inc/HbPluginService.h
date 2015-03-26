@@ -21,7 +21,7 @@ namespace hb
     namespace plugin
     {
         /*!
-         * TODOC
+         * HbPluginService identifies a service.
          */
         class HB_PLUGIN_DECL HbPluginService : public QObject
         {

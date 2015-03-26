@@ -66,7 +66,14 @@ void HbPluginListWidget::onPluginLoaded( const HbPluginInfos & plugin_infos )
         QStandardItem * item_required = new QStandardItem();
         QStandardItem * item_optional = new QStandardItem();
 
-        item_load->setCheckable( true );
+        if( plugin_infos.state() == HbPluginInfos::PLUGIN_LOADED )
+        {
+            item_load->setCheckable( true );
+        }
+        else
+        {
+            item_load->setCheckable( false );
+        }
 
         item_load->setFlags( item_load->flags() | Qt::ItemIsUserCheckable /*| Qt::ItemIsEditable*/ );
 

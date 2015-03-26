@@ -10,12 +10,12 @@
 
 
 
-Q_PLUGIN_METADATA(IID "hb::pluginexample::AppPluginInterface")
+Q_PLUGIN_METADATA(IID "hb::pluginexample::AppAbstractPlugin")
 
 using namespace hb::pluginexample;
 
 Plugin2::Plugin2() :
-    QObject(), AppPluginInterface()
+    QObject(), AppAbstractPlugin()
 {
 }
 
@@ -23,14 +23,12 @@ Plugin2::~Plugin2()
 {
 }
 
-// TODO visibility of PlatformService methods.
-
-HbPluginInterface::PluginInitState Plugin2::init( const HbPlatformService * platform_service )
+IHbPlugin::PluginInitState Plugin2::init( const HbPlatformService * platform_service )
 {
-    MenuService * service_menu = dynamic_cast< MenuService * >( platform_service->requestService( "ServiceMenuBar" ) );
+    MenuService * service_menu = dynamic_cast< MenuService * >( platform_service->requestService( AppPlatformService::SERVICE_MENU_BAR ) );
     if( !service_menu )
     {
-        return INIT_FAIL;
+        return INIT_SUCCESS_PARTLY;
     }
 
     QAction * action = service_menu->addItem( MenuService::MENU_PLUGINS, "Plugin2 action" );
@@ -46,6 +44,7 @@ HbPluginInterface::PluginInitState Plugin2::init( const HbPlatformService * plat
 
 void Plugin2::unload()
 {
+    qDebug() << "Plugin2::unload!";
     // TODO remove menu.
 }
 

@@ -32,7 +32,7 @@ namespace hb
                 MENU_USER
             };
 
-            MenuService( const QString & name, const QString & version, QMenuBar * menuBar );
+            MenuService( QMenuBar * menuBar );
 
             int       addMenu( qint32 menu_parent, const QString & title );
             QAction*  addItem( qint32 menu_id,     const QString & title );

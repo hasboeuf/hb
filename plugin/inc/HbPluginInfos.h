@@ -23,7 +23,9 @@ namespace hb
     namespace plugin
     {
         /*!
-         * TODOC
+         * HbPluginInfos represents plugin informations.
+         * It stores all informations to correctly identify and use a plugin:
+         * path, name, version, author, dependencies and children.
          */
         class HB_PLUGIN_DECL HbPluginInfos
         {

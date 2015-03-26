@@ -24,7 +24,7 @@ AppMainWindow::AppMainWindow( QWidget * parent ) :
         printf( "HbLog error: %s", HbLatin1( error ) );
     }
 
-    AppService * menu_service = new MenuService( AppPlatformService::serviceName( AppPlatformService::SERVICE_MENU_BAR ), "0.0.1", menuBar() );
+    AppService * menu_service = new MenuService( menuBar() );
     mPlatformServices.registerService( menu_service );
 
     connect( &mPlatformServices, &HbPlatformService::pluginLoaded,   plw_plugins, &HbPluginListWidget::onPluginLoaded   );
@@ -49,7 +49,7 @@ void AppMainWindow::onLoadClicked  ()
     }
 
     mPlatformServices.loadPlugins( plugin_dir );
-    plw_plugins->setPlugins( mPlatformServices.pluginInfoList() );
+    //plw_plugins->setPlugins( mPlatformServices.pluginInfoList() );
 }
 
 void AppMainWindow::onUnloadClicked()

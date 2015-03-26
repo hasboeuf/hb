@@ -3,12 +3,13 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QAction>
 // Local
-#include "MenuService.h"
+#include <MenuService.h>
+#include <AppPlatformService.h>
 
 using namespace hb::pluginexample;
 
-MenuService::MenuService( const QString & name, const QString & version, QMenuBar * menuBar ) :
-    AppService( name, version )
+MenuService::MenuService( QMenuBar * menuBar ) :
+    AppService( AppPlatformService::SERVICE_MENU_BAR, "0.0.1" )
 {
     mMenuBar = menuBar;
     mCurrentMenuId = MENU_USER;

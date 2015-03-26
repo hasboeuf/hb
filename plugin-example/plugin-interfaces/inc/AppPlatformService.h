@@ -18,13 +18,8 @@ namespace hb
 
 
         public:
-            enum ServiceID
-            {
-                SERVICE_MENU_BAR,
-                SERVICE_TAB
-            };
-
-            static QString serviceName( ServiceID service_id );
+            static const QString SERVICE_MENU_BAR;
+            static const QString SERVICE_TAB;
 
             explicit AppPlatformService();
             virtual ~AppPlatformService();

@@ -8,12 +8,12 @@
 #include <Plugin1.h>
 
 
-Q_PLUGIN_METADATA(IID "hb::pluginexample::AppPluginInterface")
+Q_PLUGIN_METADATA(IID "hb::pluginexample::AppAbstractPlugin")
 
 using namespace hb::pluginexample;
 
 Plugin1::Plugin1() :
-    QObject(), AppPluginInterface()
+    QObject(), AppAbstractPlugin()
 {
 }
 
@@ -21,17 +21,15 @@ Plugin1::~Plugin1()
 {
 }
 
-// TODO visibility of PlatformService methods.
-
-HbPluginInterface::PluginInitState Plugin1::init( const HbPlatformService * platform_service )
+IHbPlugin::PluginInitState Plugin1::init( const HbPlatformService * platform_service )
 {
 
-    if(AppPluginInterface::init(platform_service) != INIT_SUCCESS)
+    if( AppAbstractPlugin::init( platform_service ) != INIT_SUCCESS )
     {
         return INIT_FAIL;
     }
 
-    MenuService * service_menu = dynamic_cast< MenuService * >(mpPlatformService->requestService( "ServiceMenuBar" ) );
+    MenuService * service_menu = dynamic_cast< MenuService * >( mpPlatformService->requestService( AppPlatformService::SERVICE_MENU_BAR ) );
     if( !service_menu )
     {
         return INIT_FAIL;
@@ -52,6 +50,7 @@ HbPluginInterface::PluginInitState Plugin1::init( const HbPlatformService * plat
 
 void Plugin1::unload()
 {
+    qDebug() << "Plugin1::unload!";
     // TODO remove menu.
 }
 

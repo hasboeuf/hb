@@ -4,7 +4,7 @@
 #include <HbLogService.h>
 // Local
 #include <HbPlatformService.h>
-#include <HbPluginInterface.h>
+#include <IHbPlugin.h>
 #include <HbPluginInfos.h>
 #include <HbPluginService.h>
 
@@ -57,7 +57,7 @@ HbPluginService * HbPlatformService::requestService( const QString & service_nam
         return mServices.value( service_name );
     }
 
-    return 0;
+    return nullptr;
 }
 
 void HbPlatformService::registerService( HbPluginService * service )
@@ -77,7 +77,7 @@ void HbPlatformService::registerService( HbPluginService * service )
     mServices.insert( name, service );
 }
 
-const HbPluginInterface *HbPlatformService::requestPlugin( const QString & name )   const
+const IHbPlugin *HbPlatformService::requestPlugin( const QString & name )   const
 {
     return mPluginManager.plugin( name );
 }
@@ -89,7 +89,7 @@ QString HbPlatformService::isServiceRegistered( const QString & service_name ) c
         return mServices.value( service_name )->version();
     }
 
-    return "-1";
+    return QString();
 }
 
 void HbPlatformService::onPluginLoaded  ( const HbPluginInfos & plugin_infos )

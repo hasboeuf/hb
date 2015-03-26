@@ -1,21 +1,21 @@
 // Local
-#include <AppPluginInterface.h>
+#include <AppAbstractPlugin.h>
 
 using namespace hb::plugin;
 using namespace hb::pluginexample;
 
-AppPluginInterface::AppPluginInterface() :
-    HbPluginInterface()
+AppAbstractPlugin::AppAbstractPlugin() :
+    IHbPlugin()
 {
     mpPlatformService = 0;
 }
 
-AppPluginInterface::~AppPluginInterface()
+AppAbstractPlugin::~AppAbstractPlugin()
 {
 
 }
 
-HbPluginInterface::PluginInitState AppPluginInterface::init( const HbPlatformService * platform_service )
+IHbPlugin::PluginInitState AppAbstractPlugin::init( const HbPlatformService * platform_service )
 {
     if( !platform_service )
     {

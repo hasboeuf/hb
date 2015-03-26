@@ -11,7 +11,7 @@
 #include <HbLogService.h>
 // Local
 #include <HbPluginManager.h>
-#include <HbPluginInterface.h>
+#include <IHbPlugin.h>
 #include <HbPluginInfos.h>
 
 using namespace hb::plugin;
@@ -39,7 +39,7 @@ void HbPluginManager::load( const QString & folder_path )
     }
 }
 
-int HbPluginManager::unload()
+void HbPluginManager::unload()
 {
     QStringList names = mPluginsInfos.keys();
     foreach( QString plugin_name, names )
@@ -53,12 +53,11 @@ int HbPluginManager::unload()
     mPluginsInfos.clear();
     mPluginsLoaders.clear();
 
-    return 0;
 }
 
 void HbPluginManager::loadPluginFromPath( const QString & plugin_path)
 {
-    HbPluginInfos* infos = scanPlugin( plugin_path );
+    HbPluginInfos * infos = scanPlugin( plugin_path );
 
     if( !infos )
     {
@@ -84,7 +83,9 @@ void HbPluginManager::unloadPlugin( const QString & plugin_name )
     }
 
     QPluginLoader * loader = mPluginsLoaders.value( plugin_name, nullptr );
+    IHbPlugin *     plugin = mPlugins.value( plugin_name, nullptr );
     q_assert_ptr( loader );
+    q_assert_ptr( plugin );
 
     foreach( QString child_name, infos->children() )
     {
@@ -98,6 +99,8 @@ void HbPluginManager::unloadPlugin( const QString & plugin_name )
     emit pluginUnloaded( *infos );
     HbInfo( "Plugin %s unloaded.", HbLatin1( plugin_name ) );
 
+    plugin->unload();
+
     mPlugins.remove       ( plugin_name );
     mPluginsLoaders.remove( plugin_name );
 
@@ -108,15 +111,15 @@ void HbPluginManager::unloadPlugin( const QString & plugin_name )
     infos->setState( HbPluginInfos::PLUGIN_NOT_LOADED );
 }
 
-HbPluginInterface* HbPluginManager::plugin( const QString & name ) const
+IHbPlugin * HbPluginManager::plugin(const QString & plugin_name ) const
 {
-    if( mPlugins.contains( name ) &&
-        mPlugins.value( name ) )
+    if( mPlugins.contains( plugin_name ) &&
+        mPlugins.value( plugin_name ) )
     {
-        return mPlugins.value( name );
+        return mPlugins.value( plugin_name );
     }
 
-    return 0;
+    return nullptr;
 }
 
 QList< HbPluginInfos > HbPluginManager::pluginInfoList()
@@ -320,10 +323,10 @@ bool HbPluginManager::loadPlugin( const QString & plugin_name )
         return false;
     }
 
-    HbPluginInterface * plugin = dynamic_cast< HbPluginInterface * >( loader->instance() );
+    IHbPlugin * plugin = dynamic_cast< IHbPlugin * >( loader->instance() );
     if( plugin )
     {
-        if( plugin->init( mpPlatformService ) == HbPluginInterface::INIT_FAIL )
+        if( plugin->init( mpPlatformService ) == IHbPlugin::INIT_FAIL )
         {
             delete loader;
             return false;

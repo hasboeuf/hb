@@ -1,8 +1,8 @@
-#ifndef APPPLUGININTERFACE_H
-#define APPPLUGININTERFACE_H
+#ifndef APPABSTRACTPLUGIN_H
+#define APPABSTRACTPLUGIN_H
 
 // Hb
-#include <HbPluginInterface.h>
+#include <IHbPlugin.h>
 // Local
 #include <AppPlatformService.h> // Covariance.
 
@@ -15,14 +15,14 @@ namespace hb
 
     namespace pluginexample
     {
-        using hb::plugin::HbPluginInterface;
+        using hb::plugin::IHbPlugin;
 
-        class AppPluginInterface : public HbPluginInterface
+        class AppAbstractPlugin : public IHbPlugin
         {
 
         public:
-            explicit AppPluginInterface();
-            virtual ~AppPluginInterface();
+            explicit AppAbstractPlugin();
+            virtual ~AppAbstractPlugin();
 
             virtual PluginInitState init  ( const HbPlatformService * platform_service );
             virtual void            unload() = 0;
@@ -33,6 +33,6 @@ namespace hb
     }
 }
 
-Q_DECLARE_INTERFACE( hb::pluginexample::AppPluginInterface, "hb::pluginexample::AppPluginInterface" )
+Q_DECLARE_INTERFACE( hb::pluginexample::AppAbstractPlugin, "hb::pluginexample::AppAbstractPlugin" )
 
-#endif // APPPLUGININTERFACE_H
+#endif // APPABSTRACTPLUGIN_H

@@ -24,11 +24,12 @@ namespace hb
 {
     namespace plugin
     {
-        class HbPluginInterface;
+        class IHbPlugin;
         class HbPlatformService;
 
         /*!
-         * TODOC
+         * HbPluginManager handles plugins.
+         * Scan folders, seek for libraries, load plugins.
          */
         class HB_PLUGIN_DECL HbPluginManager : public QObject
         {
@@ -36,29 +37,62 @@ namespace hb
         public:
             explicit HbPluginManager( HbPlatformService * platformService, QObject * parent = nullptr );
 
+            /*!
+             * Load plugin contained in folder path.
+             * \param folder_path Folder path.
+             */
             void load  ( const QString & folder_path );
-            int  unload();
 
+            /*!
+             * Unload all plugins previously loaded.
+             */
+            void unload();
+
+            /*!
+             * Load a specific plugin.
+             * \param plugin_path Path to the library to load.
+             */
             void loadPluginFromPath( const QString & plugin_path );
+
+            /*!
+             * Load a specific plugin.
+             * \param plugin_name Plugin name.
+             */
             void loadPluginFromName( const QString & plugin_name );
+            /*!
+             * Unload a specific plugin.
+             * \param plugin_name Plugin name.
+             */
             void unloadPlugin      ( const QString & plugin_name );
 
-            HbPluginInterface* plugin( const QString & name) const;
+            /*!
+             * Get a specific plugin.
+             * \param plugin_name Plugin name.
+             */
+            IHbPlugin * plugin( const QString & plugin_name ) const;
 
+            /*!
+             * Get previously scanned plugins infos.
+             * \return Plugin infos list.
+             */
             QList< HbPluginInfos > pluginInfoList();
+
+        signals:
+            /*!
+             * Triggered when a plugin is loaded.
+             * \param plugin_infos Plugin infos.
+             */
+            void pluginLoaded  ( const HbPluginInfos & plugin_infos );
+            /*!
+             * Triggered when a plugin is unloaded.
+             * \param plugin_infos Plugin infos.
+             */
+            void pluginUnloaded( const HbPluginInfos & plugin_infos );
 
         private:
             void           scanFolder( const QString & folder_path );
             HbPluginInfos* scanPlugin( const QString & plugin_path );
             bool           loadPlugin( const QString & plugin_name );
-
-        signals:
-            void pluginLoaded       ( const HbPluginInfos & plugin_infos );
-            void pluginLoadingFailed( const HbPluginInfos & plugin_infos );
-            void pluginUnloaded     ( const HbPluginInfos & plugin_infos );
-
-            public slots:
-
 
         private:
             HbPlatformService * mpPlatformService;
@@ -67,7 +101,7 @@ namespace hb
 
             QHash< QString, HbPluginInfos * >     mPluginsInfos;
             QHash< QString, QPluginLoader * >     mPluginsLoaders;
-            QHash< QString, HbPluginInterface * > mPlugins;
+            QHash< QString, IHbPlugin * >         mPlugins;
 
         };
     }

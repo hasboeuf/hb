@@ -25,14 +25,14 @@ namespace hb
     namespace plugin
     {
         /*!
-         * TODOC
+         * HbPluginListWidget is a widget to display HbPluginInfos in a convenient way.
          */
         class HB_PLUGIN_DECL HbPluginListWidget : public QWidget, private Ui::HbPluginListWidget
         {
             Q_OBJECT
 
         public:
-            enum ColumnID
+            enum ColumnId
             {
                 COLUMN_NAME = 0,
                 COLUMN_LOAD,
@@ -44,31 +44,55 @@ namespace hb
 
             explicit HbPluginListWidget( QWidget * parent = nullptr );
 
+            /*!
+             * Add plugins to the display list.
+             * \param plugins List of plugins infos.
+             */
             void setPlugins( QList< HbPluginInfos > plugins );
+
+        public slots:
+            /*!
+             * Notify GUI that a plugin is loaded.
+             * From HbPlatformService.
+             * \param plugin_infos Plugin infos.
+             */
+            void onPluginLoaded  ( const HbPluginInfos & plugin_infos );
+
+            /*!
+             * Notify GUI that a plugin is unloaded.
+             * From HbPlatformService.
+             * \param plugin_infos Plugin infos.
+             */
+            void onPluginUnloaded( const HbPluginInfos & plugin_infos );
+
+            /*!
+             * Fired when a QStandardItemModel changed.
+             * Internal.
+             * \param item_load Pointer of the item.
+             */
+            void onPluginChecked( QStandardItem * item_load );
+
+        signals:
+            /*!
+             * Triggered when a plugin item got checked.
+             * \param Plugin name.
+             */
+            void loadPluginRequest  ( const QString & plugin_name );
+            /*!
+             * Triggered when a plugin item got unchecked.
+             * \param Plugin name.
+             */
+            void unloadPluginRequest( const QString & plugin_name );
 
         private:
             QStandardItem * getLoadItem( const QString & plugin_name );
 
         private:
-
             QStringList           mLabels;
-
             QStandardItemModel    mModel;
             QSortFilterProxyModel mProxy;
 
-            QHash<QString, QStandardItem*> mPlugins;
-
-            public slots:
-            // From PlatformService
-            void onPluginLoaded  ( const HbPluginInfos & plugin_infos );
-            void onPluginUnloaded( const HbPluginInfos & plugin_infos );
-
-            // From Delegate
-            void onPluginChecked( QStandardItem * item_load );
-
-        signals:
-            void loadPluginRequest  ( const QString & plugin_name );
-            void unloadPluginRequest( const QString & plugin_name );
+            QHash< QString, QStandardItem * > mPlugins;
         };
     }
 }
