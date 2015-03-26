@@ -21,7 +21,7 @@ AppPlatformService::~AppPlatformService()
 
 AppService * AppPlatformService::requestService( const QString & service_name ) const
 {
-    HbPluginService * service = HbPlatformService::requestService( service_name );
+    HbPluginService * service = HbPluginPlatform::requestService( service_name );
 
     return dynamic_cast< AppService * >( service );
 }

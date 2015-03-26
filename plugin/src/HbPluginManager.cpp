@@ -16,7 +16,7 @@
 
 using namespace hb::plugin;
 
-HbPluginManager::HbPluginManager( HbPlatformService * platformService, QObject * parent ) :
+HbPluginManager::HbPluginManager( HbPluginPlatform * platformService, QObject * parent ) :
     QObject( parent )
 {
     mpPlatformService = platformService;
@@ -47,7 +47,7 @@ void HbPluginManager::unload()
         unloadPlugin( plugin_name );
     }
 
-    qDeleteAll( mPluginsInfos ); // Delete HbPluginInfos.
+    qDeleteAll( mPluginsInfos ); // Delete HbPluginInfos, state will change to PLUGIN_NOT_REGISTERED.
 
     mPlugins.clear();
     mPluginsInfos.clear();
@@ -77,7 +77,7 @@ void HbPluginManager::unloadPlugin( const QString & plugin_name )
     HbPluginInfos * infos  = mPluginsInfos.value( plugin_name, nullptr );
     q_assert_ptr( infos );
 
-    if( infos->state() == HbPluginInfos::PLUGIN_NOT_LOADED )
+    if( infos->state() < HbPluginInfos::PLUGIN_LOADED_PARTIALLY )
     {
         return; // Plugin already unloaded.
     }
@@ -96,7 +96,6 @@ void HbPluginManager::unloadPlugin( const QString & plugin_name )
         }
     }
 
-    emit pluginUnloaded( *infos );
     HbInfo( "Plugin %s unloaded.", HbLatin1( plugin_name ) );
 
     plugin->unload();
@@ -108,7 +107,7 @@ void HbPluginManager::unloadPlugin( const QString & plugin_name )
     delete loader;
     loader = 0;
 
-    infos->setState( HbPluginInfos::PLUGIN_NOT_LOADED );
+    infos->setState( HbPluginInfos::PLUGIN_REGISTERED );
 }
 
 IHbPlugin * HbPluginManager::plugin(const QString & plugin_name ) const
@@ -133,6 +132,15 @@ QList< HbPluginInfos > HbPluginManager::pluginInfoList()
     }
 
     return plugin_info_list;
+}
+
+void HbPluginManager::onPluginStateChanged()
+{
+    HbPluginInfos * infos = dynamic_cast< HbPluginInfos * >( sender() );
+    if( infos )
+    {
+        emit pluginStateChanged( *infos );
+    }
 }
 
 void HbPluginManager::scanFolder( const QString & path )
@@ -232,6 +240,10 @@ HbPluginInfos * HbPluginManager::scanPlugin( const QString & plugin_path )
 
     mPluginsInfos.insert( plugin_name, infos );
 
+    connect( infos, &HbPluginInfos::stateChanged, this, &HbPluginManager::onPluginStateChanged );
+
+    infos->setState( HbPluginInfos::PLUGIN_REGISTERED );
+
     return infos;
 }
 
@@ -247,6 +259,7 @@ bool HbPluginManager::loadPlugin( const QString & plugin_name )
 
     if( infos->isLoaded() )
     {
+        HbInfo( "Plugin %s already loaded.", HbLatin1( plugin_name ) );
         return true;
     }
 
@@ -320,30 +333,44 @@ bool HbPluginManager::loadPlugin( const QString & plugin_name )
 
     if( !loader->load() )
     {
+        HbError( "Failed to load %s (error=%s).", HbLatin1( infos->name() ), HbLatin1( loader->errorString() ) );
         return false;
     }
 
     IHbPlugin * plugin = dynamic_cast< IHbPlugin * >( loader->instance() );
     if( plugin )
     {
-        if( plugin->init( mpPlatformService ) == IHbPlugin::INIT_FAIL )
+        IHbPlugin::PluginInitState state = plugin->init( mpPlatformService );
+
+        if( ( state == IHbPlugin::INIT_SUCCESS ) ||
+            ( state == IHbPlugin::INIT_SUCCESS_PARTIALLY ) )
         {
+            mPlugins.insert       ( infos->name(), plugin );
+            mPluginsLoaders.insert( infos->name(), loader );
+
+            if( state == IHbPlugin::INIT_SUCCESS )
+            {
+                infos->setState( HbPluginInfos::PLUGIN_LOADED );
+                HbInfo( "Plugin %s loaded.", HbLatin1( infos->name() ) );
+            }
+            else if( state == IHbPlugin::INIT_SUCCESS_PARTIALLY )
+            {
+                infos->setState( HbPluginInfos::PLUGIN_LOADED_PARTIALLY );
+                HbInfo( "Plugin %s partly loaded.", HbLatin1( infos->name() ) );
+            }
+
+            return true;
+        }
+        else // IHbPlugin::INIT_FAIL
+        {
+            HbError( "Failed to init %s.", HbLatin1( infos->name() ) );
             delete loader;
             return false;
         }
-
-        mPlugins.insert       ( infos->name(), plugin );
-        mPluginsLoaders.insert( infos->name(), loader );
-
-        infos->setState( HbPluginInfos::PLUGIN_LOADED );
-
-        HbInfo( "Plugin %s loaded.", HbLatin1( infos->name() ) );
-
-        emit pluginLoaded( *infos );
-        return true;
     }
     else
     {
+        HbError( "Failed to load %s, does it implement IHbPlugin?", HbLatin1( infos->name() ) );
         delete loader;
         return false;
     }

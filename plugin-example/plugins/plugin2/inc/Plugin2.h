@@ -11,7 +11,7 @@ namespace hb
 {
     namespace plugin
     {
-        class HbPlatformService;
+        class HbPluginPlatform;
     }
 
     namespace pluginexample
@@ -28,7 +28,7 @@ namespace hb
             explicit Plugin2();
             virtual ~Plugin2();
 
-            virtual PluginInitState init  ( const HbPlatformService * platform_service );
+            virtual PluginInitState init  ( const HbPluginPlatform * platform_service );
             virtual void            unload();
 
             bool doSomething() const;

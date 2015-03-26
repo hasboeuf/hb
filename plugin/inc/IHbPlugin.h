@@ -16,7 +16,7 @@
 #include <QtCore/QPluginLoader>
 #include <QtGui/QIcon>
 // Local
-#include <HbPlatformService.h>
+#include <HbPluginPlatform.h>
 #include <HbPlugin.h>
 
 namespace hb
@@ -33,7 +33,7 @@ namespace hb
             enum PluginInitState
             {
                 INIT_SUCCESS,
-                INIT_SUCCESS_PARTLY,
+                INIT_SUCCESS_PARTIALLY,
                 INIT_FAIL
             };
 
@@ -49,7 +49,7 @@ namespace hb
              *         INIT_SUCCESS_PARTLY: optional services/plugins are missing.
              *         INIT_FAIL: not good, should be unloaded.
              */
-            virtual PluginInitState init( const HbPlatformService * platform_service ) = 0;
+            virtual PluginInitState init( const HbPluginPlatform * platform_service ) = 0;
 
             /*!
              * Terminate plugin.

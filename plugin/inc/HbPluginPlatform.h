@@ -6,10 +6,10 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBPLATFORMSERVICE_H
-#define HBPLATFORMSERVICE_H
+#ifndef HBPLUGINPLATFORM_H
+#define HBPLUGINPLATFORM_H
 
-/*! \file HbPlatformService.h */
+/*! \file HbPluginPlatform.h */
 
 // Qt
 #include <QtCore/QObject>
@@ -28,16 +28,16 @@ namespace hb
         class HbPluginService;
 
         /*!
-         * HbPlatformService manages services and handle a plugin manager.
+         * HbPluginPlatform manages services and handles plugin manager.
          */
-        class HB_PLUGIN_DECL HbPlatformService : public QObject
+        class HB_PLUGIN_DECL HbPluginPlatform : public QObject
         {
             Q_OBJECT
 
         public:
 
-            explicit HbPlatformService();
-            virtual ~HbPlatformService();
+            explicit HbPluginPlatform();
+            virtual ~HbPluginPlatform();
 
             /*!
              * Load plugins contained in a folder.
@@ -86,33 +86,17 @@ namespace hb
 
         signals:
             /*!
-             * Triggered when a plugin is loaded.
+             * Triggered when a plugin has changed its state.
              * To GUI.
-             * \param plugin_infos Plugin infos.
              */
-            void pluginLoaded  ( const HbPluginInfos & plugin_infos );
-
-            /*!
-             * Triggered when a plugin is unloaded.
-             * To GUI.
-             * \param plugin_infos Plugin infos.
-             */
-            void pluginUnloaded( const HbPluginInfos & plugin_infos );
+            void pluginStateChanged( const HbPluginInfos & plugin_infos );
 
         public slots:
             /*!
-             * Fired when a plugin is loaded.
+             * Fired when a plugin has changed its state.
              * From HbPluginManager.
-             * \param plugin_infos Plugin infos.
              */
-            void onPluginLoaded  ( const HbPluginInfos & plugin_infos );
-
-            /*!
-             * Fired when a plugin is unloaded.
-             * From HbPluginManager.
-             * \param plugin_infos Plugin infos.
-             */
-            void onPluginUnloaded( const HbPluginInfos & plugin_infos );
+            void onPluginStateChanged( const HbPluginInfos & plugin_infos );
 
             /*!
              * Fired when user requests to load a plugin.
@@ -136,4 +120,4 @@ namespace hb
     }
 }
 
-#endif // HBPLATFORMSERVICE_H
+#endif // HBPLUGINPLATFORM_H

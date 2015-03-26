@@ -7,10 +7,16 @@ using namespace hb::plugin;
 
 HbPluginInfos::HbPluginInfos()
 {
-    mState   = PLUGIN_NOT_LOADED;
+    mState         = PLUGIN_NOT_REGISTERED;
 }
 
-HbPluginInfos::HbPluginInfos( const HbPluginInfos & copy )
+HbPluginInfos::~HbPluginInfos()
+{
+    setState( PLUGIN_NOT_REGISTERED );
+}
+
+HbPluginInfos::HbPluginInfos( const HbPluginInfos & copy ) :
+    QObject()
 {
     if ( this != &copy )
     {
@@ -72,12 +78,16 @@ void HbPluginInfos::setVersion( const QString & version )
 
 void HbPluginInfos::setState( PluginState state )
 {
-    mState = state;
+    if( mState != state )
+    {
+        mState = state;
+        emit stateChanged();
+    }
 }
 
 bool HbPluginInfos::isLoaded() const
 {
-    return ( mState == PLUGIN_LOADED );
+    return ( mState > PLUGIN_REGISTERED );
 }
 
 const QString & HbPluginInfos::path() const
@@ -183,6 +193,11 @@ QString HbPluginInfos::optionalServicesStr() const
 HbPluginInfos::PluginState HbPluginInfos::state() const
 {
     return mState;
+}
+
+const QString HbPluginInfos::stateStr() const
+{
+    return HbPluginInfos::MetaPluginState::toString( mState );
 }
 
 const QSet< QString > & HbPluginInfos::children() const

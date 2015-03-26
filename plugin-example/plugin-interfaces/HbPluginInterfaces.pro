@@ -23,7 +23,7 @@ QT *=
 # Modules Settings
 # -----------------
 
-HB += plugin
+HB += tools plugin
 
 # -------------
 # C++ Settings

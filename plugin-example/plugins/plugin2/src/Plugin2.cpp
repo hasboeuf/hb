@@ -3,10 +3,10 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QMessageBox>
 // Hb
-#include "AppPlatformService.h"
-#include "MenuService.h"
+#include <AppPlatformService.h>
+#include <MenuService.h>
 // Local
-#include "Plugin2.h"
+#include <Plugin2.h>
 
 
 
@@ -23,12 +23,12 @@ Plugin2::~Plugin2()
 {
 }
 
-IHbPlugin::PluginInitState Plugin2::init( const HbPlatformService * platform_service )
+IHbPlugin::PluginInitState Plugin2::init( const HbPluginPlatform * platform_service )
 {
     MenuService * service_menu = dynamic_cast< MenuService * >( platform_service->requestService( AppPlatformService::SERVICE_MENU_BAR ) );
     if( !service_menu )
     {
-        return INIT_SUCCESS_PARTLY;
+        return INIT_SUCCESS_PARTIALLY;
     }
 
     QAction * action = service_menu->addItem( MenuService::MENU_PLUGINS, "Plugin2 action" );

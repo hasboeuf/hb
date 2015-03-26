@@ -15,7 +15,7 @@ AppAbstractPlugin::~AppAbstractPlugin()
 
 }
 
-IHbPlugin::PluginInitState AppAbstractPlugin::init( const HbPlatformService * platform_service )
+IHbPlugin::PluginInitState AppAbstractPlugin::init( const HbPluginPlatform * platform_service )
 {
     if( !platform_service )
     {

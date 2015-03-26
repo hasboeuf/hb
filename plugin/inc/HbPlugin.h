@@ -12,7 +12,7 @@
 /*! \file HbPlugin.h */
 
 /*! \namespace hb::plugin
- * TODOC
+ * Contains all code relative to plugin management.
  */
 
 // Qt

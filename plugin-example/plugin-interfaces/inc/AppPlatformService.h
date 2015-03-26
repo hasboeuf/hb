@@ -2,7 +2,7 @@
 #define APPPLATFORMSERVICE_H
 
 // Hb
-#include <HbPlatformService.h>
+#include <HbPluginPlatform.h>
 // Local
 #include <AppService.h>
 
@@ -10,9 +10,9 @@ namespace hb
 {
     namespace pluginexample
     {
-        using hb::plugin::HbPlatformService;
+        using hb::plugin::HbPluginPlatform;
 
-        class AppPlatformService : public HbPlatformService
+        class AppPlatformService : public HbPluginPlatform
         {
             Q_OBJECT
 

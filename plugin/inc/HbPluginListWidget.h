@@ -52,18 +52,10 @@ namespace hb
 
         public slots:
             /*!
-             * Notify GUI that a plugin is loaded.
-             * From HbPlatformService.
-             * \param plugin_infos Plugin infos.
+             * Fired when a plugin has changed its state.
+             * From HbPluginPlatform.
              */
-            void onPluginLoaded  ( const HbPluginInfos & plugin_infos );
-
-            /*!
-             * Notify GUI that a plugin is unloaded.
-             * From HbPlatformService.
-             * \param plugin_infos Plugin infos.
-             */
-            void onPluginUnloaded( const HbPluginInfos & plugin_infos );
+            void onPluginStateChanged( const HbPluginInfos & plugin_infos );
 
             /*!
              * Fired when a QStandardItemModel changed.

@@ -26,7 +26,7 @@ CONFIG *= plugin
 # Modules Settings
 # -----------------
 
-HB += plugin plugin-interfaces
+HB += tools plugin plugin-interfaces
 
 # -------------
 # C++ Settings

@@ -21,7 +21,7 @@ Plugin1::~Plugin1()
 {
 }
 
-IHbPlugin::PluginInitState Plugin1::init( const HbPlatformService * platform_service )
+IHbPlugin::PluginInitState Plugin1::init( const HbPluginPlatform * platform_service )
 {
 
     if( AppAbstractPlugin::init( platform_service ) != INIT_SUCCESS )

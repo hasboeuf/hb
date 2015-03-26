@@ -3,31 +3,29 @@
 // Hb
 #include <HbLogService.h>
 // Local
-#include <HbPlatformService.h>
+#include <HbPluginPlatform.h>
 #include <IHbPlugin.h>
 #include <HbPluginInfos.h>
 #include <HbPluginService.h>
 
 using namespace hb::plugin;
 
-HbPlatformService::HbPlatformService() :
+HbPluginPlatform::HbPluginPlatform() :
     QObject(), mPluginManager( this )
 {
 
     mPluginLoaded = false;
 
-    connect(&mPluginManager, &HbPluginManager::pluginLoaded,
-            this,            &HbPlatformService::onPluginLoaded, Qt::UniqueConnection );
-    connect(&mPluginManager, &HbPluginManager::pluginUnloaded,
-            this,            &HbPlatformService::onPluginUnloaded, Qt::UniqueConnection );
+    connect( &mPluginManager, &HbPluginManager::pluginStateChanged,
+             this,            &HbPluginPlatform::onPluginStateChanged, Qt::UniqueConnection );
 }
 
-HbPlatformService::~HbPlatformService()
+HbPluginPlatform::~HbPluginPlatform()
 {
 
 }
 
-void HbPlatformService::loadPlugins  ( const QString & plugin_folder )
+void HbPluginPlatform::loadPlugins  ( const QString & plugin_folder )
 {
     if( !mPluginLoaded )
     {
@@ -36,7 +34,7 @@ void HbPlatformService::loadPlugins  ( const QString & plugin_folder )
     }
 }
 
-void HbPlatformService::unloadPlugins()
+void HbPluginPlatform::unloadPlugins()
 {
     if( mPluginLoaded )
     {
@@ -45,12 +43,12 @@ void HbPlatformService::unloadPlugins()
     }
 }
 
-QList< HbPluginInfos > HbPlatformService::pluginInfoList()
+QList< HbPluginInfos > HbPluginPlatform::pluginInfoList()
 {
     return mPluginManager.pluginInfoList();
 }
 
-HbPluginService * HbPlatformService::requestService( const QString & service_name ) const
+HbPluginService * HbPluginPlatform::requestService( const QString & service_name ) const
 {
     if( mServices.contains( service_name ) && mServices.value( service_name ) )
     {
@@ -60,7 +58,7 @@ HbPluginService * HbPlatformService::requestService( const QString & service_nam
     return nullptr;
 }
 
-void HbPlatformService::registerService( HbPluginService * service )
+void HbPluginPlatform::registerService( HbPluginService * service )
 {
     if( !service )
     {
@@ -77,12 +75,12 @@ void HbPlatformService::registerService( HbPluginService * service )
     mServices.insert( name, service );
 }
 
-const IHbPlugin *HbPlatformService::requestPlugin( const QString & name )   const
+const IHbPlugin *HbPluginPlatform::requestPlugin( const QString & name )   const
 {
     return mPluginManager.plugin( name );
 }
 
-QString HbPlatformService::isServiceRegistered( const QString & service_name ) const
+QString HbPluginPlatform::isServiceRegistered( const QString & service_name ) const
 {
     if(mServices.contains( service_name ) && mServices.value( service_name ) )
     {
@@ -92,23 +90,18 @@ QString HbPlatformService::isServiceRegistered( const QString & service_name ) c
     return QString();
 }
 
-void HbPlatformService::onPluginLoaded  ( const HbPluginInfos & plugin_infos )
+void HbPluginPlatform::onPluginStateChanged( const HbPluginInfos & plugin_infos )
 {
-    emit pluginLoaded( plugin_infos );
+    emit pluginStateChanged( plugin_infos );
 }
 
-void HbPlatformService::onPluginUnloaded( const HbPluginInfos & plugin_infos )
-{
-    emit pluginUnloaded( plugin_infos );
-}
-
-void HbPlatformService::onLoadPluginRequest  ( const QString & plugin_name )
+void HbPluginPlatform::onLoadPluginRequest  ( const QString & plugin_name )
 {
     HbInfo( "Load request (plugin=%s).", HbLatin1( plugin_name ) );
     mPluginManager.loadPluginFromName( plugin_name );
 }
 
-void HbPlatformService::onUnloadPluginRequest( const QString & plugin_name )
+void HbPluginPlatform::onUnloadPluginRequest( const QString & plugin_name )
 {
     HbInfo( "Unload request (plugin=%s).", HbLatin1( plugin_name ) );
     mPluginManager.unloadPlugin( plugin_name );

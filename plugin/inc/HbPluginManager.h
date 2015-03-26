@@ -25,7 +25,7 @@ namespace hb
     namespace plugin
     {
         class IHbPlugin;
-        class HbPlatformService;
+        class HbPluginPlatform;
 
         /*!
          * HbPluginManager handles plugins.
@@ -35,7 +35,7 @@ namespace hb
         {
             Q_OBJECT
         public:
-            explicit HbPluginManager( HbPlatformService * platformService, QObject * parent = nullptr );
+            explicit HbPluginManager( HbPluginPlatform * platformService, QObject * parent = nullptr );
 
             /*!
              * Load plugin contained in folder path.
@@ -79,15 +79,13 @@ namespace hb
 
         signals:
             /*!
-             * Triggered when a plugin is loaded.
-             * \param plugin_infos Plugin infos.
+             * Triggered when the state has changed.
+             * To HbPluginManager.
              */
-            void pluginLoaded  ( const HbPluginInfos & plugin_infos );
-            /*!
-             * Triggered when a plugin is unloaded.
-             * \param plugin_infos Plugin infos.
-             */
-            void pluginUnloaded( const HbPluginInfos & plugin_infos );
+            void pluginStateChanged  ( const HbPluginInfos & plugin_infos );
+
+        public slots:
+            void onPluginStateChanged();
 
         private:
             void           scanFolder( const QString & folder_path );
@@ -95,7 +93,7 @@ namespace hb
             bool           loadPlugin( const QString & plugin_name );
 
         private:
-            HbPlatformService * mpPlatformService;
+            HbPluginPlatform * mpPlatformService;
 
             QString mPath;
 
