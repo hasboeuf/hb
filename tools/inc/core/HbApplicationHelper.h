@@ -19,8 +19,7 @@ namespace hb
     namespace tools
     {
         /*!
-         * TODOC
-         * HbApplicationHelper provides helper methods for the application.
+         * HbApplicationHelper provides helper methods for QApplication.
          */
         class HB_TOOLS_DECL HbApplicationHelper
         {
@@ -38,7 +37,8 @@ namespace hb
             static void initApp(const QString & company, const QString & domain, const QString & name = QString());
 
             /*!
-             * Set the skin of the app, colors used are personal taste.
+             * Set the look and feel of the app.
+             * Colors used are personal taste. HbLogo.png is set as window icon.
              * Call it in main().
              * \param skin Name of the style used in QStyleFactory.
              */

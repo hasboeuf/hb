@@ -11,16 +11,16 @@
 
 /*! \file HbTools.h */
 
-/*! \namespace hbprivate
- * TODOC
+/*! \namespace hb
+ * Base namespace of HB module.
  */
 
-/*! \namespace hb
- * TODOC
+/*! \namespace hbprivate
+ * Private area of HB module, not supposed to be used by a third.
  */
 
 /*! \namespace hb::tools
- * TODOC
+ * Contains all tools classes.
  */
 
 // Qt

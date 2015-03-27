@@ -26,7 +26,7 @@ namespace hb
     {
         /*!
          * HbSteadyDateTime provides a non-exact* but steady datetime.
-         * *For micro and nano seconds parts.
+         * *For micro and nano seconds precision.
          */
         class HB_TOOLS_DECL HbSteadyDateTime
         {

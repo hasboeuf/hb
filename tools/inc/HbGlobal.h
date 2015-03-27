@@ -10,7 +10,7 @@
 #define HBGLOBAL_H
 
 /*! \file HbGlobal.h
- * TODO
+ * This file contains all useful macros used by HB module.
  */
 
 // Qt
