@@ -19,7 +19,7 @@
 class QTimerEvent;
 
 namespace hb
-{    
+{
     namespace log
     {
         class HbLoggerInputs;
@@ -29,13 +29,8 @@ namespace hb
         class HbLogStdStream;
 
 
-        /*! 
-        * TODOC
-        * \brief The %HbLogManager class defines the front-end of the logger.
-        *
-        * %HbLogManager is a threaded-singleton, that means it can be used from anywhere without any worries.\n
-        * %HbLogManager provides convenient macros to push new logger message.\n
-        * Also, user can add different outputs and inputs.\n
+        /*!
+        * Internal class, TODOC.
         */
         class HbLogManager final : public QObject, public HbLogger
         {

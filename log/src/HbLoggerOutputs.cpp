@@ -22,9 +22,9 @@ loguid HbLoggerOutputs::addGuiOutput(HbLogGuiNotifier * notifier, QString * erro
     return mpPool->addGuiOutput( notifier, error );
 }
 
-loguid HbLoggerOutputs::addFileOutput(const QString & file, quint32 max_size, QString * error )
+loguid HbLoggerOutputs::addFileOutput(const QString & dir, quint32 max_size, QString * error )
 {
-    return mpPool->addFileOutput( file, max_size, error );
+    return mpPool->addFileOutput( dir, max_size, error );
 }
 
 loguid HbLoggerOutputs::addTcpSocketOutput( const QString & ip, quint16 port, QString * error )

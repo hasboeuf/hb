@@ -63,7 +63,7 @@ void HbLogFileOutput::createLogFile()
     if( !mFile.open( QIODevice::WriteOnly | QIODevice::Text ) )
     {
         qDebug( "HbLogFileOutput: Error while opening file \"%s\": %s",
-            HbLatin1(mFile.fileName()), HbLatin1(mFile.errorString()));
+                HbLatin1( mFile.fileName() ), HbLatin1( mFile.errorString() ) );
     }
 
     mStream.setDevice( &mFile );

@@ -20,23 +20,16 @@
 
 
 namespace hb
-{    
+{
     namespace log
     {
 
         class HbLogManager;
 
 
-        /*! 
-        * TODOC
-        * \brief The %HbLoggerStream class defines all enums needed in the log lib.
-        *
-        * Useful enums for users within %HbLoggerStream are:\n
-        *   \li OutputFormat : represents the format to use to print a log message.
-        *   \li Level  : represents the log level of an output.
-        *   \li State   : represents the return code of the log lib.
-        * All others enums are used for internal purpose within the lib./n
-        */
+        /*!
+         * Internal class, TODOC.
+         */
         class HB_LOG_DECL HbLoggerStream : public QObject
         {
             Q_OBJECT

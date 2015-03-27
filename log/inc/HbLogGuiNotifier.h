@@ -24,6 +24,8 @@ namespace hb
         class HbLogMessage;
 
         /*!
+         * HbLogGuiNotifier is needed to add a gui output.
+         * It is the middleman between HbLog and user class.
          * TODOC.
          */
         class HB_LOG_DECL HbLogGuiNotifier final : public QObject
@@ -31,19 +33,15 @@ namespace hb
             Q_OBJECT
             Q_DISABLE_COPY( HbLogGuiNotifier )
 
-
-        public :
-
+        public:
             HbLogGuiNotifier();
             virtual ~HbLogGuiNotifier() = default;
 
-        signals :
-
+        signals:
             void newLogMessage( const HbLogMessage & message );
 
-        private :
-
-            Q_INVOKABLE void onNewLogMessage( const HbLogMessage & message );
+        private:
+            Q_INVOKABLE void onNewLogMessage( const HbLogMessage & message ); // TODO why not slot?
         };
     }
 }

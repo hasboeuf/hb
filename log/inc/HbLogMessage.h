@@ -15,27 +15,27 @@
 #include <HbLogContext.h>
 
 namespace hb
-{    
+{
     namespace log
     {
-        /*! 
-        * TODOC
-        * \brief The %HbLogMessage class defines a logger message.
-        */
+        /*!
+         * HbLogMessage class defines a log message.
+         * TODOC.
+         */
         class HB_LOG_DECL HbLogMessage final : public QObject
         {
         public:
 
             static const QString msFieldSeparator;
-            static const HbLogMessage * fromRaw( const QString & raw); // Use for export.
-            static const QString toRaw( const HbLogMessage & msg );                              // Use for import.
+            static const HbLogMessage * fromRaw( const QString & raw); //!< Use for export.
+            static const QString toRaw( const HbLogMessage & msg );    //!< Use for import.
 
             HbLogMessage();
             HbLogMessage(HbLogger::Level level, HbLogger::Formats format,
                             const HbLogContext & context, qint64 timestamp, const QString & message );
             HbLogMessage( const HbLogMessage & message );
             virtual ~HbLogMessage() = default;
-                
+
             HbLogMessage & operator =( const HbLogMessage & message );
 
             bool system() const;
@@ -52,9 +52,7 @@ namespace hb
             QByteArray toByteArray() const;
             void fromDataStream( QDataStream & stream );
 
-
         private :
-
             HbLogger::Level mLevel;
             HbLogger::Formats mFormat;
             HbLogContext mContext;

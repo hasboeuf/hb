@@ -208,19 +208,19 @@ loguid HbLoggerPool::addGuiOutput( HbLogGuiNotifier * notifier, QString * error 
     return 0;
 }
 
-loguid HbLoggerPool::addFileOutput( const QString & path, quint32 max_size, QString * error )
+loguid HbLoggerPool::addFileOutput( const QString & dir, quint32 max_size, QString * error )
 {
     QWriteLocker locker( &mOutputsLock );
     HbLoggerStream::State state = HbLoggerStream::INOUT_ADD_SUCCESS;
-    
+
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
-        if( path.isEmpty() ) state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
+        if( dir.isEmpty() ) state = HbLoggerStream::INOUT_WRONG_PARAMETERS;
 
     // No existing check as the file_name will never be the same at the end in HbLogFileOutput.
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
-        HbLogFileOutput * output = q_check_ptr( new HbLogFileOutput( path, max_size, HbLogger::LEVEL_ALL ) );
+        HbLogFileOutput * output = q_check_ptr( new HbLogFileOutput( dir, max_size, HbLogger::LEVEL_ALL ) );
         mOutputs.insert( output->uid(), output );
         return output->uid();
     }

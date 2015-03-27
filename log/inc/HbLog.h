@@ -9,18 +9,21 @@
 #ifndef HBLOG_H
 #define HBLOG_H
 
-/*! \file HbLog.h TODOC */
+/*! \file HbLog.h */
 
 /*! \namespace hb::log
- * TODOC
+ * Contains all classes relative to logging.
  */
 
 // Qt
 #include <QtCore/QtGlobal>
 
+/*! \typedef loguid
+ * Integer range for log in/outputs.
+ */
 typedef quint16 loguid;
 
-const size_t CLASS_LOG = 30;
+const size_t CLASS_LOG = 30; //!< Identifier for log in/output uids class.
 
 #if !defined( HB_LOG_DECL )
 #    if defined( HB_LOG_BUILD )

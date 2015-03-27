@@ -21,7 +21,7 @@ namespace hb
 {
     namespace log
     {
-        /*! 
+        /*!
         * TODOC
         * \brief The %HbLogFileOutput class defines a file output.
         *
@@ -39,7 +39,7 @@ namespace hb
         public :
 
             HbLogFileOutput() = delete;
-            HbLogFileOutput(const QString & path, quint32 max_size = 0, HbLogger::Levels level = HbLogger::LEVEL_ALL);
+            HbLogFileOutput( const QString & path, quint32 max_size = 0, HbLogger::Levels level = HbLogger::LEVEL_ALL );
             virtual ~HbLogFileOutput();
 
             bool isValid() const;

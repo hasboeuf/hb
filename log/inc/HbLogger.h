@@ -20,19 +20,14 @@
 #include <core/HbEnum.h>
 
 namespace hb
-{    
+{
     namespace log
     {
         class HbLogContext;
 
-        /*! 
-        * TODOC
-        * \brief The %HbLogger class defines the front-end of the logger.
-        *
-        * %HbLogger is a threaded-singleton, that means it can be used from anywhere without any worries.\n
-        * %HbLogger provides convenient macros to push new logger message.\n
-        * Also, user can add different outputs and inputs.\n
-        */
+        /*!
+         * TODOC
+         */
         class HB_LOG_DECL HbLogger
         {
             Q_GADGET
@@ -48,13 +43,13 @@ namespace hb
             enum Level : qint16
             {
                 LEVEL_NONE      = 0,        // No Levels enabled
-                LEVEL_TRACE     = 1 << 0,   // Macro TRACE    to be logged.
-                LEVEL_DEBUG     = 1 << 1,   // Macro DEBUG    to be logged.
-                LEVEL_INFO      = 1 << 2,   // Macro INFO     to be logged.
-                LEVEL_WARNING   = 1 << 3,   // Macro WARNING  to be logged.
-                LEVEL_ERROR     = 1 << 4,   // Macro ERROR    to be logged.
-                LEVEL_CRITICAL  = 1 << 5,   // Macro CRITICAL to be logged.
-                LEVEL_FATAL     = 1 << 6,   // Macro FATAL    to be logged.
+                LEVEL_TRACE     = 1 << 0,   // Macro HbTrace    to be logged.
+                LEVEL_DEBUG     = 1 << 1,   // Macro HbDebug    to be logged.
+                LEVEL_INFO      = 1 << 2,   // Macro HbInfo     to be logged.
+                LEVEL_WARNING   = 1 << 3,   // Macro HbWarning  to be logged.
+                LEVEL_ERROR     = 1 << 4,   // Macro HbError    to be logged.
+                LEVEL_CRITICAL  = 1 << 5,   // Macro HbCritical to be logged.
+                LEVEL_FATAL     = 1 << 6,   // Macro HbFatal    to be logged.
                 LEVEL_ALL       = LEVEL_TRACE | LEVEL_DEBUG | LEVEL_INFO | LEVEL_WARNING | LEVEL_ERROR | LEVEL_CRITICAL | LEVEL_FATAL
             };
 
@@ -65,7 +60,6 @@ namespace hb
                 OUTPUT_WHO     = 1 << 2,
                 OUTPUT_WHERE   = 1 << 3,     // File + Function + Line.
                 OUTPUT_TEXT    = 1 << 4,
-                OUTPUT_SYSTEM  = 1 << 5,
                 OUTPUT_ALL     = OUTPUT_LEVEL | OUTPUT_TIME | OUTPUT_WHO | OUTPUT_WHERE | OUTPUT_TEXT
             };
 
@@ -78,15 +72,15 @@ namespace hb
 
         public :
 
-            /*! 
-            * Set the general level of the log service (affected to the current thread).
-            * Then all logger messages having a level which is not included in general level are ignored by HbLog.
-            */
+            /*!
+             * Set the general level of the log service (affected to the current thread).
+             * All logger messages having a level which is not included in general level are ignored by HbLog.
+             */
             virtual void setLevel( Levels level ) final;
 
-            /*! 
-            * Return the current general level of the current thread.
-            */
+            /*!
+             * Return the current general level of the current thread.
+             */
             virtual Levels level() const final;
 
             virtual void setFormat( Formats format ) final;
@@ -96,10 +90,10 @@ namespace hb
 
             virtual void qtMessageHandler( bool enabled ) final;
 
-            /*! 
-            * Push a log message into the log lib.
-            * Note that it is kindly recommended to use the convenient macro to call this method.
-            */
+            /*!
+             * Push a log message into the log lib.
+             * Note that it is kindly recommended to use macros of HbLogService to call this method.
+             */
             virtual void print( Level level, const char * message, ... ) final;
             virtual void print( Level level, const char * message, va_list args ) final;
 
@@ -114,8 +108,6 @@ namespace hb
         private :
 
             void print( Level level, const HbLogContext & context, const char * message, va_list args );
-            void system( Level level, const HbLogContext & context, const char * message, va_list args );
-
 
         private :
 

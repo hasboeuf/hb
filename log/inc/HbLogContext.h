@@ -19,7 +19,8 @@ namespace hb
     namespace log
     {
         /*!
-         * TODOC.
+         * HbLogContext represents the exact place of a log trace in the code.
+         * Internal class.
          */
         class HB_LOG_DECL HbLogContext final
         {

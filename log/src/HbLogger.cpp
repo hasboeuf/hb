@@ -74,7 +74,7 @@ HbLogger::Levels HbLogger::level() const
 void HbLogger::setFormat( Formats format )
 {
     QWriteLocker locker( &msLock );
-    HbLogger::msFormat = ( format & ~HbLogger::OUTPUT_SYSTEM );
+    HbLogger::msFormat = ( format );
 }
 
 HbLogger::Formats HbLogger::format() const
@@ -83,12 +83,10 @@ HbLogger::Formats HbLogger::format() const
     return HbLogger::msFormat;
 }
 
-
 void HbLogger::flush()
 {
     dequeuePendingMessages();
 }
-
 
 void HbLogger::qtMessageHandler( bool enabled )
 {
@@ -117,7 +115,7 @@ void HbLogger::print( Level level, const HbLogContext & context, const char * me
 {
     if( message )
     {
-    #if defined( QT_NO_DEBUG ) 
+    #if defined( QT_NO_DEBUG )
         if( ( level == LEVEL_TRACE ) || ( level == LEVEL_DEBUG ) )
             return;
     #endif
@@ -132,16 +130,4 @@ void HbLogger::print( Level level, const HbLogContext & context, const char * me
             }
         }
     }
-}
-
-void HbLogger::system( Level level, const HbLogContext & context, const char * message, va_list args )
-{
-    if( message )
-        if( this->level() & level )
-        {
-            QString buffer = QString().vsprintf( message, args );
-
-            if( !buffer.isEmpty() )
-                enqueueMessage( level, format() | HbLogger::OUTPUT_SYSTEM, context, buffer );
-        }
 }

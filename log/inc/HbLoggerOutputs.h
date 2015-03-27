@@ -35,51 +35,61 @@ namespace hb
 
         public :
 
-            /*! 
-            * Request the add of a console output.
-            * To check the success of the operation, please store the id and connect the streamState signal.
-            * \see streamState
-            */
+            /*!
+             * Request to add a console output.
+             * Only one console per application is allowed.
+             * \param error Error description in case of failure.
+             * \return Output uid, 0 on failure.
+             */
             loguid addConsoleOutput( QString * error = nullptr );
 
-            /*! 
-            * Request the add of a gui output.
-            * To check the success of the operation, please store the id and connect the streamState signal.
-            * \see streamState
-            */
+            /*!
+             * Request to add a gui output.
+             * \param notifier Gui notifier to connect.
+             * \param error Error description in case of failure.
+             * \return Output uid, 0 on failure.
+             */
             loguid addGuiOutput( HbLogGuiNotifier * notifier, QString * error = nullptr );
 
-            /*! 
-            * Request the add of a file output.
-            * To check the success of the operation, please store the id and connect the streamState signal.
-            * \see streamState
-            */
-            loguid addFileOutput( const QString & file, quint32 max_size = 0, QString * error = nullptr );
+            /*!
+             * Request to add a file output.
+             * \param dir Directory to put log files (according to QDir path).
+             * \param max_size Max size of log file in Mo (if 0, msMaxFileSize (=100 Mo) will be used).
+             * \param error Error description in case of failure.
+             * \return Output uid, 0 on failure.
+             */
+            loguid addFileOutput( const QString & dir, quint32 max_size = 0, QString * error = nullptr );
 
-            /*! 
-            * Request the add of a tcp socket output.
-            * To check the success of the operation, please store the id and connect the streamState signal.
-            * \see streamState
-            */
+            /*!
+             * Request to add a tcp socket output.
+             * \param ip Ip of the log server.
+             * \param port Server port to connect.
+             * \param error Error description in case of failure.
+             * \return Output uid, 0 on failure.
+             */
             loguid addTcpSocketOutput( const QString & ip, quint16 port, QString * error = nullptr );
 
-            /*! 
-            * Request the add of a local socket output.
-            * To check the success of the operation, please store the id and connect the streamState signal.
-            * \see streamState
-            */
+            /*!
+             * Request to add a local socket output.
+             * \param name Server name (defaulted on DEFAULT_LOCAL_SERVER_NAME).
+             * \param error Error description in case of failure.
+             * \return Output uid, 0 on failure.
+             */
             loguid addLocalSocketOutput( const QString & name = QString(), QString * error = nullptr );
 
-            /*! 
-            * Request the deletion of an output specified by its id.
-            * To check the success of the operation, please store the id and connect the streamState signal.
-            * \see streamState
-            */
+            /*!
+             * Request to delete an output.
+             * \param uid Output uid to delete.
+             * \param error Error description in case of failure.
+             * \return True on success, false else.
+             */
             bool removeOutput( loguid uid, QString * error = nullptr );
 
-            /*! 
-            * Return the output specified by its id.
-            */
+            /*!
+             * Get output informations.
+             * \param uid Output uid.
+             * \return Output on success, nullptr else.
+             */
             IHbLoggerOutput * output( loguid uid );
 
         private :

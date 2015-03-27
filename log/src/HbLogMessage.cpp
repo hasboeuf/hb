@@ -100,12 +100,6 @@ HbLogMessage & HbLogMessage::operator =( const HbLogMessage & message )
     return *this;
 }
 
-
-bool HbLogMessage::system() const
-{
-    return mFormat.testFlag( HbLogger::OUTPUT_SYSTEM );
-}
-
 HbLogger::Level HbLogMessage::level() const
 {
     return mLevel;
