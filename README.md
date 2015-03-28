@@ -1,2 +1,2 @@
-* Wiki: https://bitbucket.org/hasboeuf/hb/wiki/Home
+* Wiki: www.wiki.hb-io.com
 * Doc: www.doc.hb-io.com
