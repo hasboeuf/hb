@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -132,7 +133,7 @@ $(document).ready(function(){initNavTree('_i_hb_user_listener_8h_source.html',''
 <div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classhb_1_1network_1_1_i_hb_user_listener.html">   28</a></span>&#160;        <span class="keyword">class </span>HB_NETWORK_DECL <a class="code" href="classhb_1_1network_1_1_i_hb_user_listener.html">IHbUserListener</a></div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        {</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">public</span> callbacks:</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">public</span> <a class="code" href="_hb_global_8h.html#adf58ebd8df5633101b11b2b056ab09c0">callbacks</a>:</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onUserContractReceived( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info, <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> * contract ) = 0;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onUserConnected       ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info ) = 0;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onUserDisconnected    ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info ) = 0;</div>
@@ -148,9 +149,10 @@ $(document).ready(function(){initNavTree('_i_hb_user_listener_8h_source.html',''
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif // IHBUSERTLISTENER_H</span></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_network_contract_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_contract.html">hb::network::HbNetworkContract</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkContract.h:36</div></div>
+<div class="ttc" id="_hb_global_8h_html_adf58ebd8df5633101b11b2b056ab09c0"><div class="ttname"><a href="_hb_global_8h.html#adf58ebd8df5633101b11b2b056ab09c0">callbacks</a></div><div class="ttdeci">#define callbacks</div><div class="ttdoc">Convenient macro to scope a method used as a slot by using the new Qt5 connect syntax. </div><div class="ttdef"><b>Definition:</b> HbGlobal.h:276</div></div>
 <div class="ttc" id="_hb_network_8h_html"><div class="ttname"><a href="_hb_network_8h.html">HbNetwork.h</a></div><div class="ttdoc">TODOC. </div></div>
-<div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
-<div class="ttc" id="_hb_global_8h_html"><div class="ttname"><a href="_hb_global_8h.html">HbGlobal.h</a></div><div class="ttdoc">TODO. </div></div>
+<div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">Base namespace of HB module. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
+<div class="ttc" id="_hb_global_8h_html"><div class="ttname"><a href="_hb_global_8h.html">HbGlobal.h</a></div><div class="ttdoc">This file contains all useful macros used by HB module. </div></div>
 <div class="ttc" id="_hb_network_user_info_8h_html"><div class="ttname"><a href="_hb_network_user_info_8h.html">HbNetworkUserInfo.h</a></div></div>
 <div class="ttc" id="_hb_network_contract_8h_html"><div class="ttname"><a href="_hb_network_contract_8h.html">HbNetworkContract.h</a></div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_network_user_info_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_user_info.html">hb::network::HbNetworkUserInfo</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkUserInfo.h:27</div></div>
@@ -161,7 +163,7 @@ $(document).ready(function(){initNavTree('_i_hb_user_listener_8h_source.html',''
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c901c14b65aa229498a52b725b3d4a2c.html">network</a></li><li class="navelem"><a class="el" href="dir_65f3df0921bcb4ab1aa5b381c9060a44.html">inc</a></li><li class="navelem"><a class="el" href="dir_c9de6dd7e7aefe3a64e65d66e237f877.html">listener</a></li><li class="navelem"><a class="el" href="_i_hb_user_listener_8h.html">IHbUserListener.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2015 12:16:26 for hb by
+    <li class="footer">Generated on Sat Mar 28 2015 12:04:11 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

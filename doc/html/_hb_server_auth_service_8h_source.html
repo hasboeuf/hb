@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -157,7 +158,7 @@ $(document).ready(function(){initNavTree('_hb_server_auth_service_8h_source.html
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keywordtype">void</span> delSocket  ( networkuid socket_uid, <span class="keywordtype">bool</span> delete_responses = <span class="keyword">true</span> );</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keywordtype">void</span> kickSocket ( networkuid socket_uid, HbNetworkProtocol::KickCode reason, <span class="keyword">const</span> QString &amp; description = QString() );</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">public</span> callbacks:</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">public</span> <a class="code" href="_hb_global_8h.html#adf58ebd8df5633101b11b2b056ab09c0">callbacks</a>:</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="comment">// From HbConnectionPool.</span></div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onContractReceived( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> * contract );</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSocketConnected   ( networkuid socket_uid );</div>
@@ -186,7 +187,8 @@ $(document).ready(function(){initNavTree('_hb_server_auth_service_8h_source.html
 <div class="ttc" id="classhb_1_1network_1_1_hb_network_contract_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_contract.html">hb::network::HbNetworkContract</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkContract.h:36</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_auth_service_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_auth_service.html">hb::network::HbAuthService</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbAuthService.h:28</div></div>
 <div class="ttc" id="_hb_auth_service_8h_html"><div class="ttname"><a href="_hb_auth_service_8h.html">HbAuthService.h</a></div></div>
-<div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
+<div class="ttc" id="_hb_global_8h_html_adf58ebd8df5633101b11b2b056ab09c0"><div class="ttname"><a href="_hb_global_8h.html#adf58ebd8df5633101b11b2b056ab09c0">callbacks</a></div><div class="ttdeci">#define callbacks</div><div class="ttdoc">Convenient macro to scope a method used as a slot by using the new Qt5 connect syntax. </div><div class="ttdef"><b>Definition:</b> HbGlobal.h:276</div></div>
+<div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">Base namespace of HB module. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_service_auth_server_config_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_service_auth_server_config.html">hb::network::HbServiceAuthServerConfig</a></div><div class="ttdef"><b>Definition:</b> HbServiceAuthServerConfig.h:26</div></div>
 <div class="ttc" id="_hb_service_auth_server_config_8h_html"><div class="ttname"><a href="_hb_service_auth_server_config_8h.html">HbServiceAuthServerConfig.h</a></div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_server_auth_strategy_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_server_auth_strategy.html">hb::network::HbServerAuthStrategy</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbServerAuthStrategy.h:30</div></div>
@@ -197,7 +199,7 @@ $(document).ready(function(){initNavTree('_hb_server_auth_service_8h_source.html
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c901c14b65aa229498a52b725b3d4a2c.html">network</a></li><li class="navelem"><a class="el" href="dir_65f3df0921bcb4ab1aa5b381c9060a44.html">inc</a></li><li class="navelem"><a class="el" href="dir_fb160bc77023e58b21b684479beae95d.html">service</a></li><li class="navelem"><a class="el" href="dir_8752da425d6a10dbc84adbfe8565aed7.html">auth</a></li><li class="navelem"><a class="el" href="_hb_server_auth_service_8h.html">HbServerAuthService.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2015 12:16:26 for hb by
+    <li class="footer">Generated on Sat Mar 28 2015 12:04:12 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

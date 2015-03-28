@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -125,7 +126,7 @@ Inheritance diagram for hb::log::HbLogger:</div>
  <div class="center">
   <img src="classhb_1_1log_1_1_hb_logger.png" usemap="#hb::log::HbLogger_map" alt=""/>
   <map id="hb::log::HbLogger_map" name="hb::log::HbLogger_map">
-<area href="classhb_1_1log_1_1_hb_log_manager.html" title="TODOC. " alt="hb::log::HbLogManager" shape="rect" coords="0,56,143,80"/>
+<area href="classhb_1_1log_1_1_hb_log_manager.html" title="Internal class, TODOC. " alt="hb::log::HbLogManager" shape="rect" coords="0,56,143,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -153,7 +154,6 @@ Public Types</h2></td></tr>
 <b>OUTPUT_WHERE</b> = 1 &lt;&lt; 3, 
 <br />
 &#160;&#160;<b>OUTPUT_TEXT</b> = 1 &lt;&lt; 4, 
-<b>OUTPUT_SYSTEM</b> = 1 &lt;&lt; 5, 
 <b>OUTPUT_ALL</b> = OUTPUT_LEVEL | OUTPUT_TIME | OUTPUT_WHO | OUTPUT_WHERE | OUTPUT_TEXT
 <br />
  }</td></tr>
@@ -198,11 +198,6 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>dequeuePendin
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>TODOC. </p>
-<p>The HbLogger class defines the front-end of the logger.</p>
-<p>HbLogger is a threaded-singleton, that means it can be used from anywhere without any worries.<br />
-HbLogger provides convenient macros to push new logger message.<br />
-Also, user can add different outputs and inputs.<br />
-</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="aff23783b26bbc6200ce3c68b703cef88"></a>
 <div class="memitem">
@@ -243,7 +238,7 @@ Also, user can add different outputs and inputs.<br />
 </div><div class="memdoc">
 
 <p>Push a log message into the log lib. </p>
-<p>Note that it is kindly recommended to use the convenient macro to call this method. </p>
+<p>Note that it is kindly recommended to use macros of <a class="el" href="classhb_1_1log_1_1_hb_log_service.html" title="HbLogService is the front-end class of HbLog. ">HbLogService</a> to call this method. </p>
 
 </div>
 </div>
@@ -270,7 +265,7 @@ Also, user can add different outputs and inputs.<br />
 </div><div class="memdoc">
 
 <p>Set the general level of the log service (affected to the current thread). </p>
-<p>Then all logger messages having a level which is not included in general level are ignored by HbLog. </p>
+<p>All logger messages having a level which is not included in general level are ignored by HbLog. </p>
 
 </div>
 </div>
@@ -283,7 +278,7 @@ Also, user can add different outputs and inputs.<br />
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacehb.html">hb</a></li><li class="navelem"><a class="el" href="namespacehb_1_1log.html">log</a></li><li class="navelem"><a class="el" href="classhb_1_1log_1_1_hb_logger.html">HbLogger</a></li>
-    <li class="footer">Generated on Tue Mar 17 2015 12:16:27 for hb by
+    <li class="footer">Generated on Sat Mar 28 2015 12:04:14 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

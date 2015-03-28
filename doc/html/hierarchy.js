@@ -48,8 +48,6 @@ var hierarchy =
       [ "hb::link::HbO2ClientConfig", "classhb_1_1link_1_1_hb_o2_client_config.html", null ],
       [ "hb::link::HbO2ServerConfig", "classhb_1_1link_1_1_hb_o2_server_config.html", null ]
     ] ],
-    [ "hb::plugin::HbPluginInfos", "classhb_1_1plugin_1_1_hb_plugin_infos.html", null ],
-    [ "hb::plugin::HbPluginInterface", "classhb_1_1plugin_1_1_hb_plugin_interface.html", null ],
     [ "HbPluginListWidget", null, [
       [ "hb::plugin::HbPluginListWidget", "classhb_1_1plugin_1_1_hb_plugin_list_widget.html", null ]
     ] ],
@@ -143,6 +141,7 @@ var hierarchy =
     [ "hb::log::IHbLoggerOutput", "classhb_1_1log_1_1_i_hb_logger_output.html", [
       [ "hb::log::HbLogAbstractOutput", "classhb_1_1log_1_1_hb_log_abstract_output.html", null ]
     ] ],
+    [ "hb::plugin::IHbPlugin", "classhb_1_1plugin_1_1_i_hb_plugin.html", null ],
     [ "hb::network::IHbSocketAuthListener", "classhb_1_1network_1_1_i_hb_socket_auth_listener.html", [
       [ "hb::network::HbPresenceService", "classhb_1_1network_1_1_hb_presence_service.html", null ]
     ] ],
@@ -208,8 +207,9 @@ var hierarchy =
         [ "hb::network::HbServer", "classhb_1_1network_1_1_hb_server.html", null ]
       ] ],
       [ "hb::network::HbSocketHandler", "classhb_1_1network_1_1_hb_socket_handler.html", null ],
-      [ "hb::plugin::HbPlatformService", "classhb_1_1plugin_1_1_hb_platform_service.html", null ],
+      [ "hb::plugin::HbPluginInfos", "classhb_1_1plugin_1_1_hb_plugin_infos.html", null ],
       [ "hb::plugin::HbPluginManager", "classhb_1_1plugin_1_1_hb_plugin_manager.html", null ],
+      [ "hb::plugin::HbPluginPlatform", "classhb_1_1plugin_1_1_hb_plugin_platform.html", null ],
       [ "hb::plugin::HbPluginService", "classhb_1_1plugin_1_1_hb_plugin_service.html", null ],
       [ "hb::tools::HbHttpRequester", "classhb_1_1tools_1_1_hb_http_requester.html", [
         [ "hb::link::HbFacebookRequester", "classhb_1_1link_1_1_hb_facebook_requester.html", null ]

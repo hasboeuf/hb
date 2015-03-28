@@ -24,7 +24,7 @@ var dir_a5045d214c962b317e62e9baf2434bae =
     [ "HbSteadyDateTime.h", "_hb_steady_date_time_8h.html", [
       [ "HbSteadyDateTime", "classhb_1_1tools_1_1_hb_steady_date_time.html", "classhb_1_1tools_1_1_hb_steady_date_time" ]
     ] ],
-    [ "HbUId.h", "_hb_u_id_8h.html", [
+    [ "HbUid.h", "_hb_uid_8h.html", [
       [ "HbUid", "classhb_1_1tools_1_1_hb_uid.html", "classhb_1_1tools_1_1_hb_uid" ]
     ] ],
     [ "HbUidGenerator.h", "_hb_uid_generator_8h.html", [

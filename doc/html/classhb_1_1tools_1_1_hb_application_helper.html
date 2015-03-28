@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -113,7 +114,7 @@ $(document).ready(function(){initNavTree('classhb_1_1tools_1_1_hb_application_he
 </div><!--header-->
 <div class="contents">
 
-<p>TODOC <a class="el" href="classhb_1_1tools_1_1_hb_application_helper.html" title="TODOC HbApplicationHelper provides helper methods to initialize an app. ">HbApplicationHelper</a> provides helper methods to initialize an app.  
+<p><a class="el" href="classhb_1_1tools_1_1_hb_application_helper.html" title="HbApplicationHelper provides helper methods for QApplication. ">HbApplicationHelper</a> provides helper methods for QApplication.  
  <a href="classhb_1_1tools_1_1_hb_application_helper.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_hb_application_helper_8h_source.html">HbApplicationHelper.h</a>&gt;</code></p>
@@ -121,14 +122,14 @@ $(document).ready(function(){initNavTree('classhb_1_1tools_1_1_hb_application_he
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aa19d8f86e5ba5417ce0aa0020c142580"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1tools_1_1_hb_application_helper.html#aa19d8f86e5ba5417ce0aa0020c142580">initApp</a> (const QString &amp;company, const QString &amp;domain, const QString &amp;name=QString())</td></tr>
-<tr class="memdesc:aa19d8f86e5ba5417ce0aa0020c142580"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize app belongings in QSetting.  <a href="#aa19d8f86e5ba5417ce0aa0020c142580">More...</a><br /></td></tr>
+<tr class="memdesc:aa19d8f86e5ba5417ce0aa0020c142580"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize app.  <a href="#aa19d8f86e5ba5417ce0aa0020c142580">More...</a><br /></td></tr>
 <tr class="separator:aa19d8f86e5ba5417ce0aa0020c142580"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd556cf7c4cefd79018f9329947d3a01"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1tools_1_1_hb_application_helper.html#acd556cf7c4cefd79018f9329947d3a01">initSkin</a> (const QString &amp;skin)</td></tr>
-<tr class="memdesc:acd556cf7c4cefd79018f9329947d3a01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the skin of the app, colors used are personal taste.  <a href="#acd556cf7c4cefd79018f9329947d3a01">More...</a><br /></td></tr>
+<tr class="memdesc:acd556cf7c4cefd79018f9329947d3a01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the look and feel of the app.  <a href="#acd556cf7c4cefd79018f9329947d3a01">More...</a><br /></td></tr>
 <tr class="separator:acd556cf7c4cefd79018f9329947d3a01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TODOC <a class="el" href="classhb_1_1tools_1_1_hb_application_helper.html" title="TODOC HbApplicationHelper provides helper methods to initialize an app. ">HbApplicationHelper</a> provides helper methods to initialize an app. </p>
+<div class="textblock"><p><a class="el" href="classhb_1_1tools_1_1_hb_application_helper.html" title="HbApplicationHelper provides helper methods for QApplication. ">HbApplicationHelper</a> provides helper methods for QApplication. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="aa19d8f86e5ba5417ce0aa0020c142580"></a>
 <div class="memitem">
@@ -168,8 +169,8 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Initialize app belongings in QSetting. </p>
-<p>Generate seed for qsrand. Call it in main(). </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Initialize app. </p>
+<p>Initialize QSetting. Generate seed for qsrand. Call it in main(). </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">company</td><td>Company name e.g.: MyCompany </td></tr>
     <tr><td class="paramname">domain</td><td>Domain name e.g.: mycompany.io </td></tr>
@@ -202,8 +203,8 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Set the skin of the app, colors used are personal taste. </p>
-<p>Call it in main(). </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Set the look and feel of the app. </p>
+<p>Colors used are personal taste. HbLogo.png is set as window icon. Call it in main(). </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">skin</td><td>Name of the style used in QStyleFactory. </td></tr>
   </table>
@@ -221,7 +222,7 @@ Static Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacehb.html">hb</a></li><li class="navelem"><a class="el" href="namespacehb_1_1tools.html">tools</a></li><li class="navelem"><a class="el" href="classhb_1_1tools_1_1_hb_application_helper.html">HbApplicationHelper</a></li>
-    <li class="footer">Generated on Tue Mar 17 2015 12:16:28 for hb by
+    <li class="footer">Generated on Sat Mar 28 2015 12:04:16 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

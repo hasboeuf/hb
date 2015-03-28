@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -113,7 +114,7 @@ $(document).ready(function(){initNavTree('classhb_1_1log_1_1_hb_logger_inputs.ht
 </div><!--header-->
 <div class="contents">
 
-<p>TODOC.  
+<p><a class="el" href="classhb_1_1log_1_1_hb_logger_inputs.html" title="HbLoggerInputs handles log inputs. ">HbLoggerInputs</a> handles log inputs.  
  <a href="classhb_1_1log_1_1_hb_logger_inputs.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_hb_logger_inputs_8h_source.html">HbLoggerInputs.h</a>&gt;</code></p>
@@ -123,25 +124,24 @@ Inheritance diagram for hb::log::HbLoggerInputs:</div>
  <div class="center">
   <img src="classhb_1_1log_1_1_hb_logger_inputs.png" usemap="#hb::log::HbLoggerInputs_map" alt=""/>
   <map id="hb::log::HbLoggerInputs_map" name="hb::log::HbLoggerInputs_map">
-<area href="classhb_1_1log_1_1_hb_logger_stream.html" title="TODOC. " alt="hb::log::HbLoggerStream" shape="rect" coords="0,56,150,80"/>
+<area href="classhb_1_1log_1_1_hb_logger_stream.html" title="Internal class, TODOC. " alt="hb::log::HbLoggerStream" shape="rect" coords="0,56,150,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a36916e6c93e30a695e57153f36899d7e"><td class="memItemLeft" align="right" valign="top">loguid&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1log_1_1_hb_logger_inputs.html#a36916e6c93e30a695e57153f36899d7e">addTcpSocketInput</a> (quint16 port, QString *error=nullptr)</td></tr>
-<tr class="memdesc:a36916e6c93e30a695e57153f36899d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the add of a tcp server input.  <a href="#a36916e6c93e30a695e57153f36899d7e">More...</a><br /></td></tr>
+<tr class="memitem:a36916e6c93e30a695e57153f36899d7e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1log_1_1_hb_logger_inputs.html#a36916e6c93e30a695e57153f36899d7e">addTcpSocketInput</a> (quint16 port, QString *error=nullptr)</td></tr>
+<tr class="memdesc:a36916e6c93e30a695e57153f36899d7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request to add a tcp server input.  <a href="#a36916e6c93e30a695e57153f36899d7e">More...</a><br /></td></tr>
 <tr class="separator:a36916e6c93e30a695e57153f36899d7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85335dbbb0805514e7035ea11e2f4036"><td class="memItemLeft" align="right" valign="top">loguid&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1log_1_1_hb_logger_inputs.html#a85335dbbb0805514e7035ea11e2f4036">addLocalSocketInput</a> (const QString &amp;name=QString(), QString *error=nullptr)</td></tr>
-<tr class="memdesc:a85335dbbb0805514e7035ea11e2f4036"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the add of a local server input.  <a href="#a85335dbbb0805514e7035ea11e2f4036">More...</a><br /></td></tr>
+<tr class="memitem:a85335dbbb0805514e7035ea11e2f4036"><td class="memItemLeft" align="right" valign="top"><a class="el" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1log_1_1_hb_logger_inputs.html#a85335dbbb0805514e7035ea11e2f4036">addLocalSocketInput</a> (const QString &amp;name=QString(), QString *error=nullptr)</td></tr>
+<tr class="memdesc:a85335dbbb0805514e7035ea11e2f4036"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request to add a local server input.  <a href="#a85335dbbb0805514e7035ea11e2f4036">More...</a><br /></td></tr>
 <tr class="separator:a85335dbbb0805514e7035ea11e2f4036"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a654b9bb34e1ff4c75051971659ea61d9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1log_1_1_hb_logger_inputs.html#a654b9bb34e1ff4c75051971659ea61d9">removeInput</a> (loguid uid, QString *error=nullptr)</td></tr>
-<tr class="memdesc:a654b9bb34e1ff4c75051971659ea61d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request the deletion of an input specified by its id.  <a href="#a654b9bb34e1ff4c75051971659ea61d9">More...</a><br /></td></tr>
+<tr class="memitem:a654b9bb34e1ff4c75051971659ea61d9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1log_1_1_hb_logger_inputs.html#a654b9bb34e1ff4c75051971659ea61d9">removeInput</a> (<a class="el" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a> uid, QString *error=nullptr)</td></tr>
+<tr class="memdesc:a654b9bb34e1ff4c75051971659ea61d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request to delete an input.  <a href="#a654b9bb34e1ff4c75051971659ea61d9">More...</a><br /></td></tr>
 <tr class="separator:a654b9bb34e1ff4c75051971659ea61d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d9a271e57d6415c62a85a3ac3a8df88"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d9a271e57d6415c62a85a3ac3a8df88"></a>
-<a class="el" href="classhb_1_1log_1_1_i_hb_logger_input.html">IHbLoggerInput</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1log_1_1_hb_logger_inputs.html#a3d9a271e57d6415c62a85a3ac3a8df88">input</a> (loguid id)</td></tr>
-<tr class="memdesc:a3d9a271e57d6415c62a85a3ac3a8df88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the output specified by its id. <br /></td></tr>
-<tr class="separator:a3d9a271e57d6415c62a85a3ac3a8df88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe9b559c01f0f6d551dfe6350f76b639"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhb_1_1log_1_1_i_hb_logger_input.html">IHbLoggerInput</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1log_1_1_hb_logger_inputs.html#abe9b559c01f0f6d551dfe6350f76b639">input</a> (<a class="el" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a> uid)</td></tr>
+<tr class="memdesc:abe9b559c01f0f6d551dfe6350f76b639"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get input informations.  <a href="#abe9b559c01f0f6d551dfe6350f76b639">More...</a><br /></td></tr>
+<tr class="separator:abe9b559c01f0f6d551dfe6350f76b639"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -167,14 +167,18 @@ static const char *&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAUL
 <tr class="separator:a77cdf27be85884d2e3a947a7cb766491 inherit pro_methods_classhb_1_1log_1_1_hb_logger_stream"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TODOC. </p>
+<div class="textblock"><p><a class="el" href="classhb_1_1log_1_1_hb_logger_inputs.html" title="HbLoggerInputs handles log inputs. ">HbLoggerInputs</a> handles log inputs. </p>
+<ul>
+<li>Add a log input.</li>
+<li>Remove an existing input. </li>
+</ul>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a85335dbbb0805514e7035ea11e2f4036"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">loguid hb::log::HbLoggerInputs::addLocalSocketInput </td>
+          <td class="memname"><a class="el" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a> hb::log::HbLoggerInputs::addLocalSocketInput </td>
           <td>(</td>
           <td class="paramtype">const QString &amp;&#160;</td>
           <td class="paramname"><em>name</em> = <code>QString()</code>, </td>
@@ -193,8 +197,15 @@ static const char *&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAUL
       </table>
 </div><div class="memdoc">
 
-<p>Request the add of a local server input. </p>
-<p>To check the success of the operation, please store the id and connect the streamState signal. </p><dl class="section see"><dt>See also</dt><dd>streamState </dd></dl>
+<p>Request to add a local server input. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Server name (defaulted on DEFAULT_LOCAL_SERVER_NAME). </td></tr>
+    <tr><td class="paramname">error</td><td>Error description in case of failure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Input uid, 0 on failure. </dd></dl>
 
 </div>
 </div>
@@ -203,7 +214,7 @@ static const char *&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAUL
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">loguid hb::log::HbLoggerInputs::addTcpSocketInput </td>
+          <td class="memname"><a class="el" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a> hb::log::HbLoggerInputs::addTcpSocketInput </td>
           <td>(</td>
           <td class="paramtype">quint16&#160;</td>
           <td class="paramname"><em>port</em>, </td>
@@ -222,8 +233,40 @@ static const char *&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAUL
       </table>
 </div><div class="memdoc">
 
-<p>Request the add of a tcp server input. </p>
-<p>To check the success of the operation, please store the id and connect the streamState signal. </p><dl class="section see"><dt>See also</dt><dd>streamState </dd></dl>
+<p>Request to add a tcp server input. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>Listening port. </td></tr>
+    <tr><td class="paramname">error</td><td>Error description in case of failure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Input uid, 0 on failure. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abe9b559c01f0f6d551dfe6350f76b639"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classhb_1_1log_1_1_i_hb_logger_input.html">IHbLoggerInput</a>* hb::log::HbLoggerInputs::input </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a>&#160;</td>
+          <td class="paramname"><em>uid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get input informations. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uid</td><td>Input uid. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Input on success, nullptr else. </dd></dl>
 
 </div>
 </div>
@@ -234,7 +277,7 @@ static const char *&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAUL
         <tr>
           <td class="memname">bool hb::log::HbLoggerInputs::removeInput </td>
           <td>(</td>
-          <td class="paramtype">loguid&#160;</td>
+          <td class="paramtype"><a class="el" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a>&#160;</td>
           <td class="paramname"><em>uid</em>, </td>
         </tr>
         <tr>
@@ -251,8 +294,15 @@ static const char *&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAUL
       </table>
 </div><div class="memdoc">
 
-<p>Request the deletion of an input specified by its id. </p>
-<p>To check the success of the operation, please store the id and connect the streamState signal. </p><dl class="section see"><dt>See also</dt><dd>streamState </dd></dl>
+<p>Request to delete an input. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">uid</td><td>Input uid to delete. </td></tr>
+    <tr><td class="paramname">error</td><td>Error description in case of failure. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True on success, false else. </dd></dl>
 
 </div>
 </div>
@@ -265,7 +315,7 @@ static const char *&#160;</td><td class="memItemRight" valign="bottom"><b>DEFAUL
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacehb.html">hb</a></li><li class="navelem"><a class="el" href="namespacehb_1_1log.html">log</a></li><li class="navelem"><a class="el" href="classhb_1_1log_1_1_hb_logger_inputs.html">HbLoggerInputs</a></li>
-    <li class="footer">Generated on Tue Mar 17 2015 12:16:27 for hb by
+    <li class="footer">Generated on Sat Mar 28 2015 12:04:14 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

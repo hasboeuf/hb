@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -127,10 +128,10 @@ $(document).ready(function(){initNavTree('_hb_enum_8h_source.html','');});
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keyword">template</span>&lt; <span class="keyword">typename</span> Class, <span class="keyword">typename</span> Enum &gt;</div>
 <div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classhbprivate_1_1_hb_enum_helper.html">   24</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classhbprivate_1_1_hb_enum_helper.html">HbEnumHelper</a></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        Q_DEFAULT_COPY( <a class="code" href="classhbprivate_1_1_hb_enum_helper.html">HbEnumHelper</a> )</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <a class="code" href="_hb_global_8h.html#a7c26416acb9750629a3b33e802f3ae0c">Q_DEFAULT_COPY</a>( <a class="code" href="classhbprivate_1_1_hb_enum_helper.html">HbEnumHelper</a> )</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">public</span> :</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keyword">static</span> QString name()</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        {</div>
@@ -190,30 +191,31 @@ $(document).ready(function(){initNavTree('_hb_enum_8h_source.html','');});
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
 <div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="_hb_enum_8h.html#a4990b837486a4af14aa11b5058470927">   91</a></span>&#160;<span class="preprocessor">#define Q_ENUMS_HANDLER( Class ) \</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">public : \</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">public: \</span></div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">\</span></div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">    template&lt; typename Enum &gt; \</span></div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="preprocessor">    class HbEnum : public hbprivate::HbEnumHelper&lt; Class, Enum &gt; {}; \</span></div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">\</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">private :</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">private:</span></div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#define Q_META_ENUMS( Enum ) \</span></div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">    typedef HbEnum&lt; Enum &gt; Meta ## Enum;</span></div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="classhbprivate_1_1_hb_enum_helper_html"><div class="ttname"><a href="classhbprivate_1_1_hb_enum_helper.html">hbprivate::HbEnumHelper</a></div><div class="ttdoc">Internal class, TODOC. </div><div class="ttdef"><b>Definition:</b> HbEnum.h:24</div></div>
-<div class="ttc" id="namespacehbprivate_html"><div class="ttname"><a href="namespacehbprivate.html">hbprivate</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbEnum.h:18</div></div>
+<div class="ttc" id="namespacehbprivate_html"><div class="ttname"><a href="namespacehbprivate.html">hbprivate</a></div><div class="ttdoc">Private area of HB module, not supposed to be used by a third. </div><div class="ttdef"><b>Definition:</b> HbEnum.h:18</div></div>
 <div class="ttc" id="_hb_enumerator_8h_html"><div class="ttname"><a href="_hb_enumerator_8h.html">HbEnumerator.h</a></div></div>
 <div class="ttc" id="classhbprivate_1_1_hb_enumerator_html"><div class="ttname"><a href="classhbprivate_1_1_hb_enumerator.html">hbprivate::HbEnumerator</a></div><div class="ttdoc">Internal class, TODOC. </div><div class="ttdef"><b>Definition:</b> HbEnumerator.h:25</div></div>
-<div class="ttc" id="classhb_1_1tools_1_1_hb_nullable_html"><div class="ttname"><a href="classhb_1_1tools_1_1_hb_nullable.html">hb::tools::HbNullable</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNullable.h:28</div></div>
+<div class="ttc" id="classhb_1_1tools_1_1_hb_nullable_html"><div class="ttname"><a href="classhb_1_1tools_1_1_hb_nullable.html">hb::tools::HbNullable</a></div><div class="ttdoc">HbNullable provides a C++ version of C# Nullable. </div><div class="ttdef"><b>Definition:</b> HbNullable.h:28</div></div>
 <div class="ttc" id="_hb_tools_8h_html"><div class="ttname"><a href="_hb_tools_8h.html">HbTools.h</a></div></div>
+<div class="ttc" id="_hb_global_8h_html_a7c26416acb9750629a3b33e802f3ae0c"><div class="ttname"><a href="_hb_global_8h.html#a7c26416acb9750629a3b33e802f3ae0c">Q_DEFAULT_COPY</a></div><div class="ttdeci">#define Q_DEFAULT_COPY(Class)</div><div class="ttdoc">Convenient macro to declare a defaulted copyable class. </div><div class="ttdef"><b>Definition:</b> HbGlobal.h:292</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_4eeb864c4eec08c7d6b9d3b0352cfdde.html">tools</a></li><li class="navelem"><a class="el" href="dir_b8ff3f042d3622ce8936e9c358386430.html">inc</a></li><li class="navelem"><a class="el" href="dir_a5045d214c962b317e62e9baf2434bae.html">core</a></li><li class="navelem"><a class="el" href="_hb_enum_8h.html">HbEnum.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2015 12:16:26 for hb by
+    <li class="footer">Generated on Sat Mar 28 2015 12:04:12 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

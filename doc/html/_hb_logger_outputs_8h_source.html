@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -134,58 +135,60 @@ $(document).ready(function(){initNavTree('_hb_logger_outputs_8h_source.html','')
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;</div>
 <div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classhb_1_1log_1_1_hb_logger_outputs.html">   31</a></span>&#160;        <span class="keyword">class </span>HB_LOG_DECL <a class="code" href="classhb_1_1log_1_1_hb_logger_outputs.html">HbLoggerOutputs</a> : <span class="keyword">public</span> <a class="code" href="classhb_1_1log_1_1_hb_logger_stream.html">HbLoggerStream</a></div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            Q_FRIEND_CLASS( <a class="code" href="classhb_1_1log_1_1_hb_log_manager.html">HbLogManager</a> )</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <a class="code" href="_hb_global_8h.html#ad02c17f276a781f00412f8c1aad74f74">Q_FRIEND_CLASS</a>( <a class="code" href="classhb_1_1log_1_1_hb_log_manager.html">HbLogManager</a> )</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">public</span> :</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            loguid addConsoleOutput( QString * error = <span class="keyword">nullptr</span> );</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            loguid addGuiOutput( <a class="code" href="classhb_1_1log_1_1_hb_log_gui_notifier.html">HbLogGuiNotifier</a> * notifier, QString * error = <span class="keyword">nullptr</span> );</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            loguid addFileOutput( <span class="keyword">const</span> QString &amp; file, quint32 max_size = 0, QString * error = <span class="keyword">nullptr</span> );</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            loguid addTcpSocketOutput( <span class="keyword">const</span> QString &amp; ip, quint16 port, QString * error = <span class="keyword">nullptr</span> );</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            loguid addLocalSocketOutput( <span class="keyword">const</span> QString &amp; name = QString(), QString * error = <span class="keyword">nullptr</span> );</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordtype">bool</span> removeOutput( loguid uid, QString * error = <span class="keyword">nullptr</span> );</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <a class="code" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a> addConsoleOutput( QString * error = <span class="keyword">nullptr</span> );</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <a class="code" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a> addGuiOutput( <a class="code" href="classhb_1_1log_1_1_hb_log_gui_notifier.html">HbLogGuiNotifier</a> * notifier, QString * error = <span class="keyword">nullptr</span> );</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <a class="code" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a> addFileOutput( <span class="keyword">const</span> QString &amp; dir, quint32 max_size = 0, QString * error = <span class="keyword">nullptr</span> );</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <a class="code" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a> addTcpSocketOutput( <span class="keyword">const</span> QString &amp; ip, quint16 port, QString * error = <span class="keyword">nullptr</span> );</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <a class="code" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a> addLocalSocketOutput( <span class="keyword">const</span> QString &amp; name = QString(), QString * error = <span class="keyword">nullptr</span> );</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <a class="code" href="classhb_1_1log_1_1_i_hb_logger_output.html">IHbLoggerOutput</a> * output( loguid uid );</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keyword">private</span> :</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <a class="code" href="classhb_1_1log_1_1_hb_logger_outputs.html">HbLoggerOutputs</a>() = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <a class="code" href="classhb_1_1log_1_1_hb_logger_outputs.html">HbLoggerOutputs</a>( <a class="code" href="classhb_1_1log_1_1_hb_log_manager.html">HbLogManager</a> * parent );</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1log_1_1_hb_logger_outputs.html">HbLoggerOutputs</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        <span class="keyword">private</span> :</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            <a class="code" href="classhb_1_1log_1_1_hb_logger_pool.html">HbLoggerPool</a> * mpPool;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        };</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordtype">bool</span> removeOutput( <a class="code" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a> uid, QString * error = <span class="keyword">nullptr</span> );</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <a class="code" href="classhb_1_1log_1_1_i_hb_logger_output.html">IHbLoggerOutput</a> * output( <a class="code" href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a> uid );</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    }</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#endif // HBLOGGEROUTPUTS_H</span></div>
-<div class="ttc" id="classhb_1_1log_1_1_hb_log_gui_notifier_html"><div class="ttname"><a href="classhb_1_1log_1_1_hb_log_gui_notifier.html">hb::log::HbLogGuiNotifier</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbLogGuiNotifier.h:29</div></div>
-<div class="ttc" id="classhb_1_1log_1_1_hb_log_manager_html"><div class="ttname"><a href="classhb_1_1log_1_1_hb_log_manager.html">hb::log::HbLogManager</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbLogManager.h:40</div></div>
-<div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
-<div class="ttc" id="_hb_global_8h_html"><div class="ttname"><a href="_hb_global_8h.html">HbGlobal.h</a></div><div class="ttdoc">TODO. </div></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <a class="code" href="classhb_1_1log_1_1_hb_logger_outputs.html">HbLoggerOutputs</a>() = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;            <a class="code" href="classhb_1_1log_1_1_hb_logger_outputs.html">HbLoggerOutputs</a>( <a class="code" href="classhb_1_1log_1_1_hb_log_manager.html">HbLogManager</a> * parent );</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1log_1_1_hb_logger_outputs.html">HbLoggerOutputs</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            <a class="code" href="classhb_1_1log_1_1_hb_logger_pool.html">HbLoggerPool</a> * mpPool;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;        };</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    }</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;}</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">#endif // HBLOGGEROUTPUTS_H</span></div>
+<div class="ttc" id="classhb_1_1log_1_1_hb_log_gui_notifier_html"><div class="ttname"><a href="classhb_1_1log_1_1_hb_log_gui_notifier.html">hb::log::HbLogGuiNotifier</a></div><div class="ttdoc">HbLogGuiNotifier is needed to add a gui output. </div><div class="ttdef"><b>Definition:</b> HbLogGuiNotifier.h:31</div></div>
+<div class="ttc" id="classhb_1_1log_1_1_hb_log_manager_html"><div class="ttname"><a href="classhb_1_1log_1_1_hb_log_manager.html">hb::log::HbLogManager</a></div><div class="ttdoc">Internal class, TODOC. </div><div class="ttdef"><b>Definition:</b> HbLogManager.h:35</div></div>
+<div class="ttc" id="_hb_global_8h_html_ad02c17f276a781f00412f8c1aad74f74"><div class="ttname"><a href="_hb_global_8h.html#ad02c17f276a781f00412f8c1aad74f74">Q_FRIEND_CLASS</a></div><div class="ttdeci">#define Q_FRIEND_CLASS(Class)</div><div class="ttdoc">Convenient macro to declare a friend class. </div><div class="ttdef"><b>Definition:</b> HbGlobal.h:310</div></div>
+<div class="ttc" id="_hb_log_8h_html_a246153f59565c58073859802a7dfa7cd"><div class="ttname"><a href="_hb_log_8h.html#a246153f59565c58073859802a7dfa7cd">loguid</a></div><div class="ttdeci">quint16 loguid</div><div class="ttdoc">Integer range for log in/outputs. </div><div class="ttdef"><b>Definition:</b> HbLog.h:24</div></div>
+<div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">Base namespace of HB module. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
+<div class="ttc" id="_hb_global_8h_html"><div class="ttname"><a href="_hb_global_8h.html">HbGlobal.h</a></div><div class="ttdoc">This file contains all useful macros used by HB module. </div></div>
 <div class="ttc" id="classhb_1_1log_1_1_hb_logger_outputs_html"><div class="ttname"><a href="classhb_1_1log_1_1_hb_logger_outputs.html">hb::log::HbLoggerOutputs</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbLoggerOutputs.h:31</div></div>
 <div class="ttc" id="classhb_1_1log_1_1_i_hb_logger_output_html"><div class="ttname"><a href="classhb_1_1log_1_1_i_hb_logger_output.html">hb::log::IHbLoggerOutput</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> IHbLoggerOutput.h:24</div></div>
-<div class="ttc" id="classhb_1_1log_1_1_hb_logger_pool_html"><div class="ttname"><a href="classhb_1_1log_1_1_hb_logger_pool.html">hb::log::HbLoggerPool</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbLoggerPool.h:38</div></div>
+<div class="ttc" id="classhb_1_1log_1_1_hb_logger_pool_html"><div class="ttname"><a href="classhb_1_1log_1_1_hb_logger_pool.html">hb::log::HbLoggerPool</a></div><div class="ttdoc">Internal class, TODOC. </div><div class="ttdef"><b>Definition:</b> HbLoggerPool.h:38</div></div>
 <div class="ttc" id="_hb_logger_stream_8h_html"><div class="ttname"><a href="_hb_logger_stream_8h.html">HbLoggerStream.h</a></div></div>
-<div class="ttc" id="classhb_1_1log_1_1_hb_logger_stream_html"><div class="ttname"><a href="classhb_1_1log_1_1_hb_logger_stream.html">hb::log::HbLoggerStream</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbLoggerStream.h:40</div></div>
-<div class="ttc" id="_hb_log_8h_html"><div class="ttname"><a href="_hb_log_8h.html">HbLog.h</a></div><div class="ttdoc">TODOC. </div></div>
+<div class="ttc" id="classhb_1_1log_1_1_hb_logger_stream_html"><div class="ttname"><a href="classhb_1_1log_1_1_hb_logger_stream.html">hb::log::HbLoggerStream</a></div><div class="ttdoc">Internal class, TODOC. </div><div class="ttdef"><b>Definition:</b> HbLoggerStream.h:33</div></div>
+<div class="ttc" id="_hb_log_8h_html"><div class="ttname"><a href="_hb_log_8h.html">HbLog.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_9381a7bbd03577d6d8720c7f35c94ffa.html">log</a></li><li class="navelem"><a class="el" href="dir_57086d0e384fe5755f0805ea248e5088.html">inc</a></li><li class="navelem"><a class="el" href="_hb_logger_outputs_8h.html">HbLoggerOutputs.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2015 12:16:26 for hb by
+    <li class="footer">Generated on Sat Mar 28 2015 12:04:11 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

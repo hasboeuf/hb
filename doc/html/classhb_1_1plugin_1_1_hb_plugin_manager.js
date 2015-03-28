@@ -1,15 +1,13 @@
 var classhb_1_1plugin_1_1_hb_plugin_manager =
 [
-    [ "HbPluginManager", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a4647a6e0ae9aa089780c11232fa0484a", null ],
-    [ "load", "classhb_1_1plugin_1_1_hb_plugin_manager.html#af27d20fac4c2df002e5a0251e59a6570", null ],
-    [ "loadPluginFromName", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a89e51203e7ff78adb7b85d54ac281f3b", null ],
-    [ "loadPluginFromPath", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a79dc461798df100307933c3d095a6eb4", null ],
-    [ "plugin", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a6712d36f37ae1b91dff27d7bc9d3c9e8", null ],
-    [ "pluginInfoList", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a9a9e99730431cce8c33793a7142c73ba", null ],
-    [ "pluginLoaded", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a961c6692995d3dd1b8b19467eae997f6", null ],
-    [ "pluginLoadingFailed", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a27c3c7b94ae82c9e272f0ff5cad6307e", null ],
-    [ "pluginUnloaded", "classhb_1_1plugin_1_1_hb_plugin_manager.html#af3f8c14bd57225d66a53a01187a12ab5", null ],
-    [ "unload", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a9af160135c6450347bb2e7bcfab33daa", null ],
-    [ "unloadPlugin", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a43de07582a13f5c373ad090def064fd9", null ],
-    [ "mLoadedPlugins", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a1e2cf37fa0e0889a4da8fe7e56e9188e", null ]
+    [ "HbPluginManager", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a55932195a9d164895ecd10b29604ec88", null ],
+    [ "load", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a952804261ce46bbee9881678a285606f", null ],
+    [ "loadPluginFromName", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a943eb2a98bb4074a3a512fc96e17b712", null ],
+    [ "loadPluginFromPath", "classhb_1_1plugin_1_1_hb_plugin_manager.html#ae5eefc7e2181602ebfdc8894834038dd", null ],
+    [ "onPluginStateChanged", "classhb_1_1plugin_1_1_hb_plugin_manager.html#ac47286c355ee5a7f6e50f9e81a3268d4", null ],
+    [ "plugin", "classhb_1_1plugin_1_1_hb_plugin_manager.html#ac680598e1dac1d431c0a39e22acbd42c", null ],
+    [ "pluginInfoList", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a8abbfb032567966ec69a291f045fd60c", null ],
+    [ "pluginStateChanged", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a13ded1300afdeb60e9096f2f9a17579f", null ],
+    [ "unload", "classhb_1_1plugin_1_1_hb_plugin_manager.html#aaaff80968680289f7a7373800d41825e", null ],
+    [ "unloadPlugin", "classhb_1_1plugin_1_1_hb_plugin_manager.html#a70219e98ca7299bc82467dda331915be", null ]
 ];

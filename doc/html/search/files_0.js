@@ -83,12 +83,11 @@ var searchData=
   ['hbo2serverconfig_2eh',['HbO2ServerConfig.h',['../_hb_o2_server_config_8h.html',1,'']]],
   ['hbo2serverfacebook_2eh',['HbO2ServerFacebook.h',['../_hb_o2_server_facebook_8h.html',1,'']]],
   ['hbpeer_2eh',['HbPeer.h',['../_hb_peer_8h.html',1,'']]],
-  ['hbplatformservice_2eh',['HbPlatformService.h',['../_hb_platform_service_8h.html',1,'']]],
   ['hbplugin_2eh',['HbPlugin.h',['../_hb_plugin_8h.html',1,'']]],
   ['hbplugininfos_2eh',['HbPluginInfos.h',['../_hb_plugin_infos_8h.html',1,'']]],
-  ['hbplugininterface_2eh',['HbPluginInterface.h',['../_hb_plugin_interface_8h.html',1,'']]],
   ['hbpluginlistwidget_2eh',['HbPluginListWidget.h',['../_hb_plugin_list_widget_8h.html',1,'']]],
   ['hbpluginmanager_2eh',['HbPluginManager.h',['../_hb_plugin_manager_8h.html',1,'']]],
+  ['hbpluginplatform_2eh',['HbPluginPlatform.h',['../_hb_plugin_platform_8h.html',1,'']]],
   ['hbpluginservice_2eh',['HbPluginService.h',['../_hb_plugin_service_8h.html',1,'']]],
   ['hbpresencecontract_2eh',['HbPresenceContract.h',['../_hb_presence_contract_8h.html',1,'']]],
   ['hbpresenceservice_2eh',['HbPresenceService.h',['../_hb_presence_service_8h.html',1,'']]],
@@ -126,6 +125,6 @@ var searchData=
   ['hbtimeoutnetworkreplies_2eh',['HbTimeoutNetworkReplies.h',['../_hb_timeout_network_replies_8h.html',1,'']]],
   ['hbtimeoutnetworkreply_2eh',['HbTimeoutNetworkReply.h',['../_hb_timeout_network_reply_8h.html',1,'']]],
   ['hbtools_2eh',['HbTools.h',['../_hb_tools_8h.html',1,'']]],
-  ['hbuid_2eh',['HbUId.h',['../_hb_u_id_8h.html',1,'']]],
+  ['hbuid_2eh',['HbUid.h',['../_hb_uid_8h.html',1,'']]],
   ['hbuidgenerator_2eh',['HbUidGenerator.h',['../_hb_uid_generator_8h.html',1,'']]]
 ];

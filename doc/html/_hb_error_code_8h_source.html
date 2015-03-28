@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -131,16 +132,16 @@ $(document).ready(function(){initNavTree('_hb_error_code_8h_source.html','');});
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
 <div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classhb_1_1tools_1_1_hb_error_code.html">   28</a></span>&#160;        <span class="keyword">class </span>HB_TOOLS_DECL <a class="code" href="classhb_1_1tools_1_1_hb_error_code.html">HbErrorCode</a> final</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        {</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            Q_DEFAULT_COPY( <a class="code" href="classhb_1_1tools_1_1_hb_error_code.html">HbErrorCode</a> )</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <a class="code" href="_hb_global_8h.html#a7c26416acb9750629a3b33e802f3ae0c">Q_DEFAULT_COPY</a>( <a class="code" href="classhb_1_1tools_1_1_hb_error_code.html">HbErrorCode</a> )</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">public</span> :</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <a class="code" href="classhb_1_1tools_1_1_hb_error_code.html">HbErrorCode</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1tools_1_1_hb_error_code.html">HbErrorCode</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;            <span class="keyword">template</span>&lt; <span class="keyword">typename</span> T &gt;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keyword">inline</span> QString operator ()( T code )<span class="keyword"> const</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keyword">inline</span> QString operator()( T code )<span class="keyword"> const</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">            </span>{</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">get</span>( ( qint32 ) code );</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            }</div>
@@ -161,13 +162,13 @@ $(document).ready(function(){initNavTree('_hb_error_code_8h_source.html','');});
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;                <span class="keywordflow">return</span> status;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            }</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">private</span> :</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordtype">bool</span> add( qint32 code, <span class="keyword">const</span> QString &amp; message );</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordtype">bool</span>    add( qint32 code, <span class="keyword">const</span> QString &amp; message );</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            QString <span class="keyword">get</span>( qint32 code ) <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keyword">private</span> :</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            QHash&lt; qint32, QString &gt; mErrors;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        };</div>
@@ -175,17 +176,18 @@ $(document).ready(function(){initNavTree('_hb_error_code_8h_source.html','');});
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="preprocessor">#endif // HBERRORCODE_H</span></div>
-<div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
-<div class="ttc" id="_hb_global_8h_html"><div class="ttname"><a href="_hb_global_8h.html">HbGlobal.h</a></div><div class="ttdoc">TODO. </div></div>
+<div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">Base namespace of HB module. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
+<div class="ttc" id="_hb_global_8h_html"><div class="ttname"><a href="_hb_global_8h.html">HbGlobal.h</a></div><div class="ttdoc">This file contains all useful macros used by HB module. </div></div>
 <div class="ttc" id="classhb_1_1tools_1_1_hb_error_code_html"><div class="ttname"><a href="classhb_1_1tools_1_1_hb_error_code.html">hb::tools::HbErrorCode</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbErrorCode.h:28</div></div>
 <div class="ttc" id="_hb_tools_8h_html"><div class="ttname"><a href="_hb_tools_8h.html">HbTools.h</a></div></div>
+<div class="ttc" id="_hb_global_8h_html_a7c26416acb9750629a3b33e802f3ae0c"><div class="ttname"><a href="_hb_global_8h.html#a7c26416acb9750629a3b33e802f3ae0c">Q_DEFAULT_COPY</a></div><div class="ttdeci">#define Q_DEFAULT_COPY(Class)</div><div class="ttdoc">Convenient macro to declare a defaulted copyable class. </div><div class="ttdef"><b>Definition:</b> HbGlobal.h:292</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_4eeb864c4eec08c7d6b9d3b0352cfdde.html">tools</a></li><li class="navelem"><a class="el" href="dir_b8ff3f042d3622ce8936e9c358386430.html">inc</a></li><li class="navelem"><a class="el" href="dir_a5045d214c962b317e62e9baf2434bae.html">core</a></li><li class="navelem"><a class="el" href="_hb_error_code_8h.html">HbErrorCode.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2015 12:16:26 for hb by
+    <li class="footer">Generated on Sat Mar 28 2015 12:04:12 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

@@ -6,7 +6,6 @@ var classhb_1_1log_1_1_hb_logger =
       [ "OUTPUT_WHO", "classhb_1_1log_1_1_hb_logger.html#a57eed45ec42eb7a056797a31911ad558a9c4195dbfa5f8fdcf866303effaeaa56", null ],
       [ "OUTPUT_WHERE", "classhb_1_1log_1_1_hb_logger.html#a57eed45ec42eb7a056797a31911ad558a4127a9ce8994bfa576e04f411b449130", null ],
       [ "OUTPUT_TEXT", "classhb_1_1log_1_1_hb_logger.html#a57eed45ec42eb7a056797a31911ad558aab00877b90b02925cdb2192aa37fc9f0", null ],
-      [ "OUTPUT_SYSTEM", "classhb_1_1log_1_1_hb_logger.html#a57eed45ec42eb7a056797a31911ad558a208dd4efe4552d59caaf4cf53e7ebda5", null ],
       [ "OUTPUT_ALL", "classhb_1_1log_1_1_hb_logger.html#a57eed45ec42eb7a056797a31911ad558a805ddb04ef0d2c0bde1b66d9e65b2d4b", null ]
     ] ],
     [ "Level", "classhb_1_1log_1_1_hb_logger.html#a90c584106186fe6b0c8c8907a0f92a4d", [

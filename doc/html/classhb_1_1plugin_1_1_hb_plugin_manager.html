@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -106,16 +107,16 @@ $(document).ready(function(){initNavTree('classhb_1_1plugin_1_1_hb_plugin_manage
 
 <div class="header">
   <div class="summary">
+<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classhb_1_1plugin_1_1_hb_plugin_manager-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">hb::plugin::HbPluginManager Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>TODOC.  
+<p><a class="el" href="classhb_1_1plugin_1_1_hb_plugin_manager.html" title="HbPluginManager handles plugins. ">HbPluginManager</a> handles plugins.  
  <a href="classhb_1_1plugin_1_1_hb_plugin_manager.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_hb_plugin_manager_8h_source.html">HbPluginManager.h</a>&gt;</code></p>
@@ -128,54 +129,216 @@ Inheritance diagram for hb::plugin::HbPluginManager:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
+Public Slots</h2></td></tr>
+<tr class="memitem:ac47286c355ee5a7f6e50f9e81a3268d4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac47286c355ee5a7f6e50f9e81a3268d4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>onPluginStateChanged</b> ()</td></tr>
+<tr class="separator:ac47286c355ee5a7f6e50f9e81a3268d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
-<tr class="memitem:a961c6692995d3dd1b8b19467eae997f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a961c6692995d3dd1b8b19467eae997f6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>pluginLoaded</b> (const <a class="el" href="classhb_1_1plugin_1_1_hb_plugin_infos.html">HbPluginInfos</a> *plugin_infos)</td></tr>
-<tr class="separator:a961c6692995d3dd1b8b19467eae997f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27c3c7b94ae82c9e272f0ff5cad6307e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a27c3c7b94ae82c9e272f0ff5cad6307e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>pluginLoadingFailed</b> (const <a class="el" href="classhb_1_1plugin_1_1_hb_plugin_infos.html">HbPluginInfos</a> *plugin_infos)</td></tr>
-<tr class="separator:a27c3c7b94ae82c9e272f0ff5cad6307e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3f8c14bd57225d66a53a01187a12ab5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af3f8c14bd57225d66a53a01187a12ab5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>pluginUnloaded</b> (QString plugin_name)</td></tr>
-<tr class="separator:af3f8c14bd57225d66a53a01187a12ab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13ded1300afdeb60e9096f2f9a17579f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1plugin_1_1_hb_plugin_manager.html#a13ded1300afdeb60e9096f2f9a17579f">pluginStateChanged</a> (const <a class="el" href="classhb_1_1plugin_1_1_hb_plugin_infos.html">HbPluginInfos</a> &amp;plugin_infos)</td></tr>
+<tr class="memdesc:a13ded1300afdeb60e9096f2f9a17579f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggered when the state has changed.  <a href="#a13ded1300afdeb60e9096f2f9a17579f">More...</a><br /></td></tr>
+<tr class="separator:a13ded1300afdeb60e9096f2f9a17579f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4647a6e0ae9aa089780c11232fa0484a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4647a6e0ae9aa089780c11232fa0484a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>HbPluginManager</b> (<a class="el" href="classhb_1_1plugin_1_1_hb_platform_service.html">HbPlatformService</a> *platformService, QObject *parent=nullptr)</td></tr>
-<tr class="separator:a4647a6e0ae9aa089780c11232fa0484a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af27d20fac4c2df002e5a0251e59a6570"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af27d20fac4c2df002e5a0251e59a6570"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>load</b> (QString folder_path)</td></tr>
-<tr class="separator:af27d20fac4c2df002e5a0251e59a6570"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9af160135c6450347bb2e7bcfab33daa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9af160135c6450347bb2e7bcfab33daa"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>unload</b> ()</td></tr>
-<tr class="separator:a9af160135c6450347bb2e7bcfab33daa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79dc461798df100307933c3d095a6eb4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79dc461798df100307933c3d095a6eb4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>loadPluginFromPath</b> (QString plugin_path)</td></tr>
-<tr class="separator:a79dc461798df100307933c3d095a6eb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89e51203e7ff78adb7b85d54ac281f3b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a89e51203e7ff78adb7b85d54ac281f3b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>loadPluginFromName</b> (QString plugin_name)</td></tr>
-<tr class="separator:a89e51203e7ff78adb7b85d54ac281f3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43de07582a13f5c373ad090def064fd9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43de07582a13f5c373ad090def064fd9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>unloadPlugin</b> (QString plugin_name, bool clear=true)</td></tr>
-<tr class="separator:a43de07582a13f5c373ad090def064fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6712d36f37ae1b91dff27d7bc9d3c9e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6712d36f37ae1b91dff27d7bc9d3c9e8"></a>
-<a class="el" href="classhb_1_1plugin_1_1_hb_plugin_interface.html">HbPluginInterface</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>plugin</b> (QString name) const </td></tr>
-<tr class="separator:a6712d36f37ae1b91dff27d7bc9d3c9e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a9e99730431cce8c33793a7142c73ba"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a9e99730431cce8c33793a7142c73ba"></a>
-const QList&lt; const <a class="el" href="classhb_1_1plugin_1_1_hb_plugin_infos.html">HbPluginInfos</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>pluginInfoList</b> ()</td></tr>
-<tr class="separator:a9a9e99730431cce8c33793a7142c73ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a1e2cf37fa0e0889a4da8fe7e56e9188e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e2cf37fa0e0889a4da8fe7e56e9188e"></a>
-QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>mLoadedPlugins</b></td></tr>
-<tr class="separator:a1e2cf37fa0e0889a4da8fe7e56e9188e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55932195a9d164895ecd10b29604ec88"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a55932195a9d164895ecd10b29604ec88"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>HbPluginManager</b> (<a class="el" href="classhb_1_1plugin_1_1_hb_plugin_platform.html">HbPluginPlatform</a> *platformService, QObject *parent=nullptr)</td></tr>
+<tr class="separator:a55932195a9d164895ecd10b29604ec88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a952804261ce46bbee9881678a285606f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1plugin_1_1_hb_plugin_manager.html#a952804261ce46bbee9881678a285606f">load</a> (const QString &amp;folder_path)</td></tr>
+<tr class="memdesc:a952804261ce46bbee9881678a285606f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load plugin contained in folder path.  <a href="#a952804261ce46bbee9881678a285606f">More...</a><br /></td></tr>
+<tr class="separator:a952804261ce46bbee9881678a285606f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaaff80968680289f7a7373800d41825e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaaff80968680289f7a7373800d41825e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1plugin_1_1_hb_plugin_manager.html#aaaff80968680289f7a7373800d41825e">unload</a> ()</td></tr>
+<tr class="memdesc:aaaff80968680289f7a7373800d41825e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unload all plugins previously loaded. <br /></td></tr>
+<tr class="separator:aaaff80968680289f7a7373800d41825e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5eefc7e2181602ebfdc8894834038dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1plugin_1_1_hb_plugin_manager.html#ae5eefc7e2181602ebfdc8894834038dd">loadPluginFromPath</a> (const QString &amp;plugin_path)</td></tr>
+<tr class="memdesc:ae5eefc7e2181602ebfdc8894834038dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load a specific plugin.  <a href="#ae5eefc7e2181602ebfdc8894834038dd">More...</a><br /></td></tr>
+<tr class="separator:ae5eefc7e2181602ebfdc8894834038dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a943eb2a98bb4074a3a512fc96e17b712"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1plugin_1_1_hb_plugin_manager.html#a943eb2a98bb4074a3a512fc96e17b712">loadPluginFromName</a> (const QString &amp;plugin_name)</td></tr>
+<tr class="memdesc:a943eb2a98bb4074a3a512fc96e17b712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load a specific plugin.  <a href="#a943eb2a98bb4074a3a512fc96e17b712">More...</a><br /></td></tr>
+<tr class="separator:a943eb2a98bb4074a3a512fc96e17b712"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70219e98ca7299bc82467dda331915be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1plugin_1_1_hb_plugin_manager.html#a70219e98ca7299bc82467dda331915be">unloadPlugin</a> (const QString &amp;plugin_name)</td></tr>
+<tr class="memdesc:a70219e98ca7299bc82467dda331915be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unload a specific plugin.  <a href="#a70219e98ca7299bc82467dda331915be">More...</a><br /></td></tr>
+<tr class="separator:a70219e98ca7299bc82467dda331915be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac680598e1dac1d431c0a39e22acbd42c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classhb_1_1plugin_1_1_i_hb_plugin.html">IHbPlugin</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1plugin_1_1_hb_plugin_manager.html#ac680598e1dac1d431c0a39e22acbd42c">plugin</a> (const QString &amp;plugin_name) const </td></tr>
+<tr class="memdesc:ac680598e1dac1d431c0a39e22acbd42c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a specific plugin.  <a href="#ac680598e1dac1d431c0a39e22acbd42c">More...</a><br /></td></tr>
+<tr class="separator:ac680598e1dac1d431c0a39e22acbd42c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8abbfb032567966ec69a291f045fd60c"><td class="memItemLeft" align="right" valign="top">QList&lt; <a class="el" href="classhb_1_1plugin_1_1_hb_plugin_infos.html">HbPluginInfos</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1plugin_1_1_hb_plugin_manager.html#a8abbfb032567966ec69a291f045fd60c">pluginInfoList</a> ()</td></tr>
+<tr class="memdesc:a8abbfb032567966ec69a291f045fd60c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get previously scanned plugins infos.  <a href="#a8abbfb032567966ec69a291f045fd60c">More...</a><br /></td></tr>
+<tr class="separator:a8abbfb032567966ec69a291f045fd60c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TODOC. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p><a class="el" href="classhb_1_1plugin_1_1_hb_plugin_manager.html" title="HbPluginManager handles plugins. ">HbPluginManager</a> handles plugins. </p>
+<p>Scan folders, seek for libraries, load plugins. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a952804261ce46bbee9881678a285606f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hb::plugin::HbPluginManager::load </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>folder_path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Load plugin contained in folder path. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">folder_path</td><td>Folder path. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a943eb2a98bb4074a3a512fc96e17b712"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hb::plugin::HbPluginManager::loadPluginFromName </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>plugin_name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Load a specific plugin. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">plugin_name</td><td>Plugin name. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae5eefc7e2181602ebfdc8894834038dd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hb::plugin::HbPluginManager::loadPluginFromPath </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>plugin_path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Load a specific plugin. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">plugin_path</td><td>Path to the library to load. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac680598e1dac1d431c0a39e22acbd42c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classhb_1_1plugin_1_1_i_hb_plugin.html">IHbPlugin</a>* hb::plugin::HbPluginManager::plugin </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>plugin_name</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get a specific plugin. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">plugin_name</td><td>Plugin name. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a8abbfb032567966ec69a291f045fd60c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">QList&lt; <a class="el" href="classhb_1_1plugin_1_1_hb_plugin_infos.html">HbPluginInfos</a> &gt; hb::plugin::HbPluginManager::pluginInfoList </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get previously scanned plugins infos. </p>
+<dl class="section return"><dt>Returns</dt><dd>Plugin infos list. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a13ded1300afdeb60e9096f2f9a17579f"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hb::plugin::HbPluginManager::pluginStateChanged </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classhb_1_1plugin_1_1_hb_plugin_infos.html">HbPluginInfos</a> &amp;&#160;</td>
+          <td class="paramname"><em>plugin_infos</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Triggered when the state has changed. </p>
+<p>To <a class="el" href="classhb_1_1plugin_1_1_hb_plugin_manager.html" title="HbPluginManager handles plugins. ">HbPluginManager</a>. </p>
+
+</div>
+</div>
+<a class="anchor" id="a70219e98ca7299bc82467dda331915be"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hb::plugin::HbPluginManager::unloadPlugin </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>plugin_name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unload a specific plugin. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">plugin_name</td><td>Plugin name. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>plugin/inc/<a class="el" href="_hb_plugin_manager_8h_source.html">HbPluginManager.h</a></li>
 </ul>
 </div><!-- contents -->
@@ -184,7 +347,7 @@ QHash&lt; QString, QString &gt;&#160;</td><td class="memItemRight" valign="botto
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacehb.html">hb</a></li><li class="navelem"><a class="el" href="namespacehb_1_1plugin.html">plugin</a></li><li class="navelem"><a class="el" href="classhb_1_1plugin_1_1_hb_plugin_manager.html">HbPluginManager</a></li>
-    <li class="footer">Generated on Tue Mar 17 2015 12:16:28 for hb by
+    <li class="footer">Generated on Sat Mar 28 2015 12:04:16 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

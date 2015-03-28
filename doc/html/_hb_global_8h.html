@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -111,7 +112,7 @@ $(document).ready(function(){initNavTree('_hb_global_8h.html','');});
 </div><!--header-->
 <div class="contents">
 
-<p>TODO.  
+<p>This file contains all useful macros used by HB module.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;QtCore/QString&gt;</code><br />
 </div>
@@ -119,82 +120,138 @@ $(document).ready(function(){initNavTree('_hb_global_8h.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ac813ef88fbdad37fbf239c3095da0dc2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac813ef88fbdad37fbf239c3095da0dc2"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>Q_EXTERN_C</b>&#160;&#160;&#160;extern</td></tr>
-<tr class="separator:ac813ef88fbdad37fbf239c3095da0dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1902755e7b62a6b6458f1820de3d8929"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1902755e7b62a6b6458f1820de3d8929"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>q_assert</b>(test)&#160;&#160;&#160;( ( test ) ? qt_noop() : qt_assert( #test, __FILE__, __LINE__ ) )</td></tr>
+<tr class="memitem:a1902755e7b62a6b6458f1820de3d8929"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#a1902755e7b62a6b6458f1820de3d8929">q_assert</a>(test)&#160;&#160;&#160;( ( test ) ? qt_noop() : qt_assert( #test, __FILE__, __LINE__ ) )</td></tr>
+<tr class="memdesc:a1902755e7b62a6b6458f1820de3d8929"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check compilator compatibility.  <a href="#a1902755e7b62a6b6458f1820de3d8929">More...</a><br /></td></tr>
 <tr class="separator:a1902755e7b62a6b6458f1820de3d8929"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac39cb662c5ca6c8412ec17bdd9beddc4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac39cb662c5ca6c8412ec17bdd9beddc4"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>q_assert_x</b>(test,  where,  what)&#160;&#160;&#160;( ( test ) ? qt_noop() : qt_assert_x( where, what, __FILE__, __LINE__ ) )</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#ac39cb662c5ca6c8412ec17bdd9beddc4">q_assert_x</a>(test,  where,  what)&#160;&#160;&#160;( ( test ) ? qt_noop() : qt_assert_x( where, what, __FILE__, __LINE__ ) )</td></tr>
+<tr class="memdesc:ac39cb662c5ca6c8412ec17bdd9beddc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient macro for qt_assert_x use. <br /></td></tr>
 <tr class="separator:ac39cb662c5ca6c8412ec17bdd9beddc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6dcd8c8a2bbae6eea444615a9a34e681"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6dcd8c8a2bbae6eea444615a9a34e681"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>HbLatin1</b>(string)&#160;&#160;&#160;QString( string ).toLatin1().constData()</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#a6dcd8c8a2bbae6eea444615a9a34e681">HbLatin1</a>(string)&#160;&#160;&#160;QString( string ).toLatin1().constData()</td></tr>
+<tr class="memdesc:a6dcd8c8a2bbae6eea444615a9a34e681"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient macro used to convert QString into const char * (\0 terminated). <br /></td></tr>
 <tr class="separator:a6dcd8c8a2bbae6eea444615a9a34e681"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a00e5989c0d8caddfa2ef82c2ff6c1c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9a00e5989c0d8caddfa2ef82c2ff6c1c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>q_assert_ptr</b>(pointer)&#160;&#160;&#160;hb_assert_ptr( pointer, __FILE__, __LINE__ )</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#a9a00e5989c0d8caddfa2ef82c2ff6c1c">q_assert_ptr</a>(pointer)&#160;&#160;&#160;hb_assert_ptr( pointer, __FILE__, __LINE__ )</td></tr>
+<tr class="memdesc:a9a00e5989c0d8caddfa2ef82c2ff6c1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient macro to assert a pointer. <br /></td></tr>
 <tr class="separator:a9a00e5989c0d8caddfa2ef82c2ff6c1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc127a5f4223e2522ff17bf58b6ac98b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc127a5f4223e2522ff17bf58b6ac98b"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>q_dynamic_cast</b>(Type,  pointer)&#160;&#160;&#160;hb_dynamic_cast&lt; Type &gt;( pointer, __FILE__, __LINE__ )</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#acc127a5f4223e2522ff17bf58b6ac98b">q_dynamic_cast</a>(Type,  pointer)&#160;&#160;&#160;hb_dynamic_cast&lt; Type &gt;( pointer, __FILE__, __LINE__ )</td></tr>
+<tr class="memdesc:acc127a5f4223e2522ff17bf58b6ac98b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient macro to dynamic cast a pointer. <br /></td></tr>
 <tr class="separator:acc127a5f4223e2522ff17bf58b6ac98b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf58ebd8df5633101b11b2b056ab09c0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adf58ebd8df5633101b11b2b056ab09c0"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>callbacks</b></td></tr>
+<tr class="memitem:adf58ebd8df5633101b11b2b056ab09c0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#adf58ebd8df5633101b11b2b056ab09c0">callbacks</a></td></tr>
+<tr class="memdesc:adf58ebd8df5633101b11b2b056ab09c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient macro to scope a method used as a slot by using the new Qt5 connect syntax.  <a href="#adf58ebd8df5633101b11b2b056ab09c0">More...</a><br /></td></tr>
 <tr class="separator:adf58ebd8df5633101b11b2b056ab09c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9b20fb61db7d7c9646e3ce4dbfc188f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9b20fb61db7d7c9646e3ce4dbfc188f"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>inner</b></td></tr>
+<tr class="memitem:ae9b20fb61db7d7c9646e3ce4dbfc188f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#ae9b20fb61db7d7c9646e3ce4dbfc188f">inner</a></td></tr>
+<tr class="memdesc:ae9b20fb61db7d7c9646e3ce4dbfc188f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient macro to tag an inner class.  <a href="#ae9b20fb61db7d7c9646e3ce4dbfc188f">More...</a><br /></td></tr>
 <tr class="separator:ae9b20fb61db7d7c9646e3ce4dbfc188f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c26416acb9750629a3b33e802f3ae0c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>Q_DEFAULT_COPY</b>(Class)</td></tr>
+<tr class="memitem:a7c26416acb9750629a3b33e802f3ae0c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#a7c26416acb9750629a3b33e802f3ae0c">Q_DEFAULT_COPY</a>(Class)</td></tr>
+<tr class="memdesc:a7c26416acb9750629a3b33e802f3ae0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient macro to declare a defaulted copyable class.  <a href="#a7c26416acb9750629a3b33e802f3ae0c">More...</a><br /></td></tr>
 <tr class="separator:a7c26416acb9750629a3b33e802f3ae0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebe64666045ded24a5bfa6b5eec8163f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><b>Q_STATIC_CLASS</b>(Class)</td></tr>
+<tr class="memitem:aebe64666045ded24a5bfa6b5eec8163f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#aebe64666045ded24a5bfa6b5eec8163f">Q_STATIC_CLASS</a>(Class)</td></tr>
+<tr class="memdesc:aebe64666045ded24a5bfa6b5eec8163f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient macro to declare a static class.  <a href="#aebe64666045ded24a5bfa6b5eec8163f">More...</a><br /></td></tr>
 <tr class="separator:aebe64666045ded24a5bfa6b5eec8163f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad02c17f276a781f00412f8c1aad74f74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad02c17f276a781f00412f8c1aad74f74"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>Q_FRIEND_CLASS</b>(Class)&#160;&#160;&#160;friend class Class;</td></tr>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#ad02c17f276a781f00412f8c1aad74f74">Q_FRIEND_CLASS</a>(Class)&#160;&#160;&#160;friend class Class;</td></tr>
+<tr class="memdesc:ad02c17f276a781f00412f8c1aad74f74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient macro to declare a friend class. <br /></td></tr>
 <tr class="separator:ad02c17f276a781f00412f8c1aad74f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a8dd57eb1c7b8f3cf851628d7626af57e"><td class="memTemplParams" colspan="2"><a class="anchor" id="a8dd57eb1c7b8f3cf851628d7626af57e"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a8dd57eb1c7b8f3cf851628d7626af57e"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><b>qScopeName</b> ()</td></tr>
+<tr class="memitem:a8dd57eb1c7b8f3cf851628d7626af57e"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#a8dd57eb1c7b8f3cf851628d7626af57e">qScopeName</a> ()</td></tr>
+<tr class="memdesc:a8dd57eb1c7b8f3cf851628d7626af57e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODOC. <br /></td></tr>
 <tr class="separator:a8dd57eb1c7b8f3cf851628d7626af57e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5575af777fa4cade8655c9b12a17a7d"><td class="memTemplParams" colspan="2"><a class="anchor" id="ad5575af777fa4cade8655c9b12a17a7d"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ad5575af777fa4cade8655c9b12a17a7d"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><b>qScopeName</b> (T *pointer)</td></tr>
+<tr class="memitem:ad5575af777fa4cade8655c9b12a17a7d"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#ad5575af777fa4cade8655c9b12a17a7d">qScopeName</a> (T *pointer)</td></tr>
+<tr class="memdesc:ad5575af777fa4cade8655c9b12a17a7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODOC. <br /></td></tr>
 <tr class="separator:ad5575af777fa4cade8655c9b12a17a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c7ee21a942938e567c35d0904546dd5"><td class="memTemplParams" colspan="2"><a class="anchor" id="a6c7ee21a942938e567c35d0904546dd5"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a6c7ee21a942938e567c35d0904546dd5"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><b>qScopeName</b> (const T &amp;expression)</td></tr>
+<tr class="memitem:a6c7ee21a942938e567c35d0904546dd5"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#a6c7ee21a942938e567c35d0904546dd5">qScopeName</a> (const T &amp;expression)</td></tr>
+<tr class="memdesc:a6c7ee21a942938e567c35d0904546dd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODOC. <br /></td></tr>
 <tr class="separator:a6c7ee21a942938e567c35d0904546dd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38420ad15a24e24dcc0aac5a5afafe80"><td class="memTemplParams" colspan="2"><a class="anchor" id="a38420ad15a24e24dcc0aac5a5afafe80"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a38420ad15a24e24dcc0aac5a5afafe80"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><b>qTypeName</b> ()</td></tr>
+<tr class="memitem:a38420ad15a24e24dcc0aac5a5afafe80"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#a38420ad15a24e24dcc0aac5a5afafe80">qTypeName</a> ()</td></tr>
+<tr class="memdesc:a38420ad15a24e24dcc0aac5a5afafe80"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODOC. <br /></td></tr>
 <tr class="separator:a38420ad15a24e24dcc0aac5a5afafe80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8be2ff557540d536214bfff4fcbf5180"><td class="memTemplParams" colspan="2"><a class="anchor" id="a8be2ff557540d536214bfff4fcbf5180"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a8be2ff557540d536214bfff4fcbf5180"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><b>qTypeName</b> (T *pointer)</td></tr>
+<tr class="memitem:a8be2ff557540d536214bfff4fcbf5180"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#a8be2ff557540d536214bfff4fcbf5180">qTypeName</a> (T *pointer)</td></tr>
+<tr class="memdesc:a8be2ff557540d536214bfff4fcbf5180"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODOC. <br /></td></tr>
 <tr class="separator:a8be2ff557540d536214bfff4fcbf5180"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ae225c11540e37a6f68f8d655787b3e"><td class="memTemplParams" colspan="2"><a class="anchor" id="a3ae225c11540e37a6f68f8d655787b3e"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a3ae225c11540e37a6f68f8d655787b3e"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><b>qTypeName</b> (const T &amp;expression)</td></tr>
+<tr class="memitem:a3ae225c11540e37a6f68f8d655787b3e"><td class="memTemplItemLeft" align="right" valign="top">QString&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#a3ae225c11540e37a6f68f8d655787b3e">qTypeName</a> (const T &amp;expression)</td></tr>
+<tr class="memdesc:a3ae225c11540e37a6f68f8d655787b3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">TODOC. <br /></td></tr>
 <tr class="separator:a3ae225c11540e37a6f68f8d655787b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:affd64bec836c4dd54ba2ec79e80616b1"><td class="memTemplParams" colspan="2"><a class="anchor" id="affd64bec836c4dd54ba2ec79e80616b1"></a>
 template&lt;typename U , typename T &gt; </td></tr>
-<tr class="memitem:affd64bec836c4dd54ba2ec79e80616b1"><td class="memTemplItemLeft" align="right" valign="top">QList&lt; U &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>qlist_dynamic_cast</b> (const QList&lt; T * &gt; &amp;list)</td></tr>
+<tr class="memitem:affd64bec836c4dd54ba2ec79e80616b1"><td class="memTemplItemLeft" align="right" valign="top">QList&lt; U &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#affd64bec836c4dd54ba2ec79e80616b1">qlist_dynamic_cast</a> (const QList&lt; T * &gt; &amp;list)</td></tr>
+<tr class="memdesc:affd64bec836c4dd54ba2ec79e80616b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient function to dynamic cast an entire list of pointers. <br /></td></tr>
 <tr class="separator:affd64bec836c4dd54ba2ec79e80616b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24c30edbaf334eecc259b6fc3267983e"><td class="memTemplParams" colspan="2"><a class="anchor" id="a24c30edbaf334eecc259b6fc3267983e"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a24c30edbaf334eecc259b6fc3267983e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>q_delete_ptr</b> (T **pointer)</td></tr>
+<tr class="memitem:a24c30edbaf334eecc259b6fc3267983e"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_hb_global_8h.html#a24c30edbaf334eecc259b6fc3267983e">q_delete_ptr</a> (T **pointer)</td></tr>
+<tr class="memdesc:a24c30edbaf334eecc259b6fc3267983e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient function to delete a pointer (reset nullptr). <br /></td></tr>
 <tr class="separator:a24c30edbaf334eecc259b6fc3267983e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae8424f97039181c4f589851eacb5799"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aae8424f97039181c4f589851eacb5799"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>qExit</b> ()</td></tr>
-<tr class="separator:aae8424f97039181c4f589851eacb5799"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a970aa6d26d1864500a528bacfbf96c6a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a970aa6d26d1864500a528bacfbf96c6a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>qAbort</b> ()</td></tr>
-<tr class="separator:a970aa6d26d1864500a528bacfbf96c6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TODO. </p>
+<div class="textblock"><p>This file contains all useful macros used by HB module. </p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="adf58ebd8df5633101b11b2b056ab09c0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define callbacks</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convenient macro to scope a method used as a slot by using the new Qt5 connect syntax. </p>
+<p>class Object { public slots: void myQt4Slot(); public callbacks: void myQt5Slot(); }; </p>
+
+</div>
+</div>
+<a class="anchor" id="ae9b20fb61db7d7c9646e3ce4dbfc188f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define inner</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convenient macro to tag an inner class. </p>
+<p>class Car { inner class Engine { }; }; </p>
+
+</div>
+</div>
+<a class="anchor" id="a1902755e7b62a6b6458f1820de3d8929"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define q_assert</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">test</td><td>)</td>
+          <td>&#160;&#160;&#160;( ( test ) ? qt_noop() : qt_assert( #test, __FILE__, __LINE__ ) )</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Check compilator compatibility. </p>
+<p>Android specifics. GCC specifics.</p>
+<p>Convenient macro for qt_assert use. </p>
+
+</div>
+</div>
 <a class="anchor" id="a7c26416acb9750629a3b33e802f3ae0c"></a>
 <div class="memitem">
 <div class="memproto">
@@ -213,6 +270,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>qAbort</b> ()</td></t
 <div class="line">    Class &amp; operator =(const Class &amp;)Q_DECL_EQ_DEFAULT; \</div>
 <div class="line">    private:</div>
 </div><!-- fragment -->
+<p>Convenient macro to declare a defaulted copyable class. </p>
+
 </div>
 </div>
 <a class="anchor" id="aebe64666045ded24a5bfa6b5eec8163f"></a>
@@ -233,6 +292,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>qAbort</b> ()</td></t
 <div class="line">    Class &amp; operator =(const Class &amp;)Q_DECL_EQ_DELETE; \</div>
 <div class="line">    virtual ~Class() Q_DECL_EQ_DELETE;</div>
 </div><!-- fragment -->
+<p>Convenient macro to declare a static class. </p>
+
 </div>
 </div>
 </div><!-- contents -->
@@ -241,7 +302,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>qAbort</b> ()</td></t
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_4eeb864c4eec08c7d6b9d3b0352cfdde.html">tools</a></li><li class="navelem"><a class="el" href="dir_b8ff3f042d3622ce8936e9c358386430.html">inc</a></li><li class="navelem"><a class="el" href="_hb_global_8h.html">HbGlobal.h</a></li>
-    <li class="footer">Generated on Tue Mar 17 2015 12:16:27 for hb by
+    <li class="footer">Generated on Sat Mar 28 2015 12:04:13 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

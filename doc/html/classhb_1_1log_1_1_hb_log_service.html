@@ -46,6 +46,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -113,7 +114,7 @@ $(document).ready(function(){initNavTree('classhb_1_1log_1_1_hb_log_service.html
 </div><!--header-->
 <div class="contents">
 
-<p>TODOC.  
+<p><a class="el" href="classhb_1_1log_1_1_hb_log_service.html" title="HbLogService is the front-end class of HbLog. ">HbLogService</a> is the front-end class of HbLog.  
  <a href="classhb_1_1log_1_1_hb_log_service.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_hb_log_service_8h_source.html">HbLogService.h</a>&gt;</code></p>
@@ -129,16 +130,65 @@ static <a class="el" href="classhb_1_1log_1_1_hb_logger_inputs.html">HbLoggerInp
 <tr class="memitem:a70d90703e5955df397bb3e9b9bcb849a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70d90703e5955df397bb3e9b9bcb849a"></a>
 static <a class="el" href="classhb_1_1log_1_1_hb_logger_outputs.html">HbLoggerOutputs</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>outputs</b> ()</td></tr>
 <tr class="separator:a70d90703e5955df397bb3e9b9bcb849a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37193c8aefaf03dff3c9b166b30e97cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37193c8aefaf03dff3c9b166b30e97cc"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>processArgs</b> (int argc, char *argv[])</td></tr>
+<tr class="memitem:a37193c8aefaf03dff3c9b166b30e97cc"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1log_1_1_hb_log_service.html#a37193c8aefaf03dff3c9b166b30e97cc">processArgs</a> (int argc, char *argv[])</td></tr>
+<tr class="memdesc:a37193c8aefaf03dff3c9b166b30e97cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process app args for HbLog.  <a href="#a37193c8aefaf03dff3c9b166b30e97cc">More...</a><br /></td></tr>
 <tr class="separator:a37193c8aefaf03dff3c9b166b30e97cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f1b795d893777ca2529ad8ce526fd75"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f1b795d893777ca2529ad8ce526fd75"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>processArgs</b> (QStringList args)</td></tr>
 <tr class="separator:a3f1b795d893777ca2529ad8ce526fd75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TODOC. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p><a class="el" href="classhb_1_1log_1_1_hb_log_service.html" title="HbLogService is the front-end class of HbLog. ">HbLogService</a> is the front-end class of HbLog. </p>
+<p><a class="el" href="classhb_1_1log_1_1_hb_log_service.html" title="HbLogService is the front-end class of HbLog. ">HbLogService</a> is a threaded-singleton, that means it can be used from anywhere without any worries. Features:</p><ul>
+<li>Define convenient macros to push log message.</li>
+<li>Add/Remove log in/outputs. </li>
+</ul>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a37193c8aefaf03dff3c9b166b30e97cc"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void hb::log::HbLogService::processArgs </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>argv</em>[]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Process app args for HbLog. </p>
+<p>See processArgs( QStringList args ) for usage. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">argc</td><td>Standard argc. </td></tr>
+    <tr><td class="paramname">argv</td><td>Standard argv. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd>processArgs( QStringList args ) </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>log/inc/<a class="el" href="_hb_log_service_8h_source.html">HbLogService.h</a></li>
 </ul>
 </div><!-- contents -->
@@ -147,7 +197,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><b>processArgs</b
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacehb.html">hb</a></li><li class="navelem"><a class="el" href="namespacehb_1_1log.html">log</a></li><li class="navelem"><a class="el" href="classhb_1_1log_1_1_hb_log_service.html">HbLogService</a></li>
-    <li class="footer">Generated on Tue Mar 17 2015 12:16:27 for hb by
+    <li class="footer">Generated on Sat Mar 28 2015 12:04:14 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>
