@@ -35,25 +35,25 @@ namespace hb
             Q_OBJECT
             Q_DISABLE_COPY( HbLogLocalSocketInput )
 
-        private :
+        private:
 
-        public :
+        public:
 
             HbLogLocalSocketInput(const QString & name = QString() );
             virtual ~HbLogLocalSocketInput() = default;
 
-        signals :
+        signals:
 
             void inputMessageReceived( HbLogMessage * message );
 
-        private callbacks :
+        private callbacks:
 
             void incomingConnection();
             void onReadyRead();
             void onClientDisconnected();
 
 
-        private :
+        private:
             QString mName;
             qint32 mAvailable;
             QSet< QLocalSocket * > mClients;

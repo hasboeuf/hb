@@ -29,12 +29,12 @@ namespace hb
             Q_DISABLE_COPY( HbLogConsoleOutput )
 
 
-        public :
+        public:
 
             HbLogConsoleOutput( HbLogger::Levels level = HbLogger::LEVEL_ALL );
             virtual ~HbLogConsoleOutput() = default;
 
-        private :
+        private:
 
             void processMessage( const HbLogMessage & message );
         };

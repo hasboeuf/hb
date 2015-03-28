@@ -23,7 +23,7 @@ namespace hb
          */
         class IHbLoggerOutput
         {
-        public :
+        public:
 
             enum OutputType : qint16
             {
@@ -34,14 +34,14 @@ namespace hb
                 OUTPUT_TCP_SOCKET    = 4
             };
 
-        public :
+        public:
 
             virtual OutputType type() const = 0;
 
             virtual void setLevel( HbLogger::Levels level ) = 0;
             virtual HbLogger::Levels level() const = 0;
 
-        protected :
+        protected:
 
             virtual ~IHbLoggerOutput(){} // = default; TODO linux-g++ issue
         };

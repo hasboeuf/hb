@@ -32,18 +32,18 @@ namespace hb
             Q_DISABLE_COPY( HbLogGuiOutput )
 
 
-        public :
+        public:
 
             HbLogGuiOutput() = delete;
             HbLogGuiOutput( HbLogGuiNotifier * notifier, HbLogger::Levels level = HbLogger::LEVEL_ALL );
             virtual ~HbLogGuiOutput();
 
-        private :
+        private:
 
             void processMessage( const HbLogMessage & message );
 
 
-        private :
+        private:
 
             HbLogGuiNotifier * mpNotifier;
         };

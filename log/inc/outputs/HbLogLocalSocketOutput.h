@@ -30,21 +30,21 @@ namespace hb
             Q_OBJECT
             Q_DISABLE_COPY( HbLogLocalSocketOutput )
 
-        private :
+        private:
             QString mName;
 
-        public :
+        public:
 
             HbLogLocalSocketOutput( const QString & name = QString(), HbLogger::Levels level = HbLogger::LEVEL_ALL );
             virtual ~HbLogLocalSocketOutput();
                 
             bool isValid() const;
 
-        private :
+        private:
 
             void processMessage( const HbLogMessage & message );
 
-        private slots :
+        private slots:
 
             void onReconnection();
             void onDisconnected();

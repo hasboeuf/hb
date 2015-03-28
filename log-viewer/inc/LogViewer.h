@@ -30,7 +30,7 @@ namespace hb
             Q_DISABLE_COPY( LogViewer )
 
 
-        public :
+        public:
 
             LogViewer( QWidget *parent = nullptr );
             virtual ~LogViewer() = default;
@@ -40,7 +40,7 @@ namespace hb
 
             HbLogGuiNotifier * logNotifier() const;
 
-        private slots :
+        private slots:
 
             // From mLogNotifier.
             void onNewLogMessage( const HbLogMessage & message );
@@ -58,7 +58,7 @@ namespace hb
             void onNewTabRequest( quint8 column, const QString & value );
 
 
-        private :
+        private:
 
             quint32 mTabIds;
             QHash<quint32, LogViewerTab *> mTabs;

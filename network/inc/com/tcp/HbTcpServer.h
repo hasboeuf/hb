@@ -38,7 +38,7 @@ namespace hb
             Q_OBJECT
             Q_DISABLE_COPY( HbTcpServer )
 
-        public :
+        public:
 
             HbTcpServer( QObject * parent = nullptr );
             virtual ~HbTcpServer();
@@ -49,7 +49,7 @@ namespace hb
             virtual bool setConfiguration( const HbTcpServerConfig & config ) final;
             virtual const HbTcpServerConfig & configuration() const final;
 
-        private :
+        private:
             virtual bool connectToNetwork();
             virtual void disconnectFromNetwork();
             virtual bool isListening() const;
@@ -67,7 +67,7 @@ namespace hb
             // To HbTcpSocketHandler.
             void newConnection( qint32 socket_descriptor );
 
-        private :
+        private:
 
             TcpServer * mpDevice;
             HbTcpServerConfig mConfig;

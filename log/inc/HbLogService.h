@@ -37,7 +37,7 @@ namespace hb
         class HB_LOG_DECL HbLogService
         {
 
-        public :
+        public:
 
             static HbLogger * logger();
             static HbLoggerInputs * inputs();
@@ -64,7 +64,7 @@ namespace hb
              */
             static void processArgs( QStringList args );
 
-        private :
+        private:
 
             HbLogService() = default;
             virtual ~HbLogService() = default;
@@ -72,7 +72,7 @@ namespace hb
             static void subscribe();
 
 
-        private :
+        private:
             static QThreadStorage< HbLogManager * > msManager;
         };
     }

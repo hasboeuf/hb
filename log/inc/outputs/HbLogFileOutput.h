@@ -32,11 +32,11 @@ namespace hb
             Q_DISABLE_COPY( HbLogFileOutput )
 
 
-        public :
+        public:
             static const QString msDefaultPath;
             static const quint32 msMaxFileSize;
 
-        public :
+        public:
 
             HbLogFileOutput() = delete;
             HbLogFileOutput( const QString & path, quint32 max_size = 0, HbLogger::Levels level = HbLogger::LEVEL_ALL );
@@ -44,13 +44,13 @@ namespace hb
 
             bool isValid() const;
 
-        private :
+        private:
             void closeLogFile();
             void createLogFile();
             void processMessage( const HbLogMessage & message );
 
 
-        private :
+        private:
             QString mPath;
             QFile mFile;
             quint32 mMaxSize;

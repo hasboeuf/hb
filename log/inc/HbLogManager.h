@@ -37,7 +37,7 @@ namespace hb
             Q_DISABLE_COPY( HbLogManager )
 
 
-        public :
+        public:
 
             HbLogManager();
             virtual ~HbLogManager();
@@ -49,12 +49,12 @@ namespace hb
         protected:
             void timerEvent( QTimerEvent * event );
 
-        private :
+        private:
             void tryEnqueueMessage();
             void enqueueMessage( Level level, Formats format, const HbLogContext & context, const QString & text );
             void dequeuePendingMessages();
 
-        private :
+        private:
 
             static QMutex msMutex;
             static quint8 msInstances;

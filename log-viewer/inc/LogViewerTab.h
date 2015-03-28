@@ -34,7 +34,7 @@ namespace hb
                 
             Q_PROPERTY( qreal _freezeAnimationValue READ freezeAnimationValue WRITE setFreezeAnimationValue )
 
-        public :
+        public:
 
             enum ColumnId : quint8
             {
@@ -49,7 +49,7 @@ namespace hb
             };
 
 
-        public :
+        public:
 
             LogViewerTab() = delete;
             LogViewerTab( qint32 id,
@@ -66,11 +66,11 @@ namespace hb
 
             void addEntry( const hb::log::HbLogMessage * msg, bool rerun = false );
 
-        signals :
+        signals:
 
             void newTabRequest( quint8 column, const QString & value );
 
-        public slots :
+        public slots:
 
             // From GUI
             void onLevelChanged     ( int index );
@@ -85,7 +85,7 @@ namespace hb
             void onRowDoubleClicked( const QModelIndex & index );
             void onCustomContextMenuRequested( const QPoint & pos );
 
-        private :
+        private:
 
             static QString       labels( ColumnId col_id );
             static QSet<QString> findAbsoluteFilePath( const QString & file_path, const QString & root_path );
@@ -100,7 +100,7 @@ namespace hb
             void  setFreezeAnimationValue( qreal value );
 
 
-        private :
+        private:
 
             quint32                        mId;
             QStandardItemModel             mModel;

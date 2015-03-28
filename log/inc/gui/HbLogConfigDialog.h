@@ -41,7 +41,7 @@ namespace hb
             void saveConfig();
             void updateGui();
 
-        private slots :
+        private slots:
 
             void onFontClicked();
             void onColorClicked(int color_id);

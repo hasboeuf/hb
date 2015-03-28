@@ -29,15 +29,15 @@ namespace hb
         {
             Q_DISABLE_COPY( HbLogAbstractInput )
 
-        public :
+        public:
             virtual ~HbLogAbstractInput(){} // = default; TODO linux-g++ issue
             virtual InputType type() const final;
 
-        protected :
+        protected:
             HbLogAbstractInput() = default;
             HbLogAbstractInput( InputType type );
 
-        private :
+        private:
             InputType mType;
         };
     }

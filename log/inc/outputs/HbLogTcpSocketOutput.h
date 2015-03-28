@@ -32,7 +32,7 @@ namespace hb
             Q_DISABLE_COPY( HbLogTcpSocketOutput )
 
 
-        public :
+        public:
 
             HbLogTcpSocketOutput() = delete;
             HbLogTcpSocketOutput( const QString & ip, quint32 port, HbLogger::Levels level = HbLogger::LEVEL_ALL );
@@ -43,17 +43,17 @@ namespace hb
             const QString & ip() const;
             quint32 port() const;
 
-        private :
+        private:
 
             void processMessage( const HbLogMessage & message );
 
-        private slots :
+        private slots:
 
             void onReconnection();
             void onDisconnected();
 
 
-        private :
+        private:
 
             QString mIp;
             quint32 mPort;

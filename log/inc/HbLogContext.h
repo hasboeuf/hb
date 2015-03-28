@@ -24,7 +24,7 @@ namespace hb
          */
         class HB_LOG_DECL HbLogContext final
         {
-        public :
+        public:
 
             HbLogContext();
             HbLogContext( const HbLogContext & context );
@@ -45,7 +45,7 @@ namespace hb
             friend QDataStream & operator <<( QDataStream & stream, const HbLogContext & context );
             friend QDataStream & operator >>( QDataStream & stream, HbLogContext & context );
 
-        private :
+        private:
 
             QString mOwner;
             QString mFile;

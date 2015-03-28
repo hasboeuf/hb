@@ -35,7 +35,7 @@ namespace hb
             Q_DISABLE_COPY( HbLogAbstractOutput )
 
 
-        public :
+        public:
 
             virtual ~HbLogAbstractOutput();
 
@@ -47,13 +47,13 @@ namespace hb
 
             virtual void processMessage( const HbLogMessage & message ) = 0;
 
-        protected :
+        protected:
 
             HbLogAbstractOutput() = default;
             HbLogAbstractOutput( OutputType type, HbLogger::Levels level );
 
 
-        private :
+        private:
 
             QMutex * mpMutex;
 

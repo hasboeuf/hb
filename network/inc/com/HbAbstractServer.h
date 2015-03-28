@@ -73,7 +73,7 @@ namespace hb
             void socketDisconnected    ( networkuid server_uid, networkuid socket_uid );
             void socketContractReceived( networkuid server_uid, networkuid socket_uid, const HbNetworkContract * contract );
 
-        public callbacks :
+        public callbacks:
             // From HbSocketHandler.
             void onSocketConnected       ( qint32 socket_descriptor, networkuid socket_uid );
             void onSocketDisconnected    ( networkuid socket_uid );

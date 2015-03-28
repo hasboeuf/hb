@@ -40,14 +40,14 @@ namespace hb
             Q_OBJECT
             Q_DISABLE_COPY( HbLoggerPool )
 
-        private :
+        private:
 
             static const quint16 MAX_CAPACITY = 500;
             static const quint16 TCP_PORT_MIN = 1024;
             // static const quint16 TCP_PORT_MAX = 65535; Useless as quint16 protects the range.
 
 
-        public :
+        public:
 
             HbLoggerPool() = delete;
             HbLoggerPool( QThread * thread );
@@ -69,14 +69,14 @@ namespace hb
 
             bool enqueueMessage( QList< HbLogMessage * > & buffer );
 
-        private callbacks :
+        private callbacks:
 
             // From QThread
             void running();
             void process();
 
 
-        private :
+        private:
 
             QAtomicInt mAtomic;
             QReadWriteLock mInputsLock;

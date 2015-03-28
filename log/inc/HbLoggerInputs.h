@@ -34,7 +34,7 @@ namespace hb
             Q_FRIEND_CLASS( HbLogManager )
 
 
-        public :
+        public:
 
             /*!
              * Request to add a tcp server input.
@@ -67,13 +67,13 @@ namespace hb
              */
             IHbLoggerInput * input( loguid uid );
 
-        private :
+        private:
 
             HbLoggerInputs() = delete;
             HbLoggerInputs( HbLogManager * parent );
             virtual ~HbLoggerInputs() = default;
 
-        private :
+        private:
 
             HbLoggerPool * mpPool;
         };

@@ -21,7 +21,7 @@ namespace hb
             Q_OBJECT
             Q_DISABLE_COPY( HbTcpClient )
 
-        public :
+        public:
 
             HbTcpClient( QObject * parent = nullptr );
             virtual ~HbTcpClient();
@@ -37,7 +37,7 @@ namespace hb
         signals:
             void socketError( QAbstractSocket::SocketError error, QString error_str );
 
-        private :
+        private:
 
             bool connectToNetwork();
             bool disconnectFromNetwork();
@@ -46,7 +46,7 @@ namespace hb
             HbAbstractSocket * pendingConnection();
             HbAbstractSocket * currentConnection() const;
 
-        private :
+        private:
 
             HbTcpSocket * mpSocket;
             HbTcpClientConfig mConfig;

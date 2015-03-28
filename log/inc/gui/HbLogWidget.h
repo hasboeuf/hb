@@ -48,7 +48,7 @@ namespace hb
 
         public slots:
 
-        private slots :
+        private slots:
             void onResetClicked();
             void onSaveAsClicked();
             void onConfigureClicked();

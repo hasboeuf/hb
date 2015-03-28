@@ -35,7 +35,7 @@ namespace hb
             Q_DISABLE_COPY( HbLogTcpSocketInput )
 
 
-        public :
+        public:
 
             HbLogTcpSocketInput() = delete;
             HbLogTcpSocketInput( quint32 port );
@@ -43,21 +43,21 @@ namespace hb
 
             quint32 port() const;
 
-        signals :
+        signals:
 
             void inputMessageReceived( HbLogMessage * message );
 
-        private :
+        private:
 
             void incomingConnection( qint32 descriptor );
 
-        private callbacks :
+        private callbacks:
 
             void onReadyRead();
             void onClientDisconnected();
 
 
-        private :
+        private:
 
             quint32 mPort;
 

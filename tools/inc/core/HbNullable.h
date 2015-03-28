@@ -27,12 +27,12 @@ namespace hb
         template< typename T >
         class HbNullable final
         {
-        public :
+        public:
 
             static const HbNullable< T > Null;
 
 
-        public :
+        public:
 
             inline HbNullable()
             {
@@ -155,7 +155,7 @@ namespace hb
             }
 
 
-        private :
+        private:
 
             T mValue;
             bool mIsNull;

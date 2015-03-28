@@ -26,7 +26,7 @@ namespace hbprivate
     {
         Q_STATIC_CLASS( HbEnumerator )
 
-    public :
+    public:
 
         template< typename Enum >
         static QString name()
@@ -117,7 +117,7 @@ namespace hbprivate
             return ( value >= 0 ) ? nullable< Enum >( ( Enum ) value ) : nullable< Enum >();
         }
 
-    private :
+    private:
 
         template< typename Enum >
         static qint32 indexOfEnumerator()

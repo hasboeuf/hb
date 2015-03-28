@@ -52,7 +52,7 @@ namespace hb
             QByteArray toByteArray() const;
             void fromDataStream( QDataStream & stream );
 
-        private :
+        private:
             HbLogger::Level mLevel;
             HbLogger::Formats mFormat;
             HbLogContext mContext;

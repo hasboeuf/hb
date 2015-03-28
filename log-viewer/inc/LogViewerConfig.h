@@ -18,7 +18,7 @@ namespace hb
         {
             Q_OBJECT
 
-        public :
+        public:
             static const LogViewerConfig importConfigXml( const QString & file_path );
             static bool exportConfigXml( const QString & file_path, const LogViewerConfig & config );
 
@@ -47,7 +47,7 @@ namespace hb
             void buildDomFromConfig( QDomElement & root ) const;
             void buildConfigFromDom( QDomElement & root );
 
-        private :
+        private:
             QStringList              mProjectFolders;
             QMap< QString, QString > mEditorCommands;
             QString                  mEditorDefault;

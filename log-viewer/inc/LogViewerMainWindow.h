@@ -14,12 +14,12 @@ namespace hb
             Q_OBJECT
             Q_DISABLE_COPY( LogViewerMainWindow )
 
-        public :
+        public:
 
             LogViewerMainWindow( QWidget * parent = nullptr );
             virtual ~LogViewerMainWindow() = default;
 
-        private :
+        private:
             LogViewerConfig * mConfig;
         };
     }

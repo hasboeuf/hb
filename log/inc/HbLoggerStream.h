@@ -37,7 +37,7 @@ namespace hb
             Q_ENUMS_HANDLER( HbLoggerStream )
             Q_ENUMS( State )
 
-        public :
+        public:
             static const char * DEFAULT_LOCAL_SERVER_NAME;
 
             enum State : quint16
@@ -51,7 +51,7 @@ namespace hb
             };
             Q_META_ENUMS( State )
 
-        protected :
+        protected:
 
             HbLoggerStream() = delete;
             HbLoggerStream( HbLogManager * parent );

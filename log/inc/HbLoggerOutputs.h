@@ -33,7 +33,7 @@ namespace hb
             Q_FRIEND_CLASS( HbLogManager )
 
 
-        public :
+        public:
 
             /*!
              * Request to add a console output.
@@ -92,13 +92,13 @@ namespace hb
              */
             IHbLoggerOutput * output( loguid uid );
 
-        private :
+        private:
 
             HbLoggerOutputs() = delete;
             HbLoggerOutputs( HbLogManager * parent );
             virtual ~HbLoggerOutputs() = default;
 
-        private :
+        private:
             HbLoggerPool * mpPool;
         };
 

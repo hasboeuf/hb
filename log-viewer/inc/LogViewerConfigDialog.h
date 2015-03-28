@@ -16,7 +16,7 @@ namespace hb
             Q_DISABLE_COPY( LogViewerConfigDialog )
 
 
-        public :
+        public:
 
             LogViewerConfigDialog() = delete;
             LogViewerConfigDialog( LogViewerConfig & config, QWidget * parent = nullptr );
@@ -24,12 +24,12 @@ namespace hb
 
             const LogViewerConfig & config() const;
 
-        private :
+        private:
             void updateGui     ();
             void saveConfig    ();
             void addEditorField( const QString & name, const QString & cmd );
 
-        private slots :
+        private slots:
             void onFontClicked           ();
             void onColorClicked          ( int color_id );
             void onBackgroundColorClicked();
@@ -40,7 +40,7 @@ namespace hb
             void onExportClicked         ();
             void onEditorNameChanged     ();
 
-        private :
+        private:
 
             LogViewerConfig mConfig;
 

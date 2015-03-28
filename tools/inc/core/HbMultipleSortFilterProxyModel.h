@@ -33,7 +33,7 @@ namespace hb
             Q_OBJECT
             Q_DISABLE_COPY( HbMultipleSortFilterProxyModel )
 
-        public :
+        public:
 
             HbMultipleSortFilterProxyModel( QObject * parent = nullptr );
             virtual ~HbMultipleSortFilterProxyModel() = default;
@@ -53,12 +53,12 @@ namespace hb
 
             bool isFiltered( qint32 column );
 
-        private :
+        private:
 
             bool filterAcceptsRow( int source_row, const QModelIndex &source_parent ) const;
 
 
-        private :
+        private:
 
             QMap< qint32, ModelFilter > filters;
             bool mDeclaringFilter;
@@ -70,7 +70,7 @@ namespace hb
             Q_DEFAULT_COPY( ModelFilter )
 
 
-        public :
+        public:
 
             ModelFilter( const QVariant &value = QVariant(),
                          qint32 role = Qt::DisplayRole,
@@ -153,7 +153,7 @@ namespace hb
                 return false;
             }
 
-        public : // As is it an inner class, members are public for convenience.
+        public: // As is it an inner class, members are public for convenience.
             QVariant        mValue;
             qint32          mRole;
             Qt::MatchFlags  mFlags;

@@ -64,7 +64,7 @@ namespace hb
         private:
             void timerEvent(QTimerEvent * event);
 
-        private callbacks : // From device.
+        private callbacks: // From device.
             void onSocketConnected();
             void onSocketReadyPacket();
             void onSocketDisconnected();

@@ -38,7 +38,7 @@ namespace hb
             Q_ENUMS( Level )
             Q_ENUMS( Format )
 
-        public :
+        public:
 
             enum Level : qint16
             {
@@ -70,7 +70,7 @@ namespace hb
             Q_DECLARE_FLAGS( Levels, Level )
 
 
-        public :
+        public:
 
             /*!
              * Set the general level of the log service (affected to the current thread).
@@ -97,7 +97,7 @@ namespace hb
             virtual void print( Level level, const char * message, ... ) final;
             virtual void print( Level level, const char * message, va_list args ) final;
 
-        protected :
+        protected:
 
             HbLogger() = default;
             virtual ~HbLogger(){} // = default; TODO linux-g++ issue
@@ -105,11 +105,11 @@ namespace hb
             virtual void enqueueMessage( Level level, Formats format, const HbLogContext & context, const QString & message ) = 0;
             virtual void dequeuePendingMessages() = 0;
 
-        private :
+        private:
 
             void print( Level level, const HbLogContext & context, const char * message, va_list args );
 
-        private :
+        private:
 
             static QReadWriteLock msLock;
             static Levels msLevel;

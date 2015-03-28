@@ -44,7 +44,7 @@ namespace hb
             QAbstractSocket::SocketError error() const;
             QAbstractSocket::SocketState state() const;
 
-        private callbacks :
+        private callbacks:
             // From device.
             void onReadyRead();
             void onStateChanged(QAbstractSocket::SocketState state);

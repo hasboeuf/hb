@@ -30,7 +30,7 @@ namespace hb
             Q_DEFAULT_COPY( HbErrorCode )
 
 
-        public :
+        public:
 
             HbErrorCode() = default;
             virtual ~HbErrorCode() = default;
@@ -57,13 +57,13 @@ namespace hb
                 return status;
             }
 
-        private :
+        private:
 
             bool    add( qint32 code, const QString & message );
             QString get( qint32 code ) const;
 
 
-        private :
+        private:
 
             QHash< qint32, QString > mErrors;
         };

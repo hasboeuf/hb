@@ -26,7 +26,7 @@ namespace hbprivate
         Q_DEFAULT_COPY( HbEnumHelper )
 
 
-    public :
+    public:
 
         static QString name()
         {
@@ -89,12 +89,12 @@ namespace hbprivate
  * Q_ENUMS_HANDLER enables introspection of enums class.
  */
 #define Q_ENUMS_HANDLER( Class ) \
-public : \
+public: \
 \
     template< typename Enum > \
     class HbEnum : public hbprivate::HbEnumHelper< Class, Enum > {}; \
 \
-private :
+private:
 
 #define Q_META_ENUMS( Enum ) \
     typedef HbEnum< Enum > Meta ## Enum;
