@@ -23,7 +23,7 @@ namespace hb
     namespace link
     {
         /*!
-         * TODOC
+         * HbFacebookUser describes a Facebook user object.
          */
         class HB_LINK_DECL HbFacebookUser : public HbFacebookObject
         {
@@ -32,9 +32,9 @@ namespace hb
             HbFacebookUser();
             virtual ~HbFacebookUser() = default;
 
-            virtual void load( const QJsonDocument & doc ); // TODO maybe a factory?
+            virtual void load( const QJsonDocument & doc ) override;
 
-            const QString toString() const;
+            virtual const QString toString() const override;
 
             virtual const QString & firstName()  const final;
             virtual const QString & lastName()   const final;

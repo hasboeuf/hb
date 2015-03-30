@@ -26,7 +26,8 @@ namespace hb
     {
 
         /*!
-         * TODOC
+         * HbO2Server provides server side authentication flow.
+         * Abstract class.
          */
         class HB_LINK_DECL HbO2Server : public HbO2
         {
@@ -37,26 +38,53 @@ namespace hb
             HbO2Server() = default;
             virtual ~HbO2Server() = default;
 
-            virtual bool isValid() const;
+            virtual bool isValid() const override;
 
+            /*!
+             * Return config.
+             * \return Config.
+             */
             virtual HbO2ServerConfig & config();
+            /*!
+             * Return const config.
+             * \return Const config.
+             */
             virtual const HbO2ServerConfig & config() const;
 
-            virtual bool link();
+            virtual bool link() override;
 
+            /*!
+             * Set redirect Uri.
+             * Must be the same than used in HbO2Client.
+             * \param redirect_uri Redirect Uri.
+             */
             void setRedirectUri( const QString & redirect_uri );
+
+            /*!
+             * Set the auth code.
+             * Must be the one obtained in HbO2Client.
+             * \param code Auth code.
+             */
             void setCode( const QString & code );
 
+            /*!
+             * Return token.
+             * \return Auth token.
+             */
             virtual const QString & token() const final;
+
+            /*!
+             * Return token expiration.
+             * In seconds.
+             * \return Token expiration.
+             */
             virtual qint32 tokenExpiration() const final;
 
         protected:
-            // Target specific.
-            virtual const QUrl endPoint() const = 0;
             virtual const QHash< QString, QString > tokenRequest() const = 0;
             virtual LinkStatus tokenResponse( const QHash< QString, QString > & response ) = 0;
 
-        public slots:
+        private slots:
             void onTokenResponseReceived();
             void onTokenResponseError( QNetworkReply::NetworkError error );
 

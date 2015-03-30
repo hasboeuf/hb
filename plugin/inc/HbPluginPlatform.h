@@ -52,7 +52,7 @@ namespace hb
             void unloadPlugins();
 
             /*!
-             * Get previously scanned plugins infos.
+             * Return previously scanned plugins infos.
              * \return Plugin infos list.
              */
             QList< HbPluginInfos > pluginInfoList();

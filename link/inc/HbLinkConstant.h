@@ -9,7 +9,9 @@
 #ifndef HBLINKCONSTANT_H
 #define HBLINKCONSTANT_H
 
-/*! \file HbLinkConstant.h TODOC */
+/*! \file HbLinkConstant.h
+ * This file contains all needed constants to correctly implement OAuth protocol.
+ */
 
 #include <QtCore/QString>
 

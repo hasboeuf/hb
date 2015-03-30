@@ -72,7 +72,7 @@ namespace hb
             IHbPlugin * plugin( const QString & plugin_name ) const;
 
             /*!
-             * Get previously scanned plugins infos.
+             * Return previously scanned plugins infos.
              * \return Plugin infos list.
              */
             QList< HbPluginInfos > pluginInfoList();

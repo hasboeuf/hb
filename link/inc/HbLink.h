@@ -12,7 +12,7 @@
 /*! \file HbLink.h */
 
 /*! \namespace hb::link
- * TODOC
+ * Contains all classes relatives to oauth authentication.
  */
 
 #if !defined( HB_LINK_DECL )

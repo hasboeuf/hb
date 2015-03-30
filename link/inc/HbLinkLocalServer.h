@@ -16,7 +16,8 @@ namespace hb
     {
 
         /*!
-         * TODOC
+         * HbLinkLocalServer listens a local port to catch http response.
+         * It is used on client side to get the auth code.
          */
         class HB_LINK_DECL HbLinkLocalServer final: public QTcpServer
         {
@@ -27,9 +28,14 @@ namespace hb
             ~HbLinkLocalServer() = default;
 
         signals:
+            /*!
+             * Triggered when an http response is caught.
+             * \param response Response data. Key: OAuth markup name, value: associated value.
+             */
             void responseReceived( QHash< QString, QString > response );
 
-        public slots:
+        private slots:
+
             void onIncomingConnection();
             void onReadyRead();
 

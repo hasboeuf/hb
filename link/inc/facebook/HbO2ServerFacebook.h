@@ -22,7 +22,7 @@ namespace hb
     namespace link
     {
         /*!
-         * TODOC
+         * HbO2ServerFacebook is the Facebook implementation of HbO2Server.
          */
         class HB_LINK_DECL HbO2ServerFacebook : public HbO2Server
         {
@@ -32,12 +32,10 @@ namespace hb
             HbO2ServerFacebook() = default;
             virtual ~HbO2ServerFacebook() = default;
 
-            void inspectToken( QString admin_token );
-
         protected:
-            virtual const QUrl endPoint() const;
-            virtual const QHash< QString, QString > tokenRequest() const;
-            virtual LinkStatus tokenResponse( const QHash< QString, QString > & response );
+            virtual const QUrl endPoint() const override;
+            virtual const QHash< QString, QString > tokenRequest() const override;
+            virtual LinkStatus tokenResponse( const QHash< QString, QString > & response ) override;
 
         };
     }

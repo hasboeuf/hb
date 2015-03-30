@@ -23,7 +23,7 @@ namespace hb
     namespace link
     {
         /*!
-         * TODOC
+         * HbFacebookObject represents an abstract Facebook object.
          */
         class HB_LINK_DECL HbFacebookObject
         {
@@ -42,13 +42,37 @@ namespace hb
             HbFacebookObject();
             virtual ~HbFacebookObject() = default;
 
+            /*!
+             * Create object from a JSON document.
+             * \todo May be a factory?
+             * \param doc JSON document.
+             */
             virtual void load( const QJsonDocument & doc ) = 0;
 
-            const QString toString() const;
+            /*!
+             * Convenient method to print Facebook object informations.
+             * \return Stringified object.
+             */
+            virtual const QString toString() const;
 
+            /*!
+             * Set the Facebook id of the object.
+             * \param id Facebook id.
+             */
             virtual void setId( const QString & id ) final;
-            virtual const QString & id()   const final;
-            virtual ObjectType      type() const final;
+
+            /*!
+             * Return the Facebook id.
+             * \return Facebook id.
+             */
+            virtual const QString & id() const final;
+
+            /*!
+             * Return the object type.
+             * \return Object type.
+             * \sa ObjectType
+             */
+            virtual ObjectType type() const final;
 
         protected:
             QString    mId;

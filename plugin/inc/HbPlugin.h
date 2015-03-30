@@ -12,7 +12,7 @@
 /*! \file HbPlugin.h */
 
 /*! \namespace hb::plugin
- * Contains all code relative to plugin management.
+ * Contains all classes relatives to plugin management.
  */
 
 // Qt

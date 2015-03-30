@@ -61,7 +61,7 @@ namespace hb
             bool removeInput( loguid uid, QString * error = nullptr );
 
             /*!
-             * Get input informations.
+             * Return input informations.
              * \param uid Input uid.
              * \return Input on success, nullptr else.
              */

@@ -25,7 +25,8 @@ namespace hb
     {
 
         /*!
-         * TODOC
+         * HbO2Client provides client side authentication flow.
+         * Abstract class.
          */
         class HB_LINK_DECL HbO2Client : public HbO2
         {
@@ -37,26 +38,41 @@ namespace hb
             HbO2Client( const HbO2Client & source );
             HbO2Client & operator=( const HbO2Client & source );
 
-            virtual bool isValid() const;
+            virtual bool isValid() const override;
 
-            virtual bool link();
+            virtual bool link() override;
 
-            virtual bool read( QDataStream & stream );
-            virtual bool write( QDataStream & stream ) const;
+            virtual bool read( QDataStream & stream ) override;
+            virtual bool write( QDataStream & stream ) const override;
 
+            /*!
+             * Return config.
+             * \return Config.
+             */
             virtual HbO2ClientConfig & config();
+            /*!
+             * Return const config.
+             * \return Const config.
+             */
             virtual const HbO2ClientConfig & config() const;
 
         protected:
-            // Target specific.
-            virtual const QUrl endPoint() const = 0;
             virtual const QHash< QString, QString > codeRequest() const = 0;
             virtual LinkStatus codeResponse( const QHash< QString, QString > & response ) = 0;
 
         public slots:
+            /*!
+             * Fired when auth code is received.
+             * \param response_parameters Response parameters.
+             */
             void onCodeResponseReceived( const QHash< QString, QString > response_parameters );
 
         signals:
+            /*!
+             * Triggered during linking phase when user should give its approval on a web page.
+             * Open default web browser.
+             * \param url URL to open.
+             */
             void openBrowser( const QUrl & url );
 
         protected:

@@ -86,7 +86,7 @@ namespace hb
             bool removeOutput( loguid uid, QString * error = nullptr );
 
             /*!
-             * Get output informations.
+             * Return output informations.
              * \param uid Output uid.
              * \return Output on success, nullptr else.
              */

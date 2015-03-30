@@ -23,7 +23,7 @@ namespace hb
     namespace link
     {
         /*!
-         * TODOC
+         * HbO2ClientFacebook is the Facebook implementation of HbO2Client.
          */
         class HB_LINK_DECL HbO2ClientFacebook : public HbO2Client
         {
@@ -35,13 +35,13 @@ namespace hb
             HbO2ClientFacebook( const HbO2ClientFacebook & source );
             HbO2ClientFacebook & operator =( const HbO2ClientFacebook & source );
 
-            virtual bool read( QDataStream & stream );
-            virtual bool write( QDataStream & stream ) const;
+            virtual bool read( QDataStream & stream ) override;
+            virtual bool write( QDataStream & stream ) const override;
 
         protected:
-            virtual const QUrl endPoint() const;
-            virtual const QHash< QString, QString > codeRequest() const;
-            virtual LinkStatus codeResponse( const QHash< QString, QString > & response );
+            virtual const QUrl endPoint() const override;
+            virtual const QHash< QString, QString > codeRequest() const override;
+            virtual LinkStatus codeResponse( const QHash< QString, QString > & response ) override;
         };
     }
 }
