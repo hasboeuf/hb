@@ -52,7 +52,7 @@ namespace hb
              */
             static void processArgs( int argc, char *argv[] );
 
-            /*
+            /*!
              * Process list of args for HbLog.
              * Add in/output according to args.
              *

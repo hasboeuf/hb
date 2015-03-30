@@ -41,7 +41,7 @@ namespace hb
             void newLogMessage( const HbLogMessage & message );
 
         private:
-            Q_INVOKABLE void onNewLogMessage( const HbLogMessage & message ); // TODO why not slot?
+            Q_INVOKABLE void onNewLogMessage( const HbLogMessage & message ); //!< \todo why not slot?
         };
     }
 }

@@ -160,7 +160,7 @@ void HbSocketHandler::onSendContract( networkuid socket_uid, ShConstHbNetworkCon
     if( !socket->sendContract( contract ) )
     {
         HbError( "Error writing contract %d in socket %d", contract->uid(), socket_uid );
-        // TODO socket error string
+        //! \todo Use socket error string.
     }
 }
 

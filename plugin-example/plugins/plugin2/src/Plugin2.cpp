@@ -45,7 +45,7 @@ IHbPlugin::PluginInitState Plugin2::init( const HbPluginPlatform * platform_serv
 void Plugin2::unload()
 {
     qDebug() << "Plugin2::unload!";
-    // TODO remove menu.
+    //! \todo Remove menu.
 }
 
 void Plugin2::onAction1Triggered()

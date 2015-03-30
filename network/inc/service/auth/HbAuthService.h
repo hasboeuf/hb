@@ -37,7 +37,7 @@ namespace hb
             };
 
             HbAuthService();
-            virtual ~HbAuthService(){} // = default; TODO linux-g++ issue
+            virtual ~HbAuthService(){} //!< \todo defaulted linux-g++ issue
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
             virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
 

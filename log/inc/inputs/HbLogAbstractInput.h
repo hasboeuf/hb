@@ -30,7 +30,7 @@ namespace hb
             Q_DISABLE_COPY( HbLogAbstractInput )
 
         public:
-            virtual ~HbLogAbstractInput(){} // = default; TODO linux-g++ issue
+            virtual ~HbLogAbstractInput(){} //!< \todo defaulted linux-g++ issue
             virtual InputType type() const final;
 
         protected:

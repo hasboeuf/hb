@@ -43,7 +43,7 @@ namespace hb
 
         protected:
 
-            virtual ~IHbLoggerOutput(){} // = default; TODO linux-g++ issue
+            virtual ~IHbLoggerOutput(){} //!< \todo defaulted linux-g++ issue
         };
     }
 }

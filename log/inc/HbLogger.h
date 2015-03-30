@@ -79,13 +79,27 @@ namespace hb
             virtual void setLevel( Levels level ) final;
 
             /*!
-             * Return the current general level of the current thread.
+             * Return the current general max level.
+             * \return General max level.
              */
             virtual Levels level() const final;
 
+            /*!
+            * Set the general output format.
+            * \param format Output format.
+            */
             virtual void setFormat( Formats format ) final;
+
+            /*!
+             * Return the current output format.
+             * \return Output format.
+             */
             virtual Formats format() const final;
 
+            /*!
+             * Dequeue pending log message.
+             * Internal use.
+             */
             virtual void flush() final;
 
             virtual void qtMessageHandler( bool enabled ) final;
@@ -100,7 +114,7 @@ namespace hb
         protected:
 
             HbLogger() = default;
-            virtual ~HbLogger(){} // = default; TODO linux-g++ issue
+            virtual ~HbLogger(){} //!< \todo defaulted linux-g++ issue
 
             virtual void enqueueMessage( Level level, Formats format, const HbLogContext & context, const QString & message ) = 0;
             virtual void dequeuePendingMessages() = 0;

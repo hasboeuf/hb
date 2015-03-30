@@ -138,7 +138,7 @@ void HbTcpServer::onNewConnection(qint32 socket_descriptor)
             QThread * t = new QThread();
             handler->moveToThread( t );
 
-            // TODO better.
+            //! \todo Redesign this part?
             connect(t,       &QThread::started,         handler, &HbSocketHandler::init, Qt::UniqueConnection );
             connect(handler, &QObject::destroyed,       t,       &QThread::quit,         Qt::UniqueConnection );
             connect(t,       &QThread::finished,        t,       &QThread::deleteLater,  Qt::UniqueConnection );

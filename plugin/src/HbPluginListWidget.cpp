@@ -106,7 +106,7 @@ void HbPluginListWidget::onPluginStateChanged( const HbPluginInfos & plugin_info
     {
         disconnect( &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked ); // Avoid to call onPluginChecked.
 
-        // TODO use PLUGIN_CHANGING?
+        //! \todo use PLUGIN_CHANGING?
 
         // Change state
         if( plugin_infos.state() == HbPluginInfos::PLUGIN_LOADED )

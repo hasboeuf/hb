@@ -27,7 +27,7 @@ namespace hb
         public:
             HbServiceConfig();
             HbServiceConfig( const HbServiceConfig & config );
-            virtual ~HbServiceConfig(){} // = default; TODO linux-g++ issue
+            virtual ~HbServiceConfig(){} //!< \todo defaulted linux-g++ issue
             virtual HbServiceConfig & operator =( const HbServiceConfig & config );
 
             virtual bool isValid() const;

@@ -368,7 +368,7 @@ void HbClientConnectionPool::onSocketUnauthenticated( networkuid socket_uid, qui
             max_tries,
             HbLatin1( reason ) );
 
-    // TODO send reason to HbClient.
+    //! \todo Send reason to HbClient.
 
     emit socketUnauthenticated( socket_uid ); // To IHbSocketAuthListener.
 }
@@ -392,7 +392,7 @@ bool HbClientConnectionPool::checkKickReceived( const HbNetworkContract * contra
                  HbLatin1( HbNetworkProtocol::MetaKickCode::toString( kick_contract->reason() ) ),
                  HbLatin1( kick_contract->description() ) );
 
-        // TODO tell it to HbClient.
+        //! \todo Tell it to HbClient.
 
         return true;
     }

@@ -95,6 +95,6 @@ void HbServerPresenceService::onContractReceived( const HbNetworkContract * cont
     else
     {
         HbError( "Presence contract type not recognized." );
-        // TODO how to kick?
+        //! \todo How to kick?
     }
 }

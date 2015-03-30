@@ -349,7 +349,7 @@ void HbServerConnectionPool::onReadyContractToSend ( const HbNetworkContract * c
             networkuid server_uid = mServerBySocketId.value( receiver, 0 );
             if( server_uid > 0 )
             {
-                HbAbstractServer * server = mServers.value( server_uid, nullptr ); // TODO will send many times the same contract if there are several servers.
+                HbAbstractServer * server = mServers.value( server_uid, nullptr ); //! \todo Will send many times the same contract if there are several servers.
                 if( server )
                 {
                     server->send( ShConstHbNetworkContract( contract ) );
@@ -464,7 +464,7 @@ void HbServerConnectionPool::onSocketUnauthenticated( networkuid socket_uid, qui
 
     delete user;
 
-    // TODO send reason to HbServer.
+    //! \todo Send reason to HbServer.
 
     emit socketUnauthenticated( socket_uid );
 }

@@ -38,7 +38,6 @@ namespace hb
 
             HbLogMessage & operator =( const HbLogMessage & message );
 
-            bool system() const;
             HbLogger::Level level() const;
             QString levelStr( bool spacing = true ) const;
             const HbLogContext & context() const;

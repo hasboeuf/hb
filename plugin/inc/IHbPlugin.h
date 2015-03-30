@@ -44,7 +44,7 @@ namespace hb
              * Init plugin.
              * Called by HbPluginManager just after QPluginLoader finished to load the library.
              * \param platform_service Platform service, useful to request a plugin/service.
-             *        TODO hide load/unload plugin features.
+             * \todo hide load/unload plugin features.
              * \return INIT_SUCCESS: all good.
              *         INIT_SUCCESS_PARTLY: optional services/plugins are missing.
              *         INIT_FAIL: not good, should be unloaded.

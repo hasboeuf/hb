@@ -29,7 +29,7 @@ namespace hb
         public:
 
             HbPresenceService();
-            virtual ~HbPresenceService(){} // = default; TODO linux-g++ issue
+            virtual ~HbPresenceService(){} //!< \todo defaulted linux-g++ issue
 
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
             virtual void plugContracts( HbNetworkExchanges & exchanges ) override;

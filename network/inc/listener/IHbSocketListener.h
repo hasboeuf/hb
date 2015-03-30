@@ -31,7 +31,7 @@ namespace hb
             virtual void onSocketDisconnected( networkuid socket_uid ) = 0;
 
         protected:
-            virtual ~IHbSocketListener(){} // = default; TODO linux-g++ issue
+            virtual ~IHbSocketListener(){} //!< \todo defaulted linux-g++ issue
         };
 
     }

@@ -35,7 +35,7 @@ namespace hb
         public:
 
             HbNetworkService() = default;
-            virtual ~HbNetworkService(){} // = default; TODO linux-g++ issue
+            virtual ~HbNetworkService(){} //!< \todo defaulted linux-g++ issue
 
             virtual void reset() = 0;
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const = 0;

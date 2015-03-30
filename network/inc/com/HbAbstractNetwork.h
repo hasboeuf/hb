@@ -41,7 +41,7 @@ namespace hb
             virtual bool isReady() const = 0;
             virtual HbNetworkProtocol::NetworkType type() const = 0;
 
-            virtual bool send( ShConstHbNetworkContract contract ) = 0; // TODO refresh
+            virtual bool send( ShConstHbNetworkContract contract ) = 0;
 
             virtual const HbNetworkConfig & configuration() const; // SUB
 

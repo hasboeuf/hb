@@ -40,7 +40,6 @@ namespace hb
             const QString & function() const;
 
             void print ( HbLogger::Level level, const char * message, ... ) const;
-            void system( HbLogger::Level level, const char * message, ... ) const;
 
             friend QDataStream & operator <<( QDataStream & stream, const HbLogContext & context );
             friend QDataStream & operator >>( QDataStream & stream, HbLogContext & context );

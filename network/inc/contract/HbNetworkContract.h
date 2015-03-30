@@ -97,7 +97,7 @@ namespace hb
             void resetReceivers();
 
         private:
-            // Internal use. Server side. TODO protect the client side.
+            //! \todo Internal use. Server side. Protect the client side.
             networkuid mSender;
             HbNetworkProtocol::NetworkType mNetworkType;
             HbNetworkProtocol::RoutingScheme mRouting;

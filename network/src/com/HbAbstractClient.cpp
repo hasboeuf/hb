@@ -119,7 +119,7 @@ bool HbAbstractClient::send( ShConstHbNetworkContract contract )
                 return true;
             }
 
-            // TODO socket error string
+            //! \todo Use socket error string.
         }
     }
 

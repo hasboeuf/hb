@@ -82,7 +82,7 @@ void HbServerAuthService::timerEvent( QTimerEvent * )
             emit socketToKick( socket_uid, HbNetworkProtocol::KICK_AUTH_TIMEOUT,
                                QString( "Reach %1 seconds auth timeout." ).arg( timeout ) );
 
-            // TODO check deletion.
+            //! \todo Check deletion.
         }
     }
 }
@@ -199,7 +199,7 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
     else
     {
         HbError( "Auth contract type not recognized." );
-        // TODO how to kick?
+        //! \todo How to kick?
     }
 }
 

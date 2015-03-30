@@ -31,7 +31,7 @@ namespace hb
             virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
 
         protected:
-            virtual ~IHbContractListener(){} // = default; TODO linux-g++ issue
+            virtual ~IHbContractListener(){} //!< \todo defaulted linux-g++ issue
         };
 
     }
