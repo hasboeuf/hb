@@ -133,7 +133,7 @@ $(document).ready(function(){initNavTree('_hb_tcp_client_8h_source.html','');});
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            <span class="keyword">using</span> HbAbstractClient::join;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> join( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_tcp_client_config.html">HbTcpClientConfig</a> &amp; config ) <span class="keyword">final</span>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keyword">virtual</span> networkuid uid() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keyword">virtual</span> <a class="code" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> uid() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keyword">virtual</span> HbNetworkProtocol::NetworkType type() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> setConfiguration( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_tcp_client_config.html">HbTcpClientConfig</a> &amp; config ) <span class="keyword">final</span>;</div>
@@ -144,24 +144,23 @@ $(document).ready(function(){initNavTree('_hb_tcp_client_8h_source.html','');});
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keywordtype">bool</span> connectToNetwork();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordtype">bool</span> disconnectFromNetwork();</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keywordtype">void</span> deleteSocket();</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keywordtype">bool</span> connectToNetwork() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keywordtype">void</span> disconnectFromNetwork() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keywordtype">void</span> deleteSocket() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_abstract_socket.html">HbAbstractSocket</a> * pendingConnection();</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_abstract_socket.html">HbAbstractSocket</a> * currentConnection() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_abstract_socket.html">HbAbstractSocket</a> * pendingConnection() <span class="keyword">override</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_abstract_socket.html">HbAbstractSocket</a> * currentConnection() <span class="keyword">const override</span>;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_tcp_socket.html">HbTcpSocket</a> * mpSocket;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_tcp_client_config.html">HbTcpClientConfig</a> mConfig;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        };</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    }</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">using</span> <a class="code" href="classhb_1_1network_1_1_hb_tcp_client.html">hb::network::HbTcpClient</a>;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif // HBTCPCLIENT_H</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_tcp_socket.html">HbTcpSocket</a> * mpSocket;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_tcp_client_config.html">HbTcpClientConfig</a> mConfig;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        };</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    }</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">using</span> <a class="code" href="classhb_1_1network_1_1_hb_tcp_client.html">hb::network::HbTcpClient</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif // HBTCPCLIENT_H</span></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_abstract_client_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_abstract_client.html">hb::network::HbAbstractClient</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbAbstractClient.h:31</div></div>
 <div class="ttc" id="_hb_abstract_client_8h_html"><div class="ttname"><a href="_hb_abstract_client_8h.html">HbAbstractClient.h</a></div></div>
 <div class="ttc" id="_hb_tcp_client_config_8h_html"><div class="ttname"><a href="_hb_tcp_client_config_8h.html">HbTcpClientConfig.h</a></div></div>
@@ -170,13 +169,14 @@ $(document).ready(function(){initNavTree('_hb_tcp_client_8h_source.html','');});
 <div class="ttc" id="classhb_1_1network_1_1_hb_abstract_socket_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_abstract_socket.html">hb::network::HbAbstractSocket</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbAbstractSocket.h:33</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_tcp_client_config_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_tcp_client_config.html">hb::network::HbTcpClientConfig</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbTcpClientConfig.h:28</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_tcp_socket_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_tcp_socket.html">hb::network::HbTcpSocket</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbTcpSocket.h:20</div></div>
+<div class="ttc" id="_hb_network_8h_html_a1017af4ddc52368dabe338132173c800"><div class="ttname"><a href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a></div><div class="ttdeci">quint32 networkuid</div><div class="ttdoc">Integer range for socket/server uid. </div><div class="ttdef"><b>Definition:</b> HbNetwork.h:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c901c14b65aa229498a52b725b3d4a2c.html">network</a></li><li class="navelem"><a class="el" href="dir_65f3df0921bcb4ab1aa5b381c9060a44.html">inc</a></li><li class="navelem"><a class="el" href="dir_0f1fb40c7ff1fbf3420c7eba41ecb111.html">com</a></li><li class="navelem"><a class="el" href="dir_61ff089e2e7ea0f50b494d5ef3ba3749.html">tcp</a></li><li class="navelem"><a class="el" href="_hb_tcp_client_8h.html">HbTcpClient.h</a></li>
-    <li class="footer">Generated on Sat Mar 28 2015 12:04:11 for hb by
+    <li class="footer">Generated on Mon Mar 30 2015 21:04:28 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

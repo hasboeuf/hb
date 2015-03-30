@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['q_5fdelete_5fptr',['q_delete_ptr',['../_hb_global_8h.html#a24c30edbaf334eecc259b6fc3267983e',1,'HbGlobal.h']]],
-  ['qlist_5fdynamic_5fcast',['qlist_dynamic_cast',['../_hb_global_8h.html#affd64bec836c4dd54ba2ec79e80616b1',1,'HbGlobal.h']]],
-  ['qscopename',['qScopeName',['../_hb_global_8h.html#a8dd57eb1c7b8f3cf851628d7626af57e',1,'qScopeName():&#160;HbGlobal.h'],['../_hb_global_8h.html#ad5575af777fa4cade8655c9b12a17a7d',1,'qScopeName(T *pointer):&#160;HbGlobal.h'],['../_hb_global_8h.html#a6c7ee21a942938e567c35d0904546dd5',1,'qScopeName(const T &amp;expression):&#160;HbGlobal.h']]],
-  ['qtypename',['qTypeName',['../_hb_global_8h.html#a38420ad15a24e24dcc0aac5a5afafe80',1,'qTypeName():&#160;HbGlobal.h'],['../_hb_global_8h.html#a8be2ff557540d536214bfff4fcbf5180',1,'qTypeName(T *pointer):&#160;HbGlobal.h'],['../_hb_global_8h.html#a3ae225c11540e37a6f68f8d655787b3e',1,'qTypeName(const T &amp;expression):&#160;HbGlobal.h']]]
+  ['id',['id',['../classhb_1_1link_1_1_hb_facebook_object.html#a3414dc0f1fd2cd053cd08861d35c0b06',1,'hb::link::HbFacebookObject']]],
+  ['init',['init',['../classhb_1_1plugin_1_1_i_hb_plugin.html#a52771292824cd1a1c97fef2d991ce1fc',1,'hb::plugin::IHbPlugin']]],
+  ['initapp',['initApp',['../classhb_1_1tools_1_1_hb_application_helper.html#aa19d8f86e5ba5417ce0aa0020c142580',1,'hb::tools::HbApplicationHelper']]],
+  ['initskin',['initSkin',['../classhb_1_1tools_1_1_hb_application_helper.html#acd556cf7c4cefd79018f9329947d3a01',1,'hb::tools::HbApplicationHelper']]],
+  ['input',['input',['../classhb_1_1log_1_1_hb_logger_inputs.html#abe9b559c01f0f6d551dfe6350f76b639',1,'hb::log::HbLoggerInputs']]],
+  ['isserviceregistered',['isServiceRegistered',['../classhb_1_1plugin_1_1_hb_plugin_platform.html#abce665969c5d91204331fcefa6e1aa4d',1,'hb::plugin::HbPluginPlatform']]],
+  ['isvalid',['isValid',['../classhb_1_1link_1_1_hb_o2.html#aa2fceccc3f91fb9f7deabb37df8b8282',1,'hb::link::HbO2::isValid()'],['../classhb_1_1link_1_1_hb_o2_client.html#ae99f8574f0e1674a4220268b0141423e',1,'hb::link::HbO2Client::isValid()'],['../classhb_1_1link_1_1_hb_o2_server.html#ac2b786e525f22b109be868a7775fffce',1,'hb::link::HbO2Server::isValid()']]]
 ];

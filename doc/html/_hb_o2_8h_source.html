@@ -134,79 +134,80 @@ $(document).ready(function(){initNavTree('_hb_o2_8h_source.html','');});
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keyword">namespace </span>link</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    {</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classhb_1_1link_1_1_hb_o2.html">   32</a></span>&#160;        <span class="keyword">class </span>HB_LINK_DECL <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> : <span class="keyword">public</span> QObject</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        {</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            Q_OBJECT</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            <span class="keyword">friend</span> QDataStream &amp; operator&lt;&lt;( QDataStream &amp; stream, <span class="keyword">const</span> <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; o2 );</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keyword">friend</span> QDataStream &amp; operator&gt;&gt;( QDataStream &amp; stream, <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; o2 );</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classhb_1_1link_1_1_hb_o2.html">   35</a></span>&#160;        <span class="keyword">class </span>HB_LINK_DECL <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> : <span class="keyword">public</span> QObject</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        {</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            Q_OBJECT</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <span class="keyword">enum</span> LinkStatus : quint8</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            {</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;                UNLINKED = 0,</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                LINKING,</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                LINKED</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            };</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keyword">static</span> QHash&lt; QString, QString &gt; getUrlItems( <span class="keyword">const</span> QString &amp; content );</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a>();</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a>( <span class="keyword">const</span> <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; source );</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; operator=( <span class="keyword">const</span> <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; source );</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> isValid() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> link();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> QString &amp; errorString() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keyword">virtual</span> LinkStatus      linkStatus() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> QString &amp; redirectUri() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> QString &amp; code() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> read( QDataStream &amp; stream );</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> write( QDataStream &amp; stream ) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="comment">// Target specific.</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> QUrl endPoint() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        signals:</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keywordtype">void</span> linkFailed( QString error );</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keywordtype">void</span> linkSucceed();</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            LinkStatus mLinkStatus;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            QString mErrorString;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            QString mCode;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            QString mRedirectUri;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        };</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        QDataStream &amp; operator&lt;&lt;( QDataStream &amp; stream, <span class="keyword">const</span> <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; o2 );</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        QDataStream &amp; operator&gt;&gt;( QDataStream &amp; stream, <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; o2 );</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    }</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">using</span> <a class="code" href="classhb_1_1link_1_1_hb_o2.html">hb::link::HbO2</a>;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">#endif // HBO2_H</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <span class="keyword">friend</span> QDataStream &amp; operator&lt;&lt;( QDataStream &amp; stream, <span class="keyword">const</span> <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; o2 );</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keyword">friend</span> QDataStream &amp; operator&gt;&gt;( QDataStream &amp; stream, <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; o2 );</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keyword">enum</span> LinkStatus : quint8</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                UNLINKED = 0,</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                LINKING,</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;                LINKED</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            };</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="keyword">static</span> QHash&lt; QString, QString &gt; getUrlItems( <span class="keyword">const</span> QString &amp; content );</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a>();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a>( <span class="keyword">const</span> <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; source );</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; operator=( <span class="keyword">const</span> <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; source );</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> isValid() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> link();</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> QString &amp; errorString() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keyword">virtual</span> LinkStatus linkStatus() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> QString &amp; redirectUri() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> QString &amp; code() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> read( QDataStream &amp; stream );</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> write( QDataStream &amp; stream ) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> QUrl endPoint() <span class="keyword">const</span> = 0; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        signals:</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            <span class="keywordtype">void</span> linkFailed( QString error );</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;            <span class="keywordtype">void</span> linkSucceed();</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;        <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;            LinkStatus mLinkStatus;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            QString    mErrorString;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;            QString    mCode;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            QString    mRedirectUri;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        };</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        QDataStream &amp; operator&lt;&lt;( QDataStream &amp; stream, <span class="keyword">const</span> <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; o2 );</div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        QDataStream &amp; operator&gt;&gt;( QDataStream &amp; stream, <a class="code" href="classhb_1_1link_1_1_hb_o2.html">HbO2</a> &amp; o2 );</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    }</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;}</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;<span class="keyword">using</span> <a class="code" href="classhb_1_1link_1_1_hb_o2.html">hb::link::HbO2</a>;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="preprocessor">#endif // HBO2_H</span></div>
 <div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">Base namespace of HB module. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
 <div class="ttc" id="_hb_link_8h_html"><div class="ttname"><a href="_hb_link_8h.html">HbLink.h</a></div></div>
 <div class="ttc" id="_hb_global_8h_html"><div class="ttname"><a href="_hb_global_8h.html">HbGlobal.h</a></div><div class="ttdoc">This file contains all useful macros used by HB module. </div></div>
-<div class="ttc" id="classhb_1_1link_1_1_hb_o2_html"><div class="ttname"><a href="classhb_1_1link_1_1_hb_o2.html">hb::link::HbO2</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbO2.h:32</div></div>
-<div class="ttc" id="_hb_link_constant_8h_html"><div class="ttname"><a href="_hb_link_constant_8h.html">HbLinkConstant.h</a></div><div class="ttdoc">TODOC. </div></div>
+<div class="ttc" id="classhb_1_1link_1_1_hb_o2_html"><div class="ttname"><a href="classhb_1_1link_1_1_hb_o2.html">hb::link::HbO2</a></div><div class="ttdoc">HbO2 is the base class used by both client and server side. </div><div class="ttdef"><b>Definition:</b> HbO2.h:35</div></div>
+<div class="ttc" id="_hb_link_constant_8h_html"><div class="ttname"><a href="_hb_link_constant_8h.html">HbLinkConstant.h</a></div><div class="ttdoc">This file contains all needed constants to correctly implement OAuth protocol. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_fd2bfa8c1cca782f2823b8ccf16d6072.html">link</a></li><li class="navelem"><a class="el" href="dir_77dc5d83c38079bb9e663c2ac7d75786.html">inc</a></li><li class="navelem"><a class="el" href="_hb_o2_8h.html">HbO2.h</a></li>
-    <li class="footer">Generated on Sat Mar 28 2015 12:04:11 for hb by
+    <li class="footer">Generated on Mon Mar 30 2015 21:04:27 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

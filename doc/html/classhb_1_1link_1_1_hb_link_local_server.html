@@ -107,7 +107,6 @@ $(document).ready(function(){initNavTree('classhb_1_1link_1_1_hb_link_local_serv
 
 <div class="header">
   <div class="summary">
-<a href="#pub-slots">Public Slots</a> &#124;
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classhb_1_1link_1_1_hb_link_local_server-members.html">List of all members</a>  </div>
@@ -116,7 +115,7 @@ $(document).ready(function(){initNavTree('classhb_1_1link_1_1_hb_link_local_serv
 </div><!--header-->
 <div class="contents">
 
-<p>TODOC.  
+<p><a class="el" href="classhb_1_1link_1_1_hb_link_local_server.html" title="HbLinkLocalServer listens a local port to catch http response. ">HbLinkLocalServer</a> listens a local port to catch http response.  
  <a href="classhb_1_1link_1_1_hb_link_local_server.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_hb_link_local_server_8h_source.html">HbLinkLocalServer.h</a>&gt;</code></p>
@@ -129,19 +128,10 @@ Inheritance diagram for hb::link::HbLinkLocalServer:</div>
 </map>
  </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
-Public Slots</h2></td></tr>
-<tr class="memitem:a4cab0010fede486c582ed2a226968c92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4cab0010fede486c582ed2a226968c92"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>onIncomingConnection</b> ()</td></tr>
-<tr class="separator:a4cab0010fede486c582ed2a226968c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5665136324a04831b2d66c2428c54af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab5665136324a04831b2d66c2428c54af"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>onReadyRead</b> ()</td></tr>
-<tr class="separator:ab5665136324a04831b2d66c2428c54af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
-<tr class="memitem:a28618cb090125d1abdf67d22305e4b77"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a28618cb090125d1abdf67d22305e4b77"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>responseReceived</b> (QHash&lt; QString, QString &gt; response)</td></tr>
+<tr class="memitem:a28618cb090125d1abdf67d22305e4b77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1link_1_1_hb_link_local_server.html#a28618cb090125d1abdf67d22305e4b77">responseReceived</a> (QHash&lt; QString, QString &gt; response)</td></tr>
+<tr class="memdesc:a28618cb090125d1abdf67d22305e4b77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggered when an http response is caught.  <a href="#a28618cb090125d1abdf67d22305e4b77">More...</a><br /></td></tr>
 <tr class="separator:a28618cb090125d1abdf67d22305e4b77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -151,8 +141,42 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9aeb7466cc5bee353a132369cd732b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TODOC. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p><a class="el" href="classhb_1_1link_1_1_hb_link_local_server.html" title="HbLinkLocalServer listens a local port to catch http response. ">HbLinkLocalServer</a> listens a local port to catch http response. </p>
+<p>It is used on client side to get the auth code. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a28618cb090125d1abdf67d22305e4b77"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void hb::link::HbLinkLocalServer::responseReceived </td>
+          <td>(</td>
+          <td class="paramtype">QHash&lt; QString, QString &gt;&#160;</td>
+          <td class="paramname"><em>response</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Triggered when an http response is caught. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">response</td><td>Response data. Key: OAuth markup name, value: associated value. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>link/inc/<a class="el" href="_hb_link_local_server_8h_source.html">HbLinkLocalServer.h</a></li>
 </ul>
 </div><!-- contents -->
@@ -161,7 +185,7 @@ Public Member Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacehb.html">hb</a></li><li class="navelem"><a class="el" href="namespacehb_1_1link.html">link</a></li><li class="navelem"><a class="el" href="classhb_1_1link_1_1_hb_link_local_server.html">HbLinkLocalServer</a></li>
-    <li class="footer">Generated on Sat Mar 28 2015 12:04:13 for hb by
+    <li class="footer">Generated on Mon Mar 30 2015 21:04:30 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

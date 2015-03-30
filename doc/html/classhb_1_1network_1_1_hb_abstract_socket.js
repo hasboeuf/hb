@@ -17,8 +17,12 @@ var classhb_1_1network_1_1_hb_abstract_socket =
     [ "socketReadyPacket", "classhb_1_1network_1_1_hb_abstract_socket.html#a889f13581b3f625c5c7a714c8b3d6131", null ],
     [ "socketStateChanged", "classhb_1_1network_1_1_hb_abstract_socket.html#a303e87abcf2e50c3ef0e524d2110634e", null ],
     [ "state", "classhb_1_1network_1_1_hb_abstract_socket.html#ae589127ef3e09b5ad65c10cce4a99e31", null ],
+    [ "takeUid", "classhb_1_1network_1_1_hb_abstract_socket.html#ac27b052527f96fc263aaac93c1a430ea", null ],
     [ "type", "classhb_1_1network_1_1_hb_abstract_socket.html#aac7b3861c606cad43ac96f8d12c6cf68", null ],
+    [ "uid", "classhb_1_1network_1_1_hb_abstract_socket.html#a2af86e022862a8d75d030b6d12c4bde3", null ],
     [ "writeBuffer", "classhb_1_1network_1_1_hb_abstract_socket.html#a8eb5290af10a92d92d1344a9af599f46", null ],
     [ "writePacket", "classhb_1_1network_1_1_hb_abstract_socket.html#aba442062670dcd7a360ebc20726b3f6d", null ],
-    [ "callbacks", "classhb_1_1network_1_1_hb_abstract_socket.html#aed96ee2284825e9637639b09f401fb43", null ]
+    [ "callbacks", "classhb_1_1network_1_1_hb_abstract_socket.html#aed96ee2284825e9637639b09f401fb43", null ],
+    [ "mReleaseUid", "classhb_1_1network_1_1_hb_abstract_socket.html#a6a8ab215fa438881b6c704e069159255", null ],
+    [ "mUid", "classhb_1_1network_1_1_hb_abstract_socket.html#ab31d21e0450d304596560eec817bfd85", null ]
 ];

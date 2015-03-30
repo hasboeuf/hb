@@ -108,6 +108,7 @@ $(document).ready(function(){initNavTree('classhb_1_1network_1_1_hb_client_auth_
 <div class="header">
   <div class="summary">
 <a href="#pub-slots">Public Slots</a> &#124;
+<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classhb_1_1network_1_1_hb_client_auth_facebook_strategy-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -142,30 +143,29 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>onFacebookLinkSucceed
 void&#160;</td><td class="memItemRight" valign="bottom"><b>onFacebookLinkFailed</b> ()</td></tr>
 <tr class="separator:af7d237b97e896b5f7be68c460588514d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
+Signals</h2></td></tr>
+<tr class="memitem:a4a4839e274eb6a949a9d4a5ddad77fbc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a4839e274eb6a949a9d4a5ddad77fbc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>authContractReady</b> (<a class="el" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_uid, <a class="el" href="classhb_1_1network_1_1_hb_auth_request_contract.html">HbAuthRequestContract</a> *contract)</td></tr>
+<tr class="separator:a4a4839e274eb6a949a9d4a5ddad77fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53e8c591961f4fefe1c24e033a50e216"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53e8c591961f4fefe1c24e033a50e216"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>authContractFailed</b> (<a class="el" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_uid, const QString &amp;description)</td></tr>
+<tr class="separator:a53e8c591961f4fefe1c24e033a50e216"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a85256782317c003b99d452674f8436dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85256782317c003b99d452674f8436dc"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>reset</b> ()</td></tr>
-<tr class="separator:a85256782317c003b99d452674f8436dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c493ab44e5840eb99c5bfa3e6c4739f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c493ab44e5840eb99c5bfa3e6c4739f"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>reset</b> () override</td></tr>
+<tr class="separator:a3c493ab44e5840eb99c5bfa3e6c4739f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8936efa968213ec4dc08f763fbf0de3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8936efa968213ec4dc08f763fbf0de3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>setConfig</b> (const <a class="el" href="classhb_1_1link_1_1_hb_o2_client_config.html">HbO2ClientConfig</a> &amp;config)</td></tr>
 <tr class="separator:ae8936efa968213ec4dc08f763fbf0de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adacb31082a2738631604a504a937fd39"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adacb31082a2738631604a504a937fd39"></a>
-virtual authstgy&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const final</td></tr>
+virtual <a class="el" href="_hb_network_8h.html#aaa443b0fd502de5d630197b4312a5ef1">authstgy</a>&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const final</td></tr>
 <tr class="separator:adacb31082a2738631604a504a937fd39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60e1d82bfe70e743ee3f6ef83edeae7a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60e1d82bfe70e743ee3f6ef83edeae7a"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>prepareAuthContract</b> (<a class="el" href="classhb_1_1network_1_1_hb_client_auth_login_object.html">HbClientAuthLoginObject</a> *login_object)</td></tr>
-<tr class="separator:a60e1d82bfe70e743ee3f6ef83edeae7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header signals_classhb_1_1network_1_1_hb_client_auth_strategy"><td colspan="2" onclick="javascript:toggleInherit('signals_classhb_1_1network_1_1_hb_client_auth_strategy')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="classhb_1_1network_1_1_hb_client_auth_strategy.html">hb::network::HbClientAuthStrategy</a></td></tr>
-<tr class="memitem:a4a4839e274eb6a949a9d4a5ddad77fbc inherit signals_classhb_1_1network_1_1_hb_client_auth_strategy"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a4839e274eb6a949a9d4a5ddad77fbc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>authContractReady</b> (networkuid socket_uid, <a class="el" href="classhb_1_1network_1_1_hb_auth_request_contract.html">HbAuthRequestContract</a> *contract)</td></tr>
-<tr class="separator:a4a4839e274eb6a949a9d4a5ddad77fbc inherit signals_classhb_1_1network_1_1_hb_client_auth_strategy"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53e8c591961f4fefe1c24e033a50e216 inherit signals_classhb_1_1network_1_1_hb_client_auth_strategy"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53e8c591961f4fefe1c24e033a50e216"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>authContractFailed</b> (networkuid socket_uid, const QString &amp;description)</td></tr>
-<tr class="separator:a53e8c591961f4fefe1c24e033a50e216 inherit signals_classhb_1_1network_1_1_hb_client_auth_strategy"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3af37d9ed1f8cb4214374dceb2f58838"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3af37d9ed1f8cb4214374dceb2f58838"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>prepareAuthContract</b> (<a class="el" href="classhb_1_1network_1_1_hb_client_auth_login_object.html">HbClientAuthLoginObject</a> *login_object) override</td></tr>
+<tr class="separator:a3af37d9ed1f8cb4214374dceb2f58838"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>TODOC. </p>
@@ -178,7 +178,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>authContractFailed</b
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacehb.html">hb</a></li><li class="navelem"><a class="el" href="namespacehb_1_1network.html">network</a></li><li class="navelem"><a class="el" href="classhb_1_1network_1_1_hb_client_auth_facebook_strategy.html">HbClientAuthFacebookStrategy</a></li>
-    <li class="footer">Generated on Sat Mar 28 2015 12:04:14 for hb by
+    <li class="footer">Generated on Mon Mar 30 2015 21:04:31 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

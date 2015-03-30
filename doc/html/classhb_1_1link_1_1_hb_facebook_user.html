@@ -107,6 +107,7 @@ $(document).ready(function(){initNavTree('classhb_1_1link_1_1_hb_facebook_user.h
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classhb_1_1link_1_1_hb_facebook_user-members.html">List of all members</a>  </div>
@@ -115,7 +116,7 @@ $(document).ready(function(){initNavTree('classhb_1_1link_1_1_hb_facebook_user.h
 </div><!--header-->
 <div class="contents">
 
-<p>TODOC.  
+<p><a class="el" href="classhb_1_1link_1_1_hb_facebook_user.html" title="HbFacebookUser describes a Facebook user object. ">HbFacebookUser</a> describes a Facebook user object.  
  <a href="classhb_1_1link_1_1_hb_facebook_user.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_hb_facebook_user_8h_source.html">HbFacebookUser.h</a>&gt;</code></p>
@@ -125,18 +126,25 @@ Inheritance diagram for hb::link::HbFacebookUser:</div>
  <div class="center">
   <img src="classhb_1_1link_1_1_hb_facebook_user.png" usemap="#hb::link::HbFacebookUser_map" alt=""/>
   <map id="hb::link::HbFacebookUser_map" name="hb::link::HbFacebookUser_map">
-<area href="classhb_1_1link_1_1_hb_facebook_object.html" title="TODOC. " alt="hb::link::HbFacebookObject" shape="rect" coords="0,0,166,24"/>
+<area href="classhb_1_1link_1_1_hb_facebook_object.html" title="HbFacebookObject represents an abstract Facebook object. " alt="hb::link::HbFacebookObject" shape="rect" coords="0,0,166,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:aa07379a048b22c6770b14d95261f5b28"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa07379a048b22c6770b14d95261f5b28"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>ObjectType</b> { <b>OBJECT_NONE</b> = 0, 
+<b>OBJECT_USER</b>
+ }</td></tr>
+<tr class="separator:aa07379a048b22c6770b14d95261f5b28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad7ce8c62ebfbd2154b62fb924992958e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7ce8c62ebfbd2154b62fb924992958e"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>load</b> (const QJsonDocument &amp;doc)</td></tr>
-<tr class="separator:ad7ce8c62ebfbd2154b62fb924992958e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90d5a760fd9f78438078d88bee242e43"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90d5a760fd9f78438078d88bee242e43"></a>
-const QString&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> () const </td></tr>
-<tr class="separator:a90d5a760fd9f78438078d88bee242e43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41aed8711a2dee3a7ecb8d26f6ce0c27"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1link_1_1_hb_facebook_user.html#a41aed8711a2dee3a7ecb8d26f6ce0c27">load</a> (const QJsonDocument &amp;doc) override</td></tr>
+<tr class="memdesc:a41aed8711a2dee3a7ecb8d26f6ce0c27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create object from a JSON document.  <a href="#a41aed8711a2dee3a7ecb8d26f6ce0c27">More...</a><br /></td></tr>
+<tr class="separator:a41aed8711a2dee3a7ecb8d26f6ce0c27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac53eddcfc71a197c373719ffbaa1377e"><td class="memItemLeft" align="right" valign="top">virtual const QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1link_1_1_hb_facebook_user.html#ac53eddcfc71a197c373719ffbaa1377e">toString</a> () const override</td></tr>
+<tr class="memdesc:ac53eddcfc71a197c373719ffbaa1377e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenient method to print Facebook object informations.  <a href="#ac53eddcfc71a197c373719ffbaa1377e">More...</a><br /></td></tr>
+<tr class="separator:ac53eddcfc71a197c373719ffbaa1377e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a689876bd51efe259a2121c2ef471899b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a689876bd51efe259a2121c2ef471899b"></a>
 virtual const QString &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>firstName</b> () const final</td></tr>
 <tr class="separator:a689876bd51efe259a2121c2ef471899b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -185,19 +193,15 @@ virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setVerified</
 <tr class="memitem:a630aff0c25e2469f032aeed19bfa792a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a630aff0c25e2469f032aeed19bfa792a"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setTimezone</b> (qint8 timezone) final</td></tr>
 <tr class="separator:a630aff0c25e2469f032aeed19bfa792a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classhb_1_1link_1_1_hb_facebook_object"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhb_1_1link_1_1_hb_facebook_object')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhb_1_1link_1_1_hb_facebook_object.html">hb::link::HbFacebookObject</a></td></tr>
-<tr class="memitem:aaf3b600ba45c9e1af688721d6d275155 inherit pub_methods_classhb_1_1link_1_1_hb_facebook_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf3b600ba45c9e1af688721d6d275155"></a>
-const QString&#160;</td><td class="memItemRight" valign="bottom"><b>toString</b> () const </td></tr>
-<tr class="separator:aaf3b600ba45c9e1af688721d6d275155 inherit pub_methods_classhb_1_1link_1_1_hb_facebook_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68abeec2afd01df7b55b4713a293f675 inherit pub_methods_classhb_1_1link_1_1_hb_facebook_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a68abeec2afd01df7b55b4713a293f675"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setId</b> (const QString &amp;id) final</td></tr>
-<tr class="separator:a68abeec2afd01df7b55b4713a293f675 inherit pub_methods_classhb_1_1link_1_1_hb_facebook_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3414dc0f1fd2cd053cd08861d35c0b06 inherit pub_methods_classhb_1_1link_1_1_hb_facebook_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3414dc0f1fd2cd053cd08861d35c0b06"></a>
-virtual const QString &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> () const final</td></tr>
-<tr class="separator:a3414dc0f1fd2cd053cd08861d35c0b06 inherit pub_methods_classhb_1_1link_1_1_hb_facebook_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a862469e88c891551ae1fa9c5712481ea inherit pub_methods_classhb_1_1link_1_1_hb_facebook_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a862469e88c891551ae1fa9c5712481ea"></a>
-virtual ObjectType&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const final</td></tr>
-<tr class="separator:a862469e88c891551ae1fa9c5712481ea inherit pub_methods_classhb_1_1link_1_1_hb_facebook_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68abeec2afd01df7b55b4713a293f675"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1link_1_1_hb_facebook_object.html#a68abeec2afd01df7b55b4713a293f675">setId</a> (const QString &amp;<a class="el" href="classhb_1_1link_1_1_hb_facebook_object.html#a3414dc0f1fd2cd053cd08861d35c0b06">id</a>) final</td></tr>
+<tr class="memdesc:a68abeec2afd01df7b55b4713a293f675"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Facebook id of the object.  <a href="#a68abeec2afd01df7b55b4713a293f675">More...</a><br /></td></tr>
+<tr class="separator:a68abeec2afd01df7b55b4713a293f675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3414dc0f1fd2cd053cd08861d35c0b06"><td class="memItemLeft" align="right" valign="top">virtual const QString &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1link_1_1_hb_facebook_object.html#a3414dc0f1fd2cd053cd08861d35c0b06">id</a> () const final</td></tr>
+<tr class="memdesc:a3414dc0f1fd2cd053cd08861d35c0b06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the Facebook id.  <a href="#a3414dc0f1fd2cd053cd08861d35c0b06">More...</a><br /></td></tr>
+<tr class="separator:a3414dc0f1fd2cd053cd08861d35c0b06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a862469e88c891551ae1fa9c5712481ea"><td class="memItemLeft" align="right" valign="top">virtual ObjectType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhb_1_1link_1_1_hb_facebook_object.html#a862469e88c891551ae1fa9c5712481ea">type</a> () const final</td></tr>
+<tr class="memdesc:a862469e88c891551ae1fa9c5712481ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the object type.  <a href="#a862469e88c891551ae1fa9c5712481ea">More...</a><br /></td></tr>
+<tr class="separator:a862469e88c891551ae1fa9c5712481ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -225,25 +229,165 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>mVerified</b></td></t
 <tr class="memitem:a769f1c5174a7552323e0882def75ce4f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a769f1c5174a7552323e0882def75ce4f"></a>
 qint8&#160;</td><td class="memItemRight" valign="bottom"><b>mTimezone</b></td></tr>
 <tr class="separator:a769f1c5174a7552323e0882def75ce4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_classhb_1_1link_1_1_hb_facebook_object"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classhb_1_1link_1_1_hb_facebook_object')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classhb_1_1link_1_1_hb_facebook_object.html">hb::link::HbFacebookObject</a></td></tr>
-<tr class="memitem:a8d435e0d1d5c83e56ff86d49c2555035 inherit pro_attribs_classhb_1_1link_1_1_hb_facebook_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d435e0d1d5c83e56ff86d49c2555035"></a>
+<tr class="memitem:a8d435e0d1d5c83e56ff86d49c2555035"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d435e0d1d5c83e56ff86d49c2555035"></a>
 QString&#160;</td><td class="memItemRight" valign="bottom"><b>mId</b></td></tr>
-<tr class="separator:a8d435e0d1d5c83e56ff86d49c2555035 inherit pro_attribs_classhb_1_1link_1_1_hb_facebook_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60dd6619c040c536c23f156ef2a49fc4 inherit pro_attribs_classhb_1_1link_1_1_hb_facebook_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60dd6619c040c536c23f156ef2a49fc4"></a>
+<tr class="separator:a8d435e0d1d5c83e56ff86d49c2555035"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60dd6619c040c536c23f156ef2a49fc4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a60dd6619c040c536c23f156ef2a49fc4"></a>
 ObjectType&#160;</td><td class="memItemRight" valign="bottom"><b>mType</b></td></tr>
-<tr class="separator:a60dd6619c040c536c23f156ef2a49fc4 inherit pro_attribs_classhb_1_1link_1_1_hb_facebook_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pub_types_classhb_1_1link_1_1_hb_facebook_object"><td colspan="2" onclick="javascript:toggleInherit('pub_types_classhb_1_1link_1_1_hb_facebook_object')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="classhb_1_1link_1_1_hb_facebook_object.html">hb::link::HbFacebookObject</a></td></tr>
-<tr class="memitem:aa07379a048b22c6770b14d95261f5b28 inherit pub_types_classhb_1_1link_1_1_hb_facebook_object"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa07379a048b22c6770b14d95261f5b28"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>ObjectType</b> { <b>OBJECT_NONE</b> = 0, 
-<b>OBJECT_USER</b>
- }</td></tr>
-<tr class="separator:aa07379a048b22c6770b14d95261f5b28 inherit pub_types_classhb_1_1link_1_1_hb_facebook_object"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a60dd6619c040c536c23f156ef2a49fc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>TODOC. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p><a class="el" href="classhb_1_1link_1_1_hb_facebook_user.html" title="HbFacebookUser describes a Facebook user object. ">HbFacebookUser</a> describes a Facebook user object. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a3414dc0f1fd2cd053cd08861d35c0b06"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const QString&amp; hb::link::HbFacebookObject::id </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">final</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the Facebook id. </p>
+<dl class="section return"><dt>Returns</dt><dd>Facebook id. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a41aed8711a2dee3a7ecb8d26f6ce0c27"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void hb::link::HbFacebookUser::load </td>
+          <td>(</td>
+          <td class="paramtype">const QJsonDocument &amp;&#160;</td>
+          <td class="paramname"><em>doc</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create object from a JSON document. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000001">Todo:</a></b></dt><dd>May be a factory? <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">doc</td><td>JSON document. </td></tr>
+  </table>
+  </dd>
+</dl>
+</dd></dl>
+
+<p>Implements <a class="el" href="classhb_1_1link_1_1_hb_facebook_object.html#a70b3d0efa63fc34976704d6d1aed4e27">hb::link::HbFacebookObject</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a68abeec2afd01df7b55b4713a293f675"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void hb::link::HbFacebookObject::setId </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">final</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Set the Facebook id of the object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>Facebook id. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac53eddcfc71a197c373719ffbaa1377e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual const QString hb::link::HbFacebookUser::toString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convenient method to print Facebook object informations. </p>
+<dl class="section return"><dt>Returns</dt><dd>Stringified object. </dd></dl>
+
+<p>Reimplemented from <a class="el" href="classhb_1_1link_1_1_hb_facebook_object.html#ac232052934b81b8163324ce340dc0ed6">hb::link::HbFacebookObject</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a862469e88c891551ae1fa9c5712481ea"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual ObjectType hb::link::HbFacebookObject::type </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">final</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the object type. </p>
+<dl class="section return"><dt>Returns</dt><dd>Object type. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>ObjectType </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>link/inc/facebook/api/<a class="el" href="_hb_facebook_user_8h_source.html">HbFacebookUser.h</a></li>
 </ul>
 </div><!-- contents -->
@@ -252,7 +396,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacehb.html">hb</a></li><li class="navelem"><a class="el" href="namespacehb_1_1link.html">link</a></li><li class="navelem"><a class="el" href="classhb_1_1link_1_1_hb_facebook_user.html">HbFacebookUser</a></li>
-    <li class="footer">Generated on Sat Mar 28 2015 12:04:13 for hb by
+    <li class="footer">Generated on Mon Mar 30 2015 21:04:30 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

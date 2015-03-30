@@ -136,37 +136,26 @@ $(document).ready(function(){initNavTree('_hb_client_channel_8h_source.html','')
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_client_channel.html">HbClientChannel</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1network_1_1_hb_client_channel.html">HbClientChannel</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <span class="keyword">virtual</span> HbNetworkProtocol::NetworkTypes enabledNetworkTypes() <span class="keyword">const</span> = 0;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> plugContracts( <a class="code" href="classhb_1_1network_1_1_hb_network_exchanges.html">HbNetworkExchanges</a> &amp; exchanges ) = 0;</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> reset() = 0;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keyword">public</span> <a class="code" href="_hb_global_8h.html#adf58ebd8df5633101b11b2b056ab09c0">callbacks</a>:</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onUserContractReceived( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info, <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> * contract ) = 0;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onUserConnected       ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info ) = 0;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onUserDisconnected    ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info ) = 0;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        };</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    }</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif // HBCLIENTCHANNEL_H</span></div>
-<div class="ttc" id="classhb_1_1network_1_1_hb_network_contract_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_contract.html">hb::network::HbNetworkContract</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkContract.h:36</div></div>
-<div class="ttc" id="classhb_1_1network_1_1_hb_network_exchanges_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_exchanges.html">hb::network::HbNetworkExchanges</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkExchanges.h:29</div></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        <span class="keyword">public</span> <a class="code" href="_hb_global_8h.html#adf58ebd8df5633101b11b2b056ab09c0">callbacks</a>:</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;        };</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    }</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#endif // HBCLIENTCHANNEL_H</span></div>
 <div class="ttc" id="_hb_global_8h_html_adf58ebd8df5633101b11b2b056ab09c0"><div class="ttname"><a href="_hb_global_8h.html#adf58ebd8df5633101b11b2b056ab09c0">callbacks</a></div><div class="ttdeci">#define callbacks</div><div class="ttdoc">Convenient macro to scope a method used as a slot by using the new Qt5 connect syntax. </div><div class="ttdef"><b>Definition:</b> HbGlobal.h:276</div></div>
-<div class="ttc" id="_hb_network_8h_html"><div class="ttname"><a href="_hb_network_8h.html">HbNetwork.h</a></div><div class="ttdoc">TODOC. </div></div>
+<div class="ttc" id="_hb_network_8h_html"><div class="ttname"><a href="_hb_network_8h.html">HbNetwork.h</a></div></div>
 <div class="ttc" id="_hb_network_channel_8h_html"><div class="ttname"><a href="_hb_network_channel_8h.html">HbNetworkChannel.h</a></div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_client_channel_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_client_channel.html">hb::network::HbClientChannel</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbClientChannel.h:27</div></div>
 <div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">Base namespace of HB module. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_network_channel_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_channel.html">hb::network::HbNetworkChannel</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkChannel.h:27</div></div>
-<div class="ttc" id="classhb_1_1network_1_1_hb_network_user_info_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_user_info.html">hb::network::HbNetworkUserInfo</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkUserInfo.h:27</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c901c14b65aa229498a52b725b3d4a2c.html">network</a></li><li class="navelem"><a class="el" href="dir_65f3df0921bcb4ab1aa5b381c9060a44.html">inc</a></li><li class="navelem"><a class="el" href="dir_fb160bc77023e58b21b684479beae95d.html">service</a></li><li class="navelem"><a class="el" href="dir_5f8243c5e24bd1822fc7c32ebd9534ee.html">channel</a></li><li class="navelem"><a class="el" href="_hb_client_channel_8h.html">HbClientChannel.h</a></li>
-    <li class="footer">Generated on Sat Mar 28 2015 12:04:12 for hb by
+    <li class="footer">Generated on Mon Mar 30 2015 21:04:28 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

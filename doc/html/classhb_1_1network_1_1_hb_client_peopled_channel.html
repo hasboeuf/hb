@@ -107,8 +107,10 @@ $(document).ready(function(){initNavTree('classhb_1_1network_1_1_hb_client_peopl
 
 <div class="header">
   <div class="summary">
+<a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classhb_1_1network_1_1_hb_client_peopled_channel-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">hb::network::HbClientPeopledChannel Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
@@ -134,83 +136,47 @@ Inheritance diagram for hb::network::HbClientPeopledChannel:</div>
 </map>
  </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
+Signals</h2></td></tr>
+<tr class="memitem:a44992bfee5f8da7348177793464ef98a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44992bfee5f8da7348177793464ef98a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>userContractToSend</b> (const <a class="el" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp;user, <a class="el" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> *contract)</td></tr>
+<tr class="separator:a44992bfee5f8da7348177793464ef98a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa91c56f1f912e3a6988bcafadf40b2aa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa91c56f1f912e3a6988bcafadf40b2aa"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>readyContractToSend</b> (const <a class="el" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> *contract)</td></tr>
+<tr class="separator:aa91c56f1f912e3a6988bcafadf40b2aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7661d26b67b79d669ab6c0a26cc37e71"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7661d26b67b79d669ab6c0a26cc37e71"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>userToKick</b> (const <a class="el" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp;user_info, <a class="el" href="_hb_network_8h.html#a94f19c941386414d42cd8057bcca7b45">netwint</a> reason, const QString &amp;description=QString())</td></tr>
+<tr class="separator:a7661d26b67b79d669ab6c0a26cc37e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25f34312d3911aaf30e6386052d91f75"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a25f34312d3911aaf30e6386052d91f75"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>socketToKick</b> (<a class="el" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_uid, <a class="el" href="_hb_network_8h.html#a94f19c941386414d42cd8057bcca7b45">netwint</a> reason, const QString &amp;description=QString())</td></tr>
+<tr class="separator:a25f34312d3911aaf30e6386052d91f75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3f94150ae9a2391b7eeb295d3b020cb8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3f94150ae9a2391b7eeb295d3b020cb8"></a>
-virtual HbNetworkProtocol::NetworkTypes&#160;</td><td class="memItemRight" valign="bottom"><b>enabledNetworkTypes</b> () const =0</td></tr>
-<tr class="separator:a3f94150ae9a2391b7eeb295d3b020cb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebe5d2e2c282addbc296f2bf54afe1f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aebe5d2e2c282addbc296f2bf54afe1f1"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>plugContracts</b> (<a class="el" href="classhb_1_1network_1_1_hb_network_exchanges.html">HbNetworkExchanges</a> &amp;exchanges)=0</td></tr>
-<tr class="separator:aebe5d2e2c282addbc296f2bf54afe1f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e4fb4883e8d9cb5f00fb9b9ed0634fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e4fb4883e8d9cb5f00fb9b9ed0634fc"></a>
+<tr class="memitem:a6f6f2dd6bac2cec8cc91f60df5c8d643"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f6f2dd6bac2cec8cc91f60df5c8d643"></a>
+virtual HbNetworkProtocol::NetworkTypes&#160;</td><td class="memItemRight" valign="bottom"><b>enabledNetworkTypes</b> () const override</td></tr>
+<tr class="separator:a6f6f2dd6bac2cec8cc91f60df5c8d643"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d4567a7950ab0d1b998749fb8211e4c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6d4567a7950ab0d1b998749fb8211e4c"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>reset</b> ()=0</td></tr>
-<tr class="separator:a9e4fb4883e8d9cb5f00fb9b9ed0634fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d95253bbfc07bdacd3ac0132c755fad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d95253bbfc07bdacd3ac0132c755fad"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onUserConnected</b> (const <a class="el" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp;user_info)=0</td></tr>
-<tr class="separator:a2d95253bbfc07bdacd3ac0132c755fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23f9f87be8c3abeb7cd3675c39e08e4f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a23f9f87be8c3abeb7cd3675c39e08e4f"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onUserDisconnected</b> (const <a class="el" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp;user_info)=0</td></tr>
-<tr class="separator:a23f9f87be8c3abeb7cd3675c39e08e4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classhb_1_1network_1_1_hb_channel_service"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhb_1_1network_1_1_hb_channel_service')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhb_1_1network_1_1_hb_channel_service.html">hb::network::HbChannelService</a></td></tr>
-<tr class="memitem:ad5b81cd55be5e7857c1c7c150c15bb78 inherit pub_methods_classhb_1_1network_1_1_hb_channel_service"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad5b81cd55be5e7857c1c7c150c15bb78"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>onUserContractReceived</b> (const <a class="el" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp;user_info, const <a class="el" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> *contract)=0</td></tr>
-<tr class="separator:ad5b81cd55be5e7857c1c7c150c15bb78 inherit pub_methods_classhb_1_1network_1_1_hb_channel_service"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_methods_classhb_1_1network_1_1_hb_network_service"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classhb_1_1network_1_1_hb_network_service')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhb_1_1network_1_1_hb_network_service.html">hb::network::HbNetworkService</a></td></tr>
-<tr class="memitem:af308c0da97ae3b8122a76a6ea7782029 inherit pub_methods_classhb_1_1network_1_1_hb_network_service"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af308c0da97ae3b8122a76a6ea7782029"></a>
-virtual serviceuid&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> () const final</td></tr>
-<tr class="separator:af308c0da97ae3b8122a76a6ea7782029 inherit pub_methods_classhb_1_1network_1_1_hb_network_service"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a6d4567a7950ab0d1b998749fb8211e4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d0f7a3d11772c33a983bb5bc8c8adf3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d0f7a3d11772c33a983bb5bc8c8adf3"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>plugContracts</b> (<a class="el" href="classhb_1_1network_1_1_hb_network_exchanges.html">HbNetworkExchanges</a> &amp;exchanges)=0</td></tr>
+<tr class="separator:a9d0f7a3d11772c33a983bb5bc8c8adf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af308c0da97ae3b8122a76a6ea7782029"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af308c0da97ae3b8122a76a6ea7782029"></a>
+virtual <a class="el" href="_hb_network_8h.html#ae3323e239df32b25b05d6ae01913083e">serviceuid</a>&#160;</td><td class="memItemRight" valign="bottom"><b>id</b> () const final</td></tr>
+<tr class="separator:af308c0da97ae3b8122a76a6ea7782029"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a20442f5966de195fba43d6135ab639da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a20442f5966de195fba43d6135ab639da"></a>
-public&#160;</td><td class="memItemRight" valign="bottom"><b>callbacks</b>: virtual void onUserContractReceived( const <a class="el" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info</td></tr>
-<tr class="separator:a20442f5966de195fba43d6135ab639da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca0b59216382639ff305d386d1fcb2b6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca0b59216382639ff305d386d1fcb2b6"></a>
-public const <a class="el" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>contract</b> = 0</td></tr>
-<tr class="separator:aca0b59216382639ff305d386d1fcb2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_attribs_classhb_1_1network_1_1_hb_client_channel"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classhb_1_1network_1_1_hb_client_channel')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classhb_1_1network_1_1_hb_client_channel.html">hb::network::HbClientChannel</a></td></tr>
-<tr class="memitem:ad104da4f506b233ce9b1671a618e2db0 inherit pub_attribs_classhb_1_1network_1_1_hb_client_channel"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad104da4f506b233ce9b1671a618e2db0"></a>
-public&#160;</td><td class="memItemRight" valign="bottom"><b>callbacks</b>: virtual void onUserContractReceived( const <a class="el" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info</td></tr>
-<tr class="separator:ad104da4f506b233ce9b1671a618e2db0 inherit pub_attribs_classhb_1_1network_1_1_hb_client_channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1292d1f23bca808ea41e3f4392257add inherit pub_attribs_classhb_1_1network_1_1_hb_client_channel"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1292d1f23bca808ea41e3f4392257add"></a>
-public const <a class="el" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>contract</b> = 0</td></tr>
-<tr class="separator:a1292d1f23bca808ea41e3f4392257add inherit pub_attribs_classhb_1_1network_1_1_hb_client_channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_attribs_classhb_1_1network_1_1_hb_network_channel"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classhb_1_1network_1_1_hb_network_channel')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classhb_1_1network_1_1_hb_network_channel.html">hb::network::HbNetworkChannel</a></td></tr>
-<tr class="memitem:ae049a4bc4d80b895d658d9740e810574 inherit pub_attribs_classhb_1_1network_1_1_hb_network_channel"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae049a4bc4d80b895d658d9740e810574"></a>
-public&#160;</td><td class="memItemRight" valign="bottom"><b>callbacks</b>: virtual void onUserContractReceived( const <a class="el" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info</td></tr>
-<tr class="separator:ae049a4bc4d80b895d658d9740e810574 inherit pub_attribs_classhb_1_1network_1_1_hb_network_channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac77c78c3ced0ce86f54026a9e44a693f inherit pub_attribs_classhb_1_1network_1_1_hb_network_channel"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac77c78c3ced0ce86f54026a9e44a693f"></a>
-public const <a class="el" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>contract</b> = 0</td></tr>
-<tr class="separator:ac77c78c3ced0ce86f54026a9e44a693f inherit pub_attribs_classhb_1_1network_1_1_hb_network_channel"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_attribs_classhb_1_1network_1_1_hb_channel_service"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classhb_1_1network_1_1_hb_channel_service')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classhb_1_1network_1_1_hb_channel_service.html">hb::network::HbChannelService</a></td></tr>
-<tr class="memitem:abd53d299b6c137e46e58f108215a1368 inherit pub_attribs_classhb_1_1network_1_1_hb_channel_service"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd53d299b6c137e46e58f108215a1368"></a>
+<tr class="memitem:abd53d299b6c137e46e58f108215a1368"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abd53d299b6c137e46e58f108215a1368"></a>
 public&#160;</td><td class="memItemRight" valign="bottom"><b>callbacks</b>: virtual void onContractReceived ( const <a class="el" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> * contract ) final</td></tr>
-<tr class="separator:abd53d299b6c137e46e58f108215a1368 inherit pub_attribs_classhb_1_1network_1_1_hb_channel_service"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pub_attribs_classhb_1_1network_1_1_hb_network_service"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classhb_1_1network_1_1_hb_network_service')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classhb_1_1network_1_1_hb_network_service.html">hb::network::HbNetworkService</a></td></tr>
-<tr class="memitem:adac18a6a0037af98b9a198804a74b551 inherit pub_attribs_classhb_1_1network_1_1_hb_network_service"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adac18a6a0037af98b9a198804a74b551"></a>
-public&#160;</td><td class="memItemRight" valign="bottom"><b>callbacks</b>: virtual void onContractReceived( const <a class="el" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> * contract ) = 0</td></tr>
-<tr class="separator:adac18a6a0037af98b9a198804a74b551 inherit pub_attribs_classhb_1_1network_1_1_hb_network_service"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:abd53d299b6c137e46e58f108215a1368"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header signals_classhb_1_1network_1_1_hb_channel_service"><td colspan="2" onclick="javascript:toggleInherit('signals_classhb_1_1network_1_1_hb_channel_service')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="classhb_1_1network_1_1_hb_channel_service.html">hb::network::HbChannelService</a></td></tr>
-<tr class="memitem:a44992bfee5f8da7348177793464ef98a inherit signals_classhb_1_1network_1_1_hb_channel_service"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a44992bfee5f8da7348177793464ef98a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>userContractToSend</b> (const <a class="el" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp;user, <a class="el" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> *contract)</td></tr>
-<tr class="separator:a44992bfee5f8da7348177793464ef98a inherit signals_classhb_1_1network_1_1_hb_channel_service"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header signals_classhb_1_1network_1_1_hb_network_service"><td colspan="2" onclick="javascript:toggleInherit('signals_classhb_1_1network_1_1_hb_network_service')"><img src="closed.png" alt="-"/>&#160;Signals inherited from <a class="el" href="classhb_1_1network_1_1_hb_network_service.html">hb::network::HbNetworkService</a></td></tr>
-<tr class="memitem:aa91c56f1f912e3a6988bcafadf40b2aa inherit signals_classhb_1_1network_1_1_hb_network_service"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa91c56f1f912e3a6988bcafadf40b2aa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>readyContractToSend</b> (const <a class="el" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> *contract)</td></tr>
-<tr class="separator:aa91c56f1f912e3a6988bcafadf40b2aa inherit signals_classhb_1_1network_1_1_hb_network_service"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7661d26b67b79d669ab6c0a26cc37e71 inherit signals_classhb_1_1network_1_1_hb_network_service"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7661d26b67b79d669ab6c0a26cc37e71"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>userToKick</b> (const <a class="el" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp;user_info, netwint reason, const QString &amp;description=QString())</td></tr>
-<tr class="separator:a7661d26b67b79d669ab6c0a26cc37e71 inherit signals_classhb_1_1network_1_1_hb_network_service"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25f34312d3911aaf30e6386052d91f75 inherit signals_classhb_1_1network_1_1_hb_network_service"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a25f34312d3911aaf30e6386052d91f75"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>socketToKick</b> (networkuid socket_uid, netwint reason, const QString &amp;description=QString())</td></tr>
-<tr class="separator:a25f34312d3911aaf30e6386052d91f75 inherit signals_classhb_1_1network_1_1_hb_network_service"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_attribs_classhb_1_1network_1_1_hb_network_service"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classhb_1_1network_1_1_hb_network_service')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classhb_1_1network_1_1_hb_network_service.html">hb::network::HbNetworkService</a></td></tr>
-<tr class="memitem:a1565cc2a3165866de43a739f9ad35799 inherit pro_attribs_classhb_1_1network_1_1_hb_network_service"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1565cc2a3165866de43a739f9ad35799"></a>
-serviceuid&#160;</td><td class="memItemRight" valign="bottom"><b>mId</b> = HbNetworkProtocol::SERVICE_UNDEFINED</td></tr>
-<tr class="separator:a1565cc2a3165866de43a739f9ad35799 inherit pro_attribs_classhb_1_1network_1_1_hb_network_service"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a1565cc2a3165866de43a739f9ad35799"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1565cc2a3165866de43a739f9ad35799"></a>
+<a class="el" href="_hb_network_8h.html#ae3323e239df32b25b05d6ae01913083e">serviceuid</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mId</b> = HbNetworkProtocol::SERVICE_UNDEFINED</td></tr>
+<tr class="separator:a1565cc2a3165866de43a739f9ad35799"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>TODOC. </p>
@@ -223,7 +189,7 @@ serviceuid&#160;</td><td class="memItemRight" valign="bottom"><b>mId</b> = HbNet
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacehb.html">hb</a></li><li class="navelem"><a class="el" href="namespacehb_1_1network.html">network</a></li><li class="navelem"><a class="el" href="classhb_1_1network_1_1_hb_client_peopled_channel.html">HbClientPeopledChannel</a></li>
-    <li class="footer">Generated on Sat Mar 28 2015 12:04:15 for hb by
+    <li class="footer">Generated on Mon Mar 30 2015 21:04:31 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

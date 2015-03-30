@@ -139,46 +139,44 @@ $(document).ready(function(){initNavTree('_hb_facebook_requester_8h_source.html'
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        {</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            Q_OBJECT</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            <span class="comment">// TODO hide HbHttpRequester signals.</span></div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <a class="code" href="classhb_1_1link_1_1_hb_facebook_requester.html">HbFacebookRequester</a>();</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1link_1_1_hb_facebook_requester.html">HbFacebookRequester</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            quint64 requestUser( <a class="code" href="classhb_1_1link_1_1_hb_o2_server_facebook.html">HbO2ServerFacebook</a> * auth );</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="comment">// From HbHttpRequester</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keywordtype">void</span> onRequestFinished( quint64 request_id, <span class="keyword">const</span> QJsonDocument &amp; doc );</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keywordtype">void</span> onRequestError   ( quint64 request_id, <span class="keyword">const</span> QString &amp; error );</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        signals:</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keywordtype">void</span> requestCompleted( quint64 request_id, <a class="code" href="classhb_1_1link_1_1_hb_facebook_object.html">HbFacebookObject</a> * <span class="keywordtype">object</span> );</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            QHash&lt; quint64, HbFacebookObject::ObjectType &gt; mRequestTypes;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        };</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    }</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">using</span> <a class="code" href="classhb_1_1link_1_1_hb_facebook_requester.html">hb::link::HbFacebookRequester</a>;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif // HBFACEBOOKREQUESTER_H</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            quint64 requestUser( <a class="code" href="classhb_1_1link_1_1_hb_o2_server_facebook.html">HbO2ServerFacebook</a> * auth );</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <span class="keywordtype">void</span> onRequestFinished( quint64 request_id, <span class="keyword">const</span> QJsonDocument &amp; doc ); </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keywordtype">void</span> onRequestError   ( quint64 request_id, <span class="keyword">const</span> QString &amp; error );     </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        signals:</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keywordtype">void</span> requestCompleted( quint64 request_id, <a class="code" href="classhb_1_1link_1_1_hb_facebook_object.html">HbFacebookObject</a> * <span class="keywordtype">object</span> );</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            QHash&lt; quint64, HbFacebookObject::ObjectType &gt; mRequestTypes;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        };</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;}</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="keyword">using</span> <a class="code" href="classhb_1_1link_1_1_hb_facebook_requester.html">hb::link::HbFacebookRequester</a>;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor">#endif // HBFACEBOOKREQUESTER_H</span></div>
 <div class="ttc" id="classhb_1_1tools_1_1_hb_http_requester_html"><div class="ttname"><a href="classhb_1_1tools_1_1_hb_http_requester.html">hb::tools::HbHttpRequester</a></div><div class="ttdoc">HbHttpRequester makes HTTP request. </div><div class="ttdef"><b>Definition:</b> HbHttpRequester.h:32</div></div>
 <div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">Base namespace of HB module. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
 <div class="ttc" id="_hb_link_8h_html"><div class="ttname"><a href="_hb_link_8h.html">HbLink.h</a></div></div>
-<div class="ttc" id="classhb_1_1link_1_1_hb_facebook_requester_html"><div class="ttname"><a href="classhb_1_1link_1_1_hb_facebook_requester.html">hb::link::HbFacebookRequester</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbFacebookRequester.h:33</div></div>
+<div class="ttc" id="classhb_1_1link_1_1_hb_facebook_requester_html"><div class="ttname"><a href="classhb_1_1link_1_1_hb_facebook_requester.html">hb::link::HbFacebookRequester</a></div><div class="ttdoc">HbFacebookRequester is a Http requester specific for Facebook. </div><div class="ttdef"><b>Definition:</b> HbFacebookRequester.h:33</div></div>
 <div class="ttc" id="_hb_facebook_object_8h_html"><div class="ttname"><a href="_hb_facebook_object_8h.html">HbFacebookObject.h</a></div></div>
 <div class="ttc" id="_hb_http_requester_8h_html"><div class="ttname"><a href="_hb_http_requester_8h.html">HbHttpRequester.h</a></div></div>
-<div class="ttc" id="classhb_1_1link_1_1_hb_facebook_object_html"><div class="ttname"><a href="classhb_1_1link_1_1_hb_facebook_object.html">hb::link::HbFacebookObject</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbFacebookObject.h:28</div></div>
-<div class="ttc" id="classhb_1_1link_1_1_hb_o2_server_facebook_html"><div class="ttname"><a href="classhb_1_1link_1_1_hb_o2_server_facebook.html">hb::link::HbO2ServerFacebook</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbO2ServerFacebook.h:27</div></div>
+<div class="ttc" id="classhb_1_1link_1_1_hb_facebook_object_html"><div class="ttname"><a href="classhb_1_1link_1_1_hb_facebook_object.html">hb::link::HbFacebookObject</a></div><div class="ttdoc">HbFacebookObject represents an abstract Facebook object. </div><div class="ttdef"><b>Definition:</b> HbFacebookObject.h:28</div></div>
+<div class="ttc" id="classhb_1_1link_1_1_hb_o2_server_facebook_html"><div class="ttname"><a href="classhb_1_1link_1_1_hb_o2_server_facebook.html">hb::link::HbO2ServerFacebook</a></div><div class="ttdoc">HbO2ServerFacebook is the Facebook implementation of HbO2Server. </div><div class="ttdef"><b>Definition:</b> HbO2ServerFacebook.h:27</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_fd2bfa8c1cca782f2823b8ccf16d6072.html">link</a></li><li class="navelem"><a class="el" href="dir_77dc5d83c38079bb9e663c2ac7d75786.html">inc</a></li><li class="navelem"><a class="el" href="dir_979ed37c7f14d87b9da9ac203fbacc25.html">facebook</a></li><li class="navelem"><a class="el" href="_hb_facebook_requester_8h.html">HbFacebookRequester.h</a></li>
-    <li class="footer">Generated on Sat Mar 28 2015 12:04:11 for hb by
+    <li class="footer">Generated on Mon Mar 30 2015 21:04:27 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

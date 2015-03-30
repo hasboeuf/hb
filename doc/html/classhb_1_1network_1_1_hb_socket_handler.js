@@ -22,8 +22,12 @@ var classhb_1_1network_1_1_hb_socket_handler =
     [ "socketContractReceived", "classhb_1_1network_1_1_hb_socket_handler.html#aece607f33effff2f2bce286766d16baa", null ],
     [ "socketDisconnected", "classhb_1_1network_1_1_hb_socket_handler.html#a72da884e0f5a72d376347a9081e16659", null ],
     [ "storeNewSocket", "classhb_1_1network_1_1_hb_socket_handler.html#a3e7f6864c4b480123ce81be03cbd69b4", null ],
+    [ "takeUid", "classhb_1_1network_1_1_hb_socket_handler.html#ac27b052527f96fc263aaac93c1a430ea", null ],
+    [ "uid", "classhb_1_1network_1_1_hb_socket_handler.html#a2af86e022862a8d75d030b6d12c4bde3", null ],
     [ "mIdBySocket", "classhb_1_1network_1_1_hb_socket_handler.html#a0e8efc75bd88fd3e33a249986d70a0c9", null ],
+    [ "mReleaseUid", "classhb_1_1network_1_1_hb_socket_handler.html#a6a8ab215fa438881b6c704e069159255", null ],
     [ "mSocketById", "classhb_1_1network_1_1_hb_socket_handler.html#ab53d3ec9b3ab65d791157d404e65c6bb", null ],
     [ "mSocketMutex", "classhb_1_1network_1_1_hb_socket_handler.html#a447d36cedf5aa91e8f639f6c5714bf53", null ],
-    [ "mState", "classhb_1_1network_1_1_hb_socket_handler.html#ac5668e1170fcdba1e15a91ef08afffb0", null ]
+    [ "mState", "classhb_1_1network_1_1_hb_socket_handler.html#ac5668e1170fcdba1e15a91ef08afffb0", null ],
+    [ "mUid", "classhb_1_1network_1_1_hb_socket_handler.html#ab31d21e0450d304596560eec817bfd85", null ]
 ];

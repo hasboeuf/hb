@@ -10,7 +10,6 @@ var classhb_1_1log_1_1_hb_log_message =
     [ "levelStr", "classhb_1_1log_1_1_hb_log_message.html#aa20f01ac0ba24eb3fb6f4515cfc02e58", null ],
     [ "message", "classhb_1_1log_1_1_hb_log_message.html#add3a8693c6515b4be13692e3093af7e8", null ],
     [ "operator=", "classhb_1_1log_1_1_hb_log_message.html#a88a4cf7282654da326ceac791e70148b", null ],
-    [ "system", "classhb_1_1log_1_1_hb_log_message.html#ad598a7ec7998fe3c75c70ddd409d1563", null ],
     [ "timestamp", "classhb_1_1log_1_1_hb_log_message.html#ae7d4b89668843317ad07f48ce3f6dd74", null ],
     [ "timestampStr", "classhb_1_1log_1_1_hb_log_message.html#ac607bf4cf511dabd370a62e09a202187", null ],
     [ "toByteArray", "classhb_1_1log_1_1_hb_log_message.html#ae36a9e229b6a762808508d648cab8a42", null ],

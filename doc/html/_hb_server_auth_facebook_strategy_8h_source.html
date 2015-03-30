@@ -151,12 +151,12 @@ $(document).ready(function(){initNavTree('_hb_server_auth_facebook_strategy_8h_s
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_server_auth_facebook_strategy.html">HbServerAuthFacebookStrategy</a>();</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1network_1_1_hb_server_auth_facebook_strategy.html">HbServerAuthFacebookStrategy</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> reset();</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> reset() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <span class="keywordtype">void</span> setConfig( <span class="keyword">const</span> <a class="code" href="classhb_1_1link_1_1_hb_o2_server_config.html">HbO2ServerConfig</a> &amp; config );</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keyword">virtual</span> authstgy type() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> checkLogin( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_auth_request_contract.html">HbAuthRequestContract</a> * contract );</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keyword">virtual</span> <a class="code" href="_hb_network_8h.html#aaa443b0fd502de5d630197b4312a5ef1">authstgy</a> type() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> checkLogin( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_auth_request_contract.html">HbAuthRequestContract</a> * contract ) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">public</span> slots:</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordtype">void</span> onLinkSucceed();</div>
@@ -179,14 +179,15 @@ $(document).ready(function(){initNavTree('_hb_server_auth_facebook_strategy_8h_s
 <div class="ttc" id="classhb_1_1link_1_1_hb_o2_server_config_html"><div class="ttname"><a href="classhb_1_1link_1_1_hb_o2_server_config.html">hb::link::HbO2ServerConfig</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbO2ServerConfig.h:27</div></div>
 <div class="ttc" id="_hb_o2_server_config_8h_html"><div class="ttname"><a href="_hb_o2_server_config_8h.html">HbO2ServerConfig.h</a></div></div>
 <div class="ttc" id="_hb_server_auth_strategy_8h_html"><div class="ttname"><a href="_hb_server_auth_strategy_8h.html">HbServerAuthStrategy.h</a></div></div>
+<div class="ttc" id="_hb_network_8h_html_aaa443b0fd502de5d630197b4312a5ef1"><div class="ttname"><a href="_hb_network_8h.html#aaa443b0fd502de5d630197b4312a5ef1">authstgy</a></div><div class="ttdeci">quint8 authstgy</div><div class="ttdoc">Integer range for auth strategies. </div><div class="ttdef"><b>Definition:</b> HbNetwork.h:27</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_auth_request_contract_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_auth_request_contract.html">hb::network::HbAuthRequestContract</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbAuthRequestContract.h:31</div></div>
-<div class="ttc" id="_hb_network_8h_html"><div class="ttname"><a href="_hb_network_8h.html">HbNetwork.h</a></div><div class="ttdoc">TODOC. </div></div>
+<div class="ttc" id="_hb_network_8h_html"><div class="ttname"><a href="_hb_network_8h.html">HbNetwork.h</a></div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_server_auth_facebook_strategy_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_server_auth_facebook_strategy.html">hb::network::HbServerAuthFacebookStrategy</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbServerAuthFacebookStrategy.h:41</div></div>
 <div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">Base namespace of HB module. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
-<div class="ttc" id="classhb_1_1link_1_1_hb_facebook_requester_html"><div class="ttname"><a href="classhb_1_1link_1_1_hb_facebook_requester.html">hb::link::HbFacebookRequester</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbFacebookRequester.h:33</div></div>
+<div class="ttc" id="classhb_1_1link_1_1_hb_facebook_requester_html"><div class="ttname"><a href="classhb_1_1link_1_1_hb_facebook_requester.html">hb::link::HbFacebookRequester</a></div><div class="ttdoc">HbFacebookRequester is a Http requester specific for Facebook. </div><div class="ttdef"><b>Definition:</b> HbFacebookRequester.h:33</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_server_auth_strategy_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_server_auth_strategy.html">hb::network::HbServerAuthStrategy</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbServerAuthStrategy.h:30</div></div>
 <div class="ttc" id="_hb_auth_request_contract_8h_html"><div class="ttname"><a href="_hb_auth_request_contract_8h.html">HbAuthRequestContract.h</a></div></div>
-<div class="ttc" id="classhb_1_1link_1_1_hb_facebook_object_html"><div class="ttname"><a href="classhb_1_1link_1_1_hb_facebook_object.html">hb::link::HbFacebookObject</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbFacebookObject.h:28</div></div>
+<div class="ttc" id="classhb_1_1link_1_1_hb_facebook_object_html"><div class="ttname"><a href="classhb_1_1link_1_1_hb_facebook_object.html">hb::link::HbFacebookObject</a></div><div class="ttdoc">HbFacebookObject represents an abstract Facebook object. </div><div class="ttdef"><b>Definition:</b> HbFacebookObject.h:28</div></div>
 <div class="ttc" id="_hb_facebook_requester_8h_html"><div class="ttname"><a href="_hb_facebook_requester_8h.html">HbFacebookRequester.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -194,7 +195,7 @@ $(document).ready(function(){initNavTree('_hb_server_auth_facebook_strategy_8h_s
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c901c14b65aa229498a52b725b3d4a2c.html">network</a></li><li class="navelem"><a class="el" href="dir_65f3df0921bcb4ab1aa5b381c9060a44.html">inc</a></li><li class="navelem"><a class="el" href="dir_fb160bc77023e58b21b684479beae95d.html">service</a></li><li class="navelem"><a class="el" href="dir_8752da425d6a10dbc84adbfe8565aed7.html">auth</a></li><li class="navelem"><a class="el" href="_hb_server_auth_facebook_strategy_8h.html">HbServerAuthFacebookStrategy.h</a></li>
-    <li class="footer">Generated on Sat Mar 28 2015 12:04:12 for hb by
+    <li class="footer">Generated on Mon Mar 30 2015 21:04:28 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

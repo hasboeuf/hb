@@ -109,6 +109,7 @@ $(document).ready(function(){initNavTree('classhb_1_1network_1_1_hb_abstract_cli
   <div class="summary">
 <a href="#signals">Signals</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classhb_1_1network_1_1_hb_abstract_client-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -134,13 +135,13 @@ Inheritance diagram for hb::network::HbAbstractClient:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
 <tr class="memitem:aacc5a087078c8b3234bdcce4f19a6bdf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aacc5a087078c8b3234bdcce4f19a6bdf"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>clientConnected</b> (networkuid client_uid)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>clientConnected</b> (<a class="el" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> client_uid)</td></tr>
 <tr class="separator:aacc5a087078c8b3234bdcce4f19a6bdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acebcfd5332aee909447f1d3a3bc74719"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acebcfd5332aee909447f1d3a3bc74719"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>clientDisconnected</b> (networkuid client_uid)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>clientDisconnected</b> (<a class="el" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> client_uid)</td></tr>
 <tr class="separator:acebcfd5332aee909447f1d3a3bc74719"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaac9ab3004f2b0d5b2b8a6eb981dabc7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaac9ab3004f2b0d5b2b8a6eb981dabc7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>clientContractReceived</b> (networkuid client_uid, const <a class="el" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> *contract)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>clientContractReceived</b> (<a class="el" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> client_uid, const <a class="el" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> *contract)</td></tr>
 <tr class="separator:aaac9ab3004f2b0d5b2b8a6eb981dabc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
@@ -155,29 +156,29 @@ virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>leave</b> () 
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>isReady</b> () const final</td></tr>
 <tr class="separator:afecce23e71d64038f3e01edbda2d8c93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a319823314ccf47b8a75e3b529721fb3a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a319823314ccf47b8a75e3b529721fb3a"></a>
-virtual networkuid&#160;</td><td class="memItemRight" valign="bottom"><b>uid</b> () const =0</td></tr>
+virtual <a class="el" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a>&#160;</td><td class="memItemRight" valign="bottom"><b>uid</b> () const =0</td></tr>
 <tr class="separator:a319823314ccf47b8a75e3b529721fb3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95c9009fb4c2805427e5854d0490fb2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95c9009fb4c2805427e5854d0490fb2f"></a>
-virtual HbNetworkProtocol::NetworkType&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const =0</td></tr>
-<tr class="separator:a95c9009fb4c2805427e5854d0490fb2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa71d162b4b6a7e23c17c21a946d9899"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afa71d162b4b6a7e23c17c21a946d9899"></a>
 virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>send</b> (ShConstHbNetworkContract contract)</td></tr>
 <tr class="separator:afa71d162b4b6a7e23c17c21a946d9899"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93bf2ba5ed4ab96ff17143ca794f9992"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a93bf2ba5ed4ab96ff17143ca794f9992"></a>
 virtual const <a class="el" href="classhb_1_1network_1_1_hb_client_config.html">HbClientConfig</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>configuration</b> () const </td></tr>
 <tr class="separator:a93bf2ba5ed4ab96ff17143ca794f9992"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4922eb65077aaeb9b1ddf15c79d11dc1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4922eb65077aaeb9b1ddf15c79d11dc1"></a>
+virtual HbNetworkProtocol::NetworkType&#160;</td><td class="memItemRight" valign="bottom"><b>type</b> () const =0</td></tr>
+<tr class="separator:a4922eb65077aaeb9b1ddf15c79d11dc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a6e272e746d3c1f4ff2ef49a2dc39d122"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6e272e746d3c1f4ff2ef49a2dc39d122"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>checkHeader</b> (const <a class="el" href="classhb_1_1network_1_1_hb_network_header.html">HbNetworkHeader</a> &amp;header)</td></tr>
+<tr class="separator:a6e272e746d3c1f4ff2ef49a2dc39d122"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a8e0c1a65462a06ae1b1db03126f52808"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e0c1a65462a06ae1b1db03126f52808"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>HbAbstractClient</b> (QObject *parent=nullptr)</td></tr>
 <tr class="separator:a8e0c1a65462a06ae1b1db03126f52808"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0de68791c8e544d0af73d9b15df7f844"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0de68791c8e544d0af73d9b15df7f844"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>connectToNetwork</b> ()=0</td></tr>
-<tr class="separator:a0de68791c8e544d0af73d9b15df7f844"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a6cdc57570a4221c6fc3b086a82f20a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a6cdc57570a4221c6fc3b086a82f20a"></a>
-virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>disconnectFromNetwork</b> ()=0</td></tr>
-<tr class="separator:a8a6cdc57570a4221c6fc3b086a82f20a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a706b764ddcfc17b8f0ac9f2a3725fe54"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a706b764ddcfc17b8f0ac9f2a3725fe54"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>deleteSocket</b> ()=0</td></tr>
 <tr class="separator:a706b764ddcfc17b8f0ac9f2a3725fe54"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -187,17 +188,12 @@ virtual <a class="el" href="classhb_1_1network_1_1_hb_abstract_socket.html">HbAb
 <tr class="memitem:a2defb8a0a66114363e78143e995e47ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2defb8a0a66114363e78143e995e47ef"></a>
 virtual <a class="el" href="classhb_1_1network_1_1_hb_abstract_socket.html">HbAbstractSocket</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>currentConnection</b> () const =0</td></tr>
 <tr class="separator:a2defb8a0a66114363e78143e995e47ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header pro_methods_classhb_1_1network_1_1_hb_abstract_network"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classhb_1_1network_1_1_hb_abstract_network')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classhb_1_1network_1_1_hb_abstract_network.html">hb::network::HbAbstractNetwork</a></td></tr>
-<tr class="memitem:a19c005de1c18b307a3acbcd964c193ff inherit pro_methods_classhb_1_1network_1_1_hb_abstract_network"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a19c005de1c18b307a3acbcd964c193ff"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>HbAbstractNetwork</b> (QObject *parent=nullptr)</td></tr>
-<tr class="separator:a19c005de1c18b307a3acbcd964c193ff inherit pro_methods_classhb_1_1network_1_1_hb_abstract_network"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
-<tr class="inherit_header pub_static_methods_classhb_1_1network_1_1_hb_abstract_network"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_classhb_1_1network_1_1_hb_abstract_network')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="classhb_1_1network_1_1_hb_abstract_network.html">hb::network::HbAbstractNetwork</a></td></tr>
-<tr class="memitem:a6e272e746d3c1f4ff2ef49a2dc39d122 inherit pub_static_methods_classhb_1_1network_1_1_hb_abstract_network"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6e272e746d3c1f4ff2ef49a2dc39d122"></a>
-static bool&#160;</td><td class="memItemRight" valign="bottom"><b>checkHeader</b> (const <a class="el" href="classhb_1_1network_1_1_hb_network_header.html">HbNetworkHeader</a> &amp;header)</td></tr>
-<tr class="separator:a6e272e746d3c1f4ff2ef49a2dc39d122 inherit pub_static_methods_classhb_1_1network_1_1_hb_abstract_network"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e1d2cc64bfe931a308546a0485f4281"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9e1d2cc64bfe931a308546a0485f4281"></a>
+virtual bool&#160;</td><td class="memItemRight" valign="bottom"><b>connectToNetwork</b> ()=0</td></tr>
+<tr class="separator:a9e1d2cc64bfe931a308546a0485f4281"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8d8fee28eea8260578208f39daeea02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae8d8fee28eea8260578208f39daeea02"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>disconnectFromNetwork</b> ()=0</td></tr>
+<tr class="separator:ae8d8fee28eea8260578208f39daeea02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>TODOC. </p>
@@ -210,7 +206,7 @@ static bool&#160;</td><td class="memItemRight" valign="bottom"><b>checkHeader</b
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacehb.html">hb</a></li><li class="navelem"><a class="el" href="namespacehb_1_1network.html">network</a></li><li class="navelem"><a class="el" href="classhb_1_1network_1_1_hb_abstract_client.html">HbAbstractClient</a></li>
-    <li class="footer">Generated on Sat Mar 28 2015 12:04:14 for hb by
+    <li class="footer">Generated on Mon Mar 30 2015 21:04:31 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

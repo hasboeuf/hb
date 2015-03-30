@@ -22,11 +22,15 @@ var classhb_1_1network_1_1_hb_network_contract =
     [ "setNetworkType", "classhb_1_1network_1_1_hb_network_contract.html#a47d09f2ada4efd886bbba6ea02491612", null ],
     [ "setRouting", "classhb_1_1network_1_1_hb_network_contract.html#a7c7c241a64f7c904d537c2adca933f1b", null ],
     [ "setSender", "classhb_1_1network_1_1_hb_network_contract.html#af0663337f8fe6b97c877a6d0a16fb434", null ],
+    [ "takeUid", "classhb_1_1network_1_1_hb_network_contract.html#ac27b052527f96fc263aaac93c1a430ea", null ],
     [ "toString", "classhb_1_1network_1_1_hb_network_contract.html#ac666ea77de5bb7b074597e3baa2b15f6", null ],
+    [ "uid", "classhb_1_1network_1_1_hb_network_contract.html#a2af86e022862a8d75d030b6d12c4bde3", null ],
     [ "updateReply", "classhb_1_1network_1_1_hb_network_contract.html#ac58231b19e6ed03ec563335d830f06a2", null ],
     [ "value", "classhb_1_1network_1_1_hb_network_contract.html#aa7c2718caa2634df12fe383f550993dd", null ],
     [ "value", "classhb_1_1network_1_1_hb_network_contract.html#aef9f997229e58fa6df66e629c27b53c2", null ],
     [ "write", "classhb_1_1network_1_1_hb_network_contract.html#a43f75c7b0435b603da28fae455d2c170", null ],
     [ "mHeader", "classhb_1_1network_1_1_hb_network_contract.html#ada8994394d3f228b3093ade6e13beac2", null ],
-    [ "mpReply", "classhb_1_1network_1_1_hb_network_contract.html#aaff9cd41fd09d7eb7ec1354b555fb8ac", null ]
+    [ "mpReply", "classhb_1_1network_1_1_hb_network_contract.html#aaff9cd41fd09d7eb7ec1354b555fb8ac", null ],
+    [ "mReleaseUid", "classhb_1_1network_1_1_hb_network_contract.html#a6a8ab215fa438881b6c704e069159255", null ],
+    [ "mUid", "classhb_1_1network_1_1_hb_network_contract.html#ab31d21e0450d304596560eec817bfd85", null ]
 ];

@@ -145,13 +145,13 @@ $(document).ready(function(){initNavTree('_hb_client_auth_facebook_strategy_8h_s
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_client_auth_facebook_strategy.html">HbClientAuthFacebookStrategy</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1network_1_1_hb_client_auth_facebook_strategy.html">HbClientAuthFacebookStrategy</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> reset();</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> reset() <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordtype">void</span> setConfig( <span class="keyword">const</span> <a class="code" href="classhb_1_1link_1_1_hb_o2_client_config.html">HbO2ClientConfig</a> &amp; config );</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keyword">virtual</span> authstgy type() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keyword">virtual</span> <a class="code" href="_hb_network_8h.html#aaa443b0fd502de5d630197b4312a5ef1">authstgy</a> type() <span class="keyword">const</span> <span class="keyword">final</span>;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> prepareAuthContract( <a class="code" href="classhb_1_1network_1_1_hb_client_auth_login_object.html">HbClientAuthLoginObject</a> * login_object );</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> prepareAuthContract( <a class="code" href="classhb_1_1network_1_1_hb_client_auth_login_object.html">HbClientAuthLoginObject</a> * login_object ) <span class="keyword">override</span>;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">public</span> slots:</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keywordtype">void</span> onFacebookOpenBrower( <span class="keyword">const</span> QUrl &amp; url );</div>
@@ -170,9 +170,10 @@ $(document).ready(function(){initNavTree('_hb_client_auth_facebook_strategy_8h_s
 <div class="ttc" id="_hb_network_protocol_8h_html"><div class="ttname"><a href="_hb_network_protocol_8h.html">HbNetworkProtocol.h</a></div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_client_auth_login_object_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_client_auth_login_object.html">hb::network::HbClientAuthLoginObject</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbClientAuthLoginObject.h:26</div></div>
 <div class="ttc" id="_hb_o2_client_facebook_8h_html"><div class="ttname"><a href="_hb_o2_client_facebook_8h.html">HbO2ClientFacebook.h</a></div></div>
+<div class="ttc" id="_hb_network_8h_html_aaa443b0fd502de5d630197b4312a5ef1"><div class="ttname"><a href="_hb_network_8h.html#aaa443b0fd502de5d630197b4312a5ef1">authstgy</a></div><div class="ttdeci">quint8 authstgy</div><div class="ttdoc">Integer range for auth strategies. </div><div class="ttdef"><b>Definition:</b> HbNetwork.h:27</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_client_auth_strategy_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_client_auth_strategy.html">hb::network::HbClientAuthStrategy</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbClientAuthStrategy.h:29</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_auth_request_contract_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_auth_request_contract.html">hb::network::HbAuthRequestContract</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbAuthRequestContract.h:31</div></div>
-<div class="ttc" id="_hb_network_8h_html"><div class="ttname"><a href="_hb_network_8h.html">HbNetwork.h</a></div><div class="ttdoc">TODOC. </div></div>
+<div class="ttc" id="_hb_network_8h_html"><div class="ttname"><a href="_hb_network_8h.html">HbNetwork.h</a></div></div>
 <div class="ttc" id="_hb_client_auth_strategy_8h_html"><div class="ttname"><a href="_hb_client_auth_strategy_8h.html">HbClientAuthStrategy.h</a></div></div>
 <div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">Base namespace of HB module. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_client_auth_facebook_strategy_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_client_auth_facebook_strategy.html">hb::network::HbClientAuthFacebookStrategy</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbClientAuthFacebookStrategy.h:35</div></div>
@@ -184,7 +185,7 @@ $(document).ready(function(){initNavTree('_hb_client_auth_facebook_strategy_8h_s
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c901c14b65aa229498a52b725b3d4a2c.html">network</a></li><li class="navelem"><a class="el" href="dir_65f3df0921bcb4ab1aa5b381c9060a44.html">inc</a></li><li class="navelem"><a class="el" href="dir_fb160bc77023e58b21b684479beae95d.html">service</a></li><li class="navelem"><a class="el" href="dir_8752da425d6a10dbc84adbfe8565aed7.html">auth</a></li><li class="navelem"><a class="el" href="_hb_client_auth_facebook_strategy_8h.html">HbClientAuthFacebookStrategy.h</a></li>
-    <li class="footer">Generated on Sat Mar 28 2015 12:04:12 for hb by
+    <li class="footer">Generated on Mon Mar 30 2015 21:04:28 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

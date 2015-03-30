@@ -146,7 +146,7 @@ $(document).ready(function(){initNavTree('_hb_abstract_network_8h_source.html','
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> isReady() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keyword">virtual</span> HbNetworkProtocol::NetworkType type() <span class="keyword">const</span> = 0;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> send( ShConstHbNetworkContract contract ) = 0; <span class="comment">// TODO refresh</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> send( ShConstHbNetworkContract contract ) = 0;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keyword">virtual</span> <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_config.html">HbNetworkConfig</a> &amp; configuration() <span class="keyword">const</span>; <span class="comment">// SUB</span></div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
@@ -154,15 +154,18 @@ $(document).ready(function(){initNavTree('_hb_abstract_network_8h_source.html','
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_abstract_network.html">HbAbstractNetwork</a>( QObject * parent = <span class="keyword">nullptr</span> );</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1network_1_1_hb_abstract_network.html">HbAbstractNetwork</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_network_config.html">HbNetworkConfig</a> mConfig; <span class="comment">// SUB</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        };</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    }</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="preprocessor">#endif // HBABSTRACTNETWORK_H</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> connectToNetwork() = 0;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> disconnectFromNetwork() = 0;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <a class="code" href="classhb_1_1network_1_1_hb_network_config.html">HbNetworkConfig</a> mConfig; <span class="comment">// SUB</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        };</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif // HBABSTRACTNETWORK_H</span></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_abstract_network_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_abstract_network.html">hb::network::HbAbstractNetwork</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbAbstractNetwork.h:30</div></div>
-<div class="ttc" id="_hb_network_8h_html"><div class="ttname"><a href="_hb_network_8h.html">HbNetwork.h</a></div><div class="ttdoc">TODOC. </div></div>
+<div class="ttc" id="_hb_network_8h_html"><div class="ttname"><a href="_hb_network_8h.html">HbNetwork.h</a></div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_network_config_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_config.html">hb::network::HbNetworkConfig</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkConfig.h:29</div></div>
 <div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">Base namespace of HB module. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_network_header_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_header.html">hb::network::HbNetworkHeader</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkHeader.h:27</div></div>
@@ -175,7 +178,7 @@ $(document).ready(function(){initNavTree('_hb_abstract_network_8h_source.html','
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c901c14b65aa229498a52b725b3d4a2c.html">network</a></li><li class="navelem"><a class="el" href="dir_65f3df0921bcb4ab1aa5b381c9060a44.html">inc</a></li><li class="navelem"><a class="el" href="dir_0f1fb40c7ff1fbf3420c7eba41ecb111.html">com</a></li><li class="navelem"><a class="el" href="_hb_abstract_network_8h.html">HbAbstractNetwork.h</a></li>
-    <li class="footer">Generated on Sat Mar 28 2015 12:04:11 for hb by
+    <li class="footer">Generated on Mon Mar 30 2015 21:04:28 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

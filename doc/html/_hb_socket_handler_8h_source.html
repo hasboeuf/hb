@@ -174,10 +174,10 @@ $(document).ready(function(){initNavTree('_hb_socket_handler_8h_source.html','')
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> init();</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="comment">// From Server</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onNewPendingConnection( qint32 socket_descriptor ) = 0;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onDisconnectionRequest( networkuid uid );</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onDisconnectionRequest( <a class="code" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> uid );</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onServerLeft();</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSendContract( ShConstHbNetworkContract contract ); <span class="comment">// Send to all.</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSendContract( networkuid socket_uid, ShConstHbNetworkContract contract );</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSendContract( <a class="code" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_uid, ShConstHbNetworkContract contract );</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="comment">// From Socket</span></div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSocketReadyPacket();</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSocketDisconnected();</div>
@@ -186,9 +186,9 @@ $(document).ready(function(){initNavTree('_hb_socket_handler_8h_source.html','')
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        signals:</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="comment">// To Server.</span></div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="keywordtype">void</span> handlerIdled          ();</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keywordtype">void</span> socketConnected       ( qint32 socket_previous_id, networkuid socket_id );</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordtype">void</span> socketDisconnected    ( networkuid socket_uid );</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordtype">void</span> socketContractReceived( networkuid socket_uid, <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> * contract );</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keywordtype">void</span> socketConnected       ( qint32 socket_previous_id, <a class="code" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_id );</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordtype">void</span> socketDisconnected    ( <a class="code" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_uid );</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordtype">void</span> socketContractReceived( <a class="code" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_uid, <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> * contract );</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        };</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    }</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
@@ -203,6 +203,7 @@ $(document).ready(function(){initNavTree('_hb_socket_handler_8h_source.html','')
 <div class="ttc" id="classhb_1_1network_1_1_hb_abstract_socket_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_abstract_socket.html">hb::network::HbAbstractSocket</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbAbstractSocket.h:33</div></div>
 <div class="ttc" id="_hb_global_8h_html"><div class="ttname"><a href="_hb_global_8h.html">HbGlobal.h</a></div><div class="ttdoc">This file contains all useful macros used by HB module. </div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_socket_handler_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_socket_handler.html">hb::network::HbSocketHandler</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbSocketHandler.h:33</div></div>
+<div class="ttc" id="_hb_network_8h_html_a1017af4ddc52368dabe338132173c800"><div class="ttname"><a href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a></div><div class="ttdeci">quint32 networkuid</div><div class="ttdoc">Integer range for socket/server uid. </div><div class="ttdef"><b>Definition:</b> HbNetwork.h:22</div></div>
 <div class="ttc" id="_hb_network_contract_8h_html"><div class="ttname"><a href="_hb_network_contract_8h.html">HbNetworkContract.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -210,7 +211,7 @@ $(document).ready(function(){initNavTree('_hb_socket_handler_8h_source.html','')
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c901c14b65aa229498a52b725b3d4a2c.html">network</a></li><li class="navelem"><a class="el" href="dir_65f3df0921bcb4ab1aa5b381c9060a44.html">inc</a></li><li class="navelem"><a class="el" href="dir_0f1fb40c7ff1fbf3420c7eba41ecb111.html">com</a></li><li class="navelem"><a class="el" href="_hb_socket_handler_8h.html">HbSocketHandler.h</a></li>
-    <li class="footer">Generated on Sat Mar 28 2015 12:04:11 for hb by
+    <li class="footer">Generated on Mon Mar 30 2015 21:04:28 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

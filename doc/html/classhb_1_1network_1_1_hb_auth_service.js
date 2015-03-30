@@ -7,12 +7,15 @@ var classhb_1_1network_1_1_hb_auth_service =
     ] ],
     [ "HbAuthService", "classhb_1_1network_1_1_hb_auth_service.html#a382920e6d46857fdb5b783379b2fc7ba", null ],
     [ "~HbAuthService", "classhb_1_1network_1_1_hb_auth_service.html#af5f3b5d7f2d6366c7ef768d0ad49ff8c", null ],
-    [ "enabledNetworkTypes", "classhb_1_1network_1_1_hb_auth_service.html#a328e3ae15f1cada5cad25e11f6cb6af2", null ],
-    [ "onSocketConnected", "classhb_1_1network_1_1_hb_auth_service.html#a1b871477e6b18d669d2b4dc0f8db78b5", null ],
-    [ "onSocketDisconnected", "classhb_1_1network_1_1_hb_auth_service.html#aec152878e47270e3a0c9245dba37ed6e", null ],
-    [ "plugContracts", "classhb_1_1network_1_1_hb_auth_service.html#a5ae9d82eb7be219f4f4f72b1e270f2ec", null ],
-    [ "reset", "classhb_1_1network_1_1_hb_auth_service.html#ac958f853b96ffb4b8d07c39bb5a4725d", null ],
+    [ "enabledNetworkTypes", "classhb_1_1network_1_1_hb_auth_service.html#ae512eb9654fc205e4adda36e9478a1bf", null ],
+    [ "id", "classhb_1_1network_1_1_hb_auth_service.html#af308c0da97ae3b8122a76a6ea7782029", null ],
+    [ "plugContracts", "classhb_1_1network_1_1_hb_auth_service.html#a6d668f082df064f53257d92d8c026b87", null ],
+    [ "readyContractToSend", "classhb_1_1network_1_1_hb_auth_service.html#aa91c56f1f912e3a6988bcafadf40b2aa", null ],
+    [ "reset", "classhb_1_1network_1_1_hb_auth_service.html#a6d4567a7950ab0d1b998749fb8211e4c", null ],
     [ "socketAuthenticated", "classhb_1_1network_1_1_hb_auth_service.html#a0a65bedbc40856e904463674a27972f6", null ],
+    [ "socketToKick", "classhb_1_1network_1_1_hb_auth_service.html#a25f34312d3911aaf30e6386052d91f75", null ],
     [ "socketUnauthenticated", "classhb_1_1network_1_1_hb_auth_service.html#ab557c4a3af26145c4a7e9969f0a9070a", null ],
-    [ "callbacks", "classhb_1_1network_1_1_hb_auth_service.html#a7684690dbdfdf294b227cd18c35e66ba", null ]
+    [ "userToKick", "classhb_1_1network_1_1_hb_auth_service.html#a7661d26b67b79d669ab6c0a26cc37e71", null ],
+    [ "callbacks", "classhb_1_1network_1_1_hb_auth_service.html#adac18a6a0037af98b9a198804a74b551", null ],
+    [ "mId", "classhb_1_1network_1_1_hb_auth_service.html#a1565cc2a3165866de43a739f9ad35799", null ]
 ];
