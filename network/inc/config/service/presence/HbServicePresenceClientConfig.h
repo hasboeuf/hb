@@ -26,7 +26,7 @@ namespace hb
         public:
             HbServicePresenceClientConfig();
             HbServicePresenceClientConfig( const HbServicePresenceClientConfig & config );
-            virtual ~HbServicePresenceClientConfig() = default;
+            virtual ~HbServicePresenceClientConfig(){} // = default; TODO linux-g++ issue
             virtual HbServicePresenceClientConfig & operator =( const HbServicePresenceClientConfig & config );
 
             virtual bool isValid() const;

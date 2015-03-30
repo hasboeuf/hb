@@ -124,3 +124,4 @@ void BasicServerMainWindow::onSocketContractReceived( networkuid server_uid, net
 
     delete contract;
 }
+

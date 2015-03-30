@@ -30,7 +30,7 @@ namespace hb
             virtual void onUserDisconnected    ( const HbNetworkUserInfo & user_info ) = 0;
 
         protected:
-            virtual ~IHbUserListener() = default;
+            virtual ~IHbUserListener(){} // = default; TODO linux-g++ issue
         };
 
     }

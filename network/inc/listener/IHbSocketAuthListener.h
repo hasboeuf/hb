@@ -27,7 +27,7 @@ namespace hb
             virtual void onSocketUnauthenticated( networkuid socket_uid ) = 0;
 
         protected:
-            virtual ~IHbSocketAuthListener() = default;
+            virtual ~IHbSocketAuthListener(){} // = default; TODO linux-g++ issue
         };
 
     }

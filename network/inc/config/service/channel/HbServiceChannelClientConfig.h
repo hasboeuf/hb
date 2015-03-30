@@ -26,7 +26,7 @@ namespace hb
         public:
             HbServiceChannelClientConfig();
             HbServiceChannelClientConfig( const HbServiceChannelClientConfig & config );
-            virtual ~HbServiceChannelClientConfig() = default;
+            virtual ~HbServiceChannelClientConfig(){} // = default; TODO linux-g++ issue
             virtual HbServiceChannelClientConfig & operator =( const HbServiceChannelClientConfig & config );
 
             virtual bool isValid() const;

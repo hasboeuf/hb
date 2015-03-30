@@ -16,7 +16,7 @@
 #include <QtCore/QStringList>
 // Hb
 #include <HbGlobal.h>
-#include <core/HbUId.h>
+#include <core/HbUid.h>
 // Local
 #include <HbNetwork.h>
 #include <contract/HbNetworkProtocol.h>

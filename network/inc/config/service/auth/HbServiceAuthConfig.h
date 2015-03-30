@@ -26,7 +26,7 @@ namespace hb
         public:
             HbServiceAuthConfig();
             HbServiceAuthConfig( const HbServiceAuthConfig & config );
-            virtual ~HbServiceAuthConfig() = default;
+            virtual ~HbServiceAuthConfig(){} // = default; TODO linux-g++ issue
             virtual HbServiceAuthConfig & operator =( const HbServiceAuthConfig & config );
 
             virtual bool isValid() const;

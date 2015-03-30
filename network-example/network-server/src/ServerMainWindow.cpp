@@ -102,3 +102,4 @@ void ServerMainWindow::onServerStatusChanged( networkuid server_uid, HbNetworkPr
 {
     HbInfo( "Status changed on server %d: %s.", server_uid, HbLatin1( HbNetworkProtocol::MetaServerStatus::toString( status ) ) );
 }
+

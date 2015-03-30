@@ -133,13 +133,15 @@
     message( QMake-ing $${PROJECT.NAME} projects. )
     message( ------------------------------------ )
 
-    win32-msvc*|win32-g++|android-g++: {
+    win32-msvc*|win32-g++|android-g++|linux-g++: {
         message( "Compilator supported." )
     } else {
         error( "Compilator not supported." )
     }
 
-    win32-g++: QMAKE_CXXFLAGS += -std=c++0x
+    *-g++: {
+        QMAKE_CXXFLAGS += -std=c++0x
+    }
 
     QMAKE_SPEC = $$(QMAKESPEC)
     isEmpty( QMAKE_SPEC ): QMAKE_SPEC = $$[QMAKESPEC]

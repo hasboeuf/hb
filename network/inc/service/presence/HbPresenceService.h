@@ -25,7 +25,7 @@ namespace hb
         public:
 
             HbPresenceService();
-            virtual ~HbPresenceService() = default;
+            virtual ~HbPresenceService(){} // = default; TODO linux-g++ issue
 
             virtual void reset() = 0;
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;

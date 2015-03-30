@@ -110,7 +110,7 @@ namespace hb
         protected :
 
             HbLogger() = default;
-            virtual ~HbLogger() = default;
+            virtual ~HbLogger(){} // = default; TODO linux-g++ issue
 
             virtual void enqueueMessage( Level level, Formats format, const HbLogContext & context, const QString & message ) = 0;
             virtual void dequeuePendingMessages() = 0;
