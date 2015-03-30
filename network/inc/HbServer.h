@@ -37,7 +37,7 @@ namespace hb
             virtual ~HbServer() = default;
 
             networkuid joinTcpServer( HbTcpServerConfig & config, bool main );
-            bool leave();
+            virtual bool leave() override;
 
         signals:
             void serverStatusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status );

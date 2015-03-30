@@ -105,13 +105,6 @@ HbNetworkProtocol::NetworkType HbTcpServer::type() const
     return HbNetworkProtocol::NETWORK_TCP;
 }
 
-bool HbTcpServer::disconnectFromNetwork( networkuid uid )
-{
-    Q_UNUSED( uid )
-    // Unused as socket is handled in HbSocketHandler.
-    return false;
-}
-
 void HbTcpServer::onNewConnection(qint32 socket_descriptor)
 {
     HbLogBegin();

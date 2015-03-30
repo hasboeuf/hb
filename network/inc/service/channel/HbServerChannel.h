@@ -31,15 +31,7 @@ namespace hb
             HbServerChannel() = default;
             virtual ~HbServerChannel() = default;
 
-            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const = 0;
-            virtual void plugContracts( HbNetworkExchanges & exchanges ) = 0;
-
-            virtual void reset() = 0;
-
         public callbacks:
-            virtual void onUserContractReceived( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract ) = 0;
-            virtual void onUserConnected       ( const HbNetworkUserInfo & user_info ) = 0;
-            virtual void onUserDisconnected    ( const HbNetworkUserInfo & user_info ) = 0;
 
         };
     }

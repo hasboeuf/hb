@@ -30,19 +30,19 @@ namespace hb
             HbTcpSocket( QTcpSocket * device );
             virtual ~HbTcpSocket();
 
-            HbNetworkProtocol::NetworkType type() const;
+            HbNetworkProtocol::NetworkType type() const override;
 
-            bool leave();
-            bool connectToHost(const HbTcpConfig & config);
+            bool leave() override;
+            bool connectToHost( const HbTcpConfig & config );
 
 
-            bool isListening() const;
+            bool isListening() const override;
 
             void setSocketOption(QAbstractSocket::SocketOption option, bool enable);
             bool socketOption(QAbstractSocket::SocketOption option) const;
 
-            QAbstractSocket::SocketError error() const;
-            QAbstractSocket::SocketState state() const;
+            QAbstractSocket::SocketError error() const override;
+            QAbstractSocket::SocketState state() const override;
 
         private callbacks:
             // From device.

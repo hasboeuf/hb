@@ -43,7 +43,7 @@ namespace hb
             HbClient( const HbGeneralClientConfig & config );
             virtual ~HbClient() = default;
 
-            bool leave();
+            virtual bool leave() override;
             networkuid joinTcpClient( HbTcpClientConfig & config, bool main );
             bool authRequest( HbClientAuthLoginObject * login_object );
             bool facebookAuthRequested();

@@ -85,7 +85,7 @@ bool HbTcpClient::connectToNetwork()
     return true;
 }
 
-bool HbTcpClient::disconnectFromNetwork()
+void HbTcpClient::disconnectFromNetwork()
 {
     q_assert_ptr( mpSocket );
     if( !mpSocket->leave() )
@@ -96,8 +96,6 @@ bool HbTcpClient::disconnectFromNetwork()
     {
         deleteSocket();
     }
-
-    return ( !mpSocket );
 }
 
 void HbTcpClient::deleteSocket()

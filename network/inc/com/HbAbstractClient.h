@@ -40,7 +40,6 @@ namespace hb
             virtual bool leave() final;
             virtual bool isReady() const final;
             virtual networkuid uid() const = 0;
-            virtual HbNetworkProtocol::NetworkType type() const = 0;
 
             virtual bool send( ShConstHbNetworkContract contract);
 
@@ -54,8 +53,6 @@ namespace hb
         protected:
             HbAbstractClient(QObject * parent = nullptr);
 
-            virtual bool connectToNetwork() = 0;
-            virtual bool disconnectFromNetwork() = 0;
             virtual void deleteSocket() = 0;
 
             virtual HbAbstractSocket * pendingConnection() = 0;

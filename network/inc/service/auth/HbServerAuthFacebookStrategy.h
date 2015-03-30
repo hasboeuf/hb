@@ -46,12 +46,12 @@ namespace hb
             HbServerAuthFacebookStrategy();
             virtual ~HbServerAuthFacebookStrategy() = default;
 
-            virtual void reset();
+            virtual void reset() override;
 
             void setConfig( const HbO2ServerConfig & config );
 
             virtual authstgy type() const final;
-            virtual bool checkLogin( const HbAuthRequestContract * contract );
+            virtual bool checkLogin( const HbAuthRequestContract * contract ) override;
 
         public slots:
             void onLinkSucceed();

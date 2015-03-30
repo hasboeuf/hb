@@ -67,11 +67,7 @@ bool HbAbstractClient::leave()
 
         networkuid uid = this->uid(); // Store uid before socket deletion.
 
-        if ( !disconnectFromNetwork() )
-        {
-            HbError( "Can not disconnect from network." );
-            return false;
-        }
+        disconnectFromNetwork();
 
         mReady = false;
         emit clientDisconnected( uid );

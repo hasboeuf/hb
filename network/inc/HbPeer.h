@@ -36,6 +36,7 @@ namespace hb
             virtual ~HbPeer() = default;
 
             virtual bool isReady() const final;
+            virtual bool leave() = 0;
 
         private:
             bool mReady;

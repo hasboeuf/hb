@@ -31,14 +31,11 @@ namespace hb
             HbPresenceService();
             virtual ~HbPresenceService(){} // = default; TODO linux-g++ issue
 
-            virtual void reset() = 0;
-            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
-            virtual void plugContracts( HbNetworkExchanges & exchanges );            
+            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
+            virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
 
         public callbacks:
-            virtual void onSocketAuthenticated  ( networkuid socket_uid ) = 0;
-            virtual void onSocketUnauthenticated( networkuid socket_uid ) = 0;
-            virtual void onContractReceived( const HbNetworkContract * contract  ) = 0;
+
         };
     }
 }

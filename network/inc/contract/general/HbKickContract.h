@@ -35,10 +35,10 @@ namespace hb
             HbKickContract( const HbKickContract & source );
             HbKickContract & operator=( const HbKickContract & source );
 
-            HbKickContract * create() const;
+            HbKickContract * create() const override;
 
-            virtual bool read ( QDataStream & stream );
-            virtual bool write( QDataStream & stream ) const;
+            virtual bool read ( QDataStream & stream ) override;
+            virtual bool write( QDataStream & stream ) const override;
 
             void setReason   ( netwint reason );
             void setDescription( const QString & description );

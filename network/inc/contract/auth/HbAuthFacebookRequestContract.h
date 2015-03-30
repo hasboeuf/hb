@@ -38,10 +38,10 @@ namespace hb
             HbAuthFacebookRequestContract( const HbAuthFacebookRequestContract & source );
             HbAuthFacebookRequestContract & operator=( const HbAuthFacebookRequestContract & source );
 
-            HbAuthFacebookRequestContract * create() const;
+            HbAuthFacebookRequestContract * create() const override;
 
-            virtual bool read ( QDataStream & stream );
-            virtual bool write( QDataStream & stream ) const;
+            virtual bool read ( QDataStream & stream ) override;
+            virtual bool write( QDataStream & stream ) const override;
 
             virtual const HbO2ClientFacebook & client() const final;
             virtual void setClient( const HbO2ClientFacebook & client ) final;

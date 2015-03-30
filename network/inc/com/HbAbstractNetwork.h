@@ -49,6 +49,9 @@ namespace hb
             HbAbstractNetwork( QObject * parent = nullptr );
             virtual ~HbAbstractNetwork() = default;
 
+            virtual bool connectToNetwork() = 0;
+            virtual void disconnectFromNetwork() = 0;
+
         private:
             HbNetworkConfig mConfig; // SUB
         };

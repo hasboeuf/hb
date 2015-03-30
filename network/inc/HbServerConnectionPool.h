@@ -40,7 +40,7 @@ namespace hb
             HbServerConnectionPool( const HbGeneralServerConfig & config );
             virtual ~HbServerConnectionPool();
 
-            virtual bool leave();
+            virtual bool leave() override;
 
             networkuid joinTcpServer( HbTcpServerConfig & config, bool main );
 
@@ -55,13 +55,13 @@ namespace hb
             // From services.
             void onSocketContractToSend( networkuid receiver, HbNetworkContract * contract );
             void onUserContractToSend  ( const HbNetworkUserInfo & user_info, HbNetworkContract * contract );
-            void onReadyContractToSend ( const HbNetworkContract * contract );
+            void onReadyContractToSend ( const HbNetworkContract * contract ) override;
             void onUserToKick  ( const HbNetworkUserInfo &user_info, netwint reason, const QString & description );
             void onSocketToKick( networkuid socket_uid, netwint reason, const QString & description );
 
             // From HbAuthService.
-            void onSocketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info );
-            void onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason );
+            void onSocketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info ) override;
+            void onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason ) override;
 
             // From HbPresenceService
             void onSocketLagged( networkuid socket_uid, quint16 last_presence, quint16 kick_threshold );

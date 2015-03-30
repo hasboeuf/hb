@@ -45,7 +45,6 @@ namespace hb
             virtual bool leave() final;
             virtual bool leave( networkuid uid ) final;
             virtual bool isReady() const final;
-            virtual HbNetworkProtocol::NetworkType type() const = 0;
 
             virtual bool send( ShConstHbNetworkContract contract );
 
@@ -56,12 +55,7 @@ namespace hb
         protected:
             HbAbstractServer( QObject * parent = nullptr );
 
-
-            virtual bool connectToNetwork() = 0;
-            virtual void disconnectFromNetwork() = 0;
             virtual bool isListening() const = 0; // From device.
-
-            virtual bool disconnectFromNetwork( networkuid uid ) = 0;
 
             virtual void reset();
 

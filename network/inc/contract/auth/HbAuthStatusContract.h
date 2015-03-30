@@ -39,10 +39,10 @@ namespace hb
             HbAuthStatusContract( const HbAuthStatusContract & source );
             HbAuthStatusContract & operator=( const HbAuthStatusContract & source );
 
-            HbAuthStatusContract * create() const;
+            HbAuthStatusContract * create() const override;
 
-            virtual bool read ( QDataStream & stream );
-            virtual bool write( QDataStream & stream ) const;
+            virtual bool read ( QDataStream & stream ) override;
+            virtual bool write( QDataStream & stream ) const override;
 
             void setStatus   ( HbNetworkProtocol::AuthStatus status );
             void setDescription( const QString & description );

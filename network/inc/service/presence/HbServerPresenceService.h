@@ -36,7 +36,7 @@ namespace hb
             HbServerPresenceService();
             virtual ~HbServerPresenceService() = default;
 
-            virtual void reset();
+            virtual void reset() override;
 
             const HbServicePresenceServerConfig & config() const;
             void setConfig( const HbServicePresenceServerConfig & config );
@@ -45,9 +45,9 @@ namespace hb
             void timerEvent( QTimerEvent * );
 
         public callbacks:
-            void onSocketAuthenticated  ( networkuid socket_uid );
-            void onSocketUnauthenticated( networkuid socket_uid );
-            void onContractReceived( const HbNetworkContract * contract );
+            void onSocketAuthenticated  ( networkuid socket_uid ) override;
+            void onSocketUnauthenticated( networkuid socket_uid ) override;
+            void onContractReceived( const HbNetworkContract * contract ) override;
 
         signals:
             void socketLagged( networkuid socket_uid, quint16 last_presence, quint16 kick_threshold );

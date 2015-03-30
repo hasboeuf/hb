@@ -38,18 +38,12 @@ namespace hb
 
             HbAuthService();
             virtual ~HbAuthService(){} // = default; TODO linux-g++ issue
-            virtual void reset() = 0;
-            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
-            virtual void plugContracts( HbNetworkExchanges & exchanges );
+            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
+            virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
 
         signals:
             void socketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info );
             void socketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason );
-
-        public callbacks:
-            virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
-            virtual void onSocketConnected   ( networkuid socket_uid ) = 0;
-            virtual void onSocketDisconnected( networkuid socket_uid ) = 0;
 
         protected:
 

@@ -50,12 +50,10 @@ namespace hb
             virtual const HbTcpServerConfig & configuration() const final;
 
         private:
-            virtual bool connectToNetwork();
-            virtual void disconnectFromNetwork();
-            virtual bool isListening() const;
-            virtual HbNetworkProtocol::NetworkType type() const;
-
-            bool disconnectFromNetwork( networkuid uid ); // Unused.
+            virtual bool connectToNetwork() override;
+            virtual void disconnectFromNetwork() override;
+            virtual bool isListening() const override;
+            virtual HbNetworkProtocol::NetworkType type() const override;
 
             virtual void reset() final;
 

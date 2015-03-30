@@ -39,15 +39,14 @@ namespace hb
 
         private:
 
-            bool connectToNetwork();
-            bool disconnectFromNetwork();
-            void deleteSocket();
+            bool connectToNetwork() override;
+            void disconnectFromNetwork() override;
+            void deleteSocket() override;
 
-            HbAbstractSocket * pendingConnection();
-            HbAbstractSocket * currentConnection() const;
+            HbAbstractSocket * pendingConnection() override;
+            HbAbstractSocket * currentConnection() const override;
 
         private:
-
             HbTcpSocket * mpSocket;
             HbTcpClientConfig mConfig;
         };

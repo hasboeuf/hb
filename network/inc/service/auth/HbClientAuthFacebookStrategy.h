@@ -40,13 +40,13 @@ namespace hb
             HbClientAuthFacebookStrategy() = default;
             virtual ~HbClientAuthFacebookStrategy() = default;
 
-            virtual void reset();
+            virtual void reset() override;
 
             void setConfig( const HbO2ClientConfig & config );
 
             virtual authstgy type() const final;
 
-            virtual bool prepareAuthContract( HbClientAuthLoginObject * login_object );
+            virtual bool prepareAuthContract( HbClientAuthLoginObject * login_object ) override;
 
         public slots:
             void onFacebookOpenBrower( const QUrl & url );

@@ -30,15 +30,11 @@ namespace hb
 
             HbChannelService();
             virtual ~HbChannelService() = default;
-            virtual void reset() = 0;
-            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const;
-            virtual void plugContracts( HbNetworkExchanges & exchanges ) = 0;
+
+            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
 
         public callbacks:
             virtual void onContractReceived    ( const HbNetworkContract * contract ) final;
-            virtual void onUserContractReceived( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract ) = 0;
-            virtual void onUserConnected       ( const HbNetworkUserInfo & user_info ) = 0;
-            virtual void onUserDisconnected    ( const HbNetworkUserInfo & user_info ) = 0;
 
         signals:
             void userContractToSend( const HbNetworkUserInfo & user, HbNetworkContract * contract );

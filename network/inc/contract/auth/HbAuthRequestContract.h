@@ -38,12 +38,12 @@ namespace hb
             HbAuthRequestContract( const HbAuthRequestContract & source );
             HbAuthRequestContract & operator=( const HbAuthRequestContract & source );
 
-            HbAuthRequestContract * create() const;
+            HbAuthRequestContract * create() const override;
 
             HbAuthStatusContract * reply() const;
 
-            virtual bool read ( QDataStream & stream );
-            virtual bool write( QDataStream & stream ) const;
+            virtual bool read ( QDataStream & stream ) override;
+            virtual bool write( QDataStream & stream ) const override;
 
             virtual authstgy type() const final;
             virtual void setType( authstgy type ) final;

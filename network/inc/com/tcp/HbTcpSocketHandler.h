@@ -31,13 +31,13 @@ namespace hb
             HbTcpSocketHandler( HbTcpServer * server );
             virtual ~HbTcpSocketHandler();
 
-            virtual HbTcpServer * server( ) const;
+            virtual HbTcpServer * server( ) const override;
 
             virtual void init();
             virtual void reset();
 
         public slots:
-            virtual void onNewPendingConnection( qint32 socket_descriptor );
+            virtual void onNewPendingConnection( qint32 socket_descriptor ) override;
 
         private:
             HbTcpServer * mpServer;

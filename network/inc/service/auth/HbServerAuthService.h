@@ -40,7 +40,7 @@ namespace hb
             HbServerAuthService();
             virtual ~HbServerAuthService();
 
-            virtual void reset();
+            virtual void reset() override;
             const HbServiceAuthServerConfig & config() const;
             void setConfig( const HbServiceAuthServerConfig & config );
 
@@ -55,9 +55,9 @@ namespace hb
 
         public callbacks:
             // From HbConnectionPool.
-            virtual void onContractReceived( const HbNetworkContract * contract );
-            virtual void onSocketConnected   ( networkuid socket_uid );
-            virtual void onSocketDisconnected( networkuid socket_uid );
+            virtual void onContractReceived( const HbNetworkContract * contract ) override;
+            virtual void onSocketConnected   ( networkuid socket_uid ) override;
+            virtual void onSocketDisconnected( networkuid socket_uid ) override;
             // From HbServerAuthStrategy.
             void onAuthSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info );
             void onAuthFailed ( networkuid socket_uid, HbNetworkProtocol::AuthStatus, const QString & description );

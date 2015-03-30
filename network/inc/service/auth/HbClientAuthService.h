@@ -41,16 +41,16 @@ namespace hb
             HbClientAuthService();
             virtual ~HbClientAuthService() = default;
 
-            virtual void reset();
+            virtual void reset() override;
             const HbServiceAuthClientConfig & config() const;
             void setConfig( const HbServiceAuthClientConfig & config );
 
             void addStrategy( HbClientAuthStrategy * strategy );
 
         public callbacks:
-            virtual void onContractReceived( const HbNetworkContract * contract );
-            virtual void onSocketConnected   ( networkuid socket_uid );
-            virtual void onSocketDisconnected( networkuid socket_uid );
+            virtual void onContractReceived( const HbNetworkContract * contract ) override;
+            virtual void onSocketConnected   ( networkuid socket_uid ) override;
+            virtual void onSocketDisconnected( networkuid socket_uid ) override;
 
             // From ClientConnectionPool.
             void onAuthRequested( HbClientAuthLoginObject * login_object );
