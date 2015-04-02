@@ -297,7 +297,16 @@
 # Target Settings
 # ----------------
 
-    contains( PROJECT.TYPE, app ): TEMPLATE = app
+    contains( PROJECT.TYPE, app ) {
+        TEMPLATE = app
+
+        isEmpty( PROJECT.ICON ) {
+            win32: RC_ICONS = $$clean_path( $$(HBDIR)/tools/resources/HbLogo.ico ) # Default HB icon.
+        } else: {
+            win32: RC_ICONS = $${PROJECT.ICON}
+        }
+    }
+
     contains( PROJECT.TYPE, dynlib|staticlib ): TEMPLATE = lib
     contains( PROJECT.TYPE, subdirs ): TEMPLATE = subdirs
 

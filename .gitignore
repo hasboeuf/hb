@@ -21,6 +21,7 @@ stable/
 lib/
 bin/
 CppDependOut
+*.rc
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
