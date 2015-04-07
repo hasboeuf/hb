@@ -18,7 +18,7 @@ PROJECT.TYPE = app
 # QT Settings
 # ------------
 
-QT *= gui widgets xml network script
+QT *= gui widgets xml network
 
 # -----------------
 # Modules Settings
