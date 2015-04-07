@@ -44,20 +44,19 @@ defineReplace( sysFilepath ) {
 
 defineTest( checkFilepath ) {
 
-	variable = $$1
-	filepaths = $$eval( $${variable} )
-	
-	for( filepath, filepaths ) {
-	
-		spaces = $$find( filepath, " " )
-		!isEmpty( spaces ): error( "$${PROJECT.PRO}: Path \"$${filepath}\" defined in ${$${variable}} shall not contains spaces" )
-	}
+        variable = $$1
+        filepaths = $$eval( $${variable} )
+
+        for( filepath, filepaths ) {
+
+                spaces = $$find( filepath, " " )
+                !isEmpty( spaces ): error( "$${PROJECT.PRO}: Path \"$${filepath}\" defined in ${$${variable}} shall not contains spaces" )
+        }
 }
 
 defineTest( isRelativePath ) {
 
-        message( $$QMAKE_PLATFORM )
-	filepath = $$first( $$1 )
+        filepath = $$first( $$1 )
 
         contains( QMAKE_HOST.os, Windows ){
             relative = $$find( filepath, ^[A-Za-z]:.* )
@@ -66,10 +65,10 @@ defineTest( isRelativePath ) {
             relative = $$find( filepath, ^/.* )
         }
 
-	isEmpty( relative ): relative = true
-	else: relative = false
+        isEmpty( relative ): relative = true
+        else: relative = false
 
-	return( $$relative )
+        return( $$relative )
 }
 
 
@@ -81,30 +80,30 @@ defineReplace( resolveVariable ) {
 
     string = $$eval( $$1 )
     variable = $$2
-    
+
     !isEmpty( variable ) {
-    
-		name = $$eval( $${variable}.name )
-		value = $$eval( $${variable}.value )
-	
-		!isEmpty( $${value} ): string = $$replace( string, %$${name}%, $$eval( $${value} ) )
-	}
-	
-	return( $${string} )
+
+                name = $$eval( $${variable}.name )
+                value = $$eval( $${variable}.value )
+
+                !isEmpty( $${value} ): string = $$replace( string, %$${name}%, $$eval( $${value} ) )
+        }
+
+        return( $${string} )
 }
 
 defineReplace( resolveVariables ) {
 
     string = $$eval( $$1 )
     variables = $$eval( PROJECT.VAR )
-    
-   	for( variable, variables ) {
-   		
-   		resolve = $$find( string, $${variable} )
-		!isEmpty( resolve ): string = $$resolveVariable( string, $${variable} )
-	}
- 	
-	return( $${string} )
+
+        for( variable, variables ) {
+
+                resolve = $$find( string, $${variable} )
+                !isEmpty( resolve ): string = $$resolveVariable( string, $${variable} )
+        }
+
+        return( $${string} )
 }
 
 
@@ -114,15 +113,15 @@ defineReplace( resolveVariables ) {
 
 defineReplace( replaceString ) {
 
-	string = $$eval( $$1 )
-	prepend = $$2
-	append = $$3
+        string = $$eval( $$1 )
+        prepend = $$2
+        append = $$3
 
-	!isEmpty( string ): for( item, string ) {
-		result += $$join( item,, $${prepend}, $${append} )
-	}
+        !isEmpty( string ): for( item, string ) {
+                result += $$join( item,, $${prepend}, $${append} )
+        }
 
-	return( $${result} )
+        return( $${result} )
 }
 
 defineReplace( fullTarget ) {

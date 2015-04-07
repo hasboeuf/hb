@@ -160,8 +160,7 @@
 
     BUILD.CONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
 
-    message("buildconfig=" $$BUILD.CONFIG)
-    message( config=$$CONFIG)
+
 
     CONFIG( debug, debug|release ): BUILD.MODE = debug
     CONFIG( release, debug|release ): BUILD.MODE = release
@@ -170,7 +169,9 @@
         error( "$${PROJECT.PRO}: Building mode cannot be resolved" )
     }
 
-        message( mode=$${BUILD.MODE})
+    message( build_config= $$BUILD.CONFIG )
+    message( config=$$CONFIG )
+    message( mode=$${BUILD.MODE} )
 
 # ---------------------
 # Modules Dependencies
@@ -194,7 +195,7 @@
             !include( $$MODULE_CONF_FILE ) {
                 error( "$${PROJECT.PRO}: Configuration file $${MODULE_CONF_FILE} not found" )
             } else {
-                message ( Configuration file $$MODULE_CONF_FILE loaded. )
+                message( Configuration file $$MODULE_CONF_FILE loaded. )
             }
 
             unset( MODULE_ENV_DIR )
@@ -251,8 +252,6 @@
 
             INCLUDEPATH *= $${PACKAGE_INC}
 
-            message( inc=$$INCLUDEPATH )
-
             DEPENDPATH *= $$clean_path( $${PACKAGE_BIN} )
 
             CONFIG( debug, debug|release ): PACKAGE_NAME = $$replaceString( PACKAGE_NAME,, d )
@@ -290,8 +289,9 @@
         resolveModuleDependency( $$LINKED_MODULE )
     }
 
+    message( inc=$$INCLUDEPATH )
     message( lib=$$LIBS )
-    message( Qt=$$QT )
+    message( qt=$$QT )
 
 # ----------------
 # Target Settings
@@ -389,7 +389,7 @@
     MOC_DIR = $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/moc/
     RCC_DIR = $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/qrc/
     UI_DIR = $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/uic/ # TODO est-ce utile de differencier par config?
-message( ui_dir=$$UI_DIR )
+
 # ---------------
 # Build Settings
 # ---------------
@@ -584,13 +584,10 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
 
 # Copy ui files.
 {
-message( UI FILES )
     contains( PROJECT_TYPE , dynlib|staticlib ) {
-message( UI FILES1 )
         UI_FILES = $$clean_path( $${PROJECT_UI}/ui_*.h )
-message( UI FILES1=$$UI_FILES)
+
         exists( $$UI_FILES ) {
-message( UI FILES2 )
             win32-g++: {
                 copy_ui.files = $$UI_FILES
                 copy_ui.path  = $$DELIVERY_INC
@@ -598,7 +595,7 @@ message( UI FILES2 )
                 INSTALLS *= copy_ui
             }
             win32-msvc*: {
-message( UI FILES3 )
+
                 QMAKE_POST_LINK += $${QMAKE_COPY} \
                                     \"$${UI_FILES}\" \
                                     \"$${DELIVERY_INC}/* )\" $$escape_expand(\n\t)
@@ -678,8 +675,8 @@ message( UI FILES3 )
 }
 
 # Debug
-win32-g++: message ( post_build=$$INSTALLS )
-win32-msvc*: message ( post_build=$$QMAKE_POST_LINK )
+#win32-g++: message( post_build=$$INSTALLS )
+#win32-msvc*: message( post_build=$$QMAKE_POST_LINK )
 
 
 # -------------------
