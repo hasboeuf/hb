@@ -1,5 +1,4 @@
 // Qt
-#include <QtCore/QDataStream>
 #include <QtCore/QIODevice>
 // Hb
 #include <HbLogService.h>

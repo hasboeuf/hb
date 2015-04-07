@@ -15,6 +15,7 @@
 #include <QtNetwork/QAbstractSocket>
 #include <QtCore/QQueue>
 #include <QtCore/QPointer>
+#include <QtCore/QDataStream>
 // Hb
 #include <HbGlobal.h>
 #include <core/HbUid.h>

@@ -20,7 +20,7 @@ HbLogTcpSocketInput::~HbLogTcpSocketInput()
 {
     // onDisconnected() handles the rest.
     foreach( QTcpSocket * client, mClients.values() )
-        q_assert_ptr( client )->close();    
+        q_assert_ptr( client )->close();
 
     mClients.clear();
 }

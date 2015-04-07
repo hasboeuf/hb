@@ -11,10 +11,12 @@
 
 /*! \file HbLogTcpSocketInput.h */
 
-#include <inputs/HbLogAbstractInput.h>
-
+// Qt
+#include <QtNetwork/QTcpServer>
+// Hb
 #include <HbGlobal.h>
-#include <QTcpServer>
+// Local
+#include <inputs/HbLogAbstractInput.h>
 
 namespace hb
 {
@@ -23,7 +25,7 @@ namespace hb
         class HbLogMessage;
 
 
-        /*! 
+        /*!
         * TODOC
         * \brief The %HbLogTcpSocketInput class defines a tcp server input.
         *

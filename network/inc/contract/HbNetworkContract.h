@@ -28,8 +28,6 @@ namespace hb
 {
     namespace network
     {
-        class HbNetworkHeader;
-
         /*!
          * TODOC
          */

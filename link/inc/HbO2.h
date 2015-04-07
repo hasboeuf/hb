@@ -15,6 +15,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QUrl>
 #include <QtCore/QHash>
+#include <QtCore/QDataStream>
 // Hb
 #include <HbGlobal.h>
 // Local

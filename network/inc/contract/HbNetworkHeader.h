@@ -11,6 +11,8 @@
 
 /*! \file HbNetworkHeader.h */
 
+// Qt
+#include <QtCore/QDataStream>
 // Hb
 #include <HbGlobal.h>
 // Local

@@ -11,6 +11,8 @@
 
 /*! \file HbLogContext.h */
 
+// Qt
+#include <QtCore/QDataStream>
 // Hb
 #include <HbLogger.h>
 

@@ -109,7 +109,7 @@ bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_
 
 void HbSocketHandler::onDisconnectionRequest( networkuid uid )
 {
-    
+
     HbAbstractSocket * socket = nullptr;
 
     { // Scoped mutex to avoid deadlock with onSocketDisconnected slot.

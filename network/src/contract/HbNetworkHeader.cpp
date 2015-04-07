@@ -1,5 +1,4 @@
 // Qt
-#include <QtCore/QDataStream>
 // Local
 #include <contract/HbNetworkHeader.h>
 

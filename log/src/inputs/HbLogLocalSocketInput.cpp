@@ -32,7 +32,7 @@ HbLogLocalSocketInput::HbLogLocalSocketInput( const QString & name ) :
 void HbLogLocalSocketInput::incomingConnection()
 {
     QLocalSocket * client = q_assert_ptr( nextPendingConnection() );
- 
+
     q_assert( connect( client, &QLocalSocket::disconnected, this,
         &HbLogLocalSocketInput::onClientDisconnected, Qt::UniqueConnection ) );
 

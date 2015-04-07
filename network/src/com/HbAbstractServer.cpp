@@ -1,5 +1,4 @@
 // Qt
-#include <QtCore/QDataStream>
 #include <QtCore/QSharedPointer>
 // Hb
 #include <HbLogService.h>

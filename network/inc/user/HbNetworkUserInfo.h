@@ -13,6 +13,7 @@
 
 // Qt
 #include <QtCore/QString>
+#include <QtCore/QDataStream>
 // Hb
 // Local
 #include <HbNetwork.h>

@@ -14,8 +14,9 @@
 // Qt
 #include <QtNetwork/QLocalServer>
 // Hb
-#include <inputs/HbLogAbstractInput.h>
 #include <HbGlobal.h>
+// Local
+#include <inputs/HbLogAbstractInput.h>
 
 namespace hb
 {
@@ -24,7 +25,7 @@ namespace hb
         class HbLogMessage;
 
 
-        /*! 
+        /*!
         * TODOC
         * \brief The %HbLogLocalSocketInput class defines a local server input.
         *
