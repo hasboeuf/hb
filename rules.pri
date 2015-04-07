@@ -133,7 +133,7 @@
     message( QMake-ing $${PROJECT.NAME} projects. )
     message( ------------------------------------ )
 
-    win32-msvc*|win32-g++|android-g++|linux-g++: {
+    win32-msvc*|win32-g++|android-g++|linux-g++|winphone: {
         message( "Compilator supported." )
     } else {
         error( "Compilator not supported." )
@@ -169,8 +169,8 @@
     isEmpty( BUILD.MODE ) {
         error( "$${PROJECT.PRO}: Building mode cannot be resolved" )
     }
-	
-	message( mode=$${BUILD.MODE})
+
+        message( mode=$${BUILD.MODE})
 
 # ---------------------
 # Modules Dependencies
@@ -380,7 +380,7 @@
     SUBDIRS *= .
     scanDirectories( SUBDIRS )
 }
-	
+
 # ----------------
 # Generated Files
 # ----------------
@@ -397,18 +397,18 @@ message( ui_dir=$$UI_DIR )
     !contains( PROJECT.TYPE, subdirs ) {
         contains( PROJECT.TYPE, app ): OUTPUT_DIR = bin/$${BUILD.CONFIG}
         contains( PROJECT.TYPE, staticlib ): OUTPUT_DIR = lib/$${BUILD.CONFIG}
-	contains( PROJECT.TYPE, dynlib ) {
+        contains( PROJECT.TYPE, dynlib ) {
                 OUTPUT_DIR = lib/$${BUILD.CONFIG}
                 OUTPUT_DIR_DLL = bin/$${BUILD.CONFIG}
-	}
-	
-	isEmpty( OUTPUT_DIR ) {
-		error( "$${PROJECT.PRO}: Project $${TARGET} output directory cannot be resolved" )
-	}
-	
+        }
+
+        isEmpty( OUTPUT_DIR ) {
+                error( "$${PROJECT.PRO}: Project $${TARGET} output directory cannot be resolved" )
+        }
+
         DESTDIR = $$clean_path( $${PROJECT.PATH}/$${OUTPUT_DIR}/ )
 
-	!isEmpty( OUTPUT_DIR_DLL ): DLLDESTDIR = $${PROJECT.PATH}/$${OUTPUT_DIR_DLL}/
+        !isEmpty( OUTPUT_DIR_DLL ): DLLDESTDIR = $${PROJECT.PATH}/$${OUTPUT_DIR_DLL}/
 
         TARGET = $${PROJECT.NAME}
         CONFIG( debug, debug|release ): TARGET = $$replaceString( TARGET,, d )
@@ -604,7 +604,7 @@ message( UI FILES3 )
                                     \"$${DELIVERY_INC}/* )\" $$escape_expand(\n\t)
             }
         }
-		
+
         unset( UI_FILES )
     }
 }

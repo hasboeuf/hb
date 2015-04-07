@@ -17,7 +17,7 @@
 #include <QtCore/QString>
 
 //! Check compilator compatibility.
-#if defined( Q_OS_WIN32 )
+#if defined( Q_OS_WIN32 ) || defined( Q_OS_WINPHONE) || defined ( Q_OS_WINRT )
 #   if !defined( Q_CC_MSVC ) && !defined( Q_CC_MINGW )
 #   error Windows compiler not supported
 #   endif

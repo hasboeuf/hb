@@ -39,7 +39,7 @@ LogViewerTab::LogViewerTab( qint32 id,
     mRerun        = rerun;
 
     if( rerun )
-    {    
+    {
         qpb_freeze->setEnabled( false );
     }
 
@@ -410,7 +410,7 @@ void LogViewerTab::onSaveAsClicked()
 
     for( qint32 row = 0; row < mModel.rowCount(); ++row )
     {
-        
+
         QStandardItem * item_level = mModel.item( row, COLUMN_LEVEL );
         QStandardItem * item_time  = mModel.item( row, COLUMN_TIME  );
         QStandardItem * item_owner = mModel.item( row, COLUMN_OWNER );
@@ -453,7 +453,7 @@ void LogViewerTab::onRowDoubleClicked( const QModelIndex & index )
 
     QStandardItem * item_line = mModel.item( index_source.row(), COLUMN_LINE );
     QStandardItem * item_file = mModel.item( index_source.row(), COLUMN_FILE );
-    
+
     qint32  line = item_line->data( Qt::DisplayRole ).toInt();
     QString file = item_file->data( Qt::DisplayRole ).toString();
 
@@ -482,7 +482,7 @@ void LogViewerTab::onRowDoubleClicked( const QModelIndex & index )
         dialog.setWindowTitle  ( QStringLiteral( "The file you want to open" ) );
         dialog.setTextValue    ( QStringLiteral( "File:" ) );
         dialog.setComboBoxItems( found_paths.values() );
-        
+
         if( dialog.exec() == QDialog::Accepted )
         {
             file_to_open = dialog.textValue();
@@ -508,6 +508,7 @@ void LogViewerTab::onRowDoubleClicked( const QModelIndex & index )
     cmd.replace( QLatin1String( "$(FILE)" ), file_to_open );
     cmd.replace( QLatin1String( "$(LINE)" ), QString::number( line ) );
 
+#ifndef QT_NO_PROCESS // Windows Phone.
     if( !QProcess::startDetached( cmd ) )
     {
         QMessageBox::critical( this,
@@ -515,6 +516,7 @@ void LogViewerTab::onRowDoubleClicked( const QModelIndex & index )
                                QStringLiteral( "Error while opening file." ),
                                QMessageBox::Ok );
     }
+#endif
 }
 
 void LogViewerTab::onCustomContextMenuRequested( const QPoint & pos )
@@ -597,7 +599,7 @@ QSet< QString > LogViewerTab::findAbsoluteFilePath( const QString & file_path, c
     {
         QString subdir_path = QStringLiteral( "%1%2/" )
             .arg( root_path_info.absoluteFilePath() ).arg( subdir );
-    
+
         file_path_found.unite( findAbsoluteFilePath( file_path, subdir_path ) );
     }
 
