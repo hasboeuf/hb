@@ -20,9 +20,6 @@ void HbLogService::subscribe()
 
         HbLogManager * manager = q_check_ptr( new HbLogManager() );
 
-        #if !defined( QT_NO_DEBUG )
-            manager->qtMessageHandler( true );
-        #endif
         msManager.setLocalData( manager );
     }
 }

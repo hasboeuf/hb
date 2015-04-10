@@ -25,7 +25,7 @@ HbLoggerPool * HbLogManager::msLoggerPool = nullptr;
 HbLogManager::HbLogManager() :
     QObject(), HbLogger()
 {
-   QMutexLocker locker( &msMutex );
+    QMutexLocker locker( &msMutex );
 
     if( ++msInstances == 1 )
     {
@@ -39,6 +39,10 @@ HbLogManager::HbLogManager() :
 
         msLoggerPool->moveToThread( msThreadPool );
         msThreadPool->start();
+
+#if !defined( QT_NO_DEBUG )
+        qtMessageHandler( true );
+#endif
     }
 
     mpInputs = q_check_ptr( new HbLoggerInputs( this ) );
@@ -56,6 +60,10 @@ HbLogManager::~HbLogManager()
 
     if( --msInstances == 0 )
     {
+#if !defined( QT_NO_DEBUG )
+        qtMessageHandler( false );
+#endif
+
         msThreadPool->exit();
         msThreadPool->wait();
 
