@@ -20,7 +20,6 @@ HbLogTcpSocketOutput::HbLogTcpSocketOutput( const QString & ip, quint32 port, Hb
         this, [this]( QAbstractSocket::SocketError )
         {
             fprintf(stderr, "%s\n", HbLatin1(errorString()));
-            QTimer::singleShot( 5000, this, SLOT( onReconnection() ) );
 
         }, Qt::UniqueConnection ) );
 
@@ -70,5 +69,5 @@ void HbLogTcpSocketOutput::onReconnection()
 
 void HbLogTcpSocketOutput::onDisconnected()
 {
-    QTimer::singleShot( 1000, this, SLOT( onReconnection() ) );
+    QTimer::singleShot( 5000, this, SLOT( onReconnection() ) );
 }
