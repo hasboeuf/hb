@@ -528,7 +528,8 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
         for( HEADER_DIR, SUBDIRS ) {
             HEADERS_TO_COPY = $$files( $$clean_path( $$PROJECT_INC/$$HEADER_DIR/*.h ) )
 
-            win32-g++: {
+            *-g++: {
+
                 !equals( HEADER_DIR, . ) {
                     suffix = _$$HEADER_DIR
                 } else { suffix = }
@@ -588,7 +589,7 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
         UI_FILES = $$clean_path( $${PROJECT_UI}/ui_*.h )
 
         exists( $$UI_FILES ) {
-            win32-g++: {
+            *-g++: {
                 copy_ui.files = $$UI_FILES
                 copy_ui.path  = $$DELIVERY_INC
 
@@ -611,7 +612,7 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
     contains( PROJECT_TYPE , dynlib|staticlib ) {
         FULLPATH_LIB = $$DESTDIR/$$fullTarget( PROJECT_NAME, staticlib ) # Force to staticlib to get .lib.
 
-        win32-g++ : {
+        *-g++ : {
             copy_lib.files = $$FULLPATH_LIB
             copy_lib.path  = $$DELIVERY_LIB
 
@@ -632,7 +633,7 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
     contains( PROJECT_TYPE, dynlib ) {
         FULLPATH_DLL = $$DESTDIR/$$fullTarget( PROJECT_NAME, dynlib )
 
-        win32-g++ : {
+        *-g++ : {
             copy_dll.files = $$FULLPATH_DLL
             copy_dll.path  = $$DELIVERY_BIN
 
@@ -658,7 +659,7 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
 {
     contains( PROJECT_TYPE, app ) {
         FULLPATH_BIN = $$DESTDIR/$$fullTarget( PROJECT_NAME, app )
-        win32-g++ : {
+        *-g++ : {
             copy_exe.files = $$FULLPATH_BIN
             copy_exe.path  = $$DELIVERY_BIN
 
