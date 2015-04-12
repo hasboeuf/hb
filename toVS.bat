@@ -1,1 +1,0 @@
-qmake HB.pro -tp vc -recursive
