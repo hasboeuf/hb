@@ -132,7 +132,7 @@ defineReplace( fullTarget ) {
         !contains( type, app|dynlib|staticlib ): \
             error( "$${PROJECT.PRO}: Project $${TARGET} must be of type app, dynlib or staticlib" )
 
-        win32-msvc*: {
+        *-msvc*: {
                 CONFIG( debug, debug|release ): target = $$replaceString( target,, d )
                 contains( type, app ): target = $$replaceString( target,, .exe )
                 contains( type, dynlib ): target = $$replaceString( target,, .dll )

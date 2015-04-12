@@ -116,6 +116,12 @@
         CONFIG += mobility
     }
 
+    contains( PROJECT.TYPE, app ):{
+        winphone|winrt: {
+            CONFIG += windeployqt
+        }
+    }
+
     contains( PROJECT.TYPE, dynlib ): CONFIG += shared
     contains( PROJECT.TYPE, staticlib ): CONFIG += static
     contains( PROJECT.TYPE, subdirs ): CONFIG += ordered no_empty_targets
@@ -541,7 +547,7 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
 
                 INSTALLS *= $${install_name}
             }
-            win32-msvc*: {
+            *-msvc*: {
                 for( HEADER_TO_COPY, HEADERS_TO_COPY ) {
                     QMAKE_POST_LINK += $${QMAKE_COPY} \
                                         \"$$HEADER_TO_COPY\" \
@@ -595,7 +601,7 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
 
                 INSTALLS *= copy_ui
             }
-            win32-msvc*: {
+            *-msvc*: {
 
                 QMAKE_POST_LINK += $${QMAKE_COPY} \
                                     \"$${UI_FILES}\" \
@@ -618,7 +624,7 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
 
             INSTALLS *= copy_lib
         }
-        win32-msvc* : {
+        *-msvc* : {
             QMAKE_POST_LINK += $${QMAKE_COPY} \
                                 \"$${FULLPATH_LIB}\" \
                                 \"$${DELIVERY_LIB}/*\" $$escape_expand(\n\t)
@@ -639,7 +645,7 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
 
             INSTALLS *= copy_dll
         }
-        win32-msvc* : {
+        *-msvc* : {
             FULLPATH_PDB = $$DESTDIR/$$replaceString( TARGET,, .pdb )
 
             QMAKE_POST_LINK += $${QMAKE_COPY} \
@@ -665,7 +671,7 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
 
             INSTALLS *= copy_exe
         }
-        win32-msvc* : {
+        *-msvc* : {
             QMAKE_POST_LINK += $${QMAKE_COPY} \
                                 \"$${FULLPATH_BIN}\" \
                                 \"$${DELIVERY_BIN}/*\" $$escape_expand(\n\t)
@@ -676,7 +682,7 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
 }
 
 # Debug
-#win32-g++: message( post_build=$$INSTALLS )
+#*-g++: message( post_build=$$INSTALLS )
 #win32-msvc*: message( post_build=$$QMAKE_POST_LINK )
 
 
