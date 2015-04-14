@@ -2,16 +2,20 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME =		HB
-MODULE.PATH =		../..
+MODULE.NAME = HB
+MODULE.PATH = ../..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID   =      network-server
-PROJECT.NAME =      HbNetworkServer
-PROJECT.TYPE =      app
+PROJECT.ID      = network-server
+PROJECT.NAME    = HbNetworkServer
+PROJECT.DIR     = network-server
+PROJECT.INTDIR  = network-example
+PROJECT.INSTALL = network-example
+PROJECT.QT      = gui widgets network
+PROJECT.TYPE    = app
 
 # ---------------
 # Debug Settings
@@ -21,13 +25,12 @@ PROJECT.TYPE =      app
 # QT Settings
 # ------------
 
-QT *= gui widgets network
 
 # -----------------
 # Modules Settings
 # -----------------
 
-HB  += tools log link network
+HB += network link log tools
 
 # ---------------
 # QMake Includes

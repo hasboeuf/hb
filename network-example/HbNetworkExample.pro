@@ -2,15 +2,15 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME =		HB
-MODULE.PATH =		..
+MODULE.NAME = HB
+MODULE.PATH = ..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.NAME =			HbNetworkExample
-PROJECT.TYPE =			subdirs
+PROJECT.NAME =            HbNetworkExample
+PROJECT.TYPE =            subdirs
 
 TEMPLATE = subdirs
 CONFIG += ordered

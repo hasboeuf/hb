@@ -11,15 +11,15 @@ error( "QMake file utils.pri not found" )
 
 isEmpty( MODULE.NAME ) {
 
-	MODULE.NAME = $$basename( _FILE_ )
-	MODULE.NAME = $$replace( MODULE.NAME, .pri, )
+    MODULE.NAME = $$basename( _FILE_ )
+    MODULE.NAME = $$replace( MODULE.NAME, .pri, )
 }
 
 !isEmpty( MODULE.PATH ) {
-	!isRelativePath( MODULE.PATH ) {
+    !isRelativePath( MODULE.PATH ) {
             error( "$$basename( _PRO_FILE_ ) : ${MODULE.PATH} must define a relative path" )
-	}
-	
+    }
+    
         MODULE.PATH = $${_PRO_FILE_PWD_}/$${MODULE.PATH}
 }
 else: MODULE.PATH = $${PWD}

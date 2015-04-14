@@ -1,6 +1,6 @@
-# -----------------
-# Platform Settings
-# -----------------
+# --------------------
+# Environment Settings
+# --------------------
 
 HB_NO_EXAMPLES = $$(HBNOEXAMPLES)
 isEmpty( HB_NO_EXAMPLES ) {
@@ -15,8 +15,8 @@ isEmpty( HB_NO_EXAMPLES ) {
 # Project Settings
 # -----------------
 
-PROJECT.NAME =			HB
-PROJECT.TYPE =			subdirs
+PROJECT.NAME =            HB
+PROJECT.TYPE =            subdirs
 
 SUBDIRS += \
     tools/HbTools.pro \
@@ -29,8 +29,6 @@ log.depends = tools
 plugin.depends = tools log
 link.depends = tools log
 network.depends = tools log link
-
-message(  value=$$HB_NO_EXAMPLES )
 
 isEmpty( HB_NO_EXAMPLES ) {
 
@@ -56,6 +54,7 @@ isEmpty( HB_NO_EXAMPLES ) {
 
 SUBDIRS += $$EXAMPLE_SUBDIRS
 
+unset( HB_NO_EXAMPLES )
 
 # ---------------
 # QMake Includes

@@ -2,16 +2,14 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME =		HB
-MODULE.PATH =		../..
+MODULE.NAME = HB
+MODULE.PATH = ../..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID   =      network-basic-common
-PROJECT.NAME =      HbNetworkBasicCommon
-PROJECT.TYPE =      staticlib
+PROJECT.ID      = network-basic-common
 
 # ---------------
 # Debug Settings
@@ -21,13 +19,11 @@ PROJECT.TYPE =      staticlib
 # QT Settings
 # ------------
 
-QT *= gui widgets network
-
 # -----------------
 # Modules Settings
 # -----------------
 
-HB  += tools log network
+HB += network log tools
 
 # ---------------
 # QMake Includes

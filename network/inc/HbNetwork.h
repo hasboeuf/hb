@@ -33,11 +33,15 @@ const size_t CLASS_SERVER   = 21; //!< Identifier for server uids class.
 const size_t CLASS_CONTRACT = 22; //!< Identifier for contract uids class.
 
 #if !defined( HB_NETWORK_DECL )
-#    if defined( HB_NETWORK_BUILD )
-#        define HB_NETWORK_DECL Q_DECL_EXPORT
-#    else
-#        define HB_NETWORK_DECL Q_DECL_IMPORT
-#    endif
+#   if defined( HB_SHARED )
+#       if defined( HB_NETWORK_SHARED )
+#           define HB_NETWORK_DECL Q_DECL_EXPORT
+#       else
+#           define HB_NETWORK_DECL Q_DECL_IMPORT
+#       endif
+#   else
+#       define HB_NETWORK_DECL
+#   endif
 #endif
 
 #endif // HBNETWORK_H

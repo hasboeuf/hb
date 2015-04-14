@@ -23,11 +23,15 @@ typedef quint16 loguid; //!< Integer range for log in/outputs.
 const size_t CLASS_LOG = 30; //!< Identifier for log in/output uids class.
 
 #if !defined( HB_LOG_DECL )
-#    if defined( HB_LOG_BUILD )
-#        define HB_LOG_DECL Q_DECL_EXPORT
-#    else
-#        define HB_LOG_DECL Q_DECL_IMPORT
-#    endif
+#   if defined( HB_SHARED )
+#       if defined( HB_LOG_SHARED )
+#           define HB_LOG_DECL Q_DECL_EXPORT
+#       else
+#           define HB_LOG_DECL Q_DECL_IMPORT
+#       endif
+#   else
+#       define HB_LOG_DECL
+#   endif
 #endif
 
 #endif // HBLOG_H

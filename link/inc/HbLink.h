@@ -16,11 +16,15 @@
  */
 
 #if !defined( HB_LINK_DECL )
-#    if defined( HB_LINK_BUILD )
-#        define HB_LINK_DECL Q_DECL_EXPORT
-#    else
-#        define HB_LINK_DECL Q_DECL_IMPORT
-#    endif
+#   if defined( HB_SHARED )
+#       if defined( HB_LINK_SHARED )
+#           define HB_LINK_DECL Q_DECL_EXPORT
+#       else
+#           define HB_LINK_DECL Q_DECL_IMPORT
+#       endif
+#   else
+#       define HB_LINK_DECL
+#   endif
 #endif
 
 #endif // HBLINK_H

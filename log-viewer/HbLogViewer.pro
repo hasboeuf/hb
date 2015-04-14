@@ -2,8 +2,8 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME =		HB
-MODULE.PATH =		..
+MODULE.NAME = HB
+MODULE.PATH = ..
 
 # -----------------
 # Project Settings
@@ -12,19 +12,19 @@ MODULE.PATH =		..
 PROJECT.ID   = log-viewer
 PROJECT.DIR  = log-viewer
 PROJECT.NAME = HbLogViewer
+PROJECT.QT   = widgets xml network
 PROJECT.TYPE = app
 
 # ------------
 # QT Settings
 # ------------
 
-QT *= widgets xml network
 
 # -----------------
 # Modules Settings
 # -----------------
 
-HB  += tools log
+HB += log tools
 
 # ---------------
 # QMake Includes

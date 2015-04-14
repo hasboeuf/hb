@@ -45,10 +45,15 @@
 
         unset( MODULE_CONF_FILE )
 
-        # Module install.
+        # Module requirements.
         MODULE.INSTALL = $$eval( $${MODULE.NAME}.INSTALL )
         isEmpty( MODULE.INSTALL ) {
             error( "Module install variable cannot be resolved" )
+        }
+
+        MODULE.LINKTYPE = $$eval( $${MODULE.NAME}.LINKTYPE )
+        isEmpty( MODULE.LINKTYPE ) {
+            error( "Module link type variable cannot be resolved" )
         }
     }
 
@@ -65,7 +70,7 @@
     isEmpty( PROJECT.NAME ): {
         error( "Project name must be defined." )
     }
-    # Project type
+    # Project type.
     isEmpty( PROJECT.TYPE ): {
         PROJECT.TYPE = $$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).TYPE )
     }
@@ -80,6 +85,10 @@
         # Project id.
         isEmpty( PROJECT.ID ): {
             error( "Project id must be defined." )
+        }
+        # Project Qt.
+        isEmpty( PROJECT.QT ): {
+            PROJECT.QT = $$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).QT )
         }
         # Project dir.
         isEmpty( PROJECT.DIR ): {
@@ -131,6 +140,7 @@
 # -----------
 
     QT *= core
+    QT *= $${PROJECT.QT}
 
 # -----------------------
 # Building Configuration
@@ -160,19 +170,25 @@
         win32-msvc*: QMAKE_LFLAGS *= /MACHINE:X86
     }
 
-    contains( QMAKE_HOST.ar-ch, x86_64 ) {
+    contains( QMAKE_HOST.arch, x86_64 ) {
         win32-msvc*: QMAKE_LFLAGS *= /MACHINE:X64
     }
 
+
     BUILD.CONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
-
-
+    contains( $${MODULE.NAME}.LINKTYPE, staticlib ){
+        BUILD.CONFIG = $$replaceString( BUILD.CONFIG,, _static )
+    }
 
     CONFIG( debug, debug|release ): BUILD.MODE = debug
     CONFIG( release, debug|release ): BUILD.MODE = release
 
     isEmpty( BUILD.MODE ) {
         error( "$${PROJECT.PRO}: Building mode cannot be resolved" )
+    }
+
+    contains( $${MODULE.NAME}.LINKTYPE, dynlib ):{
+        DEFINES += HB_SHARED
     }
 
     message( build_config= $$BUILD.CONFIG )
@@ -211,9 +227,10 @@
 
         isEmpty( MODULE_PATH ): error( Module path not defined.)
 
-        MODULE_INC =	$${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/inc
-        MODULE_LIB =    $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/lib
-        MODULE_BIN =    $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/bin
+        MODULE_LINKTYPE = $$eval( $${MODULE_NAME}.LINKTYPE )
+        MODULE_INC      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/inc
+        MODULE_LIB      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/lib
+        MODULE_BIN      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/bin
 
         PACKAGES = $$eval($$MODULE_NAME)
         for( PACKAGE, PACKAGES ) {
@@ -261,6 +278,7 @@
             DEPENDPATH *= $$clean_path( $${PACKAGE_BIN} )
 
             CONFIG( debug, debug|release ): PACKAGE_NAME = $$replaceString( PACKAGE_NAME,, d )
+            #contains( PACKAGE_TYPE, staticlib ): PACKAGE_NAME = $$replaceString( PACKAGE_NAME,, _static )
 
             LIBS *= -L$$clean_path( $${PACKAGE_BIN} )
             LIBS *= -L$$clean_path( $${PACKAGE_LIB} )
@@ -417,7 +435,8 @@
         !isEmpty( OUTPUT_DIR_DLL ): DLLDESTDIR = $${PROJECT.PATH}/$${OUTPUT_DIR_DLL}/
 
         TARGET = $${PROJECT.NAME}
-        CONFIG( debug, debug|release ): TARGET = $$replaceString( TARGET,, d )
+        CONFIG( debug, debug|release ):      TARGET = $$replaceString( TARGET,, d )
+        #contains( PROJECT.TYPE, staticlib ): TARGET = $$replaceString( TARGET,, _static )
     }
 
 # ---------------
@@ -616,7 +635,7 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
 # Copy lib file.
 {
     contains( PROJECT_TYPE , dynlib|staticlib ) {
-        FULLPATH_LIB = $$DESTDIR/$$fullTarget( PROJECT_NAME, staticlib ) # Force to staticlib to get .lib.
+        FULLPATH_LIB = $$DESTDIR/$$fullTarget( PROJECT_NAME, $$PROJECT_TYPE )
 
         *-g++ : {
             copy_lib.files = $$FULLPATH_LIB

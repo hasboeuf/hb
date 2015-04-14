@@ -2,8 +2,8 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME =		HB
-MODULE.PATH =		..
+MODULE.NAME = HB
+MODULE.PATH = ..
 
 # -----------------
 # Project Settings
@@ -18,7 +18,6 @@ SUBDIRS += core \
 # Qt Settings
 # ------------
 
-QT *=		gui widgets network
 
 # -----------------
 # Modules Settings
@@ -28,7 +27,7 @@ QT *=		gui widgets network
 # -------------
 # C++ Settings
 # -------------
-DEFINES += HB_TOOLS_BUILD
+DEFINES += HB_TOOLS_SHARED
 
 # -----------------
 # Install Settings

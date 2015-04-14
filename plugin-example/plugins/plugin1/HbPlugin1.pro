@@ -2,16 +2,20 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME =		HB
-MODULE.PATH =		../../..
+MODULE.NAME = HB
+MODULE.PATH = ../../..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID   =      plugin1
-PROJECT.NAME =		HbPlugin1
-PROJECT.TYPE =		dynlib
+PROJECT.ID      = plugin1
+PROJECT.NAME    = HbPlugin1
+PROJECT.DIR     = plugin1
+PROJECT.INTDIR  = plugin-example/plugins
+PROJECT.INSTALL = plugin-example/plugins
+PROJECT.QT      =
+PROJECT.TYPE    = dynlib
 
 OTHER_FILES += Plugin1.json
 
@@ -19,19 +23,17 @@ OTHER_FILES += Plugin1.json
 # Qt Settings
 # ------------
 
-QT *=
 CONFIG *= plugin
 
 # -----------------
 # Modules Settings
 # -----------------
 
-HB += tools plugin plugin-interfaces
+HB += plugin-interfaces plugin log tools
 
 # -------------
 # C++ Settings
 # -------------
-DEFINES +=
 
 # -----------------
 # Install Settings

@@ -2,18 +2,18 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME =		HB
-MODULE.PATH =		..
+MODULE.NAME = HB
+MODULE.PATH = ..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID   =      log
+PROJECT.ID = log
 
-SUBDIRS +=	inputs \
-                outputs \
-                gui
+SUBDIRS += inputs \
+           outputs \
+           gui
 
 EXCLUDED_HEADERS +=
 
@@ -21,18 +21,16 @@ EXCLUDED_HEADERS +=
 # Qt Settings
 # ------------
 
-QT *=		xml widgets network
-
 # -----------------
 # Modules Settings
 # -----------------
 
-HB +=		tools
+HB += tools
 
 # -------------
 # C++ Settings
 # -------------
-DEFINES += HB_LOG_BUILD
+DEFINES += HB_LOG_SHARED
 
 # -----------------
 # Install Settings

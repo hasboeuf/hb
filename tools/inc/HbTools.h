@@ -32,10 +32,14 @@ const size_t CLASS_DEFAULT = 0; //!< Default class identifier for uids.
 const size_t CLASS_REPLIES = 10; //!< Identifier for replies uids class.
 
 #if !defined( HB_TOOLS_DECL )
-#   if defined( HB_TOOLS_BUILD )
-#       define HB_TOOLS_DECL Q_DECL_EXPORT
+#   if defined( HB_SHARED )
+#       if defined( HB_TOOLS_SHARED )
+#           define HB_TOOLS_DECL Q_DECL_EXPORT
+#       else
+#           define HB_TOOLS_DECL Q_DECL_IMPORT
+#       endif
 #   else
-#       define HB_TOOLS_DECL Q_DECL_IMPORT
+#       define HB_TOOLS_DECL
 #   endif
 #endif
 

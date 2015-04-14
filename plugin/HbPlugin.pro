@@ -2,32 +2,30 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME =		HB
-MODULE.PATH =		..
+MODULE.NAME = HB
+MODULE.PATH = ..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID   =          plugin
+PROJECT.ID = plugin
 
 # ------------
 # Qt Settings
 # ------------
 
-QT *= gui widgets
-
 # -----------------
 # Modules Settings
 # -----------------
 
-HB += tools log
+HB += log tools
 
 # -------------
 # C++ Settings
 # -------------
 
-DEFINES += HB_PLUGIN_BUILD
+DEFINES += HB_PLUGIN_SHARED
 
 # -----------------
 # Install Settings

@@ -2,8 +2,8 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME =		HB
-MODULE.PATH =		..
+MODULE.NAME = HB
+MODULE.PATH = ..
 
 # -----------------
 # Project Settings
@@ -12,19 +12,19 @@ MODULE.PATH =		..
 PROJECT.ID   = link-example
 PROJECT.DIR  = link-example
 PROJECT.NAME = HbLinkExample
+PROJECT.QT   = gui widgets xml network
 PROJECT.TYPE = app
 
 # ------------
 # QT Settings
 # ------------
 
-QT *= gui widgets xml network
 
 # -----------------
 # Modules Settings
 # -----------------
 
-HB  += tools log link
+HB += link log tools
 
 # ---------------
 # QMake Includes

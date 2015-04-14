@@ -2,35 +2,33 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME =		HB
-MODULE.PATH =		..
+MODULE.NAME = HB
+MODULE.PATH = ..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID   =      link
+PROJECT.ID = link
 
-SUBDIRS +=  config \
-            facebook \
-            facebook/api
+SUBDIRS += config \
+           facebook \
+           facebook/api
 
 # ------------
 # Qt Settings
 # ------------
 
-QT *=		gui network
-
 # -----------------
 # Modules Settings
 # -----------------
 
-HB += tools log
+HB += log tools
 
 # -------------
 # C++ Settings
 # -------------
-DEFINES += HB_LINK_BUILD
+DEFINES += HB_LINK_SHARED
 
 # -----------------
 # Install Settings

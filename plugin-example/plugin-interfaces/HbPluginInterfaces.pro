@@ -2,28 +2,25 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME =		HB
-MODULE.PATH =		../..
+MODULE.NAME = HB
+MODULE.PATH = ../..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID   =      plugin-interfaces
-PROJECT.NAME =      HbPluginInterfaces
-PROJECT.TYPE =      staticlib
+PROJECT.ID = plugin-interfaces
 
 # ------------
 # Qt Settings
 # ------------
 
-QT *=
 
 # -----------------
 # Modules Settings
 # -----------------
 
-HB += tools plugin
+HB += plugin tools
 
 # -------------
 # C++ Settings

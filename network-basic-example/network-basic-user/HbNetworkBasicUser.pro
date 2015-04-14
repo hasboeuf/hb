@@ -2,16 +2,20 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME =		HB
-MODULE.PATH =		../..
+MODULE.NAME = HB
+MODULE.PATH = ../..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID   =      network-basic-user
-PROJECT.NAME =      HbNetworkBasicUser
-PROJECT.TYPE =      app
+PROJECT.ID      = network-basic-user
+PROJECT.NAME    = HbNetworkBasicUser
+PROJECT.DIR     = network-basic-user
+PROJECT.INTDIR  = network-basic-example
+PROJECT.INSTALL = network-basic-example
+PROJECT.QT      = gui widgets network
+PROJECT.TYPE    = app
 
 # ---------------
 # Debug Settings
@@ -21,13 +25,11 @@ PROJECT.TYPE =      app
 # QT Settings
 # ------------
 
-QT *= gui widgets network
-
 # -----------------
 # Modules Settings
 # -----------------
 
-HB  += tools log link network network-basic-common
+HB += network-basic-common network link log tools
 
 # ---------------
 # QMake Includes
