@@ -61,7 +61,7 @@ void HbLogTcpSocketOutput::processMessage( const HbLogMessage & message )
 
 void HbLogTcpSocketOutput::onReconnection()
 {
-    if( state() != QAbstractSocket::ConnectedState )
+    if( state() == QAbstractSocket::UnconnectedState )
     {
         connectToHost( mIp, mPort );
     }
