@@ -16,7 +16,7 @@ PROJECT.QT   = gui widgets xml network
 PROJECT.TYPE = app
 
 # ------------
-# QT Settings
+# Qt Settings
 # ------------
 
 

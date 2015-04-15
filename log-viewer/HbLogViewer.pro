@@ -16,7 +16,7 @@ PROJECT.QT   = widgets xml network
 PROJECT.TYPE = app
 
 # ------------
-# QT Settings
+# Qt Settings
 # ------------
 
 

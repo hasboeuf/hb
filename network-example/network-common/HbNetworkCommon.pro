@@ -22,7 +22,7 @@ PROJECT.TYPE    = staticlib
 # ---------------
 
 # ------------
-# QT Settings
+# Qt Settings
 # ------------
 
 

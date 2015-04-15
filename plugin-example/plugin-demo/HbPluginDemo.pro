@@ -18,7 +18,7 @@ PROJECT.QT      = gui widgets
 PROJECT.TYPE    = app
 
 # ------------
-# QT Settings
+# Qt Settings
 # ------------
 
 

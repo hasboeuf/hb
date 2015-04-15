@@ -16,7 +16,7 @@ PROJECT.ID      = network-basic-common
 # ---------------
 
 # ------------
-# QT Settings
+# Qt Settings
 # ------------
 
 # -----------------

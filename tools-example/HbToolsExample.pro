@@ -12,13 +12,13 @@ MODULE.PATH = ..
 PROJECT.ID   = tools-example
 PROJECT.DIR  = tools-example
 PROJECT.NAME = HbToolsExample
+PROJECT.QT   = gui widgets xml network
 PROJECT.TYPE = app
 
 # ------------
-# QT Settings
+# Qt Settings
 # ------------
 
-QT *= gui widgets xml network
 
 # -----------------
 # Modules Settings

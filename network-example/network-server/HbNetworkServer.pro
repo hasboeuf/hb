@@ -22,7 +22,7 @@ PROJECT.TYPE    = app
 # ---------------
 
 # ------------
-# QT Settings
+# Qt Settings
 # ------------
 
 

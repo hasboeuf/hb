@@ -176,7 +176,7 @@
 
 
     BUILD.CONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
-    contains( $${MODULE.NAME}.LINKTYPE, staticlib ){
+    contains( $${MODULE.NAME}.LINKTYPE, staticlib ) {
         BUILD.CONFIG = $$replaceString( BUILD.CONFIG,, _static )
     }
 
@@ -231,6 +231,10 @@
         MODULE_INC      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/inc
         MODULE_LIB      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/lib
         MODULE_BIN      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/bin
+        MODULE_CONFIG   = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
+        contains( $${MODULE_NAME}.LINKTYPE, staticlib ) {
+            MODULE_CONFIG = $$replaceString( MODULE_CONFIG,, _static )
+        }
 
         PACKAGES = $$eval($$MODULE_NAME)
         for( PACKAGE, PACKAGES ) {
@@ -261,8 +265,8 @@
             # External dependency
             else {
                 PACKAGE_INC = $${MODULE_INC}/$${PACKAGE_INSTALL}/$${PACKAGE_DIR}
-                PACKAGE_LIB = $${MODULE_LIB}/$${BUILD.CONFIG}/$${PACKAGE_INSTALL}/
-                PACKAGE_BIN = $${MODULE_BIN}/$${BUILD.CONFIG}/$${PACKAGE_INSTALL}/
+                PACKAGE_LIB = $${MODULE_LIB}/$${MODULE_CONFIG}/$${PACKAGE_INSTALL}/
+                PACKAGE_BIN = $${MODULE_BIN}/$${MODULE_CONFIG}/$${PACKAGE_INSTALL}/
             }
 
             *-g++: {
@@ -278,7 +282,6 @@
             DEPENDPATH *= $$clean_path( $${PACKAGE_BIN} )
 
             CONFIG( debug, debug|release ): PACKAGE_NAME = $$replaceString( PACKAGE_NAME,, d )
-            #contains( PACKAGE_TYPE, staticlib ): PACKAGE_NAME = $$replaceString( PACKAGE_NAME,, _static )
 
             LIBS *= -L$$clean_path( $${PACKAGE_BIN} )
             LIBS *= -L$$clean_path( $${PACKAGE_LIB} )
@@ -436,7 +439,6 @@
 
         TARGET = $${PROJECT.NAME}
         CONFIG( debug, debug|release ):      TARGET = $$replaceString( TARGET,, d )
-        #contains( PROJECT.TYPE, staticlib ): TARGET = $$replaceString( TARGET,, _static )
     }
 
 # ------------------------
@@ -465,6 +467,8 @@ defineTest( addCopyEvent ) {
                                 \"$$file\" \
                                 \"$$dest_path/* )\" $$escape_expand(\n\t)
         }
+
+        export( QMAKE_POST_LINK )
     }
 }
 
@@ -604,9 +608,11 @@ addCleanDirEvent( $$PROJECT_GENERATED )
             addCleanFileEvent( $$LIB_SOURCE )
             addCleanFileEvent( $$DELIVERY_LIB/$$LIB_NAME )
 
-            addCopyEvent( $$PDB_SOURCE, $$DELIVERY_BIN, copy_pdb )
-            addCleanFileEvent( $$PDB_SOURCE )
-            addCleanFileEvent( $$DELIVERY_BIN/$$PDB_NAME )
+            exists( $$PDB_SOURCE ) {
+                addCopyEvent( $$PDB_SOURCE, $$DELIVERY_BIN, copy_pdb )
+                addCleanFileEvent( $$PDB_SOURCE )
+                addCleanFileEvent( $$DELIVERY_BIN/$$PDB_NAME )
+            }
 
             unset( PDB_SOURCE )
             unset( PDB_NAME )
@@ -637,6 +643,7 @@ addCleanDirEvent( $$PROJECT_GENERATED )
 
 # Debug
 message( clean=$$QMAKE_CLEAN )
+message( post_copy=$$QMAKE_POST_LINK )
 #*-g++: message( post_build=$$INSTALLS )
 #win32-msvc*: message( post_build=$$QMAKE_POST_LINK )
 
