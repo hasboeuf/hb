@@ -439,145 +439,93 @@
         #contains( PROJECT.TYPE, staticlib ): TARGET = $$replaceString( TARGET,, _static )
     }
 
-# ---------------
-# Clean Settings
-# ---------------
+# ------------------------
+# Install & Clean Settings
+# ------------------------
 
-    defineTest( cleanFiles ) {
+defineTest( addCopyEvent ) {
 
-        files = $$1
-        basename = $$basename( files )
+    files        = $$1
+    dest_path    = $$clean_path( $$2 )
+    install_name = $$3
 
-        !isEmpty( basename ) {
+    *-g++: {
+        $${install_name}.files = $$files
+        $${install_name}.path  = $$clean_path( $$dest_path )
 
-            files = $$sysFilepath( $${files} )
+        INSTALLS *= $${install_name}
 
-            isEmpty( QMAKE_CLEAN ): QMAKE_CLEAN += $${files} $$escape_expand(\\n\\t)
-            else: QMAKE_CLEAN += -$(DEL_FILE) $${files} $$escape_expand(\\n\\t)
-
-            export( QMAKE_CLEAN )
+        export( $${install_name}.files )
+        export( $${install_name}.path )
+        export( INSTALLS )
+    }
+    *-msvc*: {
+        for( file, files ) {
+            QMAKE_POST_LINK += $${QMAKE_COPY} \
+                                \"$$file\" \
+                                \"$$dest_path/* )\" $$escape_expand(\n\t)
         }
     }
+}
 
-    defineTest( cleanDirectory ) {
+defineTest( addCleanFileEvent ) {
+    file = $$1
 
-        directory = $$clean_path($$1)
+    QMAKE_CLEAN *= $$file
+    export( QMAKE_CLEAN )
+}
 
-        exists($$directory)
-        {
+defineTest( addCleanDirEvent ) {
+    dir = $$1
 
-            directory = $$sysFilepath( $${directory} )
-            emptymode = $$2
+    QMAKE_CLEAN *= $$dir
+    export( QMAKE_CLEAN )
+}
 
-            #isEmpty( QMAKE_CLEAN ): QMAKE_CLEAN += null $$escape_expand(\\n\\t)
+# ------------------------
+# Install & Clean Settings
+# ------------------------
 
-            unix {
+# Local
+PROJECT_INC       = $$clean_path( $${PROJECT.PATH}/inc/ )
+PROJECT_UI        = $$UI_DIR
+PROJECT_TYPE      = $${PROJECT.TYPE}
+PROJECT_NAME      = $${PROJECT.NAME}
+PROJECT_DIR       = $$clean_path( $${PROJECT.DIR} )
+PROJECT_INSTALL   = $$clean_path( $${PROJECT.INSTALL} )
+PROJECT_LIB       = $$clean_path( $${PROJECT.PATH}/lib/$${BUILD.CONFIG}/ )
+PROJECT_BIN       = $$clean_path( $${PROJECT.PATH}/bin/$${BUILD.CONFIG}/ )
+PROJECT_GENERATED = $$clean_path( $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE} )
 
-                contains( emptymode, true ) {
+# Delivery
+DELIVERY_LIB      = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/lib/$${BUILD.CONFIG}/$${PROJECT_INSTALL} )
+DELIVERY_BIN      = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/bin/$${BUILD.CONFIG}/$${PROJECT_INSTALL} )
+DELIVERY_INC      = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/inc/$${PROJECT_INSTALL}/$${PROJECT_DIR} )
 
-                        QMAKE_CLEAN += @find $${directory} -type d -depth -empty -exec rmdir {}
-                        QMAKE_CLEAN += $$escape_expand(\\n\\t) -@$${QMAKE_DEL_DIR} $${directory}
-                }
+addCleanDirEvent( $$PROJECT_GENERATED )
 
-                else: QMAKE_CLEAN += -@$${QMAKE_DEL_FILE} -r $${directory}
-                QMAKE_CLEAN += $$escape_expand(\\n\\t)
-            }
-
-            win32 {
-
-                contains( emptymode, true ) {
-
-                    QMAKE_CLEAN += -@for /f %%f in (\' dir /b %%d ^| find /v /c \""\" \""\" \') do @if '%%f'=='0' rd /q %%d # Delete folder if empty
-                    #QMAKE_CLEAN += $$escape_expand(\\n\\t) -@$${QMAKE_DEL_DIR} $${directory} # Force to add \n in the makefile
-                }
-                else: QMAKE_CLEAN += -$${QMAKE_DEL_DIR} /s $${directory}
-                #QMAKE_CLEAN += $$escape_expand(\\n\\t)
-            }
-
-            export( QMAKE_CLEAN )
-        }
-    }
-
-    build_pass {
-
-        #cleanFiles( $${DESTDIR}/$${TARGET}.* )
-        #!isEmpty( DLLDESTDIR ): cleanFiles( $${DLLDESTDIR}/$${TARGET}.* )
-
-        cleanDirectory( $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/ )
-        #cleanDirectory( $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/, true )
-        #cleanDirectory( $${PROJECT.PATH}/generated/, true )
-
-        isEmpty( OUTPUT_DIR ) {
-
-            #cleanDirectory( $${DESTDIR}, true )
-            #!isEmpty( DLLDESTDIR ): cleanDirectory( $${DLLDESTDIR}/, true )
-        }
-
-        else {
-
-            #cleanDirectory( $${PROJECT.PATH}/$${OUTPUT_DIR}/, true )
-            #cleanDirectory( $${PROJECT.PATH}/$$dirname( OUTPUT_DIR )/, true )
-
-            !isEmpty( DLLDESTDIR ) {
-
-                #cleanDirectory( $${PROJECT.PATH}/$${OUTPUT_DIR_DLL}/, true )
-                #cleanDirectory( $${PROJECT.PATH}/$$dirname( OUTPUT_DIR_DLL )/, true )
-            }
-        }
-
-        #QMAKE_CLEAN += -$(DEL_FILE)
-    }
-
-# -----------------
-# Install Settings
-# -----------------
-
-# General variables.
-PROJECT_INC  = $$clean_path( $${PROJECT.PATH}/inc/ )
-PROJECT_UI   = $$UI_DIR
-PROJECT_LIB  = $$clean_path( $${PROJECT.PATH}/lib/$${BUILD.CONFIG}/ )
-PROJECT_BIN  = $$clean_path( $${PROJECT.PATH}/bin/$${BUILD.CONFIG}/ )
-PROJECT_TYPE = $${PROJECT.TYPE}
-PROJECT_NAME = $${PROJECT.NAME}
-PROJECT_DIR  = $${PROJECT.DIR}
-PROJECT_INSTALL = $${PROJECT.INSTALL}
-
-DELIVERY_INC = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/inc/$${PROJECT_INSTALL}/$${PROJECT_DIR} )
-DELIVERY_LIB = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/lib/$${BUILD.CONFIG}/$${PROJECT_INSTALL} )
-DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/bin/$${BUILD.CONFIG}/$${PROJECT_INSTALL} )
-
-# Copy header files.
+# HEADER FILES
 {
     contains( PROJECT_TYPE , dynlib|staticlib ) {
         # Copy all headers.
         for( HEADER_DIR, SUBDIRS ) {
             HEADERS_TO_COPY = $$files( $$clean_path( $$PROJECT_INC/$$HEADER_DIR/*.h ) )
 
-            *-g++: {
+            !equals( HEADER_DIR, . ) {
+                suffix = _$$clean_path( $$HEADER_DIR )
+            } else { suffix = }
 
-                !equals( HEADER_DIR, . ) {
-                    suffix = _$$HEADER_DIR
-                } else { suffix = }
+            install_name = copy_headers$$suffix
+            install_name = $$replace( install_name , /, _ ) # e.g.: copy_header_com/tcp to copy_header_com_tcp
 
-                install_name = copy_headers$$suffix
-
-                $${install_name}.files = $$HEADERS_TO_COPY
-                $${install_name}.path  = $$clean_path( $$DELIVERY_INC/$${HEADER_DIR} )
-
-                INSTALLS *= $${install_name}
-            }
-            *-msvc*: {
-                for( HEADER_TO_COPY, HEADERS_TO_COPY ) {
-                    QMAKE_POST_LINK += $${QMAKE_COPY} \
-                                        \"$$HEADER_TO_COPY\" \
-                                        \"$$clean_path( $$DELIVERY_INC/$${HEADER_DIR}/* )\" $$escape_expand(\n\t)
-                }
-            }
+            addCopyEvent( $$HEADERS_TO_COPY, $$clean_path( $$DELIVERY_INC/$$HEADER_DIR ), $$install_name )
 
             unset( HEADERS_TO_COPY )
         }
 
-        # Remove excluded headers.
+        addCleanDirEvent( $$DELIVERY_INC )
+
+        # Remove excluded headers. To be finished.
         for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) {
             !isRelativePath( EXCLUDED_HEADER ): \
                 error( "Excluded headers must define a relative path." )
@@ -608,101 +556,202 @@ DELIVERY_BIN = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/b
     }
 }
 
-# Copy ui files.
+# UI FILES
 {
     contains( PROJECT_TYPE , dynlib|staticlib ) {
         UI_FILES = $$clean_path( $${PROJECT_UI}/ui_*.h )
 
         exists( $$UI_FILES ) {
-            *-g++: {
-                copy_ui.files = $$UI_FILES
-                copy_ui.path  = $$DELIVERY_INC
-
-                INSTALLS *= copy_ui
-            }
-            *-msvc*: {
-
-                QMAKE_POST_LINK += $${QMAKE_COPY} \
-                                    \"$${UI_FILES}\" \
-                                    \"$${DELIVERY_INC}/* )\" $$escape_expand(\n\t)
-            }
+            addCopyEvent( $$UI_FILES, $$DELIVERY_INC, copy_ui )
         }
 
         unset( UI_FILES )
     }
 }
 
-# Copy lib file.
+# STATIC
 {
-    contains( PROJECT_TYPE , dynlib|staticlib ) {
-        FULLPATH_LIB = $$DESTDIR/$$fullTarget( PROJECT_NAME, $$PROJECT_TYPE )
+    contains( PROJECT_TYPE , staticlib ) {
+        LIB_NAME     = $$fullTarget( PROJECT_NAME, staticlib )
+        LIB_SOURCE   = $$PROJECT_LIB/$$LIB_NAME
 
-        *-g++ : {
-            copy_lib.files = $$FULLPATH_LIB
-            copy_lib.path  = $$DELIVERY_LIB
+        addCopyEvent( $$LIB_SOURCE, $$DELIVERY_LIB, copy_lib )
+        addCleanFileEvent( $$LIB_SOURCE )
+        addCleanFileEvent( $$DELIVERY_LIB/$$LIB_NAME )
 
-            INSTALLS *= copy_lib
-        }
-        *-msvc* : {
-            QMAKE_POST_LINK += $${QMAKE_COPY} \
-                                \"$${FULLPATH_LIB}\" \
-                                \"$${DELIVERY_LIB}/*\" $$escape_expand(\n\t)
-        }
-
-        unset( FULLPATH_LIB )
+        unset( LIB_SOURCE )
+        unset( LIB_NAME )
     }
 }
 
-# Copy dll and pdb file.
+# DYNAMIC
 {
     contains( PROJECT_TYPE, dynlib ) {
-        FULLPATH_DLL = $$DESTDIR/$$fullTarget( PROJECT_NAME, dynlib )
+        DLL_NAME   = $$fullTarget( PROJECT_NAME, dynlib )
+        DLL_SOURCE = $$DESTDIR/$$DLL_NAME
 
-        *-g++ : {
-            copy_dll.files = $$FULLPATH_DLL
-            copy_dll.path  = $$DELIVERY_BIN
+        addCopyEvent( $$DLL_SOURCE, $$DELIVERY_BIN, copy_dll )
+        addCleanFileEvent( $$DLL_SOURCE )
+        addCleanFileEvent( $$DELIVERY_BIN/$$DLL_NAME )
 
-            INSTALLS *= copy_dll
+        *-msvc*: {
+            LIB_NAME   = $$fullTarget( PROJECT_NAME, staticlib )
+            LIB_SOURCE = $$PROJECT_LIB/$$LIB_NAME
+            PDB_NAME   = $$replaceString( TARGET,, .pdb )
+            PDB_SOURCE = $$DESTDIR/$$PDB_NAME
+
+            addCopyEvent( $$LIB_SOURCE, $$DELIVERY_LIB, copy_import )
+            addCleanFileEvent( $$LIB_SOURCE )
+            addCleanFileEvent( $$DELIVERY_LIB/$$LIB_NAME )
+
+            addCopyEvent( $$PDB_SOURCE, $$DELIVERY_BIN, copy_pdb )
+            addCleanFileEvent( $$PDB_SOURCE )
+            addCleanFileEvent( $$DELIVERY_BIN/$$PDB_NAME )
+
+            unset( PDB_SOURCE )
+            unset( PDB_NAME )
+            unset( LIB_SOURCE )
+            unset( LIB_NAME )
         }
-        *-msvc* : {
-            FULLPATH_PDB = $$DESTDIR/$$replaceString( TARGET,, .pdb )
 
-            QMAKE_POST_LINK += $${QMAKE_COPY} \
-                                \"$${FULLPATH_DLL}\" \
-                                \"$${DELIVERY_BIN}/*\" $$escape_expand(\n\t)
 
-            QMAKE_POST_LINK += $${QMAKE_COPY} \
-                                \"$${FULLPATH_PDB}\" \
-                                \"$${DELIVERY_BIN}/*\" $$escape_expand(\n\t)
-        }
-
-        unset( FULLPATH_DLL )
+        unset( DLL_SOURCE )
+        unset( DLL_NAME )
     }
 }
 
-# Copy exe file.
+# BINARY FILES
 {
     contains( PROJECT_TYPE, app ) {
-        FULLPATH_BIN = $$DESTDIR/$$fullTarget( PROJECT_NAME, app )
-        *-g++ : {
-            copy_exe.files = $$FULLPATH_BIN
-            copy_exe.path  = $$DELIVERY_BIN
+        BIN_NAME   = $$fullTarget( PROJECT_NAME, app )
+        BIN_SOURCE = $$DESTDIR/$$BIN_NAME
 
-            INSTALLS *= copy_exe
-        }
-        *-msvc* : {
-            QMAKE_POST_LINK += $${QMAKE_COPY} \
-                                \"$${FULLPATH_BIN}\" \
-                                \"$${DELIVERY_BIN}/*\" $$escape_expand(\n\t)
-        }
+        addCopyEvent( $$BIN_SOURCE, $$DELIVERY_BIN, copy_exe )
+        addCleanFileEvent( $$BIN_SOURCE )
+        addCleanFileEvent( $$DELIVERY_BIN/$$BIN_NAME )
 
-        unset( FULLPATH_BIN )
+        unset( BIN_SOURCE )
+        unset( BIN_NAME )
     }
 }
 
 # Debug
+message( clean=$$QMAKE_CLEAN )
 #*-g++: message( post_build=$$INSTALLS )
 #win32-msvc*: message( post_build=$$QMAKE_POST_LINK )
+
+unset( PROJECT_INC       )
+unset( PROJECT_UI        )
+unset( PROJECT_LIB       )
+unset( PROJECT_BIN       )
+unset( PROJECT_GENERATED )
+unset( PROJECT_TYPE      )
+unset( PROJECT_NAME      )
+unset( PROJECT_DIR       )
+unset( PROJECT_INSTALL   )
+unset( DELIVERY_INC      )
+unset( DELIVERY_LIB      )
+unset( DELIVERY_BIN      )
+
+# ---------------
+# Clean Settings
+# ---------------
+
+
+#    message( CLEAN += $$PROJECT_LIB )
+#    message( CLEAN += $$PROJECT_BIN )
+#    message( CLEAN += $$DELIVERY_LIB )
+#    message( CLEAN += $$DELIVERY_BIN )
+#    message( CLEAN += $$PROJECT_GENERATED )
+#
+#    defineTest( cleanFiles ) {
+#
+#        files = $$1
+#        basename = $$basename( files )
+#
+#        !isEmpty( basename ) {
+#
+#            files = $$sysFilepath( $${files} )
+#
+#            isEmpty( QMAKE_CLEAN ): QMAKE_CLEAN += $${files} $$escape_expand(\\n\\t)
+#            else: QMAKE_CLEAN += -$(DEL_FILE) $${files} $$escape_expand(\\n\\t)
+#
+#            export( QMAKE_CLEAN )
+#        }
+#    }
+#
+#    defineTest( cleanDirectory ) {
+#
+#        directory = $$clean_path($$1)
+#
+#        exists($$directory)
+#        {
+#
+#            directory = $$sysFilepath( $${directory} )
+#            emptymode = $$2
+#
+#            #isEmpty( QMAKE_CLEAN ): QMAKE_CLEAN += null $$escape_expand(\\n\\t)
+#
+#            unix {
+#
+#                contains( emptymode, true ) {
+#
+#                        QMAKE_CLEAN += @find $${directory} -type d -depth -empty -exec rmdir {}
+#                        QMAKE_CLEAN += $$escape_expand(\\n\\t) -@$${QMAKE_DEL_DIR} $${directory}
+#                }
+#
+#                else: QMAKE_CLEAN += -@$${QMAKE_DEL_FILE} -r $${directory}
+#                QMAKE_CLEAN += $$escape_expand(\\n\\t)
+#            }
+#
+#            win32 {
+#
+#                contains( emptymode, true ) {
+#
+#                    QMAKE_CLEAN += -@for /f %%f in (\' dir /b %%d ^| find /v /c \""\" \""\" \') do @if '%%f'=='0' rd /q %%d # Delete folder if empty
+#                    #QMAKE_CLEAN += $$escape_expand(\\n\\t) -@$${QMAKE_DEL_DIR} $${directory} # Force to add \n in the makefile
+#                }
+#                else: QMAKE_CLEAN += -$${QMAKE_DEL_DIR} /s $${directory}
+#                #QMAKE_CLEAN += $$escape_expand(\\n\\t)
+#            }
+#
+#            export( QMAKE_CLEAN )
+#        }
+#    }
+#
+#    build_pass {
+#
+#        #cleanFiles( $${DESTDIR}/$${TARGET}.* )
+#        #!isEmpty( DLLDESTDIR ): cleanFiles( $${DLLDESTDIR}/$${TARGET}.* )
+#
+#        #cleanDirectory( $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/ )
+#        #cleanDirectory( $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/, true )
+#        #cleanDirectory( $${PROJECT.PATH}/generated/, true )
+#
+#        isEmpty( OUTPUT_DIR ) {
+#
+#            #cleanDirectory( $${DESTDIR}, true )
+#            #!isEmpty( DLLDESTDIR ): cleanDirectory( $${DLLDESTDIR}/, true )
+#        }
+#
+#        else {
+#
+#            #cleanDirectory( $${PROJECT.PATH}/$${OUTPUT_DIR}/, true )
+#            #cleanDirectory( $${PROJECT.PATH}/$$dirname( OUTPUT_DIR )/, true )
+#
+#            !isEmpty( DLLDESTDIR ) {
+#
+#                #cleanDirectory( $${PROJECT.PATH}/$${OUTPUT_DIR_DLL}/, true )
+#                #cleanDirectory( $${PROJECT.PATH}/$$dirname( OUTPUT_DIR_DLL )/, true )
+#            }
+#        }
+#
+#        #QMAKE_CLEAN += -$(DEL_FILE)
+#    }
+#
+#    unset( PROJECT_GENERATED )
+
+
 
 
 # -------------------

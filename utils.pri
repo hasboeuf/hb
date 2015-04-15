@@ -11,23 +11,23 @@ PROJECT.PRO = $$basename( _PRO_FILE_ )
 unix {
 
 #    QMAKE_COPY            = cp -f
-#    QMAKE_COPY_FILE            = $(COPY)
-#    QMAKE_COPY_DIR            = $(COPY) -r
+#    QMAKE_COPY_FILE       = $(COPY)
+#    QMAKE_COPY_DIR        = $(COPY) -r
 #    QMAKE_MOVE            = mv -f
-#    QMAKE_DEL_FILE            = rm -f
-#    QMAKE_DEL_DIR            = rmdir
-#    QMAKE_MKDIR            = mkdir -p
+#    QMAKE_DEL_FILE        = rm -f
+#    QMAKE_DEL_DIR         = rmdir
+#    QMAKE_MKDIR           = mkdir -p
 }
 
 win32 {
 
-        QMAKE_COPY        = xcopy /s /f /y /i #copy /y
-#    QMAKE_COPY_FILE        = $(COPY)
-        QMAKE_COPY_DIR          = xcopy /s /f /y /i
-#    QMAKE_MOVE              = move
-        QMAKE_MKDIR             = mkdir
-        QMAKE_DEL_FILE          = del /f /q        # QMAKE_DEL_FILE = del
-        QMAKE_DEL_DIR           = rmdir /q        # QMAKE_DEL_DIR = rmdir
+    QMAKE_COPY              = xcopy /s /f /y /i #copy /y
+    #QMAKE_COPY_FILE         = $(COPY)
+    QMAKE_COPY_DIR          = xcopy /s /f /y /i
+    #QMAKE_MOVE              = move
+    QMAKE_MKDIR             = mkdir
+    QMAKE_DEL_FILE          = del /f /q
+    QMAKE_DEL_DIR           = rmdir /q /s
 }
 
 # -------------------------
