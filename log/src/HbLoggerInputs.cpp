@@ -12,6 +12,10 @@ HbLoggerInputs::HbLoggerInputs( HbLogManager * parent ) :
     mpPool = parent->pool();
 }
 
+loguid HbLoggerInputs::addUdpSocketInput( const QString & ip, quint16 port, QString * error )
+{
+    return mpPool->addUdpSocketInput( ip, port, error );
+}
 
 loguid HbLoggerInputs::addTcpSocketInput( quint16 port, QString * error )
 {

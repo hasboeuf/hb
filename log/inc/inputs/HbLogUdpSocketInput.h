@@ -6,15 +6,13 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBLOGTCPSOCKETINPUT_H
-#define HBLOGTCPSOCKETINPUT_H
+#ifndef HBLOGUDPSOCKETINPUT_H
+#define HBLOGUDPSOCKETINPUT_H
 
-/*! \file HbLogTcpSocketInput.h */
+/*! \file HbLogUdpSocketInput.h */
 
 // Qt
-#include <QtNetwork/QTcpServer>
-// Hb
-#include <HbGlobal.h>
+#include <QtNetwork/QUdpSocket>
 // Local
 #include <inputs/HbLogAbstractInput.h>
 
@@ -24,45 +22,39 @@ namespace hb
     {
         class HbLogMessage;
 
-
-        /*!
+        /*! 
         * TODOC
-        * \brief The %HbLogTcpSocketInput class defines a tcp server input.
-        *
-        * %HbLogTcpSocketInput inherits from HbLogAbstractInput.\n
         */
-        class HbLogTcpSocketInput final : public QTcpServer, public HbLogAbstractInput
+        class HbLogUdpSocketInput final : public QUdpSocket, public HbLogAbstractInput
         {
             Q_OBJECT
-            Q_DISABLE_COPY( HbLogTcpSocketInput )
+            Q_DISABLE_COPY( HbLogUdpSocketInput )
 
 
         public:
 
-            HbLogTcpSocketInput() = delete;
-            HbLogTcpSocketInput( quint32 port );
-            virtual ~HbLogTcpSocketInput();
+            HbLogUdpSocketInput() = delete;
+            HbLogUdpSocketInput( const QString & ip, quint32 port );
+            virtual ~HbLogUdpSocketInput();
 
+            const QString & ip() const;
             quint32 port() const;
+
+        private:
+            void onReconnection();
 
         signals:
             void inputMessageReceived( HbLogMessage * message );
 
-        private:
-            void incomingConnection( qint32 descriptor );
-
         private callbacks:
-
             void onReadyRead();
-            void onClientDisconnected();
 
         private:
-            quint32 mPort;
             qint32  mAvailable;
-            QSet< QTcpSocket * > mClients;
+            QString mIp;
+            quint32 mPort;
         };
     }
 }
 
-#endif
-
+#endif // HBLOGUDPSOCKETINPUT_H

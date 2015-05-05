@@ -53,6 +53,7 @@ namespace hb
             HbLoggerPool( QThread * thread );
             virtual ~HbLoggerPool();
 
+            loguid addUdpSocketInput  ( const QString & ip, quint16 port, QString * error );
             loguid addTcpSocketInput  ( quint16 port, QString * error );
             loguid addLocalSocketInput( const QString & name, QString * error );
             bool   removeInput        ( loguid uid, QString * error );
@@ -60,6 +61,7 @@ namespace hb
             loguid addConsoleOutput    ( QString * error );
             loguid addGuiOutput        ( HbLogGuiNotifier * notifier, QString * error );
             loguid addFileOutput       ( const QString & path, quint32 max_size, QString * error );
+            loguid addUdpSocketOutput  ( quint16 port, QString * error );
             loguid addTcpSocketOutput  ( const QString & ip, quint16 port, QString * error );
             loguid addLocalSocketOutput( const QString & name, QString * error );
             bool   removeOutput        ( loguid uid, QString * error );

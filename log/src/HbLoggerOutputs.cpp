@@ -27,6 +27,11 @@ loguid HbLoggerOutputs::addFileOutput(const QString & dir, quint32 max_size, QSt
     return mpPool->addFileOutput( dir, max_size, error );
 }
 
+loguid HbLoggerOutputs::addUdpSocketOutput( quint16 port, QString * error )
+{
+    return mpPool->addUdpSocketOutput( port, error );
+}
+
 loguid HbLoggerOutputs::addTcpSocketOutput( const QString & ip, quint16 port, QString * error )
 {
     return mpPool->addTcpSocketOutput( ip, port, error );

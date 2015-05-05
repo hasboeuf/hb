@@ -31,7 +31,8 @@ namespace hb
                 OUTPUT_GUI           = 1,
                 OUTPUT_FILE          = 2,
                 OUTPUT_LOCAL_SOCKET  = 3,
-                OUTPUT_TCP_SOCKET    = 4
+                OUTPUT_TCP_SOCKET    = 4,
+                OUTPUT_UDP_SOCKET    = 5
             };
 
         public:

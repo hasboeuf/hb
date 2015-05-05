@@ -60,6 +60,7 @@ namespace hb
              * Usage:
              * -hblog-(output|input)-local:name
              * -hblog-(output|input)-tcp:port[:ip]
+             * -hblog-(output|input)-udp:port[:ip]
              * -hblog-output-file:dir:file_max_size
              */
             static void processArgs( QStringList args );

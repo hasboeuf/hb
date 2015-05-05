@@ -28,12 +28,11 @@ namespace hb
             enum InputType : qint16
             {
                 INPUT_LOCAL_SOCKET  = 0,
-                INPUT_TCP_SOCKET    = 1
+                INPUT_TCP_SOCKET    = 1,
+                INPUT_UDP_SOCKET    = 2
             };
 
-
         public:
-
             virtual InputType type() const = 0;
 
         protected:

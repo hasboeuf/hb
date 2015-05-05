@@ -61,6 +61,14 @@ namespace hb
             loguid addFileOutput( const QString & dir, quint32 max_size = 0, QString * error = nullptr );
 
             /*!
+             * Request to add a udp socket output.
+             * \param port Port to connect.
+             * \param error Error description in case of failure.
+             * \return Output uid, 0 on failure.
+             */
+            loguid addUdpSocketOutput( quint16 port, QString * error = nullptr );
+
+            /*!
              * Request to add a tcp socket output.
              * \param ip Ip of the log server.
              * \param port Server port to connect.
