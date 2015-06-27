@@ -58,7 +58,7 @@ namespace hb
 
         private:
             quint32 mPort;
-            qint32  mAvailable;
+            qint32  mExpected;
             QSet< QTcpSocket * > mClients;
         };
     }

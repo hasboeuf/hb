@@ -56,7 +56,7 @@ namespace hb
 
         private:
             QString mName;
-            qint32 mAvailable;
+            qint32 mExpected;
             QSet< QLocalSocket * > mClients;
         };
     }

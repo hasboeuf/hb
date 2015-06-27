@@ -50,7 +50,7 @@ namespace hb
             void onReadyRead();
 
         private:
-            qint32  mAvailable;
+            qint32  mExpected;
             QString mIp;
             quint32 mPort;
         };

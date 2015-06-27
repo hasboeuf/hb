@@ -24,6 +24,6 @@ quint32 HbLogUdpSocketOutput::port() const
 
 void HbLogUdpSocketOutput::processMessage( const HbLogMessage & message )
 {
-    /*qint64 written = writeDatagram( message.toByteArray(), QHostAddress( QHostAddress::LocalHost ), mPort );
-    flush();*/
+    writeDatagram( message.toByteArray(), QHostAddress( QHostAddress::LocalHost ), mPort );
+    flush();
 }

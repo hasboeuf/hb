@@ -80,8 +80,18 @@ loguid HbLoggerPool::addUdpSocketInput( const QString & ip, quint16 port, QStrin
     {
         HbLogUdpSocketInput * input = q_check_ptr( new HbLogUdpSocketInput( ip, port ) );
         input->moveToThread( thread() );
+
+        q_assert( connect( input, &HbLogUdpSocketInput::inputMessageReceived, this,
+            [this]( HbLogMessage * message )
+        {
+            mInputsStream.push_back( q_assert_ptr( message ) );
+        }, Qt::UniqueConnection ) );
+
         mInputs.insert( input->uid(), input );
+
         return input->uid();
+
+
     }
 
     if( error )

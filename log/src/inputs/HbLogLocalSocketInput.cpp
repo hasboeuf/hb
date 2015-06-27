@@ -11,7 +11,7 @@ using namespace hb::log;
 HbLogLocalSocketInput::HbLogLocalSocketInput( const QString & name ) :
     QLocalServer(), HbLogAbstractInput( INPUT_LOCAL_SOCKET )
 {
-    mAvailable = 0;
+    mExpected = 0;
 
     setSocketOptions( QLocalServer::UserAccessOption );
 
@@ -49,22 +49,22 @@ void HbLogLocalSocketInput::onReadyRead()
 
     do
     {
-        if( !mAvailable )
+        if( !mExpected )
         {
             if( socket->bytesAvailable() < sizeof( qint32 ) )
                  return;
 
-            stream >> mAvailable;
+            stream >> mExpected;
         }
 
-        if( socket->bytesAvailable() < mAvailable )
+        if( socket->bytesAvailable() < mExpected )
             return;
 
         HbLogMessage * message = q_check_ptr( new HbLogMessage() );
         message->fromDataStream( stream );
         emit inputMessageReceived( message );
 
-        mAvailable = 0;
+        mExpected = 0;
     }
 
     while( socket->bytesAvailable() > 0 );

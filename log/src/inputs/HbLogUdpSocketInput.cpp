@@ -12,7 +12,7 @@ HbLogUdpSocketInput::HbLogUdpSocketInput( const QString & ip, quint32 port ) :
 {
     mIp = ip;
     mPort = port;
-    mAvailable = 0;
+    mExpected = 0;
     
     q_assert( connect( this, &QUdpSocket::readyRead, this,
         &HbLogUdpSocketInput::onReadyRead, Qt::UniqueConnection ) );
@@ -52,27 +52,17 @@ void HbLogUdpSocketInput::onReconnection()
 
 void HbLogUdpSocketInput::onReadyRead()
 {
-    /*QDataStream stream( this );
-
     do
     {
-        if( !mAvailable )
-        {
-            if( pendingDatagramSize() < sizeof( qint32 ) )
-                 return;
-
-            stream >> mAvailable;
-        }
-
-        if( pendingDatagramSize() < mAvailable )
-            return;
+        QByteArray datagram( pendingDatagramSize(), 0 );
+        readDatagram( datagram.data(), datagram.size() );
+        QDataStream stream( datagram );
+        stream >> mExpected;
 
         HbLogMessage * message = q_check_ptr( new HbLogMessage() );
         message->fromDataStream( stream );
         emit inputMessageReceived( message );
-
-        mAvailable = 0;
     }
-    while( hasPendingDatagrams() );*/
+    while( hasPendingDatagrams() );
 }
 

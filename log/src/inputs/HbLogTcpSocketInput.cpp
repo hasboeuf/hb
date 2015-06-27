@@ -10,7 +10,7 @@ using namespace hb::log;
 HbLogTcpSocketInput::HbLogTcpSocketInput( quint32 port ) :
     QTcpServer(), HbLogAbstractInput( INPUT_TCP_SOCKET )
 {
-    mAvailable = 0;
+    mExpected = 0;
 
     if( !listen( QHostAddress::Any, mPort = port ) )
         fprintf( stderr, "HbLogTcpSocketInput: Unable to start the TCP server\n" );
@@ -54,24 +54,23 @@ void HbLogTcpSocketInput::onReadyRead()
 
     do
     {
-        if( !mAvailable )
+        if( !mExpected )
         {
             if( socket->bytesAvailable() < sizeof( qint32 ) )
                  return;
 
-            stream >> mAvailable;
+            stream >> mExpected;
         }
 
-        if( socket->bytesAvailable() < mAvailable )
+        if( socket->bytesAvailable() < mExpected )
             return;
 
         HbLogMessage * message = q_check_ptr( new HbLogMessage() );
         message->fromDataStream( stream );
         emit inputMessageReceived( message );
 
-        mAvailable = 0;
+        mExpected = 0;
     }
-
     while( socket->bytesAvailable() > 0 );
 }
 
