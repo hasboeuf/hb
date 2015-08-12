@@ -30,7 +30,7 @@ PROJECT.TYPE    = app
 # Modules Settings
 # -----------------
 
-HB += network link log tools
+HB += network-common network link log tools
 
 # ---------------
 # QMake Includes

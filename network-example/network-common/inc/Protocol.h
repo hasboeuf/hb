@@ -23,10 +23,10 @@ namespace hb
         class Protocol
         {
         public:
-            enum Service : serviceuid
+            enum Channel : serviceuid
             {
-                SERVICE_CHAT = hb::network::HbNetworkProtocol::SERVICE_USER,
-                SERVICE_MATH_OPERATION
+                CHANNEL_CHAT = hb::network::HbNetworkProtocol::SERVICE_USER,
+                CHANNEL_SUM
             };
 
             enum Code : codeuid

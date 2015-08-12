@@ -6,7 +6,7 @@ using namespace hb::network;
 using namespace hb::networkexample;
 
 ChatMessageContract::ChatMessageContract() :
-    HbNetworkContract( Protocol::SERVICE_CHAT,
+    HbNetworkContract( Protocol::CHANNEL_CHAT,
                        Protocol::CODE_CLT_CHAT_MESSAGE )
 {
     mMessage = "";

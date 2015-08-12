@@ -6,7 +6,7 @@ using namespace hb::network;
 using namespace hb::networkexample;
 
 RequestSumContract::RequestSumContract() :
-    HbNetworkContract( Protocol::SERVICE_MATH_OPERATION,
+    HbNetworkContract( Protocol::CHANNEL_SUM,
                        Protocol::CODE_CLT_REQUEST_SUM )
 {
     mIntA = 0;

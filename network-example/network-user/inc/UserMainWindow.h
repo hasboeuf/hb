@@ -7,7 +7,7 @@
 #include <QtGui/QStandardItemModel>
 // Hb
 #include <com/tcp/HbTcpClient.h>
-#include <user/HbNetworkUserInfo.h>
+#include <user/HbNetworkUserData.h>
 // Local
 #include <ui_UserMainWindow.h>
 
@@ -31,6 +31,9 @@ namespace hb
     namespace networkexample
     {
 
+        class ClientSumChannel;
+        class ClientChatChannel;
+
         class UserMainWindow : public QMainWindow, private Ui::UserMainWindow
         {
             Q_OBJECT
@@ -45,6 +48,8 @@ namespace hb
 
         private:
             hb::network::HbClient * mpHbClient;
+            ClientSumChannel      * mpSumChannel;
+            ClientChatChannel     * mpChatChannel;
 
         private:
 
@@ -61,8 +66,8 @@ namespace hb
             void onFacebookUnauthRequest();
 
             // From chat channel
-            void onChatUserJoined( const HbNetworkUserInfo & user_info );
-            void onChatUserLeft  ( const HbNetworkUserInfo & user_info );
+            void onChatUserJoined( const hb::network::HbNetworkUserData & user_data );
+            void onChatUserLeft  ( const hb::network::HbNetworkUserData & user_data );
             void onChatMessageReceived( const QString & author, const QString & message );
             // From math channel
             void onComputationReceived( qint32 result );

@@ -22,6 +22,8 @@
 #include <facebook/HbO2ClientFacebook.h>
 // Local
 #include <UserMainWindow.h>
+#include <ClientSumChannel.h>
+#include <ClientChatChannel.h>
 
 using namespace hb::tools;
 using namespace hb::log;
@@ -59,6 +61,12 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     config.presence().setKeepAliveInterval( 4 );
 
     mpHbClient       = new HbClient( config );
+
+    mpSumChannel = new ClientSumChannel();
+    q_assert( mpHbClient->registerChannel( mpSumChannel ) );
+
+    mpChatChannel = new ClientChatChannel();
+    q_assert( mpHbClient->registerChannel( mpChatChannel ) );
 
     connect( ui_qpb_start,               &QPushButton::clicked, this, &UserMainWindow::onStartClicked );
     connect( ui_qpb_stop,                &QPushButton::clicked, this, &UserMainWindow::onStopClicked );
@@ -154,14 +162,14 @@ void UserMainWindow::onMeStatusChanged( HbNetworkProtocol::UserStatus status )
     }
 }
 
-void UserMainWindow::onChatUserJoined( const HbNetworkUserInfo & user_info )
+void UserMainWindow::onChatUserJoined( const HbNetworkUserData & user_data )
 {
-    ui_qte_chat->append( QString( "%1 joined." ).arg( user_info.nickname() ) );
+    ui_qte_chat->append( QString( "%1 joined." ).arg( user_data.info()->nickname() ) );
 }
 
-void UserMainWindow::onChatUserLeft  ( const HbNetworkUserInfo & user_info )
+void UserMainWindow::onChatUserLeft  ( const HbNetworkUserData & user_data )
 {
-    ui_qte_chat->append( QString( "%1 left." ).arg( user_info.nickname() ) );
+    ui_qte_chat->append( QString( "%1 left." ).arg( user_data.info()->nickname() ) );
 }
 
 void UserMainWindow::onChatMessageReceived( const QString & author, const QString & message )

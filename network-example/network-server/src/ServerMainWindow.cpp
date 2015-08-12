@@ -16,6 +16,8 @@
 // Local
 #include <ServerMainWindow.h>
 #include <ServerAuthStrategy.h>
+#include <ServerSumChannel.h>
+#include <ServerChatChannel.h>
 
 
 using namespace hb::log;
@@ -50,6 +52,12 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     config.presence().setWarningAliveThreshold( 10 );
 
     mpHbServer = new HbServer( config );
+
+    mpSumChannel = new ServerSumChannel();
+    q_assert( mpHbServer->registerChannel( mpSumChannel ) );
+
+    mpChatChannel = new ServerChatChannel();
+    q_assert( mpHbServer->registerChannel( mpChatChannel ) );
 
     // Ui
     setupUi(this);

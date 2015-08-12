@@ -6,7 +6,7 @@ using namespace hb::network;
 using namespace hb::networkexample;
 
 ResponseSumContract::ResponseSumContract( ) :
-    HbNetworkContract( Protocol::SERVICE_MATH_OPERATION,
+    HbNetworkContract( Protocol::CHANNEL_SUM,
                        Protocol::CODE_SRV_RESPONSE_SUM )
 {
     mResult = 0;

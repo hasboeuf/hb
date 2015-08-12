@@ -24,6 +24,8 @@ namespace hb
 
     namespace networkexample
     {
+        class ServerSumChannel;
+        class ServerChatChannel;
 
         class ServerMainWindow : public QMainWindow, private Ui::ServerMainWindow
         {
@@ -42,6 +44,8 @@ namespace hb
 
         private:
             hb::network::HbServer * mpHbServer;
+            ServerSumChannel      * mpSumChannel;
+            ServerChatChannel     * mpChatChannel;
 
         signals:
 
