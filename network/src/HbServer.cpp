@@ -1,9 +1,11 @@
 // Qt
 // Hb
+#include <service/channel/HbServerChannel.h>
 // Local
 #include <HbServer.h>
 #include <com/tcp/HbTcpServer.h>
 #include <config/com/HbTcpServerConfig.h>
+#include <service/channel/HbNetworkChannel.h>
 
 using namespace hb::network;
 
@@ -26,4 +28,9 @@ bool HbServer::leave()
 {
     if( !isReady() ) return false;
     return mConnectionPool.leave();
+}
+
+bool HbServer::registerChannel( HbNetworkChannel * channel )
+{
+    return mConnectionPool.addChannel( channel );
 }

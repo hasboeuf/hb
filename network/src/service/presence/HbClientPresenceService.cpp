@@ -50,8 +50,10 @@ void HbClientPresenceService::timerEvent( QTimerEvent * event )
     emit readyContractToSend( presence );
 }
 
-void HbClientPresenceService::onSocketAuthenticated( networkuid socket_uid )
+void HbClientPresenceService::onSocketAuthenticated( const HbNetworkUserData & user_data )
 {
+    networkuid socket_uid = user_data.socketUid();
+
     q_assert( !mTimerBySocketUid.contains( socket_uid ) );
 
     HbInfo( "Socket authenticated, start keep alive timer." );
@@ -61,8 +63,10 @@ void HbClientPresenceService::onSocketAuthenticated( networkuid socket_uid )
     mSocketByTimerId.insert ( timer_id, socket_uid );
 }
 
-void HbClientPresenceService::onSocketUnauthenticated( networkuid socket_uid )
+void HbClientPresenceService::onSocketUnauthenticated( const HbNetworkUserData & user_data )
 {
+    networkuid socket_uid = user_data.socketUid();
+
     qint32 timer_id = mTimerBySocketUid.value( socket_uid, 0 );
     if( timer_id > 0 )
     {
@@ -72,10 +76,4 @@ void HbClientPresenceService::onSocketUnauthenticated( networkuid socket_uid )
     }
 
     mTimerBySocketUid.remove( socket_uid );
-}
-
-void HbClientPresenceService::onContractReceived( const HbNetworkContract * contract )
-{
-    Q_UNUSED( contract )
-    // Useless.
 }

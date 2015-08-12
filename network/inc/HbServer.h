@@ -39,6 +39,8 @@ namespace hb
             networkuid joinTcpServer( HbTcpServerConfig & config, bool main );
             virtual bool leave() override;
 
+            virtual bool registerChannel( HbNetworkChannel * channel ) override;
+
         signals:
             void serverStatusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status );
 

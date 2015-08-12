@@ -6,6 +6,7 @@
 #include <HbConnectionPool.h>
 #include <service/HbNetworkService.h>
 #include <contract/general/HbKickContract.h>
+#include <service/channel/HbChannelService.h>
 
 using namespace hb::network;
 
@@ -19,6 +20,14 @@ HbConnectionPool::HbConnectionPool( const HbGeneralConfig & config )
     qRegisterMetaType< HbNetworkProtocol::ClientStatus >( "HbNetworkProtocol::ClientStatus" );
     qRegisterMetaType< HbNetworkProtocol::UserStatus >  ( "HbNetworkProtocol::UserStatus" );
     qRegisterMetaType< HbNetworkProtocol::KickCode >    ( "HbNetworkProtocol::KickCode" );
+}
+
+bool HbConnectionPool::addChannel( HbNetworkChannel * channel )
+{
+    HbChannelService * channel_service = getService< HbChannelService >( HbNetworkProtocol::SERVICE_CHANNEL );
+    q_assert_ptr( channel_service );
+
+    return channel_service->addChannel( channel );
 }
 
 void HbConnectionPool::setExchanges( HbNetworkExchanges & exchanges )

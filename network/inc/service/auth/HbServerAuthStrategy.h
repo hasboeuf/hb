@@ -39,7 +39,7 @@ namespace hb
 
         signals:
             void authSucceed( networkuid sender,
-                              const HbNetworkUserInfo & user );
+                              const HbNetworkUserInfo & user_info );
             void authFailed(  networkuid sender,
                               const HbNetworkProtocol::AuthStatus & status,
                               const QString & description );

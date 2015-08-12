@@ -45,9 +45,8 @@ namespace hb
             void timerEvent( QTimerEvent * );
 
         public callbacks:
-            void onSocketAuthenticated  ( networkuid socket_uid ) override;
-            void onSocketUnauthenticated( networkuid socket_uid ) override;
-            void onContractReceived( const HbNetworkContract * contract ) override;
+            void onSocketAuthenticated  ( const HbNetworkUserData & user_data ) override;
+            void onSocketUnauthenticated( const HbNetworkUserData & user_data ) override;
 
         private:
             HbServicePresenceClientConfig mConfig;

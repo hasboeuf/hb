@@ -13,6 +13,7 @@
 
 // Qt
 // Hb
+#include <HbLogService.h>
 // Local
 #include <HbNetwork.h>
 #include <HbPeer.h>
@@ -43,8 +44,11 @@ namespace hb
             HbClient( const HbGeneralClientConfig & config );
             virtual ~HbClient() = default;
 
-            virtual bool leave() override;
             networkuid joinTcpClient( HbTcpClientConfig & config, bool main );
+            virtual bool leave() override;
+
+            virtual bool registerChannel( HbNetworkChannel * channel ) override;
+
             bool authRequest( HbClientAuthLoginObject * login_object );
             bool facebookAuthRequested();
 

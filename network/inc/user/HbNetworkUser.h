@@ -17,7 +17,7 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <user/HbNetworkUserInfo.h>
+#include <user/HbNetworkUserData.h>
 #include <contract/HbNetworkProtocol.h>
 
 namespace hb
@@ -37,7 +37,7 @@ namespace hb
 
             void reset(); // Used on client side.
 
-            const HbNetworkUserInfo & info() const;
+            ShConstHbNetworkUserInfo & info();
             void setInfo( const HbNetworkUserInfo & info );
 
             HbNetworkProtocol::UserStatus status() const;
@@ -48,11 +48,12 @@ namespace hb
 
             const QSet< networkuid > & socketsUid() const;
 
+            const HbNetworkUserData createData( networkuid socket_id );
         signals:
             void statusChanged( HbNetworkProtocol::UserStatus status );
 
         private:
-            HbNetworkUserInfo mInfo;
+            ShConstHbNetworkUserInfo mInfo;
             HbNetworkProtocol::UserStatus mStatus;
             networkuid mMainSocketUid;
             QSet< networkuid > mSocketsUid;

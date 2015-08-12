@@ -13,6 +13,7 @@
 
 // Qt
 // Hb
+#include <service/channel/HbServerChannel.h> // Covariance.
 // Local
 #include <HbNetwork.h>
 #include <service/channel/HbChannelService.h>
@@ -22,8 +23,6 @@ namespace hb
 {
     namespace network
     {
-
-        class HbServerChannel;
 
         /*!
          * TODOC
@@ -42,10 +41,13 @@ namespace hb
             const HbServiceChannelServerConfig & config() const;
             void setConfig( const HbServiceChannelServerConfig & config );
 
+            virtual bool addChannel( HbNetworkChannel * channel ) override;
+            virtual HbServerChannel * channel( serviceuid channel_uid ) override;
+
         public callbacks:
-            virtual void onUserContractReceived( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract ) override;
-            virtual void onUserConnected   ( const HbNetworkUserInfo & user_info ) override;
-            virtual void onUserDisconnected( const HbNetworkUserInfo & user_info ) override;
+            virtual void onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract ) override;
+            virtual void onUserConnected       ( const HbNetworkUserData & user_data ) override;
+            virtual void onUserDisconnected    ( const HbNetworkUserData & user_data ) override;
 
         private:
             HbServiceChannelServerConfig mConfig;

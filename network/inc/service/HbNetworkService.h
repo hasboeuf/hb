@@ -16,7 +16,7 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <user/HbNetworkUserInfo.h>
+#include <user/HbNetworkUserData.h>
 #include <contract/HbNetworkContract.h>
 #include <contract/HbNetworkExchanges.h>
 #include <listener/IHbContractListener.h>
@@ -28,7 +28,7 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbNetworkService : public QObject, public IHbContractListener
+        class HB_NETWORK_DECL HbNetworkService : public QObject
         {
             Q_OBJECT
 
@@ -41,25 +41,18 @@ namespace hb
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const = 0;
             virtual void plugContracts( HbNetworkExchanges & exchanges ) = 0;
 
-            virtual serviceuid id() const final
-            {
-                return mId;
-            }
+            virtual serviceuid uid() const = 0;
 
         public callbacks:
-            virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
 
         signals:
-            //void socketContractToSend( networkuid receiver, HbNetworkContract * contract );
-            //void userContractToSend  ( const HbNetworkUserInfo & user, HbNetworkContract * contract );
+            void userContractToSend  ( HbNetworkUserData & user_data, HbNetworkContract * contract );
             void readyContractToSend ( const HbNetworkContract * contract );
 
             // Only used in server side.
-            void userToKick  ( const HbNetworkUserInfo &user_info, netwint reason, const QString & description = QString() );
+            void userToKick  ( HbNetworkUserData & user_data, netwint reason, const QString & description = QString() );
             void socketToKick( networkuid socket_uid, netwint reason, const QString & description = QString() );
 
-        protected:
-            serviceuid mId = HbNetworkProtocol::SERVICE_UNDEFINED;
         };
     }
 }

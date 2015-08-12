@@ -9,7 +9,6 @@ using namespace hb::network;
 
 HbPresenceService::HbPresenceService()
 {
-    mId = HbNetworkProtocol::SERVICE_PRESENCE;
 }
 
 HbNetworkProtocol::NetworkTypes HbPresenceService::enabledNetworkTypes() const
@@ -21,4 +20,9 @@ void HbPresenceService::plugContracts( HbNetworkExchanges & exchanges )
 {
     exchanges.plug< HbPresenceContract >();
     exchanges.plug< HbPresenceStatusContract>();
+}
+
+serviceuid HbPresenceService::uid() const
+{
+    return HbNetworkProtocol::SERVICE_PRESENCE;
 }

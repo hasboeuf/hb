@@ -6,15 +6,16 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef IHBSOCKETAUTHLISTENER_H
-#define IHBSOCKETAUTHLISTENER_H
+#ifndef IHBUSERCONTRACTTLISTENER_H
+#define IHBUSERCONTRACTTLISTENER_H
 
-/*! \file IHbSocketAuthListener.h */
+/*! \file IHbUserContractListener.h */
 
 // Hb
 #include <HbGlobal.h>
 // Local
 #include <HbNetwork.h>
+#include <contract/HbNetworkContract.h>
 #include <user/HbNetworkUserData.h>
 
 namespace hb
@@ -24,20 +25,19 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL IHbSocketAuthListener
+        class HB_NETWORK_DECL IHbUserContractListener
         {
 
         public callbacks:
-            virtual void onSocketAuthenticated  ( const HbNetworkUserData & user_data ) = 0;
-            virtual void onSocketUnauthenticated( const HbNetworkUserData & user_data ) = 0;
+            virtual void onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract ) = 0;
 
         protected:
-            virtual ~IHbSocketAuthListener(){} //!< \todo defaulted linux-g++ issue
+            virtual ~IHbUserContractListener(){} //!< \todo defaulted linux-g++ issue
         };
 
     }
 }
 
-using hb::network::IHbSocketAuthListener;
+using hb::network::IHbUserContractListener;
 
-#endif // IHBSOCKETAUTHLISTENER_H
+#endif // IHBUSERCONTRACTTLISTENER_H

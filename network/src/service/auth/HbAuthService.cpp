@@ -11,7 +11,6 @@ using namespace hb::network;
 
 HbAuthService::HbAuthService()
 {
-    mId = HbNetworkProtocol::SERVICE_AUTH;
 }
 
 HbNetworkProtocol::NetworkTypes HbAuthService::enabledNetworkTypes() const
@@ -25,4 +24,9 @@ void HbAuthService::plugContracts( HbNetworkExchanges & exchanges )
     exchanges.plug< HbAuthFacebookRequestContract >();
     exchanges.plug< HbAuthRequestContract >();
     exchanges.plug< HbAuthStatusContract >();
+}
+
+serviceuid HbAuthService::uid() const
+{
+    return HbNetworkProtocol::SERVICE_AUTH;
 }

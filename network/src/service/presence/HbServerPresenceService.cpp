@@ -57,8 +57,10 @@ void HbServerPresenceService::timerEvent( QTimerEvent * )
     }
 }
 
-void HbServerPresenceService::onSocketAuthenticated( networkuid socket_uid )
+void HbServerPresenceService::onSocketAuthenticated( const HbNetworkUserData & user_data )
 {
+    networkuid socket_uid = user_data.socketUid();
+
     q_assert( !mClientAliveTick.contains( socket_uid ) );
 
     if( mTickTimer == 0 ) // No timer started yet.
@@ -69,8 +71,10 @@ void HbServerPresenceService::onSocketAuthenticated( networkuid socket_uid )
     mClientAliveTick.insert( socket_uid, 0 );
 }
 
-void HbServerPresenceService::onSocketUnauthenticated( networkuid socket_uid )
+void HbServerPresenceService::onSocketUnauthenticated( const HbNetworkUserData & user_data )
 {
+    networkuid socket_uid = user_data.socketUid();
+
     q_assert( mClientAliveTick.contains( socket_uid ) );
 
     mClientAliveTick.remove( socket_uid );

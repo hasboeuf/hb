@@ -44,8 +44,9 @@ namespace hb
             HbClientConnectionPool( const HbGeneralClientConfig & config );
             virtual ~HbClientConnectionPool();
 
-            virtual bool leave() override;
             networkuid joinTcpClient( HbTcpClientConfig & config, bool main );
+            virtual bool leave() override;
+
             bool authRequested( HbClientAuthLoginObject * login_object );
 
         public callbacks:
@@ -55,8 +56,7 @@ namespace hb
             void onClientContractReceived( networkuid client_uid, const HbNetworkContract * contract );
 
             // From services.
-            //void onSocketContractToSend( networkuid receiver, HbNetworkContract * contract );
-            //void onUserContractToSend  ( const HbNetworkUserInfo & user, HbNetworkContract * contract );
+            void onUserContractToSend  ( const HbNetworkUserData & user_data, HbNetworkContract * contract ) override;
             void onReadyContractToSend ( const HbNetworkContract * contract ) override;
             // From HbAuthService.
             void onSocketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info ) override;

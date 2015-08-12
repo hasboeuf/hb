@@ -25,7 +25,7 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbAuthService : public HbNetworkService, public IHbSocketListener
+        class HB_NETWORK_DECL HbAuthService : public HbNetworkService, public IHbContractListener, public IHbSocketListener
         {
             Q_OBJECT
         public:
@@ -40,6 +40,8 @@ namespace hb
             virtual ~HbAuthService(){} //!< \todo defaulted linux-g++ issue
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
             virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
+
+            virtual serviceuid uid() const override;
 
         signals:
             void socketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info );

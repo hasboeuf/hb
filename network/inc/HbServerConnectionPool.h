@@ -40,9 +40,8 @@ namespace hb
             HbServerConnectionPool( const HbGeneralServerConfig & config );
             virtual ~HbServerConnectionPool();
 
-            virtual bool leave() override;
-
             networkuid joinTcpServer( HbTcpServerConfig & config, bool main );
+            virtual bool leave() override;
 
         public callbacks:
             // From HbAbstractServer.
@@ -53,10 +52,10 @@ namespace hb
             void onSocketContractReceived( networkuid server_uid, networkuid socket_uid, const HbNetworkContract * contract );
 
             // From services.
-            void onSocketContractToSend( networkuid receiver, HbNetworkContract * contract );
-            void onUserContractToSend  ( const HbNetworkUserInfo & user_info, HbNetworkContract * contract );
+            void onSocketContractToSend( networkuid receiver, HbNetworkContract * contract ); // TODO clean
+            void onUserContractToSend  ( const HbNetworkUserData & user_data, HbNetworkContract * contract ) override;
             void onReadyContractToSend ( const HbNetworkContract * contract ) override;
-            void onUserToKick  ( const HbNetworkUserInfo &user_info, netwint reason, const QString & description );
+            void onUserToKick  ( const HbNetworkUserData & user_data, netwint reason, const QString & description );
             void onSocketToKick( networkuid socket_uid, netwint reason, const QString & description );
 
             // From HbAuthService.
@@ -71,7 +70,7 @@ namespace hb
 
         private:
             HbNetworkUser * isSocketAuthenticated( networkuid socket_uid );
-            HbNetworkUser * getUser( const HbNetworkUserInfo & user_info );
+            HbNetworkUser * getUser( const HbNetworkUserData & user_data );
             void kickUser  ( HbNetworkUser * user,  netwint reason, const QString & description );
             void kickSocket( networkuid socket_uid, netwint reason, const QString & description );
 

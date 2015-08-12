@@ -16,7 +16,6 @@
 // Local
 #include <HbNetwork.h>
 #include <service/channel/HbClientChannel.h>
-#include <listener/IHbUserListener.h>
 
 namespace hb
 {
@@ -33,6 +32,10 @@ namespace hb
             virtual ~HbClientPeopledChannel() = default;
 
         public callbacks:
+
+        private:
+            QHash< QString, HbNetworkUserInfo > mUsers;
+
 
         };
     }

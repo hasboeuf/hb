@@ -6,6 +6,7 @@
 #include <HbClient.h>
 #include <service/auth/HbClientAuthLoginObject.h>
 #include <com/tcp/HbTcpClient.h>
+#include <service/channel/HbNetworkChannel.h>
 
 using namespace hb::network;
 using namespace hb::link;
@@ -20,16 +21,21 @@ HbClient::HbClient( const HbGeneralClientConfig & config ) :
     }
 }
 
+networkuid HbClient::joinTcpClient( HbTcpClientConfig & config , bool main )
+{
+    if( !isReady() ) return false;
+    return mConnectionPool.joinTcpClient( config, main );
+}
+
 bool HbClient::leave()
 {
     if( !isReady() ) return false;
     return mConnectionPool.leave();
 }
 
-networkuid HbClient::joinTcpClient( HbTcpClientConfig & config , bool main )
+bool HbClient::registerChannel( HbNetworkChannel * channel )
 {
-    if( !isReady() ) return false;
-    return mConnectionPool.joinTcpClient( config, main );
+    return mConnectionPool.addChannel( channel );
 }
 
 bool HbClient::authRequest( HbClientAuthLoginObject * login_object )

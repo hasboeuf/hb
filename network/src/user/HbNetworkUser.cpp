@@ -14,17 +14,19 @@ void HbNetworkUser::reset()
 {
     setStatus( HbNetworkProtocol::USER_DISCONNECTED );
     mMainSocketUid = 0;
-    mInfo = HbNetworkUserInfo();
+    mInfo.clear();
+    mInfo = ShConstHbNetworkUserInfo( new HbNetworkUserInfo() ); // Valid object instead of nullptr to avoid checking ptr everytime.
 }
 
-const HbNetworkUserInfo & HbNetworkUser::info() const
+ShConstHbNetworkUserInfo & HbNetworkUser::info()
 {
     return mInfo;
 }
 
-void HbNetworkUser::setInfo( const HbNetworkUserInfo & info )
+void HbNetworkUser::setInfo( const HbNetworkUserInfo & user_info )
 {
-    mInfo = info;
+    mInfo.clear();
+    mInfo = ShConstHbNetworkUserInfo( new HbNetworkUserInfo( user_info ) );
 }
 
 HbNetworkProtocol::UserStatus HbNetworkUser::status() const
@@ -60,4 +62,14 @@ void HbNetworkUser::setMainSocketUid( networkuid socket_uid )
 const QSet< networkuid > & HbNetworkUser::socketsUid() const
 {
     return mSocketsUid;
+}
+
+const HbNetworkUserData HbNetworkUser::createData( networkuid socket_id )
+{
+    q_assert( mSocketsUid.contains( socket_id ) );
+
+    HbNetworkUserData data;
+    data.setSocketUid( socket_id );
+    data.setInfo( mInfo );
+    return data;
 }

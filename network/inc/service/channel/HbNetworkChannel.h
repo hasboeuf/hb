@@ -15,7 +15,8 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <service/channel/HbChannelService.h>
+#include <listener/IHbUserContractListener.h>
+#include <service/HbNetworkService.h>
 
 namespace hb
 {
@@ -24,7 +25,7 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbNetworkChannel : public HbChannelService
+        class HB_NETWORK_DECL HbNetworkChannel : public HbNetworkService, public IHbUserContractListener
         {
         public:
 

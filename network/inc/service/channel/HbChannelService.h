@@ -12,19 +12,23 @@
 /*! \file HbChannelService.h */
 
 // Qt
+#include <QtCore/QHash>
 // Hb
 // Local
 #include <service/HbNetworkService.h>
 #include <listener/IHbUserListener.h>
+#include <listener/IHbUserContractListener.h>
 
 namespace hb
 {
     namespace network
     {
+        class HbNetworkChannel;
+
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbChannelService : public HbNetworkService, public IHbUserListener
+        class HB_NETWORK_DECL HbChannelService : public HbNetworkService, public IHbUserListener, public IHbUserContractListener
         {
         public:
 
@@ -33,11 +37,18 @@ namespace hb
 
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
 
+            virtual serviceuid uid() const override;
+
+            virtual bool addChannel( HbNetworkChannel * channel );
+            virtual HbNetworkChannel * channel( serviceuid channel_uid );
+
         public callbacks:
-            virtual void onContractReceived    ( const HbNetworkContract * contract ) final;
 
         signals:
-            void userContractToSend( const HbNetworkUserInfo & user, HbNetworkContract * contract );
+            void userContractToSend( const HbNetworkUserData & user_data, HbNetworkContract * contract );
+
+        private:
+            QHash< serviceuid, HbNetworkChannel * > mChannels;
         };
     }
 }

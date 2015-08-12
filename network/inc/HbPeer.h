@@ -21,6 +21,8 @@ namespace hb
 {
     namespace network
     {
+        class HbNetworkChannel;
+
         /*!
          * TODOC
          */
@@ -37,6 +39,8 @@ namespace hb
 
             virtual bool isReady() const final;
             virtual bool leave() = 0;
+
+            virtual bool registerChannel( HbNetworkChannel * channel ) = 0;
 
         private:
             bool mReady;

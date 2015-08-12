@@ -3,6 +3,7 @@
 // Local
 #include <service/channel/HbServerChannelService.h>
 #include <service/channel/HbServerChannel.h>
+#include <service/channel/HbServerPeopledChannel.h>
 
 using namespace hb::network;
 
@@ -32,18 +33,44 @@ void HbServerChannelService::setConfig( const HbServiceChannelServerConfig & con
     }
 }
 
-void HbServerChannelService::onUserContractReceived( const HbNetworkUserInfo & user_info, const HbNetworkContract * contract )
+bool HbServerChannelService::addChannel( HbNetworkChannel * channel )
 {
-    Q_UNUSED( user_info )
+
+    bool ok = false;
+
+    if( dynamic_cast< HbServerChannel * >( channel ) )
+    {
+        ok = HbChannelService::addChannel( channel );
+
+        if( ok )
+        {
+            HbServerPeopledChannel * peopled_channel = dynamic_cast< HbServerPeopledChannel * >( channel );
+            if( peopled_channel )
+            {
+            }
+        }
+    }
+
+    return ok;
+}
+
+HbServerChannel * HbServerChannelService::channel( serviceuid channel_uid )
+{
+    return dynamic_cast< HbServerChannel * >( HbChannelService::channel( channel_uid ) );
+}
+
+void HbServerChannelService::onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract )
+{
+    Q_UNUSED( user_data )
     Q_UNUSED( contract )
 }
 
-void HbServerChannelService::onUserConnected   ( const HbNetworkUserInfo & user_info )
+void HbServerChannelService::onUserConnected( const HbNetworkUserData & user_data )
 {
-    Q_UNUSED( user_info )
+    Q_UNUSED( user_data )
 }
 
-void HbServerChannelService::onUserDisconnected( const HbNetworkUserInfo & user_info )
+void HbServerChannelService::onUserDisconnected( const HbNetworkUserData & user_data )
 {
-    Q_UNUSED( user_info )
+    Q_UNUSED( user_data )
 }

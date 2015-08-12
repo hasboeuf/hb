@@ -14,6 +14,7 @@
 // Qt
 #include <QtCore/QString>
 #include <QtCore/QDataStream>
+#include <QtCore/QSharedPointer>
 // Hb
 // Local
 #include <HbNetwork.h>
@@ -22,6 +23,7 @@ namespace hb
 {
     namespace network
     {
+
         /*!
          * TODOC
          */
@@ -77,6 +79,10 @@ namespace hb
 
         QDataStream & operator<<(QDataStream & stream, const HbNetworkUserInfo & header );
         QDataStream & operator>>(QDataStream & stream, HbNetworkUserInfo & header );
+
+        typedef QSharedPointer< const HbNetworkUserInfo > ShConstHbNetworkUserInfo;
+        typedef QSharedPointer< HbNetworkUserInfo >       ShHbNetworkUserInfo;
+
     }
 }
 

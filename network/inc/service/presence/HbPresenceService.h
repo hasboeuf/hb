@@ -34,6 +34,8 @@ namespace hb
             virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
             virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
 
+            virtual serviceuid uid() const override;
+
         public callbacks:
 
         };

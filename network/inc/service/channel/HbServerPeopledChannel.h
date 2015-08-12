@@ -12,10 +12,12 @@
 /*! \file HbServerPeopledChannel.h */
 
 // Qt
+#include <QtCore/QHash>
 // Hb
 // Local
 #include <HbNetwork.h>
 #include <service/channel/HbServerChannel.h>
+#include <listener/IHbUserListener.h>
 
 namespace hb
 {
@@ -24,14 +26,26 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbServerPeopledChannel : public HbServerChannel
+        class HB_NETWORK_DECL HbServerPeopledChannel : public HbServerChannel, public IHbUserListener
         {
+            Q_OBJECT
+
         public:
 
             HbServerPeopledChannel() = default;
             virtual ~HbServerPeopledChannel() = default;
 
+            virtual void onUserConnected   ( const HbNetworkUserData & user_data ) override final;
+            virtual void onUserDisconnected( const HbNetworkUserData & user_data ) override final;
+
         public callbacks:
+
+        private:
+            QHash< QString, HbNetworkUserData > mUsers;
+
+        signals:
+            void userConnected   ( const HbNetworkUserInfo & user_info );
+            void userDisconnected( const HbNetworkUserInfo & user_info );
 
         };
     }
