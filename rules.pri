@@ -120,6 +120,7 @@
     CONFIG -= warn_off lex yacc static shared
     CONFIG -= ordered no_empty_targets
     CONFIG += qt warn_on thread largefile
+    CONFIG += debug_and_release
 
     android: {
         CONFIG += mobility
@@ -149,13 +150,13 @@
     message( QMake-ing $${PROJECT.NAME} projects. )
     message( ------------------------------------ )
 
-    win32-msvc*|win32-g++|android-g++|linux-g++|winphone: {
+    *msvc*|*g++*|winphone: {
         message( "Compilator supported." )
     } else {
         error( "Compilator not supported." )
     }
 
-    *-g++: {
+    *g++*: {
         QMAKE_CXXFLAGS += -std=c++0x
     }
 
@@ -163,21 +164,24 @@
     isEmpty( QMAKE_SPEC ): QMAKE_SPEC = $$[QMAKESPEC]
 
     isEmpty( QMAKE_SPEC ) {
-        error( "$${PROJECT.PRO}: Platform scope not defined" )
+        error( "$${PROJECT.PRO}: Platform scope not defined. Is QMAKESPEC set?" )
     }
 
     contains( QMAKE_HOST.arch, x86 ) {
-        win32-msvc*: QMAKE_LFLAGS *= /MACHINE:X86
+        *msvc*: QMAKE_LFLAGS *= /MACHINE:X86
     }
 
     contains( QMAKE_HOST.arch, x86_64 ) {
-        win32-msvc*: QMAKE_LFLAGS *= /MACHINE:X64
+        *msvc*: QMAKE_LFLAGS *= /MACHINE:X64
     }
 
 
     BUILD.CONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
     contains( $${MODULE.NAME}.LINKTYPE, staticlib ) {
         BUILD.CONFIG = $$replaceString( BUILD.CONFIG,, _static )
+        win32 {
+            BUILD.CONFIG = $$replace( BUILD.CONFIG, \\+, p ) # ar compiler does not handle path with '+' symbol.
+        }
     }
 
     CONFIG( debug, debug|release ): BUILD.MODE = debug
@@ -234,6 +238,9 @@
         MODULE_CONFIG   = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
         contains( $${MODULE_NAME}.LINKTYPE, staticlib ) {
             MODULE_CONFIG = $$replaceString( MODULE_CONFIG,, _static )
+            win32 {
+                $$replace( MODULE_CONFIG, +, p ) # ar compiler does not handle path with '+' symbol.
+            }
         }
 
         PACKAGES = $$eval($$MODULE_NAME)
@@ -269,7 +276,7 @@
                 PACKAGE_BIN = $${MODULE_BIN}/$${MODULE_CONFIG}/$${PACKAGE_INSTALL}/
             }
 
-            *-g++: {
+            *g++*: {
                 equals ( PACKAGE_TYPE, staticlib ): {
                     PRE_TARGETDEPS += $$clean_path( $${PACKAGE_LIB}/$$fullTarget( PACKAGE_NAME, staticlib ) )
                 }
@@ -451,7 +458,7 @@ defineTest( addCopyEvent ) {
     dest_path    = $$clean_path( $$2 )
     install_name = $$3
 
-    *-g++: {
+    *g++*: {
         $${install_name}.files = $$files
         $${install_name}.path  = $$clean_path( $$dest_path )
 
@@ -461,7 +468,7 @@ defineTest( addCopyEvent ) {
         export( $${install_name}.path )
         export( INSTALLS )
     }
-    *-msvc*: {
+    *msvc*: {
         for( file, files ) {
             QMAKE_POST_LINK += $${QMAKE_COPY} \
                                 \"$$file\" \
@@ -598,7 +605,7 @@ addCleanDirEvent( $$PROJECT_GENERATED )
         addCleanFileEvent( $$DLL_SOURCE )
         addCleanFileEvent( $$DELIVERY_BIN/$$DLL_NAME )
 
-        *-msvc*: {
+        *msvc*: {
             LIB_NAME   = $$fullTarget( PROJECT_NAME, staticlib )
             LIB_SOURCE = $$PROJECT_LIB/$$LIB_NAME
             PDB_NAME   = $$replaceString( TARGET,, .pdb )
@@ -643,9 +650,9 @@ addCleanDirEvent( $$PROJECT_GENERATED )
 
 # Debug
 message( clean=$$QMAKE_CLEAN )
-message( post_copy=$$QMAKE_POST_LINK )
-#*-g++: message( post_build=$$INSTALLS )
-#win32-msvc*: message( post_build=$$QMAKE_POST_LINK )
+
+*g++*: message( post_copy=$$INSTALLS )
+*msvc*: message( post_copy=$$QMAKE_POST_LINK )
 
 unset( PROJECT_INC       )
 unset( PROJECT_UI        )
