@@ -120,7 +120,6 @@
     CONFIG -= warn_off lex yacc static shared
     CONFIG -= ordered no_empty_targets
     CONFIG += qt warn_on thread largefile
-    CONFIG += debug_and_release
 
     android: {
         CONFIG += mobility
