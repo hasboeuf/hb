@@ -39,6 +39,8 @@ namespace hb
 
             virtual void onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract ) override;
 
+            void requestSum( quint32 a, quint32 b );
+
         public callbacks:
 
         };

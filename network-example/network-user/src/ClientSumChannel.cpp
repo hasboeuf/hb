@@ -36,3 +36,12 @@ void ClientSumChannel::onUserContractReceived( const HbNetworkUserData & user_da
 {
     // TODO
 }
+
+void ClientSumChannel::requestSum( quint32 a, quint32 b )
+{
+    RequestSumContract * contract = new RequestSumContract();
+    contract->setIntA( a );
+    contract->setIntB( b );
+
+    //emit userContractToSend( contract );
+}
