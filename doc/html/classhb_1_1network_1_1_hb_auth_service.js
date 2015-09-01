@@ -8,14 +8,14 @@ var classhb_1_1network_1_1_hb_auth_service =
     [ "HbAuthService", "classhb_1_1network_1_1_hb_auth_service.html#a382920e6d46857fdb5b783379b2fc7ba", null ],
     [ "~HbAuthService", "classhb_1_1network_1_1_hb_auth_service.html#af5f3b5d7f2d6366c7ef768d0ad49ff8c", null ],
     [ "enabledNetworkTypes", "classhb_1_1network_1_1_hb_auth_service.html#ae512eb9654fc205e4adda36e9478a1bf", null ],
-    [ "id", "classhb_1_1network_1_1_hb_auth_service.html#af308c0da97ae3b8122a76a6ea7782029", null ],
     [ "plugContracts", "classhb_1_1network_1_1_hb_auth_service.html#a6d668f082df064f53257d92d8c026b87", null ],
     [ "readyContractToSend", "classhb_1_1network_1_1_hb_auth_service.html#aa91c56f1f912e3a6988bcafadf40b2aa", null ],
     [ "reset", "classhb_1_1network_1_1_hb_auth_service.html#a6d4567a7950ab0d1b998749fb8211e4c", null ],
     [ "socketAuthenticated", "classhb_1_1network_1_1_hb_auth_service.html#a0a65bedbc40856e904463674a27972f6", null ],
     [ "socketToKick", "classhb_1_1network_1_1_hb_auth_service.html#a25f34312d3911aaf30e6386052d91f75", null ],
     [ "socketUnauthenticated", "classhb_1_1network_1_1_hb_auth_service.html#ab557c4a3af26145c4a7e9969f0a9070a", null ],
-    [ "userToKick", "classhb_1_1network_1_1_hb_auth_service.html#a7661d26b67b79d669ab6c0a26cc37e71", null ],
+    [ "uid", "classhb_1_1network_1_1_hb_auth_service.html#ae3cc7ec303f67ff7b6442f37c9408a2a", null ],
+    [ "userToKick", "classhb_1_1network_1_1_hb_auth_service.html#acaafebd255dd09d11e6f8c8d9aaf82e8", null ],
     [ "callbacks", "classhb_1_1network_1_1_hb_auth_service.html#adac18a6a0037af98b9a198804a74b551", null ],
-    [ "mId", "classhb_1_1network_1_1_hb_auth_service.html#a1565cc2a3165866de43a739f9ad35799", null ]
+    [ "contract", "classhb_1_1network_1_1_hb_auth_service.html#a590ec44296d091668c8348adeac37d99", null ]
 ];

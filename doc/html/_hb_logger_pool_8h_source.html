@@ -32,6 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">hb
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
   </td>
  </tr>
@@ -158,48 +159,50 @@ $(document).ready(function(){initNavTree('_hb_logger_pool_8h_source.html','');})
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <a class="code" href="classhb_1_1log_1_1_hb_logger_pool.html">HbLoggerPool</a>( QThread * thread );</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1log_1_1_hb_logger_pool.html">HbLoggerPool</a>();</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addTcpSocketInput  ( quint16 port, QString * error );</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addLocalSocketInput( <span class="keyword">const</span> QString &amp; name, QString * error );</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keywordtype">bool</span>   removeInput        ( <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> uid, QString * error );</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addConsoleOutput    ( QString * error );</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addGuiOutput        ( <a class="code" href="classhb_1_1log_1_1_hb_log_gui_notifier.html">HbLogGuiNotifier</a> * notifier, QString * error );</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addFileOutput       ( <span class="keyword">const</span> QString &amp; path, quint32 max_size, QString * error );</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addTcpSocketOutput  ( <span class="keyword">const</span> QString &amp; ip, quint16 port, QString * error );</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addLocalSocketOutput( <span class="keyword">const</span> QString &amp; name, QString * error );</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordtype">bool</span>   removeOutput        ( <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> uid, QString * error );</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <a class="code" href="classhb_1_1log_1_1_i_hb_logger_input.html">IHbLoggerInput</a>  * input ( <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> uid );</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <a class="code" href="classhb_1_1log_1_1_i_hb_logger_output.html">IHbLoggerOutput</a> * output( <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> uid );</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordtype">bool</span> enqueueMessage( QList&lt; HbLogMessage * &gt; &amp; buffer );</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addUdpSocketInput  ( <span class="keyword">const</span> QString &amp; ip, quint16 port, QString * error );</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addTcpSocketInput  ( quint16 port, QString * error );</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addLocalSocketInput( <span class="keyword">const</span> QString &amp; name, QString * error );</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordtype">bool</span>   removeInput        ( <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> uid, QString * error );</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addConsoleOutput    ( QString * error );</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addGuiOutput        ( <a class="code" href="classhb_1_1log_1_1_hb_log_gui_notifier.html">HbLogGuiNotifier</a> * notifier, QString * error );</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addFileOutput       ( <span class="keyword">const</span> QString &amp; path, quint32 max_size, QString * error );</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addUdpSocketOutput  ( quint16 port, QString * error );</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addTcpSocketOutput  ( <span class="keyword">const</span> QString &amp; ip, quint16 port, QString * error );</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> addLocalSocketOutput( <span class="keyword">const</span> QString &amp; name, QString * error );</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keywordtype">bool</span>   removeOutput        ( <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> uid, QString * error );</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <a class="code" href="classhb_1_1log_1_1_i_hb_logger_input.html">IHbLoggerInput</a>  * input ( <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> uid );</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <a class="code" href="classhb_1_1log_1_1_i_hb_logger_output.html">IHbLoggerOutput</a> * output( <a class="code" href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a> uid );</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keyword">private</span> callbacks:</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keywordtype">bool</span> enqueueMessage( QList&lt; HbLogMessage * &gt; &amp; buffer );</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="comment">// From QThread</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keywordtype">void</span> running();</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keywordtype">void</span> process();</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keyword">private</span> callbacks:</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="comment">// From QThread</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keywordtype">void</span> running();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            <span class="keywordtype">void</span> process();</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;            QAtomicInt mAtomic;</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            QReadWriteLock mInputsLock;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            QReadWriteLock mOutputsLock;</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            QTimer * mpClock;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            qint32 mCapacity;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            QList&lt; HbLogMessage * &gt; mLoggerStream;</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            QList&lt; HbLogMessage * &gt; mInputsStream;</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            QHash&lt; quint32, HbLogAbstractInput * &gt; mInputs;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            QHash&lt; quint32, HbLogAbstractOutput * &gt; mOutputs;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        };</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    }</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;}</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">#endif // HBLOGGERPOOL_H</span></div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            QAtomicInt mAtomic;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            QReadWriteLock mInputsLock;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            QReadWriteLock mOutputsLock;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            QTimer * mpClock;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            qint32 mCapacity;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;            QList&lt; HbLogMessage * &gt; mLoggerStream;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            QList&lt; HbLogMessage * &gt; mInputsStream;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            QHash&lt; quint32, HbLogAbstractInput * &gt; mInputs;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            QHash&lt; quint32, HbLogAbstractOutput * &gt; mOutputs;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        };</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;}</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="preprocessor">#endif // HBLOGGERPOOL_H</span></div>
 <div class="ttc" id="classhb_1_1log_1_1_hb_log_gui_notifier_html"><div class="ttname"><a href="classhb_1_1log_1_1_hb_log_gui_notifier.html">hb::log::HbLogGuiNotifier</a></div><div class="ttdoc">HbLogGuiNotifier is needed to add a gui output. </div><div class="ttdef"><b>Definition:</b> HbLogGuiNotifier.h:31</div></div>
 <div class="ttc" id="classhb_1_1log_1_1_i_hb_logger_input_html"><div class="ttname"><a href="classhb_1_1log_1_1_i_hb_logger_input.html">hb::log::IHbLoggerInput</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> IHbLoggerInput.h:24</div></div>
 <div class="ttc" id="_hb_log_8h_html_ac71ca07a24581ca948d18d10aec2db08"><div class="ttname"><a href="_hb_log_8h.html#ac71ca07a24581ca948d18d10aec2db08">loguid</a></div><div class="ttdeci">quint16 loguid</div><div class="ttdoc">Integer range for log in/outputs. </div><div class="ttdef"><b>Definition:</b> HbLog.h:21</div></div>
@@ -214,7 +217,7 @@ $(document).ready(function(){initNavTree('_hb_logger_pool_8h_source.html','');})
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_9381a7bbd03577d6d8720c7f35c94ffa.html">log</a></li><li class="navelem"><a class="el" href="dir_57086d0e384fe5755f0805ea248e5088.html">inc</a></li><li class="navelem"><a class="el" href="_hb_logger_pool_8h.html">HbLoggerPool.h</a></li>
-    <li class="footer">Generated on Mon Mar 30 2015 21:04:27 for hb by
+    <li class="footer">Generated on Tue Sep 1 2015 21:12:56 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

@@ -32,6 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">hb
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
   </td>
  </tr>
@@ -137,14 +138,18 @@ $(document).ready(function(){initNavTree('_hb_network_8h_source.html','');});
 <div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="_hb_network_8h.html#a46b23fbc291c265649f7dd16ba5d3e48">   33</a></span>&#160;<span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code" href="_hb_network_8h.html#a46b23fbc291c265649f7dd16ba5d3e48">CLASS_CONTRACT</a> = 22; </div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#if !defined( HB_NETWORK_DECL )</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#    if defined( HB_NETWORK_BUILD )</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#        define HB_NETWORK_DECL Q_DECL_EXPORT</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#    else</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#        define HB_NETWORK_DECL Q_DECL_IMPORT</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#    endif</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#endif // HBNETWORK_H</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#   if defined( HB_SHARED )</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#       if defined( HB_NETWORK_SHARED )</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#           define HB_NETWORK_DECL Q_DECL_EXPORT</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#       else</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#           define HB_NETWORK_DECL Q_DECL_IMPORT</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#       endif</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#   else</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">#       define HB_NETWORK_DECL</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#   endif</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif // HBNETWORK_H</span></div>
 <div class="ttc" id="_hb_network_8h_html_abc98362450b17ccbc014c83c58f8f560"><div class="ttname"><a href="_hb_network_8h.html#abc98362450b17ccbc014c83c58f8f560">codeuid</a></div><div class="ttdeci">quint16 codeuid</div><div class="ttdoc">Integer range for code uid. </div><div class="ttdef"><b>Definition:</b> HbNetwork.h:24</div></div>
 <div class="ttc" id="_hb_network_8h_html_a2578848aad0e242f3f1a8a785d03f1e9"><div class="ttname"><a href="_hb_network_8h.html#a2578848aad0e242f3f1a8a785d03f1e9">CLASS_SOCKET</a></div><div class="ttdeci">const size_t CLASS_SOCKET</div><div class="ttdoc">Identifier for socket uids class. </div><div class="ttdef"><b>Definition:</b> HbNetwork.h:31</div></div>
 <div class="ttc" id="_hb_network_8h_html_aaa443b0fd502de5d630197b4312a5ef1"><div class="ttname"><a href="_hb_network_8h.html#aaa443b0fd502de5d630197b4312a5ef1">authstgy</a></div><div class="ttdeci">quint8 authstgy</div><div class="ttdoc">Integer range for auth strategies. </div><div class="ttdef"><b>Definition:</b> HbNetwork.h:27</div></div>
@@ -160,7 +165,7 @@ $(document).ready(function(){initNavTree('_hb_network_8h_source.html','');});
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c901c14b65aa229498a52b725b3d4a2c.html">network</a></li><li class="navelem"><a class="el" href="dir_65f3df0921bcb4ab1aa5b381c9060a44.html">inc</a></li><li class="navelem"><a class="el" href="_hb_network_8h.html">HbNetwork.h</a></li>
-    <li class="footer">Generated on Mon Mar 30 2015 21:04:28 for hb by
+    <li class="footer">Generated on Tue Sep 1 2015 21:12:57 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

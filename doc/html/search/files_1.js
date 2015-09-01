@@ -6,5 +6,6 @@ var searchData=
   ['ihbplugin_2eh',['IHbPlugin.h',['../_i_hb_plugin_8h.html',1,'']]],
   ['ihbsocketauthlistener_2eh',['IHbSocketAuthListener.h',['../_i_hb_socket_auth_listener_8h.html',1,'']]],
   ['ihbsocketlistener_2eh',['IHbSocketListener.h',['../_i_hb_socket_listener_8h.html',1,'']]],
+  ['ihbusercontractlistener_2eh',['IHbUserContractListener.h',['../_i_hb_user_contract_listener_8h.html',1,'']]],
   ['ihbuserlistener_2eh',['IHbUserListener.h',['../_i_hb_user_listener_8h.html',1,'']]]
 ];

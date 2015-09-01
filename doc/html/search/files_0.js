@@ -61,6 +61,7 @@ var searchData=
   ['hblogservice_2eh',['HbLogService.h',['../_hb_log_service_8h.html',1,'']]],
   ['hblogtcpsocketinput_2eh',['HbLogTcpSocketInput.h',['../_hb_log_tcp_socket_input_8h.html',1,'']]],
   ['hblogtcpsocketoutput_2eh',['HbLogTcpSocketOutput.h',['../_hb_log_tcp_socket_output_8h.html',1,'']]],
+  ['hblogudpsocketinput_2eh',['HbLogUdpSocketInput.h',['../_hb_log_udp_socket_input_8h.html',1,'']]],
   ['hblogwidget_2eh',['HbLogWidget.h',['../_hb_log_widget_8h.html',1,'']]],
   ['hbmultiplesortfilterproxymodel_2eh',['HbMultipleSortFilterProxyModel.h',['../_hb_multiple_sort_filter_proxy_model_8h.html',1,'']]],
   ['hbnetwork_2eh',['HbNetwork.h',['../_hb_network_8h.html',1,'']]],

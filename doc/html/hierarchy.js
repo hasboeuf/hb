@@ -42,6 +42,7 @@ var hierarchy =
     [ "hb::network::HbNetworkExchanges", "classhb_1_1network_1_1_hb_network_exchanges.html", null ],
     [ "hb::network::HbNetworkHeader", "classhb_1_1network_1_1_hb_network_header.html", null ],
     [ "hb::network::HbNetworkProtocol", "classhb_1_1network_1_1_hb_network_protocol.html", null ],
+    [ "hb::network::HbNetworkUserData", "classhb_1_1network_1_1_hb_network_user_data.html", null ],
     [ "hb::network::HbNetworkUserInfo", "classhb_1_1network_1_1_hb_network_user_info.html", null ],
     [ "hb::tools::HbNullable< T >", "classhb_1_1tools_1_1_hb_nullable.html", null ],
     [ "hb::link::HbO2Config", "classhb_1_1link_1_1_hb_o2_config.html", [
@@ -85,14 +86,16 @@ var hierarchy =
     [ "hb::tools::HbUid< loguid, CLASS_LOG, true >", "classhb_1_1tools_1_1_hb_uid.html", [
       [ "hb::log::HbLogAbstractInput", "classhb_1_1log_1_1_hb_log_abstract_input.html", [
         [ "hb::log::HbLogLocalSocketInput", "classhb_1_1log_1_1_hb_log_local_socket_input.html", null ],
-        [ "hb::log::HbLogTcpSocketInput", "classhb_1_1log_1_1_hb_log_tcp_socket_input.html", null ]
+        [ "hb::log::HbLogTcpSocketInput", "classhb_1_1log_1_1_hb_log_tcp_socket_input.html", null ],
+        [ "hb::log::HbLogUdpSocketInput", "classhb_1_1log_1_1_hb_log_udp_socket_input.html", null ]
       ] ],
       [ "hb::log::HbLogAbstractOutput", "classhb_1_1log_1_1_hb_log_abstract_output.html", [
         [ "hb::log::HbLogConsoleOutput", "classhb_1_1log_1_1_hb_log_console_output.html", null ],
         [ "hb::log::HbLogFileOutput", "classhb_1_1log_1_1_hb_log_file_output.html", null ],
         [ "hb::log::HbLogGuiOutput", "classhb_1_1log_1_1_hb_log_gui_output.html", null ],
         [ "hb::log::HbLogLocalSocketOutput", "classhb_1_1log_1_1_hb_log_local_socket_output.html", null ],
-        [ "hb::log::HbLogTcpSocketOutput", "classhb_1_1log_1_1_hb_log_tcp_socket_output.html", null ]
+        [ "hb::log::HbLogTcpSocketOutput", "classhb_1_1log_1_1_hb_log_tcp_socket_output.html", null ],
+        [ "hb::log::HbLogUdpSocketOutput", "classhb_1_1log_1_1_hb_log_udp_socket_output.html", null ]
       ] ]
     ] ],
     [ "hb::tools::HbUid< networkuid, CLASS_SERVER, true >", "classhb_1_1tools_1_1_hb_uid.html", [
@@ -112,28 +115,11 @@ var hierarchy =
       [ "hb::tools::HbTimeoutNetworkReply", "classhb_1_1tools_1_1_hb_timeout_network_reply.html", null ]
     ] ],
     [ "hb::network::IHbContractListener", "classhb_1_1network_1_1_i_hb_contract_listener.html", [
-      [ "hb::network::HbNetworkService", "classhb_1_1network_1_1_hb_network_service.html", [
-        [ "hb::network::HbAuthService", "classhb_1_1network_1_1_hb_auth_service.html", [
-          [ "hb::network::HbClientAuthService", "classhb_1_1network_1_1_hb_client_auth_service.html", null ],
-          [ "hb::network::HbServerAuthService", "classhb_1_1network_1_1_hb_server_auth_service.html", null ]
-        ] ],
-        [ "hb::network::HbChannelService", "classhb_1_1network_1_1_hb_channel_service.html", [
-          [ "hb::network::HbClientChannelService", "classhb_1_1network_1_1_hb_client_channel_service.html", null ],
-          [ "hb::network::HbNetworkChannel", "classhb_1_1network_1_1_hb_network_channel.html", [
-            [ "hb::network::HbClientChannel", "classhb_1_1network_1_1_hb_client_channel.html", [
-              [ "hb::network::HbClientPeopledChannel", "classhb_1_1network_1_1_hb_client_peopled_channel.html", null ]
-            ] ],
-            [ "hb::network::HbServerChannel", "classhb_1_1network_1_1_hb_server_channel.html", [
-              [ "hb::network::HbServerPeopledChannel", "classhb_1_1network_1_1_hb_server_peopled_channel.html", null ]
-            ] ]
-          ] ],
-          [ "hb::network::HbServerChannelService", "classhb_1_1network_1_1_hb_server_channel_service.html", null ]
-        ] ],
-        [ "hb::network::HbPresenceService", "classhb_1_1network_1_1_hb_presence_service.html", [
-          [ "hb::network::HbClientPresenceService", "classhb_1_1network_1_1_hb_client_presence_service.html", null ],
-          [ "hb::network::HbServerPresenceService", "classhb_1_1network_1_1_hb_server_presence_service.html", null ]
-        ] ]
-      ] ]
+      [ "hb::network::HbAuthService", "classhb_1_1network_1_1_hb_auth_service.html", [
+        [ "hb::network::HbClientAuthService", "classhb_1_1network_1_1_hb_client_auth_service.html", null ],
+        [ "hb::network::HbServerAuthService", "classhb_1_1network_1_1_hb_server_auth_service.html", null ]
+      ] ],
+      [ "hb::network::HbServerPresenceService", "classhb_1_1network_1_1_hb_server_presence_service.html", null ]
     ] ],
     [ "hb::log::IHbLoggerInput", "classhb_1_1log_1_1_i_hb_logger_input.html", [
       [ "hb::log::HbLogAbstractInput", "classhb_1_1log_1_1_hb_log_abstract_input.html", null ]
@@ -143,13 +129,31 @@ var hierarchy =
     ] ],
     [ "hb::plugin::IHbPlugin", "classhb_1_1plugin_1_1_i_hb_plugin.html", null ],
     [ "hb::network::IHbSocketAuthListener", "classhb_1_1network_1_1_i_hb_socket_auth_listener.html", [
-      [ "hb::network::HbPresenceService", "classhb_1_1network_1_1_hb_presence_service.html", null ]
+      [ "hb::network::HbPresenceService", "classhb_1_1network_1_1_hb_presence_service.html", [
+        [ "hb::network::HbClientPresenceService", "classhb_1_1network_1_1_hb_client_presence_service.html", null ],
+        [ "hb::network::HbServerPresenceService", "classhb_1_1network_1_1_hb_server_presence_service.html", null ]
+      ] ]
     ] ],
     [ "hb::network::IHbSocketListener", "classhb_1_1network_1_1_i_hb_socket_listener.html", [
       [ "hb::network::HbAuthService", "classhb_1_1network_1_1_hb_auth_service.html", null ]
     ] ],
+    [ "hb::network::IHbUserContractListener", "classhb_1_1network_1_1_i_hb_user_contract_listener.html", [
+      [ "hb::network::HbChannelService", "classhb_1_1network_1_1_hb_channel_service.html", [
+        [ "hb::network::HbClientChannelService", "classhb_1_1network_1_1_hb_client_channel_service.html", null ],
+        [ "hb::network::HbServerChannelService", "classhb_1_1network_1_1_hb_server_channel_service.html", null ]
+      ] ],
+      [ "hb::network::HbNetworkChannel", "classhb_1_1network_1_1_hb_network_channel.html", [
+        [ "hb::network::HbClientChannel", "classhb_1_1network_1_1_hb_client_channel.html", [
+          [ "hb::network::HbClientPeopledChannel", "classhb_1_1network_1_1_hb_client_peopled_channel.html", null ]
+        ] ],
+        [ "hb::network::HbServerChannel", "classhb_1_1network_1_1_hb_server_channel.html", [
+          [ "hb::network::HbServerPeopledChannel", "classhb_1_1network_1_1_hb_server_peopled_channel.html", null ]
+        ] ]
+      ] ]
+    ] ],
     [ "hb::network::IHbUserListener", "classhb_1_1network_1_1_i_hb_user_listener.html", [
-      [ "hb::network::HbChannelService", "classhb_1_1network_1_1_hb_channel_service.html", null ]
+      [ "hb::network::HbChannelService", "classhb_1_1network_1_1_hb_channel_service.html", null ],
+      [ "hb::network::HbServerPeopledChannel", "classhb_1_1network_1_1_hb_server_peopled_channel.html", null ]
     ] ],
     [ "hb::tools::ModelFilter", "classhb_1_1tools_1_1_model_filter.html", null ],
     [ "QDialog", null, [
@@ -200,7 +204,12 @@ var hierarchy =
         [ "hb::network::HbClientConnectionPool", "classhb_1_1network_1_1_hb_client_connection_pool.html", null ],
         [ "hb::network::HbServerConnectionPool", "classhb_1_1network_1_1_hb_server_connection_pool.html", null ]
       ] ],
-      [ "hb::network::HbNetworkService", "classhb_1_1network_1_1_hb_network_service.html", null ],
+      [ "hb::network::HbNetworkService", "classhb_1_1network_1_1_hb_network_service.html", [
+        [ "hb::network::HbAuthService", "classhb_1_1network_1_1_hb_auth_service.html", null ],
+        [ "hb::network::HbChannelService", "classhb_1_1network_1_1_hb_channel_service.html", null ],
+        [ "hb::network::HbNetworkChannel", "classhb_1_1network_1_1_hb_network_channel.html", null ],
+        [ "hb::network::HbPresenceService", "classhb_1_1network_1_1_hb_presence_service.html", null ]
+      ] ],
       [ "hb::network::HbNetworkUser", "classhb_1_1network_1_1_hb_network_user.html", null ],
       [ "hb::network::HbPeer", "classhb_1_1network_1_1_hb_peer.html", [
         [ "hb::network::HbClient", "classhb_1_1network_1_1_hb_client.html", null ],
@@ -229,6 +238,10 @@ var hierarchy =
     ] ],
     [ "QTimer", null, [
       [ "hb::tools::HbTimeoutNetworkReply", "classhb_1_1tools_1_1_hb_timeout_network_reply.html", null ]
+    ] ],
+    [ "QUdpSocket", null, [
+      [ "hb::log::HbLogUdpSocketInput", "classhb_1_1log_1_1_hb_log_udp_socket_input.html", null ],
+      [ "hb::log::HbLogUdpSocketOutput", "classhb_1_1log_1_1_hb_log_udp_socket_output.html", null ]
     ] ],
     [ "QWidget", null, [
       [ "hb::plugin::HbPluginListWidget", "classhb_1_1plugin_1_1_hb_plugin_list_widget.html", null ]

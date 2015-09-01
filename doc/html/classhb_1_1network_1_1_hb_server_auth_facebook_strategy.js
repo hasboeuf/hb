@@ -3,7 +3,7 @@ var classhb_1_1network_1_1_hb_server_auth_facebook_strategy =
     [ "HbServerAuthFacebookStrategy", "classhb_1_1network_1_1_hb_server_auth_facebook_strategy.html#ae252a42b2ed4fde3a59ea636e1b2a805", null ],
     [ "~HbServerAuthFacebookStrategy", "classhb_1_1network_1_1_hb_server_auth_facebook_strategy.html#aae4f0a0f3406a16162877b47164f4b5f", null ],
     [ "authFailed", "classhb_1_1network_1_1_hb_server_auth_facebook_strategy.html#ac968e92197a049c95460a37ebaf35381", null ],
-    [ "authSucceed", "classhb_1_1network_1_1_hb_server_auth_facebook_strategy.html#a9cb84c6b93b76688a33d89263ee1d64e", null ],
+    [ "authSucceed", "classhb_1_1network_1_1_hb_server_auth_facebook_strategy.html#af5c006e6cc7c13999b5622d0c1e8da8f", null ],
     [ "checkLogin", "classhb_1_1network_1_1_hb_server_auth_facebook_strategy.html#a6becb27e055cc143506c1524fd08cab4", null ],
     [ "onLinkFailed", "classhb_1_1network_1_1_hb_server_auth_facebook_strategy.html#a6c83fb1dccb20a4f5fd6684a2e95c617", null ],
     [ "onLinkSucceed", "classhb_1_1network_1_1_hb_server_auth_facebook_strategy.html#ac44698c3e890d0b2ea7c1f48af3737d3", null ],

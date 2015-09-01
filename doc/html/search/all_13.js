@@ -16,5 +16,6 @@ var searchData=
   ['_7eihbloggeroutput',['~IHbLoggerOutput',['../classhb_1_1log_1_1_i_hb_logger_output.html#a3a2ebeb63a40c1f04403121a25eb1755',1,'hb::log::IHbLoggerOutput']]],
   ['_7eihbsocketauthlistener',['~IHbSocketAuthListener',['../classhb_1_1network_1_1_i_hb_socket_auth_listener.html#afe3bd94ea0810a2bb6b572ffb1071a96',1,'hb::network::IHbSocketAuthListener']]],
   ['_7eihbsocketlistener',['~IHbSocketListener',['../classhb_1_1network_1_1_i_hb_socket_listener.html#a810c6fe59dadb775a8bba9aa323de403',1,'hb::network::IHbSocketListener']]],
+  ['_7eihbusercontractlistener',['~IHbUserContractListener',['../classhb_1_1network_1_1_i_hb_user_contract_listener.html#af73c561b1b673134d00234d4c024d74a',1,'hb::network::IHbUserContractListener']]],
   ['_7eihbuserlistener',['~IHbUserListener',['../classhb_1_1network_1_1_i_hb_user_listener.html#a288341b012287444361a8d20554a9eb2',1,'hb::network::IHbUserListener']]]
 ];

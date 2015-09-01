@@ -32,6 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">hb
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
   </td>
  </tr>
@@ -146,52 +147,52 @@ $(document).ready(function(){initNavTree('_hb_log_service_8h_source.html','');})
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keyword">static</span> <span class="keywordtype">void</span> processArgs( <span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[] );</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keyword">static</span> <span class="keywordtype">void</span> processArgs( QStringList args );</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <a class="code" href="classhb_1_1log_1_1_hb_log_service.html">HbLogService</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1log_1_1_hb_log_service.html">HbLogService</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="keyword">static</span> <span class="keywordtype">void</span> subscribe();</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <span class="keyword">static</span> <span class="keywordtype">void</span> processArgs( QStringList args );</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <a class="code" href="classhb_1_1log_1_1_hb_log_service.html">HbLogService</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1log_1_1_hb_log_service.html">HbLogService</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keyword">static</span> <span class="keywordtype">void</span> subscribe();</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            <span class="keyword">static</span> QThreadStorage&lt; HbLogManager * &gt; msManager;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        };</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a9d2daea04548f2dcead1c559ebd44eed">   84</a></span>&#160;<span class="preprocessor">#define HbLogBegin() HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_TRACE, &quot;BEGIN&quot;)</span></div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a4e80b941236079d60f1a62e46acf3de4">   90</a></span>&#160;<span class="preprocessor">#define HbLogEnd() HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_TRACE, &quot;END&quot;)</span></div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a9abc337e0a5ab9cf435da26c3490c2b3">   96</a></span>&#160;<span class="preprocessor">#define HbTrace( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_TRACE, message, ## __VA_ARGS__)</span></div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;</div>
-<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a421dbfacc24e8ed66975b365ee38186c">  102</a></span>&#160;<span class="preprocessor">#define HbDebug( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_DEBUG, message, ## __VA_ARGS__)</span></div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#af88e9c351ed7e7184c9b9b2e374fc1ac">  108</a></span>&#160;<span class="preprocessor">#define HbInfo( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_INFO, message, ## __VA_ARGS__)</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <span class="keyword">static</span> QThreadStorage&lt; HbLogManager * &gt; msManager;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        };</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a9d2daea04548f2dcead1c559ebd44eed">   85</a></span>&#160;<span class="preprocessor">#define HbLogBegin() HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_TRACE, &quot;BEGIN&quot;)</span></div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a4e80b941236079d60f1a62e46acf3de4">   91</a></span>&#160;<span class="preprocessor">#define HbLogEnd() HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_TRACE, &quot;END&quot;)</span></div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
+<div class="line"><a name="l00097"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a9abc337e0a5ab9cf435da26c3490c2b3">   97</a></span>&#160;<span class="preprocessor">#define HbTrace( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_TRACE, message, ## __VA_ARGS__)</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a421dbfacc24e8ed66975b365ee38186c">  103</a></span>&#160;<span class="preprocessor">#define HbDebug( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_DEBUG, message, ## __VA_ARGS__)</span></div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#af88e9c351ed7e7184c9b9b2e374fc1ac">  109</a></span>&#160;<span class="preprocessor">#define HbInfo( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_INFO, message, ## __VA_ARGS__)</span></div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a005f6514204444072bf4ac0a59f3f35e">  115</a></span>&#160;<span class="preprocessor">#define HbWarning( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_WARNING, message, ## __VA_ARGS__)</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#af1822a3956aa990e1bcd9bbae4ded358">  121</a></span>&#160;<span class="preprocessor">#define HbError( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_ERROR, message, ## __VA_ARGS__)</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a02128a1a1211f038eefed321b5868024">  127</a></span>&#160;<span class="preprocessor">#define HbCritical( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_CRITICAL, message, ## __VA_ARGS__)</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;</div>
-<div class="line"><a name="l00133"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a790eda60a1e2f801cddf520e93e9034c">  133</a></span>&#160;<span class="preprocessor">#define HbFatal( message, ... ) { HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="preprocessor">    .print( HbLogger::LEVEL_FATAL, message, ## __VA_ARGS__ ); qAbort(); }</span></div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a005f6514204444072bf4ac0a59f3f35e">  116</a></span>&#160;<span class="preprocessor">#define HbWarning( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_WARNING, message, ## __VA_ARGS__)</span></div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00122"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#af1822a3956aa990e1bcd9bbae4ded358">  122</a></span>&#160;<span class="preprocessor">#define HbError( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_ERROR, message, ## __VA_ARGS__)</span></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
+<div class="line"><a name="l00128"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a02128a1a1211f038eefed321b5868024">  128</a></span>&#160;<span class="preprocessor">#define HbCritical( message, ... ) HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="preprocessor">    .print(HbLogger::LEVEL_CRITICAL, message, ## __VA_ARGS__)</span></div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
+<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="_hb_log_service_8h.html#a790eda60a1e2f801cddf520e93e9034c">  134</a></span>&#160;<span class="preprocessor">#define HbFatal( message, ... ) { HbLogContext( __FILE__, __LINE__, Q_FUNC_INFO ) \</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="preprocessor">    .print( HbLogger::LEVEL_FATAL, message, ## __VA_ARGS__ ); qAbort(); }</span></div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="preprocessor">#endif // HBLOGSERVICE_H</span></div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="preprocessor">#endif // HBLOGSERVICE_H</span></div>
 <div class="ttc" id="classhb_1_1log_1_1_hb_log_service_html"><div class="ttname"><a href="classhb_1_1log_1_1_hb_log_service.html">hb::log::HbLogService</a></div><div class="ttdoc">HbLogService is the front-end class of HbLog. </div><div class="ttdef"><b>Definition:</b> HbLogService.h:37</div></div>
 <div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">Base namespace of HB module. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
 <div class="ttc" id="classhb_1_1log_1_1_hb_logger_inputs_html"><div class="ttname"><a href="classhb_1_1log_1_1_hb_logger_inputs.html">hb::log::HbLoggerInputs</a></div><div class="ttdoc">HbLoggerInputs handles log inputs. </div><div class="ttdef"><b>Definition:</b> HbLoggerInputs.h:32</div></div>
@@ -206,7 +207,7 @@ $(document).ready(function(){initNavTree('_hb_log_service_8h_source.html','');})
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_9381a7bbd03577d6d8720c7f35c94ffa.html">log</a></li><li class="navelem"><a class="el" href="dir_57086d0e384fe5755f0805ea248e5088.html">inc</a></li><li class="navelem"><a class="el" href="_hb_log_service_8h.html">HbLogService.h</a></li>
-    <li class="footer">Generated on Mon Mar 30 2015 21:04:27 for hb by
+    <li class="footer">Generated on Tue Sep 1 2015 21:12:56 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

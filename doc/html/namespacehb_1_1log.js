@@ -23,6 +23,8 @@ var namespacehb_1_1log =
     [ "HbLogService", "classhb_1_1log_1_1_hb_log_service.html", null ],
     [ "HbLogTcpSocketInput", "classhb_1_1log_1_1_hb_log_tcp_socket_input.html", "classhb_1_1log_1_1_hb_log_tcp_socket_input" ],
     [ "HbLogTcpSocketOutput", "classhb_1_1log_1_1_hb_log_tcp_socket_output.html", "classhb_1_1log_1_1_hb_log_tcp_socket_output" ],
+    [ "HbLogUdpSocketInput", "classhb_1_1log_1_1_hb_log_udp_socket_input.html", "classhb_1_1log_1_1_hb_log_udp_socket_input" ],
+    [ "HbLogUdpSocketOutput", "classhb_1_1log_1_1_hb_log_udp_socket_output.html", "classhb_1_1log_1_1_hb_log_udp_socket_output" ],
     [ "HbLogWidget", "classhb_1_1log_1_1_hb_log_widget.html", "classhb_1_1log_1_1_hb_log_widget" ],
     [ "IHbLoggerInput", "classhb_1_1log_1_1_i_hb_logger_input.html", "classhb_1_1log_1_1_i_hb_logger_input" ],
     [ "IHbLoggerOutput", "classhb_1_1log_1_1_i_hb_logger_output.html", "classhb_1_1log_1_1_i_hb_logger_output" ]

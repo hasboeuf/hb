@@ -6,5 +6,6 @@ var classhb_1_1network_1_1_hb_server =
     [ "isReady", "classhb_1_1network_1_1_hb_server.html#a94e8d997320b6c8aa592e4f452225604", null ],
     [ "joinTcpServer", "classhb_1_1network_1_1_hb_server.html#ad2cfa87745f8e6257a65d6b8047061fe", null ],
     [ "leave", "classhb_1_1network_1_1_hb_server.html#a89a1a6cfe9abd9b3755c0ad362291ccf", null ],
+    [ "registerChannel", "classhb_1_1network_1_1_hb_server.html#a81b3b1652f58238166089f4e20f8ccb6", null ],
     [ "serverStatusChanged", "classhb_1_1network_1_1_hb_server.html#a2487fa0d4b9d066ad86b79fcd6c837fa", null ]
 ];

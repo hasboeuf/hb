@@ -9,6 +9,9 @@ var dir_c9de6dd7e7aefe3a64e65d66e237f877 =
     [ "IHbSocketListener.h", "_i_hb_socket_listener_8h.html", [
       [ "IHbSocketListener", "classhb_1_1network_1_1_i_hb_socket_listener.html", "classhb_1_1network_1_1_i_hb_socket_listener" ]
     ] ],
+    [ "IHbUserContractListener.h", "_i_hb_user_contract_listener_8h.html", [
+      [ "IHbUserContractListener", "classhb_1_1network_1_1_i_hb_user_contract_listener.html", "classhb_1_1network_1_1_i_hb_user_contract_listener" ]
+    ] ],
     [ "IHbUserListener.h", "_i_hb_user_listener_8h.html", [
       [ "IHbUserListener", "classhb_1_1network_1_1_i_hb_user_listener.html", "classhb_1_1network_1_1_i_hb_user_listener" ]
     ] ]

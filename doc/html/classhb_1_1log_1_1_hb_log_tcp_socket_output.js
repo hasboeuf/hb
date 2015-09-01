@@ -5,7 +5,8 @@ var classhb_1_1log_1_1_hb_log_tcp_socket_output =
       [ "OUTPUT_GUI", "classhb_1_1log_1_1_hb_log_tcp_socket_output.html#ad5c3ae3f20035976d0fef28d67325dafaba9cfb4978266688a64e6327d4a8440e", null ],
       [ "OUTPUT_FILE", "classhb_1_1log_1_1_hb_log_tcp_socket_output.html#ad5c3ae3f20035976d0fef28d67325dafac12f9040e13fc67a54a0a663f7c50608", null ],
       [ "OUTPUT_LOCAL_SOCKET", "classhb_1_1log_1_1_hb_log_tcp_socket_output.html#ad5c3ae3f20035976d0fef28d67325dafaed14a3dba66548c0717ec0f02a7e518d", null ],
-      [ "OUTPUT_TCP_SOCKET", "classhb_1_1log_1_1_hb_log_tcp_socket_output.html#ad5c3ae3f20035976d0fef28d67325dafa4dbc4bf2cbc9ab72f28f6ea5b1611732", null ]
+      [ "OUTPUT_TCP_SOCKET", "classhb_1_1log_1_1_hb_log_tcp_socket_output.html#ad5c3ae3f20035976d0fef28d67325dafa4dbc4bf2cbc9ab72f28f6ea5b1611732", null ],
+      [ "OUTPUT_UDP_SOCKET", "classhb_1_1log_1_1_hb_log_tcp_socket_output.html#ad5c3ae3f20035976d0fef28d67325dafa69a22ebc1c054d3109144318ad05ab5e", null ]
     ] ],
     [ "HbLogTcpSocketOutput", "classhb_1_1log_1_1_hb_log_tcp_socket_output.html#af694326e7952c904bf2e020e836293ad", null ],
     [ "HbLogTcpSocketOutput", "classhb_1_1log_1_1_hb_log_tcp_socket_output.html#a9859ea7f605eb917821753242b9626a4", null ],

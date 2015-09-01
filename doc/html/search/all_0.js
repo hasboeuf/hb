@@ -7,5 +7,7 @@ var searchData=
   ['addlocalsocketoutput',['addLocalSocketOutput',['../classhb_1_1log_1_1_hb_logger_outputs.html#ac7a20bfef9a3af5b50d221bdd9555e03',1,'hb::log::HbLoggerOutputs']]],
   ['addtcpsocketinput',['addTcpSocketInput',['../classhb_1_1log_1_1_hb_logger_inputs.html#a36916e6c93e30a695e57153f36899d7e',1,'hb::log::HbLoggerInputs']]],
   ['addtcpsocketoutput',['addTcpSocketOutput',['../classhb_1_1log_1_1_hb_logger_outputs.html#a43431e0de18187eeb3f53f5a7b3efaca',1,'hb::log::HbLoggerOutputs']]],
+  ['addudpsocketinput',['addUdpSocketInput',['../classhb_1_1log_1_1_hb_logger_inputs.html#a2b4c36c0f303abe782076fd56dfce9f6',1,'hb::log::HbLoggerInputs']]],
+  ['addudpsocketoutput',['addUdpSocketOutput',['../classhb_1_1log_1_1_hb_logger_outputs.html#afa5a322a208658d2926f275e41290f38',1,'hb::log::HbLoggerOutputs']]],
   ['authstgy',['authstgy',['../_hb_network_8h.html#aaa443b0fd502de5d630197b4312a5ef1',1,'HbNetwork.h']]]
 ];

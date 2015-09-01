@@ -34,6 +34,7 @@ var namespacehb_1_1network =
     [ "HbNetworkProtocol", "classhb_1_1network_1_1_hb_network_protocol.html", "classhb_1_1network_1_1_hb_network_protocol" ],
     [ "HbNetworkService", "classhb_1_1network_1_1_hb_network_service.html", "classhb_1_1network_1_1_hb_network_service" ],
     [ "HbNetworkUser", "classhb_1_1network_1_1_hb_network_user.html", "classhb_1_1network_1_1_hb_network_user" ],
+    [ "HbNetworkUserData", "classhb_1_1network_1_1_hb_network_user_data.html", "classhb_1_1network_1_1_hb_network_user_data" ],
     [ "HbNetworkUserInfo", "classhb_1_1network_1_1_hb_network_user_info.html", "classhb_1_1network_1_1_hb_network_user_info" ],
     [ "HbPeer", "classhb_1_1network_1_1_hb_peer.html", "classhb_1_1network_1_1_hb_peer" ],
     [ "HbPresenceContract", "classhb_1_1network_1_1_hb_presence_contract.html", "classhb_1_1network_1_1_hb_presence_contract" ],
@@ -70,6 +71,7 @@ var namespacehb_1_1network =
     [ "IHbContractListener", "classhb_1_1network_1_1_i_hb_contract_listener.html", "classhb_1_1network_1_1_i_hb_contract_listener" ],
     [ "IHbSocketAuthListener", "classhb_1_1network_1_1_i_hb_socket_auth_listener.html", "classhb_1_1network_1_1_i_hb_socket_auth_listener" ],
     [ "IHbSocketListener", "classhb_1_1network_1_1_i_hb_socket_listener.html", "classhb_1_1network_1_1_i_hb_socket_listener" ],
+    [ "IHbUserContractListener", "classhb_1_1network_1_1_i_hb_user_contract_listener.html", "classhb_1_1network_1_1_i_hb_user_contract_listener" ],
     [ "IHbUserListener", "classhb_1_1network_1_1_i_hb_user_listener.html", "classhb_1_1network_1_1_i_hb_user_listener" ],
     [ "TcpServer", "classhb_1_1network_1_1_tcp_server.html", "classhb_1_1network_1_1_tcp_server" ]
 ];

@@ -13,6 +13,8 @@ var searchData=
   ['ihbsocketauthlistener_2eh',['IHbSocketAuthListener.h',['../_i_hb_socket_auth_listener_8h.html',1,'']]],
   ['ihbsocketlistener',['IHbSocketListener',['../classhb_1_1network_1_1_i_hb_socket_listener.html',1,'hb::network']]],
   ['ihbsocketlistener_2eh',['IHbSocketListener.h',['../_i_hb_socket_listener_8h.html',1,'']]],
+  ['ihbusercontractlistener',['IHbUserContractListener',['../classhb_1_1network_1_1_i_hb_user_contract_listener.html',1,'hb::network']]],
+  ['ihbusercontractlistener_2eh',['IHbUserContractListener.h',['../_i_hb_user_contract_listener_8h.html',1,'']]],
   ['ihbuserlistener',['IHbUserListener',['../classhb_1_1network_1_1_i_hb_user_listener.html',1,'hb::network']]],
   ['ihbuserlistener_2eh',['IHbUserListener.h',['../_i_hb_user_listener_8h.html',1,'']]],
   ['init',['init',['../classhb_1_1plugin_1_1_i_hb_plugin.html#a52771292824cd1a1c97fef2d991ce1fc',1,'hb::plugin::IHbPlugin']]],

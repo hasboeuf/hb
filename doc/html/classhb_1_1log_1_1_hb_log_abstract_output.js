@@ -5,7 +5,8 @@ var classhb_1_1log_1_1_hb_log_abstract_output =
       [ "OUTPUT_GUI", "classhb_1_1log_1_1_hb_log_abstract_output.html#ad5c3ae3f20035976d0fef28d67325dafaba9cfb4978266688a64e6327d4a8440e", null ],
       [ "OUTPUT_FILE", "classhb_1_1log_1_1_hb_log_abstract_output.html#ad5c3ae3f20035976d0fef28d67325dafac12f9040e13fc67a54a0a663f7c50608", null ],
       [ "OUTPUT_LOCAL_SOCKET", "classhb_1_1log_1_1_hb_log_abstract_output.html#ad5c3ae3f20035976d0fef28d67325dafaed14a3dba66548c0717ec0f02a7e518d", null ],
-      [ "OUTPUT_TCP_SOCKET", "classhb_1_1log_1_1_hb_log_abstract_output.html#ad5c3ae3f20035976d0fef28d67325dafa4dbc4bf2cbc9ab72f28f6ea5b1611732", null ]
+      [ "OUTPUT_TCP_SOCKET", "classhb_1_1log_1_1_hb_log_abstract_output.html#ad5c3ae3f20035976d0fef28d67325dafa4dbc4bf2cbc9ab72f28f6ea5b1611732", null ],
+      [ "OUTPUT_UDP_SOCKET", "classhb_1_1log_1_1_hb_log_abstract_output.html#ad5c3ae3f20035976d0fef28d67325dafa69a22ebc1c054d3109144318ad05ab5e", null ]
     ] ],
     [ "~HbLogAbstractOutput", "classhb_1_1log_1_1_hb_log_abstract_output.html#a70f019aa86b36ef4d26ded7a3fe04807", null ],
     [ "HbLogAbstractOutput", "classhb_1_1log_1_1_hb_log_abstract_output.html#a88d96a279a1c78b52b2d15a794179ef3", null ],

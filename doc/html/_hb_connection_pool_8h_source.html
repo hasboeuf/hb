@@ -32,6 +32,7 @@
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
    <div id="projectname">hb
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
   </td>
  </tr>
@@ -126,7 +127,7 @@ $(document).ready(function(){initNavTree('_hb_connection_pool_8h_source.html',''
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_hb_network_8h.html">HbNetwork.h</a>&gt;</span></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_hb_general_config_8h.html">config/peer/HbGeneralConfig.h</a>&gt;</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_hb_tcp_server_config_8h.html">config/com/HbTcpServerConfig.h</a>&gt;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;<a class="code" href="_hb_network_user_info_8h.html">user/HbNetworkUserInfo.h</a>&gt;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#include &lt;user/HbNetworkUserData.h&gt;</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacehb.html">hb</a></div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;{</div>
@@ -144,29 +145,29 @@ $(document).ready(function(){initNavTree('_hb_connection_pool_8h_source.html',''
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <span class="keyword">virtual</span> ~<a class="code" href="classhb_1_1network_1_1_hb_connection_pool.html">HbConnectionPool</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> leave() = 0;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">protected</span>:</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;            <span class="keywordtype">void</span> setExchanges( <a class="code" href="classhb_1_1network_1_1_hb_network_exchanges.html">HbNetworkExchanges</a> &amp; exchanges );</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">public</span> <a class="code" href="_hb_global_8h.html#adf58ebd8df5633101b11b2b056ab09c0">callbacks</a>:</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="comment">// From services.</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="comment">//virtual void onSocketContractToSend( networkuid receiver, HbNetworkContract * contract )            = 0;</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="comment">//virtual void onUserContractToSend  ( const HbNetworkUserInfo &amp; user, HbNetworkContract * contract ) = 0;</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onReadyContractToSend ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> * contract )                           = 0;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> addChannel( <a class="code" href="classhb_1_1network_1_1_hb_network_channel.html">HbNetworkChannel</a> * channel ) <span class="keyword">final</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keyword">protected</span>:</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="keywordtype">void</span> setExchanges( <a class="code" href="classhb_1_1network_1_1_hb_network_exchanges.html">HbNetworkExchanges</a> &amp; exchanges );</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;        <span class="keyword">public</span> <a class="code" href="_hb_global_8h.html#adf58ebd8df5633101b11b2b056ab09c0">callbacks</a>:</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="comment">// From services.</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onUserContractToSend ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_data.html">HbNetworkUserData</a> &amp; user_data, <a class="code" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> * contract ) = 0;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onReadyContractToSend( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> * contract ) = 0;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <span class="comment">// From HbAuthService.</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSocketAuthenticated  ( <a class="code" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_uid, <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info )     = 0;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSocketAuthenticated  ( <a class="code" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_uid, <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info ) = 0;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> onSocketUnauthenticated( <a class="code" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_uid, quint8 try_number, quint8 max_tries, <span class="keyword">const</span> QString &amp; reason ) = 0;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        signals:</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            <span class="comment">// To services.</span></div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            <span class="keywordtype">void</span> socketConnected       ( <a class="code" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_uid );</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <span class="keywordtype">void</span> socketDisconnected    ( <a class="code" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_uid );</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordtype">void</span> socketAuthenticated   ( <a class="code" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_uid );</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keywordtype">void</span> socketUnauthenticated ( <a class="code" href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a> socket_uid );</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <span class="keywordtype">void</span> socketAuthenticated   ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_data.html">HbNetworkUserData</a> &amp; user_data );</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keywordtype">void</span> socketUnauthenticated ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_data.html">HbNetworkUserData</a> &amp; user_data );</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordtype">void</span> socketContractReceived( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> * contract );</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordtype">void</span> userConnected         ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info );</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordtype">void</span> userDisconnected      ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info );</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordtype">void</span> userContractReceived  ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_info.html">HbNetworkUserInfo</a> &amp; user_info, <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> * contract );</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            <span class="keywordtype">void</span> userConnected         ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_data.html">HbNetworkUserData</a> &amp; user_data );</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            <span class="keywordtype">void</span> userDisconnected      ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_data.html">HbNetworkUserData</a> &amp; user_data );</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            <span class="keywordtype">void</span> userContractReceived  ( <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_user_data.html">HbNetworkUserData</a> &amp; user_data, <span class="keyword">const</span> <a class="code" href="classhb_1_1network_1_1_hb_network_contract.html">HbNetworkContract</a> * contract );</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="keyword">virtual</span> <span class="keywordtype">void</span> reset();</div>
@@ -204,7 +205,7 @@ $(document).ready(function(){initNavTree('_hb_connection_pool_8h_source.html',''
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="preprocessor">#endif // HBCONNECTIONPOOL_H</span></div>
 <div class="ttc" id="_hb_general_config_8h_html"><div class="ttname"><a href="_hb_general_config_8h.html">HbGeneralConfig.h</a></div></div>
-<div class="ttc" id="classhb_1_1network_1_1_hb_network_contract_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_contract.html">hb::network::HbNetworkContract</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkContract.h:36</div></div>
+<div class="ttc" id="classhb_1_1network_1_1_hb_network_contract_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_contract.html">hb::network::HbNetworkContract</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkContract.h:34</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_network_exchanges_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_exchanges.html">hb::network::HbNetworkExchanges</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkExchanges.h:29</div></div>
 <div class="ttc" id="_hb_global_8h_html_adf58ebd8df5633101b11b2b056ab09c0"><div class="ttname"><a href="_hb_global_8h.html#adf58ebd8df5633101b11b2b056ab09c0">callbacks</a></div><div class="ttdeci">#define callbacks</div><div class="ttdoc">Convenient macro to scope a method used as a slot by using the new Qt5 connect syntax. </div><div class="ttdef"><b>Definition:</b> HbGlobal.h:276</div></div>
 <div class="ttc" id="_hb_network_8h_html"><div class="ttname"><a href="_hb_network_8h.html">HbNetwork.h</a></div></div>
@@ -212,18 +213,19 @@ $(document).ready(function(){initNavTree('_hb_connection_pool_8h_source.html',''
 <div class="ttc" id="_hb_network_8h_html_ae3323e239df32b25b05d6ae01913083e"><div class="ttname"><a href="_hb_network_8h.html#ae3323e239df32b25b05d6ae01913083e">serviceuid</a></div><div class="ttdeci">quint16 serviceuid</div><div class="ttdoc">Integer range for service uid. </div><div class="ttdef"><b>Definition:</b> HbNetwork.h:23</div></div>
 <div class="ttc" id="namespacehb_html"><div class="ttname"><a href="namespacehb.html">hb</a></div><div class="ttdoc">Base namespace of HB module. </div><div class="ttdef"><b>Definition:</b> HbO2ClientConfig.h:19</div></div>
 <div class="ttc" id="_hb_tcp_server_config_8h_html"><div class="ttname"><a href="_hb_tcp_server_config_8h.html">HbTcpServerConfig.h</a></div></div>
+<div class="ttc" id="classhb_1_1network_1_1_hb_network_user_data_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_user_data.html">hb::network::HbNetworkUserData</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkUserData.h:28</div></div>
+<div class="ttc" id="classhb_1_1network_1_1_hb_network_channel_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_channel.html">hb::network::HbNetworkChannel</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkChannel.h:28</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_connection_pool_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_connection_pool.html">hb::network::HbConnectionPool</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbConnectionPool.h:32</div></div>
-<div class="ttc" id="_hb_network_user_info_8h_html"><div class="ttname"><a href="_hb_network_user_info_8h.html">HbNetworkUserInfo.h</a></div></div>
 <div class="ttc" id="_hb_network_8h_html_a1017af4ddc52368dabe338132173c800"><div class="ttname"><a href="_hb_network_8h.html#a1017af4ddc52368dabe338132173c800">networkuid</a></div><div class="ttdeci">quint32 networkuid</div><div class="ttdoc">Integer range for socket/server uid. </div><div class="ttdef"><b>Definition:</b> HbNetwork.h:22</div></div>
 <div class="ttc" id="classhb_1_1network_1_1_hb_network_service_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_service.html">hb::network::HbNetworkService</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkService.h:31</div></div>
-<div class="ttc" id="classhb_1_1network_1_1_hb_network_user_info_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_user_info.html">hb::network::HbNetworkUserInfo</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkUserInfo.h:27</div></div>
+<div class="ttc" id="classhb_1_1network_1_1_hb_network_user_info_html"><div class="ttname"><a href="classhb_1_1network_1_1_hb_network_user_info.html">hb::network::HbNetworkUserInfo</a></div><div class="ttdoc">TODOC. </div><div class="ttdef"><b>Definition:</b> HbNetworkUserInfo.h:30</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_c901c14b65aa229498a52b725b3d4a2c.html">network</a></li><li class="navelem"><a class="el" href="dir_65f3df0921bcb4ab1aa5b381c9060a44.html">inc</a></li><li class="navelem"><a class="el" href="_hb_connection_pool_8h.html">HbConnectionPool.h</a></li>
-    <li class="footer">Generated on Mon Mar 30 2015 21:04:28 for hb by
+    <li class="footer">Generated on Tue Sep 1 2015 21:12:57 for hb by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

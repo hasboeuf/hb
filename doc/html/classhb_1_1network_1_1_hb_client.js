@@ -9,5 +9,6 @@ var classhb_1_1network_1_1_hb_client =
     [ "isReady", "classhb_1_1network_1_1_hb_client.html#a94e8d997320b6c8aa592e4f452225604", null ],
     [ "joinTcpClient", "classhb_1_1network_1_1_hb_client.html#a5fa45b08709d4f97be3579d6bf89b5da", null ],
     [ "leave", "classhb_1_1network_1_1_hb_client.html#a7858e53f0ea132784e00578df246777a", null ],
-    [ "meStatusChanged", "classhb_1_1network_1_1_hb_client.html#a735179bede7e34bc5adb6daee9c99420", null ]
+    [ "meStatusChanged", "classhb_1_1network_1_1_hb_client.html#a735179bede7e34bc5adb6daee9c99420", null ],
+    [ "registerChannel", "classhb_1_1network_1_1_hb_client.html#a09834969a7110927a5e0130efcbaff18", null ]
 ];

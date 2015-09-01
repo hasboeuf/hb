@@ -10,6 +10,8 @@ var classhb_1_1log_1_1_hb_logger_pool =
     [ "addLocalSocketOutput", "classhb_1_1log_1_1_hb_logger_pool.html#a54d0f3c6648cf6e17be0f4dcc977d092", null ],
     [ "addTcpSocketInput", "classhb_1_1log_1_1_hb_logger_pool.html#ab53c4713f15948e8bef8c482f2725d2a", null ],
     [ "addTcpSocketOutput", "classhb_1_1log_1_1_hb_logger_pool.html#afeb96eb57362a7bc81941fa491b01288", null ],
+    [ "addUdpSocketInput", "classhb_1_1log_1_1_hb_logger_pool.html#aa26a21a5f4267230917b31b029951d1c", null ],
+    [ "addUdpSocketOutput", "classhb_1_1log_1_1_hb_logger_pool.html#a7135baa1d30bfa396cdbc46b8630bf47", null ],
     [ "enqueueMessage", "classhb_1_1log_1_1_hb_logger_pool.html#a8eda348526a4282125711366552206d7", null ],
     [ "input", "classhb_1_1log_1_1_hb_logger_pool.html#a7ab9d14dd391d9999948b7ee329d27f6", null ],
     [ "output", "classhb_1_1log_1_1_hb_logger_pool.html#a79d5f068d10f33224dd5ac3515065919", null ],
