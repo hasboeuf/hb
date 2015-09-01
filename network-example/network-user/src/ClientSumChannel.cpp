@@ -34,7 +34,7 @@ serviceuid ClientSumChannel::uid() const
 
 void ClientSumChannel::onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract )
 {
-    // TODO
+
 }
 
 void ClientSumChannel::requestSum( quint32 a, quint32 b )

@@ -34,5 +34,5 @@ serviceuid ClientChatChannel::uid() const
 
 void ClientChatChannel::onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract )
 {
-    // TODO
+
 }

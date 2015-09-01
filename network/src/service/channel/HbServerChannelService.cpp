@@ -70,7 +70,7 @@ void HbServerChannelService::onUserContractReceived( const HbNetworkUserData & u
     if( !channel )
     {
         HbError( "Null channel %d.", channel_uid );
-        // TODO Kick user
+        //! \todo Kick user
         delete contract;
         return;
     }

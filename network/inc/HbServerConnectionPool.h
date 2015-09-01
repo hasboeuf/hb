@@ -52,7 +52,7 @@ namespace hb
             void onSocketContractReceived( networkuid server_uid, networkuid socket_uid, const HbNetworkContract * contract );
 
             // From services.
-            void onSocketContractToSend( networkuid receiver, HbNetworkContract * contract ); // TODO clean
+            void onSocketContractToSend( networkuid receiver, HbNetworkContract * contract ); //! \todo clean
             void onUserContractToSend  ( const HbNetworkUserData & user_data, HbNetworkContract * contract ) override;
             void onReadyContractToSend ( const HbNetworkContract * contract ) override;
             void onUserToKick  ( const HbNetworkUserData & user_data, netwint reason, const QString & description );
