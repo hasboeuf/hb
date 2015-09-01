@@ -1,5 +1,6 @@
 // Qt
 // Hb
+#include <HbLogService.h>
 // Local
 #include <service/channel/HbServerChannelService.h>
 #include <service/channel/HbServerChannel.h>
@@ -61,8 +62,20 @@ HbServerChannel * HbServerChannelService::channel( serviceuid channel_uid )
 
 void HbServerChannelService::onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract )
 {
-    Q_UNUSED( user_data )
-    Q_UNUSED( contract )
+    q_assert_ptr( contract );
+
+    serviceuid channel_uid = contract->header().service();
+
+    HbServerChannel * channel = this->channel( channel_uid );
+    if( !channel )
+    {
+        HbError( "Null channel %d.", channel_uid );
+        // TODO Kick user
+        delete contract;
+        return;
+    }
+
+    channel->onUserContractReceived( user_data, contract );
 }
 
 void HbServerChannelService::onUserConnected( const HbNetworkUserData & user_data )
