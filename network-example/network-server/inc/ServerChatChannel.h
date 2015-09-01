@@ -23,7 +23,7 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL ServerChatChannel : public hb::network::HbServerPeopledChannel
+        class ServerChatChannel : public hb::network::HbServerPeopledChannel
         {
         public:
 

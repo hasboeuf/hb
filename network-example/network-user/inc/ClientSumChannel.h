@@ -23,7 +23,7 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL ClientSumChannel : public hb::network::HbClientChannel
+        class ClientSumChannel : public hb::network::HbClientChannel
         {
         public:
 
