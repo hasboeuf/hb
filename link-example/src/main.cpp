@@ -12,11 +12,18 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    if( argc >= 3 )
+    {
+        hb::linkexample::LinkMainWindow::msClientId     = QString( argv[1] );
+        hb::linkexample::LinkMainWindow::msClientSecret = QString( argv[2] );
+    }
+
     hb::tools::HbApplicationHelper::initApp( "hb-io", "hb-io.com" );
     hb::tools::HbApplicationHelper::initSkin( "fusion" );
     hb::log::HbLogService::processArgs( argc, argv );
 
     hb::linkexample::LinkMainWindow w;
+
     w.show();
 
     return a.exec();
