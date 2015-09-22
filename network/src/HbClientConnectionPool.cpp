@@ -47,6 +47,8 @@ HbClientConnectionPool::HbClientConnectionPool( const HbGeneralClientConfig & co
 
     foreach( HbNetworkService * service, mServices )
     {
+        q_assert_ptr( service );
+
         // Contract.
         //connect( service, &HbNetworkService::socketContractToSend, this, &HbConnectionPool::onSocketContractToSend );
         //connect( service, &HbNetworkService::userContractToSend,   this, &HbConnectionPool::onUserContractToSend   );

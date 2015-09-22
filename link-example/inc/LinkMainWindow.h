@@ -35,6 +35,9 @@ namespace hb
             explicit LinkMainWindow(QWidget * parent = nullptr);
             virtual ~LinkMainWindow();
 
+            static QString msClientId;
+            static QString msClientSecret;
+
         private:
             hb::link::HbO2ClientFacebook * mpFacebookClient;
             hb::link::HbO2ServerFacebook * mpFacebookServer;

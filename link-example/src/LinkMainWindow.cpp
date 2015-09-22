@@ -17,6 +17,9 @@ using namespace hb::log;
 using namespace hb::link;
 using namespace hb::linkexample;
 
+QString LinkMainWindow::msClientId     = "940633959281250";                  // Fake value.
+QString LinkMainWindow::msClientSecret = "74621eedf9aa2cde9cd31dc5c4d3c440"; // Fake value.
+
 LinkMainWindow::LinkMainWindow(QWidget * parent) :
     QMainWindow( parent )
 {
@@ -66,7 +69,7 @@ void LinkMainWindow::onConnectClicked()
     connect( mpFacebookClient, &HbO2Client::openBrowser, this, &LinkMainWindow::onOpenBrower );
     connect( mpFacebookClient, &HbO2::linkSucceed, this, &LinkMainWindow::onClientLinkSucceed );
 
-    mpFacebookClient->config().setClientId( "940633959281250" );
+    mpFacebookClient->config().setClientId( msClientId );
     mpFacebookClient->config().setLocalPort( 8080 );
     mpFacebookClient->config().addScope( FB_PERMISSION_EMAIL );
     mpFacebookClient->config().addScope( FB_PERMISSION_FRIENDS );
@@ -97,7 +100,7 @@ void LinkMainWindow::onClientLinkSucceed()
     connect( mpFacebookServer, &HbO2ServerFacebook::linkSucceed, this, &LinkMainWindow::onServerLinkSucceed, Qt::UniqueConnection );
 
     mpFacebookServer->config().setClientId( mpFacebookClient->config().clientId() );
-    mpFacebookServer->config().setClientSecret( "74621eedf9aa2cde9cd31dc5c4d3c440" );
+    mpFacebookServer->config().setClientSecret( msClientSecret );
     mpFacebookServer->setRedirectUri( mpFacebookClient->redirectUri() );
     mpFacebookServer->setCode( mpFacebookClient->code() );
 

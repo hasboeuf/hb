@@ -36,7 +36,7 @@ void HbConnectionPool::setExchanges( HbNetworkExchanges & exchanges )
 
     foreach( HbNetworkService * service, mServices )
     {
-        service->plugContracts( exchanges );
+        q_assert_ptr( service )->plugContracts( exchanges );
     }
 }
 
@@ -44,7 +44,7 @@ void HbConnectionPool::reset()
 {
     foreach( HbNetworkService * service, mServices )
     {
-        service->reset();
+        q_assert_ptr( service )->reset();
     }
 }
 
