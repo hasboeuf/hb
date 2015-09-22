@@ -40,13 +40,11 @@ namespace hb
             const QString & ip() const;
             quint32 port() const;
 
-        private:
-            void onReconnection();
-
         signals:
             void inputMessageReceived( HbLogMessage * message );
 
         private callbacks:
+            void onReconnection();
             void onReadyRead();
 
         private:

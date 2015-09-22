@@ -46,7 +46,7 @@ void HbLogUdpSocketInput::onReconnection()
 {
     if( !bind( QHostAddress( mIp ), mPort ) )
     {
-        QTimer::singleShot( 5000, this, SLOT( onReconnection() ) );
+        QTimer::singleShot( 5000, this, &HbLogUdpSocketInput::onReconnection );
     }
 }
 

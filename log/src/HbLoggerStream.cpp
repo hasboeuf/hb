@@ -1,5 +1,6 @@
 // Qt
 #include <QtCore/QDebug>
+#include <QtNetwork/QAbstractSocket>
 // Hb
 #include <HbLoggerStream.h>
 #include <HbLogManager.h>
@@ -12,4 +13,6 @@ HbLoggerStream::HbLoggerStream( HbLogManager * parent ) :
     QObject( parent )
 {
     q_assert_x( parent, "HbLoggerStream", "HbLogManager not defined" );
+
+    qRegisterMetaType< QAbstractSocket::SocketError >( "QAbstractSocket::SocketError" );
 }
