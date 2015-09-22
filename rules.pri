@@ -178,9 +178,7 @@
     BUILD.CONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
     contains( $${MODULE.NAME}.LINKTYPE, staticlib ) {
         BUILD.CONFIG = $$replaceString( BUILD.CONFIG,, _static )
-        win32 {
-            BUILD.CONFIG = $$replace( BUILD.CONFIG, \\+, p ) # ar compiler does not handle path with '+' symbol.
-        }
+        BUILD.CONFIG = $$replace( BUILD.CONFIG, \\+, p ) # ar compiler does not handle path with '+' symbol.
     }
 
     CONFIG( debug, debug|release ): BUILD.MODE = debug
@@ -235,11 +233,10 @@
         MODULE_LIB      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/lib
         MODULE_BIN      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/bin
         MODULE_CONFIG   = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
+
         contains( $${MODULE_NAME}.LINKTYPE, staticlib ) {
             MODULE_CONFIG = $$replaceString( MODULE_CONFIG,, _static )
-            win32 {
-                $$replace( MODULE_CONFIG, +, p ) # ar compiler does not handle path with '+' symbol.
-            }
+            MODULE_CONFIG = $$replace( MODULE_CONFIG, \\+, p ) # ar compiler does not handle path with '+' symbol.
         }
 
         PACKAGES = $$eval($$MODULE_NAME)
@@ -772,4 +769,4 @@ unset( DELIVERY_BIN      )
 # -------------------
 
 # Default rules for deployment.
-include(deployment.pri)
+#include(deployment.pri)
