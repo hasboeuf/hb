@@ -33,7 +33,9 @@ HbLoggerPool::HbLoggerPool( QThread * thread ) :
 HbLoggerPool::~HbLoggerPool()
 {
     // Dequeueing events
-    q_assert_ptr( mpClock )->stop();
+    q_assert_ptr( mpClock )->deleteLater();
+    mpClock = nullptr;
+
     QCoreApplication::processEvents( QEventLoop::ExcludeUserInputEvents );
 
     qDeleteAll( mInputs ); // Disconnect inputs.
@@ -461,9 +463,9 @@ void HbLoggerPool::running()
 {
 
     q_assert( mpClock == nullptr );
-    mpClock = q_check_ptr( new QTimer( this ) );
+    mpClock = q_check_ptr( new QTimer() );
 
-    q_assert( connect(mpClock, &QTimer::timeout,
+    q_assert( connect( mpClock, &QTimer::timeout,
         this, &HbLoggerPool::process, Qt::UniqueConnection ) );
 
     mpClock->setInterval( 1 );
