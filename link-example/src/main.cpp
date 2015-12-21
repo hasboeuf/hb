@@ -17,6 +17,10 @@ int main(int argc, char *argv[])
         hb::linkexample::LinkMainWindow::msClientId     = QString( argv[1] );
         hb::linkexample::LinkMainWindow::msClientSecret = QString( argv[2] );
     }
+    else
+    {
+        std::cout << "Missing args." << std::endl;
+    }
 
     hb::tools::HbApplicationHelper::initApp( "hb-io", "hb-io.com" );
     hb::tools::HbApplicationHelper::initSkin( "fusion" );
