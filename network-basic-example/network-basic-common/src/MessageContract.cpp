@@ -9,6 +9,7 @@ MessageContract::MessageContract() :
     HbNetworkContract( Protocol::SERVICE_MESSAGE,
                        Protocol::CODE_SRV_MESSAGE )
 {
+    setRouting( HbNetworkProtocol::ROUTING_MULTICAST );
     mMessage = "";
 }
 

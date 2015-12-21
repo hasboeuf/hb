@@ -9,6 +9,7 @@ ResponseContract::ResponseContract() :
     HbNetworkContract( Protocol::SERVICE_QUESTION,
                        Protocol::CODE_SRV_RESPONSE )
 {
+    setRouting( HbNetworkProtocol::ROUTING_UNICAST );
     mResponse = "";
 }
 

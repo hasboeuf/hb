@@ -44,7 +44,7 @@ namespace hb
             virtual void setRequest( const QString & request ) final;
 
         protected:
-            RequestContract * create() const;
+            virtual RequestContract * create() const override;
 
         protected:
             QString mRequest;

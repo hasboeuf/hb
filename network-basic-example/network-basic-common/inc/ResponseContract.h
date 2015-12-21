@@ -41,7 +41,7 @@ namespace hb
             virtual void setResponse( const QString & response ) final;
 
         protected:
-            ResponseContract * create() const;
+            virtual ResponseContract * create() const override;
 
         protected:
             QString mResponse;
