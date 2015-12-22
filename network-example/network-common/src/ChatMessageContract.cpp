@@ -33,9 +33,9 @@ ChatMessageContract & ChatMessageContract::operator=(const ChatMessageContract &
     return ( *this );
 }
 
-ChatMessageContract * ChatMessageContract::create( ) const
+ChatMessageContract * ChatMessageContract::create() const
 {
-    return new ChatMessageContract( );
+    return new ChatMessageContract();
 }
 
 const QString ChatMessageContract::toString( ) const

@@ -39,7 +39,7 @@ namespace hb
             HbAuthStatusContract( const HbAuthStatusContract & source );
             HbAuthStatusContract & operator=( const HbAuthStatusContract & source );
 
-            HbAuthStatusContract * create() const override;
+            virtual HbAuthStatusContract * create() const override;
 
             virtual bool read ( QDataStream & stream ) override;
             virtual bool write( QDataStream & stream ) const override;

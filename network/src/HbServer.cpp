@@ -18,6 +18,11 @@ HbServer::HbServer(const HbGeneralServerConfig & config ) :
     }
 }
 
+HbServer::~HbServer()
+{
+
+}
+
 networkuid HbServer::joinTcpServer( HbTcpServerConfig & config , bool main )
 {
     if( !isReady() ) return false;
@@ -28,9 +33,4 @@ bool HbServer::leave()
 {
     if( !isReady() ) return false;
     return mConnectionPool.leave();
-}
-
-bool HbServer::registerChannel( HbNetworkChannel * channel )
-{
-    return mConnectionPool.addChannel( channel );
 }

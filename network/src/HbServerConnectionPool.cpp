@@ -10,7 +10,7 @@
 #include <service/auth/HbServerAuthService.h>
 #include <service/auth/HbServerAuthFacebookStrategy.h>
 #include <service/channel/HbServerChannelService.h>
-#include <user/HbNetworkUser.h>
+#include <user/HbServerUser.h>
 
 using namespace hb::network;
 
@@ -47,14 +47,24 @@ HbServerConnectionPool::HbServerConnectionPool( const HbGeneralServerConfig & co
     {
         q_assert_ptr( service );
 
-        // Contract.
-        //connect( service, &HbNetworkService::socketContractToSend, this, &HbConnectionPool::onSocketContractToSend );
-        //connect( service, &HbNetworkService::userContractToSend,   this, &HbConnectionPool::onUserContractToSend   );
-        connect( service, &HbNetworkService::readyContractToSend,  this, &HbConnectionPool::onReadyContractToSend  );
+        // From services.
+        connect( service, &HbNetworkService::contractToSend,      this, &HbServerConnectionPool::onContractToSend );
+        connect( service, &HbNetworkService::userContractToSend,  this, &HbServerConnectionPool::onUserContractToSend );
+        connect( service, &HbNetworkService::usersContractToSend, this, &HbServerConnectionPool::onUsersContractToSend );
+        connect( service, &HbNetworkService::userToKick,          this, &HbServerConnectionPool::onUserToKick );
+        connect( service, &HbNetworkService::socketToKick,        this, &HbServerConnectionPool::onSocketToKick );
 
-        // Kick
-        connect( service, &HbNetworkService::userToKick,   this, &HbServerConnectionPool::onUserToKick );
-        connect( service, &HbNetworkService::socketToKick, this, &HbServerConnectionPool::onSocketToKick );
+        // To services.
+        // Contract listener.
+        IHbContractListener * contract_listener = dynamic_cast< IHbContractListener * >( service );
+        if( contract_listener )
+        {
+            connect( this, &HbConnectionPool::socketContractReceived,
+                    [contract_listener]( const HbNetworkContract * contract )
+                    {
+                        contract_listener->onContractReceived( contract );
+                    } );
+        }
 
         // Socket.
         IHbSocketListener * socket_listener = dynamic_cast< IHbSocketListener * >( service );
@@ -77,14 +87,14 @@ HbServerConnectionPool::HbServerConnectionPool( const HbGeneralServerConfig & co
         if( socket_auth_listener )
         {
             connect( this, &HbConnectionPool::socketAuthenticated,
-                    [socket_auth_listener]( const HbNetworkUserData & user_data )
+                    [socket_auth_listener]( networkuid socket_uid )
                     {
-                        socket_auth_listener->onSocketAuthenticated( user_data );
+                        socket_auth_listener->onSocketAuthenticated( socket_uid );
                     } );
             connect( this, &HbConnectionPool::socketUnauthenticated,
-                    [socket_auth_listener]( const HbNetworkUserData & user_data )
+                    [socket_auth_listener]( networkuid socket_uid )
                     {
-                        socket_auth_listener->onSocketUnauthenticated( user_data );
+                        socket_auth_listener->onSocketUnauthenticated( socket_uid );
                     } );
         }
 
@@ -93,14 +103,25 @@ HbServerConnectionPool::HbServerConnectionPool( const HbGeneralServerConfig & co
         if( user_listener )
         {
             connect( this, &HbConnectionPool::userConnected,
-                    [user_listener]( const HbNetworkUserData & user_data )
+                    [user_listener]( ShConstHbNetworkUserInfo user_info )
                     {
-                        user_listener->onUserConnected( user_data );
+                        user_listener->onUserConnected( user_info );
                     } );
             connect( this, &HbConnectionPool::userDisconnected,
-                    [user_listener]( const HbNetworkUserData & user_data )
+                    [user_listener]( ShConstHbNetworkUserInfo user_info )
                     {
-                        user_listener->onUserDisconnected( user_data );
+                        user_listener->onUserDisconnected( user_info );
+                    } );
+        }
+
+        // User contract listener.
+        IHbServerUserContractListener * user_contract_listener = dynamic_cast< IHbServerUserContractListener * >( service );
+        if( user_contract_listener )
+        {
+            connect( this, &HbConnectionPool::userContractReceived,
+                    [user_contract_listener]( ShConstHbNetworkUserInfo user_info, const HbNetworkContract * contract )
+                    {
+                        user_contract_listener->onUserContractReceived( user_info, contract );
                     } );
         }
     }
@@ -113,11 +134,11 @@ HbServerConnectionPool::~HbServerConnectionPool()
 
 networkuid HbServerConnectionPool::joinTcpServer( HbTcpServerConfig & config , bool main )
 {
-    networkuid uid = 0;
+    networkuid network_uid = 0;
     if( main && mMainServer > 0 )
     {
         HbError( "Impossible to create two main clients." );
-        return uid;
+        return network_uid;
     }
 
     HbTcpServer * server = new HbTcpServer();
@@ -136,15 +157,23 @@ networkuid HbServerConnectionPool::joinTcpServer( HbTcpServerConfig & config , b
         return 0;
     }
 
-    uid = server->uid();
+    network_uid = server->uid();
 
-    mServers.insert( uid, server );
-    if( main )
+    foreach( HbNetworkChannel * channel, config.channels() )
     {
-        mMainServer = uid;
+        if( addChannel( channel ) )
+        {
+            channel->setNetworkUid( network_uid );
+        }
     }
 
-    return uid;
+    mServers.insert( network_uid, server );
+    if( main )
+    {
+        mMainServer = network_uid;
+    }
+
+    return network_uid;
 }
 
 bool HbServerConnectionPool::leave()
@@ -228,8 +257,6 @@ void HbServerConnectionPool::onServerDisconnected( networkuid server_uid )
 
 void HbServerConnectionPool::onSocketConnected( networkuid server_uid, networkuid socket_uid )
 {
-    HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
-    q_assert_ptr( server );
     q_assert( mServers.contains( server_uid ) );
 
     HbInfo( "Socket %d on server %d connected.", server_uid, socket_uid );
@@ -242,15 +269,13 @@ void HbServerConnectionPool::onSocketConnected( networkuid server_uid, networkui
 
 void HbServerConnectionPool::onSocketDisconnected( networkuid server_uid, networkuid socket_uid )
 {
-    HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
-    q_assert_ptr( server );
     q_assert( mServers.contains( server_uid ) );
     q_assert( mServerBySocketId.contains( socket_uid ) );
     q_assert( mPendingSockets.contains( socket_uid ) || mUserBySocketId.contains( socket_uid ) );
 
     mServerBySocketId.remove( socket_uid );
 
-    HbNetworkUser * user = isSocketAuthenticated( socket_uid );
+    HbServerUser * user = isSocketAuthenticated( socket_uid );
     if( !user )
     {
         HbInfo( "Unauthenticated socket %d on server %d disconnected.", server_uid, socket_uid );
@@ -262,22 +287,19 @@ void HbServerConnectionPool::onSocketDisconnected( networkuid server_uid, networ
     else
     {
         q_assert( mUserByEmail.contains( user->info().data()->email() ) );
-        mUserByEmail.remove( user->info().data()->email() );
+        mUserByEmail.remove( user->info()->email() );
         mUserBySocketId.remove( socket_uid );
 
-        HbNetworkUserData user_data = user->createData( server_uid );
         delete user;
 
         // Notifying...
-        emit socketUnauthenticated( user_data ); // To IHbSocketAuthListener.
-        emit userDisconnected( user_data ); // To IHbUserListener.
+        emit socketUnauthenticated( socket_uid ); // To IHbSocketAuthListener.
+        emit userDisconnected( user->info() ); // To IHbUserListener.
     }
 }
 
 void HbServerConnectionPool::onSocketContractReceived( networkuid server_uid, networkuid socket_uid, const HbNetworkContract * contract )
 {
-    HbAbstractServer * server = dynamic_cast< HbAbstractServer * >( sender() );
-    q_assert_ptr( server );
     q_assert( mServers.contains( server_uid ) );
 
     HbInfo( "Contract received from socket %d on server %d.", socket_uid, server_uid );
@@ -290,7 +312,7 @@ void HbServerConnectionPool::onSocketContractReceived( networkuid server_uid, ne
             HbLatin1( HbNetworkProtocol::MetaService::toString( requested_service ) ),
             HbLatin1( HbNetworkProtocol::MetaCode::toString( contract->header().code() ) ) );
 
-    HbNetworkUser * user = isSocketAuthenticated( socket_uid );
+    HbServerUser * user = isSocketAuthenticated( socket_uid );
     if( !user )
     {
         if( requested_service != HbNetworkProtocol::SERVICE_AUTH )
@@ -319,9 +341,9 @@ void HbServerConnectionPool::onSocketContractReceived( networkuid server_uid, ne
     else
     {
         q_assert_ptr( user );
-        IHbUserContractListener * auth_service = dynamic_cast< IHbUserContractListener * >(service);
+        IHbServerUserContractListener * auth_service = dynamic_cast< IHbServerUserContractListener * >(service);
         q_assert_ptr( auth_service );
-        auth_service->onUserContractReceived( user->createData( socket_uid ), contract );
+        auth_service->onUserContractReceived( user->info(), contract );
     }
 }
 
@@ -341,9 +363,37 @@ void HbServerConnectionPool::onSocketContractToSend( networkuid receiver, HbNetw
     server->send( ShConstHbNetworkContract( contract ) );
 }
 
-void HbServerConnectionPool::onUserContractToSend( const HbNetworkUserData & user_data, HbNetworkContract * contract )
+void HbServerConnectionPool::onUsersContractToSend( QList< ShConstHbNetworkUserInfo > users_infos, HbNetworkContract * contract )
 {
-    HbNetworkUser * user = getUser( user_data );
+    q_assert_ptr( contract );
+    networkuid server_uid = contract->networkReceiver();
+    q_assert( server_uid != 0 );
+    q_assert( contract->receivers().size() == 0 );
+
+    foreach( ShConstHbNetworkUserInfo user_info, users_infos )
+    {
+        HbServerUser * user = getUser( user_info );
+        if( !user )
+        {
+            HbWarning( "User %d is disconnected." );
+            break;
+        }
+
+        networkuid socket_uid = user->socketUid( server_uid );
+        contract->addSocketReceiver( socket_uid );
+    }
+
+    onContractToSend( contract );
+}
+
+void HbServerConnectionPool::onUserContractToSend( ShConstHbNetworkUserInfo user_info, HbNetworkContract * contract )
+{
+    q_assert_ptr( contract );
+    networkuid server_uid = contract->networkReceiver();
+    q_assert( server_uid != 0 );
+    q_assert( contract->receivers().size() == 0 );
+
+    HbServerUser * user = getUser( user_info );
     if( !user )
     {
         HbWarning( "User %d is disconnected. Contract not sent." );
@@ -351,13 +401,13 @@ void HbServerConnectionPool::onUserContractToSend( const HbNetworkUserData & use
         return;
     }
 
-    foreach( networkuid socket_uid, user->socketsUid() )
-    {
-        contract->addSocketReceiver( socket_uid );
-    }
+    networkuid socket_uid = user->socketUid( server_uid );
+    contract->addSocketReceiver( socket_uid );
+
+    onContractToSend( contract );
 }
 
-void HbServerConnectionPool::onReadyContractToSend ( const HbNetworkContract * contract )
+void HbServerConnectionPool::onContractToSend ( const HbNetworkContract * contract )
 {
     q_assert_ptr( contract );
 
@@ -391,9 +441,9 @@ void HbServerConnectionPool::onReadyContractToSend ( const HbNetworkContract * c
     }
 }
 
-void HbServerConnectionPool::onUserToKick( const HbNetworkUserData & user_data, netwint reason, const QString & description )
+void HbServerConnectionPool::onUserToKick( ShConstHbNetworkUserInfo user_info, netwint reason, const QString & description )
 {
-    HbNetworkUser * user = getUser( user_data );
+    HbServerUser * user = getUser( user_info );
     q_assert_ptr( user );
 
     kickUser( user, reason, description );
@@ -403,7 +453,7 @@ void HbServerConnectionPool::onSocketToKick( networkuid socket_uid, netwint reas
 {
     q_assert( mServerBySocketId.contains( socket_uid ) );
 
-    HbNetworkUser * user = mUserBySocketId.value( socket_uid, nullptr );
+    HbServerUser * user = mUserBySocketId.value( socket_uid, nullptr );
     if( user )
     {
         kickUser( user, reason, description );
@@ -414,7 +464,7 @@ void HbServerConnectionPool::onSocketToKick( networkuid socket_uid, netwint reas
     }
 }
 
-void HbServerConnectionPool::kickUser( HbNetworkUser * user, netwint reason, const QString & description )
+void HbServerConnectionPool::kickUser( HbServerUser * user, netwint reason, const QString & description )
 {
     q_assert_ptr( user );
 
@@ -450,15 +500,21 @@ void HbServerConnectionPool::onSocketAuthenticated( networkuid socket_uid, const
         return;
     }
 
-    HbNetworkUser * user = new HbNetworkUser();
+    HbServerUser * user = new HbServerUser();
     user->setInfo( user_info );
-    user->setMainSocketUid( socket_uid );
+
+    q_assert( mServerBySocketId.contains( socket_uid ) );
+
+    networkuid server_uid = mServerBySocketId.value( socket_uid );
+
+    user->addSocket( server_uid, socket_uid, true );
 
     mPendingSockets.remove( socket_uid );
     mUserBySocketId.insert( socket_uid, user );
     mUserByEmail.insert( user_info.email(), user );
 
-    emit socketAuthenticated( user->createData( socket_uid ) ); // To IHbUserListener.
+    emit socketAuthenticated( socket_uid ); // To IHbSocketAuthListener.
+    emit userConnected( user->info() );     // To IHbUserListener.
 }
 
 void HbServerConnectionPool::onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason )
@@ -469,12 +525,11 @@ void HbServerConnectionPool::onSocketUnauthenticated( networkuid socket_uid, qui
 
     q_assert( mUserBySocketId.contains( socket_uid ) );
 
-    HbNetworkUser * user = mUserBySocketId.value( socket_uid, nullptr );
+    HbServerUser * user = mUserBySocketId.value( socket_uid, nullptr );
     q_assert_ptr( user );
     q_assert( user->mainSocketUid() == socket_uid );
     q_assert( mUserByEmail.contains( user->info().data()->email() ) );
 
-    user->setMainSocketUid( 0 );
     mUserByEmail.remove( user->info().data()->email() );
 
     foreach( networkuid socket, user->socketsUid() )
@@ -484,7 +539,7 @@ void HbServerConnectionPool::onSocketUnauthenticated( networkuid socket_uid, qui
 
     //! \todo Send reason to HbServer.
 
-    emit socketUnauthenticated( user->createData( socket_uid ) );
+    emit socketUnauthenticated( socket_uid );
 
     delete user;
 }
@@ -497,12 +552,12 @@ void HbServerConnectionPool::onSocketLagged( networkuid socket_uid, quint16 last
                kick_threshold - last_presence );
 }
 
-HbNetworkUser * HbServerConnectionPool::isSocketAuthenticated( networkuid socket_uid )
+HbServerUser * HbServerConnectionPool::isSocketAuthenticated( networkuid socket_uid )
 {
     return mUserBySocketId.value( socket_uid, nullptr );
 }
 
-HbNetworkUser * HbServerConnectionPool::getUser( const HbNetworkUserData & user_data )
+HbServerUser * HbServerConnectionPool::getUser( ShConstHbNetworkUserInfo user_info )
 {
-    return mUserByEmail.value( user_data.info()->email(), nullptr );
+    return mUserByEmail.value( user_info->email(), nullptr );
 }

@@ -16,6 +16,7 @@
 #include <service/channel/HbClientChannel.h> // Covariance.
 // Local
 #include <HbNetwork.h>
+#include <listener/IHbClientUserContractListener.h>
 #include <service/channel/HbChannelService.h>
 #include <config/service/channel/HbServiceChannelClientConfig.h>
 
@@ -24,10 +25,12 @@ namespace hb
     namespace network
     {
 
+        class HbClientPeopledChannel;
+
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbClientChannelService : public HbChannelService
+        class HB_NETWORK_DECL HbClientChannelService : public HbChannelService, public IHbClientUserContractListener
         {
         public:
 
@@ -36,23 +39,23 @@ namespace hb
 
             virtual void reset() override;
 
-            virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
-
             const HbServiceChannelClientConfig & config() const;
             void setConfig( const HbServiceChannelClientConfig & config );
 
             virtual bool addChannel( HbNetworkChannel * channel ) override;
             virtual HbClientChannel * channel( serviceuid channel_uid ) override;
 
+            void processContract( const HbNetworkContract * contract );
+
         public callbacks:
-            virtual void onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract ) override;
-            virtual void onUserConnected       ( const HbNetworkUserData & user_data ) override;
-            virtual void onUserDisconnected    ( const HbNetworkUserData & user_data ) override;
+            virtual void onUserContractReceived( const HbNetworkContract * contract ) override;
+            virtual void onUserConnected       ( ShConstHbNetworkUserInfo user_info ) override;
+            virtual void onUserDisconnected    ( ShConstHbNetworkUserInfo user_info ) override;
 
         private:
             HbServiceChannelClientConfig mConfig;
 
-            QHash< serviceuid, HbClientChannel * > mChannels;
+            QHash< serviceuid, HbClientPeopledChannel * > mPeopledChannels;
 
         };
     }

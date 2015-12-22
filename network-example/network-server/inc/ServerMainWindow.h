@@ -35,6 +35,9 @@ namespace hb
             explicit ServerMainWindow( QWidget * parent = nullptr );
             virtual ~ServerMainWindow();
 
+            static QString msClientId;
+            static QString msClientSecret;
+
         public slots:
             void onServerStatusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status );
 

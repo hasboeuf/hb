@@ -9,6 +9,7 @@ ResponseSumContract::ResponseSumContract( ) :
     HbNetworkContract( Protocol::CHANNEL_SUM,
                        Protocol::CODE_SRV_RESPONSE_SUM )
 {
+    setRouting( HbNetworkProtocol::ROUTING_UNICAST );
     mResult = 0;
 }
 

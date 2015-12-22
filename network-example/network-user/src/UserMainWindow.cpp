@@ -24,12 +24,17 @@
 #include <UserMainWindow.h>
 #include <ClientSumChannel.h>
 #include <ClientChatChannel.h>
+#include <ChatMessageContract.h>
+#include <RequestSumContract.h>
+
 
 using namespace hb::tools;
 using namespace hb::log;
 using namespace hb::link;
 using namespace hb::network;
 using namespace hb::networkexample;
+
+QString UserMainWindow::msClientId = "940633959281250";                      // Fake value.
 
 UserMainWindow::UserMainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -49,7 +54,7 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     setWindowTitle( "User" );
 
     HbO2ClientConfig facebook_config;
-    facebook_config.setClientId( "940633959281250" );
+    facebook_config.setClientId( msClientId );
     facebook_config.setLocalPort( 8080 );
     facebook_config.addScope( FB_PERMISSION_EMAIL );
     facebook_config.addScope( FB_PERMISSION_FRIENDS );
@@ -60,13 +65,13 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     config.auth().enableFacebookAuth( facebook_config );
     config.presence().setKeepAliveInterval( 4 );
 
-    mpHbClient       = new HbClient( config );
+    mpHbClient    = new HbClient( config );
 
-    mpSumChannel = new ClientSumChannel();
-    q_assert( mpHbClient->registerChannel( mpSumChannel ) );
-
+    mpSumChannel  = new ClientSumChannel();
     mpChatChannel = new ClientChatChannel();
-    q_assert( mpHbClient->registerChannel( mpChatChannel ) );
+
+    connect( mpSumChannel,  &ClientSumChannel::computationReceived,  this, &UserMainWindow::onComputationReceived );
+    connect( mpChatChannel, &ClientChatChannel::chatMessageReceived, this, &UserMainWindow::onChatMessageReceived );
 
     connect( ui_qpb_start,               &QPushButton::clicked, this, &UserMainWindow::onStartClicked );
     connect( ui_qpb_stop,                &QPushButton::clicked, this, &UserMainWindow::onStopClicked );
@@ -98,10 +103,13 @@ void UserMainWindow::onStartClicked()
     config.setReconnectionDelay( 0 );
     config.setBadHeaderTolerant( false );
 
-    networkuid server_uid = mpHbClient->joinTcpClient( config, true );
-    if( server_uid > 0 )
+    config.assignChannel( mpSumChannel  );
+    config.assignChannel( mpChatChannel );
+
+    networkuid client_uid = mpHbClient->joinTcpClient( config, true );
+    if( client_uid > 0 )
     {
-        HbInfo( "Client %d started.", server_uid );
+        HbInfo( "Client %d started.", client_uid );
     }
 
     HbLogEnd();
@@ -114,12 +122,13 @@ void UserMainWindow::onStopClicked()
 
 void UserMainWindow::onSendClicked()
 {
-    HbWarning( "TODO" );
+    mpChatChannel->sendMessage( ui_qle_chat->text() );
+    ui_qle_chat->clear();
 }
 
 void UserMainWindow::onComputeClicked()
 {
-    HbWarning( "TODO" );
+    mpSumChannel->requestSum( ui_qsb_a->value(), ui_qsb_b->value() );
 }
 
 void UserMainWindow::onFacebookAuthRequest()
@@ -162,14 +171,14 @@ void UserMainWindow::onMeStatusChanged( HbNetworkProtocol::UserStatus status )
     }
 }
 
-void UserMainWindow::onChatUserJoined( const HbNetworkUserData & user_data )
+void UserMainWindow::onChatUserJoined( ShConstHbNetworkUserInfo user_info )
 {
-    ui_qte_chat->append( QString( "%1 joined." ).arg( user_data.info()->nickname() ) );
+    ui_qte_chat->append( QString( "%1 joined." ).arg( user_info->nickname() ) );
 }
 
-void UserMainWindow::onChatUserLeft  ( const HbNetworkUserData & user_data )
+void UserMainWindow::onChatUserLeft  ( ShConstHbNetworkUserInfo user_info )
 {
-    ui_qte_chat->append( QString( "%1 left." ).arg( user_data.info()->nickname() ) );
+    ui_qte_chat->append( QString( "%1 left." ).arg( user_info->nickname() ) );
 }
 
 void UserMainWindow::onChatMessageReceived( const QString & author, const QString & message )
@@ -186,7 +195,7 @@ void UserMainWindow::onComputationReceived( qint32 result )
 
 void UserMainWindow::resetGui()
 {
-    ui_qle_text->clear();
+    ui_qle_chat->clear();
     ui_qte_chat->clear();
     ui_qsb_a->clear();
     ui_qsb_b->clear();

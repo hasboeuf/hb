@@ -16,6 +16,7 @@
 // Local
 #include <HbNetwork.h>
 #include <service/presence/HbPresenceService.h>
+#include <listener/IHbContractListener.h>
 #include <config/service/presence/HbServicePresenceServerConfig.h>
 
 class QTimerEvent;
@@ -27,7 +28,9 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbServerPresenceService : public HbPresenceService, public IHbContractListener
+        class HB_NETWORK_DECL HbServerPresenceService :
+            public HbPresenceService,
+            public IHbContractListener
         {
             Q_OBJECT
 
@@ -45,9 +48,9 @@ namespace hb
             void timerEvent( QTimerEvent * );
 
         public callbacks:
-            void onSocketAuthenticated  ( const HbNetworkUserData & user_data ) override;
-            void onSocketUnauthenticated( const HbNetworkUserData & user_data ) override;
-            void onContractReceived( const HbNetworkContract * contract ) override;
+            virtual void onSocketAuthenticated  ( networkuid socket_uid ) override;
+            virtual void onSocketUnauthenticated( networkuid socket_uid ) override;
+            virtual void onContractReceived( const HbNetworkContract * contract ) override;
 
         signals:
             void socketLagged( networkuid socket_uid, quint16 last_presence, quint16 kick_threshold );

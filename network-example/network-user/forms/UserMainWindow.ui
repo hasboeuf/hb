@@ -91,7 +91,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <item>
-               <widget class="QLineEdit" name="ui_qle_text"/>
+               <widget class="QLineEdit" name="ui_qle_chat"/>
               </item>
               <item>
                <widget class="QPushButton" name="ui_qpb_send">

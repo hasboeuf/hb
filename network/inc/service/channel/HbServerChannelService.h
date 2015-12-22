@@ -16,6 +16,7 @@
 #include <service/channel/HbServerChannel.h> // Covariance.
 // Local
 #include <HbNetwork.h>
+#include <listener/IHbServerUserContractListener.h>
 #include <service/channel/HbChannelService.h>
 #include <config/service/channel/HbServiceChannelServerConfig.h>
 
@@ -24,10 +25,12 @@ namespace hb
     namespace network
     {
 
+        class HbServerPeopledChannel;
+
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbServerChannelService : public HbChannelService
+        class HB_NETWORK_DECL HbServerChannelService : public HbChannelService, public IHbServerUserContractListener
         {
         public:
 
@@ -36,8 +39,6 @@ namespace hb
 
             virtual void reset() override;
 
-            void plugContracts( HbNetworkExchanges & exchanges ) override;
-
             const HbServiceChannelServerConfig & config() const;
             void setConfig( const HbServiceChannelServerConfig & config );
 
@@ -45,14 +46,19 @@ namespace hb
             virtual HbServerChannel * channel( serviceuid channel_uid ) override;
 
         public callbacks:
-            virtual void onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract ) override;
-            virtual void onUserConnected       ( const HbNetworkUserData & user_data ) override;
-            virtual void onUserDisconnected    ( const HbNetworkUserData & user_data ) override;
+            // From HbConnectionPool.
+            virtual void onUserContractReceived( ShConstHbNetworkUserInfo user_info, const HbNetworkContract * contract ) override;
+            virtual void onUserConnected       ( ShConstHbNetworkUserInfo user_info ) override;
+            virtual void onUserDisconnected    ( ShConstHbNetworkUserInfo user_info ) override;
+
+            // From channels.
+            void onUserContractToSend ( ShConstHbNetworkUserInfo user_info,             HbNetworkContract * contract );
+            void onUsersContractToSend( QList< ShConstHbNetworkUserInfo > users_infos,  HbNetworkContract * contract );
+            void onUserToKick  ( ShConstHbNetworkUserInfo user_info, netwint reason, const QString & description = QString() );
 
         private:
             HbServiceChannelServerConfig mConfig;
-
-            QHash< serviceuid, HbServerChannel * > mChannels;
+            QHash< serviceuid, HbServerPeopledChannel * > mPeopledChannels;
         };
     }
 }

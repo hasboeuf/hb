@@ -26,7 +26,7 @@ namespace hb
     namespace network
     {
         class HbAbstractServer;
-        class HbNetworkUser;
+        class HbServerUser;
 
         /*!
          * TODOC
@@ -53,9 +53,10 @@ namespace hb
 
             // From services.
             void onSocketContractToSend( networkuid receiver, HbNetworkContract * contract ); //! \todo clean
-            void onUserContractToSend  ( const HbNetworkUserData & user_data, HbNetworkContract * contract ) override;
-            void onReadyContractToSend ( const HbNetworkContract * contract ) override;
-            void onUserToKick  ( const HbNetworkUserData & user_data, netwint reason, const QString & description );
+            void onUsersContractToSend( QList< ShConstHbNetworkUserInfo > users_infos, HbNetworkContract * contract );
+            void onUserContractToSend  ( ShConstHbNetworkUserInfo user_info, HbNetworkContract * contract );
+            void onContractToSend ( const HbNetworkContract * contract ) override;
+            void onUserToKick  ( ShConstHbNetworkUserInfo user_info, netwint reason, const QString & description );
             void onSocketToKick( networkuid socket_uid, netwint reason, const QString & description );
 
             // From HbAuthService.
@@ -69,9 +70,9 @@ namespace hb
             void statusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status );
 
         private:
-            HbNetworkUser * isSocketAuthenticated( networkuid socket_uid );
-            HbNetworkUser * getUser( const HbNetworkUserData & user_data );
-            void kickUser  ( HbNetworkUser * user,  netwint reason, const QString & description );
+            HbServerUser * isSocketAuthenticated( networkuid socket_uid );
+            HbServerUser * getUser( ShConstHbNetworkUserInfo user_info );
+            void kickUser  ( HbServerUser * user,  netwint reason, const QString & description );
             void kickSocket( networkuid socket_uid, netwint reason, const QString & description );
 
         private:
@@ -80,8 +81,8 @@ namespace hb
 
             QSet < networkuid > mPendingSockets;
             QHash< networkuid, networkuid > mServerBySocketId;
-            QHash< networkuid, HbNetworkUser * > mUserBySocketId;
-            QHash< QString,    HbNetworkUser * > mUserByEmail;
+            QHash< networkuid, HbServerUser * > mUserBySocketId;
+            QHash< QString,    HbServerUser * > mUserByEmail;
         };
     }
 }

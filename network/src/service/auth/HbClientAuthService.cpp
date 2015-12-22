@@ -133,7 +133,7 @@ void HbClientAuthService::onAuthRequested( HbClientAuthLoginObject * login_objec
 void HbClientAuthService::onAuthContractReady( networkuid socket_uid, HbAuthRequestContract * contract )
 {
     contract->addSocketReceiver( socket_uid );
-    emit readyContractToSend( contract );
+    emit contractToSend( contract );
     // mPendingSocket will be reset on auth status contract reception.
 }
 

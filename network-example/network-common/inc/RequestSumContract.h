@@ -47,7 +47,7 @@ namespace hb
             virtual void setIntB( qint32 b ) final;
 
         protected:
-            RequestSumContract * create() const;
+            virtual RequestSumContract * create() const override;
 
         protected:
             qint32 mIntA;

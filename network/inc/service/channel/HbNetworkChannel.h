@@ -15,7 +15,6 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <listener/IHbUserContractListener.h>
 #include <service/HbNetworkService.h>
 
 namespace hb
@@ -25,16 +24,24 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbNetworkChannel : public HbNetworkService, public IHbUserContractListener
+        class HB_NETWORK_DECL HbNetworkChannel : public HbNetworkService
         {
         public:
 
-            HbNetworkChannel() = default;
+            HbNetworkChannel();
             virtual ~HbNetworkChannel() = default;
 
+            void setNetworkUid( networkuid network_uid );
+            networkuid networkUid() const;
+
+            // Hide service side signals.
+            void socketToKick( networkuid socket_uid, netwint reason, const QString & description = QString() ) = delete;
+
         public callbacks:
+            virtual void onContractToSend( HbNetworkContract * contract ) = 0;
 
         protected:
+            networkuid mNetworkUid;
 
         };
     }

@@ -7,13 +7,13 @@ using namespace hb::network;
 
 HbNetworkUser::HbNetworkUser()
 {
-    reset();
+    mMainSocket = 0;
+    mInfo = ShConstHbNetworkUserInfo( new HbNetworkUserInfo() ); // Valid object instead of nullptr to avoid checking ptr everytime.
 }
 
 void HbNetworkUser::reset()
 {
-    setStatus( HbNetworkProtocol::USER_DISCONNECTED );
-    mMainSocketUid = 0;
+    mMainSocket = 0;
     mInfo.clear();
     mInfo = ShConstHbNetworkUserInfo( new HbNetworkUserInfo() ); // Valid object instead of nullptr to avoid checking ptr everytime.
 }
@@ -29,47 +29,7 @@ void HbNetworkUser::setInfo( const HbNetworkUserInfo & user_info )
     mInfo = ShConstHbNetworkUserInfo( new HbNetworkUserInfo( user_info ) );
 }
 
-HbNetworkProtocol::UserStatus HbNetworkUser::status() const
-{
-    return mStatus;
-}
-
-void HbNetworkUser::setStatus( HbNetworkProtocol::UserStatus status )
-{
-    mStatus = status;
-    emit statusChanged( status );
-}
-
 networkuid HbNetworkUser::mainSocketUid() const
 {
-    return mMainSocketUid;
-}
-
-void HbNetworkUser::setMainSocketUid( networkuid socket_uid )
-{
-    if( socket_uid == 0 )
-    {
-        mSocketsUid.remove( mMainSocketUid );
-    }
-    else
-    {
-        mSocketsUid.insert( socket_uid );
-    }
-
-    mMainSocketUid = socket_uid;
-}
-
-const QSet< networkuid > & HbNetworkUser::socketsUid() const
-{
-    return mSocketsUid;
-}
-
-const HbNetworkUserData HbNetworkUser::createData( networkuid socket_id )
-{
-    q_assert( mSocketsUid.contains( socket_id ) );
-
-    HbNetworkUserData data;
-    data.setSocketUid( socket_id );
-    data.setInfo( mInfo );
-    return data;
+    return mMainSocket;
 }

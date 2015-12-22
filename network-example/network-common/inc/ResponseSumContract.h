@@ -41,7 +41,7 @@ namespace hb
             virtual void setResult( qint32 result ) final;
 
         protected:
-            ResponseSumContract * create() const;
+            virtual ResponseSumContract * create() const override;
 
         protected:
             qint32 mResult;

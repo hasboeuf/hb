@@ -154,6 +154,7 @@ void HbServerAuthService::kickSocket(networkuid socket_uid, HbNetworkProtocol::K
 
 void HbServerAuthService::onContractReceived( const HbNetworkContract * contract )
 {
+    q_assert_ptr( contract );
 
     const HbAuthRequestContract * auth_contract = contract->value< HbAuthRequestContract >();
     if( auth_contract )
@@ -194,13 +195,14 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
             kickSocket( socket_uid, HbNetworkProtocol::KICK_CONTRACT_INVALID, "No user auth strategy defined." );
         }
 
-        delete auth_contract;
     }
     else
     {
         HbError( "Auth contract type not recognized." );
         //! \todo How to kick?
     }
+
+    delete contract;
 }
 
 void HbServerAuthService::onSocketConnected   ( networkuid socket_uid )
@@ -233,7 +235,7 @@ void HbServerAuthService::onAuthSucceed( networkuid socket_uid, const HbNetworkU
 
         delSocket( socket_uid, false );
 
-        emit readyContractToSend( response );
+        emit contractToSend( response );
     }
     else
     {
@@ -259,7 +261,7 @@ void HbServerAuthService::onAuthFailed( networkuid socket_uid, HbNetworkProtocol
         response->setTryNumber( mAuthTries[socket_uid] );
         response->setMaxTries( mConfig.authMaxTries() );
 
-        emit readyContractToSend( response );
+        emit contractToSend( response );
 
         if( mAuthTries[socket_uid] == mConfig.authMaxTries() )
         {

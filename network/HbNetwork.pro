@@ -23,6 +23,7 @@ SUBDIRS +=  com \
             contract/general \
             contract/auth \
             contract/presence \
+            contract/channel \
             service \
             service/auth \
             service/channel \

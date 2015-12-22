@@ -41,7 +41,7 @@ namespace hb
             virtual void setMessage( const QString & message ) final;
 
         protected:
-            ChatMessageContract * create( ) const;
+            virtual ChatMessageContract * create() const override;
 
         protected:
             QString mMessage;

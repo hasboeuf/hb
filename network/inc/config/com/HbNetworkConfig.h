@@ -23,6 +23,8 @@ namespace hb
 {
     namespace network
     {
+        class HbNetworkChannel;
+
         /*!
          * TODOC
          */
@@ -45,7 +47,8 @@ namespace hb
             virtual const HbNetworkExchanges & exchanges() const final;
             virtual HbNetworkExchanges & exchanges() final;
 
-
+            virtual bool assignChannel( HbNetworkChannel * channel ) final;
+            virtual QList< HbNetworkChannel * > channels() final;
 
         protected:
             HbNetworkExchanges mExchanges;
@@ -53,6 +56,7 @@ namespace hb
         private:
             QIODevice::OpenMode mOpenMode;
             bool mBadHeaderTolerant;
+            QList< HbNetworkChannel * > mChannels;
 
         };
     }

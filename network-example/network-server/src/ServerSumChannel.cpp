@@ -1,4 +1,5 @@
 // Hb
+#include <HbLogService.h>
 // Local
 #include <ServerSumChannel.h>
 #include <RequestSumContract.h>
@@ -17,11 +18,6 @@ void ServerSumChannel::reset()
 
 }
 
-HbNetworkProtocol::NetworkTypes ServerSumChannel::enabledNetworkTypes() const
-{
-    return HbNetworkProtocol::NETWORK_TCP;
-}
-
 void ServerSumChannel::plugContracts( HbNetworkExchanges & exchanges )
 {
     exchanges.plug< RequestSumContract >();
@@ -32,7 +28,23 @@ serviceuid ServerSumChannel::uid() const
     return Protocol::CHANNEL_SUM;
 }
 
-void ServerSumChannel::onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract )
+void ServerSumChannel::onUserContractReceived( ShConstHbNetworkUserInfo user_info, const HbNetworkContract * contract )
 {
+    q_assert_ptr( contract );
 
+    HbInfo( "Contract received from %d.", HbLatin1( user_info->email() ) );
+    HbInfo( "Contract details: %s", HbLatin1( contract->toString() ) );
+
+    const RequestSumContract * sum_contract = contract->value< RequestSumContract >();
+    if( sum_contract )
+    {
+        ResponseSumContract * result_contract = sum_contract->reply();
+        if( result_contract )
+        {
+            result_contract->setResult( sum_contract->intA() + sum_contract->intB() );
+            onContractToSend( result_contract );
+        }
+    }
+
+    delete contract;
 }

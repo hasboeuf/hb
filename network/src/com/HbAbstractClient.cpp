@@ -109,11 +109,6 @@ bool HbAbstractClient::send( ShConstHbNetworkContract contract )
                 return false;
             }
 
-            //if ( socket->type() == HbNetworkProtocol::NETWORK_UDP )
-            //{
-            //    contract->setRouting( HbNetworkProtocol::RoutingScheme::BROADCAST );
-            //}
-
             if( socket->sendContract( contract ) )
             {
                 return true;

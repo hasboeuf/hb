@@ -25,6 +25,9 @@ using namespace hb::link;
 using namespace hb::network;
 using namespace hb::networkexample;
 
+QString ServerMainWindow::msClientId = "940633959281250";                      // Fake value.
+QString ServerMainWindow::msClientSecret = "74621eedf9aa2cde9cd31dc5c4d3c440"; // Fake value.
+
 ServerMainWindow::ServerMainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
@@ -39,8 +42,8 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     HbLogBegin();
 
     HbO2ServerConfig facebook_config;
-    facebook_config.setClientId( "940633959281250" );
-    facebook_config.setClientSecret( "74621eedf9aa2cde9cd31dc5c4d3c440" );
+    facebook_config.setClientId( msClientId );
+    facebook_config.setClientSecret( msClientSecret );
 
     HbGeneralServerConfig config;
     config.setAppName("hb-network-example");
@@ -51,13 +54,10 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     config.presence().setKickAliveThreshold( 20 );
     config.presence().setWarningAliveThreshold( 10 );
 
-    mpHbServer = new HbServer( config );
+    mpHbServer    = new HbServer( config );
 
-    mpSumChannel = new ServerSumChannel();
-    q_assert( mpHbServer->registerChannel( mpSumChannel ) );
-
+    mpSumChannel  = new ServerSumChannel();
     mpChatChannel = new ServerChatChannel();
-    q_assert( mpHbServer->registerChannel( mpChatChannel ) );
 
     // Ui
     setupUi(this);
@@ -87,6 +87,9 @@ void ServerMainWindow::onStartClicked()
     config.setPort( 4000 );
     config.setMaxUsersPerThread( 1 );
     config.setBadHeaderTolerant( false );
+
+    config.assignChannel( mpSumChannel  );
+    config.assignChannel( mpChatChannel );
 
     networkuid server_uid = mpHbServer->joinTcpServer( config, true );
     if( server_uid > 0 )

@@ -18,7 +18,7 @@
 #include <HbNetwork.h>
 #include <config/peer/HbGeneralConfig.h>
 #include <config/com/HbTcpServerConfig.h>
-#include <user/HbNetworkUserData.h>
+#include <user/HbNetworkUserInfo.h>
 
 namespace hb
 {
@@ -46,8 +46,7 @@ namespace hb
 
         public callbacks:
             // From services.
-            virtual void onUserContractToSend ( const HbNetworkUserData & user_data, HbNetworkContract * contract ) = 0;
-            virtual void onReadyContractToSend( const HbNetworkContract * contract ) = 0;
+            virtual void onContractToSend( const HbNetworkContract * contract ) = 0;
             // From HbAuthService.
             virtual void onSocketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info ) = 0;
             virtual void onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason ) = 0;
@@ -56,12 +55,12 @@ namespace hb
             // To services.
             void socketConnected       ( networkuid socket_uid );
             void socketDisconnected    ( networkuid socket_uid );
-            void socketAuthenticated   ( const HbNetworkUserData & user_data );
-            void socketUnauthenticated ( const HbNetworkUserData & user_data );
+            void socketAuthenticated   ( networkuid socket_uid );
+            void socketUnauthenticated ( networkuid socket_uid );
             void socketContractReceived( const HbNetworkContract * contract );
-            void userConnected         ( const HbNetworkUserData & user_data );
-            void userDisconnected      ( const HbNetworkUserData & user_data );
-            void userContractReceived  ( const HbNetworkUserData & user_data, const HbNetworkContract * contract );
+            void userConnected         ( ShConstHbNetworkUserInfo user_info );
+            void userDisconnected      ( ShConstHbNetworkUserInfo user_info );
+            void userContractReceived  ( ShConstHbNetworkUserInfo user_info, const HbNetworkContract * contract );
 
         protected:
             virtual void reset();

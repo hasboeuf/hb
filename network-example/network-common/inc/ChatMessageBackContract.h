@@ -44,7 +44,7 @@ namespace hb
             virtual void setAuthor( const QString & author ) final;
 
         protected:
-            ChatMessageBackContract * create() const;
+            virtual ChatMessageBackContract * create() const override;
 
         protected:
             QString mMessage;

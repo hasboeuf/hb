@@ -34,12 +34,10 @@ namespace hb
 
             HbServer() = delete;
             HbServer( const HbGeneralServerConfig & config );
-            virtual ~HbServer() = default;
+            virtual ~HbServer();
 
             networkuid joinTcpServer( HbTcpServerConfig & config, bool main );
             virtual bool leave() override;
-
-            virtual bool registerChannel( HbNetworkChannel * channel ) override;
 
         signals:
             void serverStatusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status );

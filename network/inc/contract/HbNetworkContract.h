@@ -23,6 +23,7 @@
 #include <HbNetwork.h>
 #include <contract/HbNetworkProtocol.h>
 #include <contract/HbNetworkHeader.h>
+#include <user/HbNetworkUserInfo.h>
 
 namespace hb
 {
@@ -36,7 +37,7 @@ namespace hb
             Q_FRIEND_CLASS( HbNetworkExchanges )
 
         public:
-            virtual ~HbNetworkContract() = default;
+            virtual ~HbNetworkContract();
 
             virtual bool isValid() const final;
 
@@ -46,11 +47,14 @@ namespace hb
             virtual void setSender( networkuid sender ) final;
             virtual networkuid sender() const final;
 
-            virtual void addPendingReceiver( const QString & user_id ) final;
+            virtual void addPendingReceiver( ShConstHbNetworkUserInfo users_infos ) final;
             virtual void addSocketReceiver ( networkuid socket_uid ) final;
-            virtual const QSet< QString > & pendingReceivers() const final;
+            virtual const QList< ShConstHbNetworkUserInfo > & pendingReceivers() const final;
             virtual const QSet< networkuid > & receivers() const final;
             virtual networkuid receiver() const final;
+
+            virtual void setNetworkReceiver( networkuid network_receiver ) final;
+            virtual networkuid networkReceiver() const;
 
             virtual HbNetworkProtocol::RoutingScheme routing() const final;
             virtual bool setRouting( HbNetworkProtocol::RoutingScheme routing ) final;
@@ -100,9 +104,10 @@ namespace hb
             HbNetworkProtocol::NetworkType mNetworkType;
             HbNetworkProtocol::RoutingScheme mRouting;
 
-            QSet< QString >    mPendingReceivers; // user_id, morph into SocketReceivers at sending time.
+            QList< ShConstHbNetworkUserInfo > mPendingReceivers; // Users infos, morph into networkuid at sending time.
             QSet< networkuid > mReceivers;
 
+            networkuid mNetworkReceiver; // Used by server channels.
         };
 
         typedef QSharedPointer< const HbNetworkContract > ShConstHbNetworkContract;

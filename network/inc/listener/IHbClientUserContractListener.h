@@ -6,8 +6,8 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef IHBUSERCONTRACTTLISTENER_H
-#define IHBUSERCONTRACTTLISTENER_H
+#ifndef IHBCLIENTUSERCONTRACTTLISTENER_H
+#define IHBCLIENTUSERCONTRACTTLISTENER_H
 
 /*! \file IHbUserContractListener.h */
 
@@ -16,7 +16,6 @@
 // Local
 #include <HbNetwork.h>
 #include <contract/HbNetworkContract.h>
-#include <user/HbNetworkUserData.h>
 
 namespace hb
 {
@@ -25,19 +24,19 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL IHbUserContractListener
+        class HB_NETWORK_DECL IHbClientUserContractListener
         {
 
         public callbacks:
-            virtual void onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract ) = 0;
+            virtual void onUserContractReceived( const HbNetworkContract * contract ) = 0;
 
         protected:
-            virtual ~IHbUserContractListener(){} //!< \todo defaulted linux-g++ issue
+            virtual ~IHbClientUserContractListener(){} //!< \todo defaulted linux-g++ issue
         };
 
     }
 }
 
-using hb::network::IHbUserContractListener;
+using hb::network::IHbClientUserContractListener;
 
-#endif // IHBUSERCONTRACTTLISTENER_H
+#endif // IHBCLIENTUSERCONTRACTTLISTENER_H

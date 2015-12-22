@@ -27,7 +27,8 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbClientPresenceService : public HbPresenceService
+        class HB_NETWORK_DECL HbClientPresenceService :
+            public HbPresenceService
         {
             Q_OBJECT
 
@@ -45,8 +46,8 @@ namespace hb
             void timerEvent( QTimerEvent * );
 
         public callbacks:
-            void onSocketAuthenticated  ( const HbNetworkUserData & user_data ) override;
-            void onSocketUnauthenticated( const HbNetworkUserData & user_data ) override;
+            void onSocketAuthenticated  ( networkuid socket_uid ) override;
+            void onSocketUnauthenticated( networkuid socket_uid ) override;
 
         private:
             HbServicePresenceClientConfig mConfig;

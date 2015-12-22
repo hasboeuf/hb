@@ -24,14 +24,15 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbPresenceService : public HbNetworkService, public IHbSocketAuthListener
+        class HB_NETWORK_DECL HbPresenceService :
+            public HbNetworkService,
+            public IHbSocketAuthListener
         {
         public:
 
             HbPresenceService();
             virtual ~HbPresenceService(){} //!< \todo defaulted linux-g++ issue
 
-            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
             virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
 
             virtual serviceuid uid() const override;

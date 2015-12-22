@@ -33,11 +33,6 @@ bool HbClient::leave()
     return mConnectionPool.leave();
 }
 
-bool HbClient::registerChannel( HbNetworkChannel * channel )
-{
-    return mConnectionPool.addChannel( channel );
-}
-
 bool HbClient::authRequest( HbClientAuthLoginObject * login_object )
 {
     if( !isReady() ) return false;

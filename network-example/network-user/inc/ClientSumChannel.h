@@ -25,23 +25,24 @@ namespace hb
          */
         class ClientSumChannel : public hb::network::HbClientChannel
         {
+            Q_OBJECT
+
         public:
 
             ClientSumChannel();
             virtual ~ClientSumChannel() = default;
 
             virtual void reset() override;
-
-            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
             virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
-
             virtual serviceuid uid() const override;
-
-            virtual void onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract ) override;
 
             void requestSum( quint32 a, quint32 b );
 
         public callbacks:
+            virtual void onUserContractReceived( const HbNetworkContract * contract ) override;
+
+        signals:
+            void computationReceived( qint32 result );
 
         };
     }

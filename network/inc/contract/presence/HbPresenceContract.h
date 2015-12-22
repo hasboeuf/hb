@@ -37,7 +37,7 @@ namespace hb
             HbPresenceContract( const HbPresenceContract & source );
             HbPresenceContract & operator=( const HbPresenceContract & source );
 
-            HbPresenceContract * create() const override;
+            virtual HbPresenceContract * create() const override;
 
             virtual bool read ( QDataStream & stream ) override;
             virtual bool write( QDataStream & stream ) const override;

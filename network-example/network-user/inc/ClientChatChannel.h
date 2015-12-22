@@ -25,21 +25,24 @@ namespace hb
          */
         class ClientChatChannel : public hb::network::HbClientPeopledChannel
         {
+            Q_OBJECT
+
         public:
 
             ClientChatChannel();
             virtual ~ClientChatChannel() = default;
 
             virtual void reset() override;
-
-            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
             virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
-
             virtual serviceuid uid() const override;
 
-            virtual void onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract ) override;
+            void sendMessage( const QString message );
 
         public callbacks:
+            virtual void onUserContractReceived( const HbNetworkContract * contract ) override;
+
+        signals:
+            void chatMessageReceived( const QString & author, const QString & message );
 
         };
     }

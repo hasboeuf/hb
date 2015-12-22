@@ -38,7 +38,7 @@ namespace hb
             HbAuthFacebookRequestContract( const HbAuthFacebookRequestContract & source );
             HbAuthFacebookRequestContract & operator=( const HbAuthFacebookRequestContract & source );
 
-            HbAuthFacebookRequestContract * create() const override;
+            virtual HbAuthFacebookRequestContract * create() const override;
 
             virtual bool read ( QDataStream & stream ) override;
             virtual bool write( QDataStream & stream ) const override;

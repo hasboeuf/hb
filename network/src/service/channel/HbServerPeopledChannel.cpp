@@ -3,14 +3,19 @@
 
 using namespace hb::network;
 
-void HbServerPeopledChannel::onUserConnected( const HbNetworkUserData & user_data )
+void HbServerPeopledChannel::onUserConnected( ShConstHbNetworkUserInfo user_info )
 {
-    mUsers.insert( user_data.info()->email(), user_data );
-    emit userConnected( HbNetworkUserInfo( *user_data.info() ) );
+    mUsers.insert( user_info->email(), user_info );
+    emit userConnected( user_info );
 }
 
-void HbServerPeopledChannel::onUserDisconnected( const HbNetworkUserData & user_data )
+void HbServerPeopledChannel::onUserDisconnected( ShConstHbNetworkUserInfo user_info )
 {
-    mUsers.remove( user_data.info()->email() );
-    emit userDisconnected( HbNetworkUserInfo( *user_data.info() ) );
+    mUsers.remove( user_info->email() );
+    emit userDisconnected( user_info );
+}
+
+const QHash< QString, ShConstHbNetworkUserInfo > & HbServerPeopledChannel::connectedUsers() const
+{
+    return mUsers;
 }

@@ -6,10 +6,10 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBPRESENCESTATUSCONTRACT_H
-#define HBPRESENCESTATUSCONTRACT_H
+#ifndef HBUSERSYNCCONTRACT_H
+#define HBUSERSYNCCONTRACT_H
 
-/*! \file HbPresenceStatusContract.h */
+/*! \file HbUserConnectedContract.h */
 
 // Qt
 #include <QtCore/QObject>
@@ -19,6 +19,7 @@
 // Local
 #include <HbNetwork.h>
 #include <contract/HbNetworkContract.h>
+#include <user/HbNetworkUserSync.h>
 
 namespace hb
 {
@@ -27,27 +28,31 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbPresenceStatusContract final : public HbNetworkContract
+        class HB_NETWORK_DECL HbUserSyncContract final : public HbNetworkContract
         {
 
         public:
 
-            HbPresenceStatusContract();
-            virtual ~HbPresenceStatusContract() = default;
-            HbPresenceStatusContract( const HbPresenceStatusContract & source );
-            HbPresenceStatusContract & operator=( const HbPresenceStatusContract & source );
+            HbUserSyncContract();
+            virtual ~HbUserSyncContract() = default;
+            HbUserSyncContract( const HbUserSyncContract & source );
+            HbUserSyncContract & operator=( const HbUserSyncContract & source );
 
-            HbPresenceStatusContract * create() const override;
+            virtual HbUserSyncContract * create() const override;
+
+            void addSync( const HbNetworkUserSync & user_sync );
+            const QList< hb::network::HbNetworkUserSync > & syncs() const;
 
             virtual bool read ( QDataStream & stream ) override;
             virtual bool write( QDataStream & stream ) const override;
 
         private:
+            QList< HbNetworkUserSync > mSyncs;
 
         };
     }
 }
 
-using hb::network::HbPresenceStatusContract;
+using hb::network::HbUserSyncContract;
 
-#endif // HBPRESENCESTATUSCONTRACT_H
+#endif // HBUSERSYNCCONTRACT_H

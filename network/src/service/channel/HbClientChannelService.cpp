@@ -5,20 +5,13 @@
 #include <service/channel/HbClientChannelService.h>
 #include <service/channel/HbClientChannel.h>
 #include <service/channel/HbClientPeopledChannel.h>
+#include <contract/channel/HbUserSyncContract.h>
 
 using namespace hb::network;
 
 void HbClientChannelService::reset()
 {
-    foreach( HbClientChannel * channel, mChannels )
-    {
-        channel->reset();
-    }
-}
-
-void HbClientChannelService::plugContracts( HbNetworkExchanges & exchanges )
-{
-    Q_UNUSED( exchanges )
+    HbChannelService::reset();
 }
 
 const HbServiceChannelClientConfig & HbClientChannelService::config() const
@@ -47,6 +40,10 @@ bool HbClientChannelService::addChannel( HbNetworkChannel * channel )
             HbClientPeopledChannel * peopled_channel = dynamic_cast< HbClientPeopledChannel * >( channel );
             if( peopled_channel )
             {
+                mPeopledChannels.insert( peopled_channel->uid(), peopled_channel );
+
+                connect( this, &HbClientChannelService::userConnected,    peopled_channel, &HbClientPeopledChannel::onUserConnected );
+                connect( this, &HbClientChannelService::userDisconnected, peopled_channel, &HbClientPeopledChannel::onUserDisconnected );
             }
         }
     }
@@ -59,11 +56,19 @@ HbClientChannel * HbClientChannelService::channel( serviceuid channel_uid )
     return dynamic_cast< HbClientChannel * >( HbChannelService::channel( channel_uid ) );
 }
 
-void HbClientChannelService::onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract )
+void HbClientChannelService::onUserContractReceived( const HbNetworkContract * contract )
 {
     q_assert_ptr( contract );
 
     serviceuid channel_uid = contract->header().service();
+
+    // Internal contract.
+    if( channel_uid == uid() )
+    {
+        processContract( contract );
+    }
+
+    // Channel contract.
 
     HbClientChannel * channel = this->channel( channel_uid );
     if( !channel )
@@ -73,15 +78,50 @@ void HbClientChannelService::onUserContractReceived( const HbNetworkUserData & u
         return;
     }
 
-    channel->onUserContractReceived( user_data, contract );
+    channel->onUserContractReceived( contract );
 }
 
-void HbClientChannelService::onUserConnected( const HbNetworkUserData & user_data )
+void HbClientChannelService::onUserConnected( ShConstHbNetworkUserInfo user_info )
 {
-    Q_UNUSED( user_data )
+    emit userConnected( user_info );
 }
 
-void HbClientChannelService::onUserDisconnected( const HbNetworkUserData & user_data )
+void HbClientChannelService::onUserDisconnected( ShConstHbNetworkUserInfo user_info )
 {
-    Q_UNUSED( user_data )
+    emit userDisconnected( user_info );
+}
+
+void HbClientChannelService::processContract( const HbNetworkContract * contract )
+{
+    q_assert_ptr( contract );
+
+    const HbUserSyncContract * sync_contract = contract->value< HbUserSyncContract >();
+    if( sync_contract )
+    {
+        foreach( HbNetworkUserSync user_sync, sync_contract->syncs() )
+        {
+            ShConstHbNetworkUserInfo user_info( new HbNetworkUserInfo( user_sync.userInfo() ) );
+            if( user_sync.status() == HbNetworkProtocol::NETWORK_USER_CONNECTED )
+            {
+                mUsers.insert( user_info->email(), user_info );
+                onUserConnected( user_info ); // Simulates user connection.
+            }
+            else if( user_sync.status() == HbNetworkProtocol::NETWORK_USER_DISCONNECTED )
+            {
+                mUsers.remove( user_info->email() );
+                onUserDisconnected( user_info ); // Simulates user disconnection.
+            }
+            else
+            {
+                HbWarning( "User status not recognized." );
+            }
+        }
+    }
+    else
+    {
+        HbError( "Channel contract type not recognized." );
+        //! \todo How to kick?
+    }
+
+    delete contract;
 }

@@ -1,8 +1,9 @@
 // Hb
-#include <ChatMessageContract.h>
-#include <ChatMessageBackContract.h>
+#include <HbLogService.h>
 // Local
 #include <ClientChatChannel.h>
+#include <ChatMessageContract.h>
+#include <ChatMessageBackContract.h>
 #include <Protocol.h>
 
 using namespace hb::network;
@@ -17,11 +18,6 @@ void ClientChatChannel::reset()
 
 }
 
-HbNetworkProtocol::NetworkTypes ClientChatChannel::enabledNetworkTypes() const
-{
-    return HbNetworkProtocol::NETWORK_TCP;
-}
-
 void ClientChatChannel::plugContracts( HbNetworkExchanges & exchanges )
 {
     exchanges.plug< ChatMessageBackContract >();
@@ -32,7 +28,26 @@ serviceuid ClientChatChannel::uid() const
     return Protocol::CHANNEL_CHAT;
 }
 
-void ClientChatChannel::onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract )
+void ClientChatChannel::sendMessage( const QString message )
 {
+    ChatMessageContract * message_contract = new ChatMessageContract();
+    message_contract->setMessage( message );
 
+    emit contractToSend( message_contract );
+}
+
+void ClientChatChannel::onUserContractReceived( const HbNetworkContract * contract )
+{
+    q_assert_ptr( contract );
+
+    HbInfo( "Contract received from %d.", HbLatin1( contract->sender() ) );
+    HbInfo( "Contract details: %s", HbLatin1( contract->toString() ) );
+
+    const ChatMessageBackContract * message_contract = contract->value< ChatMessageBackContract >();
+    if( message_contract )
+    {
+        emit chatMessageReceived( message_contract->author(), message_contract->message() );
+    }
+
+    delete contract;
 }

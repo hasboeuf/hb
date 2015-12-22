@@ -31,16 +31,11 @@ namespace hb
             virtual ~ServerChatChannel() = default;
 
             virtual void reset() override;
-
-            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
             virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
-
             virtual serviceuid uid() const override;
 
-            virtual void onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract ) override;
-
         public callbacks:
-
+            virtual void onUserContractReceived( hb::network::ShConstHbNetworkUserInfo user_info, const HbNetworkContract * contract ) override;
         };
     }
 }

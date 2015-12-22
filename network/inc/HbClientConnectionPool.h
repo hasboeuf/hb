@@ -19,7 +19,7 @@
 #include <HbConnectionPool.h>
 #include <config/peer/HbGeneralClientConfig.h>
 #include <config/com/HbTcpClientConfig.h>
-#include <user/HbNetworkUser.h>
+#include <user/HbClientUser.h>
 
 namespace hb
 {
@@ -56,8 +56,8 @@ namespace hb
             void onClientContractReceived( networkuid client_uid, const HbNetworkContract * contract );
 
             // From services.
-            void onUserContractToSend  ( const HbNetworkUserData & user_data, HbNetworkContract * contract ) override;
-            void onReadyContractToSend ( const HbNetworkContract * contract ) override;
+            void onContractToSend ( const HbNetworkContract * contract ) override;
+
             // From HbAuthService.
             void onSocketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info ) override;
             void onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason ) override;
@@ -74,7 +74,7 @@ namespace hb
 
         private:
             QHash< networkuid, HbAbstractClient * > mClients;
-            HbNetworkUser mUser;
+            HbClientUser mUser;
         };
     }
 }

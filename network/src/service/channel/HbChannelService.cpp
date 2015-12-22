@@ -4,6 +4,7 @@
 // Local
 #include <service/channel/HbChannelService.h>
 #include <service/channel/HbNetworkChannel.h>
+#include <contract/channel/HbUserSyncContract.h>
 
 using namespace hb::network;
 
@@ -11,14 +12,17 @@ HbChannelService::HbChannelService()
 {
 }
 
-HbNetworkProtocol::NetworkTypes HbChannelService::enabledNetworkTypes() const
+void HbChannelService::reset()
 {
-    return HbNetworkProtocol::NETWORK_TCP |
-           HbNetworkProtocol::NETWORK_WEB |
-           HbNetworkProtocol::NETWORK_SSL |
-           HbNetworkProtocol::NETWORK_UDP |
-           HbNetworkProtocol::NETWORK_LOCAL |
-           HbNetworkProtocol::NETWORK_BLUETOOTH;
+    foreach( HbNetworkChannel * channel, mChannels )
+    {
+        channel->reset();
+    }
+}
+
+void HbChannelService::plugContracts( HbNetworkExchanges & exchanges )
+{
+    exchanges.plug< HbUserSyncContract >();
 }
 
 serviceuid HbChannelService::uid() const
@@ -29,6 +33,7 @@ serviceuid HbChannelService::uid() const
 bool HbChannelService::addChannel( HbNetworkChannel * channel )
 {
     q_assert_ptr( channel );
+    q_assert( channel->networkUid() != 0 );
 
     serviceuid channel_uid = channel->uid();
     bool ok = false;
@@ -43,6 +48,8 @@ bool HbChannelService::addChannel( HbNetworkChannel * channel )
         {
             mChannels.insert( channel_uid, channel );
             ok = true;
+
+            connect( channel, &HbNetworkService::contractToSend, this, &HbChannelService::onContractToSend );
         }
     }
     else
@@ -56,4 +63,10 @@ bool HbChannelService::addChannel( HbNetworkChannel * channel )
 HbNetworkChannel * HbChannelService::channel( serviceuid channel_uid )
 {
     return mChannels.value( channel_uid, nullptr );
+}
+
+void HbChannelService::onContractToSend( const HbNetworkContract * contract )
+{
+    q_assert_ptr( contract );
+    emit contractToSend( contract );
 }

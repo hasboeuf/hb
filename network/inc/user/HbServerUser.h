@@ -6,8 +6,8 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBNETWORKUSER_H
-#define HBNETWORKUSER_H
+#ifndef HBSERVERUSER_H
+#define HBSERVERUSER_H
 
 /*! \file HbNetworkUser.h */
 
@@ -17,7 +17,7 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <user/HbNetworkUserInfo.h>
+#include <user/HbNetworkUser.h>
 #include <contract/HbNetworkProtocol.h>
 
 namespace hb
@@ -27,32 +27,25 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbNetworkUser : public QObject
+        class HB_NETWORK_DECL HbServerUser : public HbNetworkUser
         {
             Q_OBJECT
         public:
 
-            HbNetworkUser();
-            virtual ~HbNetworkUser( ) = default;
+            HbServerUser();
+            virtual ~HbServerUser() = default;
 
-            virtual void reset();
+            void addSocket( networkuid server_uid, networkuid socket_uid , bool main = false );
+            virtual void delSocket( networkuid socket_uid ) override;
 
-            ShConstHbNetworkUserInfo & info();
-            void setInfo( const HbNetworkUserInfo & info );
-
-            networkuid mainSocketUid() const;
-
-            virtual void delSocket( networkuid socket_uid ) = 0;
-            virtual QList< networkuid > socketsUid() const  = 0;
-
-        protected:
-            networkuid mMainSocket;
+            networkuid socketUid( networkuid server_uid );
+            virtual QList< networkuid > socketsUid() const override;
 
         private:
-            ShConstHbNetworkUserInfo mInfo;
+            QHash< networkuid, networkuid > mSocketsByServer;
 
         };
     }
 }
 
-#endif // HBNETWORKUSER_H
+#endif // HBSERVERUSER_H

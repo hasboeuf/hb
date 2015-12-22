@@ -36,6 +36,7 @@ namespace hb
             Q_ENUMS( ServerStatus )
             Q_ENUMS( ClientStatus )
             Q_ENUMS( UserStatus )
+            Q_ENUMS( NetworkUserStatus )
             Q_ENUMS( KickCode )
 
         public:
@@ -84,6 +85,7 @@ namespace hb
                 CODE_CLT_PRESENCE,
                 CODE_SRV_PRESENCE_STATUS,
                 CODE_SRV_KICK,
+                CODE_SRV_USER_CONNECTED,
 
                 CODE_USER                 = 1989
 
@@ -141,9 +143,17 @@ namespace hb
                 USER_CONNECTED,
                 USER_AUTHENTICATING,
                 USER_AUTHENTICATED,
-
             };
             Q_META_ENUMS( UserStatus )
+
+            enum NetworkUserStatus : netwint
+            {
+                NETWORK_USER_UNDEFINED,
+                NETWORK_USER_CONNECTED,
+                NETWORK_USER_LAGGED,
+                NETWORK_USER_DISCONNECTED
+            };
+            Q_META_ENUMS( NetworkUserStatus )
 
         };
     }

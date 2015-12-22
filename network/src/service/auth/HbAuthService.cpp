@@ -13,12 +13,6 @@ HbAuthService::HbAuthService()
 {
 }
 
-HbNetworkProtocol::NetworkTypes HbAuthService::enabledNetworkTypes() const
-{
-    return HbNetworkProtocol::NETWORK_TCP |
-           HbNetworkProtocol::NETWORK_SSL;
-}
-
 void HbAuthService::plugContracts( HbNetworkExchanges & exchanges )
 {
     exchanges.plug< HbAuthFacebookRequestContract >();

@@ -17,7 +17,6 @@
 // Local
 #include <service/HbNetworkService.h>
 #include <listener/IHbUserListener.h>
-#include <listener/IHbUserContractListener.h>
 
 namespace hb
 {
@@ -28,27 +27,33 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbChannelService : public HbNetworkService, public IHbUserListener, public IHbUserContractListener
+        class HB_NETWORK_DECL HbChannelService : public HbNetworkService, public IHbUserListener
         {
+            Q_OBJECT
         public:
 
             HbChannelService();
             virtual ~HbChannelService() = default;
 
-            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
-
+            virtual void reset() override;
+            virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
             virtual serviceuid uid() const override;
 
             virtual bool addChannel( HbNetworkChannel * channel );
             virtual HbNetworkChannel * channel( serviceuid channel_uid );
 
         public callbacks:
+            // From channels.
+            void onContractToSend( const HbNetworkContract * contract );
 
         signals:
-            void userContractToSend( const HbNetworkUserData & user_data, HbNetworkContract * contract );
+            // To channels.
+            void userConnected   ( ShConstHbNetworkUserInfo user_info );
+            void userDisconnected( ShConstHbNetworkUserInfo user_info );
 
-        private:
+        protected:
             QHash< serviceuid, HbNetworkChannel * > mChannels;
+            QHash< QString, ShConstHbNetworkUserInfo > mUsers;
         };
     }
 }

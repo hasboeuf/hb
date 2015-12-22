@@ -16,6 +16,7 @@
 // Local
 #include <service/HbNetworkService.h>
 #include <user/HbNetworkUserInfo.h>
+#include <listener/IHbContractListener.h>
 #include <listener/IHbSocketListener.h>
 
 namespace hb
@@ -25,7 +26,10 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbAuthService : public HbNetworkService, public IHbContractListener, public IHbSocketListener
+        class HB_NETWORK_DECL HbAuthService :
+            public HbNetworkService,
+            public IHbContractListener,
+            public IHbSocketListener
         {
             Q_OBJECT
         public:
@@ -38,7 +42,7 @@ namespace hb
 
             HbAuthService();
             virtual ~HbAuthService(){} //!< \todo defaulted linux-g++ issue
-            virtual HbNetworkProtocol::NetworkTypes enabledNetworkTypes() const override;
+
             virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
 
             virtual serviceuid uid() const override;

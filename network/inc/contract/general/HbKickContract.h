@@ -35,7 +35,7 @@ namespace hb
             HbKickContract( const HbKickContract & source );
             HbKickContract & operator=( const HbKickContract & source );
 
-            HbKickContract * create() const override;
+            virtual HbKickContract * create() const override;
 
             virtual bool read ( QDataStream & stream ) override;
             virtual bool write( QDataStream & stream ) const override;

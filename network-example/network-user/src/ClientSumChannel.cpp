@@ -1,8 +1,9 @@
 // Hb
-#include <RequestSumContract.h>
-#include <ResponseSumContract.h>
+#include <HbLogService.h>
 // Local
 #include <ClientSumChannel.h>
+#include <RequestSumContract.h>
+#include <ResponseSumContract.h>
 #include <Protocol.h>
 
 using namespace hb::network;
@@ -17,11 +18,6 @@ void ClientSumChannel::reset()
 
 }
 
-HbNetworkProtocol::NetworkTypes ClientSumChannel::enabledNetworkTypes() const
-{
-    return HbNetworkProtocol::NETWORK_TCP;
-}
-
 void ClientSumChannel::plugContracts( HbNetworkExchanges & exchanges )
 {
     exchanges.plug< ResponseSumContract >();
@@ -32,9 +28,20 @@ serviceuid ClientSumChannel::uid() const
     return Protocol::CHANNEL_SUM;
 }
 
-void ClientSumChannel::onUserContractReceived( const HbNetworkUserData & user_data, const HbNetworkContract * contract )
+void ClientSumChannel::onUserContractReceived( const HbNetworkContract * contract )
 {
+    q_assert_ptr( contract );
 
+    HbInfo( "Contract received from %d.", HbLatin1( contract->sender() ) );
+    HbInfo( "Contract details: %s", HbLatin1( contract->toString() ) );
+
+    const ResponseSumContract * result_contract = contract->value< ResponseSumContract >();
+    if( result_contract )
+    {
+        emit computationReceived( result_contract->result() );
+    }
+
+    delete contract;
 }
 
 void ClientSumChannel::requestSum( quint32 a, quint32 b )
@@ -43,5 +50,5 @@ void ClientSumChannel::requestSum( quint32 a, quint32 b )
     contract->setIntA( a );
     contract->setIntB( b );
 
-    //emit userContractToSend( contract );
+    onContractToSend( contract );
 }

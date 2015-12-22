@@ -57,10 +57,8 @@ void HbServerPresenceService::timerEvent( QTimerEvent * )
     }
 }
 
-void HbServerPresenceService::onSocketAuthenticated( const HbNetworkUserData & user_data )
+void HbServerPresenceService::onSocketAuthenticated( networkuid socket_uid )
 {
-    networkuid socket_uid = user_data.socketUid();
-
     q_assert( !mClientAliveTick.contains( socket_uid ) );
 
     if( mTickTimer == 0 ) // No timer started yet.
@@ -71,10 +69,8 @@ void HbServerPresenceService::onSocketAuthenticated( const HbNetworkUserData & u
     mClientAliveTick.insert( socket_uid, 0 );
 }
 
-void HbServerPresenceService::onSocketUnauthenticated( const HbNetworkUserData & user_data )
+void HbServerPresenceService::onSocketUnauthenticated( networkuid socket_uid )
 {
-    networkuid socket_uid = user_data.socketUid();
-
     q_assert( mClientAliveTick.contains( socket_uid ) );
 
     mClientAliveTick.remove( socket_uid );
@@ -101,4 +97,6 @@ void HbServerPresenceService::onContractReceived( const HbNetworkContract * cont
         HbError( "Presence contract type not recognized." );
         //! \todo How to kick?
     }
+
+    delete presence_contract;
 }

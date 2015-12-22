@@ -47,11 +47,8 @@ namespace hb
             networkuid joinTcpClient( HbTcpClientConfig & config, bool main );
             virtual bool leave() override;
 
-            virtual bool registerChannel( HbNetworkChannel * channel ) override;
-
             bool authRequest( HbClientAuthLoginObject * login_object );
             bool facebookAuthRequested();
-
 
         signals:
             void clientStatusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status );

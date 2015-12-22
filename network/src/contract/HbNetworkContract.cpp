@@ -7,10 +7,11 @@ using namespace hb::network;
 
 HbNetworkContract::HbNetworkContract()
 {
-    mSender      = 0;
-    mNetworkType = HbNetworkProtocol::NETWORK_UNDEFINED;
-    mRouting     = HbNetworkProtocol::ROUTING_UNDEFINED;
-    mpReply      = nullptr;
+    mSender          = 0;
+    mNetworkReceiver = 0;
+    mNetworkType     = HbNetworkProtocol::NETWORK_UNDEFINED;
+    mRouting         = HbNetworkProtocol::ROUTING_UNDEFINED;
+    mpReply          = nullptr;
 }
 
 HbNetworkContract::HbNetworkContract( serviceuid service, codeuid code ) :
@@ -51,6 +52,11 @@ HbNetworkContract & HbNetworkContract::operator=( const HbNetworkContract & sour
     return ( *this );
 }
 
+HbNetworkContract::~HbNetworkContract()
+{
+    if( mpReply ) delete mpReply;
+}
+
 void HbNetworkContract::updateReply()
 {
     if( mpReply )
@@ -82,9 +88,9 @@ networkuid HbNetworkContract::sender() const
     return mSender;
 }
 
-void HbNetworkContract::addPendingReceiver( const QString & user_uid )
+void HbNetworkContract::addPendingReceiver( ShConstHbNetworkUserInfo user_info )
 {
-    mPendingReceivers.insert( user_uid );
+    mPendingReceivers.push_back( user_info );
 }
 
 void HbNetworkContract::addSocketReceiver( networkuid socket_uid )
@@ -97,7 +103,7 @@ void HbNetworkContract::resetReceivers()
     mReceivers.clear();
 }
 
-const QSet< QString > & HbNetworkContract::pendingReceivers() const
+const QList< ShConstHbNetworkUserInfo > & HbNetworkContract::pendingReceivers() const
 {
     return mPendingReceivers;
 }
@@ -114,6 +120,16 @@ networkuid HbNetworkContract::receiver() const
         return *mReceivers.begin();
     }
     return 0; // 0 is an invalid netwuid.
+}
+
+void HbNetworkContract::setNetworkReceiver( networkuid network_receiver )
+{
+    mNetworkReceiver = network_receiver;
+}
+
+networkuid HbNetworkContract::networkReceiver() const
+{
+    return mNetworkReceiver;
 }
 
 bool HbNetworkContract::isValid() const

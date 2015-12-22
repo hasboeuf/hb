@@ -1,5 +1,8 @@
+// Hb
+#include <HbLogService.h>
 // Local
 #include <config/com/HbNetworkConfig.h>
+#include <service/channel/HbNetworkChannel.h>
 
 using namespace hb::network;
 
@@ -88,4 +91,29 @@ const HbNetworkExchanges & HbNetworkConfig::exchanges() const
 HbNetworkExchanges & HbNetworkConfig::exchanges()
 {
     return mExchanges;
+}
+
+bool HbNetworkConfig::assignChannel( HbNetworkChannel * channel )
+{
+    if( !channel )
+    {
+        HbError( "Can not assign null channel." );
+        return false;
+    }
+
+    if( mChannels.contains( channel ) )
+    {
+        HbWarning( "Channel %d already assigned.", channel->uid() );
+        return false;
+    }
+
+    channel->plugContracts( mExchanges );
+
+    mChannels.push_back( channel );
+    return true;
+}
+
+QList< HbNetworkChannel * > HbNetworkConfig::channels()
+{
+    return mChannels;
 }

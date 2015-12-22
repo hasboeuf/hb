@@ -26,7 +26,9 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbServerPeopledChannel : public HbServerChannel, public IHbUserListener
+        class HB_NETWORK_DECL HbServerPeopledChannel :
+            public HbServerChannel,
+            public IHbUserListener
         {
             Q_OBJECT
 
@@ -35,17 +37,19 @@ namespace hb
             HbServerPeopledChannel() = default;
             virtual ~HbServerPeopledChannel() = default;
 
-            virtual void onUserConnected   ( const HbNetworkUserData & user_data ) override final;
-            virtual void onUserDisconnected( const HbNetworkUserData & user_data ) override final;
+            virtual void onUserConnected   ( ShConstHbNetworkUserInfo user_info ) override final;
+            virtual void onUserDisconnected( ShConstHbNetworkUserInfo user_info ) override final;
+
+            const QHash< QString, ShConstHbNetworkUserInfo > & connectedUsers() const;
 
         public callbacks:
 
         private:
-            QHash< QString, HbNetworkUserData > mUsers;
+            QHash< QString, ShConstHbNetworkUserInfo > mUsers;
 
         signals:
-            void userConnected   ( const HbNetworkUserInfo & user_info );
-            void userDisconnected( const HbNetworkUserInfo & user_info );
+            void userConnected   ( ShConstHbNetworkUserInfo user_info );
+            void userDisconnected( ShConstHbNetworkUserInfo user_info );
 
         };
     }
