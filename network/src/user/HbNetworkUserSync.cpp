@@ -11,6 +11,27 @@ HbNetworkUserSync::HbNetworkUserSync()
     mStatus   = HbNetworkProtocol::NETWORK_USER_UNDEFINED;
 }
 
+HbNetworkUserSync::HbNetworkUserSync( const HbNetworkUserSync & source )
+{
+    if( &source != this )
+    {
+        mUserInfo = source.mUserInfo;
+        mStatus = source.mStatus;
+    }
+}
+
+HbNetworkUserSync & HbNetworkUserSync::operator=(const HbNetworkUserSync & source)
+{
+    if( &source != this )
+    {
+        mUserInfo = source.mUserInfo;
+        mStatus = source.mStatus;
+    }
+
+    return (*this);
+
+}
+
 void HbNetworkUserSync::setUserInfo( ShConstHbNetworkUserInfo user_info )
 {
     if( !user_info.isNull() )

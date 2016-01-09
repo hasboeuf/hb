@@ -36,6 +36,8 @@ namespace hb
 
             HbNetworkUserSync();
             virtual ~HbNetworkUserSync() = default;
+            HbNetworkUserSync( const HbNetworkUserSync & source );
+            HbNetworkUserSync & operator=(const HbNetworkUserSync & source);
 
             const HbNetworkUserInfo & userInfo() const;
             void setUserInfo( ShConstHbNetworkUserInfo user_info );
@@ -52,5 +54,7 @@ namespace hb
         QDataStream & operator>>( QDataStream & stream, HbNetworkUserSync & user_sync );
     }
 }
+
+using hb::network::HbNetworkUserSync;
 
 #endif // HBNETWORKUSERSYNC_H

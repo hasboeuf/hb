@@ -41,7 +41,7 @@ namespace hb
             virtual HbUserSyncContract * create() const override;
 
             void addSync( const HbNetworkUserSync & user_sync );
-            const QList< hb::network::HbNetworkUserSync > & syncs() const;
+            const QList< HbNetworkUserSync > & syncs() const;
 
             virtual bool read ( QDataStream & stream ) override;
             virtual bool write( QDataStream & stream ) const override;
