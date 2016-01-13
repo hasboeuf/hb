@@ -192,6 +192,11 @@
         DEFINES += HB_SHARED
     }
 
+    HB_DEV = $$(HBDEV)
+    !isEmpty( HB_DEV ) {
+        DEFINES += DEV
+    }
+
     message( build_config= $$BUILD.CONFIG )
     message( config=$$CONFIG )
     message( mode=$${BUILD.MODE} )
