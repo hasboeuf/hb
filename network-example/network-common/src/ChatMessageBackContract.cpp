@@ -7,8 +7,9 @@ using namespace hb::networkexample;
 
 ChatMessageBackContract::ChatMessageBackContract( ) :
     HbNetworkContract( Protocol::CHANNEL_CHAT,
-                       Protocol::CODE_CLT_CHAT_MESSAGE )
+                       Protocol::CODE_SRV_CHAT_MESSAGE )
 {
+    setRouting( HbNetworkProtocol::ROUTING_MULTICAST );
     mMessage = "";
     mAuthor  = "";
 }

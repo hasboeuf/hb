@@ -20,7 +20,7 @@ HbNetworkUserSync::HbNetworkUserSync( const HbNetworkUserSync & source )
     }
 }
 
-HbNetworkUserSync & HbNetworkUserSync::operator=(const HbNetworkUserSync & source)
+HbNetworkUserSync & HbNetworkUserSync::operator=( const HbNetworkUserSync & source )
 {
     if( &source != this )
     {
@@ -28,7 +28,7 @@ HbNetworkUserSync & HbNetworkUserSync::operator=(const HbNetworkUserSync & sourc
         mStatus = source.mStatus;
     }
 
-    return (*this);
+    return ( *this );
 
 }
 

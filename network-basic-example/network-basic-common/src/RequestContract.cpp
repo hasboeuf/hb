@@ -39,9 +39,9 @@ RequestContract * RequestContract::create() const
     return new RequestContract();
 }
 
-ResponseContract * RequestContract::reply() const
+ResponseContract * RequestContract::takeReply() const
 {
-    return HbNetworkContract::reply()->value< ResponseContract >();
+    return HbNetworkContract::takeReply()->value< ResponseContract >();
 }
 
 const QString RequestContract::toString() const

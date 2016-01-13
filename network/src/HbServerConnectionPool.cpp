@@ -161,10 +161,7 @@ networkuid HbServerConnectionPool::joinTcpServer( HbTcpServerConfig & config , b
 
     foreach( HbNetworkChannel * channel, config.channels() )
     {
-        if( addChannel( channel ) )
-        {
-            channel->setNetworkUid( network_uid );
-        }
+        plugChannel( channel, network_uid );
     }
 
     mServers.insert( network_uid, server );
@@ -180,6 +177,9 @@ bool HbServerConnectionPool::leave()
 {
     mLeaving = true;
 
+    // Reset
+    HbConnectionPool::reset(); // Reset services before deleting servers.
+
     QHash< networkuid, HbAbstractServer * > copy = mServers;
     // Local copy as onClientDisconnected remove items of mServers bit by bit.
     qDeleteAll( copy );
@@ -194,9 +194,6 @@ bool HbServerConnectionPool::leave()
     mUserBySocketId.clear();
     mUserByEmail.clear();
     mServerBySocketId.clear();
-
-    // Reset
-    HbConnectionPool::reset(); // Reset services.
 
     mLeaving = false;
 
@@ -241,11 +238,18 @@ void HbServerConnectionPool::onServerDisconnected( networkuid server_uid )
     {
         HbInfo( "HbServer is leaving. Server %d removed.", server_uid );
         // Deletion is handled in leave().
+        // Unplugging channels is done in leave().
     }
     else
     {
+        foreach( HbNetworkChannel * channel, server->configuration().channels() )
+        {
+            q_assert_ptr( channel );
+            HbConnectionPool::unplugChannel( channel );
+        }
+
         HbInfo( "Server %d disconnected.", server_uid );
-        server->deleteLater( );
+        server->deleteLater();
     }
 
     if( mMainServer == server_uid )
@@ -290,11 +294,11 @@ void HbServerConnectionPool::onSocketDisconnected( networkuid server_uid, networ
         mUserByEmail.remove( user->info()->email() );
         mUserBySocketId.remove( socket_uid );
 
-        delete user;
-
         // Notifying...
         emit socketUnauthenticated( socket_uid ); // To IHbSocketAuthListener.
         emit userDisconnected( user->info() ); // To IHbUserListener.
+
+        delete user;
     }
 }
 
@@ -411,18 +415,23 @@ void HbServerConnectionPool::onContractToSend ( const HbNetworkContract * contra
 {
     q_assert_ptr( contract );
 
+    ShConstHbNetworkContract shared_contract( contract );
+
     if( contract->isValid() )
     {
         auto receivers = contract->receivers();
+
+        QSet< HbAbstractServer * > servers; // Avoid to send the same contract multiple times to the same server.
+
         foreach( networkuid receiver, receivers )
         {
             networkuid server_uid = mServerBySocketId.value( receiver, 0 );
             if( server_uid > 0 )
             {
-                HbAbstractServer * server = mServers.value( server_uid, nullptr ); //! \todo Will send many times the same contract if there are several servers.
+                HbAbstractServer * server = mServers.value( server_uid, nullptr );
                 if( server )
                 {
-                    server->send( ShConstHbNetworkContract( contract ) );
+                    servers.insert( server );
                 }
                 else
                 {
@@ -434,11 +443,17 @@ void HbServerConnectionPool::onContractToSend ( const HbNetworkContract * contra
                 HbWarning( "Receiver %d has no associated server.", receiver );
             }
         }
+
+        foreach( HbAbstractServer * server, servers )
+        {
+            server->send( shared_contract );
+        }
     }
     else
     {
-        HbWarning( "Try to send an invalid contract." );
+        HbWarning( "Try to send an invalid contract, code=%d.", contract->header().code() );
     }
+
 }
 
 void HbServerConnectionPool::onUserToKick( ShConstHbNetworkUserInfo user_info, netwint reason, const QString & description )

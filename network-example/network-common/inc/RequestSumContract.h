@@ -33,7 +33,7 @@ namespace hb
             RequestSumContract( const RequestSumContract & source );
             RequestSumContract & operator=( const RequestSumContract & source );
 
-            virtual ResponseSumContract * reply() const;
+            virtual ResponseSumContract * takeReply() const;
 
             virtual const QString toString() const;
 

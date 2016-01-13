@@ -9,6 +9,7 @@ RequestSumContract::RequestSumContract() :
     HbNetworkContract( Protocol::CHANNEL_SUM,
                        Protocol::CODE_CLT_REQUEST_SUM )
 {
+    setRouting( HbNetworkProtocol::ROUTING_UNICAST );
     mIntA = 0;
     mIntB = 0;
     mpReply = new ResponseSumContract();
@@ -42,9 +43,9 @@ RequestSumContract * RequestSumContract::create() const
     return new RequestSumContract();
 }
 
-ResponseSumContract * RequestSumContract::reply() const
+ResponseSumContract * RequestSumContract::takeReply() const
 {
-    return HbNetworkContract::reply()->value< ResponseSumContract >();
+    return HbNetworkContract::takeReply()->value< ResponseSumContract >();
 }
 
 const QString RequestSumContract::toString() const

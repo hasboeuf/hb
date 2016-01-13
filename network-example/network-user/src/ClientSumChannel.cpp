@@ -20,6 +20,7 @@ void ClientSumChannel::reset()
 
 void ClientSumChannel::plugContracts( HbNetworkExchanges & exchanges )
 {
+    exchanges.plug< RequestSumContract >();
     exchanges.plug< ResponseSumContract >();
 }
 

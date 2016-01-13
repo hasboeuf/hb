@@ -51,6 +51,8 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
 
     // Ui
     setupUi( this );
+    ui_qsw_stack->setCurrentIndex( PAGE_WELCOME );
+
     setWindowTitle( "User" );
 
     HbO2ClientConfig facebook_config;
@@ -63,7 +65,7 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     config.setAppName( "hb-network-example" );
     config.setProtocolVersion( 1 );
     config.auth().enableFacebookAuth( facebook_config );
-    config.presence().setKeepAliveInterval( 4 );
+    config.presence().setKeepAliveInterval( 30 );
 
     mpHbClient    = new HbClient( config );
 
@@ -103,8 +105,8 @@ void UserMainWindow::onStartClicked()
     config.setReconnectionDelay( 0 );
     config.setBadHeaderTolerant( false );
 
-    config.assignChannel( mpSumChannel  );
-    config.assignChannel( mpChatChannel );
+    config.plugChannel( mpSumChannel  );
+    config.plugChannel( mpChatChannel );
 
     networkuid client_uid = mpHbClient->joinTcpClient( config, true );
     if( client_uid > 0 )
@@ -146,13 +148,14 @@ void UserMainWindow::onClientStatusChanged( networkuid client_uid, HbNetworkProt
     HbInfo( "Status changed on client %d: %s.", client_uid, HbLatin1( HbNetworkProtocol::MetaClientStatus::toString( status ) ) );
 }
 
-void UserMainWindow::onMeStatusChanged( HbNetworkProtocol::UserStatus status )
+void UserMainWindow::onMeStatusChanged( HbNetworkProtocol::UserStatus status, ShConstHbNetworkUserInfo me_info )
 {
     HbInfo( "My status changed: %s.", HbLatin1( HbNetworkProtocol::MetaUserStatus::toString( status ) ) );
 
     if( status == HbNetworkProtocol::USER_DISCONNECTED )
     {
         ui_qsw_stack->setCurrentIndex( PAGE_WELCOME );
+        ui_ql_me->clear();
     }
     else if( status == HbNetworkProtocol::USER_CONNECTING )
     {
@@ -168,6 +171,9 @@ void UserMainWindow::onMeStatusChanged( HbNetworkProtocol::UserStatus status )
     {
         resetGui();
         ui_qsw_stack->setCurrentIndex( PAGE_APP );
+        ui_ql_me->setText( me_info->firstName() + " " +
+                           me_info->lastName()  + " (" +
+                           me_info->email()     + ")" );
     }
 }
 

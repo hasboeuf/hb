@@ -3,6 +3,18 @@
 
 using namespace hb::network;
 
+void HbServerPeopledChannel::internalReset()
+{
+    HbNetworkChannel::internalReset();
+
+    // Clean users.
+    foreach( ShConstHbNetworkUserInfo user_info, mUsers.values() )
+    {
+        emit userDisconnected( user_info );
+    }
+    mUsers.clear();
+}
+
 void HbServerPeopledChannel::onUserConnected( ShConstHbNetworkUserInfo user_info )
 {
     mUsers.insert( user_info->email(), user_info );

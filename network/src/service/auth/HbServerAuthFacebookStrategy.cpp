@@ -6,6 +6,9 @@
 #include <service/auth/HbAuthService.h>
 #include <service/auth/HbServerAuthFacebookStrategy.h>
 #include <contract/auth/HbAuthFacebookRequestContract.h>
+#ifdef DEV
+#include <mock/HbNetworkUserInfoMock.h>
+#endif
 
 using namespace hb::network;
 using namespace hb::link;
@@ -131,6 +134,10 @@ void HbServerAuthFacebookStrategy::onRequestCompleted( quint64 request_id, HbFac
         {
             user_info.setGender( HbNetworkUserInfo::GENDER_FEMALE );
         }
+
+#ifdef DEV
+        HbNetworkUserInfoMock::mockNetworkUserInfo( user_info ); // Randomize Facebook user.
+#endif
 
         emit authSucceed( sender, user_info );
     }

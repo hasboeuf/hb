@@ -21,6 +21,7 @@ void ServerChatChannel::reset()
 void ServerChatChannel::plugContracts( HbNetworkExchanges & exchanges )
 {
     exchanges.plug< ChatMessageContract >();
+    exchanges.plug< ChatMessageBackContract >();
 }
 
 serviceuid ServerChatChannel::uid() const

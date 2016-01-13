@@ -3,6 +3,17 @@
 
 using namespace hb::network;
 
+void HbClientPeopledChannel::internalReset()
+{
+    HbNetworkChannel::internalReset();
+
+    // Clean users.
+    foreach( ShConstHbNetworkUserInfo user_info, mUsers.values() )
+    {
+        emit userDisconnected( user_info );
+    }
+    mUsers.clear();
+}
 
 void HbClientPeopledChannel::onUserConnected( ShConstHbNetworkUserInfo user_info )
 {

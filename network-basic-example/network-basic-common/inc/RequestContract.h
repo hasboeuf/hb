@@ -33,7 +33,7 @@ namespace hb
             RequestContract( const RequestContract & source );
             RequestContract & operator=( const RequestContract & source );
 
-            virtual ResponseContract * reply() const;
+            virtual ResponseContract * takeReply() const;
 
             virtual const QString toString() const;
 

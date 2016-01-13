@@ -14,10 +14,14 @@ HbChannelService::HbChannelService()
 
 void HbChannelService::reset()
 {
-    foreach( HbNetworkChannel * channel, mChannels )
+    while( !mChannels.isEmpty() )
     {
-        channel->reset();
+        HbNetworkChannel * channel = *mChannels.begin();
+        unplugChannel( channel ); // Handles reset.
     }
+
+    q_assert( mChannels.size() == 0 );
+    mUsers.clear();
 }
 
 void HbChannelService::plugContracts( HbNetworkExchanges & exchanges )
@@ -30,11 +34,12 @@ serviceuid HbChannelService::uid() const
     return HbNetworkProtocol::SERVICE_CHANNEL;
 }
 
-bool HbChannelService::addChannel( HbNetworkChannel * channel )
+bool HbChannelService::plugChannel(HbNetworkChannel * channel , networkuid network_uid )
 {
     q_assert_ptr( channel );
-    q_assert( channel->networkUid() != 0 );
+    q_assert( channel->networkUid() == 0 );
 
+    channel->setNetworkUid( network_uid );
     serviceuid channel_uid = channel->uid();
     bool ok = false;
 
@@ -46,10 +51,14 @@ bool HbChannelService::addChannel( HbNetworkChannel * channel )
         }
         else
         {
+            channel->reset();
+
             mChannels.insert( channel_uid, channel );
             ok = true;
 
             connect( channel, &HbNetworkService::contractToSend, this, &HbChannelService::onContractToSend );
+
+            HbInfo( "Channel %d added to network %d.", channel->uid(), network_uid );
         }
     }
     else
@@ -60,6 +69,28 @@ bool HbChannelService::addChannel( HbNetworkChannel * channel )
     return ok;
 }
 
+bool HbChannelService::unplugChannel( HbNetworkChannel * channel )
+{
+    q_assert_ptr( channel );
+
+    if( !mChannels.contains( channel->uid() ) )
+    {
+        HbWarning( "Channel %d inexistant.", channel );
+        return false;
+    }
+
+    channel->internalReset();
+    channel->reset();
+
+    mChannels.remove( channel->uid() );
+
+    disconnect( channel, &HbNetworkService::contractToSend, this, &HbChannelService::onContractToSend );
+
+    HbInfo( "Channel %d removed from network %d.", channel->uid(), channel->networkUid() );
+
+    return true;
+}
+
 HbNetworkChannel * HbChannelService::channel( serviceuid channel_uid )
 {
     return mChannels.value( channel_uid, nullptr );
@@ -68,5 +99,6 @@ HbNetworkChannel * HbChannelService::channel( serviceuid channel_uid )
 void HbChannelService::onContractToSend( const HbNetworkContract * contract )
 {
     q_assert_ptr( contract );
+
     emit contractToSend( contract );
 }

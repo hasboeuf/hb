@@ -84,7 +84,6 @@ auto HbNetworkUserInfo::gender() const -> Gender
     return mGender;
 }
 
-
 void HbNetworkUserInfo::setId( const QString & id )
 {
     if( !id.isEmpty() ) mId = id;

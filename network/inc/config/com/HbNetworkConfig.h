@@ -47,8 +47,8 @@ namespace hb
             virtual const HbNetworkExchanges & exchanges() const final;
             virtual HbNetworkExchanges & exchanges() final;
 
-            virtual bool assignChannel( HbNetworkChannel * channel ) final;
-            virtual QList< HbNetworkChannel * > channels() final;
+            virtual bool plugChannel( HbNetworkChannel * channel ) final;
+            virtual QList< HbNetworkChannel * > channels() const final;
 
         protected:
             HbNetworkExchanges mExchanges;

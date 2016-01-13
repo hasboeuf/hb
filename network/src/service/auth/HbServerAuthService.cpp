@@ -72,8 +72,6 @@ void HbServerAuthService::timerEvent( QTimerEvent * )
         auto current = it++;
 
         networkuid socket_uid = current.key();
-        mAuthTimeout[socket_uid]++; // Increment one second.
-
         quint8 timeout        = current.value();
 
         if( timeout > mConfig.authTimeout() )
@@ -83,6 +81,10 @@ void HbServerAuthService::timerEvent( QTimerEvent * )
                                QString( "Reach %1 seconds auth timeout." ).arg( timeout ) );
 
             //! \todo Check deletion.
+        }
+        else
+        {
+            mAuthTimeout[socket_uid]++; // Increment one second.
         }
     }
 }
@@ -114,7 +116,7 @@ void HbServerAuthService::addSocket( networkuid socket_uid )
     }
 
     mPendingSocket.insert( socket_uid );
-    mAuthTimeout.insert  ( socket_uid, mConfig.authTimeout() );
+    mAuthTimeout.insert  ( socket_uid, 0 ); // Init 0 sec.
     mAuthTries.insert    ( socket_uid, 0 );
 }
 
@@ -165,7 +167,7 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
         HbServerAuthStrategy * strategy = mStrategies.value( type, nullptr );
         if( strategy )
         {
-            HbAuthStatusContract * response = auth_contract->reply();
+            HbAuthStatusContract * response = auth_contract->takeReply();
             if( response &&
                 response->receiver() == socket_uid )
             {
@@ -217,6 +219,8 @@ void HbServerAuthService::onSocketDisconnected( networkuid socket_uid )
 
 void HbServerAuthService::onAuthSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info )
 {
+    HbNetworkUserInfo i = user_info;
+
     if( checkSocket( socket_uid ) )
     {
         HbAuthStatusContract * response = mResponses.value( socket_uid, nullptr );
@@ -226,8 +230,6 @@ void HbServerAuthService::onAuthSucceed( networkuid socket_uid, const HbNetworkU
             return;
         }
 
-        emit socketAuthenticated( socket_uid, user_info );
-
         response->setStatus( HbNetworkProtocol::AUTH_OK );
         response->setTryNumber( mAuthTries[socket_uid] );
         response->setMaxTries( mConfig.authMaxTries() );
@@ -236,6 +238,9 @@ void HbServerAuthService::onAuthSucceed( networkuid socket_uid, const HbNetworkU
         delSocket( socket_uid, false );
 
         emit contractToSend( response );
+
+        // Should be called after sending client's ack otherwise client will receive a channel contract (HbUserSyncContract) before being authenticated (from its point of view).
+        emit socketAuthenticated( socket_uid, user_info );
     }
     else
     {

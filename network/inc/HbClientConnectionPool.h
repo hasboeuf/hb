@@ -63,14 +63,14 @@ namespace hb
             void onSocketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason ) override;
 
             // From HbNetworkUser.
-            void onMeStatusChanged( HbNetworkProtocol::UserStatus status );
+            void onMeStatusChanged( HbNetworkProtocol::UserStatus me_status );
 
         private:
             bool checkKickReceived( const HbNetworkContract * contract );
 
         signals:
             void statusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status );
-            void meStatusChanged( HbNetworkProtocol::UserStatus status );
+            void meStatusChanged( HbNetworkProtocol::UserStatus status_me, ShConstHbNetworkUserInfo me_info );
 
         private:
             QHash< networkuid, HbAbstractClient * > mClients;

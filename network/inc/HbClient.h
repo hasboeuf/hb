@@ -52,7 +52,7 @@ namespace hb
 
         signals:
             void clientStatusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status );
-            void meStatusChanged( HbNetworkProtocol::UserStatus );
+            void meStatusChanged( HbNetworkProtocol::UserStatus me_status, ShConstHbNetworkUserInfo me_info );
 
         private:
             HbClientConnectionPool mConnectionPool;

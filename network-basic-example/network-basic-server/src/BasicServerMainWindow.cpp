@@ -113,7 +113,7 @@ void BasicServerMainWindow::onSocketContractReceived( networkuid server_uid, net
     const RequestContract * request = contract->value< RequestContract >();
     if( request )
     {
-        ResponseContract * response = request->reply();
+        ResponseContract * response = request->takeReply();
 
         if( response )
         {

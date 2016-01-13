@@ -59,7 +59,7 @@ namespace hb
             virtual HbNetworkProtocol::RoutingScheme routing() const final;
             virtual bool setRouting( HbNetworkProtocol::RoutingScheme routing ) final;
 
-            virtual HbNetworkContract * reply() const;
+            virtual HbNetworkContract * takeReply() const;
             virtual void updateReply() final;
 
             virtual const QString toString() const;

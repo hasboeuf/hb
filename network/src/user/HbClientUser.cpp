@@ -23,8 +23,11 @@ HbNetworkProtocol::UserStatus HbClientUser::status() const
 
 void HbClientUser::setStatus( HbNetworkProtocol::UserStatus status )
 {
-    mStatus = status;
-    emit statusChanged( status );
+    if( mStatus != status )
+    {
+        mStatus = status;
+        emit statusChanged( status );
+    }
 }
 
 void HbClientUser::addSocket( networkuid socket_uid , bool main )

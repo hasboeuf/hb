@@ -39,7 +39,8 @@ namespace hb
             virtual ~HbConnectionPool() = default;
 
             virtual bool leave() = 0;
-            virtual bool addChannel( HbNetworkChannel * channel ) final;
+            virtual bool plugChannel( HbNetworkChannel * channel, networkuid network_uid ) final;
+            virtual bool unplugChannel( HbNetworkChannel * channel ) final;
 
         protected:
             void setExchanges( HbNetworkExchanges & exchanges );

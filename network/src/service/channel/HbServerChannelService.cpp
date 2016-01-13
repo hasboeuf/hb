@@ -11,7 +11,8 @@ using namespace hb::network;
 
 void HbServerChannelService::reset()
 {
-    HbChannelService::reset();
+    HbChannelService::reset(); // Handles channels unplugging.
+    q_assert( mPeopledChannels.size() == 0 );
 }
 
 const HbServiceChannelServerConfig & HbServerChannelService::config() const
@@ -27,13 +28,13 @@ void HbServerChannelService::setConfig( const HbServiceChannelServerConfig & con
     }
 }
 
-bool HbServerChannelService::addChannel( HbNetworkChannel * channel )
+bool HbServerChannelService::plugChannel( HbNetworkChannel * channel, networkuid network_uid )
 {
     bool ok = false;
 
     if( dynamic_cast< HbServerChannel * >( channel ) )
     {
-        ok = HbChannelService::addChannel( channel );
+        ok = HbChannelService::plugChannel( channel, network_uid );
 
         connect( channel, &HbNetworkChannel::userContractToSend , this, &HbServerChannelService::onUserContractToSend );
         connect( channel, &HbNetworkChannel::usersContractToSend, this, &HbServerChannelService::onUsersContractToSend );
@@ -50,6 +51,29 @@ bool HbServerChannelService::addChannel( HbNetworkChannel * channel )
                 connect( this, &HbServerChannelService::userDisconnected, peopled_channel, &HbServerPeopledChannel::onUserDisconnected );
             }
         }
+    }
+
+    return ok;
+}
+
+bool HbServerChannelService::unplugChannel( HbNetworkChannel * channel )
+{
+    bool ok = HbChannelService::unplugChannel( channel );
+
+    if( ok )
+    {
+        disconnect( channel, &HbNetworkChannel::userContractToSend, this, &HbServerChannelService::onUserContractToSend );
+        disconnect( channel, &HbNetworkChannel::usersContractToSend, this, &HbServerChannelService::onUsersContractToSend );
+        disconnect( channel, &HbNetworkChannel::userToKick, this, &HbServerChannelService::onUserToKick );
+
+        HbServerPeopledChannel * peopled_channel = mPeopledChannels.value( channel->uid(), nullptr );
+        if( peopled_channel )
+        {
+            disconnect( this, &HbServerChannelService::userConnected, peopled_channel, &HbServerPeopledChannel::onUserConnected );
+            disconnect( this, &HbServerChannelService::userDisconnected, peopled_channel, &HbServerPeopledChannel::onUserDisconnected );
+
+            mPeopledChannels.remove( peopled_channel->uid() );
+        }        
     }
 
     return ok;
@@ -113,7 +137,7 @@ void HbServerChannelService::onUserConnected( ShConstHbNetworkUserInfo user_info
 
 void HbServerChannelService::onUserDisconnected( ShConstHbNetworkUserInfo user_info )
 {
-    q_assert( !mUsers.contains( user_info->email() ) );
+    q_assert( mUsers.contains( user_info->email() ) );
 
     mUsers.remove( user_info->email() );
 

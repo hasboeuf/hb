@@ -20,6 +20,7 @@ void ClientChatChannel::reset()
 
 void ClientChatChannel::plugContracts( HbNetworkExchanges & exchanges )
 {
+    exchanges.plug< ChatMessageContract >();
     exchanges.plug< ChatMessageBackContract >();
 }
 
@@ -30,10 +31,16 @@ serviceuid ClientChatChannel::uid() const
 
 void ClientChatChannel::sendMessage( const QString message )
 {
+    if( message.isEmpty() )
+    {
+        HbWarning( "Not enable to send empty chat message." );
+        return;
+    }
+
     ChatMessageContract * message_contract = new ChatMessageContract();
     message_contract->setMessage( message );
 
-    emit contractToSend( message_contract );
+    onContractToSend( message_contract );
 }
 
 void ClientChatChannel::onUserContractReceived( const HbNetworkContract * contract )

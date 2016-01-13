@@ -29,7 +29,8 @@ SUBDIRS +=  com \
             service/channel \
             service/presence \
             user \
-            listener
+            listener \
+            mock
 
 # ------------
 # Qt Settings

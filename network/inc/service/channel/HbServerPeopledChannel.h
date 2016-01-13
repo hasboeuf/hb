@@ -37,6 +37,8 @@ namespace hb
             HbServerPeopledChannel() = default;
             virtual ~HbServerPeopledChannel() = default;
 
+            virtual void internalReset() override;
+
             virtual void onUserConnected   ( ShConstHbNetworkUserInfo user_info ) override final;
             virtual void onUserDisconnected( ShConstHbNetworkUserInfo user_info ) override final;
 

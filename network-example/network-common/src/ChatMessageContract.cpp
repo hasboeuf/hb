@@ -9,6 +9,7 @@ ChatMessageContract::ChatMessageContract() :
     HbNetworkContract( Protocol::CHANNEL_CHAT,
                        Protocol::CODE_CLT_CHAT_MESSAGE )
 {
+    setRouting( HbNetworkProtocol::ROUTING_UNICAST );
     mMessage = "";
 }
 

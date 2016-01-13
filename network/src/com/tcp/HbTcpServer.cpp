@@ -78,9 +78,9 @@ void HbTcpServer::reset()
 
 bool HbTcpServer::connectToNetwork()
 {
-    quint16 port = this->configuration().port();
+    quint16 port = configuration().port();
 
-    if ( !mpDevice->listen( this->configuration().address(), port ) )
+    if ( !mpDevice->listen( configuration().address(), port ) )
     {
         HbError( "Server failed to listen." );
         return false;

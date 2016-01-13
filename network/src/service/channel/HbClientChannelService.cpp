@@ -11,7 +11,8 @@ using namespace hb::network;
 
 void HbClientChannelService::reset()
 {
-    HbChannelService::reset();
+    HbChannelService::reset(); // Handles channels unplugging.
+    q_assert( mPeopledChannels.size() == 0 );
 }
 
 const HbServiceChannelClientConfig & HbClientChannelService::config() const
@@ -27,13 +28,15 @@ void HbClientChannelService::setConfig( const HbServiceChannelClientConfig & con
     }
 }
 
-bool HbClientChannelService::addChannel( HbNetworkChannel * channel )
+bool HbClientChannelService::plugChannel(HbNetworkChannel * channel , networkuid network_uid )
 {
     bool ok = false;
 
     if( dynamic_cast< HbClientChannel * >( channel ) )
     {
-        ok = HbChannelService::addChannel( channel );
+        ok = HbChannelService::plugChannel( channel, network_uid );
+
+        q_assert( channel->networkUid() != 0 );
 
         if( ok )
         {
@@ -45,6 +48,25 @@ bool HbClientChannelService::addChannel( HbNetworkChannel * channel )
                 connect( this, &HbClientChannelService::userConnected,    peopled_channel, &HbClientPeopledChannel::onUserConnected );
                 connect( this, &HbClientChannelService::userDisconnected, peopled_channel, &HbClientPeopledChannel::onUserDisconnected );
             }
+        }
+    }
+
+    return ok;
+}
+
+bool HbClientChannelService::unplugChannel( HbNetworkChannel * channel )
+{
+    bool ok = HbChannelService::unplugChannel( channel );
+
+    if( ok )
+    {
+        HbClientPeopledChannel * peopled_channel = mPeopledChannels.value( channel->uid(), nullptr );
+        if( peopled_channel )
+        {
+            disconnect( this, &HbClientChannelService::userConnected, peopled_channel, &HbClientPeopledChannel::onUserConnected );
+            disconnect( this, &HbClientChannelService::userDisconnected, peopled_channel, &HbClientPeopledChannel::onUserDisconnected );
+
+            mPeopledChannels.remove( peopled_channel->uid() );
         }
     }
 
@@ -66,6 +88,7 @@ void HbClientChannelService::onUserContractReceived( const HbNetworkContract * c
     if( channel_uid == uid() )
     {
         processContract( contract );
+        return;
     }
 
     // Channel contract.

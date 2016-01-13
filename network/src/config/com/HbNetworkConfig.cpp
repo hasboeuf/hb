@@ -20,6 +20,7 @@ HbNetworkConfig::HbNetworkConfig( const HbNetworkConfig & config )
         mOpenMode = config.mOpenMode;
         mBadHeaderTolerant = config.mBadHeaderTolerant;
         mExchanges = config.mExchanges;
+        mChannels = config.mChannels;
     }
 }
 
@@ -31,6 +32,7 @@ HbNetworkConfig & HbNetworkConfig::operator =( const HbNetworkConfig & config )
         mOpenMode = config.mOpenMode;
         mBadHeaderTolerant = config.mBadHeaderTolerant;
         mExchanges = config.mExchanges;
+        mChannels = config.mChannels;
     }
 
     return *this;
@@ -93,7 +95,7 @@ HbNetworkExchanges & HbNetworkConfig::exchanges()
     return mExchanges;
 }
 
-bool HbNetworkConfig::assignChannel( HbNetworkChannel * channel )
+bool HbNetworkConfig::plugChannel( HbNetworkChannel * channel )
 {
     if( !channel )
     {
@@ -113,7 +115,7 @@ bool HbNetworkConfig::assignChannel( HbNetworkChannel * channel )
     return true;
 }
 
-QList< HbNetworkChannel * > HbNetworkConfig::channels()
+QList< HbNetworkChannel * > HbNetworkConfig::channels() const
 {
     return mChannels;
 }

@@ -57,7 +57,7 @@ namespace hb
 
         public slots:
             void onClientStatusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status );
-            void onMeStatusChanged    ( HbNetworkProtocol::UserStatus status );
+            void onMeStatusChanged( HbNetworkProtocol::UserStatus status, hb::network::ShConstHbNetworkUserInfo me_info );
 
         private slots:
             void onStartClicked();

@@ -40,7 +40,7 @@ namespace hb
 
             virtual HbAuthRequestContract * create() const override;
 
-            HbAuthStatusContract * reply() const;
+            HbAuthStatusContract * takeReply() const;
 
             virtual bool read ( QDataStream & stream ) override;
             virtual bool write( QDataStream & stream ) const override;

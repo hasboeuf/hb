@@ -40,9 +40,9 @@ HbAuthRequestContract * HbAuthRequestContract::create() const
     return new HbAuthRequestContract();
 }
 
-HbAuthStatusContract * HbAuthRequestContract::reply() const
+HbAuthStatusContract * HbAuthRequestContract::takeReply() const
 {
-    return HbNetworkContract::reply()->value< HbAuthStatusContract >();
+    return HbNetworkContract::takeReply()->value< HbAuthStatusContract >();
 }
 
 

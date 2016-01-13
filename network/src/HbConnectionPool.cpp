@@ -22,12 +22,20 @@ HbConnectionPool::HbConnectionPool( const HbGeneralConfig & config )
     qRegisterMetaType< HbNetworkProtocol::KickCode >    ( "HbNetworkProtocol::KickCode" );
 }
 
-bool HbConnectionPool::addChannel( HbNetworkChannel * channel )
+bool HbConnectionPool::plugChannel( HbNetworkChannel * channel , networkuid network_uid )
 {
     HbChannelService * channel_service = getService< HbChannelService >( HbNetworkProtocol::SERVICE_CHANNEL );
     q_assert_ptr( channel_service );
 
-    return channel_service->addChannel( channel );
+    return channel_service->plugChannel( channel, network_uid );
+}
+
+bool HbConnectionPool::unplugChannel( HbNetworkChannel * channel )
+{
+    HbChannelService * channel_service = getService< HbChannelService >( HbNetworkProtocol::SERVICE_CHANNEL );
+    q_assert_ptr( channel_service );
+
+    return channel_service->unplugChannel( channel );
 }
 
 void HbConnectionPool::setExchanges( HbNetworkExchanges & exchanges )
@@ -50,5 +58,11 @@ void HbConnectionPool::reset()
 
 HbNetworkService * HbConnectionPool::getService( serviceuid service_uid )
 {
+    if( service_uid >= HbNetworkProtocol::SERVICE_USER )
+    {
+        // Service channel will redirect contract to right user channel.
+        service_uid = HbNetworkProtocol::SERVICE_CHANNEL;
+    }
+
     return mServices.value( service_uid, nullptr );
 }

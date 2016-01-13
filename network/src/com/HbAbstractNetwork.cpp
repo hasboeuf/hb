@@ -13,6 +13,9 @@ HbAbstractNetwork::HbAbstractNetwork(QObject * parent) :
     qRegisterMetaType< contractuid >( "contractuid" );
     qRegisterMetaType< ShConstHbNetworkContract >( "ShConstHbNetworkContract" );
     qRegisterMetaType< ShHbNetworkContract >     ( "ShHbNetworkContract" );
+    qRegisterMetaType< HbNetworkUserInfo >       ( "HbNetworkUserInfo" );
+    qRegisterMetaType< ShConstHbNetworkUserInfo >( "ShConstHbNetworkUserInfo" );
+    qRegisterMetaType< ShHbNetworkUserInfo >     ( "ShHbNetworkUserInfo" );
 }
 
 const HbNetworkConfig & HbAbstractNetwork::configuration() const

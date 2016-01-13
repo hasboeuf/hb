@@ -39,7 +39,8 @@ namespace hb
             virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
             virtual serviceuid uid() const override;
 
-            virtual bool addChannel( HbNetworkChannel * channel );
+            virtual bool plugChannel( HbNetworkChannel * channel, networkuid network_uid );
+            virtual bool unplugChannel( HbNetworkChannel * channel );
             virtual HbNetworkChannel * channel( serviceuid channel_uid );
 
         public callbacks:

@@ -42,7 +42,8 @@ namespace hb
             const HbServiceChannelServerConfig & config() const;
             void setConfig( const HbServiceChannelServerConfig & config );
 
-            virtual bool addChannel( HbNetworkChannel * channel ) override;
+            virtual bool plugChannel(HbNetworkChannel * channel, networkuid network_uid ) override;
+            virtual bool unplugChannel( HbNetworkChannel * channel ) override;
             virtual HbServerChannel * channel( serviceuid channel_uid ) override;
 
         public callbacks:

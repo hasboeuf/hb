@@ -21,6 +21,7 @@ void ServerSumChannel::reset()
 void ServerSumChannel::plugContracts( HbNetworkExchanges & exchanges )
 {
     exchanges.plug< RequestSumContract >();
+    exchanges.plug< ResponseSumContract >();
 }
 
 serviceuid ServerSumChannel::uid() const
@@ -38,7 +39,7 @@ void ServerSumChannel::onUserContractReceived( ShConstHbNetworkUserInfo user_inf
     const RequestSumContract * sum_contract = contract->value< RequestSumContract >();
     if( sum_contract )
     {
-        ResponseSumContract * result_contract = sum_contract->reply();
+        ResponseSumContract * result_contract = sum_contract->takeReply();
         if( result_contract )
         {
             result_contract->setResult( sum_contract->intA() + sum_contract->intB() );

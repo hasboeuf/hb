@@ -13,5 +13,7 @@ void HbClientChannel::onContractToSend( HbNetworkContract * contract )
         return;
     }
 
+    contract->addSocketReceiver( mNetworkUid );
+
     emit contractToSend( contract );
 }

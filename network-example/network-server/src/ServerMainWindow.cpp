@@ -49,10 +49,11 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     config.setAppName("hb-network-example");
     config.setProtocolVersion( 1 );
     config.auth().setAuthMaxTries( 3 );
-    config.auth().setAuthTimeout( 300 );
+    config.auth().setAuthTimeout( 30 );
     config.auth().enableFacebookAuth( facebook_config );
-    config.presence().setKickAliveThreshold( 20 );
-    config.presence().setWarningAliveThreshold( 10 );
+    config.presence().setWarningAliveThreshold( 60 );
+    config.presence().setKickAliveThreshold( 90 );
+
 
     mpHbServer    = new HbServer( config );
 
@@ -88,8 +89,8 @@ void ServerMainWindow::onStartClicked()
     config.setMaxUsersPerThread( 1 );
     config.setBadHeaderTolerant( false );
 
-    config.assignChannel( mpSumChannel  );
-    config.assignChannel( mpChatChannel );
+    config.plugChannel( mpSumChannel  );
+    config.plugChannel( mpChatChannel );
 
     networkuid server_uid = mpHbServer->joinTcpServer( config, true );
     if( server_uid > 0 )

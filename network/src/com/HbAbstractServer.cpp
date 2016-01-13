@@ -22,7 +22,7 @@ bool HbAbstractServer::join()
 {
     if ( !isListening() )
     {
-        if( !this->configuration().isValid() )
+        if( !configuration().isValid() )
         {
             HbError( "Invalid server configuration." );
             return false;

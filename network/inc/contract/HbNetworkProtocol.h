@@ -73,7 +73,7 @@ namespace hb
                 SERVICE_PRESENCE  = 4,
                 SERVICE_CHANNEL   = 255,
 
-                SERVICE_USER      = SERVICE_CHANNEL
+                SERVICE_USER      = SERVICE_CHANNEL + 1
             };
             Q_META_ENUMS( Service )
 

@@ -37,7 +37,7 @@ namespace hb
             HbNetworkUserSync();
             virtual ~HbNetworkUserSync() = default;
             HbNetworkUserSync( const HbNetworkUserSync & source );
-            HbNetworkUserSync & operator=(const HbNetworkUserSync & source);
+            HbNetworkUserSync & operator=( const HbNetworkUserSync & source );
 
             const HbNetworkUserInfo & userInfo() const;
             void setUserInfo( ShConstHbNetworkUserInfo user_info );

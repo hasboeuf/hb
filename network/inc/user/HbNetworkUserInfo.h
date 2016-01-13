@@ -86,6 +86,8 @@ namespace hb
     }
 }
 
+Q_DECLARE_METATYPE( hb::network::HbNetworkUserInfo )
+
 using hb::network::HbNetworkUserInfo;
 
 #endif // HBNETWORKUSERINFO_H

@@ -29,10 +29,11 @@ HbNetworkContract::HbNetworkContract( const HbNetworkContract & source )
     {
         mHeader           = source.mHeader;
         mSender           = source.mSender;
+        mNetworkReceiver  = source.mNetworkReceiver;
         mNetworkType      = source.mNetworkType;
         mRouting          = source.mRouting;
-        mReceivers   = source.mReceivers;
-        mPendingReceivers     = source.mPendingReceivers;
+        mReceivers        = source.mReceivers;
+        mPendingReceivers = source.mPendingReceivers;
         mpReply           = ( source.mpReply ? source.mpReply->create() : nullptr );
     }
 }
@@ -43,6 +44,7 @@ HbNetworkContract & HbNetworkContract::operator=( const HbNetworkContract & sour
     {
         mHeader           = source.mHeader;
         mSender           = source.mSender;
+        mNetworkReceiver  = source.mNetworkReceiver;
         mNetworkType      = source.mNetworkType;
         mRouting          = source.mRouting;
         mReceivers        = source.mReceivers;
@@ -54,7 +56,11 @@ HbNetworkContract & HbNetworkContract::operator=( const HbNetworkContract & sour
 
 HbNetworkContract::~HbNetworkContract()
 {
-    if( mpReply ) delete mpReply;
+    if( mpReply )
+    {
+        // Delete reply if user did not take it.
+        delete mpReply;
+    }
 }
 
 void HbNetworkContract::updateReply()
@@ -185,9 +191,19 @@ bool HbNetworkContract::setRouting( HbNetworkProtocol::RoutingScheme routing )
     return false;
 }
 
-HbNetworkContract * HbNetworkContract::reply() const
+HbNetworkContract * HbNetworkContract::takeReply() const
 {
-    return mpReply;
+    if( !mpReply )
+    {
+        return nullptr;
+    }
+
+    HbNetworkContract * reply = mpReply;
+
+    HbNetworkContract * this_non_const = const_cast< HbNetworkContract * >( this ); // Hack to avoid breaking const-correctness in the reception flow of HbNetwork.
+    this_non_const->mpReply = nullptr;                                              // User takes reply, so it must be deleted by himself.
+
+    return reply;
 }
 
 const QString HbNetworkContract::toString() const

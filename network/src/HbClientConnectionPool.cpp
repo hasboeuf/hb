@@ -161,10 +161,7 @@ networkuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , b
 
     foreach( HbNetworkChannel * channel, config.channels() )
     {
-        if( addChannel( channel ) )
-        {
-            channel->setNetworkUid( network_uid );
-        }
+        plugChannel( channel, network_uid );
     }
 
     mClients.insert( network_uid, client );
@@ -178,16 +175,16 @@ bool HbClientConnectionPool::leave()
 {
     mLeaving = true;
 
+    // Reset
+    mUser.reset();
+    HbConnectionPool::reset(); // Reset services before deleting clients.
+
     QHash< networkuid, HbAbstractClient * > copy = mClients;
     // Local copy as onClientDisconnected remove items of mClients bit by bit.
     qDeleteAll( copy );
 
     // onClientDisconnected is called there and handles:
     // - mClients
-
-    // Reset
-    mUser.reset();
-    HbConnectionPool::reset(); // Reset services.
 
     mLeaving = false;
 
@@ -257,7 +254,9 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
     {
         HbInfo( "HbClient is leaving. Client %d removed.", client_uid );
         mClients.remove( client_uid );
-        // Deletion is handled in leave().
+
+        // Deletion is handled in leave()
+        // Unplugging channels is done in leave().
         // User reset is done in leave().
     }
     else
@@ -266,6 +265,14 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
         if( !reconnecting )
         {
             HbInfo( "Client %d will not reconnect, deletion...", client_uid );
+
+            // Unplug channels.
+            foreach( HbNetworkChannel * channel, client->configuration().channels() )
+            {
+                q_assert_ptr( channel );
+                HbConnectionPool::unplugChannel( channel );
+            }
+
             mClients.remove( client_uid );
             client->deleteLater();
 
@@ -277,6 +284,14 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
         }
         else
         {
+            // It will reconnect so we do not unplug channels but we reset it.
+            foreach( HbNetworkChannel * channel, client->configuration().channels() )
+            {
+                q_assert_ptr( channel );
+                channel->internalReset();
+                channel->reset();
+            }
+
             if( client_uid == mUser.mainSocketUid() )
             {
                 mUser.reset();
@@ -401,7 +416,7 @@ void HbClientConnectionPool::onSocketUnauthenticated( networkuid socket_uid, qui
 
 void HbClientConnectionPool::onMeStatusChanged( HbNetworkProtocol::UserStatus status )
 {
-    emit meStatusChanged( status );
+    emit meStatusChanged( status, mUser.info() );
 }
 
 bool HbClientConnectionPool::checkKickReceived( const HbNetworkContract * contract )
