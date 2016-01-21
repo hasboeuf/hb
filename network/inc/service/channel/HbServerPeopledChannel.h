@@ -43,6 +43,7 @@ namespace hb
             virtual void onUserDisconnected( ShConstHbNetworkUserInfo user_info ) override final;
 
             const QHash< QString, ShConstHbNetworkUserInfo > & connectedUsers() const;
+            ShConstHbNetworkUserInfo connectedUser( const QString & email );
 
         public callbacks:
 

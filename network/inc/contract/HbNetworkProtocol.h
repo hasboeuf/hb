@@ -79,7 +79,7 @@ namespace hb
 
             enum Code : codeuid
             {
-                CODE_UNDEFINED            = 0,
+                CODE_UNDEFINED = 0,
                 CODE_CLT_AUTH_REQUEST,
                 CODE_SRV_AUTH_STATUS,
                 CODE_CLT_PRESENCE,
@@ -87,13 +87,13 @@ namespace hb
                 CODE_SRV_KICK,
                 CODE_SRV_USER_CONNECTED,
 
-                CODE_USER                 = 1989
+                CODE_USER = 1989
 
 
             };
             Q_META_ENUMS( Code )
 
-            enum KickCode : netwint
+            enum KickCode : netwlint
             {
                 KICK_UNDEFINED = 0,
                 KICK_INTERNAL_ERROR,
@@ -101,7 +101,9 @@ namespace hb
                 KICK_CONTRACT_INVALID,
                 KICK_AUTH_LIMIT,
                 KICK_AUTH_TIMEOUT,
-                KICK_PRESENCE_TIMEOUT
+                KICK_PRESENCE_TIMEOUT,
+
+                KICK_USER = 1989
 
             };
             Q_META_ENUMS( KickCode )

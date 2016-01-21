@@ -25,7 +25,8 @@ typedef quint16 codeuid;     //!< Integer range for code uid.
 typedef quint64 contractuid; //!< Integer range for contract uid.
 // High level
 typedef quint8  authstgy; //!< Integer range for auth strategies.
-typedef quint8  netwint;  //!< Integer range mainly for network enums.
+typedef quint8  netwint;  //!< Integer range (8 bytes) mainly for network enums.
+typedef quint16 netwlint; //!< Integer range (16 bytes) mainly for network enums.
 
 
 const size_t CLASS_SOCKET   = 20; //!< Identifier for socket uids class.

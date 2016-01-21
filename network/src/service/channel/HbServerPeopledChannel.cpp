@@ -31,3 +31,8 @@ const QHash< QString, ShConstHbNetworkUserInfo > & HbServerPeopledChannel::conne
 {
     return mUsers;
 }
+
+ShConstHbNetworkUserInfo HbServerPeopledChannel::connectedUser( const QString & email )
+{
+    return mUsers.value( email, ShConstHbNetworkUserInfo( nullptr ) );
+}
