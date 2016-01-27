@@ -370,9 +370,17 @@ void HbServerConnectionPool::onSocketContractToSend( networkuid receiver, HbNetw
 void HbServerConnectionPool::onUsersContractToSend( QList< ShConstHbNetworkUserInfo > users_infos, HbNetworkContract * contract )
 {
     q_assert_ptr( contract );
-    networkuid server_uid = contract->networkReceiver();
-    q_assert( server_uid != 0 );
     q_assert( contract->receivers().size() == 0 );
+
+    networkuid server_uid = contract->networkReceiver();
+
+    if( contract->header().service() >= HbNetworkProtocol::SERVICE_USER )
+    {
+        // Contract coming from channels must have a network receiver.
+        // Others are internal contracts and are directly forwarded to main socket uid.
+
+        q_assert( server_uid != 0 );
+    }
 
     foreach( ShConstHbNetworkUserInfo user_info, users_infos )
     {
@@ -393,9 +401,17 @@ void HbServerConnectionPool::onUsersContractToSend( QList< ShConstHbNetworkUserI
 void HbServerConnectionPool::onUserContractToSend( ShConstHbNetworkUserInfo user_info, HbNetworkContract * contract )
 {
     q_assert_ptr( contract );
-    networkuid server_uid = contract->networkReceiver();
-    q_assert( server_uid != 0 );
     q_assert( contract->receivers().size() == 0 );
+
+    networkuid server_uid = contract->networkReceiver();
+
+    if( contract->header().service() >= HbNetworkProtocol::SERVICE_USER )
+    {
+        // Contract coming from channels must have a network receiver.
+        // Others are internal contracts and are directly forwarded to main socket uid.
+
+        q_assert( server_uid != 0 );
+    }
 
     HbServerUser * user = getUser( user_info );
     if( !user )
