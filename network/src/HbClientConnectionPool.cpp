@@ -248,6 +248,7 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
     }
 
     emit statusChanged( client_uid, HbNetworkProtocol::CLIENT_DISCONNECTED );
+    emit socketDisconnected( client_uid ); // To IHbSocketListener.
 
     bool reconnecting = ( client->configuration().reconnectionDelay() > 0 ? true : false );
     if( mLeaving ) // If HbClient is leaving.

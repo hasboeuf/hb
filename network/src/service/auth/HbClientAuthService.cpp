@@ -98,7 +98,7 @@ void HbClientAuthService::onSocketDisconnected( networkuid socket_uid )
 {
     if( socket_uid == mPendingSocket )
     {
-        HbInfo( "Socket %d disconnected an auth request is pending.", socket_uid );
+        HbInfo( "Socket %d disconnected while an auth request is pending.", socket_uid );
         mPendingSocket = 0;
     }
 }
@@ -134,7 +134,8 @@ void HbClientAuthService::onAuthContractReady( networkuid socket_uid, HbAuthRequ
 {
     contract->addSocketReceiver( socket_uid );
     emit contractToSend( contract );
-    // mPendingSocket will be reset on auth status contract reception.
+    // mPendingSocket will be reset on auth status contract reception,
+    // or if the socket is disconnected on the server side (e.g.: auth timeout reached).
 }
 
 void HbClientAuthService::onAuthContractFailed( networkuid socket_uid, const QString & description )
