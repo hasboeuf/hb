@@ -106,29 +106,32 @@ void HbServerChannelService::onUserConnected( ShConstHbNetworkUserInfo user_info
 {
     q_assert( !mUsers.contains( user_info->email() ) );
 
-    HbUserSyncContract * one_contract    = new HbUserSyncContract(); // Notify the new connected user.
-    HbUserSyncContract * others_contract = new HbUserSyncContract(); // Notify the others.
-
-    HbNetworkUserSync user_sync;
-    user_sync.setUserInfo( user_info );
-    user_sync.setStatus( HbNetworkProtocol::NETWORK_USER_CONNECTED );
-
-    others_contract->addSync( user_sync );
-
-    auto it = mUsers.begin();
-    while( it != mUsers.end() )
+    if( mUsers.size() )
     {
-        HbNetworkUserSync sync;
-        sync.setUserInfo( it.value() );
-        sync.setStatus( HbNetworkProtocol::NETWORK_USER_CONNECTED );
+        HbUserSyncContract * one_contract    = new HbUserSyncContract(); // Notify the new connected user.
+        HbUserSyncContract * others_contract = new HbUserSyncContract(); // Notify the others.
 
-        one_contract->addSync( sync );
+        HbNetworkUserSync user_sync;
+        user_sync.setUserInfo( user_info );
+        user_sync.setStatus( HbNetworkProtocol::NETWORK_USER_CONNECTED );
 
-        ++it;
+        others_contract->addSync( user_sync );
+
+        auto it = mUsers.begin();
+        while( it != mUsers.end() )
+        {
+            HbNetworkUserSync sync;
+            sync.setUserInfo( it.value() );
+            sync.setStatus( HbNetworkProtocol::NETWORK_USER_CONNECTED );
+
+            one_contract->addSync( sync );
+
+            ++it;
+        }
+
+        emit userContractToSend( user_info, one_contract );
+        emit usersContractToSend( mUsers.values(), others_contract );
     }
-
-    emit userContractToSend( user_info, one_contract );
-    emit usersContractToSend( mUsers.values(), others_contract );
 
     mUsers.insert( user_info->email(), user_info );
 

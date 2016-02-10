@@ -310,11 +310,10 @@ void HbServerConnectionPool::onSocketContractReceived( networkuid server_uid, ne
 
     serviceuid requested_service = contract->header().service();
 
-    HbInfo( "Contract OK [socket=%d, server=%d, service=%s, code=%s].",
+    HbInfo( "Contract OK [socket=%d, server=%d, %s].",
             socket_uid,
             server_uid,
-            HbLatin1( HbNetworkProtocol::MetaService::toString( requested_service ) ),
-            HbLatin1( HbNetworkProtocol::MetaCode::toString( contract->header().code() ) ) );
+            HbLatin1( contract->header().toString() ) );
 
     HbServerUser * user = isSocketAuthenticated( socket_uid );
     if( !user )
@@ -467,7 +466,7 @@ void HbServerConnectionPool::onContractToSend ( const HbNetworkContract * contra
     }
     else
     {
-        HbWarning( "Try to send an invalid contract, code=%d.", contract->header().code() );
+        HbWarning( "Try to send an invalid contract (%s).", HbLatin1( contract->header().toString() ) );
     }
 
 }

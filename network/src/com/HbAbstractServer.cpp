@@ -88,7 +88,7 @@ bool HbAbstractServer::send( ShConstHbNetworkContract contract )
         {
             if ( !configuration().exchanges().registered( contract->header().service(), contract->header().code() ) )
             {
-                HbError( "Try to send an unregistered contract [service=%d, code=%d]", contract->header().service(), contract->header().code() );
+                HbError( "Try to send an unregistered contract (%s).", HbLatin1( contract->header().toString() ) );
 
                 return false;
             }

@@ -104,7 +104,7 @@ bool HbAbstractClient::send( ShConstHbNetworkContract contract )
         {
             if ( !configuration().exchanges().registered( contract->header().service(), contract->header().code() ) )
             {
-                HbError( "Try to send an unregistered contract [service=%d, code=%d]", contract->header().service(), contract->header().code() );
+                HbError( "Try to send an unregistered contract (%s).", HbLatin1( contract->header().toString() ) );
 
                 return false;
             }
@@ -186,7 +186,7 @@ void HbAbstractClient::onSocketReadyPacket()
 
             if( !contract )
             {
-                HbError( "Try to read unregistered contract [service=%d, code=%d].", header.service(), header.code() );
+                HbError( "Try to read unregistered contract (%s).", HbLatin1( contract->header().toString() ) );
             }
             else
             {
@@ -194,7 +194,7 @@ void HbAbstractClient::onSocketReadyPacket()
                 {
                     q_assert( stream.status( ) == QDataStream::Ok );
 
-                    HbError( "Error occurred while reading contract [service=%d, code=%d].", header.service(), header.code() );
+                    HbError( "Error occurred while reading contract (%s).", HbLatin1( contract->header().toString() ) );
                 }
                 else
                 {

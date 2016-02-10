@@ -49,8 +49,8 @@ const QString HbNetworkHeader::toString() const
     return QString("app=%1,protocol=%2,service=%3,code=%4" )
             .arg( mAppName )
             .arg( mProtocolVersion )
-            .arg( mService )
-            .arg( mCode );
+            .arg( HbNetworkProtocol::MetaService::toString( mService ) )
+            .arg( HbNetworkProtocol::MetaCode::toString( mCode ) );
 }
 
 const QString & HbNetworkHeader::appName() const

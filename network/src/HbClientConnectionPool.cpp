@@ -312,10 +312,9 @@ void HbClientConnectionPool::onClientContractReceived( networkuid client_uid, co
 
     serviceuid requested_service = contract->header().service();
 
-    HbInfo( "Contract OK [client=%d, service=%s, code=%s].",
+    HbInfo( "Contract OK [client=%d, %s].",
             client_uid,
-            HbLatin1( HbNetworkProtocol::MetaService::toString( requested_service ) ),
-            HbLatin1( HbNetworkProtocol::MetaCode::toString( contract->header().code() ) ) );
+            HbLatin1( contract->header().toString() ) );
 
     if( checkKickReceived( contract ) )
     {
