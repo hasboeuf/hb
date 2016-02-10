@@ -49,10 +49,18 @@ bool HbServerAuthFacebookStrategy::checkLogin( const HbAuthRequestContract * con
     connect( server_auth, &HbO2ServerFacebook::linkSucceed, this, &HbServerAuthFacebookStrategy::onLinkSucceed, Qt::UniqueConnection );
     connect( server_auth, &HbO2ServerFacebook::linkFailed,  this, &HbServerAuthFacebookStrategy::onLinkFailed,  Qt::UniqueConnection );
 
-    server_auth->config().setClientId    ( mConfig.clientId() );
+    server_auth->config().setClientId( mConfig.clientId() );
     server_auth->config().setClientSecret( mConfig.clientSecret() );
-    server_auth->setRedirectUri        ( facebook_auth->client().redirectUri() );
-    server_auth->setCode               ( facebook_auth->client().code() );
+    server_auth->setRedirectUri( facebook_auth->client().redirectUri() );
+    server_auth->setCode       ( facebook_auth->client().code() );
+    server_auth->addField( FB_USER_FIRST_NAME );
+    server_auth->addField( FB_USER_LAST_NAME );
+    server_auth->addField( FB_USER_LINK );
+    server_auth->addField( FB_USER_EMAIL );
+    server_auth->addField( FB_USER_GENDER );
+    server_auth->addField( FB_USER_LOCALE );
+    server_auth->addField( FB_USER_VERIFIED );
+    server_auth->addField( FB_USER_TIMEZONE );
 
     mPendingToken.insert( server_auth, contract->sender() );
 

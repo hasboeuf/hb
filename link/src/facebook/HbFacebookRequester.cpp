@@ -34,6 +34,7 @@ quint64 HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )
 
     QHash< QString, QString > params;
     params.insert( FB_TOKEN, auth->token() );
+    params.insert( FB_EXTRA_FIELDS, auth->fields() ); // Since Facebook graph 2.4.
 
     request.setQueryItems( HbDictionaryHelper::toPairList< QString, QString >( params ) );
     url.setQuery( request );

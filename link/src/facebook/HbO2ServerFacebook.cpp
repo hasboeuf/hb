@@ -7,6 +7,35 @@
 // Local
 #include <facebook/HbO2ServerFacebook.h>
 
+void HbO2ServerFacebook::addField( const QString & field )
+{
+    if( !field.isEmpty() )
+    {
+        if( !mFields.isEmpty() )
+        {
+            mFields += QStringLiteral( "," );
+        }
+        mFields += field;
+    }
+}
+
+void HbO2ServerFacebook::setFields( const QString & fields )
+{
+    if( mFields.isEmpty() )
+    {
+        mFields = fields;
+    }
+    else
+    {
+        HbWarning( "Scope is not empty." );
+    }
+}
+
+const QString & HbO2ServerFacebook::fields() const
+{
+    return mFields;
+}
+
 const QUrl HbO2ServerFacebook::endPoint() const
 {
     return QUrl( QStringLiteral( "https://graph.facebook.com/oauth/access_token" ) );
@@ -19,6 +48,7 @@ const QHash< QString, QString > HbO2ServerFacebook::tokenRequest() const
     request.insert( OAUTH2_CLIENT_SECRET, mConfig.clientSecret() );
     request.insert( OAUTH2_CODE,          mCode);
     request.insert( OAUTH2_REDIRECT_URI,  mRedirectUri);
+
     return request;
 }
 

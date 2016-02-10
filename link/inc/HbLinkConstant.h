@@ -44,6 +44,8 @@ const QString FB_EXPIRES_IN           = QStringLiteral( "expires" );
 // permissions
 const QString FB_PERMISSION_EMAIL     = QStringLiteral( "email" );
 const QString FB_PERMISSION_FRIENDS   = QStringLiteral( "user_friends" );
+// extra
+const QString FB_EXTRA_FIELDS         = QStringLiteral( "fields" );
 // object
 const QString FB_OBJECT_ID            = QStringLiteral( "id" );
 // user

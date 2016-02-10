@@ -16,6 +16,7 @@ using namespace hb::link;
 void HbClientAuthFacebookStrategy::setConfig( const HbO2ClientConfig & config )
 {
     mConfig = config;
+    mConfig.addScope( FB_PERMISSION_EMAIL );
 }
 
 void HbClientAuthFacebookStrategy::reset()

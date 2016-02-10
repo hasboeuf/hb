@@ -103,6 +103,14 @@ void LinkMainWindow::onClientLinkSucceed()
     mpFacebookServer->config().setClientSecret( msClientSecret );
     mpFacebookServer->setRedirectUri( mpFacebookClient->redirectUri() );
     mpFacebookServer->setCode( mpFacebookClient->code() );
+    mpFacebookServer->addField( FB_USER_FIRST_NAME );
+    mpFacebookServer->addField( FB_USER_LAST_NAME );
+    mpFacebookServer->addField( FB_USER_LINK );
+    mpFacebookServer->addField( FB_USER_EMAIL );
+    mpFacebookServer->addField( FB_USER_GENDER );
+    mpFacebookServer->addField( FB_USER_LOCALE );
+    mpFacebookServer->addField( FB_USER_VERIFIED );
+    mpFacebookServer->addField( FB_USER_TIMEZONE );
 
     mpFacebookClient->deleteLater();
     mpFacebookClient = nullptr;

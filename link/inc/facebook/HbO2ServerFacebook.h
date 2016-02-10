@@ -32,11 +32,17 @@ namespace hb
             HbO2ServerFacebook() = default;
             virtual ~HbO2ServerFacebook() = default;
 
+            virtual void addField( const QString & field ) final;
+            virtual void setFields( const QString & fields ) final;
+            virtual const QString & fields() const final;
+
         protected:
             virtual const QUrl endPoint() const override;
             virtual const QHash< QString, QString > tokenRequest() const override;
-            virtual LinkStatus tokenResponse( const QHash< QString, QString > & response ) override;
+            virtual LinkStatus tokenResponse( const QHash< QString, QString > & response ) override;   
 
+        private:
+            QString mFields;
         };
     }
 }
