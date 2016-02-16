@@ -12,9 +12,9 @@ QString HbStringHelper::randomString( quint32 string_length, QString input )
     }
 
     QString random_string;
-    for( int i = 0; i< string_length; ++i )
+    for( quint32 i = 0; i< string_length; ++i )
     {
-        int index = qrand() % input.length();
+        qint32 index = qrand() % input.length();
         random_string.append( input.at( index ) );
     }
 
