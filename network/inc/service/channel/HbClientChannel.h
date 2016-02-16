@@ -39,6 +39,10 @@ namespace hb
             void usersContractToSend( QList< ShConstHbNetworkUserInfo > users_infos,  HbNetworkContract * contract )        = delete;
             void userToKick( ShConstHbNetworkUserInfo user_info, netwlint reason, const QString & description = QString() ) = delete;
 
+        private:
+            // Hide low level signal, slot must be used by end user.
+            using HbNetworkService::contractToSend;
+
         public callbacks:
             virtual void onContractToSend( HbNetworkContract * contract ) override;
         };

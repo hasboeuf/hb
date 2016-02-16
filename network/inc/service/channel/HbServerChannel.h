@@ -34,6 +34,13 @@ namespace hb
             HbServerChannel() = default;
             virtual ~HbServerChannel() = default;
 
+        private:
+            // Hide low level signal, slot must be used by end user.
+            using HbNetworkService::contractToSend;
+            using HbNetworkService::userContractToSend;
+            using HbNetworkService::usersContractToSend;
+            using HbNetworkService::userToKick;
+
         public callbacks:
             virtual void onContractToSend( HbNetworkContract * contract ) override;
             void onUserContractToSend ( ShConstHbNetworkUserInfo user_info,             HbNetworkContract * contract );

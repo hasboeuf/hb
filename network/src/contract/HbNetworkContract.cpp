@@ -150,7 +150,7 @@ bool HbNetworkContract::isValid() const
     {
         if ( mReceivers.size() != 1 )
         {
-            HbError( "Only one receiver is allowed with unicast mode (%s).", HbLatin1( mHeader.toString() ) );
+            HbError( "Only one receiver (size=%d) is allowed with unicast mode (%s).", mReceivers.size(), HbLatin1( mHeader.toString() ) );
             return false;
         }
     }
