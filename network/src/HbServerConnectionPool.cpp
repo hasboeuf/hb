@@ -471,7 +471,7 @@ void HbServerConnectionPool::onContractToSend ( const HbNetworkContract * contra
 
 }
 
-void HbServerConnectionPool::onUserToKick( ShConstHbNetworkUserInfo user_info, netwint reason, const QString & description )
+void HbServerConnectionPool::onUserToKick( ShConstHbNetworkUserInfo user_info, netwlint reason, const QString & description )
 {
     HbServerUser * user = getUser( user_info );
     q_assert_ptr( user );
@@ -479,7 +479,7 @@ void HbServerConnectionPool::onUserToKick( ShConstHbNetworkUserInfo user_info, n
     kickUser( user, reason, description );
 }
 
-void HbServerConnectionPool::onSocketToKick( networkuid socket_uid, netwint reason, const QString & description )
+void HbServerConnectionPool::onSocketToKick( networkuid socket_uid, netwlint reason, const QString & description )
 {
     q_assert( mServerBySocketId.contains( socket_uid ) );
 
@@ -494,7 +494,7 @@ void HbServerConnectionPool::onSocketToKick( networkuid socket_uid, netwint reas
     }
 }
 
-void HbServerConnectionPool::kickUser( HbServerUser * user, netwint reason, const QString & description )
+void HbServerConnectionPool::kickUser( HbServerUser * user, netwlint reason, const QString & description )
 {
     q_assert_ptr( user );
 
@@ -504,7 +504,7 @@ void HbServerConnectionPool::kickUser( HbServerUser * user, netwint reason, cons
     }
 }
 
-void HbServerConnectionPool::kickSocket( networkuid socket_uid , netwint reason, const QString & description )
+void HbServerConnectionPool::kickSocket( networkuid socket_uid, netwlint reason, const QString & description )
 {
     networkuid server_uid = mServerBySocketId.value( socket_uid, 0 );
     q_assert( server_uid > 0 );

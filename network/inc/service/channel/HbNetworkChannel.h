@@ -37,7 +37,7 @@ namespace hb
             networkuid networkUid() const;
 
             // Hide service side signals.
-            void socketToKick( networkuid socket_uid, netwint reason, const QString & description = QString() ) = delete;
+            void socketToKick( networkuid socket_uid, netwlint reason, const QString & description = QString() ) = delete;
 
         public callbacks:
             virtual void onContractToSend( HbNetworkContract * contract ) = 0;

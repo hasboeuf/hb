@@ -40,14 +40,14 @@ namespace hb
             virtual bool read ( QDataStream & stream ) override;
             virtual bool write( QDataStream & stream ) const override;
 
-            void setReason   ( netwint reason );
+            void setReason( netwlint reason );
             void setDescription( const QString & description );
 
-            netwint reason() const;
+            netwlint reason() const;
             const QString & description() const;
 
         private:
-            netwint mReason;
+            netwlint mReason;
             QString mDescription;
         };
     }

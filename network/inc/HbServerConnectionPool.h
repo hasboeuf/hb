@@ -56,8 +56,8 @@ namespace hb
             void onUsersContractToSend( QList< ShConstHbNetworkUserInfo > users_infos, HbNetworkContract * contract );
             void onUserContractToSend  ( ShConstHbNetworkUserInfo user_info, HbNetworkContract * contract );
             void onContractToSend ( const HbNetworkContract * contract ) override;
-            void onUserToKick  ( ShConstHbNetworkUserInfo user_info, netwint reason, const QString & description );
-            void onSocketToKick( networkuid socket_uid, netwint reason, const QString & description );
+            void onUserToKick( ShConstHbNetworkUserInfo user_info, netwlint reason, const QString & description );
+            void onSocketToKick( networkuid socket_uid, netwlint reason, const QString & description );
 
             // From HbAuthService.
             void onSocketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info ) override;
@@ -72,8 +72,8 @@ namespace hb
         private:
             HbServerUser * isSocketAuthenticated( networkuid socket_uid );
             HbServerUser * getUser( ShConstHbNetworkUserInfo user_info );
-            void kickUser  ( HbServerUser * user,  netwint reason, const QString & description );
-            void kickSocket( networkuid socket_uid, netwint reason, const QString & description );
+            void kickUser( HbServerUser * user, netwlint reason, const QString & description );
+            void kickSocket( networkuid socket_uid, netwlint reason, const QString & description );
 
         private:
             networkuid mMainServer;

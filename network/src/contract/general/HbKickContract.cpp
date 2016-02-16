@@ -55,7 +55,7 @@ bool HbKickContract::write( QDataStream & stream ) const
     return true;
 }
 
-void HbKickContract::setReason( netwint reason )
+void HbKickContract::setReason( netwlint reason )
 {
     mReason = reason;
 }
@@ -65,7 +65,7 @@ void HbKickContract::setDescription( const QString & description )
     mDescription = description;
 }
 
-netwint HbKickContract::reason() const
+netwlint HbKickContract::reason() const
 {
     return mReason;
 }

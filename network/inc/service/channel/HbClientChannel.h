@@ -35,9 +35,9 @@ namespace hb
             virtual ~HbClientChannel() = default;
 
             // Hide server side signals.
-            void userContractToSend ( ShConstHbNetworkUserInfo user_info,             HbNetworkContract * contract )         = delete;
-            void usersContractToSend( QList< ShConstHbNetworkUserInfo > users_infos,  HbNetworkContract * contract )         = delete;
-            void userToKick  ( ShConstHbNetworkUserInfo user_info, netwint reason, const QString & description = QString() ) = delete;
+            void userContractToSend ( ShConstHbNetworkUserInfo user_info,             HbNetworkContract * contract )        = delete;
+            void usersContractToSend( QList< ShConstHbNetworkUserInfo > users_infos,  HbNetworkContract * contract )        = delete;
+            void userToKick( ShConstHbNetworkUserInfo user_info, netwlint reason, const QString & description = QString() ) = delete;
 
         public callbacks:
             virtual void onContractToSend( HbNetworkContract * contract ) override;

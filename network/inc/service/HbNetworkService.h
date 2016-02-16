@@ -48,8 +48,8 @@ namespace hb
             // Server side.
             void userContractToSend ( ShConstHbNetworkUserInfo user_info,             HbNetworkContract * contract );
             void usersContractToSend( QList< ShConstHbNetworkUserInfo > users_infos,  HbNetworkContract * contract );
-            void userToKick  ( ShConstHbNetworkUserInfo user_info, netwint reason, const QString & description = QString() );
-            void socketToKick( networkuid socket_uid, netwint reason, const QString & description = QString() );
+            void userToKick( ShConstHbNetworkUserInfo user_info, netwlint reason, const QString & description = QString() );
+            void socketToKick( networkuid socket_uid, netwlint reason, const QString & description = QString() );
 
         };
     }

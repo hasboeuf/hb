@@ -56,7 +56,7 @@ void HbServerChannel::onUsersContractToSend( QList< ShConstHbNetworkUserInfo > u
     emit usersContractToSend( users_infos, contract );
 }
 
-void HbServerChannel::onUserToKick  ( ShConstHbNetworkUserInfo user_info, netwint reason, const QString & description )
+void HbServerChannel::onUserToKick( ShConstHbNetworkUserInfo user_info, netwlint reason, const QString & description )
 {
     emit userToKick( user_info, reason, description );
 }

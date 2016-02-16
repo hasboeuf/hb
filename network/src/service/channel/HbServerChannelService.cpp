@@ -106,7 +106,7 @@ void HbServerChannelService::onUserConnected( ShConstHbNetworkUserInfo user_info
 {
     q_assert( !mUsers.contains( user_info->email() ) );
 
-    if( mUsers.size() )
+    if( mUsers.size() > 0 )
     {
         HbUserSyncContract * one_contract    = new HbUserSyncContract(); // Notify the new connected user.
         HbUserSyncContract * others_contract = new HbUserSyncContract(); // Notify the others.
@@ -144,15 +144,18 @@ void HbServerChannelService::onUserDisconnected( ShConstHbNetworkUserInfo user_i
 
     mUsers.remove( user_info->email() );
 
-    HbUserSyncContract * sync_contract = new HbUserSyncContract(); // Notify the others.
+    if( mUsers.size() > 0 )
+    {
+        HbUserSyncContract * sync_contract = new HbUserSyncContract(); // Notify the others.
 
-    HbNetworkUserSync user_sync;
-    user_sync.setUserInfo( user_info );
-    user_sync.setStatus( HbNetworkProtocol::NETWORK_USER_DISCONNECTED );
+        HbNetworkUserSync user_sync;
+        user_sync.setUserInfo( user_info );
+        user_sync.setStatus( HbNetworkProtocol::NETWORK_USER_DISCONNECTED );
 
-    sync_contract->addSync( user_sync );
+        sync_contract->addSync( user_sync );
 
-    emit usersContractToSend( mUsers.values(), sync_contract );
+        emit usersContractToSend( mUsers.values(), sync_contract );
+    }
 
     emit userDisconnected( user_info );
 }
@@ -169,7 +172,7 @@ void HbServerChannelService::onUsersContractToSend( QList< ShConstHbNetworkUserI
     emit usersContractToSend( users_infos, contract );
 }
 
-void HbServerChannelService::onUserToKick  ( ShConstHbNetworkUserInfo user_info, netwint reason, const QString & description )
+void HbServerChannelService::onUserToKick( ShConstHbNetworkUserInfo user_info, netwlint reason, const QString & description )
 {
     emit userToKick( user_info, reason, description );
 }
