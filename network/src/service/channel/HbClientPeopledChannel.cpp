@@ -3,9 +3,9 @@
 
 using namespace hb::network;
 
-void HbClientPeopledChannel::internalReset()
+void HbClientPeopledChannel::internalReset( bool keep_uid )
 {
-    HbNetworkChannel::internalReset();
+    HbNetworkChannel::internalReset( keep_uid );
 
     // Clean users.
     foreach( ShConstHbNetworkUserInfo user_info, mUsers.values() )

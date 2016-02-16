@@ -12,9 +12,12 @@ HbNetworkChannel::HbNetworkChannel()
     mNetworkUid = 0;
 }
 
-void HbNetworkChannel::internalReset()
+void HbNetworkChannel::internalReset( bool keep_uid )
 {
-    mNetworkUid = 0;
+    if( !keep_uid )
+    {
+        mNetworkUid = 0;
+    }
 }
 
 void HbNetworkChannel::setNetworkUid( networkuid network_uid )

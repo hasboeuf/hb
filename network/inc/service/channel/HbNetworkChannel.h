@@ -31,7 +31,7 @@ namespace hb
             HbNetworkChannel();
             virtual ~HbNetworkChannel() = default;
 
-            virtual void internalReset(); //!< \todo Make it protected.
+            virtual void internalReset( bool keep_uid = false ); //!< \todo Make it protected.
 
             void setNetworkUid( networkuid network_uid );
             networkuid networkUid() const;

@@ -289,7 +289,7 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
             foreach( HbNetworkChannel * channel, client->configuration().channels() )
             {
                 q_assert_ptr( channel );
-                channel->internalReset();
+                channel->internalReset( /*keep_uid*/ true );
                 channel->reset();
             }
 
@@ -354,6 +354,7 @@ void HbClientConnectionPool::onClientContractReceived( networkuid client_uid, co
 
 void HbClientConnectionPool::onContractToSend ( const HbNetworkContract * contract )
 {
+    ShConstHbNetworkContract shared_contract( contract );
     if( contract->isValid() )
     {
         auto receivers = contract->receivers();
@@ -362,7 +363,7 @@ void HbClientConnectionPool::onContractToSend ( const HbNetworkContract * contra
             HbAbstractClient * client = mClients.value( receiver, nullptr );
             if( client )
             {
-                client->send( ShConstHbNetworkContract( contract ) );
+                client->send( shared_contract );
             }
             else
             {
