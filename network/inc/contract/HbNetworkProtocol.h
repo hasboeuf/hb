@@ -71,9 +71,8 @@ namespace hb
                 SERVICE_KICK      = 2,
                 SERVICE_AUTH      = 3,
                 SERVICE_PRESENCE  = 4,
-                SERVICE_CHANNEL   = 255,
-
-                SERVICE_USER      = SERVICE_CHANNEL + 1
+                SERVICE_CHANNEL   = 5,
+                SERVICE_USER      = 999
             };
             Q_META_ENUMS( Service )
 
@@ -87,7 +86,7 @@ namespace hb
                 CODE_SRV_KICK,
                 CODE_SRV_USER_CONNECTED,
 
-                CODE_USER = 1989
+                CODE_USER = 999
 
 
             };
@@ -103,7 +102,7 @@ namespace hb
                 KICK_AUTH_TIMEOUT,
                 KICK_PRESENCE_TIMEOUT,
 
-                KICK_USER = 1989
+                KICK_USER = 999
 
             };
             Q_META_ENUMS( KickCode )
