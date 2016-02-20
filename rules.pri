@@ -145,9 +145,7 @@
 # -----------------------
 # Building Configuration
 # -----------------------
-    message( ------------------------------------ )
     message( QMake-ing $${PROJECT.NAME} projects. )
-    message( ------------------------------------ )
 
     *msvc*|*g++*|winphone: {
         message( "Compilator supported." )
@@ -196,10 +194,6 @@
     !isEmpty( HB_DEV ) {
         DEFINES += DEV
     }
-
-    message( build_config= $$BUILD.CONFIG )
-    message( config=$$CONFIG )
-    message( mode=$${BUILD.MODE} )
 
 # ---------------------
 # Modules Dependencies
@@ -323,10 +317,6 @@
     for( LINKED_MODULE, LINKED_MODULES ) {
         resolveModuleDependency( $$LINKED_MODULE )
     }
-
-    message( inc=$$INCLUDEPATH )
-    message( lib=$$LIBS )
-    message( qt=$$QT )
 
 # ----------------
 # Target Settings
@@ -648,9 +638,6 @@ addCleanDirEvent( $$PROJECT_GENERATED )
         unset( BIN_NAME )
     }
 }
-
-# Debug
-message( clean=$$QMAKE_CLEAN )
 
 *g++*: message( post_copy=$$INSTALLS )
 *msvc*: message( post_copy=$$QMAKE_POST_LINK )
