@@ -164,8 +164,14 @@ loguid HbLoggerPool::addLocalSocketInput( const QString & name, QString * error 
         {
             if( q_assert_ptr( input )->type() == HbLogAbstractInput::INPUT_LOCAL_SOCKET )
             {
-                state = HbLoggerStream::INOUT_ALREADY_EXISTS;
-                break;
+                HbLogLocalSocketInput * local_socket = q_dynamic_cast( HbLogLocalSocketInput *, input );
+                q_assert( local_socket );
+
+                if( local_socket->name() == name )
+                {
+                    state = HbLoggerStream::INOUT_ALREADY_EXISTS;
+                    break;
+                }
             }
         }
     }
@@ -381,8 +387,14 @@ loguid HbLoggerPool::addLocalSocketOutput( const QString & name, QString * error
         {
             if( q_assert_ptr( output )->type() == HbLogAbstractOutput::OUTPUT_LOCAL_SOCKET )
             {
-                state = HbLoggerStream::INOUT_ALREADY_EXISTS;
-                break;
+                HbLogLocalSocketOutput * local_socket = q_dynamic_cast( HbLogLocalSocketOutput *, output );
+                q_assert( local_socket );
+
+                if( local_socket->name() == name )
+                {
+                    state = HbLoggerStream::INOUT_ALREADY_EXISTS;
+                    break;
+                }
             }
         }
     }

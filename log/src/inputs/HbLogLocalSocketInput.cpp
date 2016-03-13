@@ -28,6 +28,11 @@ HbLogLocalSocketInput::HbLogLocalSocketInput( const QString & name ) :
         &HbLogLocalSocketInput::incomingConnection, Qt::UniqueConnection ) );
 }
 
+const QString & HbLogLocalSocketInput::name() const
+{
+    return mName;
+}
+
 
 void HbLogLocalSocketInput::incomingConnection()
 {

@@ -27,6 +27,10 @@ HbLogLocalSocketOutput::~HbLogLocalSocketOutput()
     close();
 }
 
+const QString & HbLogLocalSocketOutput::name() const
+{
+    return mName;
+}
 
 bool HbLogLocalSocketOutput::isValid() const
 {

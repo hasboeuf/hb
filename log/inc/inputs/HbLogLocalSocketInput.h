@@ -36,12 +36,12 @@ namespace hb
             Q_OBJECT
             Q_DISABLE_COPY( HbLogLocalSocketInput )
 
-        private:
-
         public:
 
             HbLogLocalSocketInput(const QString & name = QString() );
             virtual ~HbLogLocalSocketInput() = default;
+
+            const QString & name() const;
 
         signals:
 
