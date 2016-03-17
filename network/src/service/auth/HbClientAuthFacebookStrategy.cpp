@@ -42,7 +42,7 @@ bool HbClientAuthFacebookStrategy::prepareAuthContract( HbClientAuthLoginObject 
 
     facebook_client->config().setClientId ( mConfig.clientId()  );
     facebook_client->config().setLocalPort( mConfig.localPort() );
-    facebook_client->config().setScope    ( mConfig.scope()     );
+    facebook_client->config().setScopes   ( mConfig.scopes()     );
 
     mPendingCodes.insert( facebook_client, login_object->socketUid() );
 

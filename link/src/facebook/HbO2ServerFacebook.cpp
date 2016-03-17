@@ -7,6 +7,11 @@
 // Local
 #include <facebook/HbO2ServerFacebook.h>
 
+HbO2ServerFacebook::HbO2ServerFacebook()
+{
+    mRequestType = REQUEST_GET;
+}
+
 void HbO2ServerFacebook::addField( const QString & field )
 {
     if( !field.isEmpty() )
@@ -52,11 +57,13 @@ const QHash< QString, QString > HbO2ServerFacebook::tokenRequest() const
     return request;
 }
 
-auto HbO2ServerFacebook::tokenResponse( const QHash< QString, QString > & response ) -> LinkStatus
+HbO2::LinkStatus HbO2ServerFacebook::tokenResponse( const QByteArray & data )
 {
-    if( response.contains( FB_TOKEN ) )
+    QHash< QString, QString > response = HbO2::getUrlItems( QString( data ) );
+
+    if( response.contains( OAUTH2_ACCESS_TOKEN ) )
     {
-        mToken           = response.value( FB_TOKEN );
+        mToken           = response.value( OAUTH2_ACCESS_TOKEN );
         mTokenExpiration = response.value( FB_EXPIRES_IN ).toInt();
 
         return LINKED;

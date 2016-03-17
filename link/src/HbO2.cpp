@@ -41,29 +41,17 @@ HbO2 & HbO2::operator=( const HbO2 & source )
 
 bool HbO2::isValid() const
 {
-    if( !QUrl( mRedirectUri ).isValid() || endPoint().isEmpty() )
-    {
-        return false;
-    }
-
-    return true;
-}
-
-bool HbO2::link()
-{
     if( mLinkStatus != UNLINKED)
     {
         HbInfo( "HbO2 already linked or in linking." );
         return false;
     }
 
-    if( !isValid() )
+    if( !QUrl( mRedirectUri ).isValid() || endPoint().isEmpty() )
     {
         HbError( "HbO2 not valid." );
         return false;
     }
-
-    mLinkStatus = LINKING;
 
     return true;
 }
@@ -81,7 +69,7 @@ const QString & HbO2::errorString() const
     return mErrorString;
 }
 
-auto HbO2::linkStatus() const -> LinkStatus
+HbO2::LinkStatus HbO2::linkStatus() const
 {
     return mLinkStatus;
 }

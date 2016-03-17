@@ -60,18 +60,57 @@ QHash< QString, QString > HbLinkLocalServer::parseResponse( QByteArray & data )
 {
     QString content = QString( data );
 
+// Google response example:
+//
+//    GET /favicon.ico HTTP/1.1
+//    Host: localhost:8080
+//    Connection: keep-alive
+//    User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36
+//    Accept: */*
+//    Referer: http://localhost:8080/?code={CODE}
+//    Accept-Encoding: gzip, deflate, sdch
+//    Accept-Language: fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4
+//
+// Facebook response example:
+//
+//    GET /?code={CODE} HTTP/1.1
+//    Host: localhost:8080
+//    Connection: keep-alive
+//    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+//    Upgrade-Insecure-Requests: 1
+//    User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36
+//    Accept-Encoding: gzip, deflate, sdch
+//    Accept-Language: fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4
+//
+// Aim here: extract code={CODE}
+
     HbInfo( "Response content received: %s", HbLatin1( content ) );
 
-    content = content.split("\n").first();
-    content.remove("GET");
-    content.remove("HTTP/1.1");
-    content = content.trimmed();
-    if( content.startsWith( "/?" ) )
+    content = content.simplified(); // All white-space characters become space.
+
+    QRegExp capture_expr("(/\\?\\S+)"); // Matches "/?" followed by non white-space characters => e.g.: "/?var1=foo&var2=bar"
+    capture_expr.indexIn( content );
+    QStringList result = capture_expr.capturedTexts();
+    result.removeDuplicates(); // Regexp can capture in different ways same extracts.
+
+    if( result.size() > 0 )
     {
-        content = content.remove( 0, 2 );
+        if( result.size() == 1 )
+        {
+            content = result.first();
+            content = content.remove( 0, 2 ); // Remove "/?".
+        }
+        else
+        {
+            HbError( "Parsing found more than one url pattern: %s", HbLatin1( result.join( QChar::Space ) ) );
+        }
+    }
+    else
+    {
+        HbError( "Parsing found 0 url pattern." );
     }
 
-    HbInfo( "Simplifed response content: %s", HbLatin1( content ) );
+    HbInfo( "Simplified response content: %s", HbLatin1( content ) );
 
     return HbO2::getUrlItems( content );
 }

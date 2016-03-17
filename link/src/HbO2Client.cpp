@@ -53,10 +53,12 @@ bool HbO2Client::link()
 {
     mRedirectUri = REDIRECT_URI.arg( mConfig.localPort() ); // Complete uri with the port.
 
-    if( !HbO2::link() )
+    if( !isValid() )
     {
         return false;
     }
+
+    mLinkStatus = LINKING;
 
     if( mReplyServer.isListening() )
     {

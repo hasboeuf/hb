@@ -37,9 +37,8 @@ const QString OAUTH2_REFRESH_TOKEN = QStringLiteral( "refresh_token" );
 const QString OAUTH2_EXPIRES_IN    = QStringLiteral( "expires_in" );
 
 // Facebook
-// reply
+// token reply
 const QString FB_INPUT_TOKEN          = QStringLiteral( "input_token" );
-const QString FB_TOKEN                = QStringLiteral( "access_token" );
 const QString FB_EXPIRES_IN           = QStringLiteral( "expires" );
 // permissions
 const QString FB_PERMISSION_EMAIL     = QStringLiteral( "email" );
@@ -57,5 +56,24 @@ const QString FB_USER_GENDER          = QStringLiteral( "gender" );
 const QString FB_USER_LOCALE          = QStringLiteral( "locale" );
 const QString FB_USER_VERIFIED        = QStringLiteral( "verified" );
 const QString FB_USER_TIMEZONE        = QStringLiteral( "timezone" );
+
+// Google
+// token request
+const QString GL_GRANT_TYPE_VALUE     = QStringLiteral( "authorization_code" );
+// token reply
+// permissions
+const QString GL_PERMISSION_EMAIL     = QStringLiteral( "email" );
+const QString GL_PERMISSION_PROFILE   = QStringLiteral( "https://www.googleapis.com/auth/userinfo.profile" );
+// object
+const QString GL_OBJECT_ID            = QStringLiteral( "id" );
+// user
+const QString GL_USER_FIRST_NAME      = QStringLiteral( "given_name" );
+const QString GL_USER_LAST_NAME       = QStringLiteral( "family_name" );
+const QString GL_USER_LINK            = QStringLiteral( "link" );
+const QString GL_USER_EMAIL           = QStringLiteral( "email" );
+const QString GL_USER_GENDER          = QStringLiteral( "gender" );
+const QString GL_USER_LOCALE          = QStringLiteral( "locale" );
+const QString GL_USER_VERIFIED        = QStringLiteral( "verified_email" );
+const QString GL_USER_PICTURE         = QStringLiteral( "picture" );
 
 #endif // HBLINKCONSTANT_H

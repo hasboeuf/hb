@@ -6,21 +6,21 @@
 #include <HbLogService.h>
 #include <core/HbDictionaryHelper.h>
 // Local
-#include <facebook/HbFacebookRequester.h>
-#include <facebook/HbO2ServerFacebook.h>
-#include <facebook/api/HbFacebookUser.h>
+#include <google/HbGoogleRequester.h>
+#include <google/HbO2ServerGoogle.h>
+#include <google/api/HbGoogleUser.h>
 
 using namespace hb::link;
 
-HbFacebookRequester::HbFacebookRequester() :
+HbGoogleRequester::HbGoogleRequester() :
     HbHttpRequester()
 {
 
-    connect( this, &HbHttpRequester::requestFinished, this, &HbFacebookRequester::onRequestFinished, Qt::UniqueConnection );
-    connect( this, &HbHttpRequester::requestError,    this, &HbFacebookRequester::onRequestError,    Qt::UniqueConnection );
+    connect( this, &HbHttpRequester::requestFinished, this, &HbGoogleRequester::onRequestFinished, Qt::UniqueConnection );
+    connect( this, &HbHttpRequester::requestError,    this, &HbGoogleRequester::onRequestError,    Qt::UniqueConnection );
 }
 
-quint64 HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )
+quint64 HbGoogleRequester::requestUser( HbO2ServerGoogle * auth )
 {
 
     if( !auth || ( auth->linkStatus() != HbO2::LINKED ) )
@@ -29,12 +29,12 @@ quint64 HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )
         return false;
     }
 
-    QUrl url( "https://graph.facebook.com/me" );
+    QUrl url( "https://www.googleapis.com/oauth2/v1/userinfo" );
     QUrlQuery request( url );
 
     QHash< QString, QString > params;
     params.insert( OAUTH2_ACCESS_TOKEN, auth->token() );
-    params.insert( FB_EXTRA_FIELDS, auth->fields() ); // Since Facebook graph 2.4.
+    params.insert( "alt", "json" );
 
     request.setQueryItems( HbDictionaryHelper::toPairList< QString, QString >( params ) );
     url.setQuery( request );
@@ -42,17 +42,17 @@ quint64 HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )
     quint64 id = processRequest( url );
     if( id > 0 )
     {
-        mRequestTypes.insert( id, HbFacebookObject::OBJECT_USER );
+        mRequestTypes.insert( id, HbGoogleObject::OBJECT_USER );
         HbInfo( "Request %lld is sent (%s).", id, HbLatin1( url.toString() ) );
     }
 
     return id;
 }
 
-void HbFacebookRequester::onRequestFinished( quint64 request_id, const QJsonDocument & doc )
+void HbGoogleRequester::onRequestFinished( quint64 request_id, const QJsonDocument & doc )
 {
 
-    HbFacebookObject::ObjectType type = HbFacebookObject::OBJECT_NONE;
+    HbGoogleObject::ObjectType type = HbGoogleObject::OBJECT_NONE;
 
     if( mRequestTypes.contains( request_id ) )
     {
@@ -61,12 +61,12 @@ void HbFacebookRequester::onRequestFinished( quint64 request_id, const QJsonDocu
 
     HbInfo( "Request (%lld) of type %s completed.",
             request_id,
-            HbLatin1( HbFacebookObject::MetaObjectType::toString( type ) ) );
+            HbLatin1( HbGoogleObject::MetaObjectType::toString( type ) ) );
 
 
-    if( type == HbFacebookObject::OBJECT_USER )
+    if( type == HbGoogleObject::OBJECT_USER )
     {
-        HbFacebookUser * user = new HbFacebookUser();
+        HbGoogleUser * user = new HbGoogleUser();
         user->load( doc );
         emit requestCompleted( request_id, user );
     }
@@ -77,9 +77,9 @@ void HbFacebookRequester::onRequestFinished( quint64 request_id, const QJsonDocu
     }
 }
 
-void HbFacebookRequester::onRequestError( quint64 request_id, const QString & error )
+void HbGoogleRequester::onRequestError( quint64 request_id, const QString & error )
 {
-    HbFacebookObject::ObjectType type = HbFacebookObject::OBJECT_NONE;
+    HbGoogleObject::ObjectType type = HbGoogleObject::OBJECT_NONE;
 
     if( mRequestTypes.contains( request_id ) )
     {
@@ -88,7 +88,7 @@ void HbFacebookRequester::onRequestError( quint64 request_id, const QString & er
 
     HbError( "Request (%lld) of type %s failed (%s).",
              request_id,
-             HbLatin1( HbFacebookObject::MetaObjectType::toString( type ) ),
+             HbLatin1( HbGoogleObject::MetaObjectType::toString( type ) ),
              HbLatin1( error ) );
 
     emit requestCompleted( request_id, nullptr );

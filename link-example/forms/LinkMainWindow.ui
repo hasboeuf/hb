@@ -6,34 +6,37 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>560</width>
-    <height>320</height>
+    <width>256</width>
+    <height>111</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="ui_qpb_connect">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>90</y>
-      <width>191</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Connect with facebook</string>
-    </property>
-   </widget>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="ui_qpb_facebook_connect">
+      <property name="text">
+       <string>Connect with Facebook</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="ui_qpb_google_connect">
+      <property name="text">
+       <string>Connect with Google</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>560</width>
+     <width>256</width>
      <height>21</height>
     </rect>
    </property>

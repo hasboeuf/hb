@@ -6,10 +6,8 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBO2SERVERFACEBOOK_H
-#define HBO2SERVERFACEBOOK_H
-
-/*! \file HbO2ServerFacebook.h */
+#ifndef HBO2SERVERGOOGLE_H
+#define HBO2SERVERGOOGLE_H
 
 // Qt
 // Local
@@ -22,31 +20,24 @@ namespace hb
     namespace link
     {
         /*!
-         * HbO2ServerFacebook is the Facebook implementation of HbO2Server.
+         * HbO2ServerGoogle is the Google implementation of HbO2Server.
          */
-        class HB_LINK_DECL HbO2ServerFacebook : public HbO2Server
+        class HB_LINK_DECL HbO2ServerGoogle : public HbO2Server
         {
             Q_OBJECT
 
         public:
-            HbO2ServerFacebook();
-            virtual ~HbO2ServerFacebook() = default;
-
-            virtual void addField( const QString & field ) final;
-            virtual void setFields( const QString & fields ) final;
-            virtual const QString & fields() const final;
+            HbO2ServerGoogle() = default;
+            virtual ~HbO2ServerGoogle() = default;
 
         protected:
             virtual const QUrl endPoint() const override;
             virtual const QHash< QString, QString > tokenRequest() const override;
             virtual LinkStatus tokenResponse( const QByteArray & data ) override;
-
-        private:
-            QString mFields;
         };
     }
 }
 
-using hb::link::HbO2ServerFacebook;
+using hb::link::HbO2ServerGoogle;
 
-#endif // HBO2SERVERFACEBOOK_H
+#endif // HBO2SERVERGOOGLE_H

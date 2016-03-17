@@ -8,6 +8,7 @@ using namespace hb::link;
 HbO2ClientConfig::HbO2ClientConfig()
 {
     mLocalPort = 8080;
+    mScopesSeparator = ",";
 }
 
 HbO2ClientConfig::HbO2ClientConfig(const HbO2ClientConfig & config) :
@@ -16,7 +17,7 @@ HbO2ClientConfig::HbO2ClientConfig(const HbO2ClientConfig & config) :
     if (this != &config)
     {
         mLocalPort     = config.mLocalPort;
-        mScope         = config.mScope;
+        mScopes         = config.mScopes;
     }
 }
 
@@ -27,7 +28,7 @@ HbO2ClientConfig & HbO2ClientConfig::operator =(const HbO2ClientConfig & config)
         HbO2Config::operator=( config );
 
         mLocalPort     = config.mLocalPort;
-        mScope         = config.mScope;
+        mScopes         = config.mScopes;
     }
 
     return *this;
@@ -45,7 +46,7 @@ bool HbO2ClientConfig::isValid() const
 
 bool HbO2ClientConfig::read( QDataStream & stream )
 {
-    stream >> mScope;
+    stream >> mScopes;
     stream >> mLocalPort;
 
     return true;
@@ -53,7 +54,7 @@ bool HbO2ClientConfig::read( QDataStream & stream )
 
 bool HbO2ClientConfig::write( QDataStream & stream ) const
 {
-    stream << mScope;
+    stream << mScopes;
     stream << mLocalPort;
 
     return true;
@@ -73,19 +74,15 @@ void HbO2ClientConfig::addScope( const QString & permission )
 {
     if( !permission.isEmpty() )
     {
-        if( !mScope.isEmpty() )
-        {
-            mScope += QStringLiteral( "," );
-        }
-        mScope += permission;
+        mScopes << permission;
     }
 }
 
-void HbO2ClientConfig::setScope( const QString & permissions )
+void HbO2ClientConfig::setScopes( const QStringList & permissions )
 {
-    if( mScope.isEmpty() )
+    if( mScopes.isEmpty() )
     {
-        mScope = permissions;
+        mScopes = permissions;
     }
     else
     {
@@ -93,7 +90,17 @@ void HbO2ClientConfig::setScope( const QString & permissions )
     }
 }
 
-const QString & HbO2ClientConfig::scope() const
+const QStringList & HbO2ClientConfig::scopes() const
 {
-    return mScope;
+    return mScopes;
+}
+
+const QString HbO2ClientConfig::scopesStr() const
+{
+    return mScopes.join( mScopesSeparator );
+}
+
+void HbO2ClientConfig::setScopeSeparator( const QString & separator )
+{
+    mScopesSeparator = separator;
 }

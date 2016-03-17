@@ -24,7 +24,6 @@ namespace hb
 {
     namespace link
     {
-
         /*!
          * HbO2Server provides server side authentication flow.
          * Abstract class.
@@ -34,11 +33,17 @@ namespace hb
             Q_OBJECT
 
         public:
+            enum RequestType {
+                REQUEST_GET,
+                REQUEST_POST
+            };
 
-            HbO2Server() = default;
+            HbO2Server();
             virtual ~HbO2Server() = default;
 
             virtual bool isValid() const override;
+
+            virtual bool link() override;
 
             /*!
              * Return config.
@@ -50,8 +55,6 @@ namespace hb
              * \return Const config.
              */
             virtual const HbO2ServerConfig & config() const;
-
-            virtual bool link() override;
 
             /*!
              * Set redirect Uri.
@@ -82,7 +85,7 @@ namespace hb
 
         protected:
             virtual const QHash< QString, QString > tokenRequest() const = 0;
-            virtual LinkStatus tokenResponse( const QHash< QString, QString > & response ) = 0;
+            virtual LinkStatus tokenResponse( const QByteArray & data ) = 0;
 
         private slots:
             void onTokenResponseReceived();
@@ -92,6 +95,7 @@ namespace hb
             HbO2ServerConfig mConfig;
             QString mToken;
             qint32  mTokenExpiration;
+            RequestType mRequestType;
 
         private:
             QNetworkAccessManager mManager;

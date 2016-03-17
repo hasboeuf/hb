@@ -71,7 +71,7 @@ namespace hb
              * Process to the OAuth link phase.
              * \return True on success, false else.
              */
-            virtual bool link();
+            virtual bool link() = 0;
 
             /*!
              * Return the last occured error.

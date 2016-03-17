@@ -35,12 +35,12 @@ const QHash< QString, QString > HbO2ClientFacebook::codeRequest() const
     request.insert( OAUTH2_RESPONSE_TYPE, OAUTH2_GRANT_CODE );
     request.insert( OAUTH2_CLIENT_ID,     mConfig.clientId() );
     request.insert( OAUTH2_REDIRECT_URI,  mRedirectUri );
-    request.insert( OAUTH2_SCOPE,         mConfig.scope() );
+    request.insert( OAUTH2_SCOPE,         mConfig.scopesStr() );
 
     return request;
 }
 
-auto HbO2ClientFacebook::codeResponse( const QHash< QString, QString > & response ) -> LinkStatus
+HbO2::LinkStatus HbO2ClientFacebook::codeResponse( const QHash< QString, QString > & response )
 {
     if ( response.contains( FB_ERROR ) )
     {

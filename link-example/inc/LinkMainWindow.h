@@ -12,6 +12,7 @@
 // Local
 #include <ui_LinkMainWindow.h>
 #include <facebook/HbFacebookRequester.h>
+#include <google/HbGoogleRequester.h>
 
 class QNetworkAccessManager;
 
@@ -22,6 +23,9 @@ namespace hb
         class HbO2ClientFacebook;
         class HbO2ServerFacebook;
         class HbFacebookObject;
+
+        class HbO2ClientGoogle;
+        class HbO2ServerGoogle;
     }
 
     namespace linkexample
@@ -41,16 +45,25 @@ namespace hb
         private:
             hb::link::HbO2ClientFacebook * mpFacebookClient;
             hb::link::HbO2ServerFacebook * mpFacebookServer;
-            hb::link::HbFacebookRequester  mRequester;
+            hb::link::HbFacebookRequester  mFacebookRequester;
+
+            hb::link::HbO2ClientGoogle * mpGoogleClient;
+            hb::link::HbO2ServerGoogle * mpGoogleServer;
+            hb::link::HbGoogleRequester  mGoogleRequester;
 
         public slots:
             void onOpenBrower( const QUrl & url );
-            void onClientLinkSucceed();
-            void onServerLinkSucceed();
-            void onRequestCompleted(quint64 request_id, hb::link::HbFacebookObject * object );
+            void onFacebookClientLinkSucceed();
+            void onFacebookServerLinkSucceed();
+            void onFacebookRequestCompleted(quint64 request_id, hb::link::HbFacebookObject * object );
+
+            void onGoogleClientLinkSucceed();
+            void onGoogleServerLinkSucceed();
+            void onGoogleRequestCompleted( quint64 request_id, hb::link::HbGoogleObject * object );
 
         private slots:
-            void onConnectClicked();
+            void onFacebookConnectClicked();
+            void onGoogleConnectClicked();
 
         signals:
 

@@ -13,6 +13,7 @@
 
 // Qt
 // Hb
+#include <QtCore/QStringList>
 // Local
 #include <config/HbO2Config.h>
 
@@ -42,11 +43,15 @@ namespace hb
             virtual quint16 localPort() const final;
 
             virtual void addScope( const QString & permission  ) final;
-            virtual void setScope( const QString & permissions ) final;
-            virtual const QString & scope() const final;
+            virtual void setScopes( const QStringList & permissions ) final;
+            virtual const QStringList & scopes() const final;
+            virtual const QString scopesStr() const final;
+
+            virtual void setScopeSeparator( const QString & separator ) final;
 
         private:
-            QString mScope;
+            QStringList mScopes;
+            QString     mScopesSeparator;
             quint16 mLocalPort;
         };
     }

@@ -9,6 +9,11 @@
 
 using namespace hb::link;
 
+HbO2Server::HbO2Server()
+{
+    mRequestType = REQUEST_POST;
+}
+
 bool HbO2Server::isValid() const
 {
     if( !HbO2::isValid() )
@@ -39,31 +44,6 @@ const HbO2ServerConfig & HbO2Server::config() const
     return mConfig;
 }
 
-bool HbO2Server::link()
-{
-    if( !HbO2::link() )
-    {
-        return false;
-    }
-
-    QUrl url( endPoint() );
-
-    QUrlQuery request( url );
-    request.setQueryItems( HbDictionaryHelper::toPairList< QString, QString >( tokenRequest() ) );
-    url.setQuery( request );
-
-    QNetworkRequest token_request( url );
-    QNetworkReply * token_reply = mManager.get( token_request );
-
-    mReplies.add( token_reply );
-
-    connect( token_reply, &QNetworkReply::finished, this, &HbO2Server::onTokenResponseReceived, Qt::UniqueConnection );
-    connect( token_reply, ( void ( QNetworkReply:: * )( QNetworkReply::NetworkError ) )( &QNetworkReply::error ),
-             this, &HbO2Server::onTokenResponseError, Qt::UniqueConnection );
-
-    return true;
-}
-
 void HbO2Server::onTokenResponseReceived()
 {
     QNetworkReply * token_reply = dynamic_cast< QNetworkReply * >( sender() );
@@ -75,11 +55,10 @@ void HbO2Server::onTokenResponseReceived()
     {
 
         QByteArray data = token_reply->readAll();
-        QString content( data );
 
-        HbInfo( "Token content: %s", HbLatin1( content ) );
+        HbInfo( "Token content: %s", HbLatin1( QString( data ) ) );
 
-        if( tokenResponse( HbO2::getUrlItems( content ) ) == LINKED )
+        if( tokenResponse( data ) == LINKED )
         {
             HbInfo( "Verification succeed." );
             HbInfo( "Token received: %s", HbLatin1( mToken ) );
@@ -139,4 +118,46 @@ const QString & HbO2Server::token() const
 qint32 HbO2Server::tokenExpiration() const
 {
     return mTokenExpiration;
+}
+
+bool HbO2Server::link()
+{
+    if( !isValid() )
+    {
+        return false;
+    }
+
+    mLinkStatus = LINKING;
+
+    QUrl url( endPoint() );
+
+    if( mRequestType == REQUEST_GET )
+    {
+        QUrlQuery request( url );
+        request.setQueryItems( HbDictionaryHelper::toPairList< QString, QString >( tokenRequest() ) );
+        url.setQuery( request );
+    }
+
+    QNetworkRequest token_request( url );
+    QNetworkReply * token_reply = nullptr;
+
+    if( mRequestType == REQUEST_GET )
+    {
+        token_reply = mManager.get( token_request );
+    }
+    else // REQUEST_POST
+    {
+        QUrlQuery post_data;
+        post_data.setQueryItems( HbDictionaryHelper::toPairList< QString, QString >( tokenRequest() ) );
+
+        token_reply = mManager.post( token_request, post_data.toString( QUrl::FullyEncoded ).toUtf8() );
+    }
+
+    mReplies.add( token_reply );
+
+    connect( token_reply, &QNetworkReply::finished, this, &HbO2Server::onTokenResponseReceived, Qt::UniqueConnection );
+    connect( token_reply, ( void ( QNetworkReply:: * )( QNetworkReply::NetworkError ) )( &QNetworkReply::error ),
+             this, &HbO2Server::onTokenResponseError, Qt::UniqueConnection );
+
+    return true;
 }

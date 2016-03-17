@@ -13,7 +13,9 @@ PROJECT.ID = link
 
 SUBDIRS += config \
            facebook \
-           facebook/api
+           facebook/api \
+           google \
+           google/api \
 
 # ------------
 # Qt Settings
