@@ -27,7 +27,7 @@ const QString & HbGoogleObject::id() const
     return mId;
 }
 
-auto HbGoogleObject::type() const -> ObjectType
+HbGoogleObject::ObjectType HbGoogleObject::type() const
 {
     return mType;
 }

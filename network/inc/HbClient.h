@@ -23,18 +23,11 @@
 
 namespace hb
 {
-    namespace link
-    {
-        class HbO2ClientFacebook;
-    }
-
     namespace network
     {
         /*!
          * TODOC
          */
-        class HbClientAuthLoginObject;
-
         class HB_NETWORK_DECL HbClient final : public HbPeer
         {
             Q_OBJECT

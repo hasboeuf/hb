@@ -23,7 +23,7 @@ namespace hb
         using hb::log::HbLogGuiNotifier;
         using hb::log::HbLogMessage;
 
-        
+
         class LogViewer final : public QWidget, private Ui::LogViewer
         {
             Q_OBJECT

@@ -79,7 +79,7 @@ quint8 HbNetworkUserInfo::age() const
     return mAge;
 }
 
-auto HbNetworkUserInfo::gender() const -> Gender
+HbNetworkUserInfo::Gender HbNetworkUserInfo::gender() const
 {
     return mGender;
 }

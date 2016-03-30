@@ -9,15 +9,8 @@
 
 namespace hb
 {
-    namespace plugin
-    {
-        class HbPluginPlatform;
-    }
-
     namespace pluginexample
     {
-        class AppPlatformService;
-
         class Plugin2 : public QObject, public IPlugin2, public AppAbstractPlugin
         {
             Q_OBJECT

@@ -24,17 +24,10 @@
 
 namespace hb
 {
-    namespace link
-    {
-        class HbO2ServerFacebook;
-    }
-
     using namespace link;
 
     namespace network
     {
-        class HbAuthRequestContract;
-
         /*!
          * TODOC
          */

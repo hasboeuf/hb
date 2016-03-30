@@ -30,8 +30,6 @@ namespace hb
 
     namespace network
     {
-        class HbAuthRequestContract;
-
         /*!
          * TODOC
          */

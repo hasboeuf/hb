@@ -20,11 +20,6 @@
 
 namespace hb
 {
-    namespace link
-    {
-        class HbO2Client;
-    }
-
     namespace network
     {
         /*!

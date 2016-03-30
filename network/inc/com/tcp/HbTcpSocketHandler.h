@@ -15,8 +15,6 @@ namespace hb
 {
     namespace network
     {
-        class HbTcpSocket;
-
         /*!
          * TODOC
          */

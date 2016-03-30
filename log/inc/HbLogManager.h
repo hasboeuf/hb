@@ -26,8 +26,6 @@ namespace hb
         class HbLoggerOutputs;
         class HbLoggerPool;
         class HbLogMessage;
-        class HbLogStdStream;
-
 
         /*!
         * Internal class, TODOC.

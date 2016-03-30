@@ -17,11 +17,6 @@ namespace hb
         class HbServer;
     }
 
-    namespace log
-    {
-        class HbLogWidget;
-    }
-
     namespace networkexample
     {
         class ServerSumChannel;

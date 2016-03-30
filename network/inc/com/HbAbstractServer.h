@@ -26,7 +26,6 @@ namespace hb
     namespace network
     {
 
-        class HbAbstractSocket;
         class HbSocketHandler;
 
         /*!

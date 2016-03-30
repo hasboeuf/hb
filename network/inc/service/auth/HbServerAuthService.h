@@ -25,7 +25,6 @@ namespace hb
     {
 
         class HbServerAuthStrategy;
-        class HbAuthRequestContract;
         class HbAuthStatusContract;
 
         /*!

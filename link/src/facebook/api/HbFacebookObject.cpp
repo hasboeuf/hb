@@ -27,7 +27,7 @@ const QString & HbFacebookObject::id() const
     return mId;
 }
 
-auto HbFacebookObject::type() const -> ObjectType
+HbFacebookObject::ObjectType HbFacebookObject::type() const
 {
     return mType;
 }

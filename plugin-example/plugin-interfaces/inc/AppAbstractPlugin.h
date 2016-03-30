@@ -8,11 +8,6 @@
 
 namespace hb
 {
-    namespace plugin
-    {
-        class HbPluginPlatform;
-    }
-
     namespace pluginexample
     {
         using hb::plugin::IHbPlugin;

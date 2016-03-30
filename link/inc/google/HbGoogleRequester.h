@@ -23,7 +23,6 @@ namespace hb
     {
 
         class HbO2ServerGoogle;
-        class HbGoogleUser;
 
         /*!
          * HbGoogleRequester is a Http requester specific for Google.

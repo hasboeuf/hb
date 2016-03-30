@@ -19,10 +19,6 @@
 
 namespace hb
 {
-    namespace link
-    {
-        class HbO2ClientFacebook;
-    }
     namespace network
     {
         class HbClientAuthStrategy;

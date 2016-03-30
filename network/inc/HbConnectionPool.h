@@ -24,8 +24,6 @@ namespace hb
 {
     namespace network
     {
-        class HbNetworkService;
-
         /*!
          * TODOC
          */

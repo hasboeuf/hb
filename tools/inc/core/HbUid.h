@@ -39,7 +39,7 @@ namespace hb
                 mReleaseUid = true;
             }
 
-            ~HbUid()
+            virtual ~HbUid()
             {
                 if( mReleaseUid )
                 {

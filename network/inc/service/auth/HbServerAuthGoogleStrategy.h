@@ -21,17 +21,10 @@
 
 namespace hb
 {
-    namespace link
-    {
-        class HbO2ServerGoogle;
-    }
-
     using namespace link;
 
     namespace network
     {
-        class HbAuthRequestContract;
-
         /*!
          * TODOC
          */

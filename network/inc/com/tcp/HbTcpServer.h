@@ -9,14 +9,10 @@
 #include <com/HbAbstractServer.h>
 #include <config/com/HbTcpServerConfig.h>
 
-class QTcpServer;
-
 namespace hb
 {
     namespace network
     {
-        class HbTcpSocketHandler;
-
         /*!
          * TODOC
          */

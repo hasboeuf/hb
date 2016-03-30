@@ -18,16 +18,6 @@ namespace hb
         class HbClient;
     }
 
-    namespace log
-    {
-        class HbLogWidget;
-    }
-
-    namespace link
-    {
-        class HbO2ClientFacebook;
-    }
-
     namespace networkexample
     {
 

@@ -25,7 +25,6 @@ namespace hb
     {
 
         class HbO2ServerFacebook;
-        class HbFacebookUser;
 
         /*!
          * HbFacebookRequester is a Http requester specific for Facebook.

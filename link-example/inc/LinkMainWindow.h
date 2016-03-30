@@ -14,8 +14,6 @@
 #include <facebook/HbFacebookRequester.h>
 #include <google/HbGoogleRequester.h>
 
-class QNetworkAccessManager;
-
 namespace hb
 {
     namespace link

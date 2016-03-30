@@ -22,8 +22,6 @@
 #include <contract/HbNetworkContract.h>
 #include <contract/HbNetworkProtocol.h>
 
-class QIODevice;
-
 namespace hb
 {
     namespace network
