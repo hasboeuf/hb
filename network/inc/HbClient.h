@@ -19,6 +19,7 @@
 #include <HbPeer.h>
 #include <HbClientConnectionPool.h>
 #include <config/peer/HbGeneralClientConfig.h>
+#include <service/auth/HbAuthService.h>
 
 namespace hb
 {
@@ -48,7 +49,7 @@ namespace hb
             virtual bool leave() override;
 
             bool authRequest( HbClientAuthLoginObject * login_object );
-            bool facebookAuthRequested();
+            bool OAuthRequested( HbAuthService::AuthType type );
 
         signals:
             void clientStatusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status );

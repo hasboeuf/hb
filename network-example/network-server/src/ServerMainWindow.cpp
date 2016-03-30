@@ -45,12 +45,17 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     facebook_config.setClientId( msClientId );
     facebook_config.setClientSecret( msClientSecret );
 
+    HbO2ServerConfig google_config;
+    google_config.setClientId( msClientId );
+    google_config.setClientSecret( msClientSecret );
+
     HbGeneralServerConfig config;
     config.setAppName("hb-network-example");
     config.setProtocolVersion( 1 );
     config.auth().setAuthMaxTries( 3 );
     config.auth().setAuthTimeout( 30 );
     config.auth().enableFacebookAuth( facebook_config );
+    config.auth().enableGoogleAuth( google_config );
     config.presence().setWarningAliveThreshold( 60 );
     config.presence().setKickAliveThreshold( 90 );
 

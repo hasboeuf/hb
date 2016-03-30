@@ -35,8 +35,8 @@ namespace hb
             explicit ServerMainWindow( QWidget * parent = nullptr );
             virtual ~ServerMainWindow();
 
-            static QString msClientId;
-            static QString msClientSecret;
+            static QString msClientId;     // Shared by facebook and google => makes oauth exclusif in that sample.
+            static QString msClientSecret; // Shared by facebook and google => makes oauth exclusif in that sample.
 
         public slots:
             void onServerStatusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status );

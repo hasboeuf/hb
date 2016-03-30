@@ -2,8 +2,7 @@
 // Hb
 // Local
 #include <service/auth/HbAuthService.h>
-#include <contract/auth/HbAuthFacebookRequestContract.h>
-#include <contract/auth/HbAuthRequestContract.h>
+#include <contract/auth/HbOAuthRequestContract.h>
 #include <contract/auth/HbAuthStatusContract.h>
 
 
@@ -15,7 +14,7 @@ HbAuthService::HbAuthService()
 
 void HbAuthService::plugContracts( HbNetworkExchanges & exchanges )
 {
-    exchanges.plug< HbAuthFacebookRequestContract >();
+    exchanges.plug< HbOAuthRequestContract >();
     exchanges.plug< HbAuthRequestContract >();
     exchanges.plug< HbAuthStatusContract >();
 }

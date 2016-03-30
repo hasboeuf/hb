@@ -6,23 +6,26 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBCLIENTAUTHFACEBOOKSTRATEGY_H
-#define HBCLIENTAUTHFACEBOOKSTRATEGY_H
-
-/*! \file HbClientAuthFacebookStrategy.h */
+#ifndef HBSERVEROAUTHSTRATEGY_H
+#define HBSERVEROAUTHSTRATEGY_H
 
 // Qt
 #include <QtCore/QHash>
 // Hb
-#include <facebook/HbO2ClientFacebook.h>
+#include <config/HbO2ServerConfig.h>
 // Local
 #include <HbNetwork.h>
-#include <service/auth/HbClientOAuthStrategy.h>
+#include <service/auth/HbServerAuthStrategy.h>
 #include <contract/HbNetworkProtocol.h>
 #include <contract/auth/HbAuthRequestContract.h> // Template.
 
 namespace hb
 {
+    namespace link
+    {
+        class HbO2Server;
+    }
+
     using namespace link;
 
     namespace network
@@ -32,26 +35,29 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbClientAuthFacebookStrategy : public HbClientOAuthStrategy
+        class HB_NETWORK_DECL HbServerOAuthStrategy : public HbServerAuthStrategy
         {
             Q_OBJECT
         public:
 
-            HbClientAuthFacebookStrategy() = default;
-            virtual ~HbClientAuthFacebookStrategy() = default;
+            HbServerOAuthStrategy();
+            virtual ~HbServerOAuthStrategy() = default;
 
             virtual void reset() override;
 
-            virtual void setConfig( const HbO2ClientConfig & config ) override;
+            virtual void setConfig( const HbO2ServerConfig & config );
 
-            virtual authstgy type() const final;
+        public slots:
+            void onLinkFailed( const QString & error );
 
-            virtual bool prepareAuthContract( HbClientAuthLoginObject * login_object ) override;
-
+        protected:
+            QHash< HbO2Server *, networkuid > mPendingToken;
+            QHash< quint64, networkuid >      mPendingRequest;
+            HbO2ServerConfig                  mConfig;
         };
     }
 }
 
-using hb::network::HbClientAuthFacebookStrategy;
+using hb::network::HbServerOAuthStrategy;
 
-#endif // HBCLIENTAUTHFACEBOOKSTRATEGY_H
+#endif // HBSERVEROAUTHSTRATEGY_H

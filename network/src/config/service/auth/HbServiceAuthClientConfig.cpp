@@ -50,3 +50,13 @@ const hb::link::HbO2ClientConfig & HbServiceAuthClientConfig::facebookAuthConfig
 {
     return mFacebookAuthConfig;
 }
+
+void HbServiceAuthClientConfig::enableGoogleAuth( const hb::link::HbO2ClientConfig & config )
+{
+    mGoogleAuthConfig = config;
+}
+
+const hb::link::HbO2ClientConfig & HbServiceAuthClientConfig::googleAuthConfig() const
+{
+    return mGoogleAuthConfig;
+}

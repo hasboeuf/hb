@@ -6,25 +6,6 @@ HbO2ClientGoogle::HbO2ClientGoogle()
     mConfig.setScopeSeparator( " " );
 }
 
-HbO2ClientGoogle::HbO2ClientGoogle( const HbO2ClientGoogle & source ) :
-    HbO2Client( source )
-{
-    if( &source != this )
-    {
-
-    }
-}
-
-HbO2ClientGoogle & HbO2ClientGoogle::operator =( const HbO2ClientGoogle & source )
-{
-    if( &source != this )
-    {
-        HbO2Client::operator =( source );
-    }
-
-    return ( *this );
-}
-
 const QUrl HbO2ClientGoogle::endPoint() const
 {
     return QUrl( QStringLiteral( "https://accounts.google.com/o/oauth2/v2/auth" ) );
@@ -54,14 +35,3 @@ HbO2::LinkStatus HbO2ClientGoogle::codeResponse( const QHash< QString, QString >
         return UNLINKED;
     }
 }
-
-bool HbO2ClientGoogle::read( QDataStream & stream )
-{
-    return HbO2Client::read( stream );
-}
-
-bool HbO2ClientGoogle::write( QDataStream & stream ) const
-{
-    return HbO2Client::write( stream );
-}
-

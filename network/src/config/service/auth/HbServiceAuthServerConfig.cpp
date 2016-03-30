@@ -55,7 +55,7 @@ bool HbServiceAuthServerConfig::isValid() const
             return false;
         }
 
-        if( !mFacebookAuthConfig.isValid() ) return false;
+        // TODO facebook and google validation.
 
         return true;
     }
@@ -75,6 +75,16 @@ void HbServiceAuthServerConfig::enableFacebookAuth( const HbO2ServerConfig & con
 const hb::link::HbO2ServerConfig & HbServiceAuthServerConfig::facebookAuthConfig() const
 {
     return mFacebookAuthConfig;
+}
+
+void HbServiceAuthServerConfig::enableGoogleAuth( const hb::link::HbO2ServerConfig & config )
+{
+    mGoogleAuthConfig = config;
+}
+
+const hb::link::HbO2ServerConfig & HbServiceAuthServerConfig::googleAuthConfig() const
+{
+    return mGoogleAuthConfig;
 }
 
 

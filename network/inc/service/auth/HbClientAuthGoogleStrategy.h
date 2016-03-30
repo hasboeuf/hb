@@ -6,15 +6,12 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBCLIENTAUTHFACEBOOKSTRATEGY_H
-#define HBCLIENTAUTHFACEBOOKSTRATEGY_H
-
-/*! \file HbClientAuthFacebookStrategy.h */
+#ifndef HBCLIENTAUTHGOOGLESTRATEGY_H
+#define HBCLIENTAUTHGOOGLESTRATEGY_H
 
 // Qt
 #include <QtCore/QHash>
 // Hb
-#include <facebook/HbO2ClientFacebook.h>
 // Local
 #include <HbNetwork.h>
 #include <service/auth/HbClientOAuthStrategy.h>
@@ -32,13 +29,13 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbClientAuthFacebookStrategy : public HbClientOAuthStrategy
+        class HB_NETWORK_DECL HbClientAuthGoogleStrategy : public HbClientOAuthStrategy
         {
             Q_OBJECT
         public:
 
-            HbClientAuthFacebookStrategy() = default;
-            virtual ~HbClientAuthFacebookStrategy() = default;
+            HbClientAuthGoogleStrategy() = default;
+            virtual ~HbClientAuthGoogleStrategy() = default;
 
             virtual void reset() override;
 
@@ -47,11 +44,10 @@ namespace hb
             virtual authstgy type() const final;
 
             virtual bool prepareAuthContract( HbClientAuthLoginObject * login_object ) override;
-
         };
     }
 }
 
-using hb::network::HbClientAuthFacebookStrategy;
+using hb::network::HbClientAuthGoogleStrategy;
 
-#endif // HBCLIENTAUTHFACEBOOKSTRATEGY_H
+#endif // HBCLIENTAUTHGOOGLESTRATEGY_H

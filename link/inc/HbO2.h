@@ -37,10 +37,6 @@ namespace hb
         {
             Q_OBJECT
 
-
-            friend QDataStream & operator<<( QDataStream & stream, const HbO2 & o2 );
-            friend QDataStream & operator>>( QDataStream & stream, HbO2 & o2 );
-
         public:
             enum LinkStatus : quint8
             {
@@ -58,8 +54,6 @@ namespace hb
 
             HbO2();
             virtual ~HbO2() = default;
-            HbO2( const HbO2 & source );
-            HbO2 & operator=( const HbO2 & source );
 
             /*!
              * Check if link could be done.
@@ -97,20 +91,6 @@ namespace hb
              */
             virtual const QString & code() const final;
 
-            /*!
-             * Return object values from stream.
-             * \param Source stream.
-             * \return True if no errors, false else.
-             */
-            virtual bool read( QDataStream & stream );
-
-            /*!
-             * Write object values in stream.
-             * \param Destination stream.
-             * \return True if no errors, false else.
-             */
-            virtual bool write( QDataStream & stream ) const;
-
         protected:
             virtual const QUrl endPoint() const = 0; //!< Target specific.
 
@@ -132,21 +112,6 @@ namespace hb
             QString    mCode;
             QString    mRedirectUri;
         };
-
-        /*!
-         * Needed for serialization within HbNetwork.
-         * \param stream Data stream.
-         * \param o2 HbO2 object.
-         * \return Enqueued stream.
-         */
-        QDataStream & operator<<( QDataStream & stream, const HbO2 & o2 );
-        /*!
-         * Needed for serialization within HbNetwork.
-         * \param stream Data stream.
-         * \param o2 HbO2 object.
-         * \return Dequeued stream.
-         */
-        QDataStream & operator>>( QDataStream & stream, HbO2 & o2 );
     }
 }
 

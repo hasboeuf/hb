@@ -6,18 +6,16 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBCLIENTAUTHFACEBOOKSTRATEGY_H
-#define HBCLIENTAUTHFACEBOOKSTRATEGY_H
-
-/*! \file HbClientAuthFacebookStrategy.h */
+#ifndef HBCLIENTOAUTHSTRATEGY_H
+#define HBCLIENTOAUTHSTRATEGY_H
 
 // Qt
 #include <QtCore/QHash>
 // Hb
-#include <facebook/HbO2ClientFacebook.h>
+#include <HbO2Client.h>
 // Local
 #include <HbNetwork.h>
-#include <service/auth/HbClientOAuthStrategy.h>
+#include <service/auth/HbClientAuthStrategy.h>
 #include <contract/HbNetworkProtocol.h>
 #include <contract/auth/HbAuthRequestContract.h> // Template.
 
@@ -32,26 +30,30 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbClientAuthFacebookStrategy : public HbClientOAuthStrategy
+        class HB_NETWORK_DECL HbClientOAuthStrategy : public HbClientAuthStrategy
         {
             Q_OBJECT
         public:
 
-            HbClientAuthFacebookStrategy() = default;
-            virtual ~HbClientAuthFacebookStrategy() = default;
+            HbClientOAuthStrategy() = default;
+            virtual ~HbClientOAuthStrategy() = default;
 
             virtual void reset() override;
 
-            virtual void setConfig( const HbO2ClientConfig & config ) override;
+            virtual void setConfig( const HbO2ClientConfig & config );
 
-            virtual authstgy type() const final;
+        public slots:
+            void onOpenBrower( const QUrl & url );
+            void onLinkSucceed();
+            void onLinkFailed();
 
-            virtual bool prepareAuthContract( HbClientAuthLoginObject * login_object ) override;
-
+        protected:
+            QHash< HbO2Client *, networkuid > mPendingCodes;
+            HbO2ClientConfig mConfig;
         };
     }
 }
 
-using hb::network::HbClientAuthFacebookStrategy;
+using hb::network::HbClientOAuthStrategy;
 
-#endif // HBCLIENTAUTHFACEBOOKSTRATEGY_H
+#endif // HBCLIENTOAUTHSTRATEGY_H

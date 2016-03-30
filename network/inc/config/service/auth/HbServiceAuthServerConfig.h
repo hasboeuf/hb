@@ -37,6 +37,9 @@ namespace hb
             void enableFacebookAuth( const hb::link::HbO2ServerConfig & config );
             const hb::link::HbO2ServerConfig & facebookAuthConfig() const;
 
+            void enableGoogleAuth( const hb::link::HbO2ServerConfig & config );
+            const hb::link::HbO2ServerConfig & googleAuthConfig() const;
+
             virtual void setAuthMaxTries( quint16 max ) final;
             virtual quint16 authMaxTries() const;
 
@@ -47,6 +50,7 @@ namespace hb
             quint16 mAuthMaxTries;
             quint16 mAuthTimeout;
             hb::link::HbO2ServerConfig mFacebookAuthConfig;
+            hb::link::HbO2ServerConfig mGoogleAuthConfig;
         };
     }
 }

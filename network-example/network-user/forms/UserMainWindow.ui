@@ -49,7 +49,7 @@
     <item>
      <widget class="QStackedWidget" name="ui_qsw_stack">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="ui_qw_welcome">
        <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -64,6 +64,13 @@
       </widget>
       <widget class="QWidget" name="ui_qw_auth">
        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QPushButton" name="ui_qpb_gl_authentication">
+          <property name="text">
+           <string>Google authentication</string>
+          </property>
+         </widget>
+        </item>
         <item>
          <widget class="QPushButton" name="ui_qpb_fb_authentication">
           <property name="text">
@@ -185,9 +192,9 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
-           <widget class="QPushButton" name="ui_qpb_fb_unauthentication">
+           <widget class="QPushButton" name="ui_qpb_unauthentication">
             <property name="text">
-             <string>Facebook unauthentication</string>
+             <string>Unauthentication</string>
             </property>
            </widget>
           </item>

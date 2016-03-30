@@ -46,7 +46,7 @@ namespace hb
             explicit UserMainWindow( QWidget * parent = nullptr );
             virtual ~UserMainWindow();
 
-            static QString msClientId;
+            static QString msClientId; // Shared by facebook and google => makes oauth exclusif in that sample.
 
         private:
             hb::network::HbClient * mpHbClient;
@@ -65,7 +65,8 @@ namespace hb
             void onSendClicked();
             void onComputeClicked();
             void onFacebookAuthRequest();
-            void onFacebookUnauthRequest();
+            void onGoogleAuthRequest();
+            void onUnauthRequest();
 
             // From chat channel
             void onChatUserJoined( hb::network::ShConstHbNetworkUserInfo user_info );

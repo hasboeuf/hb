@@ -9,6 +9,7 @@
 #include <service/presence/HbServerPresenceService.h>
 #include <service/auth/HbServerAuthService.h>
 #include <service/auth/HbServerAuthFacebookStrategy.h>
+#include <service/auth/HbServerAuthGoogleStrategy.h>
 #include <service/channel/HbServerChannelService.h>
 #include <user/HbServerUser.h>
 
@@ -33,6 +34,14 @@ HbServerConnectionPool::HbServerConnectionPool( const HbGeneralServerConfig & co
         HbServerAuthFacebookStrategy * fb_strategy = new HbServerAuthFacebookStrategy();
         fb_strategy->setConfig( config.auth().facebookAuthConfig() );
         service_auth->addStrategy( fb_strategy );
+    }
+
+    // Google auth
+    if( config.auth().googleAuthConfig().isValid() )
+    {
+        HbServerAuthGoogleStrategy * gl_strategy = new HbServerAuthGoogleStrategy();
+        gl_strategy->setConfig( config.auth().googleAuthConfig() );
+        service_auth->addStrategy( gl_strategy );
     }
 
     mServices.insert( service_presence->uid(), service_presence );

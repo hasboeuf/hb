@@ -9,6 +9,7 @@
 #include <service/presence/HbClientPresenceService.h>
 #include <service/auth/HbClientAuthService.h>
 #include <service/auth/HbClientAuthFacebookStrategy.h>
+#include <service/auth/HbClientAuthGoogleStrategy.h>
 #include <service/channel/HbClientChannelService.h>
 #include <service/auth/HbClientAuthLoginObject.h>
 #include <user/HbNetworkUser.h>
@@ -36,6 +37,14 @@ HbClientConnectionPool::HbClientConnectionPool( const HbGeneralClientConfig & co
         HbClientAuthFacebookStrategy * fb_strategy = new HbClientAuthFacebookStrategy();
         fb_strategy->setConfig( config.auth().facebookAuthConfig() );
         service_auth->addStrategy( fb_strategy );
+    }
+
+    // Google auth
+    if( config.auth().googleAuthConfig().isValid() )
+    {
+        HbClientAuthGoogleStrategy * gl_strategy = new HbClientAuthGoogleStrategy();
+        gl_strategy->setConfig( config.auth().googleAuthConfig() );
+        service_auth->addStrategy( gl_strategy );
     }
 
     mServices.insert( service_presence->uid(), service_presence );

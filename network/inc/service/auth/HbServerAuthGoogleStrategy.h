@@ -6,23 +6,26 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBCLIENTAUTHFACEBOOKSTRATEGY_H
-#define HBCLIENTAUTHFACEBOOKSTRATEGY_H
-
-/*! \file HbClientAuthFacebookStrategy.h */
+#ifndef HBSERVERAUTHGOOGLESTRATEGY_H
+#define HBSERVERAUTHGOOGLESTRATEGY_H
 
 // Qt
 #include <QtCore/QHash>
 // Hb
-#include <facebook/HbO2ClientFacebook.h>
+#include <google/HbGoogleRequester.h>
 // Local
 #include <HbNetwork.h>
-#include <service/auth/HbClientOAuthStrategy.h>
+#include <service/auth/HbServerOAuthStrategy.h>
 #include <contract/HbNetworkProtocol.h>
 #include <contract/auth/HbAuthRequestContract.h> // Template.
 
 namespace hb
 {
+    namespace link
+    {
+        class HbO2ServerGoogle;
+    }
+
     using namespace link;
 
     namespace network
@@ -32,26 +35,27 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbClientAuthFacebookStrategy : public HbClientOAuthStrategy
+        class HB_NETWORK_DECL HbServerAuthGoogleStrategy : public HbServerOAuthStrategy
         {
             Q_OBJECT
         public:
 
-            HbClientAuthFacebookStrategy() = default;
-            virtual ~HbClientAuthFacebookStrategy() = default;
-
-            virtual void reset() override;
-
-            virtual void setConfig( const HbO2ClientConfig & config ) override;
+            HbServerAuthGoogleStrategy();
+            virtual ~HbServerAuthGoogleStrategy() = default;
 
             virtual authstgy type() const final;
+            virtual bool checkLogin( const HbAuthRequestContract * contract ) override;
 
-            virtual bool prepareAuthContract( HbClientAuthLoginObject * login_object ) override;
+        public slots:
+            void onLinkSucceed();
+            void onRequestCompleted( quint64 request_id, HbGoogleObject * object );
 
+        private:
+            HbGoogleRequester mRequester;
         };
     }
 }
 
-using hb::network::HbClientAuthFacebookStrategy;
+using hb::network::HbServerAuthGoogleStrategy;
 
-#endif // HBCLIENTAUTHFACEBOOKSTRATEGY_H
+#endif // HBSERVERAUTHGOOGLESTRATEGY_H

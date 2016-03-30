@@ -35,15 +35,10 @@ namespace hb
         public:
             HbO2Client() = default;
             virtual ~HbO2Client() = default;
-            HbO2Client( const HbO2Client & source );
-            HbO2Client & operator=( const HbO2Client & source );
 
             virtual bool isValid() const override;
 
             virtual bool link() override;
-
-            virtual bool read( QDataStream & stream ) override;
-            virtual bool write( QDataStream & stream ) const override;
 
             /*!
              * Return config.
@@ -84,5 +79,7 @@ namespace hb
         };
     }
 }
+
+using hb::link::HbO2Client;
 
 #endif // HBO2CLIENT_H

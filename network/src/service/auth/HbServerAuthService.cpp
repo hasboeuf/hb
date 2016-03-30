@@ -5,7 +5,7 @@
 #include <service/auth/HbServerAuthService.h>
 #include <service/auth/HbServerAuthStrategy.h>
 #include <contract/auth/HbAuthRequestContract.h>
-#include <contract/auth/HbAuthFacebookRequestContract.h>
+#include <contract/auth/HbOAuthRequestContract.h>
 #include <contract/auth/HbAuthStatusContract.h>
 #include <service/auth/HbServerAuthFacebookStrategy.h>
 

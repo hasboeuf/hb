@@ -39,35 +39,17 @@ bool HbClient::authRequest( HbClientAuthLoginObject * login_object )
     return mConnectionPool.authRequested( login_object );
 }
 
-bool HbClient::facebookAuthRequested()
+bool HbClient::OAuthRequested( HbAuthService::AuthType type )
 {
     if( !isReady() ) return false;
+    if( type == HbAuthService::AUTH_NONE &&
+        type >= HbAuthService::AUTH_USER )
+    {
+        return false;
+    }
 
     HbClientAuthLoginObject * login_object = new HbClientAuthLoginObject();
-    login_object->setStrategy( HbAuthService::AUTH_FACEBOOK );
+    login_object->setStrategy( type );
     return mConnectionPool.authRequested( login_object );
 }
-
-/*void HbClient::onClientConnected( netwuid client_uid )
-{
-    HbInfo( "Client %d connected.", client_uid );
-    emit clientConnected( client_uid );
-}
-
-void HbClient::onClientDisconnected    ( netwuid client_uid )
-{
-    HbInfo( "Client %d disconnected.", client_uid );
-
-    q_assert( mClients.contains( client_uid ) );
-
-    HbAbstractClient * client = mClients.take( client_uid );
-    if( mMainClient == client )
-    {
-        mMainClient = nullptr;
-    }
-    client->deleteLater();
-
-    emit clientDisconnected( client_uid );
-}*/
-
 

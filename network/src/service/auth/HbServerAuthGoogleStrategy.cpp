@@ -1,10 +1,10 @@
 // Hb
 #include <HbLogService.h>
-#include <facebook/HbO2ServerFacebook.h>
-#include <facebook/api/HbFacebookUser.h>
+#include <google/HbO2ServerGoogle.h>
+#include <google/api/HbGoogleUser.h>
 // Local
 #include <service/auth/HbAuthService.h>
-#include <service/auth/HbServerAuthFacebookStrategy.h>
+#include <service/auth/HbServerAuthGoogleStrategy.h>
 #include <contract/auth/HbOAuthRequestContract.h>
 #ifdef DEV
 #include <mock/HbNetworkUserInfoMock.h>
@@ -13,43 +13,35 @@
 using namespace hb::network;
 using namespace hb::link;
 
-HbServerAuthFacebookStrategy::HbServerAuthFacebookStrategy() :
+HbServerAuthGoogleStrategy::HbServerAuthGoogleStrategy() :
     HbServerOAuthStrategy()
 {
-    connect( &mRequester, &HbFacebookRequester::requestCompleted, this, &HbServerAuthFacebookStrategy::onRequestCompleted, Qt::UniqueConnection );
+    connect( &mRequester, &HbGoogleRequester::requestCompleted, this, &HbServerAuthGoogleStrategy::onRequestCompleted, Qt::UniqueConnection );
 }
 
-authstgy HbServerAuthFacebookStrategy::type() const
+authstgy HbServerAuthGoogleStrategy::type() const
 {
-    return HbAuthService::AUTH_FACEBOOK;
+    return HbAuthService::AUTH_GOOGLE;
 }
 
-bool HbServerAuthFacebookStrategy::checkLogin( const HbAuthRequestContract * contract )
+bool HbServerAuthGoogleStrategy::checkLogin( const HbAuthRequestContract * contract )
 {
-    const HbOAuthRequestContract * facebook_auth = contract->value< HbOAuthRequestContract >();
+    const HbOAuthRequestContract * google_auth = contract->value< HbOAuthRequestContract >();
 
-    if( !facebook_auth )
+    if( !google_auth )
     {
         return false;
     }
 
-    HbO2ServerFacebook * server_auth = new HbO2ServerFacebook();
+    HbO2ServerGoogle * server_auth = new HbO2ServerGoogle();
 
-    connect( server_auth, &HbO2ServerFacebook::linkSucceed, this, &HbServerAuthFacebookStrategy::onLinkSucceed, Qt::UniqueConnection );
-    connect( server_auth, &HbO2ServerFacebook::linkFailed,  this, &HbServerOAuthStrategy::onLinkFailed,  Qt::UniqueConnection );
+    connect( server_auth, &HbO2ServerGoogle::linkSucceed, this, &HbServerAuthGoogleStrategy::onLinkSucceed, Qt::UniqueConnection );
+    connect( server_auth, &HbO2ServerGoogle::linkFailed,  this, &HbServerOAuthStrategy::onLinkFailed,  Qt::UniqueConnection );
 
     server_auth->config().setClientId( mConfig.clientId() );
     server_auth->config().setClientSecret( mConfig.clientSecret() );
-    server_auth->setRedirectUri( facebook_auth->redirectUri() );
-    server_auth->setCode       ( facebook_auth->code() );
-    server_auth->addField( FB_USER_FIRST_NAME );
-    server_auth->addField( FB_USER_LAST_NAME );
-    server_auth->addField( FB_USER_LINK );
-    server_auth->addField( FB_USER_EMAIL );
-    server_auth->addField( FB_USER_GENDER );
-    server_auth->addField( FB_USER_LOCALE );
-    server_auth->addField( FB_USER_VERIFIED );
-    server_auth->addField( FB_USER_TIMEZONE );
+    server_auth->setRedirectUri( google_auth->redirectUri() );
+    server_auth->setCode       ( google_auth->code() );
 
     mPendingToken.insert( server_auth, contract->sender() );
 
@@ -62,14 +54,14 @@ bool HbServerAuthFacebookStrategy::checkLogin( const HbAuthRequestContract * con
 // Problem: onLinkSucceed and onLinkFailed are both called. That causes problems
 // as deleterLater is called in each of them.
 
-void HbServerAuthFacebookStrategy::onLinkSucceed()
+void HbServerAuthGoogleStrategy::onLinkSucceed()
 {
     HbLogBegin();
-    HbO2ServerFacebook * server_auth = dynamic_cast< HbO2ServerFacebook * >( sender() );
+    HbO2ServerGoogle * server_auth = dynamic_cast< HbO2ServerGoogle * >( sender() );
     q_assert_ptr( server_auth );
     q_assert( mPendingToken.contains( server_auth ) );
 
-    HbInfo( "Server link succeed. Requesting Facebook user object %s...", HbLatin1( server_auth->config().clientId() ) );
+    HbInfo( "Server link succeed. Requesting Google user object %s...", HbLatin1( server_auth->config().clientId() ) );
 
     networkuid sender = mPendingToken.take( server_auth );
     quint64 request_id = mRequester.requestUser( server_auth );
@@ -87,16 +79,16 @@ void HbServerAuthFacebookStrategy::onLinkSucceed()
     HbLogEnd();
 }
 
-void HbServerAuthFacebookStrategy::onRequestCompleted( quint64 request_id, HbFacebookObject * object )
+void HbServerAuthGoogleStrategy::onRequestCompleted( quint64 request_id, HbGoogleObject * object )
 {
     q_assert( mPendingRequest.contains( request_id ) );
 
     networkuid sender = mPendingRequest.take( request_id );
 
-    HbFacebookUser * user = dynamic_cast< HbFacebookUser * >( object );
+    HbGoogleUser * user = dynamic_cast< HbGoogleUser * >( object );
     if( user )
     {
-        HbInfo( "Facebook user informations: %s", HbLatin1( user->toString() ) );
+        HbInfo( "Google user informations: %s", HbLatin1( user->toString() ) );
 
         HbNetworkUserInfo user_info;
         user_info.setId       ( user->id() );
@@ -123,7 +115,7 @@ void HbServerAuthFacebookStrategy::onRequestCompleted( quint64 request_id, HbFac
     }
     else
     {
-        HbError( "Bad dynamic cast HbFacebookObject -> HbFacebookUser." );
+        HbError( "Bad dynamic cast HbGoogleObject -> HbGoogleUser." );
         emit authFailed( sender, HbNetworkProtocol::AUTH_OAUTH_KO, "" );
     }
 

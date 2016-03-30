@@ -16,7 +16,7 @@
 #include <gui/HbLogWidget.h>
 #include <HbLoggerOutputs.h>
 #include <HbClient.h>
-#include <contract/auth/HbAuthFacebookRequestContract.h>
+#include <contract/auth/HbOAuthRequestContract.h>
 #include <contract/HbNetworkHeader.h>
 #include <contract/HbNetworkProtocol.h>
 #include <facebook/HbO2ClientFacebook.h>
@@ -34,7 +34,7 @@ using namespace hb::link;
 using namespace hb::network;
 using namespace hb::networkexample;
 
-QString UserMainWindow::msClientId = "940633959281250";                      // Fake value.
+QString UserMainWindow::msClientId = "940633959281250"; // Fake value.
 
 UserMainWindow::UserMainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -58,13 +58,16 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     HbO2ClientConfig facebook_config;
     facebook_config.setClientId( msClientId );
     facebook_config.setLocalPort( 8080 );
-    facebook_config.addScope( FB_PERMISSION_EMAIL );
-    facebook_config.addScope( FB_PERMISSION_FRIENDS );
+
+    HbO2ClientConfig google_config;
+    google_config.setClientId( msClientId );
+    google_config.setLocalPort( 8080 );
 
     HbGeneralClientConfig config;
     config.setAppName( "hb-network-example" );
     config.setProtocolVersion( 1 );
     config.auth().enableFacebookAuth( facebook_config );
+    config.auth().enableGoogleAuth( google_config );
     config.presence().setKeepAliveInterval( 30 );
 
     mpHbClient    = new HbClient( config );
@@ -78,7 +81,8 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
     connect( ui_qpb_start,               &QPushButton::clicked, this, &UserMainWindow::onStartClicked );
     connect( ui_qpb_stop,                &QPushButton::clicked, this, &UserMainWindow::onStopClicked );
     connect( ui_qpb_fb_authentication,   &QPushButton::clicked, this, &UserMainWindow::onFacebookAuthRequest );
-    connect( ui_qpb_fb_unauthentication, &QPushButton::clicked, this, &UserMainWindow::onFacebookUnauthRequest );
+    connect( ui_qpb_gl_authentication,   &QPushButton::clicked, this, &UserMainWindow::onGoogleAuthRequest );
+    connect( ui_qpb_unauthentication,    &QPushButton::clicked, this, &UserMainWindow::onUnauthRequest );
     connect( ui_qpb_send,                &QPushButton::clicked, this, &UserMainWindow::onSendClicked );
     connect( ui_qpb_compute,             &QPushButton::clicked, this, &UserMainWindow::onComputeClicked );
 
@@ -135,10 +139,15 @@ void UserMainWindow::onComputeClicked()
 
 void UserMainWindow::onFacebookAuthRequest()
 {
-    mpHbClient->facebookAuthRequested();
+    mpHbClient->OAuthRequested( HbAuthService::AUTH_FACEBOOK );
 }
 
-void UserMainWindow::onFacebookUnauthRequest()
+void UserMainWindow::onGoogleAuthRequest()
+{
+    mpHbClient->OAuthRequested( HbAuthService::AUTH_GOOGLE );
+}
+
+void UserMainWindow::onUnauthRequest()
 {
     HbWarning( "TODO" );
 }

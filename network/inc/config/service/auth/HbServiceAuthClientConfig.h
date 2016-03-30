@@ -36,10 +36,14 @@ namespace hb
             void enableFacebookAuth( const hb::link::HbO2ClientConfig & config );
             const hb::link::HbO2ClientConfig & facebookAuthConfig() const;
 
+            void enableGoogleAuth( const hb::link::HbO2ClientConfig & config );
+            const hb::link::HbO2ClientConfig & googleAuthConfig() const;
+
         protected:
 
         private:
             hb::link::HbO2ClientConfig mFacebookAuthConfig;
+            hb::link::HbO2ClientConfig mGoogleAuthConfig;
         };
     }
 }

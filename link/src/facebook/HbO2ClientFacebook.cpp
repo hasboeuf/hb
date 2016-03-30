@@ -5,25 +5,6 @@ const QString FB_ERROR             = QStringLiteral( "error" );
 const QString FB_ERROR_REASON      = QStringLiteral( "error_reason" );
 const QString FB_ERROR_DESCRIPTION = QStringLiteral( "error_description" );
 
-HbO2ClientFacebook::HbO2ClientFacebook( const HbO2ClientFacebook & source ) :
-    HbO2Client( source )
-{
-    if( &source != this )
-    {
-
-    }
-}
-
-HbO2ClientFacebook & HbO2ClientFacebook::operator =( const HbO2ClientFacebook & source )
-{
-    if( &source != this )
-    {
-        HbO2Client::operator =( source );
-    }
-
-    return ( *this );
-}
-
 const QUrl HbO2ClientFacebook::endPoint() const
 {
     return QUrl( QStringLiteral( "https://www.facebook.com/dialog/oauth" ) );
@@ -60,15 +41,5 @@ HbO2::LinkStatus HbO2ClientFacebook::codeResponse( const QHash< QString, QString
         mErrorString += "undefined error";
         return UNLINKED;
     }
-}
-
-bool HbO2ClientFacebook::read( QDataStream & stream )
-{
-    return HbO2Client::read( stream );
-}
-
-bool HbO2ClientFacebook::write( QDataStream & stream ) const
-{
-    return HbO2Client::write( stream );
 }
 

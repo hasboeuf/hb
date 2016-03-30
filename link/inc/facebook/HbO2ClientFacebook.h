@@ -32,11 +32,6 @@ namespace hb
         public:
             HbO2ClientFacebook() = default;
             virtual ~HbO2ClientFacebook() = default;
-            HbO2ClientFacebook( const HbO2ClientFacebook & source );
-            HbO2ClientFacebook & operator =( const HbO2ClientFacebook & source );
-
-            virtual bool read( QDataStream & stream ) override;
-            virtual bool write( QDataStream & stream ) const override;
 
         protected:
             virtual const QUrl endPoint() const override;

@@ -37,6 +37,7 @@ namespace hb
             {
                 AUTH_NONE = 0,
                 AUTH_FACEBOOK,
+                AUTH_GOOGLE,
                 AUTH_USER = 255
             };
 

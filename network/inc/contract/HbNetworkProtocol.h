@@ -116,8 +116,8 @@ namespace hb
                 AUTH_BAD_PASSWORD,
                 AUTH_OK,
                 AUTH_OK_ADMIN,
-                // Facebook
-                AUTH_FB_KO
+                // OAuth
+                AUTH_OAUTH_KO
             };
 
             enum ServerStatus : netwint

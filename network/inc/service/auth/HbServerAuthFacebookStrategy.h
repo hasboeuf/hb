@@ -18,7 +18,7 @@
 #include <config/HbO2ServerConfig.h>
 // Local
 #include <HbNetwork.h>
-#include <service/auth/HbServerAuthStrategy.h>
+#include <service/auth/HbServerOAuthStrategy.h>
 #include <contract/HbNetworkProtocol.h>
 #include <contract/auth/HbAuthRequestContract.h> // Template.
 
@@ -38,7 +38,7 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbServerAuthFacebookStrategy : public HbServerAuthStrategy
+        class HB_NETWORK_DECL HbServerAuthFacebookStrategy : public HbServerOAuthStrategy
         {
             Q_OBJECT
         public:
@@ -46,23 +46,15 @@ namespace hb
             HbServerAuthFacebookStrategy();
             virtual ~HbServerAuthFacebookStrategy() = default;
 
-            virtual void reset() override;
-
-            void setConfig( const HbO2ServerConfig & config );
-
             virtual authstgy type() const final;
             virtual bool checkLogin( const HbAuthRequestContract * contract ) override;
 
         public slots:
             void onLinkSucceed();
-            void onLinkFailed( const QString & error );
             void onRequestCompleted( quint64 request_id, HbFacebookObject * object );
 
         private:
-            HbFacebookRequester                       mRequester;
-            QHash< HbO2ServerFacebook *, networkuid > mPendingToken;
-            QHash< quint64, networkuid >              mPendingRequest;
-            HbO2ServerConfig                          mConfig;
+            HbFacebookRequester mRequester;
         };
     }
 }

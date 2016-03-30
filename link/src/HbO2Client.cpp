@@ -9,26 +9,6 @@
 
 using namespace hb::link;
 
-HbO2Client::HbO2Client( const HbO2Client & source ) :
-    HbO2( source )
-{
-    if( &source != this )
-    {
-        mConfig = source.mConfig;
-    }
-}
-
-HbO2Client & HbO2Client::operator=( const HbO2Client & source )
-{
-    if( &source != this )
-    {
-        HbO2::operator =( source );
-
-        mConfig = source.mConfig;
-    }
-    return ( *this );
-}
-
 bool HbO2Client::isValid() const
 {
     if( !HbO2::isValid() )
@@ -97,28 +77,4 @@ void HbO2Client::onCodeResponseReceived( const QHash< QString, QString > respons
 
         emit linkFailed( mErrorString );
     }
-}
-
-bool HbO2Client::read( QDataStream & stream )
-{
-    if( HbO2::read( stream ) )
-    {
-        stream >> mConfig;
-
-        return ( stream.status() == QDataStream::Ok );
-    }
-
-    return false;
-}
-
-bool HbO2Client::write( QDataStream & stream ) const
-{
-    if( HbO2::write( stream ) )
-    {
-        stream << mConfig;
-
-        return ( stream.status() == QDataStream::Ok );
-    }
-
-    return false;
 }

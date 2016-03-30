@@ -30,11 +30,6 @@ namespace hb
         public:
             HbO2ClientGoogle();
             virtual ~HbO2ClientGoogle() = default;
-            HbO2ClientGoogle( const HbO2ClientGoogle & source );
-            HbO2ClientGoogle & operator =( const HbO2ClientGoogle & source );
-
-            virtual bool read( QDataStream & stream ) override;
-            virtual bool write( QDataStream & stream ) const override;
 
         protected:
             virtual const QUrl endPoint() const override;
