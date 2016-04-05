@@ -42,7 +42,7 @@ ChatMessageBackContract * ChatMessageBackContract::create( ) const
     return new ChatMessageBackContract( );
 }
 
-const QString ChatMessageBackContract::toString( ) const
+QString ChatMessageBackContract::toString( ) const
 {
     return QString( "%1,message=%2,author=%3" )
             .arg( HbNetworkContract::toString() )

@@ -53,7 +53,7 @@ namespace hb
              * Convenient method to print Facebook object informations.
              * \return Stringified object.
              */
-            virtual const QString toString() const;
+            virtual QString toString() const;
 
             /*!
              * Set the Facebook id of the object.

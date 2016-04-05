@@ -7,7 +7,7 @@ HbFacebookObject::HbFacebookObject()
     mType = OBJECT_NONE;
 }
 
-const QString HbFacebookObject::toString() const
+QString HbFacebookObject::toString() const
 {
     return QString( "%1=%2; %3=%4" )
             .arg( "type" )

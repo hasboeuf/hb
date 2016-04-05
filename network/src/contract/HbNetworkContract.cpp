@@ -206,7 +206,7 @@ HbNetworkContract * HbNetworkContract::takeReply() const
     return reply;
 }
 
-const QString HbNetworkContract::toString() const
+QString HbNetworkContract::toString() const
 {
     return QString("ctctuid=%1,type=%2,%3")
             .arg( mUid )

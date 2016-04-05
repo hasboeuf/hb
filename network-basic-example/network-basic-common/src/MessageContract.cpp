@@ -39,7 +39,7 @@ MessageContract * MessageContract::create() const
     return new MessageContract();
 }
 
-const QString MessageContract::toString() const
+QString MessageContract::toString() const
 {
     return QString( "%1,message=%2" )
             .arg( HbNetworkContract::toString() )

@@ -51,7 +51,7 @@ namespace hb
              * Convenient method to print Google object informations.
              * \return Stringified object.
              */
-            virtual const QString toString() const;
+            virtual QString toString() const;
 
             /*!
              * Set the Google id of the object.

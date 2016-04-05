@@ -44,7 +44,7 @@ HbNetworkHeader & HbNetworkHeader::operator=( const HbNetworkHeader & header )
     return *this;
 }
 
-const QString HbNetworkHeader::toString() const
+QString HbNetworkHeader::toString() const
 {
     return QString("app=%1,protocol=%2,service=%3,code=%4" )
             .arg( mAppName )

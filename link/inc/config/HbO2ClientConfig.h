@@ -45,7 +45,7 @@ namespace hb
             virtual void addScope( const QString & permission  ) final;
             virtual void setScopes( const QStringList & permissions ) final;
             virtual const QStringList & scopes() const final;
-            virtual const QString scopesStr() const final;
+            virtual QString scopesStr() const final;
 
             virtual void setScopeSeparator( const QString & separator ) final;
 

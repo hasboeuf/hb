@@ -74,7 +74,7 @@ namespace hb
             const QHash<QString, QString> &  optionalServices   () const;
             QString                          optionalServicesStr() const;
             HbPluginInfos::PluginState       state              () const;
-            const QString                    stateStr           () const;
+            QString                          stateStr           () const;
             const QSet< QString > &          children           () const;
 
             bool requiresPlugin ( const QString & name ) const;

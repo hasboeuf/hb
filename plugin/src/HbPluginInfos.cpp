@@ -198,7 +198,7 @@ HbPluginInfos::PluginState HbPluginInfos::state() const
     return mState;
 }
 
-const QString HbPluginInfos::stateStr() const
+QString HbPluginInfos::stateStr() const
 {
     return HbPluginInfos::MetaPluginState::toString( mState );
 }

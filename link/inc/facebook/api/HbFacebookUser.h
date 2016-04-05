@@ -34,7 +34,7 @@ namespace hb
 
             virtual void load( const QJsonDocument & doc ) override;
 
-            virtual const QString toString() const override;
+            virtual QString toString() const override;
 
             virtual const QString & firstName()  const final;
             virtual const QString & lastName()   const final;

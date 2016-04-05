@@ -35,7 +35,7 @@ namespace hb
 
             virtual ResponseContract * takeReply() const;
 
-            virtual const QString toString() const;
+            virtual QString toString() const;
 
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;

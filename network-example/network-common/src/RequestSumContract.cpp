@@ -48,7 +48,7 @@ ResponseSumContract * RequestSumContract::takeReply() const
     return HbNetworkContract::takeReply()->value< ResponseSumContract >();
 }
 
-const QString RequestSumContract::toString() const
+QString RequestSumContract::toString() const
 {
     return QString( "%1,intA=%2,intB=%3" )
             .arg( HbNetworkContract::toString() )

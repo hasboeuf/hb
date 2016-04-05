@@ -44,7 +44,7 @@ ResponseContract * RequestContract::takeReply() const
     return HbNetworkContract::takeReply()->value< ResponseContract >();
 }
 
-const QString RequestContract::toString() const
+QString RequestContract::toString() const
 {
     return QString( "%1,request=%2" )
             .arg( HbNetworkContract::toString() )

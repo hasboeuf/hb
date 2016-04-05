@@ -39,7 +39,7 @@ ResponseContract * ResponseContract::create() const
     return new ResponseContract();
 }
 
-const QString ResponseContract::toString() const
+QString ResponseContract::toString() const
 {
     return QString( "%1,response=%2" )
             .arg( HbNetworkContract::toString() )

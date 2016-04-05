@@ -62,7 +62,7 @@ namespace hb
             virtual HbNetworkContract * takeReply() const;
             virtual void updateReply() final;
 
-            virtual const QString toString() const;
+            virtual QString toString() const;
 
             virtual void setNetworkType( HbNetworkProtocol::NetworkType type ) final;
             virtual HbNetworkProtocol::NetworkType networkType() const final;

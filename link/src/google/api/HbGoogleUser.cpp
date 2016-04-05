@@ -33,7 +33,7 @@ void HbGoogleUser::load( const QJsonDocument & doc )
     mPicture   = root.value( GL_USER_PICTURE ).toString();
 }
 
-const QString HbGoogleUser::toString() const
+QString HbGoogleUser::toString() const
 {
     return QString( "%1; %2=%3; %4=%5; %6=%7; %8=%9; %10=%11; %12=%13; %14=%15; %16=%17" )
             .arg( HbGoogleObject::toString() )

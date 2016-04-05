@@ -95,7 +95,7 @@ const QStringList & HbO2ClientConfig::scopes() const
     return mScopes;
 }
 
-const QString HbO2ClientConfig::scopesStr() const
+QString HbO2ClientConfig::scopesStr() const
 {
     return mScopes.join( mScopesSeparator );
 }

@@ -28,7 +28,7 @@ namespace hb
 
             static const QString msFieldSeparator;
             static const HbLogMessage * fromRaw( const QString & raw); //!< Use for export.
-            static const QString toRaw( const HbLogMessage & msg );    //!< Use for import.
+            static QString toRaw( const HbLogMessage & msg );    //!< Use for import.
 
             HbLogMessage();
             HbLogMessage(HbLogger::Level level, HbLogger::Formats format,

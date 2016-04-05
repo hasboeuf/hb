@@ -37,7 +37,7 @@ const HbLogMessage * HbLogMessage::fromRaw( const QString & raw)
     return msg;
 }
 
-const QString HbLogMessage::toRaw(const HbLogMessage &msg)
+QString HbLogMessage::toRaw(const HbLogMessage &msg)
 {
     QString raw;
 

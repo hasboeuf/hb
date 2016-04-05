@@ -32,7 +32,7 @@ namespace hb
             MessageContract( const MessageContract & source );
             MessageContract & operator=( const MessageContract & source );
 
-            virtual const QString toString() const;
+            virtual QString toString() const;
 
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;

@@ -32,7 +32,7 @@ namespace hb
             ResponseSumContract( const ResponseSumContract & source );
             ResponseSumContract & operator=(const ResponseSumContract & source);
 
-            virtual const QString toString() const;
+            virtual QString toString() const;
 
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;

@@ -32,7 +32,7 @@ namespace hb
             ChatMessageBackContract( const ChatMessageBackContract & source );
             ChatMessageBackContract & operator=(const ChatMessageBackContract & source);
 
-            virtual const QString toString() const;
+            virtual QString toString() const;
 
             virtual bool read ( QDataStream & stream );
             virtual bool write( QDataStream & stream ) const;

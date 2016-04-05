@@ -39,7 +39,7 @@ namespace hb
             HbNetworkHeader & operator=( const HbNetworkHeader & header );
             ~HbNetworkHeader() = default;
 
-            const QString toString() const;
+            QString toString() const;
 
             const QString & appName() const;
             quint16 protocolVersion() const;

@@ -7,7 +7,7 @@ HbGoogleObject::HbGoogleObject()
     mType = OBJECT_NONE;
 }
 
-const QString HbGoogleObject::toString() const
+QString HbGoogleObject::toString() const
 {
     return QString( "%1=%2; %3=%4" )
             .arg( "type" )
