@@ -35,7 +35,8 @@ bool HbServiceAuthClientConfig::isValid() const
 {
     if( HbServiceAuthConfig::isValid() )
     {
-        return mFacebookAuthConfig.isValid();
+        // TODO facebook and google validation.
+        return true;
     }
 
     return false;
