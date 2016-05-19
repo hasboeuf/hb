@@ -1,5 +1,5 @@
 set QMAKESPEC=win32-msvc2013
-set QTVERSION=5.5
+set QTVERSION=5.6
 set QTCOMPILED=msvc2013
 set HBSTATIC=1
 %QTDIR%/%QTVERSION%/%QTCOMPILED%/bin/qmake.exe -r -spec %QMAKESPEC% -tp vc HB.pro
