@@ -11,6 +11,8 @@
 
 /*! \file HbApplicationHelper.h */
 
+// Qt
+#include <QtCore/QSettings>
 // Local
 #include <HbTools.h>
 
@@ -27,14 +29,15 @@ namespace hb
         public:
             /*!
              * Initialize app.
-             * Initialize QSetting.
+             *
+             * Set domain, company, app name.
              * Generate seed for qsrand.
              * Call it in main().
              * \param company Company name e.g.: MyCompany
              * \param domain Domain name e.g.: mycompany.io
              * \param name Application name e.g.: MyApp, by default it is the executable name.
              */
-            static void initApp(const QString & company, const QString & domain, const QString & name = QString());
+            static void initApp( const QString & company, const QString & domain, const QString & name = QString() );
 
             /*!
              * Set the look and feel of the app.
@@ -42,7 +45,7 @@ namespace hb
              * Call it in main().
              * \param skin Name of the style used in QStyleFactory.
              */
-            static void initSkin(const QString & skin);
+            static void initSkin( const QString & skin );
         };
     }
 }
