@@ -4,6 +4,7 @@
 #include <HbLogService.h>
 #include <HbLoggerOutputs.h>
 #include <core/HbDictionaryHelper.h>
+#include <core/HbSettings.h>
 // Local
 #include <ToolsMainWindow.h>
 
@@ -40,6 +41,7 @@ ToolsMainWindow::ToolsMainWindow( QWidget * parent ) :
     testUidGenerator();
     testHttpRequester();
     testTimeoutNetworkReplies();
+    testSettings();
 
 }
 
@@ -146,3 +148,19 @@ void ToolsMainWindow::testTimeoutNetworkReplies()
     HbWarning( "== DEMO == HbTimeoutNetworkReplies" );
 }
 
+void ToolsMainWindow::testSettings()
+{
+    // HbApplicationHelper::initApp already called in main().
+    HbSettings::init( QSettings::UserScope, QSettings::IniFormat );
+    HbSettings settings;
+    q_assert( settings.write( "string", "string_content" ) );
+
+    QString data = settings.read( "string" ).toString();
+
+    q_assert( data == "string_content" );
+
+    settings.remove( "string" );
+    data = settings.read( "string" ).toString();
+
+    q_assert( data == "" );
+}

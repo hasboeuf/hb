@@ -31,6 +31,7 @@ namespace hb
             void testSteadyDateTime();
             void testUid();
             void testUidGenerator();
+            void testSettings();
 
             // network
             void testHttpRequester();
