@@ -12,7 +12,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    hb::tools::HbApplicationHelper::initApp ( "hb-io", "hb-io.com" );
+    Q_INIT_RESOURCE( HbLog );
+
+    hb::tools::HbApplicationHelper::initApp ( "hb", "hb-io.com", "hbtest" );
     hb::tools::HbApplicationHelper::initSkin( "fusion" );
     hb::log::HbLogService::processArgs( argc, argv );
 
