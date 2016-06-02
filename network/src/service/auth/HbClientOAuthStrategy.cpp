@@ -21,12 +21,6 @@ void HbClientOAuthStrategy::reset()
     mPendingCodes.clear();
 }
 
-void HbClientOAuthStrategy::onOpenBrower( const QUrl & url )
-{
-    HbInfo( "Opening browser on %s", HbLatin1( url.toString() ) );
-    QDesktopServices::openUrl( url );
-}
-
 void HbClientOAuthStrategy::onLinkSucceed()
 {
     HbO2Client * client = dynamic_cast< HbO2Client * >( sender() );

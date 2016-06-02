@@ -13,6 +13,7 @@
 #include <ui_LinkMainWindow.h>
 #include <facebook/HbFacebookRequester.h>
 #include <google/HbGoogleRequester.h>
+#include <LinkBrowserControls.h>
 
 namespace hb
 {
@@ -49,8 +50,9 @@ namespace hb
             hb::link::HbO2ServerGoogle * mpGoogleServer;
             hb::link::HbGoogleRequester  mGoogleRequester;
 
+            LinkBrowserControls mBrowserControls;
+
         public slots:
-            void onOpenBrower( const QUrl & url );
             void onFacebookClientLinkSucceed();
             void onFacebookServerLinkSucceed();
             void onFacebookRequestCompleted(quint64 request_id, hb::link::HbFacebookObject * object );

@@ -32,8 +32,6 @@ bool HbClientAuthGoogleStrategy::prepareAuthContract( HbClientAuthLoginObject * 
 {
     HbO2ClientGoogle * google_client = new HbO2ClientGoogle();
 
-    connect( google_client, &HbO2Client::openBrowser,
-             this, &HbClientOAuthStrategy::onOpenBrower );
     connect( google_client, &HbO2::linkSucceed,
              this, &HbClientOAuthStrategy::onLinkSucceed );
     connect( google_client, &HbO2::linkFailed,
@@ -42,6 +40,7 @@ bool HbClientAuthGoogleStrategy::prepareAuthContract( HbClientAuthLoginObject * 
     google_client->config().setClientId ( mConfig.clientId()  );
     google_client->config().setLocalPort( mConfig.localPort() );
     google_client->config().setScopes   ( mConfig.scopes()     );
+    google_client->config().setBrowserControls( mConfig.browserControls() );
 
     mPendingCodes.insert( google_client, login_object->socketUid() );
 

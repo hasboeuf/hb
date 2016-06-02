@@ -22,6 +22,8 @@ namespace hb
     namespace link
     {
 
+        class IHbLinkBrowserControls;
+
         /*!
          * TODOC
          */
@@ -49,10 +51,14 @@ namespace hb
 
             virtual void setScopeSeparator( const QString & separator ) final;
 
+            void setBrowserControls( IHbLinkBrowserControls * browser_controls );
+            IHbLinkBrowserControls * browserControls();
+
         private:
             QStringList mScopes;
             QString     mScopesSeparator;
             quint16 mLocalPort;
+            IHbLinkBrowserControls * mpBrowserControls; // Not serialized.
         };
     }
 }

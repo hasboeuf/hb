@@ -32,8 +32,6 @@ bool HbClientAuthFacebookStrategy::prepareAuthContract( HbClientAuthLoginObject 
 {
     HbO2ClientFacebook * facebook_client = new HbO2ClientFacebook();
 
-    connect( facebook_client, &HbO2Client::openBrowser,
-             this, &HbClientOAuthStrategy::onOpenBrower );
     connect( facebook_client, &HbO2::linkSucceed,
              this, &HbClientOAuthStrategy::onLinkSucceed );
     connect( facebook_client, &HbO2::linkFailed,
@@ -41,7 +39,8 @@ bool HbClientAuthFacebookStrategy::prepareAuthContract( HbClientAuthLoginObject 
 
     facebook_client->config().setClientId ( mConfig.clientId()  );
     facebook_client->config().setLocalPort( mConfig.localPort() );
-    facebook_client->config().setScopes   ( mConfig.scopes()     );
+    facebook_client->config().setScopes   ( mConfig.scopes()    );
+    facebook_client->config().setBrowserControls( mConfig.browserControls() );
 
     mPendingCodes.insert( facebook_client, login_object->socketUid() );
 

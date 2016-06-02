@@ -70,6 +70,12 @@ namespace hb
              */
             void openBrowser( const QUrl & url );
 
+            /*!
+             * Triggered when linking phase is done.
+             * User can close its browser.
+             */
+            void closeBrowser();
+
         protected:
             HbO2ClientConfig mConfig;
 

@@ -41,7 +41,6 @@ namespace hb
             virtual void setConfig( const HbO2ClientConfig & config );
 
         public slots:
-            void onOpenBrower( const QUrl & url );
             void onLinkSucceed();
             void onLinkFailed();
 

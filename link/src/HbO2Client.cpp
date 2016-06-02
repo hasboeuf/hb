@@ -6,6 +6,7 @@
 #include <core/HbDictionaryHelper.h>
 // Local
 #include <HbO2Client.h>
+#include <IHbLinkBrowserControls.h>
 
 using namespace hb::link;
 
@@ -35,8 +36,12 @@ bool HbO2Client::link()
 
     if( !isValid() )
     {
+        HbError( "O2Client config invalid." );
         return false;
     }
+
+    connect( this, &HbO2Client::openBrowser, mConfig.browserControls(), &IHbLinkBrowserControls::onOpenBrowser );
+    connect( this, &HbO2Client::closeBrowser, mConfig.browserControls(), &IHbLinkBrowserControls::onCloseBrowser );
 
     mLinkStatus = LINKING;
 
@@ -73,8 +78,8 @@ void HbO2Client::onCodeResponseReceived( const QHash< QString, QString > respons
     else
     {
         HbError( "Verification failed. (%s)", HbLatin1( mErrorString ) );
-        mLinkStatus = UNLINKED;
-
-        emit linkFailed( mErrorString );
+        mLinkStatus = UNLINKED;       
     }
+
+    emit closeBrowser();
 }

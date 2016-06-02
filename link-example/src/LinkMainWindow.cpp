@@ -1,7 +1,6 @@
 // Qt
 #include <QtCore/QUrl>
 #include <QtCore/QUrlQuery>
-#include <QtGui/QDesktopServices>
 #include <QtNetwork/QNetworkReply>
 // Hb
 #include <HbLogService.h>
@@ -72,13 +71,13 @@ void LinkMainWindow::onFacebookConnectClicked()
 
     mpFacebookClient = new HbO2ClientFacebook();
 
-    connect( mpFacebookClient, &HbO2Client::openBrowser, this, &LinkMainWindow::onOpenBrower );
     connect( mpFacebookClient, &HbO2::linkSucceed, this, &LinkMainWindow::onFacebookClientLinkSucceed );
 
     mpFacebookClient->config().setClientId( msClientId );
     mpFacebookClient->config().setLocalPort( 8080 );
     mpFacebookClient->config().addScope( FB_PERMISSION_EMAIL );
     mpFacebookClient->config().addScope( FB_PERMISSION_FRIENDS );
+    mpFacebookClient->config().setBrowserControls( &mBrowserControls );
 
     mpFacebookClient->link();
 
@@ -92,24 +91,18 @@ void LinkMainWindow::onGoogleConnectClicked()
 
     mpGoogleClient = new HbO2ClientGoogle();
 
-    connect( mpGoogleClient, &HbO2Client::openBrowser, this, &LinkMainWindow::onOpenBrower );
     connect( mpGoogleClient, &HbO2::linkSucceed, this, &LinkMainWindow::onGoogleClientLinkSucceed );
 
     mpGoogleClient->config().setClientId( msClientId );
     mpGoogleClient->config().setLocalPort( 8080 );
     mpGoogleClient->config().addScope( GL_PERMISSION_EMAIL );
     mpGoogleClient->config().addScope( GL_PERMISSION_PROFILE );
+    mpGoogleClient->config().setBrowserControls( &mBrowserControls );
 
     mpGoogleClient->link();
 
     HbLogEnd();
 
-}
-
-void LinkMainWindow::onOpenBrower( const QUrl & url )
-{
-    HbInfo( "Opening browser on %s", HbLatin1( url.toString() ) );
-    QDesktopServices::openUrl( url );
 }
 
 void LinkMainWindow::onFacebookClientLinkSucceed()
