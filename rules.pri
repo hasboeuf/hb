@@ -164,16 +164,18 @@
         error( "$${PROJECT.PRO}: Platform scope not defined. Is QMAKESPEC set?" )
     }
 
-    contains( QMAKE_HOST.arch, x86 ) {
-        *msvc*: QMAKE_LFLAGS *= /MACHINE:X86
-    }
-
-    contains( QMAKE_HOST.arch, x86_64 ) {
+    contains( QT_ARCH, x86_64 ) {
         *msvc*: QMAKE_LFLAGS *= /MACHINE:X64
+        ARCH = x86_64
+    } else {
+        *msvc*: QMAKE_LFLAGS *= /MACHINE:X86
+        ARCH = x86
     }
 
+    BUILD.CONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${ARCH}
 
-    BUILD.CONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
+    unset( ARCH )
+
     contains( $${MODULE.NAME}.LINKTYPE, staticlib ) {
         BUILD.CONFIG = $$replaceString( BUILD.CONFIG,, _static )
         BUILD.CONFIG = $$replace( BUILD.CONFIG, \\+, p ) # ar compiler does not handle path with '+' symbol.
