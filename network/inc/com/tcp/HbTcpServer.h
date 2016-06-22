@@ -24,7 +24,7 @@ namespace hb
 
         protected:
             TcpServer( QObject * parent = nullptr );
-            void incomingConnection( qint32 socket_descriptor );
+            void incomingConnection( qintptr socket_descriptor ) override;
         signals:
             void newConnection( qint32 socket_descriptor );
         };

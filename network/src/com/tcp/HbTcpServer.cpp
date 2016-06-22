@@ -16,8 +16,9 @@ TcpServer::TcpServer(QObject * parent) :
 {
 }
 
-void TcpServer::incomingConnection(qint32 socket_descriptor)
+void TcpServer::incomingConnection( qintptr socket_descriptor )
 {
+    //! \todo Switch to qintptr for internal structure.
     HbLogBegin();
 
     emit newConnection( socket_descriptor );
