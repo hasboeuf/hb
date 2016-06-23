@@ -95,6 +95,11 @@ void HbO2Server::onTokenResponseError( QNetworkReply::NetworkError error )
 
     HbInfo( "Token response error. (%s)", HbLatin1( mErrorString ) );
 
+    if( mErrorString.contains( "Error creating SSL context" ) )
+    {
+        HbWarning( "You might miss updated OpenSSL lib on your system." );
+    }
+
     emit linkFailed( mErrorString );
 
     token_reply->deleteLater();
@@ -139,6 +144,7 @@ bool HbO2Server::link()
     }
 
     QNetworkRequest token_request( url );
+    
     QNetworkReply * token_reply = nullptr;
 
     if( mRequestType == REQUEST_GET )
@@ -147,6 +153,8 @@ bool HbO2Server::link()
     }
     else // REQUEST_POST
     {
+        token_request.setHeader( QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded" );
+
         QUrlQuery post_data;
         post_data.setQueryItems( HbDictionaryHelper::toPairList< QString, QString >( tokenRequest() ) );
 
@@ -155,6 +163,9 @@ bool HbO2Server::link()
 
     mReplies.add( token_reply );
 
+    connect( token_reply, &QNetworkReply::sslErrors, [token_reply]() {
+        token_reply->ignoreSslErrors();
+    } );
     connect( token_reply, &QNetworkReply::finished, this, &HbO2Server::onTokenResponseReceived, Qt::UniqueConnection );
     connect( token_reply, ( void ( QNetworkReply:: * )( QNetworkReply::NetworkError ) )( &QNetworkReply::error ),
              this, &HbO2Server::onTokenResponseError, Qt::UniqueConnection );
