@@ -54,6 +54,7 @@ namespace hb
             const QString & lastName () const;
             quint8          age      () const;
             Gender          gender   () const;
+            const QString & picture  () const;
 
             void setId       ( const QString & id );
             void setType     ( authstgy type );
@@ -63,6 +64,7 @@ namespace hb
             void setLastName ( const QString & last_name );
             void setAge      ( quint8 age );
             void setGender   ( Gender gender );
+            void setPicture  ( const QString & picture );
 
 
         private:
@@ -74,6 +76,7 @@ namespace hb
             QString  mLastName;
             quint8   mAge;
             Gender   mGender;
+            QString  mPicture;
 
         };
 

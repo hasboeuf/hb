@@ -106,6 +106,7 @@ void HbServerAuthGoogleStrategy::onRequestCompleted( quint64 request_id, HbGoogl
         {
             user_info.setGender( HbNetworkUserInfo::GENDER_FEMALE );
         }
+        user_info.setPicture( user->picture() );
 
 #ifdef DEV
         HbNetworkUserInfoMock::mockNetworkUserInfo( user_info ); // Randomize user.

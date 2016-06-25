@@ -25,6 +25,7 @@ HbNetworkUserInfo::HbNetworkUserInfo( const HbNetworkUserInfo & source )
         mLastName  = source.mLastName;
         mAge       = source.mAge;
         mGender    = source.mGender;
+        mPicture   = source.mPicture;
     }
 }
 
@@ -40,6 +41,7 @@ HbNetworkUserInfo & HbNetworkUserInfo::operator=( const HbNetworkUserInfo & sour
         mLastName  = source.mLastName;
         mAge       = source.mAge;
         mGender    = source.mGender;
+        mPicture   = source.mPicture;
     }
     return ( *this );
 }
@@ -84,6 +86,11 @@ HbNetworkUserInfo::Gender HbNetworkUserInfo::gender() const
     return mGender;
 }
 
+const QString & HbNetworkUserInfo::picture() const
+{
+    return mPicture;
+}
+
 void HbNetworkUserInfo::setId( const QString & id )
 {
     if( !id.isEmpty() ) mId = id;
@@ -124,6 +131,11 @@ void HbNetworkUserInfo::setGender   ( Gender gender )
     if( gender != GENDER_NONE ) mGender = gender;
 }
 
+void HbNetworkUserInfo::setPicture( const QString & picture )
+{
+    if( !picture.isEmpty() ) mPicture = picture;
+}
+
 namespace hb
 {
     namespace network
@@ -139,6 +151,7 @@ namespace hb
             stream << user_info.mLastName;
             stream << user_info.mAge;
             stream << ( netwint ) user_info.mGender;
+            stream << user_info.mPicture;
 
             return stream;
         }
@@ -154,6 +167,7 @@ namespace hb
             stream >> user_info.mLastName;
             stream >> user_info.mAge;
             stream >> gender;
+            stream >> user_info.mPicture;
 
             user_info.mGender = ( HbNetworkUserInfo::Gender ) gender;
 
