@@ -46,6 +46,13 @@ namespace hb
              * \param skin Name of the style used in QStyleFactory.
              */
             static void initSkin( const QString & skin );
+
+            /*!
+             * Catch OS interrupting events and quit Qt application properly.
+             * \note OS specific.
+             * \todo Not tested on Unix system yet.
+             */
+            static void catchInterruptingEvents();
         };
     }
 }

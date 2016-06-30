@@ -1,9 +1,20 @@
 // Qt
+#include <QtCore/QCoreApplication>
+#include <QtCore/QThread>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QStyleFactory>
 #include <QtGui/QPalette>
 #include <QtGui/QIcon>
 #include <QtCore/QTime>
+#include <QtCore/QSet>
+#include <QtCore/QDebug>
+// System
+#if defined Q_OS_WIN32
+#include <Windows.h>
+#elif defined Q_OS_LINUX || defined Q_OS_DARWIN
+#include "unistd.h"
+#include <signal.h>
+#endif
 // Local
 #include <core/HbApplicationHelper.h>
 
@@ -52,4 +63,46 @@ void HbApplicationHelper::initSkin( const QString & skin )
 
     qApp->setPalette(p);
 
+}
+
+void HbApplicationHelper::catchInterruptingEvents()
+{
+#if defined Q_OS_WIN32
+    auto handler = []( DWORD sig ) -> BOOL {
+        switch( sig )
+        {
+        case CTRL_C_EVENT:
+        case CTRL_CLOSE_EVENT:
+        case CTRL_BREAK_EVENT:
+        case CTRL_LOGOFF_EVENT:
+        case CTRL_SHUTDOWN_EVENT:
+            // This callback is called from another thread than Qt main thread.
+            // That is why we wait for Qt main thread to finish.
+
+            qCritical() << QString( "Signal %1 caught. Quit qApp." ).arg( sig );
+            QMetaObject::invokeMethod( qApp, "quit", Qt::QueuedConnection );
+            qApp->thread()->wait();
+        default:
+            break;
+        }
+
+        return FALSE;
+    };
+
+    SetConsoleCtrlHandler( handler, TRUE );
+
+#elif defined Q_OS_LINUX || defined Q_OS_DARWIN
+
+    auto handler = []( int sig ) {
+        qCritical() << QString( "Signal %1 caught. Quit qApp." ).arg( sig );
+        qApp->quit();
+    };
+
+    QSet< int > sigs = {SIGQUIT, SIGINT, SIGTERM, SIGHUP};
+    for( int sig : sigs )
+    {
+        signal( sig, handler );
+    }
+
+#endif
 }
