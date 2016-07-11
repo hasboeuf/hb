@@ -78,7 +78,8 @@ void HbO2Client::onCodeResponseReceived( const QHash< QString, QString > respons
     else
     {
         HbError( "Verification failed. (%s)", HbLatin1( mErrorString ) );
-        mLinkStatus = UNLINKED;       
+        mLinkStatus = UNLINKED;
+        emit linkFailed( mErrorString );
     }
 
     emit closeBrowser();

@@ -17,8 +17,14 @@ HbServerOAuthStrategy::HbServerOAuthStrategy() :
 {
 }
 
+HbServerOAuthStrategy::~HbServerOAuthStrategy()
+{
+    reset();
+}
+
 void HbServerOAuthStrategy::reset()
 {
+    qDeleteAll( mPendingToken.keys() );
     mPendingToken.clear();
     mPendingRequest.clear();
 }

@@ -11,6 +11,11 @@
 using namespace hb::network;
 using namespace hb::link;
 
+HbClientOAuthStrategy::~HbClientOAuthStrategy()
+{
+    reset();
+}
+
 void HbClientOAuthStrategy::setConfig( const HbO2ClientConfig & config )
 {
     mConfig = config;
@@ -18,6 +23,7 @@ void HbClientOAuthStrategy::setConfig( const HbO2ClientConfig & config )
 
 void HbClientOAuthStrategy::reset()
 {
+    qDeleteAll( mPendingCodes.keys() );
     mPendingCodes.clear();
 }
 

@@ -39,7 +39,7 @@ namespace hb
         public:
 
             HbServerOAuthStrategy();
-            virtual ~HbServerOAuthStrategy() = default;
+            virtual ~HbServerOAuthStrategy();
 
             virtual void reset() override;
 

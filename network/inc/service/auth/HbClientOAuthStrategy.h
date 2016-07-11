@@ -34,7 +34,7 @@ namespace hb
         public:
 
             HbClientOAuthStrategy() = default;
-            virtual ~HbClientOAuthStrategy() = default;
+            virtual ~HbClientOAuthStrategy();
 
             virtual void reset() override;
 
