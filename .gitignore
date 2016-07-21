@@ -17,6 +17,7 @@ assets/
 
 # Build results
 
+Makefile*
 [Dd]ebug/
 [Rr]elease/
 x64/
