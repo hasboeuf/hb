@@ -164,17 +164,24 @@
         error( "$${PROJECT.PRO}: Platform scope not defined. Is QMAKESPEC set?" )
     }
 
+    ARCH = $$QT_ARCH
+
     contains( QT_ARCH, x86_64 ) {
         *msvc*: QMAKE_LFLAGS *= /MACHINE:X64
-        ARCH = x86_64
     } else {
-        *msvc*: QMAKE_LFLAGS *= /MACHINE:X86
-        ARCH = x86
+        contains( QT_ARCH, x86 ) {
+            *msvc*: QMAKE_LFLAGS *= /MACHINE:X86
+        }
+    }
+
+    isEmpty( ARCH ) {
+        error( "$${PROJECT.PRO}: Arch not defined. Is QT_ARCH set?" )
     }
 
     BUILD.CONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${ARCH}
 
     unset( ARCH )
+    unset( QMAKE_SPEC )
 
     contains( $${MODULE.NAME}.LINKTYPE, staticlib ) {
         BUILD.CONFIG = $$replaceString( BUILD.CONFIG,, _static )
