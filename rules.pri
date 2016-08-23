@@ -157,14 +157,9 @@
         QMAKE_CXXFLAGS += -std=c++0x
     }
 
-    QMAKE_SPEC = $$(QMAKESPEC)
-    isEmpty( QMAKE_SPEC ): QMAKE_SPEC = $$[QMAKESPEC]
-
-    isEmpty( QMAKE_SPEC ) {
-        error( "$${PROJECT.PRO}: Platform scope not defined. Is QMAKESPEC set?" )
+    isEmpty( QT_ARCH ) {
+        error( "$${PROJECT.PRO}: Arch not defined. Is QT_ARCH set?" )
     }
-
-    ARCH = $$QT_ARCH
 
     contains( QT_ARCH, x86_64 ) {
         *msvc*: QMAKE_LFLAGS *= /MACHINE:X64
@@ -174,19 +169,7 @@
         }
     }
 
-    isEmpty( ARCH ) {
-        error( "$${PROJECT.PRO}: Arch not defined. Is QT_ARCH set?" )
-    }
-
-    BUILD.CONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${ARCH}
-
-    unset( ARCH )
-    unset( QMAKE_SPEC )
-
-    contains( $${MODULE.NAME}.LINKTYPE, staticlib ) {
-        BUILD.CONFIG = $$replaceString( BUILD.CONFIG,, _static )
-        BUILD.CONFIG = $$replace( BUILD.CONFIG, \\+, p ) # ar compiler does not handle path with '+' symbol.
-    }
+    BUILD.CONFIG = $$buildConfig( $${MODULE_NAME}.LINKTYPE )
 
     CONFIG( debug, debug|release ): BUILD.MODE = debug
     CONFIG( release, debug|release ): BUILD.MODE = release
@@ -240,12 +223,7 @@
         MODULE_INC      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/inc
         MODULE_LIB      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/lib
         MODULE_BIN      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/bin
-        MODULE_CONFIG   = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QMAKE_HOST.arch}
-
-        contains( $${MODULE_NAME}.LINKTYPE, staticlib ) {
-            MODULE_CONFIG = $$replaceString( MODULE_CONFIG,, _static )
-            MODULE_CONFIG = $$replace( MODULE_CONFIG, \\+, p ) # ar compiler does not handle path with '+' symbol.
-        }
+        MODULE_CONFIG   = $$buildConfig( $${MODULE_NAME}.LINKTYPE )
 
         PACKAGES = $$eval($$MODULE_NAME)
         for( PACKAGE, PACKAGES ) {

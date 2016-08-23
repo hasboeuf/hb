@@ -156,3 +156,23 @@ defineReplace( fullTarget ) {
 
         return( $${target} )
 }
+
+defineReplace( buildConfig ) {
+    link_type = $$1
+
+    QMAKE_SPEC = $$(QMAKESPEC)
+    isEmpty( QMAKE_SPEC ): QMAKE_SPEC = $$[QMAKESPEC]
+
+    isEmpty( QMAKE_SPEC ) {
+        error( "$${PROJECT.PRO}: Platform scope not defined. Is QMAKESPEC set?" )
+    }
+
+    config = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QT_ARCH}
+
+    contains( $$link_type, staticlib ) {
+        config = $$replaceString( BUILD.CONFIG,, _static )
+        config = $$replace( BUILD.CONFIG, \\+, p ) # ar compiler does not handle path with '+' symbol.
+    }
+
+    return( $${config} )
+}
