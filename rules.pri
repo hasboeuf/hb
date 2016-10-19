@@ -17,99 +17,82 @@
 # Module Settings
 # ----------------
 
-    !contains( PROJECT.TYPE, subdirs ) {
-        isEmpty( MODULE.NAME ) {
-            error( "$${PROJECT.PRO}: $${MODULE.NAME} variable cannot be resolved" )
-        }
+    isEmpty( MODULE.PATH ) {
+        error( "$${PROJECT.PRO}: MODULE.PATH must be defined" )
+    }
 
-        isEmpty( MODULE.PATH ) {
-            error( "$${PROJECT.PRO}: $${MODULE.PATH} variable cannot be resolved" )
-        }
+    isRelativePath( MODULE.PATH ) {
+        error( "$${PROJECT.PRO}: $${MODULE.PATH} must be an absolute path" )
+    }
 
-        isRelativePath( MODULE.PATH ) {
-            error( "$${PROJECT.PRO}: $${MODULE.PATH} must define an absolute path" )
-        }
+    checkFilepath( MODULE.PATH )
 
-        checkFilepath( MODULE.PATH )
+    isEmpty( MODULE.NAME ) {
+        error( "$${PROJECT.PRO}: MODULE.NAME must be defined" )
+    }
 
-        MODULE.NAME = $$upper( $${MODULE.NAME} )
+    # Conf file.
+    MODULE_CONF_FILE = $${MODULE.PATH}/$${MODULE.NAME}.conf
+    !include( $$MODULE_CONF_FILE ) {
+        error( "$${PROJECT.PRO}: Configuration file $${MODULE_CONF_FILE} not found" )
+    } else {
+        message ( "Configuration file $$MODULE_CONF_FILE loaded" )
+    }
+    unset( MODULE_CONF_FILE )
 
-        # Conf file.
-        MODULE_CONF_FILE = $$clean_path( $${MODULE.PATH}/$${MODULE.NAME}.conf )
+    # Module requirements.
+    MODULE.LINKTYPE = $$eval($${MODULE.NAME}.linktype)
+    MODULE.DIR = $$clean_path($$eval($${MODULE.NAME}.dir))
+    MODULE.INSTALL = $$clean_path($${MODULE.DIR}/$$eval($${MODULE.NAME}.install))
+    MODULE.BUILD = $$clean_path($${MODULE.DIR}/build)
 
-        !include( $$MODULE_CONF_FILE ) {
-            error( "$${PROJECT.PRO}: Configuration file $${MODULE_CONF} not found" )
-        } else {
-            message ( Configuration file $$MODULE_CONF_FILEPATH loaded. )
-        }
+    isEmpty( MODULE.LINKTYPE ) {
+        error( "$${PROJECT.PRO}: $${MODULE.NAME}.linktype must be defined" )
+    }
 
-        unset( MODULE_CONF_FILE )
+    isEmpty( MODULE.DIR ) {
+        error( "$${PROJECT.PRO}: $${MODULE.NAME}.dir must be defined" )
+    }
 
-        # Module requirements.
-        MODULE.INSTALL = $$eval( $${MODULE.NAME}.INSTALL )
-        isEmpty( MODULE.INSTALL ) {
-            error( "Module install variable cannot be resolved" )
-        }
+    isEmpty( MODULE.INSTALL ) {
+        error( "$${PROJECT.PRO}: $${MODULE.NAME}.install must be defined" )
+    }
 
-        MODULE.LINKTYPE = $$eval( $${MODULE.NAME}.LINKTYPE )
-        isEmpty( MODULE.LINKTYPE ) {
-            error( "Module link type variable cannot be resolved" )
-        }
+    isEmpty( MODULE.BUILD ) {
+        error( "$${PROJECT.PRO}: $${MODULE.NAME}.build must be defined" )
     }
 
 # -----------------
 # Project Settings
 # -----------------
 
-    PROJECT.PATH = $${_PRO_FILE_PWD_}/
+    isEmpty( PROJECT.NAME ) {
+        error( "$${PROJECT.PRO}: PROJECT.NAME must be defined" )
+    }
 
-    # Project name.
-    isEmpty( PROJECT.NAME ): {
-        PROJECT.NAME = $$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).NAME )
+    isEmpty( PROJECT.TYPE ) {
+        PROJECT.TYPE = $$eval($${PROJECT.NAME}.type)
+        isEmpty( PROJECT.TYPE ) {
+            PROJECT.TYPE = subdirs
+        }
     }
-    isEmpty( PROJECT.NAME ): {
-        error( "Project name must be defined." )
-    }
-    # Project type.
-    isEmpty( PROJECT.TYPE ): {
-        PROJECT.TYPE = $$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).TYPE )
-    }
-    isEmpty( PROJECT.TYPE ): {
-        error( "Project type must be defined." )
-    }
+
     !contains( PROJECT.TYPE, app|dynlib|staticlib|subdirs ) {
-        error( "$${PROJECT.PRO}: Project $${TARGET} must be of type app, dynlib, staticlib or subdirs" )
+        error( "$${PROJECT.PRO}: $${PROJECT.NAME}.type must be of type app, dynlib, staticlib or subdirs" )
     }
 
     !contains( PROJECT.TYPE, subdirs ) {
-        # Project id.
-        isEmpty( PROJECT.ID ): {
-            error( "Project id must be defined." )
+        isEmpty( PROJECT.DIR ) {
+            PROJECT.DIR = $$eval($${PROJECT.NAME}.dir)
         }
-        # Project Qt.
-        isEmpty( PROJECT.QT ): {
-            PROJECT.QT = $$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).QT )
+        PROJECT.PATH = $$clean_path($${_PRO_FILE_PWD_})
+
+        isEmpty( PROJECT.QT ) {
+            PROJECT.QT = $$eval($${PROJECT.NAME}.qt)
         }
-        # Project dir.
-        isEmpty( PROJECT.DIR ): {
-            PROJECT.DIR = $$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).DIR )
-        }
-        isEmpty( PROJECT.DIR ): {
-            error( "Project ($${PROJECT.NAME}) dir must be defined." )
-        }
-        # Project intermediate dir.
-        isEmpty( PROJECT.INTDIR ): {
-            PROJECT.INTDIR = $$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INTDIR )
-        }
-        isEmpty( PROJECT.INTDIR ): {
-            PROJECT.INTDIR = .
-        }
-        # Project install.
-        isEmpty( PROJECT.INSTALL ): {
-            PROJECT.INSTALL = $$eval( $${MODULE.NAME}.$$upper( $${PROJECT.ID} ).INSTALL )
-        }
-        isEmpty( PROJECT.INSTALL ): {
-           PROJECT.INSTALL = .
+
+        isEmpty( PROJECT.DIR ) {
+            error( "$${PROJECT.PRO}: $${PROJECT.NAME}.dir variable cannot be resolved" )
         }
     }
 
@@ -158,7 +141,7 @@
     }
 
     isEmpty( QT_ARCH ) {
-        error( "$${PROJECT.PRO}: Arch not defined. Is QT_ARCH set?" )
+        error( "Arch not defined. Is QT_ARCH set?" )
     }
 
     contains( QT_ARCH, x86_64 ) {
@@ -169,23 +152,19 @@
         }
     }
 
-    BUILD.CONFIG = $$buildConfig( $${MODULE_NAME}.LINKTYPE )
-
     CONFIG( debug, debug|release ): BUILD.MODE = debug
     CONFIG( release, debug|release ): BUILD.MODE = release
 
     isEmpty( BUILD.MODE ) {
-        error( "$${PROJECT.PRO}: Building mode cannot be resolved" )
+        error( "Building mode cannot be resolved" )
     }
 
-    contains( $${MODULE.NAME}.LINKTYPE, dynlib ):{
-        DEFINES += HB_SHARED
+    BUILD.CONFIG=Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}-$${QMAKE_COMPILER}-$${QT_ARCH}-$${BUILD.MODE}
+    contains( MODULE.LINKTYPE, staticlib ) {
+        BUILD.CONFIG = $$replaceString( BUILD.CONFIG, , -static )
     }
 
-    HB_DEV = $$(HBDEV)
-    !isEmpty( HB_DEV ) {
-        DEFINES += DEV
-    }
+    PROJECT.BUILD = $$clean_path($${MODULE.BUILD}/$${PROJECT.DIR}/$${BUILD.CONFIG})
 
 # ---------------------
 # Modules Dependencies
@@ -198,13 +177,16 @@
 
         # Internal dependency, conf file already included.
         equals( MODULE_NAME, $${MODULE.NAME} ) {
-            MODULE_PATH = $${MODULE.PATH}
+            MODULE_DIR = $${MODULE.DIR}
+            MODULE_DEST = $${MODULE.BUILD}
+
+            checkFilepath(MODULE_DIR)
+            checkFilepath(MODULE_DEST)
         }
         # External dependency
         else {
-            MODULE_ENV_DIR = $($${MODULE_NAME}DIR)/
-            MODULE_CONF_FILE = $$replaceString( MODULE_CONF_FILE, $$MODULE_ENV_DIR , )
-            MODULE_PATH = $$MODULE_ENV_DIR
+            MODULE_DIR = $($${MODULE_NAME}DIR)
+            MODULE_CONF_FILE = $$clean_path($$MODULE_DIR/$$MODULE_CONF_FILE)
 
             !include( $$MODULE_CONF_FILE ) {
                 error( "$${PROJECT.PRO}: Configuration file $${MODULE_CONF_FILE} not found" )
@@ -212,65 +194,57 @@
                 message( Configuration file $$MODULE_CONF_FILE loaded. )
             }
 
-            unset( MODULE_ENV_DIR )
+            MODULE_LINKTYPE = $$eval($${MODULE.NAME}.linktype)
+            MODULE_DEST = $$clean_path($$MODULE_DIR/$$eval( $${MODULE_NAME}.install ))
+            isEmpty(MODULE_DEST) {
+                error( "$${PROJECT.PRO}: $${MODULE_NAME}.install must be defined" )
+            }
+
+            unset( MODULE_DIR )
         }
 
         unset( MODULE_CONF_FILE )
 
-        isEmpty( MODULE_PATH ): error( Module path not defined.)
-
-        MODULE_LINKTYPE = $$eval( $${MODULE_NAME}.LINKTYPE )
-        MODULE_INC      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/inc
-        MODULE_LIB      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/lib
-        MODULE_BIN      = $${MODULE_PATH}/$$eval( $$upper( $${MODULE_NAME}.INSTALL ) )/bin
-        MODULE_CONFIG   = $$buildConfig( $${MODULE_NAME}.LINKTYPE )
-
         PACKAGES = $$eval($$MODULE_NAME)
         for( PACKAGE, PACKAGES ) {
 
-            PACKAGE_NAME    = $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.NAME ) )
-            PACKAGE_DIR     = $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.DIR ) )
-            PACKAGE_INTDIR  = $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.INTDIR ) )
-            PACKAGE_INSTALL = $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.INSTALL ) )
-            PACKAGE_QT      = $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.QT ) )
-            PACKAGE_TYPE    = $$eval( $$upper( $${MODULE_NAME}.$${PACKAGE}.TYPE ) )
+            PACKAGE_NAME    = $${PACKAGE}
+            PACKAGE_DIR     = $$eval( $${PACKAGE_NAME}.dir )
+            PACKAGE_QT      = $$eval( $${PACKAGE_NAME}.qt )
+            PACKAGE_TYPE    = $$eval( $${PACKAGE_NAME}.type )
 
-            isEmpty( PACKAGE_NAME ): {
-                error( PACKAGE_NAME not defined ($${PROJECT.NAME})($${MODULE_NAME}.$${PACKAGE}.NAME).)
-            }
-            isEmpty( PACKAGE_DIR  ): error( PACKAGE_DIR not defined.)
-            isEmpty( PACKAGE_INTDIR  ): PACKAGE_INTDIR = .
-            isEmpty( PACKAGE_TYPE ): error( PACKAGE_TYPE not defined.)
-            isEmpty( PACKAGE_INSTALL ): PACKAGE_INSTALL = .
+            isEmpty(PACKAGE_DIR): error( PACKAGE_DIR must be defined)
+            isEmpty(PACKAGE_TYPE): error( PACKAGE_TYPE must be defined)
 
             # Internal dependency
             equals( MODULE_NAME, $${MODULE.NAME} ) {
-
-                PACKAGE_INC =  $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/inc
-                PACKAGE_INC += $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/uic/
-                PACKAGE_LIB =  $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/lib/$${BUILD.CONFIG}
-                PACKAGE_BIN =  $${MODULE_PATH}/$${PACKAGE_INTDIR}/$${PACKAGE_DIR}/bin/$${BUILD.CONFIG}
+                PACKAGE_BUILD = $${MODULE_DEST}/$${PACKAGE_DIR}/$${BUILD.CONFIG}
+                PACKAGE_INC = $${MODULE_DIR}/$${PACKAGE_DIR}/inc
+                PACKAGE_INC += $$PACKAGE_BUILD
+                PACKAGE_LIB =  $$PACKAGE_BUILD
+                PACKAGE_BIN =  $$PACKAGE_BUILD
+                unset(PACKAGE_BUILD)
             }
             # External dependency
             else {
-                PACKAGE_INC = $${MODULE_INC}/$${PACKAGE_INSTALL}/$${PACKAGE_DIR}
-                PACKAGE_LIB = $${MODULE_LIB}/$${MODULE_CONFIG}/$${PACKAGE_INSTALL}/
-                PACKAGE_BIN = $${MODULE_BIN}/$${MODULE_CONFIG}/$${PACKAGE_INSTALL}/
+                PACKAGE_INC = $$clean_path($${MODULE_DEST}/inc/$${PACKAGE_DIR})
+                PACKAGE_LIB = $$clean_path($${MODULE_DEST}/lib/$${BUILD.CONFIG})
+                PACKAGE_BIN = $$clean_path($${MODULE_DEST}/bin/$${BUILD.CONFIG})
             }
+
+            PACKAGE_NAME = $$targetName(PACKAGE_NAME, $$PACKAGE_TYPE)
 
             *g++*: {
                 equals ( PACKAGE_TYPE, staticlib ): {
-                    PRE_TARGETDEPS += $$clean_path( $${PACKAGE_LIB}/$$fullTarget( PACKAGE_NAME, staticlib ) )
+                    PRE_TARGETDEPS += $$clean_path($${PACKAGE_LIB}/$$fullTarget(PACKAGE_NAME, $$PACKAGE_TYPE))
                 }
             }
-.
+
             QT *= $$PACKAGE_QT
 
             INCLUDEPATH *= $${PACKAGE_INC}
 
             DEPENDPATH *= $$clean_path( $${PACKAGE_BIN} )
-
-            CONFIG( debug, debug|release ): PACKAGE_NAME = $$replaceString( PACKAGE_NAME,, d )
 
             LIBS *= -L$$clean_path( $${PACKAGE_BIN} )
             LIBS *= -L$$clean_path( $${PACKAGE_LIB} )
@@ -278,8 +252,6 @@
 
             unset( PACKAGE_NAME )
             unset( PACKAGE_DIR )
-            unset( PACKAGE_INTDIR )
-            unset( PACKAGE_INSTALL )
             unset( PACKAGE_QT )
             unset( PACKAGE_TYPE )
             unset( PACKAGE_INC )
@@ -293,10 +265,8 @@
         export( LIBS )
         export( PRE_TARGETDEPS )
 
-        unset( MODULE_INC )
-        unset( MODULE_LIB )
-        unset( MODULE_BIN )
-        unset( MODULE_PATH )
+        unset( MODULE_DIR )
+        unset( MODULE_DEST )
         unset( MODULE_NAME )
     }
 
@@ -327,7 +297,7 @@
     }
 
     contains( PROJECT.TYPE, subdirs ) {
-        isEmpty( SUBDIRS ): error( "$${PROJECT.PRO}: Variable ${SUBDIRS} must be defined" )
+        isEmpty( SUBDIRS ): error( "SUBDIRS must be defined" )
     }
 
 # ---------------
@@ -358,8 +328,7 @@
 
             for( EXT_H, EXTS_H ) {
                 exists( $${PROJECT.PATH}/inc/$${subdir}/*$${EXT_H} ) {
-                    HEADERS *= $$files( $$clean_path( $${PROJECT.PATH}/inc/$${subdir}/*$${EXT_H} ) ) # $$files( $$clean_path( inc/$${subdir}/*$${EXT_H} ) )
-                    # INCLUDEPATH += $$clean_path( $${PROJECT.PATH}/inc/$${subdir} ) We wont that.
+                    HEADERS *= $$files( $$clean_path( $${PROJECT.PATH}/inc/$${subdir}/*$${EXT_H} ) )
                 }
             }
 
@@ -388,8 +357,8 @@
     }
 
     INCLUDEPATH += $$clean_path( $${PROJECT.PATH}/inc )
-
     SUBDIRS *= .
+
     scanDirectories( SUBDIRS )
 }
 
@@ -397,33 +366,18 @@
 # Generated Files
 # ----------------
 
-    OBJECTS_DIR = $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/obj/
-    MOC_DIR = $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/moc/
-    RCC_DIR = $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/qrc/
-    UI_DIR = $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE}/uic/
+    OBJECTS_DIR = $${PROJECT.BUILD}
+    MOC_DIR = $${PROJECT.BUILD}
+    RCC_DIR = $${PROJECT.BUILD}
+    UI_DIR = $${PROJECT.BUILD}
+    DESTDIR = $${PROJECT.BUILD}
 
 # ---------------
 # Build Settings
 # ---------------
 
     !contains( PROJECT.TYPE, subdirs ) {
-        contains( PROJECT.TYPE, app ): OUTPUT_DIR = bin/$${BUILD.CONFIG}
-        contains( PROJECT.TYPE, staticlib ): OUTPUT_DIR = lib/$${BUILD.CONFIG}
-        contains( PROJECT.TYPE, dynlib ) {
-                OUTPUT_DIR = lib/$${BUILD.CONFIG}
-                OUTPUT_DIR_DLL = bin/$${BUILD.CONFIG}
-        }
-
-        isEmpty( OUTPUT_DIR ) {
-                error( "$${PROJECT.PRO}: Project $${TARGET} output directory cannot be resolved" )
-        }
-
-        DESTDIR = $$clean_path( $${PROJECT.PATH}/$${OUTPUT_DIR}/ )
-
-        !isEmpty( OUTPUT_DIR_DLL ): DLLDESTDIR = $${PROJECT.PATH}/$${OUTPUT_DIR_DLL}/
-
-        TARGET = $${PROJECT.NAME}
-        CONFIG( debug, debug|release ):      TARGET = $$replaceString( TARGET,, d )
+        TARGET = $$targetName(PROJECT.NAME, $${PROJECT.TYPE})
     }
 
 # ------------------------
@@ -437,25 +391,16 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
         dest_path    = $$clean_path( $$2 )
         install_name = $$3
 
-        *g++*: {
-            $${install_name}.files = $$files
-            $${install_name}.path  = $$clean_path( $$dest_path )
+        $${install_name}.files = $$files
+        $${install_name}.path  = $$clean_path( $$dest_path )
+        $${install_name}.CONFIG += no_check_exist
 
-            INSTALLS *= $${install_name}
+        INSTALLS *= $${install_name}
 
-            export( $${install_name}.files )
-            export( $${install_name}.path )
-            export( INSTALLS )
-        }
-        *msvc*: {
-            for( file, files ) {
-                QMAKE_POST_LINK += $${QMAKE_COPY} \
-                                    \"$$file\" \
-                                    \"$$dest_path/* )\" $$escape_expand(\n\t)
-            }
-
-            export( QMAKE_POST_LINK )
-        }
+        export( $${install_name}.files )
+        export( $${install_name}.path )
+        export( $${install_name}.CONFIG )
+        export( INSTALLS )
     }
 
     defineTest( addCleanFileEvent ) {
@@ -472,24 +417,18 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
         export( QMAKE_CLEAN )
     }
 
-
     # Local
-    PROJECT_INC       = $$clean_path( $${PROJECT.PATH}/inc/ )
-    PROJECT_UI        = $$UI_DIR
-    PROJECT_TYPE      = $${PROJECT.TYPE}
-    PROJECT_NAME      = $${PROJECT.NAME}
-    PROJECT_DIR       = $$clean_path( $${PROJECT.DIR} )
-    PROJECT_INSTALL   = $$clean_path( $${PROJECT.INSTALL} )
-    PROJECT_LIB       = $$clean_path( $${PROJECT.PATH}/lib/$${BUILD.CONFIG}/ )
-    PROJECT_BIN       = $$clean_path( $${PROJECT.PATH}/bin/$${BUILD.CONFIG}/ )
-    PROJECT_GENERATED = $$clean_path( $${PROJECT.PATH}/generated/$${BUILD.CONFIG}/$${BUILD.MODE} )
+    PROJECT_INC = $$clean_path($${PROJECT.PATH}/inc)
+    PROJECT_TYPE = $${PROJECT.TYPE}
+    PROJECT_NAME = $${PROJECT.NAME}
+    PROJECT_UI = $${PROJECT.BUILD}
+
+    PROJECT_DEST = $${PROJECT.BUILD}
 
     # Delivery
-    DELIVERY_LIB      = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/lib/$${BUILD.CONFIG}/$${PROJECT_INSTALL} )
-    DELIVERY_BIN      = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/bin/$${BUILD.CONFIG}/$${PROJECT_INSTALL} )
-    DELIVERY_INC      = $$clean_path( $${MODULE.PATH}/$$eval( $${MODULE.NAME}.INSTALL )/inc/$${PROJECT_INSTALL}/$${PROJECT_DIR} )
-
-    addCleanDirEvent( $$PROJECT_GENERATED )
+    DELIVERY_LIB = $$clean_path($${MODULE.INSTALL}/lib/$${BUILD.CONFIG})
+    DELIVERY_BIN = $$clean_path($${MODULE.INSTALL}/bin/$${BUILD.CONFIG})
+    DELIVERY_INC = $$clean_path($${MODULE.INSTALL}/inc/$${PROJECT.DIR})
 
     # HEADER FILES
     {
@@ -505,7 +444,7 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
                 install_name = copy_headers$$suffix
                 install_name = $$replace( install_name , /, _ ) # e.g.: copy_header_com/tcp to copy_header_com_tcp
 
-                addCopyEvent( $$HEADERS_TO_COPY, $$clean_path( $$DELIVERY_INC/$$HEADER_DIR ), $$install_name )
+                addCopyEvent( $$HEADERS_TO_COPY, $$DELIVERY_INC/$$HEADER_DIR, $$install_name )
 
                 unset( HEADERS_TO_COPY )
             }
@@ -513,33 +452,33 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
             addCleanDirEvent( $$DELIVERY_INC )
 
             # Remove excluded headers. To be finished.
-            for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) {
-                !isRelativePath( EXCLUDED_HEADER ): \
-                    error( "Excluded headers must define a relative path." )
+            #for( EXCLUDED_HEADER, EXCLUDED_HEADERS ) {
+            #    !isRelativePath( EXCLUDED_HEADER ): \
+            #        error( "Excluded headers must define a relative path." )
+            #
+            #    # ex: gui/*.h
+            #    EXCLUDED_HEADER = $$clean_path( $$replaceString( EXCLUDED_HEADER, $$PROJECT_INC/, ) )
+            #
+            #    # ex: C:/hb/log/gui/*.h
+            #    EXCLUDED_HEADER_FILES *= $$files( $$EXCLUDED_HEADER )
+            #
+            #    # ex: C:/hb/log/gui/foo1.h C:/hb/log/gui/foo2.h
+            #
+            #    for( EXCLUDED_HEADER_FILE, EXCLUDED_HEADER_FILES ) {
+            #        # Replace root path.
+            #        EXCLUDED_HEADER_FILES_TMP *= $$clean_path( $$replace( EXCLUDED_HEADER_FILE, $$PROJECT_INC, $$DELIVERY_INC ) )
+            #    }
+            #    EXCLUDED_HEADER_FILES = $$EXCLUDED_HEADER_FILES_TMP
+            #    unset( EXCLUDED_HEADER_FILES_TMP )
+            #
+            #    # ex: C:/hb/delivery/inc/log/gui/foo1.h C:/hb/delivery/inc/log/gui/foo2.h
+            #    EXCLUDED_HEADERS_TMP *= $$EXCLUDED_HEADER_FILES
+            #    unset( EXCLUDED_HEADER_FILES )
+            #}
+            #EXCLUDED_HEADERS = $$EXCLUDED_HEADERS_TMP
 
-                # ex: gui/*.h
-                EXCLUDED_HEADER = $$clean_path( $$replaceString( EXCLUDED_HEADER, $$PROJECT_INC/, ) )
-
-                # ex: C:/hb/log/gui/*.h
-                EXCLUDED_HEADER_FILES *= $$files( $$EXCLUDED_HEADER )
-
-                # ex: C:/hb/log/gui/foo1.h C:/hb/log/gui/foo2.h
-
-                for( EXCLUDED_HEADER_FILE, EXCLUDED_HEADER_FILES ) {
-                    # Replace root path.
-                    EXCLUDED_HEADER_FILES_TMP *= $$clean_path( $$replace( EXCLUDED_HEADER_FILE, $$PROJECT_INC, $$DELIVERY_INC ) )
-                }
-                EXCLUDED_HEADER_FILES = $$EXCLUDED_HEADER_FILES_TMP
-                unset( EXCLUDED_HEADER_FILES_TMP )
-
-                # ex: C:/hb/delivery/inc/log/gui/foo1.h C:/hb/delivery/inc/log/gui/foo2.h
-                EXCLUDED_HEADERS_TMP *= $$EXCLUDED_HEADER_FILES
-                unset( EXCLUDED_HEADER_FILES )
-            }
-            EXCLUDED_HEADERS = $$EXCLUDED_HEADERS_TMP
-
-            unset( EXCLUDED_HEADERS_TMP )
-            unset( EXCLUDED_HEADER )
+            #unset( EXCLUDED_HEADERS_TMP )
+            #unset( EXCLUDED_HEADER )
         }
     }
 
@@ -548,9 +487,7 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
         contains( PROJECT_TYPE , dynlib|staticlib ) {
             UI_FILES = $$clean_path( $${PROJECT_UI}/ui_*.h )
 
-            exists( $$UI_FILES ) {
-                addCopyEvent( $$UI_FILES, $$DELIVERY_INC, copy_ui )
-            }
+            addCopyEvent( $$UI_FILES, $$DELIVERY_INC, copy_ui )
 
             unset( UI_FILES )
         }
@@ -559,11 +496,11 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
     # STATIC
     {
         contains( PROJECT_TYPE , staticlib ) {
-            LIB_NAME     = $$fullTarget( PROJECT_NAME, staticlib )
-            LIB_SOURCE   = $$PROJECT_LIB/$$LIB_NAME
+            LIB_NAME = $$targetName( PROJECT_NAME, $$PROJECT_TYPE )
+            LIB_NAME = $$fullTarget( LIB_NAME, $$PROJECT_TYPE )
+            LIB_SOURCE = $$PROJECT_DEST/$$LIB_NAME
 
             addCopyEvent( $$LIB_SOURCE, $$DELIVERY_LIB, copy_lib )
-            addCleanFileEvent( $$LIB_SOURCE )
             addCleanFileEvent( $$DELIVERY_LIB/$$LIB_NAME )
 
             unset( LIB_SOURCE )
@@ -574,48 +511,49 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
     # DYNAMIC
     {
         contains( PROJECT_TYPE, dynlib ) {
-            DLL_NAME   = $$fullTarget( PROJECT_NAME, dynlib )
-            DLL_SOURCE = $$DESTDIR/$$DLL_NAME
+            LIB_NAME = $$targetName( PROJECT_NAME, $$PROJECT_TYPE )
+            LIB_NAME = $$fullTarget( LIB_NAME, $$PROJECT_TYPE )
+            LIB_SOURCE = $$PROJECT_DEST/$$LIB_NAME
 
-            addCopyEvent( $$DLL_SOURCE, $$DELIVERY_BIN, copy_dll )
-            addCleanFileEvent( $$DLL_SOURCE )
-            addCleanFileEvent( $$DELIVERY_BIN/$$DLL_NAME )
+            addCopyEvent( $$LIB_SOURCE, $$DELIVERY_BIN, copy_dll )
+            addCleanFileEvent( $$DELIVERY_BIN/$$LIB_NAME )
 
-            *msvc*: {
-                LIB_NAME   = $$fullTarget( PROJECT_NAME, staticlib )
-                LIB_SOURCE = $$PROJECT_LIB/$$LIB_NAME
-                PDB_NAME   = $$replaceString( TARGET,, .pdb )
-                PDB_SOURCE = $$DESTDIR/$$PDB_NAME
+            unset( LIB_SOURCE )
+            unset( LIB_NAME )
+        }
+    }
 
-                addCopyEvent( $$LIB_SOURCE, $$DELIVERY_LIB, copy_import )
-                addCleanFileEvent( $$LIB_SOURCE )
-                addCleanFileEvent( $$DELIVERY_LIB/$$LIB_NAME )
+    # MSVC SPECIFIC
+    *msvc*: {
+        contains( PROJECT_TYPE , staticlib|dynlib ) {
+            LIB_TARGET_NAME = $$targetName( PROJECT_NAME, $$PROJECT_TYPE )
+            LIB_NAME = $$fullTarget( LIB_TARGET_NAME, vcdynlib )
+            PDB_NAME = $$fullTarget( LIB_TARGET_NAME, vcpdb )
 
-                exists( $$PDB_SOURCE ) {
-                    addCopyEvent( $$PDB_SOURCE, $$DELIVERY_BIN, copy_pdb )
-                    addCleanFileEvent( $$PDB_SOURCE )
-                    addCleanFileEvent( $$DELIVERY_BIN/$$PDB_NAME )
-                }
+            LIB_SOURCE = $$PROJECT_DEST/$$LIB_NAME
+            PDB_SOURCE = $$PROJECT_DEST/$$PDB_NAME
 
-                unset( PDB_SOURCE )
-                unset( PDB_NAME )
-                unset( LIB_SOURCE )
-                unset( LIB_NAME )
-            }
+            addCopyEvent( $$LIB_SOURCE, $$DELIVERY_LIB, copy_import )
+            addCopyEvent( $$PDB_SOURCE, $$DELIVERY_LIB, copy_pdb )
+            addCleanFileEvent( $$DELIVERY_LIB/$$LIB_NAME )
+            addCleanFileEvent( $$DELIVERY_LIB/$$PDB_NAME )
 
-            unset( DLL_SOURCE )
-            unset( DLL_NAME )
+            unset( LIB_TARGET_NAME )
+            unset( LIB_NAME )
+            unset( PDB_NAME )
+            unset( LIB_SOURCE )
+            unset( PDB_SOURCE )
         }
     }
 
     # BINARY FILES
     {
         contains( PROJECT_TYPE, app ) {
-            BIN_NAME   = $$fullTarget( PROJECT_NAME, app )
-            BIN_SOURCE = $$DESTDIR/$$BIN_NAME
+            BIN_NAME = $$targetName( PROJECT_NAME, $$PROJECT_TYPE )
+            BIN_NAME   = $$fullTarget( BIN_NAME, app )
+            BIN_SOURCE = $$PROJECT_DEST/$$BIN_NAME
 
             addCopyEvent( $$BIN_SOURCE, $$DELIVERY_BIN, copy_exe )
-            addCleanFileEvent( $$BIN_SOURCE )
             addCleanFileEvent( $$DELIVERY_BIN/$$BIN_NAME )
 
             unset( BIN_SOURCE )
@@ -623,24 +561,13 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
         }
     }
 
-    unset( PROJECT_INC       )
-    unset( PROJECT_UI        )
-    unset( PROJECT_LIB       )
-    unset( PROJECT_BIN       )
-    unset( PROJECT_GENERATED )
-    unset( PROJECT_TYPE      )
-    unset( PROJECT_NAME      )
-    unset( PROJECT_DIR       )
-    unset( PROJECT_INSTALL   )
-    unset( DELIVERY_INC      )
-    unset( DELIVERY_LIB      )
-    unset( DELIVERY_BIN      )
-
-    # Debug
-    message( clean=$$QMAKE_CLEAN )
-    *g++*: message( post_copy=$$INSTALLS )
-    *msvc*: message( post_copy=$$QMAKE_POST_LINK )
-
+    unset(PROJECT_INC)
+    unset(PROJECT_UI)
+    unset(PROJECT_LIB)
+    unset(PROJECT_BIN)
+    unset(PROJECT_TYPE)
+    unset(PROJECT_NAME)
+    unset(DELIVERY_INC)
 }
 
 # -------------------

@@ -2,18 +2,17 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME = HB
+MODULE.NAME = hb
 MODULE.PATH = ../../..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID      = plugin1
 PROJECT.NAME    = HbPlugin1
-PROJECT.DIR     = plugin1
-PROJECT.INTDIR  = plugin-example/plugins
-PROJECT.INSTALL = plugin-example/plugins
+PROJECT.DIR     = plugin-example/plugins/plugin1
+#PROJECT.INTDIR  = plugin-example/plugins
+#PROJECT.INSTALL = plugin-example/plugins
 PROJECT.QT      =
 PROJECT.TYPE    = dynlib
 
@@ -29,7 +28,7 @@ CONFIG *= plugin
 # Modules Settings
 # -----------------
 
-HB += plugin-interfaces plugin log tools
+hb += HbPluginInterfaces HbPlugin HbLog HbTools
 
 # -------------
 # C++ Settings

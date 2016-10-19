@@ -2,18 +2,17 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME = HB
+MODULE.NAME = hb
 MODULE.PATH = ../..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID      = network-basic-user
 PROJECT.NAME    = HbNetworkBasicUser
-PROJECT.DIR     = network-basic-user
-PROJECT.INTDIR  = network-basic-example
-PROJECT.INSTALL = network-basic-example
+PROJECT.DIR     = network-basic-example/network-basic-user
+#PROJECT.INTDIR  = network-basic-example
+#PROJECT.INSTALL = network-basic-example
 PROJECT.QT      = gui widgets network
 PROJECT.TYPE    = app
 
@@ -29,7 +28,7 @@ PROJECT.TYPE    = app
 # Modules Settings
 # -----------------
 
-HB += network-basic-common network link log tools
+hb += HbNetworkBasicCommon HbNetwork HbLink HbLog HbTools
 
 # ---------------
 # QMake Includes

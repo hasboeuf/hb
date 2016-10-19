@@ -2,14 +2,14 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME = HB
+MODULE.NAME = hb
 MODULE.PATH = ..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID   =      tools
+PROJECT.NAME = HbTools
 
 SUBDIRS += core \
            network

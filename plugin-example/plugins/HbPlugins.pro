@@ -2,7 +2,7 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME = HB
+MODULE.NAME = hb
 MODULE.PATH = ../..
 
 # -----------------
@@ -12,9 +12,6 @@ MODULE.PATH = ../..
 PROJECT.NAME =            HbPlugins
 PROJECT.TYPE =            subdirs
 
-TEMPLATE = subdirs
-CONFIG += ordered
-
 SUBDIRS += \
     plugin1/HbPlugin1.pro \
     plugin2/HbPlugin2.pro
@@ -23,3 +20,5 @@ SUBDIRS += \
 # QMake Includes
 # ---------------
 
+!include( $${MODULE.PATH}/$${MODULE.NAME}.pri ): \
+error( "QMake file $${MODULE.NAME}.pri not found" )

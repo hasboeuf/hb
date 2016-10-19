@@ -11,18 +11,22 @@ error( "QMake file utils.pri not found" )
 
 isEmpty( MODULE.NAME ) {
 
-    MODULE.NAME = $$basename( _FILE_ )
-    MODULE.NAME = $$replace( MODULE.NAME, .pri, )
-}
+    # Current parsing file is the module definition.
+    MODULE.NAME = $$basename(_PRO_FILE_)
+    MODULE.NAME = $$replace( MODULE.NAME, .pro, )
+    MODULE.PATH = $$clean_path($${PWD})
 
-!isEmpty( MODULE.PATH ) {
-    !isRelativePath( MODULE.PATH ) {
-            error( "$$basename( _PRO_FILE_ ) : ${MODULE.PATH} must define a relative path" )
+} else {
+    isEmpty(MODULE.PATH) {
+        error($${PROJECT.PRO}: MODULE.PATH not defined)
     }
-    
-        MODULE.PATH = $${_PRO_FILE_PWD_}/$${MODULE.PATH}
+
+    !isRelativePath(MODULE.PATH) {
+        error( "$${PROJECT.PRO}: ${MODULE.PATH} must define a relative path" )
+    }
+
+    MODULE.PATH = $$clean_path($${_PRO_FILE_PWD_}/$${MODULE.PATH})
 }
-else: MODULE.PATH = $${PWD}
 
 # -------------------
 # QMake Dependencies

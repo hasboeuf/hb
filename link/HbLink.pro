@@ -2,14 +2,14 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME = HB
+MODULE.NAME = hb
 MODULE.PATH = ..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID = link
+PROJECT.NAME = HbLink
 
 SUBDIRS += config \
            facebook \
@@ -25,7 +25,7 @@ SUBDIRS += config \
 # Modules Settings
 # -----------------
 
-HB += log tools
+hb += HbLog HbTools
 
 # -------------
 # C++ Settings
