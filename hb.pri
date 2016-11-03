@@ -2,7 +2,7 @@
 # Common Routines & Definitions
 # ------------------------------
 
-!include( $$(HBDIR)/utils.pri ): \
+!include( $$(HB_HOME)/utils.pri ): \
 error( "QMake file utils.pri not found" )
 
 # ----------------
@@ -42,6 +42,6 @@ CONFIG -= flat
 # QMake Includes
 # ---------------
 
-!include( $$(HBDIR)/rules.pri ): \
+!include( $$(HB_HOME)/rules.pri ): \
 error( "QMake file rules.pri not found" )
 

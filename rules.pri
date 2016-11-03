@@ -185,7 +185,7 @@
         }
         # External dependency
         else {
-            MODULE_DIR = $($${MODULE_NAME}DIR)
+            MODULE_DIR = $($$upper($${MODULE_NAME})_HOME)
             MODULE_CONF_FILE = $$clean_path($$MODULE_DIR/$$MODULE_CONF_FILE)
 
             !include( $$MODULE_CONF_FILE ) {
@@ -227,9 +227,9 @@
             }
             # External dependency
             else {
-                PACKAGE_INC = $$clean_path($${MODULE_DEST}/inc/$${PACKAGE_DIR})
-                PACKAGE_LIB = $$clean_path($${MODULE_DEST}/lib/$${BUILD.CONFIG})
-                PACKAGE_BIN = $$clean_path($${MODULE_DEST}/bin/$${BUILD.CONFIG})
+                PACKAGE_INC = $$shell_path($$clean_path( $${MODULE_DEST}/inc/$${PACKAGE_DIR} ))
+                PACKAGE_LIB = $$clean_path( $${MODULE_DEST}/lib/$${BUILD.CONFIG} )
+                PACKAGE_BIN = $$clean_path( $${MODULE_DEST}/bin/$${BUILD.CONFIG} )
             }
 
             PACKAGE_NAME = $$targetName(PACKAGE_NAME, $$PACKAGE_TYPE)
@@ -283,7 +283,7 @@
         TEMPLATE = app
 
         isEmpty( PROJECT.ICON ) {
-            win32: RC_ICONS = $$clean_path( $$(HBDIR)/tools/resources/HbLogo.ico ) # Default HB icon.
+            win32: RC_ICONS = $$clean_path( $$(HB_HOME)/tools/resources/HbLogo.ico ) # Default HB icon.
         } else: {
             win32: RC_ICONS = $${PROJECT.ICON}
         }
