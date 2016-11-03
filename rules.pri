@@ -159,7 +159,8 @@
         error( "Building mode cannot be resolved" )
     }
 
-    BUILD.CONFIG=Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}-$${QMAKE_COMPILER}-$${QT_ARCH}-$${BUILD.MODE}
+    BUILD.BASECONFIG = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}-$${QMAKE_COMPILER}-$${QT_ARCH}-$${BUILD.MODE}
+    BUILD.CONFIG = $${BUILD.BASECONFIG}
     contains( MODULE.LINKTYPE, staticlib ) {
         BUILD.CONFIG = $$replaceString( BUILD.CONFIG, , -static )
     }
@@ -194,7 +195,7 @@
                 message( Configuration file $$MODULE_CONF_FILE loaded. )
             }
 
-            MODULE_LINKTYPE = $$eval($${MODULE.NAME}.linktype)
+            MODULE_LINKTYPE = $$eval($${MODULE_NAME}.linktype)
             MODULE_DEST = $$clean_path($$MODULE_DIR/$$eval( $${MODULE_NAME}.install ))
             isEmpty(MODULE_DEST) {
                 error( "$${PROJECT.PRO}: $${MODULE_NAME}.install must be defined" )
@@ -228,8 +229,16 @@
             # External dependency
             else {
                 PACKAGE_INC = $$shell_path($$clean_path( $${MODULE_DEST}/inc/$${PACKAGE_DIR} ))
-                PACKAGE_LIB = $$clean_path( $${MODULE_DEST}/lib/$${BUILD.CONFIG} )
-                PACKAGE_BIN = $$clean_path( $${MODULE_DEST}/bin/$${BUILD.CONFIG} )
+
+                PACKAGE_CONFIG = $${BUILD.BASECONFIG}
+                contains( MODULE_LINKTYPE, staticlib ) {
+                    PACKAGE_CONFIG = $$replaceString( PACKAGE_CONFIG, , -static )
+                }
+
+                PACKAGE_LIB = $$clean_path( $${MODULE_DEST}/lib/$$PACKAGE_CONFIG )
+                PACKAGE_BIN = $$clean_path( $${MODULE_DEST}/bin/$$PACKAGE_CONFIG )
+
+                unset(PACKAGE_CONFIG)
             }
 
             PACKAGE_NAME = $$targetName(PACKAGE_NAME, $$PACKAGE_TYPE)
