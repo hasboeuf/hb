@@ -1,3 +1,26 @@
+# ----------------------
+# Internal documentation
+# ----------------------
+#
+# Suppose we have a foo module where bar project stands.
+#
+# MODULE.PATH: relative path between leaf project and root module.
+# MODULE.NAME: module name that the project belongs to.
+# MODULE.LINKTYPE: staticlib | dynlib (used for external project linking)
+# MODULE.DIR: pwd of foo.pro (foo.dir var)
+# MODULE.INSTALL: relative location where results will be copied (foo.install var)
+# MODULE.BUILD: relative location where build objects will stand
+#
+# PROJECT.NAME: name of the project (bar)
+# PROJECT.TYPE: app | staticlib | dynlib
+# PROJECT.PATH: pwd of bar.pro
+# PROJECT.QT: bar Qt dependencies
+# PROJECT.DIR: relative path from foo.pro to bar.pro
+#
+# BUILD.MODE: debug | release
+# BUILD.BASECONFIG: foo shadow build label: Qt57-msvc-x86_64-debug
+# BUILD.CONFIG: bar shadow build label: Qt57-msvc-x86_64-debug-static
+
 # ------------------------------
 # Common Routines & Definitions
 # ------------------------------
@@ -41,10 +64,10 @@
     unset( MODULE_CONF_FILE )
 
     # Module requirements.
-    MODULE.LINKTYPE = $$eval($${MODULE.NAME}.linktype)
-    MODULE.DIR = $$clean_path($$eval($${MODULE.NAME}.dir))
-    MODULE.INSTALL = $$clean_path($${MODULE.DIR}/$$eval($${MODULE.NAME}.install))
-    MODULE.BUILD = $$clean_path($${MODULE.DIR}/build)
+    MODULE.LINKTYPE = $$eval( $${MODULE.NAME}.linktype )
+    MODULE.DIR = $$clean_path( $$eval( $${MODULE.NAME}.dir) )
+    MODULE.INSTALL = $$clean_path( $${MODULE.DIR}/$$eval( $${MODULE.NAME}.install ) )
+    MODULE.BUILD = $$clean_path( $${MODULE.DIR}/build )
 
     isEmpty( MODULE.LINKTYPE ) {
         error( "$${PROJECT.PRO}: $${MODULE.NAME}.linktype must be defined" )
@@ -71,7 +94,7 @@
     }
 
     isEmpty( PROJECT.TYPE ) {
-        PROJECT.TYPE = $$eval($${PROJECT.NAME}.type)
+        PROJECT.TYPE = $$eval( $${PROJECT.NAME}.type )
         isEmpty( PROJECT.TYPE ) {
             PROJECT.TYPE = subdirs
         }
@@ -83,12 +106,12 @@
 
     !contains( PROJECT.TYPE, subdirs ) {
         isEmpty( PROJECT.DIR ) {
-            PROJECT.DIR = $$eval($${PROJECT.NAME}.dir)
+            PROJECT.DIR = $$eval( $${PROJECT.NAME}.dir )
         }
         PROJECT.PATH = $$clean_path($${_PRO_FILE_PWD_})
 
         isEmpty( PROJECT.QT ) {
-            PROJECT.QT = $$eval($${PROJECT.NAME}.qt)
+            PROJECT.QT = $$eval( $${PROJECT.NAME}.qt )
         }
 
         isEmpty( PROJECT.DIR ) {
@@ -165,7 +188,7 @@
         BUILD.CONFIG = $$replaceString( BUILD.CONFIG, , -static )
     }
 
-    PROJECT.BUILD = $$clean_path($${MODULE.BUILD}/$${PROJECT.DIR}/$${BUILD.CONFIG})
+    PROJECT.BUILD = $$clean_path( $${MODULE.BUILD}/$${PROJECT.DIR}/$${BUILD.CONFIG} )
 
 # ---------------------
 # Modules Dependencies
@@ -181,13 +204,13 @@
             MODULE_DIR = $${MODULE.DIR}
             MODULE_DEST = $${MODULE.BUILD}
 
-            checkFilepath(MODULE_DIR)
-            checkFilepath(MODULE_DEST)
+            checkFilepath( MODULE_DIR )
+            checkFilepath( MODULE_DEST )
         }
         # External dependency
         else {
-            MODULE_DIR = $($$upper($${MODULE_NAME})_HOME)
-            MODULE_CONF_FILE = $$clean_path($$MODULE_DIR/$$MODULE_CONF_FILE)
+            MODULE_DIR = $($$upper( $${MODULE_NAME} )_HOME)
+            MODULE_CONF_FILE = $$clean_path( $$MODULE_DIR/$$MODULE_CONF_FILE )
 
             !include( $$MODULE_CONF_FILE ) {
                 error( "$${PROJECT.PRO}: Configuration file $${MODULE_CONF_FILE} not found" )
@@ -195,9 +218,9 @@
                 message( Configuration file $$MODULE_CONF_FILE loaded. )
             }
 
-            MODULE_LINKTYPE = $$eval($${MODULE_NAME}.linktype)
-            MODULE_DEST = $$clean_path($$MODULE_DIR/$$eval( $${MODULE_NAME}.install ))
-            isEmpty(MODULE_DEST) {
+            MODULE_LINKTYPE = $$eval( $${MODULE_NAME}.linktype )
+            MODULE_DEST = $$clean_path( $$MODULE_DIR/$$eval( $${MODULE_NAME}.install ) )
+            isEmpty( MODULE_DEST ) {
                 error( "$${PROJECT.PRO}: $${MODULE_NAME}.install must be defined" )
             }
 
@@ -206,7 +229,7 @@
 
         unset( MODULE_CONF_FILE )
 
-        PACKAGES = $$eval($$MODULE_NAME)
+        PACKAGES = $$eval( $$MODULE_NAME )
         for( PACKAGE, PACKAGES ) {
 
             PACKAGE_NAME    = $${PACKAGE}
@@ -214,8 +237,8 @@
             PACKAGE_QT      = $$eval( $${PACKAGE_NAME}.qt )
             PACKAGE_TYPE    = $$eval( $${PACKAGE_NAME}.type )
 
-            isEmpty(PACKAGE_DIR): error( PACKAGE_DIR must be defined)
-            isEmpty(PACKAGE_TYPE): error( PACKAGE_TYPE must be defined)
+            isEmpty( PACKAGE_DIR ): error( PACKAGE_DIR must be defined)
+            isEmpty( PACKAGE_TYPE ): error( PACKAGE_TYPE must be defined)
 
             # Internal dependency
             equals( MODULE_NAME, $${MODULE.NAME} ) {
@@ -224,11 +247,11 @@
                 PACKAGE_INC += $$PACKAGE_BUILD
                 PACKAGE_LIB =  $$PACKAGE_BUILD
                 PACKAGE_BIN =  $$PACKAGE_BUILD
-                unset(PACKAGE_BUILD)
+                unset( PACKAGE_BUILD )
             }
             # External dependency
             else {
-                PACKAGE_INC = $$shell_path($$clean_path( $${MODULE_DEST}/inc/$${PACKAGE_DIR} ))
+                PACKAGE_INC = $$shell_path( $$clean_path( $${MODULE_DEST}/inc/$${PACKAGE_DIR} ) )
 
                 PACKAGE_CONFIG = $${BUILD.BASECONFIG}
                 contains( MODULE_LINKTYPE, staticlib ) {
@@ -238,14 +261,14 @@
                 PACKAGE_LIB = $$clean_path( $${MODULE_DEST}/lib/$$PACKAGE_CONFIG )
                 PACKAGE_BIN = $$clean_path( $${MODULE_DEST}/bin/$$PACKAGE_CONFIG )
 
-                unset(PACKAGE_CONFIG)
+                unset( PACKAGE_CONFIG )
             }
 
-            PACKAGE_NAME = $$targetName(PACKAGE_NAME, $$PACKAGE_TYPE)
+            PACKAGE_NAME = $$targetName( PACKAGE_NAME, $$PACKAGE_TYPE )
 
             *g++*: {
                 equals ( PACKAGE_TYPE, staticlib ): {
-                    PRE_TARGETDEPS += $$clean_path($${PACKAGE_LIB}/$$fullTarget(PACKAGE_NAME, $$PACKAGE_TYPE))
+                    PRE_TARGETDEPS += $$clean_path( $${PACKAGE_LIB}/$$fullTarget(PACKAGE_NAME, $$PACKAGE_TYPE) )
                 }
             }
 
@@ -386,7 +409,7 @@
 # ---------------
 
     !contains( PROJECT.TYPE, subdirs ) {
-        TARGET = $$targetName(PROJECT.NAME, $${PROJECT.TYPE})
+        TARGET = $$targetName( PROJECT.NAME, $${PROJECT.TYPE} )
     }
 
 # ------------------------
@@ -427,7 +450,7 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
     }
 
     # Local
-    PROJECT_INC = $$clean_path($${PROJECT.PATH}/inc)
+    PROJECT_INC = $$clean_path( $${PROJECT.PATH}/inc )
     PROJECT_TYPE = $${PROJECT.TYPE}
     PROJECT_NAME = $${PROJECT.NAME}
     PROJECT_UI = $${PROJECT.BUILD}
@@ -435,9 +458,9 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
     PROJECT_DEST = $${PROJECT.BUILD}
 
     # Delivery
-    DELIVERY_LIB = $$clean_path($${MODULE.INSTALL}/lib/$${BUILD.CONFIG})
-    DELIVERY_BIN = $$clean_path($${MODULE.INSTALL}/bin/$${BUILD.CONFIG})
-    DELIVERY_INC = $$clean_path($${MODULE.INSTALL}/inc/$${PROJECT.DIR})
+    DELIVERY_LIB = $$clean_path( $${MODULE.INSTALL}/lib/$${BUILD.CONFIG} )
+    DELIVERY_BIN = $$clean_path( $${MODULE.INSTALL}/bin/$${BUILD.CONFIG} )
+    DELIVERY_INC = $$clean_path( $${MODULE.INSTALL}/inc/$${PROJECT.DIR} )
 
     # HEADER FILES
     {
@@ -570,13 +593,13 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
         }
     }
 
-    unset(PROJECT_INC)
-    unset(PROJECT_UI)
-    unset(PROJECT_LIB)
-    unset(PROJECT_BIN)
-    unset(PROJECT_TYPE)
-    unset(PROJECT_NAME)
-    unset(DELIVERY_INC)
+    unset( PROJECT_INC )
+    unset( PROJECT_UI )
+    unset( PROJECT_LIB )
+    unset( PROJECT_BIN )
+    unset( PROJECT_TYPE )
+    unset( PROJECT_NAME )
+    unset( DELIVERY_INC )
 }
 
 # -------------------
