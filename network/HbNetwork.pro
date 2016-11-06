@@ -2,14 +2,14 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME = HB
+MODULE.NAME = hb
 MODULE.PATH = ..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID = network
+PROJECT.NAME = HbNetwork
 
 SUBDIRS +=  com \
             com/tcp \
@@ -41,7 +41,7 @@ SUBDIRS +=  com \
 # Modules Settings
 # -----------------
 
-HB += link log tools
+hb += HbLink HbLog HbTools
 
 # -------------
 # C++ Settings

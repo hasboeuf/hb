@@ -48,9 +48,8 @@ defineTest( checkFilepath ) {
         filepaths = $$eval( $${variable} )
 
         for( filepath, filepaths ) {
-
-                spaces = $$find( filepath, " " )
-                !isEmpty( spaces ): error( "$${PROJECT.PRO}: Path \"$${filepath}\" defined in ${$${variable}} shall not contains spaces" )
+            spaces = $$find( filepath, " " )
+            !isEmpty( spaces ): error( "$${PROJECT.PRO}: Path \"$${filepath}\" defined in ${$${variable}} shall not contains spaces" )
         }
 }
 
@@ -124,7 +123,7 @@ defineReplace( replaceString ) {
         return( $${result} )
 }
 
-defineReplace( fullTarget ) {
+defineReplace( targetName ) {
 
         target = $$eval( $$1 )
         type = $$2
@@ -132,47 +131,37 @@ defineReplace( fullTarget ) {
         !contains( type, app|dynlib|staticlib ): \
             error( "$${PROJECT.PRO}: Project $${TARGET} must be of type app, dynlib or staticlib" )
 
+        CONFIG( debug, debug|release ): target = $$replaceString( target,, d )
+
+        return( $${target} )
+}
+
+defineReplace( fullTarget ) {
+
+        target = $$eval( $$1 )
+        type = $$2
+
+        !contains( type, app|dynlib|vcdynlib|vcpdb|staticlib ): \
+            error( "$${PROJECT.PRO}: Project $${TARGET} must be of type app, dynlib, vcdynlib, vcpdb or staticlib" )
+
         *-msvc*: {
-                CONFIG( debug, debug|release ): target = $$replaceString( target,, d )
                 contains( type, app ): target = $$replaceString( target,, .exe )
                 contains( type, dynlib ): target = $$replaceString( target,, .dll )
+                contains( type, vcdynlib ): target = $$replaceString( target,, .lib )
+                contains( type, vcpdb ): target = $$lower($$replaceString( target,, .pdb ))
                 contains( type, staticlib ): target = $$replaceString( target,, .lib )
         }
 
-        else: mingw: {
-
-                CONFIG( debug, debug|release ): target = $$replaceString( target,, d )
+        else: mingw: {                
                 contains( type, app ): target = $$replaceString( target,, .exe )
                 contains( type, dynlib ): target = $$replaceString( target,, .dll )
                 contains( type, staticlib ): target = $$replaceString( target, lib, .a )
         }
 
         else: unix: {
-
-                CONFIG( debug, debug|release ): target = $$replaceString( target,, d )
                 contains( type, dynlib ): target = $$replaceString( target, lib, .so )
                 contains( type, staticlib ): target = $$replaceString( target, lib, .a )
         }
 
         return( $${target} )
-}
-
-defineReplace( buildConfig ) {
-    link_type = $$1
-
-    QMAKE_SPEC = $$(QMAKESPEC)
-    isEmpty( QMAKE_SPEC ): QMAKE_SPEC = $$[QMAKESPEC]
-
-    isEmpty( QMAKE_SPEC ) {
-        error( "$${PROJECT.PRO}: Platform scope not defined. Is QMAKESPEC set?" )
-    }
-
-    config = Qt$${QT_MAJOR_VERSION}$${QT_MINOR_VERSION}_$${QMAKE_SPEC}_$${QT_ARCH}
-
-    contains( $$link_type, staticlib ) {
-        config = $$replaceString( BUILD.CONFIG,, _static )
-        config = $$replace( BUILD.CONFIG, \\+, p ) # ar compiler does not handle path with '+' symbol.
-    }
-
-    return( $${config} )
 }

@@ -2,18 +2,15 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME = HB
+MODULE.NAME = hb
 MODULE.PATH = ..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.NAME =            HbPluginExample
-PROJECT.TYPE =            subdirs
-
-TEMPLATE = subdirs
-CONFIG += ordered
+PROJECT.NAME = HbPluginExample
+PROJECT.TYPE = subdirs
 
 SUBDIRS += \
     plugin-interfaces/HbPluginInterfaces.pro \
@@ -26,4 +23,7 @@ plugins.depends = plugin-interfaces
 # ---------------
 # QMake Includes
 # ---------------
+
+!include( $${MODULE.PATH}/$${MODULE.NAME}.pri ): \
+error( "QMake file $${MODULE.NAME}.pri not found" )
 

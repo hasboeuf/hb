@@ -2,14 +2,14 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME = HB
+MODULE.NAME = hb
 MODULE.PATH = ../..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID      = network-basic-common
+PROJECT.NAME = HbNetworkBasicCommon
 
 # ---------------
 # Debug Settings
@@ -23,7 +23,7 @@ PROJECT.ID      = network-basic-common
 # Modules Settings
 # -----------------
 
-HB += network log tools
+hb += HbNetwork HbLog HbTools
 
 # ---------------
 # QMake Includes

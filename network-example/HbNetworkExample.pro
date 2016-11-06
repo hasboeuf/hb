@@ -2,18 +2,15 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME = HB
+MODULE.NAME = hb
 MODULE.PATH = ..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.NAME =            HbNetworkExample
-PROJECT.TYPE =            subdirs
-
-TEMPLATE = subdirs
-CONFIG += ordered
+PROJECT.NAME = HbNetworkExample
+PROJECT.TYPE = subdirs
 
 SUBDIRS += \
     network-common/HbNetworkCommon.pro \
@@ -27,3 +24,5 @@ network-user.depends = network network-common
 # QMake Includes
 # ---------------
 
+!include( $${MODULE.PATH}/$${MODULE.NAME}.pri ): \
+error( "QMake file $${MODULE.NAME}.pri not found" )

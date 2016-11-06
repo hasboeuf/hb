@@ -2,14 +2,14 @@
 # Module Settings
 # ----------------
 
-MODULE.NAME = HB
+MODULE.NAME = hb
 MODULE.PATH = ..
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.ID = log
+PROJECT.NAME = HbLog
 
 SUBDIRS += inputs \
            outputs \
@@ -25,7 +25,7 @@ EXCLUDED_HEADERS +=
 # Modules Settings
 # -----------------
 
-HB += tools
+hb += HbTools
 
 # -------------
 # C++ Settings

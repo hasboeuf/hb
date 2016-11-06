@@ -2,35 +2,29 @@
 # Environment Settings
 # --------------------
 
-HB_NO_EXAMPLES = $$(HBNOEXAMPLES)
-isEmpty( HB_NO_EXAMPLES ) {
+NO_EXAMPLES = $$(HB_NO_EXAMPLES)
+isEmpty( NO_EXAMPLES ) {
     android|winphone|winrt {
-        HB_NO_EXAMPLES = 1
+        NO_EXAMPLES = 1
     }
 }
 
-!isEmpty( HB_NO_EXAMPLES ): message( Hb example apps are ignored. )
+!isEmpty( NO_EXAMPLES ): message( Hb example apps are ignored. )
 
 # -----------------
 # Project Settings
 # -----------------
 
-PROJECT.NAME =            HB
-PROJECT.TYPE =            subdirs
+PROJECT.NAME = hb
 
 SUBDIRS += \
     tools/HbTools.pro \
     log/HbLog.pro \
     plugin/HbPlugin.pro \
     link/HbLink.pro \
-    network/HbNetwork.pro
+    network/HbNetwork.pro \
 
-log.depends = tools
-plugin.depends = tools log
-link.depends = tools log
-network.depends = tools log link
-
-isEmpty( HB_NO_EXAMPLES ) {
+isEmpty( NO_EXAMPLES ) {
 
     EXAMPLE_SUBDIRS += \
         tools-example/HbToolsExample.pro \
@@ -40,13 +34,6 @@ isEmpty( HB_NO_EXAMPLES ) {
         network-example/HbNetworkExample.pro \
         network-basic-example/HbNetworkBasicExample.pro
 
-    tools-example.depends = tools log
-    log-viewer.depends = tools log
-    plugin-example.depends = tools log plugin
-    link-example.depends = tools log link
-    network-example.depends = tools log link network
-    network-basic-example.depends = tools log link network
-
 } else {
     # Let it void, Trick for qmake/qtcreator bug.
     EXAMPLE_SUBDIRS=
@@ -54,7 +41,7 @@ isEmpty( HB_NO_EXAMPLES ) {
 
 SUBDIRS += $$EXAMPLE_SUBDIRS
 
-unset( HB_NO_EXAMPLES )
+unset( NO_EXAMPLES )
 
 # ---------------
 # QMake Includes
