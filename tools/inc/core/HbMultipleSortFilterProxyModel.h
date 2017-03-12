@@ -65,10 +65,8 @@ namespace hb
         };
 
 
-        inner class ModelFilter final
+        class ModelFilter final
         {
-            Q_DEFAULT_COPY( ModelFilter )
-
 
         public:
 
@@ -79,6 +77,24 @@ namespace hb
                 mValue = value;
                 mRole  = role;
                 mFlags = flags;
+            }
+
+            ModelFilter( const ModelFilter& source )
+            {
+                mValue = source.mValue;
+                mRole = source.mRole;
+                mFlags = source.mFlags;
+            }
+
+            ModelFilter & operator=( const ModelFilter& source )
+            {
+                if( &source != this )
+                {
+                    mValue = source.mValue;
+                    mRole = source.mRole;
+                    mFlags = source.mFlags;
+                }
+                return *this;
             }
 
             virtual ~ModelFilter() = default;
