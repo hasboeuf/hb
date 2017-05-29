@@ -17,6 +17,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QQueue>
 #include <QtCore/QMutex>
+#include <QtCore/QHash>
 // Hb
 #include <HbTools.h>
 #include <core/HbSingleton.h>
