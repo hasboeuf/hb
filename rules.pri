@@ -517,7 +517,7 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
     # UI FILES
     {
         contains( PROJECT_TYPE , dynlib|staticlib ) {
-            UI_FILES = $$clean_path( $${PROJECT_UI}/ui_*.h )
+            UI_FILES = $$files( $$clean_path( $${PROJECT_UI}/ui_*.h ) )
 
             addCopyEvent( $$UI_FILES, $$DELIVERY_INC, copy_ui )
 
