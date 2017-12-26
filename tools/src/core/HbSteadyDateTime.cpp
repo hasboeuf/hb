@@ -1,3 +1,6 @@
+// System
+#include <math.h>
+
 // Qt
 #include <QtCore/QDebug>
 // Local
