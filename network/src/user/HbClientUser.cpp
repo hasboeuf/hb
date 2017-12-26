@@ -38,6 +38,7 @@ void HbClientUser::addSocket( networkuid socket_uid , bool main )
     {
         q_assert( mMainSocket == 0 );
         mMainSocket = socket_uid;
+        setStatus(HbNetworkProtocol::USER_CONNECTING);
     }
 }
 
