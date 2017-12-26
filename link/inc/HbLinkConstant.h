@@ -17,7 +17,7 @@
 
 // General
 const QString ENRICHED_URI_BASE    = QStringLiteral( "http://localhost/?" );
-const QString REDIRECT_URI         = QStringLiteral( "http://localhost:%1/" );
+const QString REDIRECT_URI         = QStringLiteral( "http://localhost:%1" );
 
 // Request
 const QString OAUTH2_RESPONSE_TYPE = QStringLiteral( "response_type" );
