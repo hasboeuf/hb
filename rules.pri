@@ -243,7 +243,7 @@
             # Internal dependency
             equals( MODULE_NAME, $${MODULE.NAME} ) {
                 PACKAGE_BUILD = $${MODULE_DEST}/$${PACKAGE_DIR}/$${BUILD.CONFIG}
-                PACKAGE_INC = $${MODULE_DIR}/$${PACKAGE_DIR}/inc
+                PACKAGE_INC = $${MODULE_DIR}/$${PACKAGE_DIR}
                 PACKAGE_INC += $$PACKAGE_BUILD
                 PACKAGE_LIB =  $$PACKAGE_BUILD
                 PACKAGE_BIN =  $$PACKAGE_BUILD
@@ -251,7 +251,7 @@
             }
             # External dependency
             else {
-                PACKAGE_INC = $$shell_path( $$clean_path( $${MODULE_DEST}/inc/$${PACKAGE_DIR} ) )
+                PACKAGE_INC = $$shell_path( $$clean_path( $${MODULE_DEST}/$${PACKAGE_DIR} ) )
 
                 PACKAGE_CONFIG = $${BUILD.BASECONFIG}
                 contains( MODULE_LINKTYPE, staticlib ) {
@@ -359,14 +359,14 @@
             checkFilepath( subdir )
 
             for( EXT_H, EXTS_H ) {
-                exists( $${PROJECT.PATH}/inc/$${subdir}/*$${EXT_H} ) {
-                    HEADERS *= $$files( $$clean_path( $${PROJECT.PATH}/inc/$${subdir}/*$${EXT_H} ) )
+                exists( $${PROJECT.PATH}/$${subdir}/*$${EXT_H} ) {
+                    HEADERS *= $$files( $$clean_path( $${PROJECT.PATH}/$${subdir}/*$${EXT_H} ) )
                 }
             }
 
             for( EXT_CPP, EXTS_CPP ) {
-                exists( $${PROJECT.PATH}/src/$${subdir}/*$${EXT_CPP} ) {
-                    SOURCES *= $$files( $$clean_path( $${PROJECT.PATH}/src/$${subdir}/*$${EXT_CPP} ) )
+                exists( $${PROJECT.PATH}/$${subdir}/*$${EXT_CPP} ) {
+                    SOURCES *= $$files( $$clean_path( $${PROJECT.PATH}/$${subdir}/*$${EXT_CPP} ) )
                 }
             }
 
@@ -388,7 +388,7 @@
         export( RESOURCES )
     }
 
-    INCLUDEPATH += $$clean_path( $${PROJECT.PATH}/inc )
+    INCLUDEPATH += $$clean_path( $${PROJECT.PATH} )
     SUBDIRS *= .
 
     scanDirectories( SUBDIRS )
@@ -450,7 +450,7 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
     }
 
     # Local
-    PROJECT_INC = $$clean_path( $${PROJECT.PATH}/inc )
+    PROJECT_INC = $$clean_path( $${PROJECT.PATH} )
     PROJECT_TYPE = $${PROJECT.TYPE}
     PROJECT_NAME = $${PROJECT.NAME}
     PROJECT_UI = $${PROJECT.BUILD}
