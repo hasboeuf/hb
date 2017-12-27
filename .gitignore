@@ -26,7 +26,6 @@ build/
 [Oo]bj/
 delivery*/
 stable/
-lib/
 bin/
 CppDependOut
 *.rc

@@ -18,21 +18,15 @@ isEmpty( NO_EXAMPLES ) {
 PROJECT.NAME = hb
 
 SUBDIRS += \
-    tools/HbTools.pro \
-    log/HbLog.pro \
-    plugin/HbPlugin.pro \
-    link/HbLink.pro \
-    network/HbNetwork.pro \
+    tools \
+    log \
+    plugin \
+    link \
+    network \
 
 isEmpty( NO_EXAMPLES ) {
 
     EXAMPLE_SUBDIRS += \
-        tools-example/HbToolsExample.pro \
-        log-viewer/HbLogViewer.pro \
-        plugin-example/HbPluginExample.pro \
-        link-example/HbLinkExample.pro \
-        network-example/HbNetworkExample.pro \
-        network-basic-example/HbNetworkBasicExample.pro
 
 } else {
     # Let it void, Trick for qmake/qtcreator bug.
