@@ -10,12 +10,11 @@ using namespace hb::plugin;
 const QString AppPlatformService::SERVICE_MENU_BAR = QStringLiteral( "ServiceMenuBar" );
 const QString AppPlatformService::SERVICE_TAB      = QStringLiteral( "ServiceTab" );
 
-AppPlatformService::AppPlatformService()
+AppPlatformService::AppPlatformService() : HbPluginPlatform()
 {
 }
 
-AppPlatformService::~AppPlatformService()
-{
+AppPlatformService::~AppPlatformService() {
 
 }
 

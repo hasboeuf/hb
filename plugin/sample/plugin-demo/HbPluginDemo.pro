@@ -9,10 +9,6 @@ MODULE.PATH = ../../..
 # Project Settings
 # -----------------
 
-PROJECT.NAME    = HbPluginDemo
-PROJECT.DIR     = plugin-example/plugin-demo
-#PROJECT.INTDIR  = plugin-example
-#PROJECT.INSTALL = plugin-example
 PROJECT.QT      = gui widgets
 PROJECT.TYPE    = app
 

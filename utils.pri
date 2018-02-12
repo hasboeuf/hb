@@ -128,7 +128,7 @@ defineReplace( targetName ) {
         target = $$eval( $$1 )
         type = $$2
 
-        !contains( type, app|dynlib|staticlib ): \
+        !contains( type, app|test|dynlib|staticlib ): \
             error( "$${PROJECT.PRO}: Project $${TARGET} must be of type app, dynlib or staticlib" )
 
         CONFIG( debug, debug|release ): target = $$replaceString( target,, d )
@@ -141,11 +141,11 @@ defineReplace( fullTarget ) {
         target = $$eval( $$1 )
         type = $$2
 
-        !contains( type, app|dynlib|vcdynlib|vcpdb|staticlib ): \
+        !contains( type, app|test|dynlib|vcdynlib|vcpdb|staticlib ): \
             error( "$${PROJECT.PRO}: Project $${TARGET} must be of type app, dynlib, vcdynlib, vcpdb or staticlib" )
 
         *-msvc*: {
-                contains( type, app ): target = $$replaceString( target,, .exe )
+                contains( type, app|test ): target = $$replaceString( target,, .exe )
                 contains( type, dynlib ): target = $$replaceString( target,, .dll )
                 contains( type, vcdynlib ): target = $$replaceString( target,, .lib )
                 contains( type, vcpdb ): target = $$lower($$replaceString( target,, .pdb ))
@@ -153,7 +153,7 @@ defineReplace( fullTarget ) {
         }
 
         else: mingw: {                
-                contains( type, app ): target = $$replaceString( target,, .exe )
+                contains( type, app|test ): target = $$replaceString( target,, .exe )
                 contains( type, dynlib ): target = $$replaceString( target,, .dll )
                 contains( type, staticlib ): target = $$replaceString( target, lib, .a )
         }

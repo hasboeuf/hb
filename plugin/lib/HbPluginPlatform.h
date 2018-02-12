@@ -37,7 +37,6 @@ namespace hb
         public:
 
             explicit HbPluginPlatform();
-            virtual ~HbPluginPlatform();
 
             /*!
              * Load plugins contained in a folder.

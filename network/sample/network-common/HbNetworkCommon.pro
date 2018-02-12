@@ -9,7 +9,6 @@ MODULE.PATH = ../../..
 # Project Settings
 # -----------------
 
-PROJECT.NAME = HbNetworkCommon
 
 # ---------------
 # Debug Settings

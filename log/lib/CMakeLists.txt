@@ -8,13 +8,11 @@ set(CMAKE_AUTOMOC ON)
 set(AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-include_directories(. gui inputs native outputs)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-file(GLOB HbLog_SRC
+file(GLOB_RECURSE HbLog_SRC
     "*.h"
-    "*/*.h"
     "*.cpp"
-    "*/*.cpp"
 )
 
 qt5_wrap_ui(HbLog_UI
@@ -26,12 +24,17 @@ qt5_add_resources(QRC_SRC resources/HbLog.qrc)
 
 add_library(HbLog STATIC ${HbLog_SRC} ${QRC_SRC} ${HbLog_UI})
 
-target_include_directories(HbLog INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(HbLog INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 target_link_libraries(HbLog Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Xml Qt5::Network HbTools)
 
 install(TARGETS HbLog DESTINATION lib)
-install(DIRECTORY .
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
         DESTINATION include/HbLog
         FILES_MATCHING PATTERN "*.h"
-        PATTERN "resources" EXCLUDE)
+        PATTERN "resources" EXCLUDE
+        PATTERN "forms" EXCLUDE)
+
+file(GLOB UI_HEADERS "${CMAKE_CURRENT_BINARY_DIR}/*.h")
+install(FILES ${UI_HEADERS}
+        DESTINATION include/HbLog)

@@ -18,11 +18,6 @@ HbPluginPlatform::HbPluginPlatform() :
              this,            &HbPluginPlatform::onPluginStateChanged, Qt::UniqueConnection );
 }
 
-HbPluginPlatform::~HbPluginPlatform()
-{
-
-}
-
 void HbPluginPlatform::loadPlugins  ( const QString & plugin_folder )
 {
     mPluginManager.load( plugin_folder );

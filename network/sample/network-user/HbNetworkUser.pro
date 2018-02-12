@@ -9,8 +9,6 @@ MODULE.PATH = ../../..
 # Project Settings
 # -----------------
 
-PROJECT.NAME    = HbNetworkUser
-PROJECT.DIR     = network-example/network-user
 PROJECT.QT      = gui widgets network
 PROJECT.TYPE    = app
 

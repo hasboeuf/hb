@@ -14,7 +14,7 @@ isEmpty( MODULE.NAME ) {
     # Current parsing file is the module definition.
     MODULE.NAME = $$basename(_PRO_FILE_)
     MODULE.NAME = $$replace( MODULE.NAME, .pro, )
-    MODULE.PATH = $$clean_path($${PWD})
+    MODULE.PATH = $$clean_path($$PWD)
 
 } else {
     isEmpty(MODULE.PATH) {
@@ -25,7 +25,13 @@ isEmpty( MODULE.NAME ) {
         error( "$${PROJECT.PRO}: ${MODULE.PATH} must define a relative path" )
     }
 
-    MODULE.PATH = $$clean_path($${_PRO_FILE_PWD_}/$${MODULE.PATH})
+    MODULE.PATH = $$clean_path($$PWD) # /home/.../hb
+
+    PRO_FILE = $$_PRO_FILE_ # /home/.../hb/tools/lib/HbTools.pro
+    PROJECT.DIR = $$relative_path($$dirname(PRO_FILE), $${MODULE.PATH}) # tools/lib
+    PROJECT.NAME = $$basename(PRO_FILE) # HbTools.pro
+    PROJECT.NAME = $$replace(PROJECT.NAME, .pro, ) # HbTools
+    unset(PRO_FILE)
 }
 
 # -------------------

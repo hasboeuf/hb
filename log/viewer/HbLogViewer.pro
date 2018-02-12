@@ -9,10 +9,8 @@ MODULE.PATH = ../..
 # Project Settings
 # -----------------
 
-PROJECT.NAME = HbLogViewer
 PROJECT.QT   = widgets xml network
 PROJECT.TYPE = app
-PROJECT.DIR = log-viewer
 
 # ------------
 # Qt Settings

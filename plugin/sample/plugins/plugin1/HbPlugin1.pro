@@ -9,10 +9,6 @@ MODULE.PATH = ../../../..
 # Project Settings
 # -----------------
 
-PROJECT.NAME    = HbPlugin1
-PROJECT.DIR     = plugin-example/plugins/plugin1
-#PROJECT.INTDIR  = plugin-example/plugins
-#PROJECT.INSTALL = plugin-example/plugins
 PROJECT.QT      =
 PROJECT.TYPE    = dynlib
 

@@ -9,8 +9,6 @@ MODULE.PATH = ../..
 # Project Settings
 # -----------------
 
-PROJECT.NAME = HbLinkExample
-PROJECT.DIR  = link-example
 PROJECT.QT   = gui widgets xml network
 PROJECT.TYPE = app
 

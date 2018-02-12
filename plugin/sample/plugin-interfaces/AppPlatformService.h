@@ -24,7 +24,7 @@ namespace hb
             explicit AppPlatformService();
             virtual ~AppPlatformService();
 
-            virtual AppService * requestService ( const QString & service_name ) const;
+            virtual AppService * requestService ( const QString & service_name ) const override;
 
 
         };

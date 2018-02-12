@@ -9,7 +9,6 @@ MODULE.PATH = ../../..
 # Project Settings
 # -----------------
 
-PROJECT.NAME = HbPluginInterfaces
 
 # ------------
 # Qt Settings

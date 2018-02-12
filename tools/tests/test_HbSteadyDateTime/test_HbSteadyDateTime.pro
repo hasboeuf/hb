@@ -9,12 +9,7 @@ MODULE.PATH = ../../..
 # Project Settings
 # -----------------
 
-PROJECT.QT      = gui widgets network
-PROJECT.TYPE    = app
-
-# ---------------
-# Debug Settings
-# ---------------
+PROJECT.TYPE = test
 
 # ------------
 # Qt Settings
@@ -25,7 +20,16 @@ PROJECT.TYPE    = app
 # Modules Settings
 # -----------------
 
-hb += HbNetworkCommon HbNetwork HbLink HbLog HbTools
+hb += HbTools
+
+# -------------
+# C++ Settings
+# -------------
+DEFINES +=
+
+# -----------------
+# Install Settings
+# -----------------
 
 # ---------------
 # QMake Includes

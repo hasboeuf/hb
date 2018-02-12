@@ -4,18 +4,20 @@
 #
 # Suppose we have a foo module where bar project stands.
 #
+# bar.pro must define:
 # MODULE.PATH: relative path between leaf project and root module.
 # MODULE.NAME: module name that the project belongs to.
+#
+# foo.pri must define:
 # MODULE.LINKTYPE: staticlib | dynlib (used for external project linking)
 # MODULE.DIR: pwd of foo.pro (foo.dir var)
 # MODULE.INSTALL: relative location where results will be copied (foo.install var)
 # MODULE.BUILD: relative location where build objects will stand
 #
-# PROJECT.NAME: name of the project (bar)
-# PROJECT.TYPE: app | staticlib | dynlib
-# PROJECT.PATH: pwd of bar.pro
+# PROJECT.NAME: bar (auto generated from bar.pro file)
+# PROJECT.TYPE: app | staticlib | dynlib | test
+# PROJECT.PATH: relative path between MODULE.PATH and bar.pro (auto computed from bar.pro path)
 # PROJECT.QT: bar Qt dependencies
-# PROJECT.DIR: relative path from foo.pro to bar.pro
 #
 # BUILD.MODE: debug | release
 # BUILD.BASECONFIG: foo shadow build label: Qt57-msvc-x86_64-debug
@@ -100,8 +102,8 @@
         }
     }
 
-    !contains( PROJECT.TYPE, app|dynlib|staticlib|subdirs ) {
-        error( "$${PROJECT.PRO}: $${PROJECT.NAME}.type must be of type app, dynlib, staticlib or subdirs" )
+    !contains( PROJECT.TYPE, app|test|dynlib|staticlib|subdirs ) {
+        error( "$${PROJECT.PRO}: $${PROJECT.NAME}.type must be of type app, dynlib, staticlib, subdirs or test" )
     }
 
     !contains( PROJECT.TYPE, subdirs ) {
@@ -140,12 +142,14 @@
     contains( PROJECT.TYPE, dynlib ): CONFIG += shared
     contains( PROJECT.TYPE, staticlib ): CONFIG += static
     contains( PROJECT.TYPE, subdirs ): CONFIG += ordered no_empty_targets
+    contains( PROJECT.TYPE, test ): CONFIG += testcase
 
 # -----------
 # Qt Modules
 # -----------
 
     QT *= core
+    contains( PROJECT.TYPE, test ): QT *= testlib
     QT *= $${PROJECT.QT}
 
 # -----------------------
@@ -323,6 +327,7 @@
 
     contains( PROJECT.TYPE, dynlib|staticlib ): TEMPLATE = lib
     contains( PROJECT.TYPE, subdirs ): TEMPLATE = subdirs
+    contains( PROJECT.TYPE, test ): TEMPLATE = app
 
     contains( PROJECT.TYPE, app ) {
         CONFIG( debug, debug|release ): CONFIG *= console
@@ -460,7 +465,7 @@ isEmpty( $${MODULE.NAME}.NO_INSTALL_TARGETS ) {
     # Delivery
     DELIVERY_LIB = $$clean_path( $${MODULE.INSTALL}/lib/$${BUILD.CONFIG} )
     DELIVERY_BIN = $$clean_path( $${MODULE.INSTALL}/bin/$${BUILD.CONFIG} )
-    DELIVERY_INC = $$clean_path( $${MODULE.INSTALL}/inc/$${PROJECT.DIR} )
+    DELIVERY_INC = $$clean_path( $${MODULE.INSTALL}/inc/$${PROJECT.NAME} )
 
     # HEADER FILES
     {
