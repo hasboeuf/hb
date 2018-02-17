@@ -15,11 +15,19 @@ file(GLOB_RECURSE HbNetwork_SRC
 
 add_library(HbNetwork STATIC ${HbNetwork_SRC})
 
-target_include_directories(HbNetwork INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(
+    HbNetwork PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:include/HbNetwork>
+)
 
 target_link_libraries(HbNetwork Qt5::Core Qt5::Network HbLink HbLog HbTools)
 
-install(TARGETS HbNetwork DESTINATION lib)
+install(
+    TARGETS HbNetwork
+    EXPORT HbTargets
+    ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
+)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
-        DESTINATION include/HbNetwork
+        DESTINATION ${INSTALL_INCLUDE_DIR}/HbNetwork
         FILES_MATCHING PATTERN "*.h")

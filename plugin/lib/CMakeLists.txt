@@ -21,16 +21,27 @@ qt5_wrap_ui(HbPlugin_UI
 
 add_library(HbPlugin STATIC ${HbPlugin_SRC} ${HbPlugin_UI})
 
-target_include_directories(HbPlugin INTERFACE ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(
+    HbPlugin PUBLIC
+    "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR};${CMAKE_CURRENT_BINARY_DIR}>"
+    "$<INSTALL_INTERFACE:include/HbPlugin>"
+)
 
 target_link_libraries(HbPlugin Qt5::Core Qt5::Gui Qt5::Widgets HbLog HbTools)
 
-install(TARGETS HbPlugin DESTINATION lib)
-install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
-        DESTINATION include/HbPlugin
-        FILES_MATCHING PATTERN "*.h"
+install(
+    TARGETS HbPlugin
+    EXPORT HbTargets
+    ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
+)
+install(
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
+    DESTINATION ${INSTALL_INCLUDE_DIR}/HbPlugin
+    FILES_MATCHING PATTERN "*.h"
 )
 
 file(GLOB UI_HEADERS "${CMAKE_CURRENT_BINARY_DIR}/*.h")
-install(FILES ${UI_HEADERS}
-        DESTINATION include/HbPlugin)
+install(
+    FILES ${UI_HEADERS}
+    DESTINATION ${INSTALL_INCLUDE_DIR}/HbPlugin
+)

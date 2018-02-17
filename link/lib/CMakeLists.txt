@@ -15,12 +15,20 @@ file(GLOB_RECURSE HbLink_SRC
 
 add_library(HbLink STATIC ${HbLink_SRC})
 
-target_include_directories(HbLink INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(
+    HbLink PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:include/HbLink>
+)
 
 target_link_libraries(HbLink Qt5::Core Qt5::Network HbLog HbTools)
 
-install(TARGETS HbLink DESTINATION lib)
+install(
+    TARGETS HbLink
+    EXPORT HbTargets
+    ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
+)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/
-        DESTINATION include/HbLink
+        DESTINATION ${INSTALL_INCLUDE_DIR}/HbLink
         FILES_MATCHING PATTERN "*.h"
 )

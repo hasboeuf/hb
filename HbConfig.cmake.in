@@ -1,0 +1,9 @@
+# Compute paths
+get_filename_component(HB_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(HB_INCLUDE_DIRS "@CONF_INCLUDE_DIRS@")
+
+# Include definitions for IMPORTED targets)
+include("${HB_CMAKE_DIR}/HbTargets.cmake")
+
+# These are IMPORTED targets created by HbTargets.cmake
+set(HB_LIBRARIES HbTools HbLog HbLink HbPlugin HbNetwork)
