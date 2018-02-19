@@ -9,6 +9,9 @@ set(HB_MINOR_VERSION 1)
 set(HB_PATCH_VERSION 0)
 set(HB_VERSION ${HB_MAJOR_VERSION}.${HB_MINOR_VERSION}.${HB_PATCH_VERSION})
 
+add_compile_options(-DQT_DISABLE_DEPRECATED_BEFORE=0x051000)
+add_compile_options(-Werror=switch)
+add_compile_options(-Werror=return-type)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_REQUIRED TRUE)
 
