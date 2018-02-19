@@ -62,7 +62,7 @@ void HbLogConfigDialog::updateGui()
     qsb_buffer->setValue(mConfig.maxBuffer());
 
     // Colors
-    foreach(QAbstractButton* vButton, qbg_colors.buttons())
+    for(QAbstractButton* vButton: qbg_colors.buttons())
     {
         QColor c = mConfig.colorByIdLevel(qbg_colors.id(vButton));
 

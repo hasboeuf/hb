@@ -52,7 +52,7 @@ HbServerConnectionPool::HbServerConnectionPool( const HbGeneralServerConfig & co
     connect( service_auth,     &HbAuthService::socketUnauthenticated,  this, &HbConnectionPool::onSocketUnauthenticated, Qt::UniqueConnection );
     connect( service_presence, &HbServerPresenceService::socketLagged, this, &HbServerConnectionPool::onSocketLagged,    Qt::UniqueConnection );
 
-    foreach( HbNetworkService * service, mServices )
+    for( HbNetworkService * service: mServices )
     {
         q_assert_ptr( service );
 
@@ -168,7 +168,7 @@ networkuid HbServerConnectionPool::joinTcpServer( HbTcpServerConfig & config , b
 
     network_uid = server->uid();
 
-    foreach( HbNetworkChannel * channel, config.channels() )
+    for( HbNetworkChannel * channel: config.channels() )
     {
         plugChannel( channel, network_uid );
     }
@@ -251,7 +251,7 @@ void HbServerConnectionPool::onServerDisconnected( networkuid server_uid )
     }
     else
     {
-        foreach( HbNetworkChannel * channel, server->configuration().channels() )
+        for( HbNetworkChannel * channel: server->configuration().channels() )
         {
             q_assert_ptr( channel );
             HbConnectionPool::unplugChannel( channel );
@@ -390,7 +390,7 @@ void HbServerConnectionPool::onUsersContractToSend( QList< ShConstHbNetworkUserI
         q_assert( server_uid != 0 );
     }
 
-    foreach( ShConstHbNetworkUserInfo user_info, users_infos )
+    for( ShConstHbNetworkUserInfo user_info: users_infos )
     {
         HbServerUser * user = getUser( user_info );
         if( !user )
@@ -447,7 +447,7 @@ void HbServerConnectionPool::onContractToSend ( const HbNetworkContract * contra
 
         QSet< HbAbstractServer * > servers; // Avoid to send the same contract multiple times to the same server.
 
-        foreach( networkuid receiver, receivers )
+        for( networkuid receiver: receivers )
         {
             networkuid server_uid = mServerBySocketId.value( receiver, 0 );
             if( server_uid > 0 )
@@ -468,7 +468,7 @@ void HbServerConnectionPool::onContractToSend ( const HbNetworkContract * contra
             }
         }
 
-        foreach( HbAbstractServer * server, servers )
+        for( HbAbstractServer * server: servers )
         {
             server->send( shared_contract );
         }
@@ -507,7 +507,7 @@ void HbServerConnectionPool::kickUser( HbServerUser * user, netwlint reason, con
 {
     q_assert_ptr( user );
 
-    foreach( networkuid socket_uid, user->socketsUid() )
+    for( networkuid socket_uid: user->socketsUid() )
     {
         kickSocket( socket_uid, reason, description );
     }
@@ -571,7 +571,7 @@ void HbServerConnectionPool::onSocketUnauthenticated( networkuid socket_uid, qui
 
     mUserByEmail.remove( user->info().data()->email() );
 
-    foreach( networkuid socket, user->socketsUid() )
+    for( networkuid socket: user->socketsUid() )
     {
         mUserBySocketId.remove( socket );
     }

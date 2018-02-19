@@ -42,7 +42,7 @@ void HbConnectionPool::setExchanges( HbNetworkExchanges & exchanges )
 {
     exchanges.plug< HbKickContract >();
 
-    foreach( HbNetworkService * service, mServices )
+    for( HbNetworkService * service: mServices )
     {
         q_assert_ptr( service )->plugContracts( exchanges );
     }
@@ -50,7 +50,7 @@ void HbConnectionPool::setExchanges( HbNetworkExchanges & exchanges )
 
 void HbConnectionPool::reset()
 {
-    foreach( HbNetworkService * service, mServices )
+    for( HbNetworkService * service: mServices )
     {
         q_assert_ptr( service )->reset();
     }

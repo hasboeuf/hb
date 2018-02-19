@@ -76,7 +76,7 @@ namespace hb
             QList< T * > getListeners()
             {
                 QList< T * > listeners;
-                foreach( HbNetworkService * service, mServices )
+                for( HbNetworkService * service: mServices )
                 {
                     T * listener = dynamic_cast< T * >( service );
                     if( listener )

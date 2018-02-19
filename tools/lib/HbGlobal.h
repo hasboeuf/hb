@@ -247,7 +247,7 @@ inline QList< U > qlist_dynamic_cast( const QList< T * > & list )
 {
     QList< U > list_cast;
 
-    foreach( T * item, list )
+    for( T * item: list )
         list_cast.append( q_dynamic_cast( U, item ) );
 
     return list_cast;

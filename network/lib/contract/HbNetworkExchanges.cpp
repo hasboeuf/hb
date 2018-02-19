@@ -5,9 +5,9 @@ using namespace hb::network;
 
 HbNetworkExchanges::~HbNetworkExchanges()
 {
-    foreach( const Contracts & contracts, mContracts )
+    for( const Contracts & contracts: mContracts )
     {
-        foreach( HbNetworkContract * contract, contracts )
+        for( HbNetworkContract * contract: contracts )
         {
             delete contract;
         }
@@ -18,9 +18,9 @@ HbNetworkExchanges & HbNetworkExchanges::operator=( const HbNetworkExchanges & s
 {
     if( &source != this )
     {
-        foreach( const Contracts & contracts, source.mContracts )
+        for( const Contracts & contracts: source.mContracts )
         {
-            foreach( HbNetworkContract * contract, contracts )
+            for( HbNetworkContract * contract: contracts )
             {
                 add( contract->create() );
             }

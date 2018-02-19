@@ -8,7 +8,7 @@ void HbClientPeopledChannel::internalReset( bool keep_uid )
     HbNetworkChannel::internalReset( keep_uid );
 
     // Clean users.
-    foreach( ShConstHbNetworkUserInfo user_info, mUsers.values() )
+    for( ShConstHbNetworkUserInfo user_info: mUsers.values() )
     {
         emit userDisconnected( user_info );
     }

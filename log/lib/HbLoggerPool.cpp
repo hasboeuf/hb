@@ -63,7 +63,7 @@ loguid HbLoggerPool::addUdpSocketInput( const QString & ip, quint16 port, QStrin
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
-        foreach( HbLogAbstractInput * input, mInputs )
+        for( HbLogAbstractInput * input: mInputs )
         {
             if( q_assert_ptr( input )->type() == HbLogAbstractOutput::OUTPUT_UDP_SOCKET )
             {
@@ -115,7 +115,7 @@ loguid HbLoggerPool::addTcpSocketInput( quint16 port, QString * error )
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
-        foreach( HbLogAbstractInput* input, mInputs )
+        for( HbLogAbstractInput* input: mInputs )
         {
             if( q_assert_ptr( input )->type() == HbLogAbstractInput::INPUT_TCP_SOCKET )
             {
@@ -160,7 +160,7 @@ loguid HbLoggerPool::addLocalSocketInput( const QString & name, QString * error 
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
-        foreach( HbLogAbstractInput * input, mInputs )
+        for( HbLogAbstractInput * input: mInputs )
         {
             if( q_assert_ptr( input )->type() == HbLogAbstractInput::INPUT_LOCAL_SOCKET )
             {
@@ -226,7 +226,7 @@ loguid HbLoggerPool::addConsoleOutput( QString * error )
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
-        foreach(HbLogAbstractOutput * output, mOutputs)
+        for(HbLogAbstractOutput * output: mOutputs)
         {
             if (q_assert_ptr(output)->type() == HbLogAbstractOutput::OUTPUT_CONSOLE)
             {
@@ -303,7 +303,7 @@ loguid HbLoggerPool::addUdpSocketOutput( quint16 port, QString * error )
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
-        foreach( HbLogAbstractOutput* output, mOutputs )
+        for( HbLogAbstractOutput* output: mOutputs )
         {
             if( q_assert_ptr( output )->type() == HbLogAbstractOutput::OUTPUT_UDP_SOCKET )
             {
@@ -346,7 +346,7 @@ loguid HbLoggerPool::addTcpSocketOutput( const QString & ip, quint16 port, QStri
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
-        foreach( HbLogAbstractOutput* output, mOutputs )
+        for( HbLogAbstractOutput* output: mOutputs )
         {
             if( q_assert_ptr( output )->type() == HbLogAbstractOutput::OUTPUT_TCP_SOCKET )
             {
@@ -383,7 +383,7 @@ loguid HbLoggerPool::addLocalSocketOutput( const QString & name, QString * error
 
     if( state == HbLoggerStream::INOUT_ADD_SUCCESS )
     {
-        foreach( HbLogAbstractOutput* output, mOutputs )
+        for( HbLogAbstractOutput* output: mOutputs )
         {
             if( q_assert_ptr( output )->type() == HbLogAbstractOutput::OUTPUT_LOCAL_SOCKET )
             {
@@ -507,7 +507,7 @@ void HbLoggerPool::process()
                 {
                     HbLogMessage * message = q_assert_ptr( mLoggerStream.takeFirst() );
 
-                    foreach( HbLogAbstractOutput * output, mOutputs.values() )
+                    for( HbLogAbstractOutput * output: mOutputs.values() )
                     {
                         if ( output->isValid() )
                         {

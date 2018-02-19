@@ -23,12 +23,12 @@ HbServerAuthService::~HbServerAuthService()
 
 void HbServerAuthService::reset()
 {
-    foreach( HbServerAuthStrategy * strategy, mStrategies )
+    for( HbServerAuthStrategy * strategy: mStrategies )
     {
         strategy->reset();
     }
 
-    foreach( networkuid socket_uid, mPendingSocket )
+    for( networkuid socket_uid: mPendingSocket )
     {
         delSocket( socket_uid );
     }

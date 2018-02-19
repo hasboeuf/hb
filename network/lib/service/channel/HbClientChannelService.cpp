@@ -121,7 +121,7 @@ void HbClientChannelService::processContract( const HbNetworkContract * contract
     const HbUserSyncContract * sync_contract = contract->value< HbUserSyncContract >();
     if( sync_contract )
     {
-        foreach( HbNetworkUserSync user_sync, sync_contract->syncs() )
+        for( HbNetworkUserSync user_sync: sync_contract->syncs() )
         {
             ShConstHbNetworkUserInfo user_info( new HbNetworkUserInfo( user_sync.userInfo() ) );
             if( user_sync.status() == HbNetworkProtocol::NETWORK_USER_CONNECTED )

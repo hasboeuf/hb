@@ -18,7 +18,7 @@ HbLogWidget::HbLogWidget(QWidget *parent) :
 
     mConfig.loadSettings(); // Init config from settings or default xml config file.
 
-    foreach(QString level, HbLogger::MetaLevel::toString())
+    for(QString level: HbLogger::MetaLevel::toString())
     {
         if (!level.contains(QLatin1String("_ALL")) && !level.contains(QLatin1String("_NONE")))
         {
@@ -74,7 +74,7 @@ void HbLogWidget::onLevelChanged(int pLevel)
 
     qte_log->clear();
 
-    foreach(HbLogMessage* msg, mLoggerMessages)
+    for(HbLogMessage* msg: mLoggerMessages)
     {
         displayNewMessage(msg);
     }
@@ -139,7 +139,7 @@ void HbLogWidget::updateGui()
 
     // Log entries colors
     qte_log->clear();
-    foreach(HbLogMessage* msg, mLoggerMessages)
+    for(HbLogMessage* msg: mLoggerMessages)
     {
         displayNewMessage(msg);
     }

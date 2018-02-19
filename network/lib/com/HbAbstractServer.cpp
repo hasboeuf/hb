@@ -116,7 +116,7 @@ bool HbAbstractServer::send( ShConstHbNetworkContract contract )
             else if( contract->routing() == HbNetworkProtocol::ROUTING_MULTICAST )
             {
                 // Retrieve socket handler.
-                foreach( networkuid receiver, contract->receivers() )
+                for( networkuid receiver: contract->receivers() )
                 {
                     HbSocketHandler * handler = mHandlerBySocketId.value( receiver, nullptr );
                     if( !handler )
@@ -131,7 +131,7 @@ bool HbAbstractServer::send( ShConstHbNetworkContract contract )
             }
             else // HbNetworkProtocol::BROADCAST
             {
-                foreach( HbSocketHandler * handler, mHandlerById.values() )
+                for( HbSocketHandler * handler: mHandlerById.values() )
                 {
                     q_assert_ptr( handler );
                     q_assert( QMetaObject::invokeMethod( handler, "onSendContract", Q_ARG( ShConstHbNetworkContract, contract ) ) );
@@ -158,7 +158,7 @@ void HbAbstractServer::reset()
     HbInfo( "Reset server..." );
 
     mPending.clear();
-    foreach( HbSocketHandler * handler, mHandlerById.values() )
+    for( HbSocketHandler * handler: mHandlerById.values() )
     {
         q_assert_ptr( handler );
         HbInfo( "Deleting handler %d", handler->uid() );

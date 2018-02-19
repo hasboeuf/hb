@@ -42,7 +42,7 @@ void HbPluginManager::load( const QString & folder_path )
 void HbPluginManager::unload()
 {
     QStringList names = mPluginsInfos.keys();
-    foreach( QString plugin_name, names )
+    for( QString plugin_name: names )
     {
         unloadPlugin( plugin_name );
     }
@@ -89,7 +89,7 @@ void HbPluginManager::unloadPlugin( const QString & plugin_name )
     q_assert_ptr( loader );
     q_assert_ptr( plugin );
 
-    foreach( QString child_name, infos->children() )
+    for( QString child_name: infos->children() )
     {
         HbWarning( "Unload child plugin %s.", HbLatin1( child_name ) );
         if( mPluginsInfos.contains( child_name ) )
@@ -127,7 +127,7 @@ QList< HbPluginInfos > HbPluginManager::pluginInfoList()
 {
     QList< HbPluginInfos > plugin_info_list;
 
-    foreach( const HbPluginInfos * info, mPluginsInfos )
+    for( const HbPluginInfos * info: mPluginsInfos )
     {
         q_assert_ptr( info );
         plugin_info_list.append( *info );
@@ -159,7 +159,7 @@ void HbPluginManager::scanFolder( const QString & path )
 
     QFileInfoList files = plugin_dir.entryInfoList();
 
-    foreach( QFileInfo file, files )
+    for( QFileInfo file: files )
     {
         if( !file.isFile() ) continue;
 
@@ -194,7 +194,7 @@ HbPluginInfos * HbPluginManager::scanPlugin( const QString & plugin_path )
 
     if( !plugin_required.isEmpty() )
     {
-        foreach( QVariant item, plugin_required )
+        for( QVariant item: plugin_required )
         {
             QVariantMap map     = item.toMap();
             QString     name    = map.value( QStringLiteral( "name"    ) ).toString();
@@ -206,7 +206,7 @@ HbPluginInfos * HbPluginManager::scanPlugin( const QString & plugin_path )
 
     if( !plugin_optional.isEmpty() )
     {
-        foreach( QVariant item, plugin_optional )
+        for( QVariant item: plugin_optional )
         {
             QVariantMap map     = item.toMap();
             QString     name    = map.value( QStringLiteral( "name"    ) ).toString();
@@ -218,7 +218,7 @@ HbPluginInfos * HbPluginManager::scanPlugin( const QString & plugin_path )
 
     if( !service_required.isEmpty() )
     {
-        foreach( QVariant item, service_required )
+        for( QVariant item: service_required )
         {
             QVariantMap map     = item.toMap();
             QString     name    = map.value( QStringLiteral( "name"    ) ).toString();
@@ -230,7 +230,7 @@ HbPluginInfos * HbPluginManager::scanPlugin( const QString & plugin_path )
 
     if( !service_optional.isEmpty() )
     {
-        foreach( QVariant item, service_optional )
+        for( QVariant item: service_optional )
         {
             QVariantMap map     = item.toMap();
             QString     name    = map.value( QStringLiteral( "name"    ) ).toString();

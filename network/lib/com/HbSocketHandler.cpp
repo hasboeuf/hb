@@ -45,7 +45,7 @@ void HbSocketHandler::reset()
     HbInfo( "Reset socket handler %d", mUid );
     QMutexLocker locker( &mSocketMutex );
 
-    foreach( HbAbstractSocket * socket, mSocketById.values() )
+    for( HbAbstractSocket * socket: mSocketById.values() )
     {
         HbInfo( "Delete socket %d.", socket->uid() );
         delete socket;
@@ -136,7 +136,7 @@ void HbSocketHandler::onServerLeft()
 
 void HbSocketHandler::onSendContract( ShConstHbNetworkContract contract )
 {
-    foreach( networkuid socket_uid, mSocketById.keys() )
+    for( networkuid socket_uid: mSocketById.keys() )
     {
         onSendContract( socket_uid, contract );
     }

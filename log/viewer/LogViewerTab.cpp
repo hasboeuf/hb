@@ -52,7 +52,7 @@ LogViewerTab::LogViewerTab( qint32 id,
 
     mFreezeAnimationValue = -1.f;
 
-    foreach( const QString level, HbLogger::MetaLevel::toString() )
+    for( const QString level: HbLogger::MetaLevel::toString() )
     {
         if( !level.contains( QLatin1String( "_ALL" ) ) && !level.contains( QLatin1String( "_NONE" ) ) )
         {
@@ -463,7 +463,7 @@ void LogViewerTab::onRowDoubleClicked( const QModelIndex & index )
     QStringList   folders = mConfig.projectFolders();
     QSet< QString > found_paths;
 
-    foreach( const QString folder, folders )
+    for( const QString folder: folders )
     {
         found_paths.unite(findAbsoluteFilePath( file, folder ) );
     }
@@ -595,7 +595,7 @@ QSet< QString > LogViewerTab::findAbsoluteFilePath( const QString & file_path, c
     QStringList subdirs = root_path_dir.entryList( QDir::Dirs | QDir::NoDot | QDir::NoDotDot );
 
     // Browse subdirs
-    foreach( const QString subdir, subdirs )
+    for( const QString subdir: subdirs )
     {
         QString subdir_path = QStringLiteral( "%1%2/" )
             .arg( root_path_info.absoluteFilePath() ).arg( subdir );

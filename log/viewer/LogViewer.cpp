@@ -47,7 +47,7 @@ void LogViewer::loadConfigPath( const QString & path )
 {
     Q_UNUSED( path );
 
-    foreach( LogViewerTab * tab, mTabs )
+    for( LogViewerTab * tab: mTabs )
     {
         if( tab ) tab->updateView();
     }
@@ -57,7 +57,7 @@ void LogViewer::loadConfigSettings()
 {
     mConfig.loadSettings();
 
-    foreach( LogViewerTab* tab, mTabs )
+    for( LogViewerTab* tab: mTabs )
     {
         if( tab ) tab->updateView();
     }
@@ -125,7 +125,7 @@ void LogViewer::onConfigureClicked()
         mConfig = config_dialog.config();
         mConfig.saveSettings();
 
-        foreach( LogViewerTab * tab, mTabs )
+        for( LogViewerTab * tab: mTabs )
         {
             tab->updateView();
         }
@@ -161,7 +161,7 @@ void LogViewer::processLogMessage()
     {
         HbLogMessage * message = mTempBuffer.takeFirst();
     
-        foreach( LogViewerTab* tab, mTabs )
+        for( LogViewerTab* tab: mTabs )
         {
             tab->addEntry( message );
         }

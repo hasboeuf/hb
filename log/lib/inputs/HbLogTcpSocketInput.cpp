@@ -19,7 +19,7 @@ HbLogTcpSocketInput::HbLogTcpSocketInput( quint32 port ) :
 HbLogTcpSocketInput::~HbLogTcpSocketInput()
 {
     // onDisconnected() handles the rest.
-    foreach( QTcpSocket * client, mClients.values() )
+    for( QTcpSocket * client: mClients.values() )
         q_assert_ptr( client )->close();
 
     mClients.clear();

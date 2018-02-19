@@ -76,7 +76,7 @@ void HbLogService::processArgs(QStringList args)
 
     QString error;
 
-    foreach( QString arg, args )
+    for( QString arg: args )
     {
         int pos = check.indexIn( arg );
         if(pos != -1)

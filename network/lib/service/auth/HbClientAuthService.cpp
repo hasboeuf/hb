@@ -18,7 +18,7 @@ HbClientAuthService::HbClientAuthService()
 
 void HbClientAuthService::reset()
 {
-    foreach( HbClientAuthStrategy * strategy, mStrategies )
+    for( HbClientAuthStrategy * strategy: mStrategies )
     {
         strategy->reset();
     }

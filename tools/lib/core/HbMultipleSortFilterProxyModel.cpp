@@ -85,7 +85,7 @@ bool HbMultipleSortFilterProxyModel::filterAcceptsRow ( int source_row, const QM
     }
     else
     {
-        foreach( qint32 current_column, filter_columns )
+        for( qint32 current_column: filter_columns )
         {
             ModelFilter filter = filters[current_column];
 

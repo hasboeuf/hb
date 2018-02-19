@@ -61,7 +61,7 @@ void LogViewerConfigDialog::updateGui()
     qsb_buffer->setValue( mConfig.maxBuffer() );
 
     // Colors
-    foreach( QAbstractButton * vButton, qbg_colors.buttons() )
+    for( QAbstractButton * vButton: qbg_colors.buttons() )
     {
         QColor c = mConfig.colorByIdLevel( qbg_colors.id( vButton ) );
 
@@ -77,7 +77,7 @@ void LogViewerConfigDialog::updateGui()
 
     // Project folders
     qte_project_folders->clear();
-    foreach( const QString project_folder, mConfig.projectFolders() )
+    for( const QString project_folder: mConfig.projectFolders() )
     {
         qte_project_folders->append( project_folder );
     }
@@ -161,7 +161,7 @@ void LogViewerConfigDialog::onEditorNameChanged()
 
     qcb_default->clear();
 
-    foreach( QLineEdit * field, qfl_editor_fields )
+    for( QLineEdit * field: qfl_editor_fields )
     {
         if ( !field ) continue;
 
@@ -197,7 +197,7 @@ void LogViewerConfigDialog::saveConfig()
     // Project folders
     QStringList folders = qte_project_folders->toPlainText().split( QChar::LineFeed, QString::SkipEmptyParts );
     mConfig.resetProjectFolders();
-    foreach( const QString folder, folders )
+    for( const QString folder: folders )
     {
         mConfig.addProjectFolder( folder );
     }
@@ -206,7 +206,7 @@ void LogViewerConfigDialog::saveConfig()
     mConfig.setDefaultEditor( qcb_default->currentText() );
     mConfig.resetEditors();
 
-    foreach( QLineEdit * field, qfl_editor_fields )
+    for( QLineEdit * field: qfl_editor_fields )
     {
         if (!field) continue;
         QLineEdit * label = qobject_cast< QLineEdit * >( qfl_editors->labelForField( field ) );

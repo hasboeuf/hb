@@ -7,7 +7,7 @@ HbTimeoutNetworkReplies::~HbTimeoutNetworkReplies()
 {
     printf( "~HbTimeoutNetworkReplies mReplies=%d\n", mReplies.size() );
 
-    foreach( QNetworkReply * reply, mReplies.keys() )
+    for( QNetworkReply * reply: mReplies.keys() )
     {
         delete reply;
     }

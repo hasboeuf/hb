@@ -54,7 +54,7 @@ HbClientConnectionPool::HbClientConnectionPool( const HbGeneralClientConfig & co
     connect( service_auth, &HbAuthService::socketAuthenticated,   this, &HbClientConnectionPool::onSocketAuthenticated,   Qt::UniqueConnection );
     connect( service_auth, &HbAuthService::socketUnauthenticated, this, &HbClientConnectionPool::onSocketUnauthenticated, Qt::UniqueConnection );
 
-    foreach( HbNetworkService * service, mServices )
+    for( HbNetworkService * service: mServices )
     {
         q_assert_ptr( service );
 
@@ -168,7 +168,7 @@ networkuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , b
 
     network_uid = client->uid();
 
-    foreach( HbNetworkChannel * channel, config.channels() )
+    for( HbNetworkChannel * channel: config.channels() )
     {
         plugChannel( channel, network_uid );
     }
@@ -277,7 +277,7 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
             HbInfo( "Client %d will not reconnect, deletion...", client_uid );
 
             // Unplug channels.
-            foreach( HbNetworkChannel * channel, client->configuration().channels() )
+            for( HbNetworkChannel * channel: client->configuration().channels() )
             {
                 q_assert_ptr( channel );
                 HbConnectionPool::unplugChannel( channel );
@@ -295,7 +295,7 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
         else
         {
             // It will reconnect so we do not unplug channels but we reset it.
-            foreach( HbNetworkChannel * channel, client->configuration().channels() )
+            for( HbNetworkChannel * channel: client->configuration().channels() )
             {
                 q_assert_ptr( channel );
                 channel->internalReset( /*keep_uid*/ true );
@@ -367,7 +367,7 @@ void HbClientConnectionPool::onContractToSend ( const HbNetworkContract * contra
     if( contract->isValid() )
     {
         auto receivers = contract->receivers();
-        foreach( networkuid receiver, receivers )
+        for( networkuid receiver: receivers )
         {
             HbAbstractClient * client = mClients.value( receiver, nullptr );
             if( client )

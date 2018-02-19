@@ -15,7 +15,7 @@ HbClientPresenceService::HbClientPresenceService()
 
 void HbClientPresenceService::reset()
 {
-    foreach( qint32 timer_id , mTimerBySocketUid )
+    for( qint32 timer_id: mTimerBySocketUid )
     {
         killTimer( timer_id );
     }

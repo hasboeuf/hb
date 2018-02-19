@@ -51,7 +51,7 @@ void LogViewerConfig::buildDomFromConfig(QDomElement& root) const
 
     // Project dir
     QDomElement project_folders = dom.createElement( QStringLiteral( "projectFolders" ) );
-    foreach( QString folder, mProjectFolders )
+    for( QString folder: mProjectFolders )
     {
         QDomElement project_folder = dom.createElement( QStringLiteral( "projectFolder" ) );
         project_folder.setAttribute( QStringLiteral( "path" ), folder );
@@ -222,7 +222,7 @@ void LogViewerConfig::loadSettings()
     mEditorCommands.clear();
     settings.beginGroup( QStringLiteral( "editors/commands" ) );
     QStringList editors = settings.childKeys();
-    foreach (const QString editor, editors)
+    for (const QString editor: editors)
     {
         mEditorCommands[editor] = settings.value( editor ).toString();
     }

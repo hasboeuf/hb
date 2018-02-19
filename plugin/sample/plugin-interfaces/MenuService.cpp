@@ -17,7 +17,7 @@ MenuService::MenuService( QMenuBar * menuBar ) :
     if( mMenuBar )
     {
         QList< QMenu * > menus = mMenuBar->findChildren< QMenu * >();
-        foreach( QMenu* menu, menus )
+        for( QMenu* menu: menus )
         {
             if     ( menu->title() == QStringLiteral( "File"    ) ) mMenus.insert(MENU_FILE,    menu );
             else if( menu->title() == QStringLiteral( "Edit"    ) ) mMenus.insert(MENU_EDIT,    menu );

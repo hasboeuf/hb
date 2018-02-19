@@ -119,7 +119,7 @@ void HbTcpServer::onNewConnection(qint32 socket_descriptor)
     HbSocketHandler * handler = nullptr;
 
     // Seeking an available handler.
-    foreach( HbSocketHandler * h , mHandlerById.values() )
+    for( HbSocketHandler * h: mHandlerById.values() )
     {
         if ( h->canHandleNewConnection() )
         {

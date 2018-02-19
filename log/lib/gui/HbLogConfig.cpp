@@ -248,7 +248,7 @@ void HbLogConfig::loadSettings()
     mLevelColors.clear();
     QStringList levels = settings.childKeys();
 
-    foreach(QString level, levels)
+    for(QString level: levels)
     {
         QColor color;
         color.setNamedColor(settings.value(level).toString());
