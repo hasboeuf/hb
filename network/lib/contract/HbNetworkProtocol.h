@@ -29,15 +29,6 @@ namespace hb
         class HB_NETWORK_DECL HbNetworkProtocol final
         {
             Q_GADGET
-            Q_ENUMS_HANDLER( HbNetworkProtocol )
-            Q_ENUMS( NetworkType )
-            Q_ENUMS( Service )
-            Q_ENUMS( Code )
-            Q_ENUMS( ServerStatus )
-            Q_ENUMS( ClientStatus )
-            Q_ENUMS( UserStatus )
-            Q_ENUMS( NetworkUserStatus )
-            Q_ENUMS( KickCode )
 
         public:
             static QString msAppName;
@@ -53,7 +44,8 @@ namespace hb
                 NETWORK_LOCAL     = 1 << 4,
                 NETWORK_BLUETOOTH = 1 << 5
             };
-            Q_META_ENUMS( NetworkType )
+            Q_ENUM( NetworkType )
+            HB_ENUM( NetworkType )
             Q_DECLARE_FLAGS( NetworkTypes, NetworkType )
 
             enum RoutingScheme : netwint
@@ -74,7 +66,8 @@ namespace hb
                 SERVICE_CHANNEL   = 5,
                 SERVICE_USER      = 999
             };
-            Q_META_ENUMS( Service )
+            Q_ENUM( Service )
+            HB_ENUM( Service )
 
             enum Code : codeuid
             {
@@ -87,10 +80,9 @@ namespace hb
                 CODE_SRV_USER_CONNECTED,
 
                 CODE_USER = 999
-
-
             };
-            Q_META_ENUMS( Code )
+            Q_ENUM( Code )
+            HB_ENUM( Code )
 
             enum KickCode : netwlint
             {
@@ -103,9 +95,9 @@ namespace hb
                 KICK_PRESENCE_TIMEOUT,
 
                 KICK_USER = 999
-
             };
-            Q_META_ENUMS( KickCode )
+            Q_ENUM( KickCode )
+            HB_ENUM( KickCode )
 
             enum AuthStatus : netwint
             {
@@ -125,7 +117,8 @@ namespace hb
                 SERVER_DISCONNECTED,
                 SERVER_LISTENING
             };
-            Q_META_ENUMS( ServerStatus )
+            Q_ENUM( ServerStatus )
+            HB_ENUM( ServerStatus )
 
             enum ClientStatus : netwint
             {
@@ -135,7 +128,8 @@ namespace hb
                 CLIENT_AUTHENTICATING,
                 CLIENT_AUTHENTICATED
             };
-            Q_META_ENUMS( ClientStatus )
+            Q_ENUM( ClientStatus )
+            HB_ENUM( ClientStatus )
 
             enum UserStatus : netwint
             {
@@ -145,7 +139,8 @@ namespace hb
                 USER_AUTHENTICATING,
                 USER_AUTHENTICATED,
             };
-            Q_META_ENUMS( UserStatus )
+            Q_ENUM( UserStatus )
+            HB_ENUM( UserStatus )
 
             enum NetworkUserStatus : netwint
             {
@@ -154,7 +149,8 @@ namespace hb
                 NETWORK_USER_LAGGED,
                 NETWORK_USER_DISCONNECTED
             };
-            Q_META_ENUMS( NetworkUserStatus )
+            Q_ENUM( NetworkUserStatus )
+            HB_ENUM( NetworkUserStatus )
 
         };
     }

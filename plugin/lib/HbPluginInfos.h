@@ -33,8 +33,6 @@ namespace hb
         class HB_PLUGIN_DECL HbPluginInfos : public QObject
         {
             Q_OBJECT
-            Q_ENUMS_HANDLER( HbPluginInfos )
-            Q_ENUMS( PluginState )
 
         public:
             enum PluginState
@@ -45,7 +43,8 @@ namespace hb
                 PLUGIN_LOADED_PARTIALLY,
                 PLUGIN_LOADED
             };
-            Q_META_ENUMS( PluginState )
+            Q_ENUM( PluginState )
+            HB_ENUM( PluginState )
 
 
             HbPluginInfos();

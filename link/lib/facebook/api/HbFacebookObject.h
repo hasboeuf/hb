@@ -28,8 +28,6 @@ namespace hb
         class HB_LINK_DECL HbFacebookObject
         {
             Q_GADGET
-            Q_ENUMS_HANDLER( HbFacebookObject )
-            Q_ENUMS( ObjectType )
 
         public:
             enum ObjectType
@@ -37,7 +35,8 @@ namespace hb
                 OBJECT_NONE = 0,
                 OBJECT_USER
             };
-            Q_META_ENUMS( ObjectType )
+            Q_ENUM( ObjectType )
+            HB_ENUM( ObjectType )
 
             HbFacebookObject();
             virtual ~HbFacebookObject() = default;

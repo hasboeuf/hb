@@ -34,8 +34,6 @@ namespace hb
         {
             Q_OBJECT
             Q_DISABLE_COPY(HbLoggerStream)
-            Q_ENUMS_HANDLER( HbLoggerStream )
-            Q_ENUMS( State )
 
         public:
             static const char * DEFAULT_LOCAL_SERVER_NAME;
@@ -49,7 +47,8 @@ namespace hb
                 INOUT_DEL_SUCCESS,
                 INOUT_DEL_FAIL
             };
-            Q_META_ENUMS( State )
+            Q_ENUM( State )
+            HB_ENUM( State )
 
         protected:
 

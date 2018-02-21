@@ -22,7 +22,7 @@ HbLogWidget::HbLogWidget(QWidget *parent) :
     {
         if (!level.contains(QLatin1String("_ALL")) && !level.contains(QLatin1String("_NONE")))
         {
-            HbLogger::Level enum_level = HbLogger::MetaLevel::fromString(level, HbLogger::LEVEL_TRACE);
+            HbLogger::Level enum_level = HbLogger::MetaLevel::fromString(level);
 
             qcb_level->addItem(level, enum_level);
         }

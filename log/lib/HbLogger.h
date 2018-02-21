@@ -32,11 +32,7 @@ namespace hb
         {
             Q_GADGET
             Q_DISABLE_COPY ( HbLogger )
-            Q_ENUMS_HANDLER( HbLogger )
             Q_FRIEND_CLASS ( HbLogContext )
-
-            Q_ENUMS( Level )
-            Q_ENUMS( Format )
 
         public:
 
@@ -63,9 +59,10 @@ namespace hb
                 OUTPUT_ALL     = OUTPUT_LEVEL | OUTPUT_TIME | OUTPUT_WHO | OUTPUT_WHERE | OUTPUT_TEXT
             };
 
-            Q_META_ENUMS( Format )
-            Q_META_ENUMS( Level )
-
+            Q_ENUM( Level )
+            Q_ENUM( Format )
+            HB_ENUM( Level )
+            HB_ENUM( Format )
             Q_DECLARE_FLAGS( Formats, Format )
             Q_DECLARE_FLAGS( Levels, Level )
 

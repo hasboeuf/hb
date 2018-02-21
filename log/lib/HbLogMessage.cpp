@@ -24,7 +24,7 @@ const HbLogMessage * HbLogMessage::fromRaw( const QString & raw)
         QString function    = fields.at( 5 );
         QString text        = fields.at( 6 );
 
-        HbLogger::Level level = HbLogger::MetaLevel::fromString( level_str, HbLogger::LEVEL_NONE );
+        HbLogger::Level level = HbLogger::MetaLevel::fromString( level_str );
 
         HbSteadyDateTime datetime = HbSteadyDateTime::fromString( time_str, QStringLiteral( "yyyy-MM-dd-HH:mm:ss:zzz.uuuuuu" ) );
         qint64 timestamp = datetime.toNsSinceEpoch();

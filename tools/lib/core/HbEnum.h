@@ -11,92 +11,69 @@
 
 /*! \file HbEnum.h */
 
+// Qt
+#include <QMetaEnum>
 // Hb
 #include <HbTools.h>
-#include <core/HbEnumerator.h>
+#include <HbGlobal.h>
 
-namespace hbprivate
-{
-    /*!
-     * Internal class, TODOC.
-     */
-    template< typename Class, typename Enum >
-    class HbEnumHelper
-    {
-        Q_DEFAULT_COPY( HbEnumHelper )
+namespace hb {
+    namespace tools {
 
-
-    public:
-
-        static QString name()
+        template< typename Enum >
+        class HbEnum
         {
-            return hbprivate::HbEnumerator< Class >::template name< Enum >();
-        }
+            Q_STATIC_CLASS( HbEnum )
 
-        static qint16 count()
-        {
-            return hbprivate::HbEnumerator< Class >::template count< Enum >();
-        }
-
-        static bool isFlag()
-        {
-            return hbprivate::HbEnumerator< Class >::template isFlag< Enum >();
-        }
-
-        static nullable< Enum > value( qint16 index )
-        {
-            return hbprivate::HbEnumerator< Class >::template value< Enum >( index );
-        }
-
-        static qint16 index( Enum value )
-        {
-            return hbprivate::HbEnumerator< Class >::index( value );
-        }
-
-        static QString toString( Enum value )
-        {
-            QString texte = hbprivate::HbEnumerator< Class >::toString( value );
-            if( texte.isEmpty() )
-            {
-                texte = QString::number( ( int ) value );
+        public:
+            static QStringList toString() {
+                QStringList keys;
+                const QMetaEnum metaEnum = HbEnum::metaEnum();
+                for( qint16 index = 0; index < metaEnum.keyCount(); ++index ) {
+                    qint32 value = metaEnum.value( index );
+                    Q_ASSERT( value != -1 );
+                    auto str = metaEnum.valueToKey( ( Enum ) value );
+                    Q_ASSERT( str );
+                    keys.append( QString::fromLatin1( str ) );
+                }
+                return keys;
             }
-            return texte;
-        }
 
-        static QString toString( qint64 value )
-        {
-            return toString( ( Enum ) value );
-        }
+            static QString toString( Enum value ) {
+                return HbEnum::toString( ( qint32 ) value );
+            }
 
-        static QStringList toString()
-        {
-            return hbprivate::HbEnumerator< Class >::template toString< Enum >();
-        }
+            static QString toString( qint32 value ) {
+                const QMetaEnum metaEnum = HbEnum::metaEnum();
+                auto str = metaEnum.valueToKey( ( qint32 ) value );
+                Q_ASSERT( str );
+                return QString::fromLatin1( str );
+            }
 
-        static nullable< Enum > fromString( const QString & label )
-        {
-            return hbprivate::HbEnumerator< Class >::template fromString< Enum >( label );
-        }
+            static Enum fromString( const QString & label )
+            {
+                const QMetaEnum metaEnum = HbEnum::metaEnum();
 
-        static Enum fromString( const QString & label, Enum defaultValue )
-        {
-            return hbprivate::HbEnumerator< Class >::template fromString< Enum >( label ).value( defaultValue );
-        }
-    };
+                qint32 key = metaEnum.keyToValue( label.toLatin1().constData() );
+                Q_ASSERT( key != -1 );
+                return ( Enum ) key;
+            }
+
+        private:
+            static QMetaEnum metaEnum() {
+                auto enumerator = QMetaEnum::fromType<Enum>();
+                Q_ASSERT( enumerator.isValid() );
+                return enumerator;
+            }
+        };
+    }
 }
 
-/*! \def Q_ENUMS_HANDLER
- * Q_ENUMS_HANDLER enables introspection of enums class.
+/*! \def HB_ENUM
+ * Macro that creates a Meta{MyEnum} static class
+ * Provide convenient methods for introspection with the help of QMetaEnum.
+ * \note Q_ENUM needs to be called first.
  */
-#define Q_ENUMS_HANDLER( Class ) \
-public: \
-\
-    template< typename Enum > \
-    class HbEnum : public hbprivate::HbEnumHelper< Class, Enum > {}; \
-\
-private:
-
-#define Q_META_ENUMS( Enum ) \
-    typedef HbEnum< Enum > Meta ## Enum;
-
+#define HB_ENUM( Enum ) \
+    typedef hb::tools::HbEnum< Enum > Meta ## Enum;
 #endif
