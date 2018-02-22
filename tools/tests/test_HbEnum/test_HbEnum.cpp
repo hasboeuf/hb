@@ -30,9 +30,9 @@ private slots:
     }
 
     void testFromString() {
-        QCOMPARE( Value1, MetaMyEnum::fromString( "Value1" ) );
-        QCOMPARE( Value2, MetaMyEnum::fromString( "Value2" ) );
-        QCOMPARE( Value3, MetaMyEnum::fromString( "Value3" ) );
+        QCOMPARE( MetaMyEnum::fromString( "Value1" ), Value1 );
+        QCOMPARE( MetaMyEnum::fromString( "Value2" ), Value2 );
+        QCOMPARE( MetaMyEnum::fromString( "Value3" ), Value3 );
     }
 };
 
