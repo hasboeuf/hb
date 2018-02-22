@@ -30,7 +30,7 @@ namespace hb
         /*!
          * TODOC
          */
-        class HbSocketHandler : public QObject, public HbUid< networkuid, CLASS_SERVER, true >
+        class HbSocketHandler : public QObject, public HbUid< CLASS_SERVER >
         {
             Q_OBJECT
             Q_DISABLE_COPY( HbSocketHandler )

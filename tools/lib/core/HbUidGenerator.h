@@ -23,6 +23,10 @@
 #include <core/HbSingleton.h>
 #include <HbGlobal.h>
 
+const quint32 LOWEST_UID = 1;
+
+class TestHbUid;
+
 namespace hb
 {
     namespace tools
@@ -30,76 +34,65 @@ namespace hb
         /*!
          * HbUidGenerator maintains a list of unique integer identifiers for the application.
          * It is a singleton class.
-         * \param T Type of integer.
          * \param C Uid belongings.
          * \sa HbUid
          */
-        template< typename T = qint32, size_t C = CLASS_DEFAULT >
-        class HbUidGenerator : public HbSingleton< HbUidGenerator< T, C > >
+        template< size_t C = CLASS_DEFAULT >
+        class HbUidGenerator : public HbSingleton< HbUidGenerator< C > >
         {
-            using I = typename std::conditional< std::is_integral< T >::value, T, qint32 >::type;
-
             Q_DISABLE_COPY( HbUidGenerator )
 
-            // https://connect.microsoft.com/VisualStudio/feedbackdetail/view/731937/friend-template-bug-in-msvc
-            //friend HbUidGenerator< T, C > * HbSingleton< HbUidGenerator< T, C > >::get();
-            //friend void HbSingleton< HbUidGenerator< T, C > >::kill();
-            friend class HbSingleton< HbUidGenerator< T, C > >;
-
-        private:
-            QMutex mMutex;
-            QHash< ulong, I > mCurrent;
-            QHash< ulong, QQueue< I > > mUnused;
+            friend class HbSingleton< HbUidGenerator< C > >;
+            friend class ::TestHbUid;
 
         public:
-            I uid( bool zero_excluded = false )
+            quint32 uid()
             {
-                I value = 0;
+                quint32 value = 0;
 
                 { // Mutex area
                     QMutexLocker locker( &mMutex );
 
-                    if( !mUnused[C].isEmpty() )
-                    {
-                        value = mUnused[C].dequeue();
+                    if( !mUnused.isEmpty() ) {
+                        value = mUnused.dequeue();
                     }
-                    else
-                    {
-                        value = mCurrent[C]++;
+                    else {
+                        value = mCurrent++;
                     }
                 }
 
-                if( zero_excluded && value == 0 )
-                {
-                    return uid( true );
-                }
-
+                Q_ASSERT( value != 0 );
                 return value;
             }
 
-            I randomId()
+            quint32 randomId()
             {
                 QMutexLocker locker( &mMutex );
 
-                I lowest = std::numeric_limits< I >::min();
-                I highest = std::numeric_limits< I >::max();
+                quint32 lowest = LOWEST_UID;
+                quint32 highest = std::numeric_limits< quint32 >::max();
                 return qrand() % ((highest + 1) - lowest) + lowest;
             }
 
-            void releaseUid( I released_id )
+            void releaseUid( quint32 released_id )
             {
                 QMutexLocker locker( &mMutex );
-
-                mUnused[C].enqueue( released_id );
+                mUnused.enqueue( released_id );
             }
 
         private:
-            HbUidGenerator()
-            {
-                mCurrent[C] = std::numeric_limits< I >::min();
+            HbUidGenerator() = default;
+            ~HbUidGenerator() = default;
+
+            void reset() {
+                QMutexLocker locker( &mMutex );
+                mUnused.clear();
+                mCurrent = LOWEST_UID;
             }
 
-            ~HbUidGenerator() = default;
+            QMutex mMutex;
+            quint32 mCurrent = LOWEST_UID;
+            QQueue< quint32 > mUnused;
         };
     }
 }

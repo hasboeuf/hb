@@ -26,10 +26,9 @@
 // Qt
 #include <QtCore/QtGlobal>
 
-typedef quint64 replyuid; //!< Integer range for replies.
-
 const size_t CLASS_DEFAULT = 0; //!< Default class identifier for uids.
 const size_t CLASS_REPLIES = 10; //!< Identifier for replies uids class.
+const size_t CLASS_USER = 100; //!< User class identifiers can begin from this value.
 
 #if !defined( HB_TOOLS_DECL )
 #   if defined( HB_SHARED )

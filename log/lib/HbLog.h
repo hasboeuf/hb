@@ -18,7 +18,7 @@
 // Qt
 #include <QtCore/QtGlobal>
 
-typedef quint16 loguid; //!< Integer range for log in/outputs.
+typedef quint32 loguid; //!< Integer range for log in/outputs.
 
 const size_t CLASS_LOG = 30; //!< Identifier for log in/output uids class.
 

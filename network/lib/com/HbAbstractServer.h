@@ -31,7 +31,7 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbAbstractServer : public HbAbstractNetwork, public HbUid< networkuid, CLASS_SERVER, true >
+        class HB_NETWORK_DECL HbAbstractServer : public HbAbstractNetwork, public HbUid< CLASS_SERVER >
         {
             Q_OBJECT
             Q_DISABLE_COPY( HbAbstractServer )

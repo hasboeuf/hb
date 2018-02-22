@@ -22,7 +22,7 @@
 typedef quint32 networkuid;  //!< Integer range for socket/server uid.
 typedef quint16 serviceuid;  //!< Integer range for service uid.
 typedef quint16 codeuid;     //!< Integer range for code uid.
-typedef quint64 contractuid; //!< Integer range for contract uid.
+typedef quint32 contractuid; //!< Integer range for contract uid.
 // High level
 typedef quint8  authstgy; //!< Integer range for auth strategies.
 typedef quint8  netwint;  //!< Integer range (8 bytes) mainly for network enums.

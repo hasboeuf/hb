@@ -32,7 +32,7 @@ namespace hb
         /*!
          * TODOC
          */
-        class HB_NETWORK_DECL HbNetworkContract : public HbUid< contractuid, CLASS_CONTRACT >
+        class HB_NETWORK_DECL HbNetworkContract : public HbUid< CLASS_CONTRACT >
         {
             Q_FRIEND_CLASS( HbNetworkExchanges )
 

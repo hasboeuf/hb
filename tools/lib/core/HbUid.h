@@ -22,20 +22,17 @@ namespace hb
     {
         /*!
          * HbUid provides a unique integer identifier.
-         * \param T Type of integer.
          * \param C Uid belongings.
-         * \param Z Zero exclusion.
          * \sa HbUidGenerator
          */
-        template< typename T = qint32, size_t C = CLASS_DEFAULT, bool Z = false >
+        template< size_t C = CLASS_DEFAULT >
         class HbUid
         {
-            using I = typename std::conditional< std::is_integral< T >::value, T, qint32 >::type;
 
         public:
             HbUid()
             {
-                mUid = HbUidGenerator< T, C >::get()->uid( Z );
+                mUid = HbUidGenerator< C >::get()->uid();
                 mReleaseUid = true;
             }
 
@@ -43,11 +40,11 @@ namespace hb
             {
                 if( mReleaseUid )
                 {
-                    HbUidGenerator< T, C >::get()->releaseUid( mUid );
+                    HbUidGenerator< C >::get()->releaseUid( mUid );
                 }
             }
 
-            virtual I uid() const final
+            virtual quint32 uid() const final
             {
                 return mUid;
             }
@@ -61,7 +58,7 @@ namespace hb
                     return false;
                 }
 
-                HbUidGenerator< T, C >::get()->releaseUid( mUid );
+                HbUidGenerator< C >::get()->releaseUid( mUid );
                 mUid = uid_object->uid();
                 uid_object->mReleaseUid = false;
 
@@ -69,7 +66,7 @@ namespace hb
             }
 
         protected:
-            I    mUid;
+            quint32 mUid;
             bool mReleaseUid;
         };
     }

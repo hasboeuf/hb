@@ -25,7 +25,7 @@ namespace hb
          */
         class HbLogAbstractInput :
             public IHbLoggerInput,
-            public HbUid< loguid, CLASS_LOG, true >
+            public HbUid< CLASS_LOG >
         {
             Q_DISABLE_COPY( HbLogAbstractInput )
 
