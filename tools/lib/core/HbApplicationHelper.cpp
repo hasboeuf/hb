@@ -98,7 +98,7 @@ void HbApplicationHelper::catchInterruptingEvents()
         qApp->quit();
     };
 
-    QSet< int > sigs = {SIGQUIT, SIGINT, SIGTERM, SIGHUP};
+    QSet< int > sigs = {SIGQUIT, SIGINT, SIGTERM, SIGHUP, SIGABRT};
     for( int sig : sigs )
     {
         signal( sig, handler );
