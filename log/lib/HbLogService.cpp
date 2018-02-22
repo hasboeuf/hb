@@ -11,6 +11,14 @@ using namespace hb::log;
 
 QThreadStorage< HbLogManager * > HbLogService::msManager;
 
+void qtHbLogHandler( QtMsgType type, const QMessageLogContext & context, const QString & message )
+{
+    HbLogContext( context ).print( type, message );
+    if ( type == QtFatalMsg ) {
+        abort();
+    }
+}
+
 void HbLogService::subscribe()
 {
     if( !msManager.hasLocalData() )
@@ -24,6 +32,9 @@ void HbLogService::subscribe()
     }
 }
 
+void HbLogService::install() {
+    qInstallMessageHandler(qtHbLogHandler);
+}
 
 HbLogger * HbLogService::logger()
 {

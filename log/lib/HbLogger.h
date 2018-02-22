@@ -39,14 +39,12 @@ namespace hb
             enum Level : qint16
             {
                 LEVEL_NONE      = 0,        // No Levels enabled
-                LEVEL_TRACE     = 1 << 0,   // Macro HbTrace    to be logged.
-                LEVEL_DEBUG     = 1 << 1,   // Macro HbDebug    to be logged.
-                LEVEL_INFO      = 1 << 2,   // Macro HbInfo     to be logged.
-                LEVEL_WARNING   = 1 << 3,   // Macro HbWarning  to be logged.
-                LEVEL_ERROR     = 1 << 4,   // Macro HbError    to be logged.
-                LEVEL_CRITICAL  = 1 << 5,   // Macro HbCritical to be logged.
-                LEVEL_FATAL     = 1 << 6,   // Macro HbFatal    to be logged.
-                LEVEL_ALL       = LEVEL_TRACE | LEVEL_DEBUG | LEVEL_INFO | LEVEL_WARNING | LEVEL_ERROR | LEVEL_CRITICAL | LEVEL_FATAL
+                LEVEL_DEBUG     = 1 << 0,   // qDebug
+                LEVEL_INFO      = 1 << 1,   // qInfo
+                LEVEL_WARNING   = 1 << 2,   // qWarning
+                LEVEL_CRITICAL  = 1 << 3,   // qCritical
+                LEVEL_FATAL     = 1 << 4,   // qFatal
+                LEVEL_ALL       = LEVEL_DEBUG | LEVEL_INFO | LEVEL_WARNING | LEVEL_CRITICAL | LEVEL_FATAL
             };
 
             enum Format : qint16
@@ -99,15 +97,6 @@ namespace hb
              */
             virtual void flush() final;
 
-            virtual void qtMessageHandler( bool enabled ) final;
-
-            /*!
-             * Push a log message into the log lib.
-             * Note that it is kindly recommended to use macros of HbLogService to call this method.
-             */
-            virtual void print( Level level, const char * message, ... ) final;
-            virtual void print( Level level, const char * message, va_list args ) final;
-
         protected:
 
             HbLogger() = default;
@@ -118,7 +107,7 @@ namespace hb
 
         private:
 
-            void print( Level level, const HbLogContext & context, const char * message, va_list args );
+            void print( Level level, const HbLogContext & context, const QString & message );
 
         private:
 

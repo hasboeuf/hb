@@ -8,7 +8,6 @@
 #include <HbLoggerOutputs.h>
 #include <HbLoggerPool.h>
 #include <HbLogMessage.h>
-#include <native/HbLogHandler.h>
 #include <core/HbSteadyDateTime.h>
 
 using namespace hb::log;
@@ -39,10 +38,6 @@ HbLogManager::HbLogManager() :
 
         msLoggerPool->moveToThread( msThreadPool );
         msThreadPool->start();
-
-#if !defined( QT_NO_DEBUG )
-        qtMessageHandler( true );
-#endif
     }
 
     mpInputs = q_check_ptr( new HbLoggerInputs( this ) );
@@ -60,10 +55,6 @@ HbLogManager::~HbLogManager()
 
     if( --msInstances == 0 )
     {
-#if !defined( QT_NO_DEBUG )
-        qtMessageHandler( false );
-#endif
-
         msThreadPool->exit();
         msThreadPool->wait();
 
@@ -115,11 +106,11 @@ void HbLogManager::tryEnqueueMessage()
     }
 }
 
-void HbLogManager::enqueueMessage( Level level, Formats format, const HbLogContext & context, const QString & text )
+void HbLogManager::enqueueMessage(Level level, Formats format, const HbLogContext & context, const QString & text )
 {
     qint64 timestamp = HbSteadyDateTime::now().toNsSinceEpoch();
 
-    HbLogMessage * message = q_check_ptr( new HbLogMessage( level, format, context, timestamp, text ) );
+    HbLogMessage * message = new HbLogMessage( level, format, context, timestamp, text );
 
     mMessages.push_back( message );
     tryEnqueueMessage();

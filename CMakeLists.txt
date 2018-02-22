@@ -30,12 +30,12 @@ endforeach()
 
 add_subdirectory(tools)
 add_subdirectory(log)
-add_subdirectory(plugin)
-add_subdirectory(link)
-add_subdirectory(network)
+#add_subdirectory(plugin)
+#add_subdirectory(link)
+#add_subdirectory(network)
 
 # Add all targets to the build-tree export set
-export(TARGETS HbTools HbLog HbPlugin HbLink HbNetwork FILE "${PROJECT_BINARY_DIR}/HbTargets.cmake")
+#export(TARGETS HbTools HbLog HbPlugin HbLink HbNetwork FILE "${PROJECT_BINARY_DIR}/HbTargets.cmake")
 
 # Create the HbConfig.cmake and HbConfigVersion files
 file(RELATIVE_PATH REL_INCLUDE_DIR "${INSTALL_CMAKE_DIR}" "${INSTALL_INCLUDE_DIR}")

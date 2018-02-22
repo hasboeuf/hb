@@ -13,6 +13,7 @@
 
 // Qt
 #include <QtCore/QDataStream>
+#include <QtCore/QDebug>
 // Hb
 #include <HbLogger.h>
 
@@ -29,19 +30,25 @@ namespace hb
         public:
 
             HbLogContext();
-            HbLogContext( const HbLogContext & context );
-            HbLogContext( const char * file, qint32 line, const char * function );
-            HbLogContext( const QString & owner, const char * file, qint32 line, const char * function );
             virtual ~HbLogContext() = default;
+            HbLogContext( const QMessageLogContext & context );
 
+            HbLogContext( const HbLogContext & context );
             HbLogContext & operator =( const HbLogContext & context );
 
             const QString & owner   () const;
+            qint32          thread  () const;
             const QString & file    () const;
             qint32          line    () const;
             const QString & function() const;
 
-            void print ( HbLogger::Level level, const char * message, ... ) const;
+            void setOwner   ( const QString & owner );
+            void setThread  ( qint32 thread );
+            void setFile    ( const QString & file );
+            void setLine    ( quint32 line );
+            void setFunction( const QString & function );
+
+            void print ( QtMsgType type, const QString & message ) const;
 
             friend QDataStream & operator <<( QDataStream & stream, const HbLogContext & context );
             friend QDataStream & operator >>( QDataStream & stream, HbLogContext & context );
@@ -49,8 +56,9 @@ namespace hb
         private:
 
             QString mOwner;
+            qint32 mThread;
             QString mFile;
-            qint32  mLine;
+            quint32  mLine;
             QString mFunction;
 
             static QString msApplicationName;

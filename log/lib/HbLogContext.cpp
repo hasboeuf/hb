@@ -1,5 +1,7 @@
 // Qt
 #include <QtCore/QCoreApplication>
+#include <QtCore/QDir>
+#include <QtCore/QThread>
 // Hb
 #include <HbLogContext.h>
 #include <HbLogService.h>
@@ -18,7 +20,16 @@ HbLogContext::HbLogContext()
     }
 
     mOwner = msApplicationName;
-    mLine = -1;
+    mThread = 0;
+    mLine = 0;
+}
+
+HbLogContext::HbLogContext(const QMessageLogContext & context ) :
+    HbLogContext()
+{
+    mFile = QString(context.file).section(QDir::separator(), -1);
+    mLine = context.line;
+    mFunction = context.function;
 }
 
 HbLogContext::HbLogContext( const HbLogContext & context ) :
@@ -27,34 +38,19 @@ HbLogContext::HbLogContext( const HbLogContext & context ) :
     if( &context != this )
     {
         mOwner    = context.mOwner;
+        mThread   = context.mThread;
         mFile     = context.mFile;
         mLine     = context.mLine;
         mFunction = context.mFunction;
     }
 }
 
-HbLogContext::HbLogContext( const char * file, qint32 line, const char * function ) :
-    HbLogContext()
-{
-    mFile     = QString::fromLatin1( file );
-    mLine     = ( !mFile.isEmpty() ) ? line : -1;
-    mFunction = QString::fromLatin1( function );
-}
-
-HbLogContext::HbLogContext( const QString & owner, const char * file, qint32 line, const char * function )
-{
-    q_assert( !( mOwner = owner ).isEmpty() );
-    mFile     = QString::fromLatin1( file );
-    mLine     = ( !mFile.isEmpty() ) ? line : -1;
-    mFunction = QString::fromLatin1( function );
-}
-
-
 HbLogContext & HbLogContext::operator =( const HbLogContext & context )
 {
     if( &context != this )
     {
         mOwner    = context.mOwner;
+        mThread   = context.mThread;
         mFile     = context.mFile;
         mLine     = context.mLine;
         mFunction = context.mFunction;
@@ -67,6 +63,11 @@ HbLogContext & HbLogContext::operator =( const HbLogContext & context )
 const QString & HbLogContext::owner() const
 {
     return mOwner;
+}
+
+qint32 HbLogContext::thread() const
+{
+    return mThread;
 }
 
 const QString & HbLogContext::file() const
@@ -84,16 +85,49 @@ const QString & HbLogContext::function() const
     return mFunction;
 }
 
+void HbLogContext::setOwner   ( const QString & owner ) {
+    mOwner = owner;
+}
 
-void HbLogContext::print( HbLogger::Level level, const char * message, ... ) const
+void HbLogContext::setThread  ( qint32 thread ) {
+    mThread = thread;
+}
+
+void HbLogContext::setFile    ( const QString & file ) {
+    mFile = file;
+}
+
+void HbLogContext::setLine    ( quint32 line ) {
+    mLine = line;
+}
+
+void HbLogContext::setFunction( const QString & function ) {
+    mFunction = function;
+}
+
+void HbLogContext::print(QtMsgType type, const QString & message) const
 {
-    if( message )
-    {
-        va_list args;
-        va_start( args, message );
-        HbLogService::logger()->print( level, *this, message, args );
-        va_end( args );
+    HbLogger::Level level = HbLogger::LEVEL_NONE;
+    switch( type ) {
+    case QtDebugMsg:
+        level = HbLogger::LEVEL_DEBUG;
+        break;
+    case QtWarningMsg:
+        level = HbLogger::LEVEL_WARNING;
+        break;
+    case QtCriticalMsg:
+        level = HbLogger::LEVEL_CRITICAL;
+        break;
+    case QtFatalMsg:
+        level = HbLogger::LEVEL_FATAL;
+        break;
+    case QtInfoMsg:
+        level = HbLogger::LEVEL_INFO;
+        break;
+    default:
+        Q_UNREACHABLE();
     }
+    HbLogService::logger()->print( level, *this, message );
 }
 
 namespace hb

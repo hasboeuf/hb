@@ -30,7 +30,11 @@ const HbLogMessage * HbLogMessage::fromRaw( const QString & raw)
         qint64 timestamp = datetime.toNsSinceEpoch();
         qint32 line    = ( qint32 ) line_str.toInt();
 
-        HbLogContext context( owner, file.toStdString().c_str(), line, function.toStdString().c_str() );
+        HbLogContext context;
+        context.setOwner( owner );
+        context.setFile( file );
+        context.setFunction( function );
+        context.setLine( line );
         msg = new HbLogMessage( level, HbLogger::OUTPUT_ALL, context, timestamp, text );
     }
 
