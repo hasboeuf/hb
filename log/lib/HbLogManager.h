@@ -49,7 +49,7 @@ namespace hb
 
         private:
             void tryEnqueueMessage();
-            void enqueueMessage(Level level, Formats format, const HbLogContext & context, const QString & text );
+            void enqueueMessage(Level level, const HbLogContext & context, const QString & text );
             void dequeuePendingMessages();
 
         private:

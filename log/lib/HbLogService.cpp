@@ -6,6 +6,7 @@
 #include <HbLogManager.h>
 #include <HbLoggerOutputs.h>
 #include <HbLoggerInputs.h>
+#include <HbLogMessage.h>
 
 using namespace hb::log;
 
@@ -32,8 +33,9 @@ void HbLogService::subscribe()
     }
 }
 
-void HbLogService::install() {
+void HbLogService::install( const QString  & logPattern ) {
     qInstallMessageHandler(qtHbLogHandler);
+    HbLogMessage::setPattern( logPattern );
 }
 
 HbLogger * HbLogService::logger()
@@ -52,17 +54,6 @@ HbLoggerOutputs * HbLogService::outputs()
 {
     HbLogService::subscribe();
     return q_assert_ptr( msManager.localData() )->outputs();
-}
-
-void HbLogService::processArgs(int argc, char *argv[])
-{
-    QStringList args;
-    for (int n = 1; n < argc; ++n) // Skip the program name.
-    {
-        args.append(QString::fromLatin1(argv[n]));
-    }
-
-    processArgs( args );
 }
 
 void HbLogService::processArgs(QStringList args)

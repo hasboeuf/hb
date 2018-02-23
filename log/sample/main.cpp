@@ -1,5 +1,5 @@
 // Qt
-#include <QtWidgets/QApplication>
+#include <QtCore/QCoreApplication>
 // Hb
 #include <core/HbApplicationHelper.h>
 #include <HbLogService.h>
@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     hb::tools::HbApplicationHelper::initApp( "hb-io", "hb-io.com" );
     hb::tools::HbApplicationHelper::catchInterruptingEvents();
 
-    hb::log::HbLogService::install();
+    hb::log::HbLogService::install("%{level} %{message}");
     hb::log::HbLogService::outputs()->addConsoleOutput();
 
     qDebug() << "This is a debug trace";
@@ -23,5 +23,5 @@ int main(int argc, char *argv[])
     qCritical() << "This is a critical trace";
     //qFatal("This is a fatal trace");
 
-    return a.exec();
+    return 0;
 }

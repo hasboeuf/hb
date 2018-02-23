@@ -18,6 +18,8 @@ namespace hb
 {
     namespace log
     {
+        class HbLogService;
+
         /*!
          * HbLogMessage class defines a log message.
          * TODOC.
@@ -25,13 +27,13 @@ namespace hb
         class HB_LOG_DECL HbLogMessage final : public QObject
         {
         public:
-
             static const QString msFieldSeparator;
             static const HbLogMessage * fromRaw( const QString & raw); //!< Use for export.
             static QString toRaw( const HbLogMessage & msg );    //!< Use for import.
+            static void setPattern( const QString & format );
 
             HbLogMessage();
-            HbLogMessage(HbLogger::Level level, HbLogger::Formats format,
+            HbLogMessage(HbLogger::Level level,
                             const HbLogContext & context, qint64 timestamp, const QString & message );
             HbLogMessage( const HbLogMessage & message );
             virtual ~HbLogMessage() = default;
@@ -52,8 +54,26 @@ namespace hb
             void fromDataStream( QDataStream & stream );
 
         private:
+            enum Output
+            {
+                OUTPUT_NONE     = 0,
+                OUTPUT_LEVEL    = 1 << 0,
+                OUTPUT_TIME     = 1 << 1,
+                OUTPUT_APP      = 1 << 2,
+                OUTPUT_FILE     = 1 << 3,
+                OUTPUT_FUNCTION = 1 << 4,
+                OUTPUT_LINE     = 1 << 5,
+                OUTPUT_MESSAGE  = 1 << 6,
+                OUTPUT_ALL      = OUTPUT_LEVEL | OUTPUT_TIME | OUTPUT_APP | OUTPUT_FILE | OUTPUT_FUNCTION | OUTPUT_LINE | OUTPUT_MESSAGE
+            };
+            Q_ENUM( Output )
+            HB_ENUM( Output )
+            Q_DECLARE_FLAGS( Outputs, Output )
+
+            static QString msPattern;
+            static Outputs msOutputs;
+
             HbLogger::Level mLevel;
-            HbLogger::Formats mFormat;
             HbLogContext mContext;
 
             qint64  mTimestamp;

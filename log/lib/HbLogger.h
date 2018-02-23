@@ -47,21 +47,8 @@ namespace hb
                 LEVEL_ALL       = LEVEL_DEBUG | LEVEL_INFO | LEVEL_WARNING | LEVEL_CRITICAL | LEVEL_FATAL
             };
 
-            enum Format : qint16
-            {
-                OUTPUT_LEVEL   = 1 << 0,
-                OUTPUT_TIME    = 1 << 1,
-                OUTPUT_WHO     = 1 << 2,
-                OUTPUT_WHERE   = 1 << 3,     // File + Function + Line.
-                OUTPUT_TEXT    = 1 << 4,
-                OUTPUT_ALL     = OUTPUT_LEVEL | OUTPUT_TIME | OUTPUT_WHO | OUTPUT_WHERE | OUTPUT_TEXT
-            };
-
             Q_ENUM( Level )
-            Q_ENUM( Format )
             HB_ENUM( Level )
-            HB_ENUM( Format )
-            Q_DECLARE_FLAGS( Formats, Format )
             Q_DECLARE_FLAGS( Levels, Level )
 
 
@@ -80,18 +67,6 @@ namespace hb
             virtual Levels level() const final;
 
             /*!
-            * Set the general output format.
-            * \param format Output format.
-            */
-            virtual void setFormat( Formats format ) final;
-
-            /*!
-             * Return the current output format.
-             * \return Output format.
-             */
-            virtual Formats format() const final;
-
-            /*!
              * Dequeue pending log message.
              * Internal use.
              */
@@ -102,7 +77,7 @@ namespace hb
             HbLogger() = default;
             virtual ~HbLogger(){} //!< \todo defaulted linux-g++ issue
 
-            virtual void enqueueMessage( Level level, Formats format, const HbLogContext & context, const QString & message ) = 0;
+            virtual void enqueueMessage( Level level, const HbLogContext & context, const QString & message ) = 0;
             virtual void dequeuePendingMessages() = 0;
 
         private:
@@ -113,11 +88,9 @@ namespace hb
 
             static QReadWriteLock msLock;
             static Levels msLevel;
-            static Formats msFormat;
         };
 
         Q_DECLARE_OPERATORS_FOR_FLAGS( HbLogger::Levels )
-        Q_DECLARE_OPERATORS_FOR_FLAGS( HbLogger::Formats )
     }
 }
 

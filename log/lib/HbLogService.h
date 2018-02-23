@@ -23,7 +23,6 @@ namespace hb
 {
     namespace log
     {
-
         class HbLoggerInputs;
         class HbLoggerOutputs;
         class HbLogManager;
@@ -39,19 +38,10 @@ namespace hb
         {
 
         public:
-            static void install();
+            static void install( const QString & logPattern = QString() );
             static HbLogger * logger();
             static HbLoggerInputs * inputs();
             static HbLoggerOutputs * outputs();
-
-            /*!
-             * Process app args for HbLog.
-             * See processArgs( QStringList args ) for usage.
-             * \param argc Standard argc.
-             * \param argv Standard argv.
-             * \sa processArgs( QStringList args )
-             */
-            static void processArgs( int argc, char *argv[] );
 
             /*!
              * Process list of args for HbLog.
@@ -67,7 +57,6 @@ namespace hb
             static void processArgs( QStringList args );
 
         private:
-
             HbLogService() = default;
             virtual ~HbLogService() = default;
 

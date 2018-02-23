@@ -7,7 +7,17 @@
 using namespace hb::log;
 using namespace hb::tools;
 
+static constexpr char TOKEN_LEVEL[] = "%{level}";
+static constexpr char TOKEN_TIME[] = "%{time}";
+static constexpr char TOKEN_APP[] = "%{app}";
+static constexpr char TOKEN_FILE[] = "%{file}";
+static constexpr char TOKEN_FUNCTION[] = "%{function}";
+static constexpr char TOKEN_LINE[] = "%{line}";
+static constexpr char TOKEN_MESSAGE[] = "%{message}";
+
 const QString HbLogMessage::msFieldSeparator = QStringLiteral( "___" );
+QString HbLogMessage::msPattern = "%{level} %{time} %{app} %{file} %{function} %{line} %{message}";
+HbLogMessage::Outputs HbLogMessage::msOutputs = HbLogMessage::OUTPUT_ALL;
 
 const HbLogMessage * HbLogMessage::fromRaw( const QString & raw)
 {
@@ -35,7 +45,7 @@ const HbLogMessage * HbLogMessage::fromRaw( const QString & raw)
         context.setFile( file );
         context.setFunction( function );
         context.setLine( line );
-        msg = new HbLogMessage( level, HbLogger::OUTPUT_ALL, context, timestamp, text );
+        msg = new HbLogMessage( level, context, timestamp, text );
     }
 
     return msg;
@@ -57,20 +67,41 @@ QString HbLogMessage::toRaw(const HbLogMessage &msg)
     return raw;
 }
 
+void HbLogMessage::setPattern( const QString & pattern )
+{
+    if ( pattern.isEmpty() ) {
+        return;
+    }
+
+    Outputs outputs = OUTPUT_NONE;
+    if ( pattern.contains( TOKEN_LEVEL    ) ) outputs |= OUTPUT_LEVEL;
+    if ( pattern.contains( TOKEN_TIME     ) ) outputs |= OUTPUT_TIME;
+    if ( pattern.contains( TOKEN_APP      ) ) outputs |= OUTPUT_APP;
+    if ( pattern.contains( TOKEN_FILE     ) ) outputs |= OUTPUT_FILE;
+    if ( pattern.contains( TOKEN_FUNCTION ) ) outputs |= OUTPUT_FUNCTION;
+    if ( pattern.contains( TOKEN_LINE     ) ) outputs |= OUTPUT_LINE;
+    if ( pattern.contains( TOKEN_MESSAGE  ) ) outputs |= OUTPUT_MESSAGE;
+
+    if ( outputs == OUTPUT_NONE ) {
+        return;
+    }
+
+    HbLogMessage::msPattern = pattern;
+    HbLogMessage::msOutputs = outputs;
+}
+
 HbLogMessage::HbLogMessage() :
     QObject()
 {
     mLevel     = HbLogger::LEVEL_NONE;
-    mFormat    = HbLogger::OUTPUT_ALL;
     mTimestamp = 0;
 }
 
-HbLogMessage::HbLogMessage(HbLogger::Level level, HbLogger::Formats format,
+HbLogMessage::HbLogMessage(HbLogger::Level level,
                             const HbLogContext & context, qint64 timestamp, const QString & message ) :
     QObject()
 {
     mLevel     = level;
-    mFormat    = format;
     mContext   = context;
     mTimestamp = timestamp;
     mMessage   = message;
@@ -82,7 +113,6 @@ HbLogMessage::HbLogMessage( const HbLogMessage & message ) :
     if( &message != this )
     {
         mLevel = message.mLevel;
-        mFormat = message.mFormat;
         mContext = message.mContext;
         mTimestamp = message.mTimestamp;
         mMessage = message.mMessage;
@@ -95,7 +125,6 @@ HbLogMessage & HbLogMessage::operator =( const HbLogMessage & message )
     if( &message != this )
     {
         mLevel = message.mLevel;
-        mFormat = message.mFormat;
         mContext = message.mContext;
         mTimestamp = message.mTimestamp;
         mMessage = message.mMessage;
@@ -142,38 +171,34 @@ const QString & HbLogMessage::message() const
 
 QString HbLogMessage::toString() const
 {
-    QString buffer;
+    QString buffer = HbLogMessage::msPattern;
 
-    if( mFormat & HbLogger::OUTPUT_LEVEL )
-    {
-        buffer += levelStr();
+    if ( HbLogMessage::msOutputs & OUTPUT_LEVEL ) {
+        buffer.replace( TOKEN_LEVEL, levelStr( true ) );
     }
 
-    if( mFormat & HbLogger::OUTPUT_TIME )
-    {
-        if( mTimestamp > 0 )
-        {
-            buffer += QStringLiteral( "[%1]" ).arg( timestampStr() );
-        }
+    if ( HbLogMessage::msOutputs & OUTPUT_TIME ) {
+        buffer.replace( TOKEN_TIME, timestampStr() );
     }
 
-    if( mFormat & HbLogger::OUTPUT_WHO )
-    {
-        buffer += QStringLiteral( "[%1]" ).arg( mContext.owner() );
+    if ( HbLogMessage::msOutputs & OUTPUT_APP ) {
+        buffer.replace( TOKEN_APP, mContext.owner() );
     }
 
-    if( mFormat & HbLogger::OUTPUT_WHERE )
-    {
-        if( !mContext.file().isEmpty() )
-        {
-            buffer += QStringLiteral( "[%1::%2 (line %3)]" ).arg( mContext.file() ).
-                arg( mContext.function() ).arg( mContext.line() );
-        }
+    if ( HbLogMessage::msOutputs & OUTPUT_FILE ) {
+        buffer.replace( TOKEN_FILE, mContext.file() );
     }
 
-    if( mFormat & HbLogger::OUTPUT_TEXT )
-    {
-        buffer += QStringLiteral( " %1" ).arg( mMessage );
+    if ( HbLogMessage::msOutputs & OUTPUT_FUNCTION ) {
+        buffer.replace( TOKEN_FUNCTION, mContext.function() );
+    }
+
+    if ( HbLogMessage::msOutputs & OUTPUT_LINE ) {
+        buffer.replace( TOKEN_LINE, QString::number( mContext.line() ) );
+    }
+
+    if ( HbLogMessage::msOutputs & OUTPUT_MESSAGE ) {
+        buffer.replace( TOKEN_MESSAGE, mMessage );
     }
 
     return buffer;

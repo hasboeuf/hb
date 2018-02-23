@@ -106,11 +106,11 @@ void HbLogManager::tryEnqueueMessage()
     }
 }
 
-void HbLogManager::enqueueMessage(Level level, Formats format, const HbLogContext & context, const QString & text )
+void HbLogManager::enqueueMessage(Level level, const HbLogContext & context, const QString & text )
 {
     qint64 timestamp = HbSteadyDateTime::now().toNsSinceEpoch();
 
-    HbLogMessage * message = new HbLogMessage( level, format, context, timestamp, text );
+    HbLogMessage * message = new HbLogMessage( level, context, timestamp, text );
 
     mMessages.push_back( message );
     tryEnqueueMessage();
