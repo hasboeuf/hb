@@ -60,7 +60,7 @@ namespace hb
             HbLogService() = default;
             virtual ~HbLogService() = default;
 
-            static void subscribe();
+            static void init();
 
         private:
             static QThreadStorage< HbLogManager * > msManager;

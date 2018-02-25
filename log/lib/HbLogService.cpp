@@ -20,7 +20,7 @@ void qtHbLogHandler( QtMsgType type, const QMessageLogContext & context, const Q
     }
 }
 
-void HbLogService::subscribe()
+void HbLogService::init()
 {
     if( !msManager.hasLocalData() )
     {
@@ -40,19 +40,19 @@ void HbLogService::install( const QString  & logPattern ) {
 
 HbLogger * HbLogService::logger()
 {
-    HbLogService::subscribe();
+    HbLogService::init();
     return msManager.localData();
 }
 
 HbLoggerInputs * HbLogService::inputs()
 {
-    HbLogService::subscribe();
+    HbLogService::init();
     return q_assert_ptr( msManager.localData() )->inputs();
 }
 
 HbLoggerOutputs * HbLogService::outputs()
 {
-    HbLogService::subscribe();
+    HbLogService::init();
     return q_assert_ptr( msManager.localData() )->outputs();
 }
 
