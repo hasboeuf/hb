@@ -13,8 +13,10 @@
 
 // Qt
 #include <QtCore/QMutex>
+#include <QtCore/QPointer>
 // Hb
 #include <HbLogger.h>
+#include <HbLoggerPool.h>
 
 class QTimerEvent;
 
@@ -37,12 +39,8 @@ namespace hb
 
         public:
 
-            HbLogManager();
+            HbLogManager( HbLoggerPool * pool );
             virtual ~HbLogManager();
-
-            HbLoggerInputs * inputs() const;
-            HbLoggerOutputs * outputs() const;
-            HbLoggerPool * pool() const;
 
         protected:
             void timerEvent( QTimerEvent * event );
@@ -53,15 +51,8 @@ namespace hb
             void dequeuePendingMessages();
 
         private:
+            QPointer< HbLoggerPool > mPool;
 
-            static QMutex msMutex;
-            static quint8 msInstances;
-
-            static QThread * msThreadPool;
-            static HbLoggerPool * msLoggerPool;
-
-            HbLoggerInputs * mpInputs;
-            HbLoggerOutputs * mpOutputs;
             QList< HbLogMessage * > mMessages;
             qint32 mRetry;
         };

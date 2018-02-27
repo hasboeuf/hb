@@ -12,33 +12,34 @@
 /*! \file HbLogAbstractInput.h */
 
 // Hb
+#include <HbLog.h>
 #include <core/HbUid.h>
 // Local
-#include <IHbLoggerInput.h>
 
 namespace hb
 {
     namespace log
     {
+        class HbLogMessage;
+
         /*!
          * TODOC.
          */
-        class HbLogAbstractInput :
-            public IHbLoggerInput,
-            public HbUid< CLASS_LOG >
+        class HbLogAbstractInput : public QObject, public HbUid< CLASS_LOG >
         {
+            Q_OBJECT
             Q_DISABLE_COPY( HbLogAbstractInput )
+            friend class HbLoggerPool;
 
         public:
-            virtual ~HbLogAbstractInput(){} //!< \todo defaulted linux-g++ issue
-            virtual InputType type() const final;
+            HbLogAbstractInput( QObject * parent = nullptr );
+            virtual ~HbLogAbstractInput() = default;
+
+        signals:
+            void inputMessageReceived( HbLogMessage * message );
 
         protected:
-            HbLogAbstractInput() = default;
-            HbLogAbstractInput( InputType type );
-
-        private:
-            InputType mType;
+            virtual void init() = 0;
         };
     }
 }

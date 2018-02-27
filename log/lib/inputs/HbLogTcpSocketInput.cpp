@@ -1,4 +1,5 @@
 // Qt
+#include <QtNetwork/QTcpServer>
 #include <QtNetwork/QTcpSocket>
 // Hb
 #include <inputs/HbLogTcpSocketInput.h>
@@ -7,20 +8,19 @@
 using namespace hb::log;
 
 
-HbLogTcpSocketInput::HbLogTcpSocketInput( quint32 port ) :
-    QTcpServer(), HbLogAbstractInput( INPUT_TCP_SOCKET )
+HbLogTcpSocketInput::HbLogTcpSocketInput( quint32 port, QObject * parent ) :
+    HbLogAbstractInput( parent )
 {
     mExpected = 0;
-
-    if( !listen( QHostAddress::Any, mPort = port ) )
-        fprintf( stderr, "HbLogTcpSocketInput: Unable to start the TCP server\n" );
+    mPort = port;
 }
 
 HbLogTcpSocketInput::~HbLogTcpSocketInput()
 {
     // onDisconnected() handles the rest.
-    for( QTcpSocket * client: mClients.values() )
+    for( QTcpSocket * client: mClients.values() ) {
         q_assert_ptr( client )->close();
+    }
 
     mClients.clear();
 }
@@ -31,26 +31,30 @@ quint32 HbLogTcpSocketInput::port() const
     return mPort;
 }
 
+void HbLogTcpSocketInput::init()
+{
+    mTcpServer.reset( new QTcpServer() );
+    if( !mTcpServer->listen( QHostAddress::Any, mPort ) )
+    {
+        fprintf( stderr, "HbLogTcpSocketInput: Unable to start the TCP server\n" );
+    }
+}
 
 void HbLogTcpSocketInput::incomingConnection( qint32 descriptor )
 {
     QTcpSocket * client = q_check_ptr( new QTcpSocket( this ) );
     client->setSocketDescriptor( descriptor );
 
-    q_assert( connect( client, &QTcpSocket::disconnected, this,
-        &HbLogTcpSocketInput::onClientDisconnected, Qt::UniqueConnection ) );
-
-    q_assert( connect( client, &QTcpSocket::readyRead, this,
-        &HbLogTcpSocketInput::onReadyRead, Qt::UniqueConnection ) );
+    connect( client, &QTcpSocket::disconnected, this, &HbLogTcpSocketInput::onClientDisconnected );
+    connect( client, &QTcpSocket::readyRead, this, &HbLogTcpSocketInput::onReadyRead );
 
     mClients.insert( client );
 }
 
-
 void HbLogTcpSocketInput::onReadyRead()
 {
     QTcpSocket * socket = q_dynamic_cast( QTcpSocket *, sender() );
-    QDataStream stream( q_assert_ptr( socket ) );
+    QDataStream stream( socket );
 
     do
     {
@@ -65,7 +69,7 @@ void HbLogTcpSocketInput::onReadyRead()
         if( socket->bytesAvailable() < mExpected )
             return;
 
-        HbLogMessage * message = q_check_ptr( new HbLogMessage() );
+        HbLogMessage * message = new HbLogMessage();
         message->fromDataStream( stream );
         emit inputMessageReceived( message );
 
@@ -78,6 +82,6 @@ void HbLogTcpSocketInput::onClientDisconnected()
 {
     QTcpSocket * socket = q_dynamic_cast( QTcpSocket *, sender() );
 
-    mClients.remove( q_assert_ptr( socket ) );
+    mClients.remove( socket );
     socket->deleteLater();
 }

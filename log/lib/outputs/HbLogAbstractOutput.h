@@ -12,11 +12,9 @@
 /*! \file HbLogAbstractOutput.h */
 
 // Hb
+#include <HbLog.h>
 #include <core/HbUid.h>
 // Local
-#include <IHbLoggerOutput.h>
-
-class QMutex;
 
 namespace hb
 {
@@ -28,37 +26,18 @@ namespace hb
         /*!
          * TODOC.
          */
-        class HbLogAbstractOutput :
-            public IHbLoggerOutput,
-            public HbUid< CLASS_LOG >
+        class HbLogAbstractOutput : public QObject, public HbUid< CLASS_LOG >
         {
             Q_DISABLE_COPY( HbLogAbstractOutput )
-
+            friend class HbLoggerPool;
 
         public:
-
-            virtual ~HbLogAbstractOutput();
-
-            virtual OutputType type() const final;
-            virtual bool isValid() const;
-
-            virtual void setLevel( HbLogger::Levels level ) final;
-            virtual HbLogger::Levels level() const final;
-
-            virtual void processMessage( const HbLogMessage & message ) = 0;
+            HbLogAbstractOutput( QObject * parent = nullptr );
+            virtual ~HbLogAbstractOutput() = default;
 
         protected:
-
-            HbLogAbstractOutput() = default;
-            HbLogAbstractOutput( OutputType type, HbLogger::Levels level );
-
-
-        private:
-
-            QMutex * mpMutex;
-
-            OutputType mType;
-            HbLogger::Levels mLevel;
+            virtual void init() = 0;
+            virtual void processMessage( const HbLogMessage & message ) = 0;
         };
     }
 }

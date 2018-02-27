@@ -12,11 +12,12 @@
 /*! \file HbLoggerPool.h */
 
 // Qt
+#include <QtCore/QObject>
 #include <QtCore/QHash>
 #include <QtCore/QReadWriteLock>
 // Hb
-#include <HbLoggerStream.h>
 #include <HbGlobal.h>
+#include <HbLog.h>
 
 class QTimer;
 
@@ -26,7 +27,7 @@ namespace hb
     {
 
         class IHbLoggerInput;
-        class IHbLoggerOutput;
+        class HbLogAbstractOutput;
         class HbLogAbstractInput;
         class HbLogAbstractOutput;
         class HbLogGuiNotifier;
@@ -49,8 +50,7 @@ namespace hb
 
         public:
 
-            HbLoggerPool() = delete;
-            HbLoggerPool( QThread * thread );
+            HbLoggerPool();
             virtual ~HbLoggerPool();
 
             loguid addUdpSocketInput  ( const QString & ip, quint16 port, QString * error );
@@ -61,20 +61,23 @@ namespace hb
             loguid addConsoleOutput    ( QString * error );
             loguid addGuiOutput        ( HbLogGuiNotifier * notifier, QString * error );
             loguid addFileOutput       ( const QString & path, quint32 max_size, QString * error );
-            loguid addUdpSocketOutput  ( quint16 port, QString * error );
+            loguid addUdpSocketOutput  ( const QString & ip, quint16 port, QString * error );
             loguid addTcpSocketOutput  ( const QString & ip, quint16 port, QString * error );
             loguid addLocalSocketOutput( const QString & name, QString * error );
             bool   removeOutput        ( loguid uid, QString * error );
 
-            IHbLoggerInput  * input ( loguid uid );
-            IHbLoggerOutput * output( loguid uid );
+            HbLogAbstractInput * input ( loguid uid );
+            HbLogAbstractOutput * output( loguid uid );
 
             bool enqueueMessage( QList< HbLogMessage * > & buffer );
 
-        private callbacks:
-
-            // From QThread
+        public slots:
             void running();
+
+        private callbacks:
+            void onInputMessageReceived( HbLogMessage * message );
+            // From QThread
+
             void process();
 
 

@@ -11,9 +11,12 @@
 
 /*! \file HbLogLocalSocketOutput.h */
 
+// Qt
+#include <QtCore/QScopedPointer>
+// Hb
 #include <outputs/HbLogAbstractOutput.h>
 
-#include <QLocalSocket>
+class QLocalSocket;
 
 namespace hb
 {
@@ -25,29 +28,28 @@ namespace hb
         *
         * %HbLogLocalSocketOutput inherits from HbLogAbstractOutput.\n
         */
-        class HbLogLocalSocketOutput final : public QLocalSocket, public HbLogAbstractOutput
+        class HbLogLocalSocketOutput final : public HbLogAbstractOutput
         {
             Q_OBJECT
             Q_DISABLE_COPY( HbLogLocalSocketOutput )
 
         public:
-            HbLogLocalSocketOutput( const QString & name = QString(), HbLogger::Levels level = HbLogger::LEVEL_ALL );
+            HbLogLocalSocketOutput(const QString & name = QString(), QObject * parent = nullptr );
             virtual ~HbLogLocalSocketOutput();
 
             const QString & name() const;
-                
-            bool isValid() const;
 
         private:
-            void processMessage( const HbLogMessage & message );
+            void processMessage( const HbLogMessage & message ) override;
+            void init() override;
 
         private slots:
-
             void onReconnection();
             void onDisconnected();
 
         private:
             QString mName;
+            QScopedPointer< QLocalSocket > mLocalSocket;
         };
     }
 }

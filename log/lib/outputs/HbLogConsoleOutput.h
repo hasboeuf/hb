@@ -17,26 +17,18 @@ namespace hb
 {
     namespace log
     {
-
         /*! 
-        * TODOC
         * \brief The %HbLogConsoleOutput class defines a console output.
-        *
-        * %HbLogConsoleOutput inherits from HbLogAbstractOutput.\n
         */
         class HbLogConsoleOutput final : public HbLogAbstractOutput
         {
-            Q_DISABLE_COPY( HbLogConsoleOutput )
-
-
         public:
-
-            HbLogConsoleOutput( HbLogger::Levels level = HbLogger::LEVEL_ALL );
+            HbLogConsoleOutput( QObject * parent = nullptr );
             virtual ~HbLogConsoleOutput() = default;
 
-        private:
-
-            void processMessage( const HbLogMessage & message );
+        protected:
+            void init() override;
+            void processMessage( const HbLogMessage & message ) override;
         };
     }
 }

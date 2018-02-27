@@ -12,11 +12,13 @@
 /*! \file HbLogTcpSocketInput.h */
 
 // Qt
-#include <QtNetwork/QUdpSocket>
+#include <QtCore/QScopedPointer>
 // Hb
 #include <HbGlobal.h>
 // Local
 #include <outputs/HbLogAbstractOutput.h>
+
+class QUdpSocket;
 
 namespace hb
 {
@@ -28,25 +30,25 @@ namespace hb
         /*!
         * TODOC
         */
-        class HbLogUdpSocketOutput final : public QUdpSocket, public HbLogAbstractOutput
+        class HbLogUdpSocketOutput final : public HbLogAbstractOutput
         {
             Q_OBJECT
             Q_DISABLE_COPY( HbLogUdpSocketOutput )
 
-
         public:
-
             HbLogUdpSocketOutput() = delete;
-            HbLogUdpSocketOutput( quint32 port, HbLogger::Levels level = HbLogger::LEVEL_ALL );
+            HbLogUdpSocketOutput( const QString & ip, quint32 port, QObject * parent = nullptr );
             virtual ~HbLogUdpSocketOutput();
 
             quint32 port() const;
 
-        private:
+        protected:
+            void init() override;
+            void processMessage( const HbLogMessage & message ) override;
 
-            void processMessage( const HbLogMessage & message );
-
         private:
+            QScopedPointer< QUdpSocket > mUdpSocket;
+            QString mIp;
             quint32 mPort;
         };
     }

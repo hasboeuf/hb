@@ -32,6 +32,7 @@ namespace hb
         {
             Q_OBJECT
             Q_DISABLE_COPY( HbLogGuiNotifier )
+            friend class HbLogGuiOutput;
 
         public:
             HbLogGuiNotifier();
@@ -41,7 +42,7 @@ namespace hb
             void newLogMessage( const HbLogMessage & message );
 
         private:
-            Q_INVOKABLE void onNewLogMessage( const HbLogMessage & message ); //!< \todo why not slot?
+            void onNewLogMessage( const HbLogMessage & message ); //!< \todo why not slot?
         };
     }
 }

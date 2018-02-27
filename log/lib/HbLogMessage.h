@@ -18,8 +18,6 @@ namespace hb
 {
     namespace log
     {
-        class HbLogService;
-
         /*!
          * HbLogMessage class defines a log message.
          * TODOC.

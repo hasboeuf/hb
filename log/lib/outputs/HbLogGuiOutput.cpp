@@ -5,21 +5,27 @@
 using namespace hb::log;
 
 
-HbLogGuiOutput::HbLogGuiOutput( HbLogGuiNotifier * notifier, HbLogger::Levels level ) :
-    HbLogAbstractOutput( HbLogAbstractOutput::OUTPUT_GUI, level )
+HbLogGuiOutput::HbLogGuiOutput( HbLogGuiNotifier * notifier , QObject * parent) :
+    HbLogAbstractOutput( parent )
 {
-    mpNotifier = notifier;
+    mNotifier.reset( notifier );
 }
 
 HbLogGuiOutput::~HbLogGuiOutput()
 {
-    delete mpNotifier;
-    mpNotifier = nullptr;
+    mNotifier.take()->deleteLater(); // mNotifier does not leave in the same thread.
 }
 
+void HbLogGuiOutput::init()
+{
+
+}
 
 void HbLogGuiOutput::processMessage( const HbLogMessage & message )
 {
-    if( mpNotifier )
-        q_assert( QMetaObject::invokeMethod( mpNotifier, "onNewLogMessage", Q_ARG( HbLogMessage, message ) ) );
+    if( mNotifier ) {
+        QMetaObject::invokeMethod( mNotifier.data(), [this, &message]() {
+            mNotifier->onNewLogMessage( message );
+        } );
+    }
 }

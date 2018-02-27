@@ -24,6 +24,7 @@ namespace hb
     namespace log
     {
         class HbLogContext;
+        class HbLogServiceController;
 
         /*!
          * TODOC
@@ -32,7 +33,7 @@ namespace hb
         {
             Q_GADGET
             Q_DISABLE_COPY ( HbLogger )
-            Q_FRIEND_CLASS ( HbLogContext )
+            Q_FRIEND_CLASS ( HbLogServiceController )
 
         public:
 
@@ -81,7 +82,6 @@ namespace hb
             virtual void dequeuePendingMessages() = 0;
 
         private:
-
             void print( Level level, const HbLogContext & context, const QString & message );
 
         private:

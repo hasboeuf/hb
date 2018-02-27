@@ -1,5 +1,6 @@
 // Qt
 #include <QtCore/QTimer>
+#include <QtNetwork/QTcpSocket>
 // Hb
 #include <outputs/HbLogTcpSocketOutput.h>
 #include <HbLogMessage.h>
@@ -7,36 +8,17 @@
 using namespace hb::log;
 
 
-HbLogTcpSocketOutput::HbLogTcpSocketOutput( const QString & ip, quint32 port, HbLogger::Levels level ) :
-    QTcpSocket(), HbLogAbstractOutput( HbLogAbstractOutput::OUTPUT_TCP_SOCKET, level )
+HbLogTcpSocketOutput::HbLogTcpSocketOutput( const QString & ip, quint32 port, QObject * parent ) :
+    HbLogAbstractOutput( parent )
 {
     mIp = ip;
     mPort = port;
-    
-    q_assert( connect( this, &QTcpSocket::disconnected, this,
-        &HbLogTcpSocketOutput::onDisconnected, Qt::UniqueConnection ) );
-
-    q_assert( connect( this, ( void ( QTcpSocket::* )( QAbstractSocket::SocketError ) ) &QTcpSocket::error,
-        this, [this]( QAbstractSocket::SocketError )
-        {
-            fprintf(stderr, "%s\n", HbLatin1(errorString()));
-
-        }, Qt::UniqueConnection ) );
-
-    onReconnection();
 }
 
 HbLogTcpSocketOutput::~HbLogTcpSocketOutput()
 {
-    close();
+    mTcpSocket->close();
 }
-
-
-bool HbLogTcpSocketOutput::isValid() const
-{
-    return ( state() == QAbstractSocket::ConnectedState );
-}
-
 
 const QString & HbLogTcpSocketOutput::ip() const
 {
@@ -48,26 +30,38 @@ quint32 HbLogTcpSocketOutput::port() const
     return mPort;
 }
 
+void HbLogTcpSocketOutput::init()
+{
+    mTcpSocket.reset( new QTcpSocket() );
+
+    connect( mTcpSocket.data(), &QTcpSocket::disconnected, this, &HbLogTcpSocketOutput::onDisconnected );
+
+    connect( mTcpSocket.data(), ( void ( QTcpSocket::* )( QAbstractSocket::SocketError ) ) &QTcpSocket::error,
+             this, [this]( QAbstractSocket::SocketError ) {
+        fprintf(stderr, "%s\n", HbLatin1( mTcpSocket->errorString()));
+    } );
+
+    onReconnection();
+}
 
 void HbLogTcpSocketOutput::processMessage( const HbLogMessage & message )
 {
-    if( state() == QAbstractSocket::ConnectedState )
+    if( mTcpSocket->state() == QAbstractSocket::ConnectedState )
     {
-        write( message.toByteArray() );
-        flush();
+        mTcpSocket->write( message.toByteArray() );
+        mTcpSocket->flush();
     }
 }
 
-
 void HbLogTcpSocketOutput::onReconnection()
 {
-    if( state() == QAbstractSocket::UnconnectedState )
+    if( mTcpSocket->state() == QAbstractSocket::UnconnectedState )
     {
-        connectToHost( mIp, mPort );
+        mTcpSocket->connectToHost( mIp, mPort );
     }
 }
 
 void HbLogTcpSocketOutput::onDisconnected()
 {
-    QTimer::singleShot( 5000, this, SLOT( onReconnection() ) );
+    QTimer::singleShot( 5000, this, &HbLogTcpSocketOutput::onReconnection );
 }

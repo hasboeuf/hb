@@ -5,11 +5,15 @@
 using namespace hb::log;
 
 
-HbLogConsoleOutput::HbLogConsoleOutput( HbLogger::Levels level ) :
-    HbLogAbstractOutput( HbLogAbstractOutput::OUTPUT_CONSOLE, level )
+HbLogConsoleOutput::HbLogConsoleOutput( QObject * parent ) :
+    HbLogAbstractOutput( parent )
 {
 }
 
+void HbLogConsoleOutput::init()
+{
+
+}
 
 void HbLogConsoleOutput::processMessage( const HbLogMessage & message )
 {

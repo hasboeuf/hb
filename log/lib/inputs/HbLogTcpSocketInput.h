@@ -12,11 +12,14 @@
 /*! \file HbLogTcpSocketInput.h */
 
 // Qt
-#include <QtNetwork/QTcpServer>
+#include <QtCore/QScopedPointer>
 // Hb
 #include <HbGlobal.h>
 // Local
 #include <inputs/HbLogAbstractInput.h>
+
+class QTcpServer;
+class QTcpSocket;
 
 namespace hb
 {
@@ -24,29 +27,25 @@ namespace hb
     {
         class HbLogMessage;
 
-
         /*!
         * TODOC
         * \brief The %HbLogTcpSocketInput class defines a tcp server input.
-        *
-        * %HbLogTcpSocketInput inherits from HbLogAbstractInput.\n
         */
-        class HbLogTcpSocketInput final : public QTcpServer, public HbLogAbstractInput
+        class HbLogTcpSocketInput final : public HbLogAbstractInput
         {
             Q_OBJECT
             Q_DISABLE_COPY( HbLogTcpSocketInput )
 
-
         public:
 
             HbLogTcpSocketInput() = delete;
-            HbLogTcpSocketInput( quint32 port );
+            HbLogTcpSocketInput( quint32 port, QObject * parent );
             virtual ~HbLogTcpSocketInput();
 
             quint32 port() const;
 
-        signals:
-            void inputMessageReceived( HbLogMessage * message );
+        protected:
+            void init() override;
 
         private:
             void incomingConnection( qint32 descriptor );
@@ -59,6 +58,7 @@ namespace hb
         private:
             quint32 mPort;
             qint32  mExpected;
+            QScopedPointer< QTcpServer > mTcpServer;
             QSet< QTcpSocket * > mClients;
         };
     }

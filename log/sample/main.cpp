@@ -3,7 +3,6 @@
 // Hb
 #include <core/HbApplicationHelper.h>
 #include <HbLogService.h>
-#include <HbLoggerOutputs.h>
 // Local
 
 
@@ -15,7 +14,7 @@ int main(int argc, char *argv[])
     hb::tools::HbApplicationHelper::catchInterruptingEvents();
 
     hb::log::HbLogService::install("%{level} %{message}");
-    hb::log::HbLogService::outputs()->addConsoleOutput();
+    hb::log::HbLogService::addConsoleOutput();
 
     qDebug() << "This is a debug trace";
     qInfo() << "This is a info trace";

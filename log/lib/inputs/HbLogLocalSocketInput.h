@@ -12,11 +12,14 @@
 /*! \file HbLogLocalSocketInput.h */
 
 // Qt
-#include <QtNetwork/QLocalServer>
+#include <QtCore/QScopedPointer>
 // Hb
 #include <HbGlobal.h>
 // Local
 #include <inputs/HbLogAbstractInput.h>
+
+class QLocalSocket;
+class QLocalServer;
 
 namespace hb
 {
@@ -24,39 +27,33 @@ namespace hb
     {
         class HbLogMessage;
 
-
         /*!
         * TODOC
         * \brief The %HbLogLocalSocketInput class defines a local server input.
-        *
-        * %HbLogLocalSocketInput inherits from HbLogAbstractInput.\n
         */
-        class HbLogLocalSocketInput final : public QLocalServer, public HbLogAbstractInput
+        class HbLogLocalSocketInput final : public HbLogAbstractInput
         {
             Q_OBJECT
             Q_DISABLE_COPY( HbLogLocalSocketInput )
 
         public:
-
-            HbLogLocalSocketInput(const QString & name = QString() );
-            virtual ~HbLogLocalSocketInput() = default;
+            HbLogLocalSocketInput( const QString & name = QString(), QObject * parent = nullptr );
+            virtual ~HbLogLocalSocketInput();
 
             const QString & name() const;
 
-        signals:
-
-            void inputMessageReceived( HbLogMessage * message );
+        protected:
+            void init() override;
 
         private callbacks:
-
             void incomingConnection();
             void onReadyRead();
             void onClientDisconnected();
 
-
         private:
             QString mName;
             qint32 mExpected;
+            QScopedPointer< QLocalServer > mLocalServer;
             QSet< QLocalSocket * > mClients;
         };
     }

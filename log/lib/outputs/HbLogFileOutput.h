@@ -11,50 +11,48 @@
 
 /*! \file HbLogFileOutput.h */
 
+// Qt
+#include <QtCore/QScopedPointer>
+// Hb
 #include <HbLog.h>
 #include <outputs/HbLogAbstractOutput.h>
 
-#include <QFile>
-#include <QTextStream>
+class QFile;
+class QTextStream;
 
 namespace hb
 {
     namespace log
     {
         /*!
-        * TODOC
         * \brief The %HbLogFileOutput class defines a file output.
-        *
-        * %HbLogFileOutput inherits from HbLogAbstractOutput.\n
         */
         class HB_LOG_DECL HbLogFileOutput final : public HbLogAbstractOutput
         {
             Q_DISABLE_COPY( HbLogFileOutput )
-
 
         public:
             static const QString msDefaultPath;
             static const quint32 msMaxFileSize;
 
         public:
-
             HbLogFileOutput() = delete;
-            HbLogFileOutput( const QString & path, quint32 max_size = 0, HbLogger::Levels level = HbLogger::LEVEL_ALL );
+            HbLogFileOutput( const QString & path, quint32 maxSize = 0, QObject * parent = nullptr );
             virtual ~HbLogFileOutput();
 
-            bool isValid() const;
+        protected:
+            void init() override;
+            void processMessage( const HbLogMessage & message ) override;
 
         private:
             void closeLogFile();
             void createLogFile();
-            void processMessage( const HbLogMessage & message );
-
 
         private:
             QString mPath;
-            QFile mFile;
             quint32 mMaxSize;
-            QTextStream mStream;
+            QScopedPointer< QFile > mFile;
+            QScopedPointer< QTextStream > mStream;
         };
     }
 }

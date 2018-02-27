@@ -4,8 +4,6 @@
 #include <QtCore/QThread>
 // Hb
 #include <HbLogManager.h>
-#include <HbLoggerInputs.h>
-#include <HbLoggerOutputs.h>
 #include <HbLoggerPool.h>
 #include <HbLogMessage.h>
 #include <core/HbSteadyDateTime.h>
@@ -14,35 +12,10 @@ using namespace hb::log;
 using namespace hb::tools;
 
 
-QMutex HbLogManager::msMutex;
-quint8 HbLogManager::msInstances = 0;
-
-QThread *      HbLogManager::msThreadPool = nullptr;
-HbLoggerPool * HbLogManager::msLoggerPool = nullptr;
-
-
-HbLogManager::HbLogManager() :
+HbLogManager::HbLogManager(HbLoggerPool * pool) :
     QObject(), HbLogger()
 {
-    QMutexLocker locker( &msMutex );
-
-    if( ++msInstances == 1 )
-    {
-        qRegisterMetaType< hb::log::HbLogMessage >( "HbLogMessage" );
-
-        msThreadPool = q_check_ptr( new QThread() );
-        msLoggerPool = q_check_ptr( new HbLoggerPool( msThreadPool ) );
-
-        q_assert( connect( msThreadPool, &QThread::finished,
-            msThreadPool, &QObject::deleteLater, Qt::UniqueConnection ) );
-
-        msLoggerPool->moveToThread( msThreadPool );
-        msThreadPool->start();
-    }
-
-    mpInputs = q_check_ptr( new HbLoggerInputs( this ) );
-    mpOutputs = q_check_ptr( new HbLoggerOutputs( this ) );
-
+    mPool = pool;
     mRetry = 0;
 }
 
@@ -50,32 +23,6 @@ HbLogManager::~HbLogManager()
 {
     if( mRetry ) killTimer( mRetry );
     dequeuePendingMessages();
-
-    QMutexLocker locker( &msMutex );
-
-    if( --msInstances == 0 )
-    {
-        msThreadPool->exit();
-        msThreadPool->wait();
-
-        q_delete_ptr( &msLoggerPool );
-    }
-}
-
-
-HbLoggerInputs * HbLogManager::inputs() const
-{
-    return q_assert_ptr( mpInputs );
-}
-
-HbLoggerOutputs * HbLogManager::outputs() const
-{
-    return q_assert_ptr( mpOutputs );
-}
-
-HbLoggerPool * HbLogManager::pool() const
-{
-    return q_assert_ptr( msLoggerPool );
 }
 
 void HbLogManager::timerEvent( QTimerEvent * event )
@@ -87,7 +34,7 @@ void HbLogManager::timerEvent( QTimerEvent * event )
 
 void HbLogManager::tryEnqueueMessage()
 {
-    if( msLoggerPool->enqueueMessage( mMessages ) )
+    if( mPool->enqueueMessage( mMessages ) )
     {
         if( mRetry )
         {
@@ -120,7 +67,7 @@ void HbLogManager::dequeuePendingMessages()
 {
     if( !mMessages.isEmpty() )
     {
-        while( !msLoggerPool->enqueueMessage( mMessages ) )
+        while( !mPool->enqueueMessage( mMessages ) )
         {
             QThread::yieldCurrentThread();
         }

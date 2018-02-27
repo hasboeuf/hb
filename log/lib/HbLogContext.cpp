@@ -127,7 +127,7 @@ void HbLogContext::print(QtMsgType type, const QString & message) const
     default:
         Q_UNREACHABLE();
     }
-    HbLogService::logger()->print( level, *this, message );
+    HbLogService::print( level, *this, message );
 }
 
 namespace hb

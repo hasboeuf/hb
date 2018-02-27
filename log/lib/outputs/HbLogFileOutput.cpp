@@ -11,19 +11,17 @@ using namespace hb::log;
 const quint32 HbLogFileOutput::msMaxFileSize = 100000000; // 100 Mo.
 const QString HbLogFileOutput::msDefaultPath = "log";
 
-HbLogFileOutput::HbLogFileOutput( const QString & path, quint32 max_size, HbLogger::Levels level ) :
-    HbLogAbstractOutput( HbLogAbstractOutput::OUTPUT_FILE, level )
+HbLogFileOutput::HbLogFileOutput( const QString & path, quint32 maxSize, QObject * parent ) :
+    HbLogAbstractOutput( parent )
 {
     mPath = ( path.isEmpty() ? msDefaultPath : path );
 
-    max_size *= 1000000; // To bytes.
-    mMaxSize = ( ( max_size > msMaxFileSize ) ? msMaxFileSize : max_size );
-    if( max_size == 0)
+    maxSize *= 1000000; // To bytes.
+    mMaxSize = ( ( maxSize > msMaxFileSize ) ? msMaxFileSize : maxSize );
+    if( maxSize == 0)
     {
         mMaxSize = msMaxFileSize;
     }
-
-    createLogFile();
 }
 
 HbLogFileOutput::~HbLogFileOutput()
@@ -31,18 +29,20 @@ HbLogFileOutput::~HbLogFileOutput()
     closeLogFile();
 }
 
-bool HbLogFileOutput::isValid() const
+void HbLogFileOutput::init()
 {
-    return mFile.isOpen();
+    mFile.reset( new QFile() );
+    mStream.reset( new QTextStream() );
+    createLogFile();
 }
 
 void HbLogFileOutput::closeLogFile()
 {
-    mStream.setDevice( 0 );
-    if(mFile.isOpen())
+    mStream->setDevice( 0 );
+    if( mFile->isOpen() )
     {
-        mFile.flush();
-        mFile.close();
+        mFile->flush();
+        mFile->close();
     }
 }
 
@@ -53,32 +53,33 @@ void HbLogFileOutput::createLogFile()
     QString filename = QDateTime::currentDateTime().toString( QStringLiteral( "yyyy-MM-dd_hh-mm-ss-zzz" ) );
     QString filepath = QStringLiteral( "%1/%2.log" ).arg( mPath ).arg( filename );
 
-    mFile.setFileName( filepath );
+    mFile->setFileName( filepath );
 
     if( !QDir( mPath ).exists() )
     {
         QDir().mkdir( mPath );
     }
 
-    if( !mFile.open( QIODevice::WriteOnly | QIODevice::Text ) )
+    if( !mFile->open( QIODevice::WriteOnly | QIODevice::Text ) )
     {
+        // TODO remove qdebug
         qDebug( "HbLogFileOutput: Error while opening file \"%s\": %s",
-                HbLatin1( mFile.fileName() ), HbLatin1( mFile.errorString() ) );
+                HbLatin1( mFile->fileName() ), HbLatin1( mFile->errorString() ) );
     }
 
-    mStream.setDevice( &mFile );
+    mStream->setDevice( mFile.data() );
 }
 
 void HbLogFileOutput::processMessage( const HbLogMessage & message )
 {
-    if( mFile.size() >= mMaxSize)
+    if( mFile->size() >= mMaxSize)
     {
         createLogFile();
     }
 
-    if( mFile.isWritable() )
+    if( mFile->isWritable() )
     {
-        mStream << HbLogMessage::toRaw( message ) << QChar( QChar::LineFeed );
-        mStream.flush();
+        (* mStream.data()) << HbLogMessage::toRaw( message ) << QChar( QChar::LineFeed );
+        mStream->flush();
     }
 }

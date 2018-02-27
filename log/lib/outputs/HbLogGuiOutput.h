@@ -11,6 +11,9 @@
 
 /*! \file HbLogGuiOutput.h */
 
+// Qt
+#include <QtCore/QScopedPointer>
+// Hb
 #include <outputs/HbLogAbstractOutput.h>
 
 namespace hb
@@ -20,32 +23,24 @@ namespace hb
 
         class HbLogGuiNotifier;
 
-
         /*! 
-        * TODOC
         * \brief The %HbLogGuiOutput class defines a GUI output.
-        *
-        * %HbLogGuiOutput inherits from HbLogAbstractOutput.\n
         */
         class HbLogGuiOutput final : public HbLogAbstractOutput
         {
             Q_DISABLE_COPY( HbLogGuiOutput )
 
-
         public:
-
             HbLogGuiOutput() = delete;
-            HbLogGuiOutput( HbLogGuiNotifier * notifier, HbLogger::Levels level = HbLogger::LEVEL_ALL );
+            HbLogGuiOutput( HbLogGuiNotifier * notifier, QObject * parent = nullptr );
             virtual ~HbLogGuiOutput();
 
+        protected:
+            void init() override;
+            void processMessage( const HbLogMessage & message ) override;
+
         private:
-
-            void processMessage( const HbLogMessage & message );
-
-
-        private:
-
-            HbLogGuiNotifier * mpNotifier;
+            QScopedPointer< HbLogGuiNotifier > mNotifier;
         };
     }
 }

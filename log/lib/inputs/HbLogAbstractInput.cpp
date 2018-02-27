@@ -3,13 +3,7 @@
 
 using namespace hb::log;
 
-HbLogAbstractInput::HbLogAbstractInput( InputType type )
+HbLogAbstractInput::HbLogAbstractInput( QObject * parent ) :
+    QObject( parent )
 {
-    mType = type;
-}
-
-
-HbLogAbstractInput::InputType HbLogAbstractInput::type() const
-{
-    return mType;
 }

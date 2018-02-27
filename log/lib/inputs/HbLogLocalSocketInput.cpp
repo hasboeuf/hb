@@ -1,31 +1,23 @@
 
 // Qt
+#include <QtNetwork/QLocalServer>
 #include <QtNetwork/QLocalSocket>
 // Local
 #include <inputs/HbLogLocalSocketInput.h>
 #include <HbLogMessage.h>
-#include <HbLoggerStream.h>
 
 using namespace hb::log;
 
-HbLogLocalSocketInput::HbLogLocalSocketInput( const QString & name ) :
-    QLocalServer(), HbLogAbstractInput( INPUT_LOCAL_SOCKET )
+HbLogLocalSocketInput::HbLogLocalSocketInput( const QString & name, QObject * parent ) :
+    HbLogAbstractInput( parent )
 {
     mExpected = 0;
-
-    setSocketOptions( QLocalServer::UserAccessOption );
-
     mName = name;
-    if (mName.isEmpty())
-    {
-        mName = QString::fromLatin1(HbLoggerStream::DEFAULT_LOCAL_SERVER_NAME);
-    }
+}
 
-    if( !listen( mName ) )
-        fprintf( stderr, "HbLogLocalSocketInput: Unable to start the local server\n" );
-
-    q_assert( connect( this, &QLocalServer::newConnection, this,
-        &HbLogLocalSocketInput::incomingConnection, Qt::UniqueConnection ) );
+HbLogLocalSocketInput::~HbLogLocalSocketInput()
+{
+    qDeleteAll( mClients );
 }
 
 const QString & HbLogLocalSocketInput::name() const
@@ -33,16 +25,24 @@ const QString & HbLogLocalSocketInput::name() const
     return mName;
 }
 
+void HbLogLocalSocketInput::init()
+{
+    mLocalServer.reset( new QLocalServer() );
+    mLocalServer->setSocketOptions( QLocalServer::UserAccessOption );
+
+    if( !mLocalServer->listen( mName ) ) {
+        fprintf( stderr, "HbLogLocalSocketInput: Unable to start the local server\n" );
+    }
+
+    connect( mLocalServer.data(), &QLocalServer::newConnection, this, &HbLogLocalSocketInput::incomingConnection );
+}
 
 void HbLogLocalSocketInput::incomingConnection()
 {
-    QLocalSocket * client = q_assert_ptr( nextPendingConnection() );
+    QLocalSocket * client = mLocalServer->nextPendingConnection();
 
-    q_assert( connect( client, &QLocalSocket::disconnected, this,
-        &HbLogLocalSocketInput::onClientDisconnected, Qt::UniqueConnection ) );
-
-    q_assert( connect( client, &QLocalSocket::readyRead, this,
-        &HbLogLocalSocketInput::onReadyRead, Qt::UniqueConnection ) );
+    connect( client, &QLocalSocket::disconnected, this, &HbLogLocalSocketInput::onClientDisconnected );
+    connect( client, &QLocalSocket::readyRead, this, &HbLogLocalSocketInput::onReadyRead );
 
     mClients.insert( client );
 }
@@ -50,7 +50,7 @@ void HbLogLocalSocketInput::incomingConnection()
 void HbLogLocalSocketInput::onReadyRead()
 {
     QLocalSocket * socket = q_dynamic_cast( QLocalSocket *, sender() );
-    QDataStream stream( q_assert_ptr( socket ) );
+    QDataStream stream( socket );
 
     do
     {
