@@ -8,10 +8,9 @@
 using namespace hb::log;
 
 
-HbLogUdpSocketInput::HbLogUdpSocketInput( const QString & ip, quint32 port, QObject * parent ) :
+HbLogUdpSocketInput::HbLogUdpSocketInput( quint32 port, QObject * parent ) :
     HbLogAbstractInput( parent )
 {
-    mIp = ip;
     mPort = port;
     mExpected = 0;
 }
@@ -19,11 +18,6 @@ HbLogUdpSocketInput::HbLogUdpSocketInput( const QString & ip, quint32 port, QObj
 HbLogUdpSocketInput::~HbLogUdpSocketInput()
 {
 
-}
-
-const QString & HbLogUdpSocketInput::ip() const
-{
-    return mIp;
 }
 
 quint32 HbLogUdpSocketInput::port() const
@@ -45,7 +39,7 @@ void HbLogUdpSocketInput::init()
 
 void HbLogUdpSocketInput::onReconnection()
 {
-    if( !mUdpSocket->bind( QHostAddress( mIp ), mPort ) )
+    if( !mUdpSocket->bind( QHostAddress::LocalHost, mPort ) )
     {
         QTimer::singleShot( 5000, this, &HbLogUdpSocketInput::onReconnection );
     }

@@ -35,10 +35,9 @@ namespace hb
         public:
 
             HbLogUdpSocketInput() = delete;
-            HbLogUdpSocketInput( const QString & ip, quint32 port, QObject * parent = nullptr );
+            HbLogUdpSocketInput( quint32 port, QObject * parent = nullptr );
             virtual ~HbLogUdpSocketInput();
 
-            const QString & ip() const;
             quint32 port() const;
 
         protected:
@@ -50,7 +49,6 @@ namespace hb
 
         private:
             qint32  mExpected;
-            QString mIp;
             quint32 mPort;
             QScopedPointer< QUdpSocket > mUdpSocket;
         };

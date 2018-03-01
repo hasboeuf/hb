@@ -57,12 +57,11 @@ namespace hb
 
             /*!
              * Request to add a udp socket input.
-             * \param ip Ip of the log server.
              * \param port Server port to connect.
              * \param error Error description in case of failure.
              * \return Output uid, 0 on failure.
              */
-            loguid addUdpSocketInput( const QString & ip, quint16 port, QString * error = nullptr );
+            loguid addUdpSocketInput( quint16 port, QString * error = nullptr );
 
             /*!
              * Request to add a tcp server input.

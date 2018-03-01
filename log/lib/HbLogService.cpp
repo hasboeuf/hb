@@ -242,9 +242,9 @@ void HbLogService::processArgs( QStringList args )
     logServiceController()->processArgs( args );
 }
 
-loguid HbLogService::addUdpSocketInput( const QString & ip, quint16 port, QString * error )
+loguid HbLogService::addUdpSocketInput( quint16 port, QString * error )
 {
-    return logServiceController()->pool()->addUdpSocketInput( ip, port, error );
+    return logServiceController()->pool()->addUdpSocketInput( port, error );
 }
 
 loguid HbLogService::addTcpSocketInput( quint16 port, QString * error )

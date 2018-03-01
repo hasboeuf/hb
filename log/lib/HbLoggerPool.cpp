@@ -47,11 +47,11 @@ HbLoggerPool::~HbLoggerPool()
     qDeleteAll( mLoggerStream );
 }
 
-loguid HbLoggerPool::addUdpSocketInput( const QString & ip, quint16 port, QString * error )
+loguid HbLoggerPool::addUdpSocketInput( quint16 port, QString * error )
 {
     QWriteLocker locker( &mInputsLock );
 
-    HbLogAbstractInput * input = new HbLogUdpSocketInput( ip, port, this );
+    HbLogAbstractInput * input = new HbLogUdpSocketInput( port, this );
     input->moveToThread( thread() );
     input->init();
 

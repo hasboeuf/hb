@@ -53,7 +53,7 @@ namespace hb
             HbLoggerPool();
             virtual ~HbLoggerPool();
 
-            loguid addUdpSocketInput  ( const QString & ip, quint16 port, QString * error );
+            loguid addUdpSocketInput  ( quint16 port, QString * error );
             loguid addTcpSocketInput  ( quint16 port, QString * error );
             loguid addLocalSocketInput( const QString & name, QString * error );
             bool   removeInput        ( loguid uid, QString * error );
