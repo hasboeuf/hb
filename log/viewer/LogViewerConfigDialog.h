@@ -1,6 +1,8 @@
 #ifndef LOGVIEWERCONFIGDIALOG_H
 #define LOGVIEWERCONFIGDIALOG_H
 
+// Qt
+#include <QButtonGroup>
 // Local
 #include <ui_LogViewerConfigDialog.h>
 #include <LogViewerConfig.h>

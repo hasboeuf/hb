@@ -11,6 +11,8 @@
 
 /*! \file HbLogConfigDialog.h */
 
+// Qt
+#include <QButtonGroup>
 // Local
 #include <HbLog.h>
 #include <ui_HbLogConfigDialog.h>
