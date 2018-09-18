@@ -1,3 +1,5 @@
+//System
+#include <iostream>
 // Qt
 #include <QtCore/QCoreApplication>
 #include <QtCore/QThread>
@@ -94,7 +96,7 @@ void HbApplicationHelper::catchInterruptingEvents()
 #elif defined Q_OS_LINUX || defined Q_OS_DARWIN
 
     auto handler = []( int sig ) {
-        qCritical() << QString( "Signal %1 caught. Quit qApp." ).arg( sig );
+        std::cerr << QString( "Signal %1 caught. Quit qApp." ).arg( sig ).toStdString().c_str();
         qApp->quit();
     };
 
