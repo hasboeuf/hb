@@ -37,7 +37,7 @@ void HbLogLocalSocketOutput::init()
     });
 
     connect( mLocalSocket.data(), &QLocalSocket::disconnected, this, [this]() {
-        std::cout << "HbLog: tcp output disconnected on " << qUtf8Printable(mName) << std::endl;
+        std::cout << "HbLog: local output disconnected on " << qUtf8Printable(mName) << std::endl;
     });
 
     onReconnection();
