@@ -8,12 +8,14 @@ set(CMAKE_AUTOMOC ON)
 set(AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-file(GLOB HbLogViewer_SRC
+file(GLOB SOURCES
     "*.h"
     "*.cpp"
 )
 
-qt5_wrap_ui(HbLogViewer_UI
+qt5_add_resources(QRC_SRC resources/HbLogViewer.qrc)
+
+qt5_wrap_ui(FORMS
     forms/LogViewer.ui
     forms/LogViewerConfigDialog.ui
     forms/LogViewerMainWindow.ui
@@ -22,7 +24,7 @@ qt5_wrap_ui(HbLogViewer_UI
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-add_executable(HbLogViewer ${HbLogViewer_SRC} ${HbLogViewer_UI})
+add_executable(HbLogViewer ${QRC_SRC} ${SOURCES} ${FORMS})
 
 target_link_libraries(HbLogViewer Qt5::Core Qt5::Widgets Qt5::Xml HbLog HbTools)
 
