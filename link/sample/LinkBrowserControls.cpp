@@ -10,11 +10,11 @@ using namespace hb::linkexample;
 
 void LinkBrowserControls::onOpenBrowser( const QUrl & url )
 {
-    HbInfo( "Opening browser on %s", HbLatin1( url.toString() ) );
+    qDebug() << "Opening browser on" << url.toString();
     QDesktopServices::openUrl( url );
 }
 
 void LinkBrowserControls::onCloseBrowser()
 {
-    HbInfo( "Browser could be closed." );
+    qDebug() << "Browser could be closed";
 }

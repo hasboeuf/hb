@@ -94,7 +94,7 @@ void HbO2ClientConfig::setScopes( const QStringList & permissions )
     }
     else
     {
-        HbWarning( "Scope is not empty." );
+        qWarning() << "Scope is not empty";
     }
 }
 

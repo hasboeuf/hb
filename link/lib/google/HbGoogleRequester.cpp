@@ -25,7 +25,7 @@ quint64 HbGoogleRequester::requestUser( HbO2ServerGoogle * auth )
 
     if( !auth || ( auth->linkStatus() != HbO2::LINKED ) )
     {
-        HbError( "Auth null or unlinked." );
+        qWarning() << "Auth null or unlinked";
         return false;
     }
 
@@ -43,7 +43,7 @@ quint64 HbGoogleRequester::requestUser( HbO2ServerGoogle * auth )
     if( id > 0 )
     {
         mRequestTypes.insert( id, HbGoogleObject::OBJECT_USER );
-        HbInfo( "Request %lld is sent (%s).", id, HbLatin1( url.toString() ) );
+        qDebug() << "Request" << id << "is sent" << url.toString();
     }
 
     return id;
@@ -59,10 +59,7 @@ void HbGoogleRequester::onRequestFinished( quint64 request_id, const QJsonDocume
         type = mRequestTypes.take( request_id );
     }
 
-    HbInfo( "Request (%lld) of type %s completed.",
-            request_id,
-            HbLatin1( HbGoogleObject::MetaObjectType::toString( type ) ) );
-
+    qDebug() << "Request" << request_id << "of type" << HbGoogleObject::MetaObjectType::toString( type ) << "completed";
 
     if( type == HbGoogleObject::OBJECT_USER )
     {
@@ -72,7 +69,7 @@ void HbGoogleRequester::onRequestFinished( quint64 request_id, const QJsonDocume
     }
     else
     {
-        HbError( "Object creation failed, bad type." );
+        qWarning() << "Object creation failed, bad type.";
         emit requestCompleted( request_id, nullptr );
     }
 }
@@ -86,10 +83,9 @@ void HbGoogleRequester::onRequestError( quint64 request_id, const QString & erro
         type = mRequestTypes.take( request_id );
     }
 
-    HbError( "Request (%lld) of type %s failed (%s).",
-             request_id,
-             HbLatin1( HbGoogleObject::MetaObjectType::toString( type ) ),
-             HbLatin1( error ) );
+    qWarning() << "Request" << request_id << "of type"
+               << HbGoogleObject::MetaObjectType::toString( type )
+               << "failed" << error;
 
     emit requestCompleted( request_id, nullptr );
 }

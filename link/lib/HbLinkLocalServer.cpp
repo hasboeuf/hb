@@ -31,7 +31,7 @@ void HbLinkLocalServer::onReadyRead()
     QTcpSocket *socket = dynamic_cast< QTcpSocket * >( sender() );
     if ( !socket )
     {
-        HbError( "Socket null." );
+        qWarning() << "Null socket";
         return;
     }
 
@@ -43,7 +43,7 @@ void HbLinkLocalServer::onReadyRead()
     reply.append( QString( "Content-Length: %1\r\n\r\n" ).arg( content.size() ) );
     reply.append( content );
 
-    HbInfo( "Reply written: %s", reply.constData() );
+    qDebug() << "Reply written:" << reply.constData();
 
     socket->write( reply );
 
@@ -84,7 +84,7 @@ QHash< QString, QString > HbLinkLocalServer::parseResponse( QByteArray & data )
 //
 // Aim here: extract code={CODE}
 
-    HbInfo( "Response content received: %s", HbLatin1( content ) );
+    qDebug() << "Response content received:" << content;
 
     content = content.simplified(); // All white-space characters become space.
 
@@ -102,15 +102,15 @@ QHash< QString, QString > HbLinkLocalServer::parseResponse( QByteArray & data )
         }
         else
         {
-            HbError( "Parsing found more than one url pattern: %s", HbLatin1( result.join( QChar::Space ) ) );
+            qWarning() << "Parsing found more than one url pattern:" << result.join( QChar::Space );
         }
     }
     else
     {
-        HbError( "Parsing found 0 url pattern." );
+        qWarning() << "Parsing found 0 url pattern.";
     }
 
-    HbInfo( "Simplified response content: %s", HbLatin1( content ) );
+    qDebug() << "Simplified response content:" << content;
 
     return HbO2::getUrlItems( content );
 }

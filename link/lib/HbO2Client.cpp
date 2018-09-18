@@ -36,7 +36,7 @@ bool HbO2Client::link()
 
     if( !isValid() )
     {
-        HbError( "O2Client config invalid." );
+        qWarning() << "O2Client config invalid";
         return false;
     }
 
@@ -59,7 +59,7 @@ bool HbO2Client::link()
     request.setQueryItems( HbDictionaryHelper::toPairList< QString, QString >( codeRequest() ) );
     url.setQuery( request );
 
-    HbInfo( "Url to open: %s", HbLatin1( url.toString() ) );
+    qDebug() << "Url to open:" << url.toString();
 
     emit openBrowser( url );
 
@@ -70,14 +70,14 @@ void HbO2Client::onCodeResponseReceived( const QHash< QString, QString > respons
 {
     if( codeResponse( response ) == LINKED )
     {
-        HbInfo( "Verification succeed." );
-        HbInfo( "Code received: %s", HbLatin1( mCode ) );
+        qDebug() << "Verification succeed";
+        qDebug() << "Code received:" << mCode;
         mLinkStatus = LINKED;
         emit linkSucceed();
     }
     else
     {
-        HbError( "Verification failed. (%s)", HbLatin1( mErrorString ) );
+        qWarning() << "Verification failed" << mErrorString;
         mLinkStatus = UNLINKED;
         emit linkFailed( mErrorString );
     }

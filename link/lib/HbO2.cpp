@@ -19,13 +19,13 @@ bool HbO2::isValid() const
 {
     if( mLinkStatus != UNLINKED)
     {
-        HbInfo( "HbO2 already linked or in linking." );
+        qDebug() << "HbO2 already linked or in linking";
         return false;
     }
 
     if( !QUrl( mRedirectUri ).isValid() || endPoint().isEmpty() )
     {
-        HbError( "HbO2 not valid." );
+        qWarning() << "HbO2 not valid";
         return false;
     }
 

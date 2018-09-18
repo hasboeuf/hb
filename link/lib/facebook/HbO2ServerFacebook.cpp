@@ -32,7 +32,7 @@ void HbO2ServerFacebook::setFields( const QString & fields )
     }
     else
     {
-        HbWarning( "Scope is not empty." );
+        qWarning() << "Scope is not empty";
     }
 }
 

@@ -25,7 +25,7 @@ quint64 HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )
 
     if( !auth || ( auth->linkStatus() != HbO2::LINKED ) )
     {
-        HbError( "Auth null or unlinked." );
+        qWarning() << "Auth null or unlinked";
         return false;
     }
 
@@ -43,7 +43,7 @@ quint64 HbFacebookRequester::requestUser( HbO2ServerFacebook * auth )
     if( id > 0 )
     {
         mRequestTypes.insert( id, HbFacebookObject::OBJECT_USER );
-        HbInfo( "Request %lld is sent (%s).", id, HbLatin1( url.toString() ) );
+        qWarning() << "Request" << id << "is sent" << url.toString();
     }
 
     return id;
@@ -59,10 +59,8 @@ void HbFacebookRequester::onRequestFinished( quint64 request_id, const QJsonDocu
         type = mRequestTypes.take( request_id );
     }
 
-    HbInfo( "Request (%lld) of type %s completed.",
-            request_id,
-            HbLatin1( HbFacebookObject::MetaObjectType::toString( type ) ) );
-
+    qDebug() << "Request" << request_id
+             << "of type" << HbFacebookObject::MetaObjectType::toString( type ) << "completed";
 
     if( type == HbFacebookObject::OBJECT_USER )
     {
@@ -72,7 +70,7 @@ void HbFacebookRequester::onRequestFinished( quint64 request_id, const QJsonDocu
     }
     else
     {
-        HbError( "Object creation failed, bad type." );
+        qWarning() << "Object creation failed, bad type";
         emit requestCompleted( request_id, nullptr );
     }
 }
@@ -86,10 +84,9 @@ void HbFacebookRequester::onRequestError( quint64 request_id, const QString & er
         type = mRequestTypes.take( request_id );
     }
 
-    HbError( "Request (%lld) of type %s failed (%s).",
-             request_id,
-             HbLatin1( HbFacebookObject::MetaObjectType::toString( type ) ),
-             HbLatin1( error ) );
+    qWarning() << "Request" << request_id
+               << "of type" << HbFacebookObject::MetaObjectType::toString( type )
+               << "failed" << error;
 
     emit requestCompleted( request_id, nullptr );
 }

@@ -3,8 +3,6 @@
 #include <QtCore/QUrlQuery>
 #include <QtNetwork/QNetworkReply>
 // Hb
-#include <HbLogService.h>
-#include <HbLoggerOutputs.h>
 #include <core/HbDictionaryHelper.h>
 #include <facebook/HbO2ClientFacebook.h>
 #include <facebook/HbO2ServerFacebook.h>
@@ -15,7 +13,6 @@
 // Local
 #include <LinkMainWindow.h>
 
-using namespace hb::log;
 using namespace hb::link;
 using namespace hb::linkexample;
 
@@ -25,16 +22,6 @@ QString LinkMainWindow::msClientSecret = "74621eedf9aa2cde9cd31dc5c4d3c440"; // 
 LinkMainWindow::LinkMainWindow(QWidget * parent) :
     QMainWindow( parent )
 {
-
-    // Log
-    QString error;
-    if( HbLogService::outputs()->addConsoleOutput( &error ) == 0 )
-    {
-        printf( "HbLog error: %s", HbLatin1( error ) );
-    }
-
-    HbLogBegin();
-
     // Ui
     setupUi( this );
     setWindowTitle( "Link" );
@@ -49,26 +36,18 @@ LinkMainWindow::LinkMainWindow(QWidget * parent) :
 
     connect( &mFacebookRequester, &HbFacebookRequester::requestCompleted, this, &LinkMainWindow::onFacebookRequestCompleted );
     connect( &mGoogleRequester,   &HbGoogleRequester::requestCompleted, this, &LinkMainWindow::onGoogleRequestCompleted );
-
-    HbLogEnd();
 }
 
 LinkMainWindow::~LinkMainWindow()
 {
-    HbLogBegin();
-
     if( mpFacebookClient ) delete mpFacebookClient;
     if( mpFacebookServer ) delete mpFacebookServer;
     if( mpGoogleClient   ) delete mpGoogleClient;
     if( mpGoogleServer   ) delete mpGoogleServer;
-
-    HbLogEnd();
 }
 
 void LinkMainWindow::onFacebookConnectClicked()
 {
-    HbLogBegin();
-
     mpFacebookClient = new HbO2ClientFacebook();
 
     connect( mpFacebookClient, &HbO2::linkSucceed, this, &LinkMainWindow::onFacebookClientLinkSucceed );
@@ -80,15 +59,10 @@ void LinkMainWindow::onFacebookConnectClicked()
     mpFacebookClient->config().setBrowserControls( &mBrowserControls );
 
     mpFacebookClient->link();
-
-    HbLogEnd();
-
 }
 
 void LinkMainWindow::onGoogleConnectClicked()
 {
-    HbLogBegin();
-
     mpGoogleClient = new HbO2ClientGoogle();
 
     connect( mpGoogleClient, &HbO2::linkSucceed, this, &LinkMainWindow::onGoogleClientLinkSucceed );
@@ -100,9 +74,6 @@ void LinkMainWindow::onGoogleConnectClicked()
     mpGoogleClient->config().setBrowserControls( &mBrowserControls );
 
     mpGoogleClient->link();
-
-    HbLogEnd();
-
 }
 
 void LinkMainWindow::onFacebookClientLinkSucceed()
@@ -112,7 +83,7 @@ void LinkMainWindow::onFacebookClientLinkSucceed()
         return;
     }
 
-    HbInfo( "Client link succeed" );
+    qDebug() << "Client link succeed";
 
     mpFacebookServer = new HbO2ServerFacebook();
 
@@ -144,16 +115,16 @@ void LinkMainWindow::onFacebookServerLinkSucceed()
         return;
     }
 
-    HbInfo( "Server link succeed. Request facebook user..." );
+    qDebug() << "Server link succeed. Request facebook user...";
 
     quint64 request_id = mFacebookRequester.requestUser( mpFacebookServer );
     if( request_id > 0 )
     {
-        HbInfo( "Request id: %lld.", request_id );
+        qDebug() << "Request id:" << request_id;
     }
     else
     {
-        HbError( "Request user failed." );
+        qDebug() << "Request user failed.";
     }
 
     mpFacebookServer->deleteLater();
@@ -162,31 +133,30 @@ void LinkMainWindow::onFacebookServerLinkSucceed()
 
 void LinkMainWindow::onFacebookRequestCompleted( quint64 request_id, hb::link::HbFacebookObject * object )
 {
-    HbInfo( "Request %lld completed.", request_id );
+    qDebug() << "Request completed" << request_id;
     if( !object )
     {
-        HbError( "Facebook object null." );
+        qWarning() << "Facebook object null";
         return;
     }
 
-    HbInfo( "Facebook object of type %s received.",
-            HbLatin1( HbFacebookObject::MetaObjectType::toString( object->type() ) ) );
+    qDebug() << "Facebook object of type" << HbFacebookObject::MetaObjectType::toString( object->type() ) << "received";
 
     if( object->type() == HbFacebookObject::OBJECT_USER )
     {
         HbFacebookUser * user = dynamic_cast< HbFacebookUser * >( object );
         if( user )
         {
-            HbInfo( "Facebook user informations: %s", HbLatin1( user->toString() ) );
+            qDebug() << "Facebook user informations:" << user->toString();
         }
         else
         {
-            HbError( "Bad dynamic cast HbFacebookObject -> HbFacebookUser." );
+            qWarning() << "Bad dynamic cast HbFacebookObject -> HbFacebookUser";
         }
     }
     else
     {
-        HbWarning( "No displayable for this type." );
+        qWarning() << "No displayable for this type";
     }
 
     delete object;
@@ -199,7 +169,7 @@ void LinkMainWindow::onGoogleClientLinkSucceed()
         return;
     }
 
-    HbInfo( "Client link succeed" );
+    qDebug() << "Client link succeed";
 
     mpGoogleServer = new HbO2ServerGoogle();
 
@@ -223,16 +193,16 @@ void LinkMainWindow::onGoogleServerLinkSucceed()
         return;
     }
 
-    HbInfo( "Server link succeed. Request google user..." );
+    qDebug() << "Server link succeed. Request google user...";
 
     quint64 request_id = mGoogleRequester.requestUser( mpGoogleServer );
     if( request_id > 0 )
     {
-        HbInfo( "Request id: %lld.", request_id );
+        qDebug() << "Request id:" << request_id;
     }
     else
     {
-        HbError( "Request user failed." );
+        qWarning() << "Request user failed";
     }
 
     mpGoogleServer->deleteLater();
@@ -241,31 +211,30 @@ void LinkMainWindow::onGoogleServerLinkSucceed()
 
 void LinkMainWindow::onGoogleRequestCompleted( quint64 request_id, hb::link::HbGoogleObject * object )
 {
-    HbInfo( "Request %lld completed.", request_id );
+    qDebug() << "Request completed" << request_id ;
     if( !object )
     {
-        HbError( "Google object null." );
+        qWarning() << "Google object null.";
         return;
     }
 
-    HbInfo( "Google object of type %s received.",
-            HbLatin1( HbGoogleObject::MetaObjectType::toString( object->type() ) ) );
+    qDebug() << "Google object of type" << HbGoogleObject::MetaObjectType::toString( object->type() ) << "received.";
 
     if( object->type() == HbGoogleObject::OBJECT_USER )
     {
         HbGoogleUser * user = dynamic_cast< HbGoogleUser * >( object );
         if( user )
         {
-            HbInfo( "Google user informations: %s", HbLatin1( user->toString() ) );
+            qDebug() << "Google user informations:" << user->toString();
         }
         else
         {
-            HbError( "Bad dynamic cast HbGoogleObject -> HbGoogleUser." );
+            qWarning() << "Bad dynamic cast HbGoogleObject -> HbGoogleUser";
         }
     }
     else
     {
-        HbWarning( "No displayable for this type." );
+        qWarning() << "No displayable for this type";
     }
 
     delete object;

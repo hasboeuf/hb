@@ -49,25 +49,25 @@ void HbO2Server::onTokenResponseReceived()
     QNetworkReply * token_reply = dynamic_cast< QNetworkReply * >( sender() );
     q_assert_ptr( token_reply );
 
-    HbInfo( "Token response received.");
+    qDebug() << "Token response received";
 
     if ( token_reply->error() == QNetworkReply::NoError)
     {
 
         QByteArray data = token_reply->readAll();
 
-        HbInfo( "Token content: %s", HbLatin1( QString( data ) ) );
+        qDebug() << "Token content:" << data;
 
         if( tokenResponse( data ) == LINKED )
         {
-            HbInfo( "Verification succeed." );
-            HbInfo( "Token received: %s", HbLatin1( mToken ) );
+            qDebug() << "Verification succeed";
+            qDebug() << "Token received:" << mToken;
             mLinkStatus = LINKED;
             emit linkSucceed();
         }
         else
         {
-            HbError( "Verification failed. (%s)", HbLatin1( mErrorString ) );
+            qWarning() << "Verification failed" << mErrorString;
             mLinkStatus = UNLINKED;
 
             emit linkFailed( mErrorString );
@@ -93,11 +93,11 @@ void HbO2Server::onTokenResponseError( QNetworkReply::NetworkError error )
     mLinkStatus = UNLINKED;
     mErrorString = token_reply->errorString();
 
-    HbInfo( "Token response error. (%s)", HbLatin1( mErrorString ) );
+    qWarning() << "Token response error" << mErrorString;
 
     if( mErrorString.contains( "Error creating SSL context" ) )
     {
-        HbWarning( "You might miss updated OpenSSL lib on your system." );
+        qWarning() << "You might miss updated OpenSSL lib on your system.";
     }
 
     emit linkFailed( mErrorString );

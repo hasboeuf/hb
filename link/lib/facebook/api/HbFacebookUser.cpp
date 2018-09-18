@@ -18,8 +18,7 @@ HbFacebookUser::HbFacebookUser() :
 
 void HbFacebookUser::load( const QJsonDocument & doc )
 {
-    HbInfo( "Loading json into facebook user: %s",
-            HbLatin1( QString( doc.toJson( QJsonDocument::Indented ) ) ) );
+    qDebug() << "Loading json into facebook user:" << doc.toJson( QJsonDocument::Indented );
 
     QJsonObject root( doc.object() );
 

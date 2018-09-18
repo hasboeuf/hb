@@ -17,8 +17,8 @@ HbGoogleUser::HbGoogleUser() :
 
 void HbGoogleUser::load( const QJsonDocument & doc )
 {
-    HbInfo( "Loading json into google user: %s",
-            HbLatin1( QString( doc.toJson( QJsonDocument::Indented ) ) ) );
+    qDebug() << "Loading json into google user:" <<
+                doc.toJson( QJsonDocument::Indented );
 
     QJsonObject root( doc.object() );
 

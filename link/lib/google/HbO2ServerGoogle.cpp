@@ -31,7 +31,7 @@ HbO2::LinkStatus HbO2ServerGoogle::tokenResponse( const QByteArray & data )
     QJsonDocument doc = QJsonDocument::fromJson( data );
     if( doc.isNull() )
     {
-        HbError( "Null JSON document" );
+        qWarning() << "Null JSON document";
     }
     QJsonObject root( doc.object() );
 
