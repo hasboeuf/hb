@@ -39,16 +39,16 @@ namespace hb
         public:
 
             HbLogTcpSocketInput() = delete;
-            HbLogTcpSocketInput( quint32 port, QObject * parent );
+            HbLogTcpSocketInput( quint16 port, QObject * parent );
             virtual ~HbLogTcpSocketInput();
 
-            quint32 port() const;
+            quint16 port() const;
 
         protected:
             void init() override;
 
         private:
-            void incomingConnection( qint32 descriptor );
+            void onNewConnection();
 
         private callbacks:
 
@@ -56,7 +56,7 @@ namespace hb
             void onClientDisconnected();
 
         private:
-            quint32 mPort;
+            quint16 mPort;
             qint32  mExpected;
             QScopedPointer< QTcpServer > mTcpServer;
             QSet< QTcpSocket * > mClients;

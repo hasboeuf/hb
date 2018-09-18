@@ -20,9 +20,6 @@ namespace hb
 {
     namespace log
     {
-
-        class HbLogMessage;
-
         /*!
          * TODOC.
          */
@@ -37,7 +34,7 @@ namespace hb
 
         protected:
             virtual void init() = 0;
-            virtual void processMessage( const HbLogMessage & message ) = 0;
+            virtual void processMessage( const HbLogMessagePtr & message ) = 0;
         };
     }
 }

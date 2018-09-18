@@ -35,11 +35,11 @@ namespace hb
             HbLogAbstractInput( QObject * parent = nullptr );
             virtual ~HbLogAbstractInput() = default;
 
-        signals:
-            void inputMessageReceived( HbLogMessage * message );
-
         protected:
             virtual void init() = 0;
+
+        signals:
+            void inputMessageReceived( HbLogMessage * message );
         };
     }
 }

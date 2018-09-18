@@ -1,3 +1,5 @@
+// Qt
+#include <QtCore/QTimer>
 // Hb
 #include <inputs/HbLogAbstractInput.h>
 

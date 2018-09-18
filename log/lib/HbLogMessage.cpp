@@ -1,3 +1,5 @@
+// System
+#include <iostream>
 // Qt
 #include <QtCore/QTime>
 // Hb
@@ -51,7 +53,7 @@ const HbLogMessage * HbLogMessage::fromRaw( const QString & raw)
     return msg;
 }
 
-QString HbLogMessage::toRaw(const HbLogMessage &msg)
+QString HbLogMessage::toRaw(const HbLogMessage& msg)
 {
     QString raw;
 
@@ -59,7 +61,7 @@ QString HbLogMessage::toRaw(const HbLogMessage &msg)
     raw += HbSteadyDateTime::fromNsSinceEpoch( msg.timestamp() ).toString( "yyyy-MM-dd-HH:mm:ss:zzz.uuuuuu" )
                                                              + HbLogMessage::msFieldSeparator;
     raw += msg.mContext.owner()                              + HbLogMessage::msFieldSeparator;
-    raw += QStringLiteral( "%1" ).arg( msg.mContext.line() ) + HbLogMessage::msFieldSeparator;
+    raw += QString( "%1" ).arg( msg.mContext.line() ) + HbLogMessage::msFieldSeparator;
     raw += msg.mContext.file()                               + HbLogMessage::msFieldSeparator;
     raw += msg.mContext.function()                           + HbLogMessage::msFieldSeparator;
     raw += msg.mMessage;
@@ -90,16 +92,13 @@ void HbLogMessage::setPattern( const QString & pattern )
     HbLogMessage::msOutputs = outputs;
 }
 
-HbLogMessage::HbLogMessage() :
-    QObject()
+HbLogMessage::HbLogMessage()
 {
-    mLevel     = HbLogger::LEVEL_NONE;
-    mTimestamp = 0;
+    mLevel = HbLogger::LEVEL_NONE;
 }
 
 HbLogMessage::HbLogMessage(HbLogger::Level level,
-                            const HbLogContext & context, qint64 timestamp, const QString & message ) :
-    QObject()
+                           const HbLogContext & context, qint64 timestamp, const QString & message )
 {
     mLevel     = level;
     mContext   = context;
@@ -107,30 +106,7 @@ HbLogMessage::HbLogMessage(HbLogger::Level level,
     mMessage   = message;
 }
 
-HbLogMessage::HbLogMessage( const HbLogMessage & message ) :
-    HbLogMessage()
-{
-    if( &message != this )
-    {
-        mLevel = message.mLevel;
-        mContext = message.mContext;
-        mTimestamp = message.mTimestamp;
-        mMessage = message.mMessage;
-    }
-}
-
-
-HbLogMessage & HbLogMessage::operator =( const HbLogMessage & message )
-{
-    if( &message != this )
-    {
-        mLevel = message.mLevel;
-        mContext = message.mContext;
-        mTimestamp = message.mTimestamp;
-        mMessage = message.mMessage;
-    }
-
-    return *this;
+HbLogMessage::~HbLogMessage() {
 }
 
 HbLogger::Level HbLogMessage::level() const
@@ -148,7 +124,7 @@ QString HbLogMessage::levelStr( bool spacing ) const
     return level;
 }
 
-const HbLogContext & HbLogMessage::context() const
+HbLogContext HbLogMessage::context() const
 {
     return mContext;
 }
@@ -163,7 +139,7 @@ QString HbLogMessage::timestampStr() const
     return HbSteadyDateTime::fromNsSinceEpoch( mTimestamp ).toString("HH:mm:ss.zzz.uuuuuu");
 }
 
-const QString & HbLogMessage::message() const
+QString HbLogMessage::message() const
 {
     return mMessage;
 }
@@ -213,7 +189,7 @@ QByteArray HbLogMessage::toByteArray() const
     qint32 size = 0;
 
     stream << size;
-    stream << ( qint32 ) mLevel;
+    stream << (qint8) mLevel;
     stream << mContext;
     stream << mTimestamp;
     stream << mMessage;
@@ -229,7 +205,7 @@ QByteArray HbLogMessage::toByteArray() const
 void HbLogMessage::fromDataStream( QDataStream & stream )
 {
     // ASB: How to test the integrity of the stream?
-    qint32 enum_stream = 0;
+    qint8 enum_stream = 0;
 
     stream >> enum_stream;
     stream >> mContext;

@@ -5,6 +5,7 @@
 #include <QtCore/QMutex>
 #include <QtCore/QTimer>
 // Local
+#include <HbLog.h>
 #include <ui_LogViewer.h>
 #include <LogViewerConfig.h>
 
@@ -43,7 +44,7 @@ namespace hb
         private slots:
 
             // From mLogNotifier.
-            void onNewLogMessage( const HbLogMessage & message );
+            void onNewLogMessage( const hb::log::HbLogMessagePtr & message );
 
             // From GUI.
             void onOpenFileClicked   ();

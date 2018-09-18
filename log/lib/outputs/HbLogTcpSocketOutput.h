@@ -36,24 +36,23 @@ namespace hb
 
         public:
             HbLogTcpSocketOutput() = delete;
-            HbLogTcpSocketOutput( const QString & ip, quint32 port, QObject * parent = nullptr );
+            HbLogTcpSocketOutput( const QString & ip, quint16 port, QObject * parent = nullptr );
             virtual ~HbLogTcpSocketOutput();
 
             const QString & ip() const;
-            quint32 port() const;
+            quint16 port() const;
 
         protected:
             void init() override;
-            void processMessage( const HbLogMessage & message ) override;
+            void processMessage( const HbLogMessagePtr & message ) override;
 
         private slots:
             void onReconnection();
-            void onDisconnected();
 
         private:
             QScopedPointer< QTcpSocket > mTcpSocket;
             QString mIp;
-            quint32 mPort;
+            quint16 mPort;
         };
     }
 }

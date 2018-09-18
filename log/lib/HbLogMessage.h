@@ -22,36 +22,10 @@ namespace hb
          * HbLogMessage class defines a log message.
          * TODOC.
          */
-        class HB_LOG_DECL HbLogMessage final : public QObject
+        class HB_LOG_DECL HbLogMessage final
         {
+            Q_GADGET
         public:
-            static const QString msFieldSeparator;
-            static const HbLogMessage * fromRaw( const QString & raw); //!< Use for export.
-            static QString toRaw( const HbLogMessage & msg );    //!< Use for import.
-            static void setPattern( const QString & format );
-
-            HbLogMessage();
-            HbLogMessage(HbLogger::Level level,
-                            const HbLogContext & context, qint64 timestamp, const QString & message );
-            HbLogMessage( const HbLogMessage & message );
-            virtual ~HbLogMessage() = default;
-
-            HbLogMessage & operator =( const HbLogMessage & message );
-
-            HbLogger::Level level() const;
-            QString levelStr( bool spacing = true ) const;
-            const HbLogContext & context() const;
-
-            qint64 timestamp() const;
-            QString timestampStr() const;
-            const QString & message() const;
-
-            QString toString() const;
-
-            QByteArray toByteArray() const;
-            void fromDataStream( QDataStream & stream );
-
-        private:
             enum Output
             {
                 OUTPUT_NONE     = 0,
@@ -68,15 +42,40 @@ namespace hb
             HB_ENUM( Output )
             Q_DECLARE_FLAGS( Outputs, Output )
 
+            static const QString msFieldSeparator;
+            static const HbLogMessage * fromRaw( const QString & raw); //!< Use for export.
+            static QString toRaw( const HbLogMessage & msg );    //!< Use for import.
+            static void setPattern( const QString & format );
+
+            HbLogMessage();
+            HbLogMessage(HbLogger::Level level,
+                            const HbLogContext & context, qint64 timestamp, const QString & message );
+            virtual ~HbLogMessage();
+
+            HbLogger::Level level() const;
+            QString levelStr( bool spacing = true ) const;
+            HbLogContext context() const;
+
+            qint64 timestamp() const;
+            QString timestampStr() const;
+            QString message() const;
+
+            QString toString() const;
+
+            QByteArray toByteArray() const;
+            void fromDataStream( QDataStream & stream );
+
             static QString msPattern;
             static Outputs msOutputs;
 
             HbLogger::Level mLevel;
             HbLogContext mContext;
 
-            qint64  mTimestamp;
+            qint64  mTimestamp = 0;
             QString mMessage;
         };
+
+        using HbLogMessagePtr = QSharedPointer<HbLogMessage>;
     }
 }
 

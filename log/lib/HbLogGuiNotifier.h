@@ -39,10 +39,7 @@ namespace hb
             virtual ~HbLogGuiNotifier() = default;
 
         signals:
-            void newLogMessage( const HbLogMessage & message );
-
-        private:
-            void onNewLogMessage( const HbLogMessage & message ); //!< \todo why not slot?
+            void newLogMessage( const HbLogMessagePtr & message );
         };
     }
 }

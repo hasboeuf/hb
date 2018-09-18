@@ -267,7 +267,7 @@ void LogViewerConfigDialog::onExportClicked()
 
     if( !LogViewerConfig::exportConfigXml( file_path, mConfig ) )
     {
-        HbError( "Exporting log config file failed." );
+        qWarning() << "Exporting log config file failed.";
     }
 }
 

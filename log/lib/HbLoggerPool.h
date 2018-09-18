@@ -14,7 +14,6 @@
 // Qt
 #include <QtCore/QObject>
 #include <QtCore/QHash>
-#include <QtCore/QReadWriteLock>
 // Hb
 #include <HbGlobal.h>
 #include <HbLog.h>
@@ -26,7 +25,6 @@ namespace hb
     namespace log
     {
 
-        class IHbLoggerInput;
         class HbLogAbstractOutput;
         class HbLogAbstractInput;
         class HbLogAbstractOutput;
@@ -53,21 +51,16 @@ namespace hb
             HbLoggerPool();
             virtual ~HbLoggerPool();
 
-            loguid addUdpSocketInput  ( quint16 port, QString * error );
-            loguid addTcpSocketInput  ( quint16 port, QString * error );
-            loguid addLocalSocketInput( const QString & name, QString * error );
-            bool   removeInput        ( loguid uid, QString * error );
+            void addUdpSocketInput  ( quint16 port );
+            void addTcpSocketInput  ( quint16 port );
+            void addLocalSocketInput( const QString & name );
 
-            loguid addConsoleOutput    ( QString * error );
-            loguid addGuiOutput        ( HbLogGuiNotifier * notifier, QString * error );
-            loguid addFileOutput       ( const QString & path, quint32 max_size, QString * error );
-            loguid addUdpSocketOutput  ( const QString & ip, quint16 port, QString * error );
-            loguid addTcpSocketOutput  ( const QString & ip, quint16 port, QString * error );
-            loguid addLocalSocketOutput( const QString & name, QString * error );
-            bool   removeOutput        ( loguid uid, QString * error );
-
-            HbLogAbstractInput * input ( loguid uid );
-            HbLogAbstractOutput * output( loguid uid );
+            void addConsoleOutput    ();
+            void addGuiOutput        ( HbLogGuiNotifier * notifier );
+            void addFileOutput       ( const QString & path, quint32 max_size );
+            void addUdpSocketOutput  ( const QString & ip, quint16 port );
+            void addTcpSocketOutput  ( const QString & ip, quint16 port );
+            void addLocalSocketOutput( const QString & name );
 
             bool enqueueMessage( QList< HbLogMessage * > & buffer );
 
@@ -84,8 +77,6 @@ namespace hb
         private:
 
             QAtomicInt mAtomic;
-            QReadWriteLock mInputsLock;
-            QReadWriteLock mOutputsLock;
 
             QTimer * mpClock;
             qint32 mCapacity;

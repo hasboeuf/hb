@@ -15,7 +15,7 @@ void HbLogConsoleOutput::init()
 
 }
 
-void HbLogConsoleOutput::processMessage( const HbLogMessage & message )
+void HbLogConsoleOutput::processMessage( const HbLogMessagePtr & message )
 {
-    fprintf( stderr, "%s\n", HbLatin1( message.toString() ) );
+    fprintf( stderr, "%s\n", qUtf8Printable( message->toString() ) );
 }

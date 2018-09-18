@@ -433,8 +433,13 @@ void LogViewerTab::onSaveAsClicked()
         QString file  = item_file->data( Qt::DisplayRole ).toString();
         QString func  = item_func->data( Qt::DisplayRole ).toString();
 
-        HbLogContext context( owner, file.toStdString().c_str(), line, func.toStdString().c_str() );
-        HbLogMessage msg( ( HbLogger::Level ) level, HbLogger::OUTPUT_ALL, context, time, text );
+        HbLogContext context;
+        context.setOwner( owner );
+        context.setFile( file );
+        context.setLine( line );
+        context.setFunction( func );
+
+        HbLogMessage msg(( HbLogger::Level ) level, context, time, text );
 
         buffer += HbLogMessage::toRaw( msg );
         buffer += QChar::LineFeed;
@@ -470,7 +475,7 @@ void LogViewerTab::onRowDoubleClicked( const QModelIndex & index )
 
     if( found_paths.isEmpty() )
     {
-        qDebug() << QStringLiteral( "No path found for %1 : %2." ).arg( file ).arg( line );
+        qDebug() << QString( "No path found for %1 : %2." ).arg( file ).arg( line );
         return;
     }
 

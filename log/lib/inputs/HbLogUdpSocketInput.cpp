@@ -8,7 +8,7 @@
 using namespace hb::log;
 
 
-HbLogUdpSocketInput::HbLogUdpSocketInput( quint32 port, QObject * parent ) :
+HbLogUdpSocketInput::HbLogUdpSocketInput( quint16 port, QObject * parent ) :
     HbLogAbstractInput( parent )
 {
     mPort = port;
@@ -20,7 +20,7 @@ HbLogUdpSocketInput::~HbLogUdpSocketInput()
 
 }
 
-quint32 HbLogUdpSocketInput::port() const
+quint16 HbLogUdpSocketInput::port() const
 {
     return mPort;
 }
@@ -29,10 +29,6 @@ void HbLogUdpSocketInput::init()
 {
     mUdpSocket.reset( new QUdpSocket() );
     connect( mUdpSocket.data(), &QUdpSocket::readyRead, this, &HbLogUdpSocketInput::onReadyRead );
-    connect( mUdpSocket.data(), ( void ( QUdpSocket::* )( QAbstractSocket::SocketError ) ) &QUdpSocket::error,
-             this, [this]( QAbstractSocket::SocketError ) {
-            fprintf( stderr, "%s\n", HbLatin1( mUdpSocket->errorString() ) );
-    } );
 
     onReconnection();
 }
@@ -42,7 +38,9 @@ void HbLogUdpSocketInput::onReconnection()
     if( !mUdpSocket->bind( QHostAddress::LocalHost, mPort ) )
     {
         QTimer::singleShot( 5000, this, &HbLogUdpSocketInput::onReconnection );
+        return;
     }
+    std::cout << "HbLog: upd input connected on port " << mPort << std::endl;
 }
 
 void HbLogUdpSocketInput::onReadyRead()

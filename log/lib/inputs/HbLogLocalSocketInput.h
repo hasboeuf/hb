@@ -13,6 +13,7 @@
 
 // Qt
 #include <QtCore/QScopedPointer>
+#include <QtCore/QSet>
 // Hb
 #include <HbGlobal.h>
 // Local
@@ -38,7 +39,7 @@ namespace hb
 
         public:
             HbLogLocalSocketInput( const QString & name = QString(), QObject * parent = nullptr );
-            virtual ~HbLogLocalSocketInput();
+            ~HbLogLocalSocketInput() override;
 
             const QString & name() const;
 

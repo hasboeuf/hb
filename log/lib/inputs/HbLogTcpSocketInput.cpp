@@ -8,7 +8,7 @@
 using namespace hb::log;
 
 
-HbLogTcpSocketInput::HbLogTcpSocketInput( quint32 port, QObject * parent ) :
+HbLogTcpSocketInput::HbLogTcpSocketInput( quint16 port, QObject * parent ) :
     HbLogAbstractInput( parent )
 {
     mExpected = 0;
@@ -26,7 +26,7 @@ HbLogTcpSocketInput::~HbLogTcpSocketInput()
 }
 
 
-quint32 HbLogTcpSocketInput::port() const
+quint16 HbLogTcpSocketInput::port() const
 {
     return mPort;
 }
@@ -34,16 +34,17 @@ quint32 HbLogTcpSocketInput::port() const
 void HbLogTcpSocketInput::init()
 {
     mTcpServer.reset( new QTcpServer() );
+    connect(mTcpServer.data(), &QTcpServer::newConnection, this, &HbLogTcpSocketInput::onNewConnection);
     if( !mTcpServer->listen( QHostAddress::Any, mPort ) )
     {
-        fprintf( stderr, "HbLogTcpSocketInput: Unable to start the TCP server\n" );
+        std::cerr << "HbLog: tcp input failed to start on port " << mPort << std::endl;
     }
 }
 
-void HbLogTcpSocketInput::incomingConnection( qint32 descriptor )
+void HbLogTcpSocketInput::onNewConnection()
 {
-    QTcpSocket * client = q_check_ptr( new QTcpSocket( this ) );
-    client->setSocketDescriptor( descriptor );
+    QTcpSocket * client = mTcpServer->nextPendingConnection();
+    Q_ASSERT(client);
 
     connect( client, &QTcpSocket::disconnected, this, &HbLogTcpSocketInput::onClientDisconnected );
     connect( client, &QTcpSocket::readyRead, this, &HbLogTcpSocketInput::onReadyRead );

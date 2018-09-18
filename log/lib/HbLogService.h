@@ -58,92 +58,58 @@ namespace hb
             /*!
              * Request to add a udp socket input.
              * \param port Server port to connect.
-             * \param error Error description in case of failure.
-             * \return Output uid, 0 on failure.
              */
-            loguid addUdpSocketInput( quint16 port, QString * error = nullptr );
+            void addUdpSocketInput( quint16 port );
 
             /*!
              * Request to add a tcp server input.
              * \param port Listening port.
-             * \param error Error description in case of failure.
-             * \return Input uid, 0 on failure.
              */
-            loguid addTcpSocketInput( quint16 port, QString * error = nullptr );
+            void addTcpSocketInput( quint16 port );
 
             /*!
              * Request to add a local server input.
              * \param name Server name (defaulted on DEFAULT_LOCAL_SERVER_NAME).
-             * \param error Error description in case of failure.
-             * \return Input uid, 0 on failure.
              */
-            loguid addLocalSocketInput( const QString & name = QString(), QString * error = nullptr );
-
-            /*!
-             * Request to delete an input.
-             * \param uid Input uid to delete.
-             * \param error Error description in case of failure.
-             * \return True on success, false else.
-             */
-            bool removeInput( loguid uid, QString * error = nullptr );
+            void addLocalSocketInput( const QString & name = QString() );
 
             /*!
              * Request to add a console output.
              * Only one console per application is allowed.
-             * \param error Error description in case of failure.
-             * \return Output uid, 0 on failure.
              */
-            loguid addConsoleOutput( QString * error = nullptr );
+            void addConsoleOutput();
 
             /*!
              * Request to add a gui output.
              * \param notifier Gui notifier to connect.
-             * \param error Error description in case of failure.
-             * \return Output uid, 0 on failure.
              */
-            loguid addGuiOutput( HbLogGuiNotifier * notifier, QString * error = nullptr );
+            void addGuiOutput( HbLogGuiNotifier * notifier );
 
             /*!
              * Request to add a file output.
              * \param dir Directory to put log files (according to QDir path).
              * \param max_size Max size of log file in Mo (if 0, msMaxFileSize (=100 Mo) will be used).
-             * \param error Error description in case of failure.
-             * \return Output uid, 0 on failure.
              */
-            loguid addFileOutput( const QString & dir, quint32 max_size = 0, QString * error = nullptr );
+            void addFileOutput( const QString & dir, quint32 max_size = 0 );
 
             /*!
              * Request to add a udp socket output.
              * \param port Port to connect.
-             * \param error Error description in case of failure.
-             * \return Output uid, 0 on failure.
              */
-            loguid addUdpSocketOutput( const QString & ip, quint16 port, QString * error = nullptr );
+            void addUdpSocketOutput( const QString & ip, quint16 port );
 
             /*!
              * Request to add a tcp socket output.
              * \param ip Ip of the log server.
              * \param port Server port to connect.
-             * \param error Error description in case of failure.
-             * \return Output uid, 0 on failure.
              */
-            loguid addTcpSocketOutput( const QString & ip, quint16 port, QString * error = nullptr );
+            void addTcpSocketOutput( const QString & ip, quint16 port );
 
             /*!
              * Request to add a local socket output.
              * \param name Server name (defaulted on DEFAULT_LOCAL_SERVER_NAME).
-             * \param error Error description in case of failure.
-             * \return Output uid, 0 on failure.
              */
-            loguid addLocalSocketOutput( const QString & name = QString(), QString * error = nullptr );
-
-            /*!
-             * Request to delete an output.
-             * \param uid Output uid to delete.
-             * \param error Error description in case of failure.
-             * \return True on success, false else.
-             */
-            bool removeOutput( loguid uid, QString * error = nullptr );
+            void addLocalSocketOutput( const QString & name = QString() );
         }
     }
 }

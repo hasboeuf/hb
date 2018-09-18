@@ -1,6 +1,7 @@
 // Qt
 #include <QtCore/QDateTime>
 #include <QtCore/QDir>
+#include <QtCore/QTextStream>
 // Hb
 #include <outputs/HbLogFileOutput.h>
 #include <HbLogMessage.h>
@@ -55,6 +56,8 @@ void HbLogFileOutput::createLogFile()
 
     mFile->setFileName( filepath );
 
+    std::cout << "HbLog: file created " << mFile->fileName().toStdString().c_str() << std::endl;
+
     if( !QDir( mPath ).exists() )
     {
         QDir().mkdir( mPath );
@@ -62,15 +65,15 @@ void HbLogFileOutput::createLogFile()
 
     if( !mFile->open( QIODevice::WriteOnly | QIODevice::Text ) )
     {
-        // TODO remove qdebug
-        qDebug( "HbLogFileOutput: Error while opening file \"%s\": %s",
-                HbLatin1( mFile->fileName() ), HbLatin1( mFile->errorString() ) );
+        std::cerr << "HbLog: error while opening file "
+                  << qPrintable( mFile->fileName() ) << ": "
+                  << qPrintable( mFile->errorString() );
     }
 
     mStream->setDevice( mFile.data() );
 }
 
-void HbLogFileOutput::processMessage( const HbLogMessage & message )
+void HbLogFileOutput::processMessage( const HbLogMessagePtr & message )
 {
     if( mFile->size() >= mMaxSize)
     {
@@ -79,7 +82,7 @@ void HbLogFileOutput::processMessage( const HbLogMessage & message )
 
     if( mFile->isWritable() )
     {
-        (* mStream.data()) << HbLogMessage::toRaw( message ) << QChar( QChar::LineFeed );
+        (* mStream.data()) << HbLogMessage::toRaw( *message.data() ) << QChar( QChar::LineFeed );
         mStream->flush();
     }
 }

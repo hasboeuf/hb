@@ -13,7 +13,6 @@
 
 // Qt
 #include <QtCore/QDataStream>
-#include <QtCore/QDebug>
 // Hb
 #include <HbLogger.h>
 
@@ -33,19 +32,16 @@ namespace hb
             virtual ~HbLogContext() = default;
             HbLogContext( const QMessageLogContext & context );
 
-            HbLogContext( const HbLogContext & context );
-            HbLogContext & operator =( const HbLogContext & context );
-
-            const QString & owner   () const;
-            qint32          thread  () const;
-            const QString & file    () const;
-            qint32          line    () const;
-            const QString & function() const;
+            QString owner() const;
+            qint32 thread() const;
+            QString file() const;
+            qint32 line() const;
+            QString function() const;
 
             void setOwner   ( const QString & owner );
             void setThread  ( qint32 thread );
             void setFile    ( const QString & file );
-            void setLine    ( quint32 line );
+            void setLine    ( qint32 line );
             void setFunction( const QString & function );
 
             void print ( QtMsgType type, const QString & message ) const;
@@ -56,9 +52,9 @@ namespace hb
         private:
 
             QString mOwner;
-            qint32 mThread;
+            qint32 mThread = 0;
             QString mFile;
-            quint32  mLine;
+            qint32  mLine = 0;
             QString mFunction;
 
             static QString msApplicationName;

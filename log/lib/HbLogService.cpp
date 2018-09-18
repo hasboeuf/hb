@@ -1,3 +1,5 @@
+// System
+#include <iostream>
 // Qt
 #include <QtCore/QCoreApplication>
 #include <QtCore/QThread>
@@ -63,21 +65,21 @@ namespace hb {
                     parser.setInput( arg );
 
                     if ( parser.checkIsConsoleOutput() ) {
-                        mLogPool->addConsoleOutput( nullptr );
+                        mLogPool->addConsoleOutput();
                     } else if ( parser.checkIsFileOutput() ) {
-                        mLogPool->addFileOutput( parser.filePath(), parser.fileMaxSize(), nullptr );
+                        mLogPool->addFileOutput( parser.filePath(), parser.fileMaxSize() );
                     } else if ( parser.checkIsLocalOutput() ) {
-                        mLogPool->addLocalSocketOutput( parser.serverName(), nullptr );
+                        mLogPool->addLocalSocketOutput( parser.serverName() );
                     } else if ( parser.checkIsTcpSocketOutput() ) {
-                        mLogPool->addTcpSocketOutput( parser.ip(), parser.port(), nullptr );
+                        mLogPool->addTcpSocketOutput( parser.ip(), parser.port() );
                     } else if ( parser.checkIsUdpSocketOutput() ) {
-                        mLogPool->addUdpSocketOutput( parser.ip(), parser.port(), nullptr );
+                        mLogPool->addUdpSocketOutput( parser.ip(), parser.port() );
                     } else if ( parser.checkIsLocalInput() ) {
-                        mLogPool->addLocalSocketInput( parser.serverName(), nullptr );
+                        mLogPool->addLocalSocketInput( parser.serverName() );
                     } else if ( parser.checkIsTcpSocketInput() ) {
-                        mLogPool->addTcpSocketInput( parser.port(), nullptr );
+                        mLogPool->addTcpSocketInput( parser.port() );
                     } else if ( parser.checkIsUdpSocketInput() ) {
-                        mLogPool->addUdpSocketInput( parser.port(), nullptr );
+                        mLogPool->addUdpSocketInput( parser.port() );
                     }
                 }
             }
@@ -123,57 +125,47 @@ void HbLogService::processArgs( QStringList args )
     logServiceController()->processArgs( args );
 }
 
-loguid HbLogService::addUdpSocketInput( quint16 port, QString * error )
+void HbLogService::addUdpSocketInput( quint16 port )
 {
-    return logServiceController()->pool()->addUdpSocketInput( port, error );
+    logServiceController()->pool()->addUdpSocketInput( port );
 }
 
-loguid HbLogService::addTcpSocketInput( quint16 port, QString * error )
+void HbLogService::addTcpSocketInput( quint16 port )
 {
-    return logServiceController()->pool()->addTcpSocketInput( port, error );
+    logServiceController()->pool()->addTcpSocketInput( port );
 }
 
-loguid HbLogService::addLocalSocketInput( const QString & name, QString * error )
+void HbLogService::addLocalSocketInput( const QString & name )
 {
-    return logServiceController()->pool()->addLocalSocketInput( name, error );
+    logServiceController()->pool()->addLocalSocketInput( name );
 }
 
-bool HbLogService::removeInput( loguid uid, QString * error )
+void HbLogService::addConsoleOutput()
 {
-    return logServiceController()->pool()->removeInput( uid, error );
+    logServiceController()->pool()->addConsoleOutput();
 }
 
-loguid HbLogService::addConsoleOutput( QString * error )
+void HbLogService::addGuiOutput( HbLogGuiNotifier * notifier )
 {
-    return logServiceController()->pool()->addConsoleOutput( error );
+    logServiceController()->pool()->addGuiOutput( notifier );
 }
 
-loguid HbLogService::addGuiOutput( HbLogGuiNotifier * notifier, QString * error )
+void HbLogService::addFileOutput( const QString & dir, quint32 max_size )
 {
-    return logServiceController()->pool()->addGuiOutput( notifier, error );
+    logServiceController()->pool()->addFileOutput( dir, max_size );
 }
 
-loguid HbLogService::addFileOutput( const QString & dir, quint32 max_size, QString * error )
+void HbLogService::addUdpSocketOutput( const QString & ip, quint16 port )
 {
-    return logServiceController()->pool()->addFileOutput( dir, max_size, error );
+    logServiceController()->pool()->addUdpSocketOutput( ip, port );
 }
 
-loguid HbLogService::addUdpSocketOutput( const QString & ip, quint16 port, QString * error )
+void HbLogService::addTcpSocketOutput( const QString & ip, quint16 port )
 {
-    return logServiceController()->pool()->addUdpSocketOutput( ip, port, error );
+    logServiceController()->pool()->addTcpSocketOutput( ip, port );
 }
 
-loguid HbLogService::addTcpSocketOutput( const QString & ip, quint16 port, QString * error )
+void HbLogService::addLocalSocketOutput( const QString & name )
 {
-    return logServiceController()->pool()->addTcpSocketOutput( ip, port, error );
-}
-
-loguid HbLogService::addLocalSocketOutput( const QString & name, QString * error )
-{
-    return logServiceController()->pool()->addLocalSocketOutput( name, error );
-}
-
-bool HbLogService::removeOutput( loguid uid, QString * error )
-{
-    return logServiceController()->pool()->removeOutput( uid, error );
+    logServiceController()->pool()->addLocalSocketOutput( name );
 }

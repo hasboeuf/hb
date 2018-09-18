@@ -3,8 +3,6 @@
 #include <QtWidgets/QApplication>
 // Hb
 #include <HbLogService.h>
-#include <HbLoggerInputs.h>
-#include <HbLoggerOutputs.h>
 #include <core/HbSteadyDateTime.h>
 // Local
 #include <LogViewerMainWindow.h>
@@ -18,5 +16,5 @@ LogViewerMainWindow::LogViewerMainWindow( QWidget * parent ) :
 {
     setupUi(this);
 
-    q_assert( HbLogService::outputs()->addGuiOutput( qw_log->logNotifier() ) > 0 );
+    HbLogService::addGuiOutput( qw_log->logNotifier() );
 }

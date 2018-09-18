@@ -1,5 +1,9 @@
+// System
+#include <iostream>
 // Qt
 #include <QtCore/QCoreApplication>
+#include <QtCore/QTimer>
+#include <QtCore/QChar>
 // Hb
 #include <core/HbApplicationHelper.h>
 #include <HbLogService.h>
@@ -11,16 +15,34 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
 
     hb::tools::HbApplicationHelper::initApp( "hb-io", "hb-io.com" );
-    hb::tools::HbApplicationHelper::catchInterruptingEvents();
 
     hb::log::HbLogService::install("%{level} %{message}");
     hb::log::HbLogService::addConsoleOutput();
+    hb::log::HbLogService::processArgs( a.arguments() );
 
-    qDebug() << "This is a debug trace";
-    qInfo() << "This is a info trace";
-    qWarning() << "This is a warning trace";
-    qCritical() << "This is a critical trace";
-    //qFatal("This is a fatal trace");
+    QTimer::singleShot( 0, &a, [&a]() {
+        qDebug() << "This is a debug trace";
+        qInfo() << "This is a info trace";
+        qWarning() << "This is a warning trace";
+        qCritical() << "This is a critical trace";
+        //qFatal("This is a fatal trace");
 
-    return 0;
+        QTextStream stream(stdin);
+        QString line;
+        while (stream.readLineInto(&line)) {
+            if (line.isNull()) {
+                continue;
+            }
+
+            if (line.isEmpty()) {
+                qDebug() << "Exiting...";
+                a.quit();
+                break;
+            }
+
+            qDebug() << line;
+        }
+    });
+
+    return a.exec();
 }

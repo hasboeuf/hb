@@ -7,7 +7,7 @@
 using namespace hb::log;
 
 
-HbLogUdpSocketOutput::HbLogUdpSocketOutput( const QString & ip, quint32 port, QObject * parent ) :
+HbLogUdpSocketOutput::HbLogUdpSocketOutput( const QString & ip, quint16 port, QObject * parent ) :
     HbLogAbstractOutput( parent )
 {
     mIp = ip;
@@ -19,7 +19,7 @@ HbLogUdpSocketOutput::~HbLogUdpSocketOutput()
 
 }
 
-quint32 HbLogUdpSocketOutput::port() const
+quint16 HbLogUdpSocketOutput::port() const
 {
     return mPort;
 }
@@ -29,8 +29,8 @@ void HbLogUdpSocketOutput::init()
     mUdpSocket.reset( new QUdpSocket() );
 }
 
-void HbLogUdpSocketOutput::processMessage( const HbLogMessage & message )
+void HbLogUdpSocketOutput::processMessage( const HbLogMessagePtr & message )
 {
-    mUdpSocket->writeDatagram( message.toByteArray(), QHostAddress( mIp ), mPort );
+    mUdpSocket->writeDatagram( message->toByteArray(), QHostAddress( mIp ), mPort );
     mUdpSocket->flush();
 }

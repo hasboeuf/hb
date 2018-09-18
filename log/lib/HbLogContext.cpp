@@ -20,8 +20,6 @@ HbLogContext::HbLogContext()
     }
 
     mOwner = msApplicationName;
-    mThread = 0;
-    mLine = 0;
 }
 
 HbLogContext::HbLogContext(const QMessageLogContext & context ) :
@@ -32,35 +30,7 @@ HbLogContext::HbLogContext(const QMessageLogContext & context ) :
     mFunction = context.function;
 }
 
-HbLogContext::HbLogContext( const HbLogContext & context ) :
-    HbLogContext()
-{
-    if( &context != this )
-    {
-        mOwner    = context.mOwner;
-        mThread   = context.mThread;
-        mFile     = context.mFile;
-        mLine     = context.mLine;
-        mFunction = context.mFunction;
-    }
-}
-
-HbLogContext & HbLogContext::operator =( const HbLogContext & context )
-{
-    if( &context != this )
-    {
-        mOwner    = context.mOwner;
-        mThread   = context.mThread;
-        mFile     = context.mFile;
-        mLine     = context.mLine;
-        mFunction = context.mFunction;
-    }
-
-    return *this;
-}
-
-
-const QString & HbLogContext::owner() const
+QString HbLogContext::owner() const
 {
     return mOwner;
 }
@@ -70,7 +40,7 @@ qint32 HbLogContext::thread() const
     return mThread;
 }
 
-const QString & HbLogContext::file() const
+QString HbLogContext::file() const
 {
     return mFile;
 }
@@ -80,7 +50,7 @@ qint32 HbLogContext::line() const
     return mLine;
 }
 
-const QString & HbLogContext::function() const
+QString HbLogContext::function() const
 {
     return mFunction;
 }
@@ -97,7 +67,7 @@ void HbLogContext::setFile    ( const QString & file ) {
     mFile = file;
 }
 
-void HbLogContext::setLine    ( quint32 line ) {
+void HbLogContext::setLine    ( qint32 line ) {
     mLine = line;
 }
 
@@ -136,13 +106,13 @@ namespace hb
     {
         QDataStream & operator <<( QDataStream & stream, const HbLogContext & context )
         {
-            stream << context.mOwner << context.mFile << context.mLine << context.mFunction;
+            stream << context.mOwner << context.mThread << context.mFile << context.mLine << context.mFunction;
             return stream;
         }
 
         QDataStream & operator >>( QDataStream & stream, HbLogContext & context )
         {
-            stream >> context.mOwner >> context.mFile >> context.mLine >> context.mFunction;
+            stream >> context.mOwner >> context.mThread >> context.mFile >> context.mLine >> context.mFunction;
             return stream;
         }
     }

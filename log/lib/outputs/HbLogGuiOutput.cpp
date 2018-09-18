@@ -21,11 +21,11 @@ void HbLogGuiOutput::init()
 
 }
 
-void HbLogGuiOutput::processMessage( const HbLogMessage & message )
+void HbLogGuiOutput::processMessage( const HbLogMessagePtr & message )
 {
     if( mNotifier ) {
-        QMetaObject::invokeMethod( mNotifier.data(), [this, &message]() {
-            mNotifier->onNewLogMessage( message );
+        QMetaObject::invokeMethod( mNotifier.data(), [this, message]() {
+            mNotifier->newLogMessage( message );
         } );
     }
 }

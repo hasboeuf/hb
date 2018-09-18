@@ -37,7 +37,7 @@ namespace hb
 
         protected:
             void init() override;
-            void processMessage( const HbLogMessage & message ) override;
+            void processMessage( const HbLogMessagePtr & message ) override;
 
         private:
             QScopedPointer< HbLogGuiNotifier > mNotifier;

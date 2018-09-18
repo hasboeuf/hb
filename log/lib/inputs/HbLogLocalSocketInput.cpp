@@ -1,7 +1,7 @@
-
 // Qt
 #include <QtNetwork/QLocalServer>
 #include <QtNetwork/QLocalSocket>
+#include <QThread>
 // Local
 #include <inputs/HbLogLocalSocketInput.h>
 #include <HbLogMessage.h>
@@ -31,7 +31,7 @@ void HbLogLocalSocketInput::init()
     mLocalServer->setSocketOptions( QLocalServer::UserAccessOption );
 
     if( !mLocalServer->listen( mName ) ) {
-        fprintf( stderr, "HbLogLocalSocketInput: Unable to start the local server\n" );
+        std::cerr << "HbLog: local input failed to start on " << qUtf8Printable(mName) << std::endl;
     }
 
     connect( mLocalServer.data(), &QLocalServer::newConnection, this, &HbLogLocalSocketInput::incomingConnection );

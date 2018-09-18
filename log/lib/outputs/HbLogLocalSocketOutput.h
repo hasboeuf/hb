@@ -40,12 +40,11 @@ namespace hb
             const QString & name() const;
 
         private:
-            void processMessage( const HbLogMessage & message ) override;
+            void processMessage( const HbLogMessagePtr & message ) override;
             void init() override;
 
         private slots:
             void onReconnection();
-            void onDisconnected();
 
         private:
             QString mName;

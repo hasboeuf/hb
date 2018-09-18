@@ -5,7 +5,6 @@
 // Hb
 #include <HbLogGuiNotifier.h>
 #include <HbLogMessage.h>
-#include <HbLoggerOutputs.h>
 #include <outputs/HbLogFileOutput.h>
 // Local
 #include <LogViewer.h>
@@ -70,13 +69,12 @@ HbLogGuiNotifier * LogViewer::logNotifier() const
 }
 
 
-void LogViewer::onNewLogMessage( const HbLogMessage & message )
+void LogViewer::onNewLogMessage( const HbLogMessagePtr & message )
 {
-    HbLogMessage * log = q_check_ptr( new HbLogMessage( message ) );
+    HbLogMessage * log = q_check_ptr( new HbLogMessage( *message.data() ) );
 
     QMutexLocker locker( &mMutexBuffer );
     mTempBuffer.append( log );
-
 }
 
 

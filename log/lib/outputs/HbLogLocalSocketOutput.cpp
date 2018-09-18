@@ -27,34 +27,35 @@ void HbLogLocalSocketOutput::init()
 {
     mLocalSocket.reset( new QLocalSocket() );
 
-    connect( mLocalSocket.data(), &QLocalSocket::disconnected, this, &HbLogLocalSocketOutput::onDisconnected );
+    connect( mLocalSocket.data(), &QLocalSocket::stateChanged, this, [this]() {
+        auto state = mLocalSocket->state();
+        if (state == QLocalSocket::UnconnectedState) {
+            QTimer::singleShot(5000, this, &HbLogLocalSocketOutput::onReconnection);
+        } else if (state == QLocalSocket::ConnectedState) {
+            std::cout << "HbLog: local output connected on " << qUtf8Printable(mName) << std::endl;
+        }
+    });
+
+    connect( mLocalSocket.data(), &QLocalSocket::disconnected, this, [this]() {
+        std::cout << "HbLog: tcp output disconnected on " << qUtf8Printable(mName) << std::endl;
+    });
 
     onReconnection();
 }
 
-void HbLogLocalSocketOutput::processMessage( const HbLogMessage & message )
+void HbLogLocalSocketOutput::processMessage( const HbLogMessagePtr & message )
 {
     if( mLocalSocket->state() == QLocalSocket::ConnectedState )
     {
-        mLocalSocket->write( message.toByteArray() );
+        mLocalSocket->write( message->toByteArray() );
         mLocalSocket->flush();
     }
 }
 
 void HbLogLocalSocketOutput::onReconnection()
 {
-    if( mLocalSocket->state() != QLocalSocket::ConnectedState )
+    if( mLocalSocket->state() == QLocalSocket::UnconnectedState )
     {
         mLocalSocket->connectToServer( mName );
-        
-        if( !mLocalSocket->waitForConnected( 0 ) )
-        {
-            onDisconnected();
-        }
     }
-}
-
-void HbLogLocalSocketOutput::onDisconnected()
-{
-    QTimer::singleShot( 5000, this, &HbLogLocalSocketOutput::onReconnection );
 }

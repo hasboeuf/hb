@@ -37,19 +37,19 @@ namespace hb
 
         public:
             HbLogUdpSocketOutput() = delete;
-            HbLogUdpSocketOutput( const QString & ip, quint32 port, QObject * parent = nullptr );
+            HbLogUdpSocketOutput( const QString & ip, quint16 port, QObject * parent = nullptr );
             virtual ~HbLogUdpSocketOutput();
 
-            quint32 port() const;
+            quint16 port() const;
 
         protected:
             void init() override;
-            void processMessage( const HbLogMessage & message ) override;
+            void processMessage( const HbLogMessagePtr & message ) override;
 
         private:
             QScopedPointer< QUdpSocket > mUdpSocket;
             QString mIp;
-            quint32 mPort;
+            quint16 mPort;
         };
     }
 }

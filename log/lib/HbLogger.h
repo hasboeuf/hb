@@ -37,7 +37,7 @@ namespace hb
 
         public:
 
-            enum Level : qint16
+            enum Level : qint8
             {
                 LEVEL_NONE      = 0,        // No Levels enabled
                 LEVEL_DEBUG     = 1 << 0,   // qDebug
