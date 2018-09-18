@@ -50,7 +50,7 @@ QStandardItem * HbPluginListWidget::getLoadItem( const QString & plugin_name )
 
 void HbPluginListWidget::onPluginStateChanged( const HbPluginInfos & plugin_infos )
 {
-    HbInfo( "onPluginStateChanged state=%s", HbLatin1( plugin_infos.stateStr() ) );
+    qDebug() << "onPluginStateChanged state" << plugin_infos.stateStr();
 
     // Unregistered plugin.
     if( plugin_infos.state() == HbPluginInfos::PLUGIN_NOT_REGISTERED )

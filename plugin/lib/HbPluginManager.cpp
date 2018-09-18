@@ -91,14 +91,14 @@ void HbPluginManager::unloadPlugin( const QString & plugin_name )
 
     for( QString child_name: infos->children() )
     {
-        HbWarning( "Unload child plugin %s.", HbLatin1( child_name ) );
+        qWarning() << "Unload child plugin" << child_name;
         if( mPluginsInfos.contains( child_name ) )
         {
             unloadPlugin( child_name );
         }
     }
 
-    HbInfo( "Plugin %s unloaded.", HbLatin1( plugin_name ) );
+    qDebug() << "Plugin unloaded" << plugin_name;
 
     plugin->unload();
 
@@ -155,7 +155,7 @@ void HbPluginManager::scanFolder( const QString & path )
 
     QDir plugin_dir( path );
 
-    HbInfo( "Scan %s directory.", HbLatin1( path ) );
+    qDebug() << "Scan directory" << path;
 
     QFileInfoList files = plugin_dir.entryInfoList();
 
@@ -165,7 +165,7 @@ void HbPluginManager::scanFolder( const QString & path )
 
         QString file_path = file.filePath();
 
-        HbInfo( "Scan %s file.", HbLatin1( file_path ) );
+        qDebug() << "Scan file" << file_path;
         scanPlugin( file_path ); // Add HbPluginInfos.
     }
 }
@@ -251,17 +251,17 @@ HbPluginInfos * HbPluginManager::scanPlugin( const QString & plugin_path )
 
 bool HbPluginManager::loadPlugin( const QString & plugin_name )
 {
-    HbInfo( "Loading plugin %s...", HbLatin1( plugin_name ) );
+    qDebug() << "Loading plugin" << plugin_name;
     HbPluginInfos * infos = mPluginsInfos.value( plugin_name, nullptr );
     if( !infos )
     {
-        HbError( "Plugin %s absent.", HbLatin1( plugin_name ) );
+        qWarning() << "Plugin absent" << plugin_name;
         return false;
     }
 
     if( infos->isLoaded() )
     {
-        HbInfo( "Plugin %s already loaded.", HbLatin1( plugin_name ) );
+        qDebug() << "Plugin already loaded" << plugin_name;
         return true;
     }
 
@@ -284,10 +284,10 @@ bool HbPluginManager::loadPlugin( const QString & plugin_name )
 
             if( !dep->isLoaded() )
             {
-                HbInfo( "Loading dependency plugin %s...", HbLatin1( dep_name ) );
+                qDebug() << "Loading dependency plugin" << dep_name;
                 if( !loadPlugin( dep_name ) )
                 {
-                    HbWarning( "Missing dependency for plugin %s: %s.", HbLatin1( infos->name() ), HbLatin1( dep_name ) );
+                    qWarning() << "Missing dependency for plugin" << infos->name() << dep_name;
                     required_plugins_ok = false;
                 }
             }
@@ -296,10 +296,10 @@ bool HbPluginManager::loadPlugin( const QString & plugin_name )
             {
                 if( dep->version() != dep_version )
                 {
-                    HbInfo( "Version mismatch for plugin %s: current=%s, required=%s.",
-                        HbLatin1( dep_name ),
-                        HbLatin1( dep->version() ),
-                        HbLatin1( dep_version ) );
+                    qDebug() << QString("Version mismatch for plugin %1: current=%2, required=%3.")
+                        .arg( dep_name )
+                        .arg( dep->version() )
+                        .arg( dep_version );
 
                     required_plugins_ok = false;
                 }
@@ -307,7 +307,7 @@ bool HbPluginManager::loadPlugin( const QString & plugin_name )
         }
         else
         {
-            HbError( "Missing dependency for plugin %s: %s.", HbLatin1( infos->name( ) ), HbLatin1( dep_name ) );
+            qWarning() << "Missing dependency for plugin" << infos->name() << dep_name;
             required_plugins_ok = false;
         }
 
@@ -327,7 +327,7 @@ bool HbPluginManager::loadPlugin( const QString & plugin_name )
         if( !mpPlatformService || mpPlatformService->isServiceRegistered( dep_name) != dep_version )
         {
             required_services_ok = false;
-            HbError( "Missing service for plugin %s: %s.", HbLatin1( infos->name() ), HbLatin1( dep_name ) );
+            qWarning() << "Missing service for plugin" << infos->name() << dep_name;
         }
 
         ++it_rs;
@@ -352,36 +352,36 @@ bool HbPluginManager::loadPlugin( const QString & plugin_name )
                     if( state == IHbPlugin::INIT_SUCCESS )
                     {
                         infos->setState( HbPluginInfos::PLUGIN_LOADED );
-                        HbInfo( "Plugin %s loaded.", HbLatin1( infos->name() ) );
+                        qDebug() << "Plugin loaded" << infos->name();
                     }
                     else if( state == IHbPlugin::INIT_SUCCESS_PARTIALLY )
                     {
                         infos->setState( HbPluginInfos::PLUGIN_LOADED_PARTIALLY );
-                        HbInfo( "Plugin %s partly loaded.", HbLatin1( infos->name() ) );
+                        qDebug() << "Plugin partly loaded" << infos->name();
                     }
 
                     return true;
                 }
                 else // IHbPlugin::INIT_FAIL
                 {
-                    HbError( "Failed to init %s.", HbLatin1( infos->name() ) );
+                    qWarning() << "Failed to init" << infos->name();
                     delete loader;
                 }
             }
             else
             {
-                HbError( "Failed to load %s, does it implement IHbPlugin?", HbLatin1( infos->name() ) );
+                qWarning() << "Failed to load" << infos->name() << "does it implement IHbPlugin?";
                 delete loader;
             }
         }
         else
         {
-            HbError( "Failed to load %s (error=%s).", HbLatin1( infos->name( ) ), HbLatin1( loader->errorString( ) ) );
+            qWarning() << "Failed to load" << infos->name() << loader->errorString();
         }
     }
     else
     {
-        HbError( "Plugin %s not loaded.", HbLatin1( infos->name() ) );
+        qWarning() << "Plugin not loaded" << infos->name();
     }
 
     infos->setState( HbPluginInfos::PLUGIN_REGISTERED );

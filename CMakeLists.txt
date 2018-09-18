@@ -30,7 +30,7 @@ endforeach()
 
 add_subdirectory(tools)
 add_subdirectory(log)
-#add_subdirectory(plugin)
+add_subdirectory(plugin)
 #add_subdirectory(link)
 #add_subdirectory(network)
 

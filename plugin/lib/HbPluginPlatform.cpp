@@ -82,12 +82,12 @@ void HbPluginPlatform::onPluginStateChanged( const HbPluginInfos & plugin_infos 
 
 void HbPluginPlatform::onLoadPluginRequest  ( const QString & plugin_name )
 {
-    HbInfo( "Load request (plugin=%s).", HbLatin1( plugin_name ) );
+    qDebug() << "Load request plugin" << plugin_name;
     mPluginManager.loadPluginFromName( plugin_name );
 }
 
 void HbPluginPlatform::onUnloadPluginRequest( const QString & plugin_name )
 {
-    HbInfo( "Unload request (plugin=%s).", HbLatin1( plugin_name ) );
+    qDebug() << "Unload request plugin" << plugin_name;
     mPluginManager.unloadPlugin( plugin_name );
 }
