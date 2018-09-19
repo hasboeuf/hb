@@ -124,7 +124,7 @@ void LinkMainWindow::onFacebookServerLinkSucceed()
     }
     else
     {
-        qDebug() << "Request user failed.";
+        qDebug() << "Request user failed";
     }
 
     mpFacebookServer->deleteLater();
@@ -214,11 +214,11 @@ void LinkMainWindow::onGoogleRequestCompleted( quint64 request_id, hb::link::HbG
     qDebug() << "Request completed" << request_id ;
     if( !object )
     {
-        qWarning() << "Google object null.";
+        qWarning() << "Google object null";
         return;
     }
 
-    qDebug() << "Google object of type" << HbGoogleObject::MetaObjectType::toString( object->type() ) << "received.";
+    qDebug() << "Google object of type" << HbGoogleObject::MetaObjectType::toString( object->type() ) << "received";
 
     if( object->type() == HbGoogleObject::OBJECT_USER )
     {

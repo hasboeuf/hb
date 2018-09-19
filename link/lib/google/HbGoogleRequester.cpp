@@ -69,7 +69,7 @@ void HbGoogleRequester::onRequestFinished( quint64 request_id, const QJsonDocume
     }
     else
     {
-        qWarning() << "Object creation failed, bad type.";
+        qWarning() << "Object creation failed, bad type";
         emit requestCompleted( request_id, nullptr );
     }
 }

@@ -107,7 +107,7 @@ QHash< QString, QString > HbLinkLocalServer::parseResponse( QByteArray & data )
     }
     else
     {
-        qWarning() << "Parsing found 0 url pattern.";
+        qWarning() << "Parsing found 0 url pattern";
     }
 
     qDebug() << "Simplified response content:" << content;

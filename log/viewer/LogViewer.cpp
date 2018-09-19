@@ -104,7 +104,7 @@ void LogViewer::onOpenFileClicked()
         const HbLogMessage * msg = HbLogMessage::fromRaw( line );
         if( !msg )
         {
-            qDebug() << "Unreadable line.";
+            qDebug() << "Unreadable line";
             continue;
         }
 

@@ -97,7 +97,7 @@ void HbO2Server::onTokenResponseError( QNetworkReply::NetworkError error )
 
     if( mErrorString.contains( "Error creating SSL context" ) )
     {
-        qWarning() << "You might miss updated OpenSSL lib on your system.";
+        qWarning() << "You might miss updated OpenSSL lib on your system";
     }
 
     emit linkFailed( mErrorString );

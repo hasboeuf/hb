@@ -160,7 +160,7 @@ void HbLogConfigDialog::onExportClicked()
 
     if (!HbLogConfig::exportConfigXml(file_path, mConfig))
     {
-        // TOFIX HbError("Exporting log config file failed.");
+        qWarning() << "Exporting log config file failed";
     }
 }
 

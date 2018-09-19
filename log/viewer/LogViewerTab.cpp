@@ -169,7 +169,7 @@ bool LogViewerTab::isValidEntry( QList< QStandardItem * > & row )
         !row.at( COLUMN_FILE  ) ||
         !row.at( COLUMN_FUNC  ) )
     {
-        qDebug() << "Unexpected null pointer.";
+        qDebug() << "Unexpected null pointer";
         return false;
     }
 
@@ -286,7 +286,7 @@ void LogViewerTab::updateView()
 
         if( !item_level || !item_time || !item_owner || !item_line || !item_where || !item_text )
         {
-            qDebug() << "Unexpected null pointer.";
+            qDebug() << "Unexpected null pointer";
             continue;
         }
 
@@ -421,7 +421,7 @@ void LogViewerTab::onSaveAsClicked()
 
         if( !item_level || !item_time || !item_owner || !item_text || !item_line || !item_file || !item_func )
         {
-            qDebug() << "Unexpected null pointer.";
+            qDebug() << "Unexpected null pointer";
             continue;
         }
 
@@ -506,7 +506,7 @@ void LogViewerTab::onRowDoubleClicked( const QModelIndex & index )
     QString cmd = mConfig.editorCommand( mConfig.defaultEditor() );
     if( cmd.isEmpty() )
     {
-        qDebug() << "No command found.";
+        qDebug() << "No command found";
         return;
     }
 
