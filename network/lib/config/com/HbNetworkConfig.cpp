@@ -99,13 +99,13 @@ bool HbNetworkConfig::plugChannel( HbNetworkChannel * channel )
 {
     if( !channel )
     {
-        HbError( "Can not assign null channel." );
+        qWarning() << "Can not assign null channel";
         return false;
     }
 
     if( mChannels.contains( channel ) )
     {
-        HbWarning( "Channel %d already assigned.", channel->uid() );
+        qWarning() << "Channel" << channel->uid() << "already assigned";
         return false;
     }
 

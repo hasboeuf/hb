@@ -45,13 +45,13 @@ bool HbServiceAuthServerConfig::isValid() const
 
         if( mAuthMaxTries < 1 )
         {
-            HbError( "AuthMaxTries must be > 0." );
+            qWarning() << "AuthMaxTries must be > 0";
             return false;
         }
 
         if( mAuthTimeout < 1 )
         {
-            HbError( "mAuthTimeout must be > 0 second.");
+            qWarning() << "mAuthTimeout must be > 0 second";
             return false;
         }
 

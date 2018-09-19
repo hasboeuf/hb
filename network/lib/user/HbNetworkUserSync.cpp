@@ -40,7 +40,7 @@ void HbNetworkUserSync::setUserInfo( ShConstHbNetworkUserInfo user_info )
     }
     else
     {
-        HbError( "Null user information." );
+        qWarning() << "Null user information";
     }
 }
 

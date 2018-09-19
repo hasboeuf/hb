@@ -60,7 +60,7 @@ bool HbTcpClient::setConfiguration( const HbTcpClientConfig & config )
 {
     if( mpSocket )
     {
-        HbError( "Can not apply configuration on instanciated socket." );
+        qWarning() << "Can not apply configuration on instanciated socket";
         return false;
     }
 
@@ -78,7 +78,7 @@ bool HbTcpClient::connectToNetwork()
     q_assert_ptr( mpSocket );
     if( !mpSocket->connectToHost( this->configuration( ) ) )
     {
-        HbError( "Can not connect to host." );
+        qWarning() << "Can not connect to host";
         return false;
     }
 
@@ -90,7 +90,7 @@ void HbTcpClient::disconnectFromNetwork()
     q_assert_ptr( mpSocket );
     if( !mpSocket->leave() )
     {
-        HbError( "Can not disconnect from host." );
+        qWarning() << "Can not disconnect from host";
     }
     else
     {

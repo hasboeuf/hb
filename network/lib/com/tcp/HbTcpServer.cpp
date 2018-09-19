@@ -19,11 +19,7 @@ TcpServer::TcpServer(QObject * parent) :
 void TcpServer::incomingConnection( qintptr socket_descriptor )
 {
     //! \todo Switch to qintptr for internal structure.
-    HbLogBegin();
-
     emit newConnection( socket_descriptor );
-
-    HbLogEnd();
 }
 
 HbTcpServer::HbTcpServer( QObject * parent ) :
@@ -56,7 +52,7 @@ bool HbTcpServer::setConfiguration( const HbTcpServerConfig & config )
 {
     if( isListening() )
     {
-        HbError( "Can not set configuration, server is listening." );
+        qWarning() << "Can not set configuration, server is listening";
         return false;
     }
 
@@ -83,11 +79,11 @@ bool HbTcpServer::connectToNetwork()
 
     if ( !mpDevice->listen( configuration().address(), port ) )
     {
-        HbError( "Server failed to listen." );
+        qWarning() << "Server failed to listen";
         return false;
     }
 
-    HbInfo( "Server started on port %d.", port );
+    qDebug() << "Server started on port" << port;
     return true;
 }
 
@@ -108,11 +104,9 @@ HbNetworkProtocol::NetworkType HbTcpServer::type() const
 
 void HbTcpServer::onNewConnection(qint32 socket_descriptor)
 {
-    HbLogBegin();
-
     if( !isReady() )
     {
-        HbInfo( "Server not ready, no treatments for onNewConnection()." );
+        qDebug() << "Server not ready, no treatments for onNewConnection()";
         return;
     }
 
@@ -154,12 +148,10 @@ void HbTcpServer::onNewConnection(qint32 socket_descriptor)
 
         mHandlerById.insert( handler->uid(), handler );
 
-        HbInfo( "Handler %d created to handle socket %d added.", handler->uid(), socket_descriptor );
+        qDebug() << "Handler" << handler->uid() << "created to handle socket" << socket_descriptor;
     }
 
     mPending.append( socket_descriptor );
     q_assert( QMetaObject::invokeMethod(handler, "onNewPendingConnection", Q_ARG( qint32, socket_descriptor ) ) );
-
-    HbLogEnd();
 }
 

@@ -24,7 +24,7 @@ bool HbAbstractServer::join()
     {
         if( !configuration().isValid() )
         {
-            HbError( "Invalid server configuration." );
+            qWarning() << "Invalid server configuration";
             return false;
         }
 
@@ -47,11 +47,11 @@ bool HbAbstractServer::leave()
         reset();
         emit serverDisconnected( mUid );
 
-        HbInfo( "Server stopped." );
+        qDebug() << "Server stopped";
     }
     else
     {
-        HbInfo( "Server already stopped." );
+        qDebug() << "Server already stopped";
     }
 
     return true;
@@ -59,7 +59,7 @@ bool HbAbstractServer::leave()
 
 bool HbAbstractServer::leave( networkuid uid )
 {
-    HbInfo( "Disconnecting socket %d.", uid );
+    qDebug() << "Disconnecting socket" << uid;
     HbSocketHandler * handler = mHandlerBySocketId.value( uid, nullptr );
     q_assert_ptr( handler );
 
@@ -76,19 +76,19 @@ bool HbAbstractServer::send( ShConstHbNetworkContract contract )
 {
     if( contract.isNull() )
     {
-        HbWarning( "Try to send a null contract." );
+        qWarning() << "Try to send a null contract";
     }
     else
     {
         if ( !isListening() )
         {
-            HbError( "Unable to send contract on inactive server" );
+            qWarning() << "Unable to send contract on inactive server";
         }
         else
         {
             if ( !configuration().exchanges().registered( contract->header().service(), contract->header().code() ) )
             {
-                HbError( "Try to send an unregistered contract (%s).", HbLatin1( contract->header().toString() ) );
+                qWarning() << "Try to send an unregistered contract" << contract->header().toString();
 
                 return false;
             }
@@ -101,7 +101,7 @@ bool HbAbstractServer::send( ShConstHbNetworkContract contract )
                     HbSocketHandler * handler = mHandlerBySocketId.value( receiver, nullptr );
                     if( !handler )
                     {
-                        HbWarning( "Unable to send contract, socket %d does not exist.", receiver );
+                        qWarning() << "Unable to send contract, socket" << receiver << "does not exist";
                     }
                     else
                     {
@@ -110,7 +110,7 @@ bool HbAbstractServer::send( ShConstHbNetworkContract contract )
                 }
                 else
                 {
-                    HbError( "Try to send an incompatible UNICAST contract." );
+                    qWarning() << "Try to send an incompatible UNICAST contract";
                 }
             }
             else if( contract->routing() == HbNetworkProtocol::ROUTING_MULTICAST )
@@ -121,7 +121,7 @@ bool HbAbstractServer::send( ShConstHbNetworkContract contract )
                     HbSocketHandler * handler = mHandlerBySocketId.value( receiver, nullptr );
                     if( !handler )
                     {
-                        HbWarning( "Unable to send contract, socket %d does not exist.", receiver );
+                        qWarning() << "Unable to send contract, socket" << receiver << "does not exist";
                     }
                     else
                     {
@@ -155,13 +155,13 @@ const HbServerConfig & HbAbstractServer::configuration() const // SUB
 
 void HbAbstractServer::reset()
 {
-    HbInfo( "Reset server..." );
+    qDebug() << "Reset server...";
 
     mPending.clear();
     for( HbSocketHandler * handler: mHandlerById.values() )
     {
         q_assert_ptr( handler );
-        HbInfo( "Deleting handler %d", handler->uid() );
+        qDebug() << "Deleting handler" << handler->uid();
         handler->disconnect();
         handler->deleteLater();
     }
@@ -175,7 +175,7 @@ void HbAbstractServer::onSocketConnected( qint32 socket_descriptor, networkuid s
 {
     if( !mReady )
     {
-        HbInfo( "Server not ready, no treatments for onSocketConnected()." );
+        qDebug() << "Server not ready, no treatments for onSocketConnected()";
         return;
     }
 
@@ -184,7 +184,8 @@ void HbAbstractServer::onSocketConnected( qint32 socket_descriptor, networkuid s
     q_assert( mPending.contains( socket_descriptor ) );
     q_assert( !mHandlerBySocketId.contains( socket_uid ) );
 
-    HbInfo( "New socket %d connected (descriptor=%d) on handler %d.", socket_uid, socket_descriptor, handler->uid() );
+    qDebug() << QString("New socket %1 connected (descriptor=%2) on handler %3")
+                .arg(socket_uid).arg(socket_descriptor).arg(handler->uid());
 
     mPending.removeOne( socket_descriptor );
     mHandlerBySocketId.insert( socket_uid, handler );
@@ -196,7 +197,7 @@ void HbAbstractServer::onSocketDisconnected( networkuid socket_uid )
 {
     if( !mReady )
     {
-        HbInfo( "Server not ready, no treatments for onSocketDisconnected()." );
+        qDebug() << "Server not ready, no treatments for onSocketDisconnected()";
         return;
     }
     HbSocketHandler * handler = qobject_cast< HbSocketHandler * >( sender() );
@@ -212,7 +213,7 @@ void HbAbstractServer::onSocketContractReceived( networkuid socket_uid, const Hb
 {
     if( !mReady )
     {
-        HbInfo( "Server not ready, no treatments for onSocketContractReceived()." );
+        qDebug() << "Server not ready, no treatments for onSocketContractReceived()";
         delete contract;
         return;
     }
@@ -223,7 +224,7 @@ void HbAbstractServer::onHandlerIdled()
 {
     if( !mReady )
     {
-        HbInfo( "Server not ready, no treatments for onHandlerIdled()." );
+        qDebug() << "Server not ready, no treatments for onHandlerIdled()";
         return;
     }
     HbSocketHandler * handler = qobject_cast< HbSocketHandler * >( sender() );

@@ -19,11 +19,7 @@ using namespace hb::network;
 HbSocketHandler::HbSocketHandler() :
     QObject( nullptr )
 {
-    HbLogBegin();
-
     mState = NOT_THREADED;
-
-    HbLogEnd();
 }
 
 HbSocketHandler::~HbSocketHandler()
@@ -33,21 +29,17 @@ HbSocketHandler::~HbSocketHandler()
 
 void HbSocketHandler::init()
 {
-    HbLogBegin();
-
     mState = THREADED;
-
-    HbLogEnd();
 }
 
 void HbSocketHandler::reset()
 {
-    HbInfo( "Reset socket handler %d", mUid );
+    qDebug() << "Reset socket handler" << mUid;
     QMutexLocker locker( &mSocketMutex );
 
     for( HbAbstractSocket * socket: mSocketById.values() )
     {
-        HbInfo( "Delete socket %d.", socket->uid() );
+        qDebug() << "Delete socket" << socket->uid();
         delete socket;
     }
 
@@ -57,8 +49,6 @@ void HbSocketHandler::reset()
 
 bool HbSocketHandler::canHandleNewConnection()
 {
-    HbLogBegin();
-
     QMutexLocker locker( &mSocketMutex );
 
     bool is_threaded = server()->configuration().isThreaded();
@@ -70,13 +60,8 @@ bool HbSocketHandler::canHandleNewConnection()
         return true;
     }
 
-    HbError("SocketHandler %d: Cannot handle new socket. [state=%d, size=%d, max=%d].",
-            mUid,
-            mState,
-            mSocketById.size(),
-            server()->configuration().maxUsersPerThread() );
-
-    HbLogEnd();
+    qWarning() << QString("SocketHandler %1: Cannot handle new socket. [state=%2, size=%3, max=%4].")
+                  .arg(mUid).arg(mState).arg(mSocketById.size()).arg(server()->configuration().maxUsersPerThread() );
     return false;
 }
 
@@ -96,11 +81,13 @@ bool HbSocketHandler::storeNewSocket(HbAbstractSocket * socket, qint32 previous_
     connect( socket, &HbAbstractSocket::socketError,
              this, [this, socket]()
              {
-                 HbError( "Error %d (%s) on socket %d.", socket->error(), HbLatin1( socket->errorString() ), socket->uid());
+                 qWarning() << QString("Error %1 (%2) on socket %3")
+                               .arg(socket->error()).arg(socket->errorString()).arg(socket->uid());
 
              }, Qt::UniqueConnection );
 
-    HbInfo( "Handler %d: socket %d (descriptor=%d) instanciated.", mUid, socket->uid(), previous_uid );
+    qDebug() << QString("Handler %1: socket %2 (descriptor=%3) instanciated")
+                .arg(mUid).arg(socket->uid()).arg(previous_uid);
 
     emit socketConnected( previous_uid, socket->uid() ); // To Server.
 
@@ -124,13 +111,13 @@ void HbSocketHandler::onDisconnectionRequest( networkuid uid )
     }
     else
     {
-        HbWarning( "Socket %d does not exist for hander %d.", uid, mUid );
+        qWarning() << QString("Socket %1 does not exist for hander %2").arg(uid).arg(mUid);
     }
 }
 
 void HbSocketHandler::onServerLeft()
 {
-    HbInfo( "Server left -> deleting this handler %d", mUid );
+    qDebug() << "Server left -> deleting this handler" << mUid;
     reset();
 }
 
@@ -147,19 +134,19 @@ void HbSocketHandler::onSendContract( networkuid socket_uid, ShConstHbNetworkCon
     HbAbstractSocket * socket = mSocketById.value( socket_uid, nullptr );
     if( !socket )
     {
-        HbError( "Socket %d does not exist in this handler.", socket_uid );
+        qWarning() << "Socket" << socket_uid << "does not exist in this handler";
         return;
     }
 
     if (!socket->isListening())
     {
-        HbError( "Unable to send contract on inactive socket." );
+        qWarning() << "Unable to send contract on inactive socket";
         return;
     }
 
     if( !socket->sendContract( contract ) )
     {
-        HbError( "Error writing contract %d in socket %d", contract->uid(), socket_uid );
+        qWarning() << QString("Error writing contract %1 in socket %2").arg(contract->uid()).arg(socket_uid);
         //! \todo Use socket error string.
     }
 }
@@ -176,7 +163,7 @@ void HbSocketHandler::onSocketReadyPacket()
 
         if( !server()->configuration().openMode( ).testFlag( QIODevice::ReadOnly ) )
         {
-            HbError( "Unable to receive contract on write only socket %d.", socket->uid() );
+            qWarning() << "Unable to receive contract on write only socket" << socket->uid();
         }
         else
         {
@@ -190,9 +177,8 @@ void HbSocketHandler::onSocketReadyPacket()
             {
                 if( !HbAbstractNetwork::checkHeader( header ) )
                 {
-                    HbError( "Bad contract header (app=%s, protocol=%d. Kick.",
-                             HbLatin1( header.appName() ),
-                             header.protocolVersion() );
+                    qWarning() << QString("Bad contract header (app=%1, protocol=%2. Kick")
+                                  .arg(header.appName()).arg(header.protocolVersion());
                     socket->leave();
                     return;
                 }
@@ -202,7 +188,7 @@ void HbSocketHandler::onSocketReadyPacket()
 
             if( !contract )
             {
-                HbError( "Try to read unregistered contract (%s).", HbLatin1( contract->header().toString() ) );
+                qWarning() << "Try to read unregistered contract" << contract->header().toString();
             }
             else
             {
@@ -210,7 +196,7 @@ void HbSocketHandler::onSocketReadyPacket()
                 {
                     q_assert( stream.status( ) == QDataStream::Ok );
 
-                    HbError( "Error occurred while reading contract (%s).", HbLatin1( contract->header().toString() ) );
+                    qWarning() << "Error occurred while reading contract" << contract->header().toString();
                 }
                 else
                 {
@@ -229,8 +215,6 @@ void HbSocketHandler::onSocketReadyPacket()
 
 void HbSocketHandler::onSocketDisconnected()
 {
-    HbLogBegin();
-
     QMutexLocker locker( &mSocketMutex );
 
     HbAbstractSocket * socket = q_assert_ptr( dynamic_cast<HbAbstractSocket *>(sender() ) );
@@ -238,7 +222,7 @@ void HbSocketHandler::onSocketDisconnected()
     q_assert( mIdBySocket.contains( socket ) );
     q_assert( mSocketById.contains( socket->uid( ) ) );
 
-    HbInfo("SocketPool%d: Socket %d disconnected.", mUid, socket->uid() );
+    qDebug() << QString("SocketPool %1: Socket %2 disconnected.").arg(mUid).arg(socket->uid());
 
     networkuid uid = socket->uid();
 
@@ -254,7 +238,4 @@ void HbSocketHandler::onSocketDisconnected()
     {
         emit handlerIdled();
     }
-
-    HbLogEnd();
-
 }

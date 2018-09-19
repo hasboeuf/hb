@@ -1,9 +1,6 @@
 // Qt
 // Hb
 #include <HbGlobal.h>
-#include <HbLogService.h>
-#include <gui/HbLogWidget.h>
-#include <HbLoggerOutputs.h>
 // Local
 #include <ResponseContract.h>
 #include <RequestContract.h>
@@ -11,22 +8,12 @@
 #include <BasicUserMainWindow.h>
 
 using namespace hb::tools;
-using namespace hb::log;
 using namespace hb::network;
 using namespace hb::networkexample;
 
 BasicUserMainWindow::BasicUserMainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-    // Log
-    /*QString error;
-    if( HbLogService::outputs()->addConsoleOutput( &error ) == 0 )
-    {
-        printf( "HbLog error: %s", HbLatin1( error ) );
-    }*/
-
-    HbLogBegin();
-
     // Ui
     setupUi( this );
     setWindowTitle( "BasicUser" );
@@ -41,14 +28,10 @@ BasicUserMainWindow::BasicUserMainWindow(QWidget *parent) :
     connect( &mTcpClient, &HbTcpClient::clientConnected,        this, &BasicUserMainWindow::onClientConnected );
     connect( &mTcpClient, &HbTcpClient::clientDisconnected,     this, &BasicUserMainWindow::onClientDisconnected );
     connect( &mTcpClient, &HbTcpClient::clientContractReceived, this, &BasicUserMainWindow::onClientContractReceived );
-
-    HbLogEnd();
 }
 
 void BasicUserMainWindow::onStartClicked()
 {
-    HbLogBegin();
-
     HbTcpClientConfig config;
     config.setAddress( QHostAddress::LocalHost );
     config.setPort( 4001 );
@@ -60,16 +43,14 @@ void BasicUserMainWindow::onStartClicked()
     config.exchanges().plug< MessageContract  >();
 
     mTcpClient.join( config );
-
-    HbLogEnd();
 }
 
 void BasicUserMainWindow::onSendContractClicked()
 {
-    HbInfo( "Send request contract." );
+    qDebug() << "Send request contract";
 
     RequestContract * request = new RequestContract();
-    request->setRequest( "What ever im asking, ill get the same response." );
+    request->setRequest( "What ever im asking, ill get the same response" );
 
     mTcpClient.send( ShConstHbNetworkContract( request ) );
 }
@@ -81,31 +62,31 @@ void BasicUserMainWindow::onStopClicked()
 
 void BasicUserMainWindow::onClientConnected( networkuid client_uid )
 {
-    HbInfo( "Client %d connected.", client_uid );
+    qDebug() << "Client connected" << client_uid;
 }
 
 void BasicUserMainWindow::onClientDisconnected( networkuid client_uid )
 {
-    HbInfo( "Client %d disconnected.", client_uid );
+    qDebug() << "Client disconnected" << client_uid;
 }
 
 void BasicUserMainWindow::onClientContractReceived( networkuid client_uid, const HbNetworkContract * contract )
 {
     q_assert_ptr( contract );
 
-    HbInfo( "Contract received on client %d.", client_uid );
-    HbInfo( "Contract details: %s", HbLatin1( contract->toString() ) );
+    qDebug() << "Contract received on client" << client_uid ;
+    qDebug() << "Contract details:" << contract->toString();
 
     const ResponseContract * response = contract->value< ResponseContract >();
     if( response )
     {
-        HbInfo( "Contract is of type ResponseContract." );
+        qDebug() << "Contract is of type ResponseContract";
     }
 
     const MessageContract * message = contract->value< MessageContract >();
     if( message )
     {
-        HbInfo( "Contract is of type MessageContract." );
+        qDebug() << "Contract is of type MessageContract";
     }
 
     delete contract;

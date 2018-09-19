@@ -36,17 +36,15 @@ void HbServerOAuthStrategy::setConfig( const HbO2ServerConfig & config )
 
 void HbServerOAuthStrategy::onLinkFailed(const QString & error )
 {
-    HbLogBegin();
     HbO2Server * server_auth = dynamic_cast< HbO2Server * >( sender() );
     q_assert_ptr( server_auth );
     q_assert( mPendingToken.contains( server_auth ) );
 
-    HbInfo( "Server link failed for user %s ( %s ).", HbLatin1( server_auth->config().clientId() ), HbLatin1( error ) );
+    qDebug() << "Server link failed for user" << server_auth->config().clientId() << error;
 
     networkuid sender = mPendingToken.take( server_auth );
 
     server_auth->deleteLater();
 
     emit authFailed( sender, HbNetworkProtocol::AUTH_OAUTH_KO, error );
-    HbLogEnd();
 }

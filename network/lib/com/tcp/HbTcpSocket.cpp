@@ -115,7 +115,7 @@ void HbTcpSocket::onReadyRead()
 
     if ( readStream( stream ) < 0 )
     {
-        HbError( "Read stream failed." );
+        qWarning() << "Read stream failed";
     }
 }
 
@@ -125,33 +125,33 @@ void HbTcpSocket::onStateChanged( QAbstractSocket::SocketState state )
 
     if( state == QAbstractSocket::UnconnectedState )
     {
-        HbInfo( "Socket enters UnconnectedState." );
+        qDebug() << "Socket enters UnconnectedState";
         emit socketDisconnected();
     }
     else if( state == QAbstractSocket::HostLookupState )
     {
-        HbInfo( "Socket enters HostLookupState." );
+        qDebug() << "Socket enters HostLookupState";
     }
     else if( state == QAbstractSocket::ConnectingState )
     {
-        HbInfo( "Socket enters ConnectingState." );
+        qDebug() << "Socket enters ConnectingState";
     }
     else if( state == QAbstractSocket::ConnectedState )
     {
-        HbInfo( "Socket enters ConnectedState." );
+        qDebug() << "Socket enters ConnectedState";
         emit socketConnected();
     }
     else if( state == QAbstractSocket::BoundState )
     {
-        HbInfo( "Socket enters BoundState." );
+        qDebug() << "Socket enters BoundState";
     }
     else if( state == QAbstractSocket::ClosingState )
     {
-        HbInfo( "Socket enters ClosingState." );
+        qDebug() << "Socket enters ClosingState";
     }
     else if( state == QAbstractSocket::ListeningState )
     {
-        HbInfo( "Socket enters ListeningState." );
+        qDebug() << "Socket enters ListeningState";
     }
 
     emit socketStateChanged();

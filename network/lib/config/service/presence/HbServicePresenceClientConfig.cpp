@@ -43,7 +43,7 @@ bool HbServicePresenceClientConfig::isValid() const
 
     if( mKeepAliveInterval == 0 )
     {
-        HbError( "KeepAliveInterval must be > 0." );
+        qWarning() << "KeepAliveInterval must be > 0";
         return true;
     }
 

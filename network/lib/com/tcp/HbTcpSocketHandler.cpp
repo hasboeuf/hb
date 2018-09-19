@@ -16,11 +16,7 @@ using namespace hb::network;
 HbTcpSocketHandler::HbTcpSocketHandler( HbTcpServer * server ) :
     HbSocketHandler()
 {
-    HbLogBegin();
-
     mpServer = q_assert_ptr( server );
-
-    HbLogEnd();
 }
 
 HbTcpSocketHandler::~HbTcpSocketHandler()
@@ -45,18 +41,14 @@ void HbTcpSocketHandler::reset()
 
 void HbTcpSocketHandler::onNewPendingConnection( qint32 socket_descriptor )
 {
-    HbLogBegin();
-
     if( !canHandleNewConnection() )
     {
-        HbError( "Handler %d: cannot handle socket descriptor %d.", mUid, socket_descriptor );
+        qWarning() << QString("Handler %1: cannot handle socket descriptor %2").arg(mUid).arg(socket_descriptor);
         // Creating a volatile socket to disconnect the descriptor.
         QTcpSocket * socket = new QTcpSocket();
         socket->setSocketDescriptor(socket_descriptor);
         socket->close();
         delete socket;
-
-        HbLogEnd();
         return;
     }
 
@@ -71,6 +63,4 @@ void HbTcpSocketHandler::onNewPendingConnection( qint32 socket_descriptor )
     socket->setSocketOption( QAbstractSocket::MulticastLoopbackOption, options.testFlag( HbTcpConfig::SocketOption::MulticastLoopback ) );
 
     storeNewSocket( socket, socket_descriptor );
-
-    HbLogEnd();
 }

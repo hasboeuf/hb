@@ -93,7 +93,7 @@ void HbServerChannelService::onUserContractReceived( ShConstHbNetworkUserInfo us
     HbServerChannel * channel = this->channel( channel_uid );
     if( !channel )
     {
-        HbError( "Null channel %d.", channel_uid );
+        qWarning() << "Null channel" << channel_uid;
         //! \todo Kick user
         delete contract;
         return;

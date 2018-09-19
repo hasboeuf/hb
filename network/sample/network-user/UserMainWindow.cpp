@@ -12,9 +12,6 @@
 #include <QtCore/QSharedPointer>
 // Hb
 #include <HbGlobal.h>
-#include <HbLogService.h>
-#include <gui/HbLogWidget.h>
-#include <HbLoggerOutputs.h>
 #include <HbClient.h>
 #include <contract/auth/HbOAuthRequestContract.h>
 #include <contract/HbNetworkHeader.h>
@@ -29,7 +26,6 @@
 
 
 using namespace hb::tools;
-using namespace hb::log;
 using namespace hb::link;
 using namespace hb::network;
 using namespace hb::networkexample;
@@ -39,16 +35,6 @@ QString UserMainWindow::msClientId = "940633959281250"; // Fake value.
 UserMainWindow::UserMainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-
-    // Log
-    /*QString error;
-    if( HbLogService::outputs()->addConsoleOutput( &error ) == 0 )
-    {
-        printf( "HbLog error: %s", HbLatin1( error ) );
-    }*/
-
-    HbLogBegin();
-
     // Ui
     setupUi( this );
     ui_qsw_stack->setCurrentIndex( PAGE_WELCOME );
@@ -88,21 +74,14 @@ UserMainWindow::UserMainWindow(QWidget *parent) :
 
     connect( mpHbClient, &HbClient::clientStatusChanged, this, &UserMainWindow::onClientStatusChanged );
     connect( mpHbClient, &HbClient::meStatusChanged,     this, &UserMainWindow::onMeStatusChanged );
-
-    HbLogEnd();
 }
 
 UserMainWindow::~UserMainWindow()
 {
-    HbLogBegin();
-
-    HbLogEnd();
 }
 
 void UserMainWindow::onStartClicked()
 {
-    HbLogBegin();
-
     HbTcpClientConfig config;
     config.setAddress( QHostAddress::LocalHost );
     config.setPort( 4000 );
@@ -115,10 +94,8 @@ void UserMainWindow::onStartClicked()
     networkuid client_uid = mpHbClient->joinTcpClient( config, true );
     if( client_uid > 0 )
     {
-        HbInfo( "Client %d started.", client_uid );
+        qDebug() << "Client started" << client_uid;
     }
-
-    HbLogEnd();
 }
 
 void UserMainWindow::onStopClicked()
@@ -149,17 +126,17 @@ void UserMainWindow::onGoogleAuthRequest()
 
 void UserMainWindow::onUnauthRequest()
 {
-    HbWarning( "TODO" );
+    qWarning() << "TODO";
 }
 
 void UserMainWindow::onClientStatusChanged( networkuid client_uid, HbNetworkProtocol::ClientStatus status )
 {
-    HbInfo( "Status changed on client %d: %s.", client_uid, HbLatin1( HbNetworkProtocol::MetaClientStatus::toString( status ) ) );
+    qDebug() << "Status changed on client" << client_uid << HbNetworkProtocol::MetaClientStatus::toString( status );
 }
 
 void UserMainWindow::onMeStatusChanged( HbNetworkProtocol::UserStatus status, ShConstHbNetworkUserInfo me_info )
 {
-    HbInfo( "My status changed: %s.", HbLatin1( HbNetworkProtocol::MetaUserStatus::toString( status ) ) );
+    qDebug() << "My status changed:" << HbNetworkProtocol::MetaUserStatus::toString( status );
 
     if( status == HbNetworkProtocol::USER_DISCONNECTED )
     {

@@ -28,7 +28,7 @@ void HbNetworkChannel::setNetworkUid( networkuid network_uid )
     }
     else
     {
-        HbError( "Network uid already set." );
+        qWarning() << "Network uid already set";
     }
 }
 

@@ -146,7 +146,7 @@ networkuid HbServerConnectionPool::joinTcpServer( HbTcpServerConfig & config , b
     networkuid network_uid = 0;
     if( main && mMainServer > 0 )
     {
-        HbError( "Impossible to create two main clients." );
+        qWarning() << "Impossible to create two main clients";
         return network_uid;
     }
 
@@ -228,7 +228,7 @@ void HbServerConnectionPool::onServerConnected( networkuid server_uid )
 
     mServers.insert( server->uid(), server );
 
-    HbInfo( "Server %d connected.", server_uid );
+    qDebug() << "Server" << server_uid << "connected";
 
     emit statusChanged( server_uid, HbNetworkProtocol::SERVER_LISTENING );
 }
@@ -245,7 +245,7 @@ void HbServerConnectionPool::onServerDisconnected( networkuid server_uid )
 
     if( mLeaving )
     {
-        HbInfo( "HbServer is leaving. Server %d removed.", server_uid );
+        qDebug() << "HbServer is leaving. Server" << server_uid << "removed";
         // Deletion is handled in leave().
         // Unplugging channels is done in leave().
     }
@@ -257,13 +257,13 @@ void HbServerConnectionPool::onServerDisconnected( networkuid server_uid )
             HbConnectionPool::unplugChannel( channel );
         }
 
-        HbInfo( "Server %d disconnected.", server_uid );
+        qDebug() << "Server" << server_uid << "disconnected";
         server->deleteLater();
     }
 
     if( mMainServer == server_uid )
     {
-        HbInfo( "Server %d was the main server, reset.", server_uid );
+        qDebug() << "Server" << server_uid << "was the main server, reset";
         mMainServer = 0;
     }
 }
@@ -272,7 +272,7 @@ void HbServerConnectionPool::onSocketConnected( networkuid server_uid, networkui
 {
     q_assert( mServers.contains( server_uid ) );
 
-    HbInfo( "Socket %d on server %d connected.", server_uid, socket_uid );
+    qDebug() << "Socket" << socket_uid << "on server" << server_uid << "connected";
 
     mPendingSockets.insert( socket_uid );
     mServerBySocketId.insert( socket_uid, server_uid );
@@ -291,7 +291,7 @@ void HbServerConnectionPool::onSocketDisconnected( networkuid server_uid, networ
     HbServerUser * user = isSocketAuthenticated( socket_uid );
     if( !user )
     {
-        HbInfo( "Unauthenticated socket %d on server %d disconnected.", server_uid, socket_uid );
+        qDebug() << "Unauthenticated socket" << socket_uid << "on server" << server_uid << "disconnected";
 
         mPendingSockets.remove( socket_uid );
 
@@ -315,14 +315,12 @@ void HbServerConnectionPool::onSocketContractReceived( networkuid server_uid, ne
 {
     q_assert( mServers.contains( server_uid ) );
 
-    HbInfo( "Contract received from socket %d on server %d.", socket_uid, server_uid );
+    qDebug() << QString("Contract received from socket %1 on server %2").arg(socket_uid).arg(server_uid);
 
     serviceuid requested_service = contract->header().service();
 
-    HbInfo( "Contract OK [socket=%d, server=%d, %s].",
-            socket_uid,
-            server_uid,
-            HbLatin1( contract->header().toString() ) );
+    qDebug() << QString("Contract OK [socket=%1, server=%2, %3]")
+                .arg(socket_uid).arg(server_uid).arg(contract->header().toString());
 
     HbServerUser * user = isSocketAuthenticated( socket_uid );
     if( !user )
@@ -330,7 +328,8 @@ void HbServerConnectionPool::onSocketContractReceived( networkuid server_uid, ne
         if( requested_service != HbNetworkProtocol::SERVICE_AUTH )
         {
             kickSocket( socket_uid, HbNetworkProtocol::KICK_CONTRACT_INVALID, "Bad service." );
-            HbError( "Unauthenticated socket requested a service.", HbLatin1( HbNetworkProtocol::MetaService::toString( contract->header().service() ) ) );
+            qWarning() << "Unauthenticated socket requested a service"
+                       << HbNetworkProtocol::MetaService::toString( contract->header().service() );
             return;
         }
     }
@@ -339,7 +338,7 @@ void HbServerConnectionPool::onSocketContractReceived( networkuid server_uid, ne
     if( !service )
     {
         kickSocket( socket_uid, HbNetworkProtocol::KICK_CONTRACT_INVALID, "Bad service." );
-        HbError( "Service %s is not instanciated.", HbLatin1( HbNetworkProtocol::MetaService::toString( contract->header().service() ) ) );
+        qWarning() << "Service" << HbNetworkProtocol::MetaService::toString( contract->header().service() ) << "is not instanciated";
         return;
     }
 
@@ -395,7 +394,7 @@ void HbServerConnectionPool::onUsersContractToSend( QList< ShConstHbNetworkUserI
         HbServerUser * user = getUser( user_info );
         if( !user )
         {
-            HbWarning( "User %d is disconnected." );
+            qWarning() << "User %d is disconnected";
             break;
         }
 
@@ -424,7 +423,7 @@ void HbServerConnectionPool::onUserContractToSend( ShConstHbNetworkUserInfo user
     HbServerUser * user = getUser( user_info );
     if( !user )
     {
-        HbWarning( "User %d is disconnected. Contract not sent." );
+        qWarning() << "User %d is disconnected. Contract not sent";
         delete contract;
         return;
     }
@@ -459,12 +458,12 @@ void HbServerConnectionPool::onContractToSend ( const HbNetworkContract * contra
                 }
                 else
                 {
-                    HbWarning( "Server %d does not exist.", server_uid );
+                    qWarning() << "Server" << server_uid << "does not exist";
                 }
             }
             else
             {
-                HbWarning( "Receiver %d has no associated server.", receiver );
+                qWarning() << "Receiver" << receiver << "has no associated server";
             }
         }
 
@@ -475,7 +474,7 @@ void HbServerConnectionPool::onContractToSend ( const HbNetworkContract * contra
     }
     else
     {
-        HbWarning( "Try to send an invalid contract (%s).", HbLatin1( contract->header().toString() ) );
+        qWarning() << "Try to send an invalid contract" << contract->header().toString();
     }
 
 }
@@ -535,7 +534,7 @@ void HbServerConnectionPool::onSocketAuthenticated( networkuid socket_uid, const
 {
     if( !mServerBySocketId.contains( socket_uid ) )
     {
-        HbWarning( "Socket %d disconnected before being authenticated.", socket_uid );
+        qWarning() << "Socket" << socket_uid << "disconnected before being authenticated";
         return;
     }
 
@@ -585,10 +584,8 @@ void HbServerConnectionPool::onSocketUnauthenticated( networkuid socket_uid, qui
 
 void HbServerConnectionPool::onSocketLagged( networkuid socket_uid, quint16 last_presence, quint16 kick_threshold )
 {
-    HbWarning( "Socket %d lagged since %d seconds, %d seconds before kick.",
-               socket_uid,
-               last_presence,
-               kick_threshold - last_presence );
+    qWarning() << QString("Socket %1 lagged since %2 seconds, %3 seconds before kick")
+                  .arg( socket_uid ).arg( last_presence ).arg( kick_threshold - last_presence );
 }
 
 HbServerUser * HbServerConnectionPool::isSocketAuthenticated( networkuid socket_uid )

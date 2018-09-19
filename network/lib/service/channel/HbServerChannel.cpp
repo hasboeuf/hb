@@ -11,20 +11,20 @@ void HbServerChannel::onContractToSend( HbNetworkContract * contract )
 
     if( !contract )
     {
-        HbError( "Null contract." );
+        qWarning() << "Null contract";
         return;
     }
 
     if( contract->routing() != HbNetworkProtocol::ROUTING_UNICAST )
     {
-        HbError( "Only unicast contract are supported." );
+        qWarning() << "Only unicast contract are supported";
         delete contract;
         return;
     }
 
     if( contract->receivers().size() != 1 )
     {
-        HbError( "There must be only one receiver." );
+        qWarning() << "There must be only one receiver";
     }
 
     emit contractToSend( contract );
@@ -34,7 +34,7 @@ void HbServerChannel::onUserContractToSend ( ShConstHbNetworkUserInfo user_info,
 {
     if( !contract )
     {
-        HbError( "Null contract." );
+        qWarning() << "Null contract";
         return;
     }
 
@@ -47,7 +47,7 @@ void HbServerChannel::onUsersContractToSend( QList< ShConstHbNetworkUserInfo > u
 {
     if( !contract )
     {
-        HbError( "Null contract." );
+        qWarning() << "Null contract";
         return;
     }
 

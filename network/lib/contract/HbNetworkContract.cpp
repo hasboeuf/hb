@@ -142,7 +142,7 @@ bool HbNetworkContract::isValid() const
 {
     if( mRouting == HbNetworkProtocol::ROUTING_UNDEFINED )
     {
-        HbError( "Routing is not defined (%s).", HbLatin1( mHeader.toString() ) );
+        qWarning() << "Routing is not defined" << mHeader.toString();
         return false;
     }
 
@@ -150,7 +150,8 @@ bool HbNetworkContract::isValid() const
     {
         if ( mReceivers.size() != 1 )
         {
-            HbError( "Only one receiver (size=%d) is allowed with unicast mode (%s).", mReceivers.size(), HbLatin1( mHeader.toString() ) );
+            qWarning() << QString("Only one receiver (size=%1) is allowed with unicast mode (%2)")
+                          .arg(mReceivers.size()).arg(mHeader.toString());
             return false;
         }
     }
@@ -158,7 +159,7 @@ bool HbNetworkContract::isValid() const
     {
         if( mReceivers.isEmpty() )
         {
-            HbError( "No receivers set in multicast mode (%s).", HbLatin1( mHeader.toString() ) );
+            qWarning() << "No receivers set in multicast mode" << mHeader.toString();
             return false;
         }
         return true;
@@ -167,7 +168,7 @@ bool HbNetworkContract::isValid() const
     {
         if( mReceivers.size() > 0 )
         {
-            HbWarning( "Receivers set in broadcast mode are ignored (%s).", HbLatin1( mHeader.toString() ) );
+            qWarning() << "Receivers set in broadcast mode are ignored" << mHeader.toString();
         }
     }
 
@@ -187,7 +188,6 @@ bool HbNetworkContract::setRouting( HbNetworkProtocol::RoutingScheme routing )
         return true;
     }
 
-    // HbWarning( "Routing is already set." );
     return false;
 }
 

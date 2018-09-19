@@ -60,7 +60,7 @@ void HbServerAuthService::addStrategy( HbServerAuthStrategy * strategy )
     }
     else
     {
-        HbWarning( "Strategy already defined or null." );
+        qWarning() << "Strategy already defined or null";
     }
 }
 
@@ -181,26 +181,26 @@ void HbServerAuthService::onContractReceived( const HbNetworkContract * contract
                 }
                 else
                 {
-                    HbError( "Bad contract." );
+                    qWarning() << "Bad contract";
                     kickSocket( socket_uid, HbNetworkProtocol::KICK_CONTRACT_INVALID, "Bad contract." );
                 }
             }
             else
             {
-                HbError( "Bad reply contract." );
+                qWarning() << "Bad reply contract";
                 kickSocket( socket_uid, HbNetworkProtocol::KICK_CONTRACT_INVALID, "Bad reply contract." );
             }
         }
         else
         {
-            HbError( "No user auth strategy defined." );
+            qWarning() << "No user auth strategy defined";
             kickSocket( socket_uid, HbNetworkProtocol::KICK_CONTRACT_INVALID, "No user auth strategy defined." );
         }
 
     }
     else
     {
-        HbError( "Auth contract type not recognized." );
+        qWarning() << "Auth contract type not recognized";
         //! \todo How to kick?
     }
 
@@ -244,7 +244,7 @@ void HbServerAuthService::onAuthSucceed( networkuid socket_uid, const HbNetworkU
     }
     else
     {
-        HbWarning( "Socket %d disconnected before getting ok auth response.", socket_uid );
+        qWarning() << "Socket" << socket_uid << "disconnected before getting ok auth response";
     }
 }
 
@@ -275,6 +275,6 @@ void HbServerAuthService::onAuthFailed( networkuid socket_uid, HbNetworkProtocol
     }
     else
     {
-        HbWarning( "Socket %d disconnected before getting nok auth response.", socket_uid );
+        qWarning() << "Socket" << socket_uid << "disconnected before getting nok auth response";
     }
 }

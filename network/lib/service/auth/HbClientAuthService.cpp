@@ -52,7 +52,7 @@ void HbClientAuthService::addStrategy( HbClientAuthStrategy * strategy )
     }
     else
     {
-        HbWarning( "Strategy already defined or null." );
+        qWarning() << "Strategy already defined or null";
     }
 }
 
@@ -83,7 +83,7 @@ void HbClientAuthService::onContractReceived( const HbNetworkContract * contract
     }
     else
     {
-        HbError( "Auth contract type not recognized." );
+        qWarning() << "Auth contract type not recognized";
     }
 
     delete contract;
@@ -98,7 +98,7 @@ void HbClientAuthService::onSocketDisconnected( networkuid socket_uid )
 {
     if( socket_uid == mPendingSocket )
     {
-        HbInfo( "Socket %d disconnected while an auth request is pending.", socket_uid );
+        qDebug() << "Socket" << socket_uid << "disconnected while an auth request is pending";
         mPendingSocket = 0;
     }
 }
@@ -119,12 +119,12 @@ void HbClientAuthService::onAuthRequested( HbClientAuthLoginObject * login_objec
         }
         else
         {
-            HbError( "Fail trying to log." );
+            qWarning() << "Fail trying to log";
         }
     }
     else
     {
-        HbError( "No user auth strategy defined." );
+        qWarning() << "No user auth strategy defined";
     }
 
     delete login_object;

@@ -49,7 +49,7 @@ bool HbTcpConfig::isValid() const
 
     if( mAddress.isNull() )
     {
-        HbError( "Null address." );
+        qWarning() << "Null address";
         return false;
     }
 

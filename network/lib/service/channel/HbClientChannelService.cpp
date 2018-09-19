@@ -96,7 +96,7 @@ void HbClientChannelService::onUserContractReceived( const HbNetworkContract * c
     HbClientChannel * channel = this->channel( channel_uid );
     if( !channel )
     {
-        HbError( "Null channel %d.", channel_uid );
+        qWarning() << "Null channel" << channel_uid;
         delete contract;
         return;
     }
@@ -136,13 +136,13 @@ void HbClientChannelService::processContract( const HbNetworkContract * contract
             }
             else
             {
-                HbWarning( "User status not recognized." );
+                qWarning() << "User status not recognized";
             }
         }
     }
     else
     {
-        HbError( "Channel contract type not recognized." );
+        qWarning() << "Channel contract type not recognized";
         //! \todo How to kick?
     }
 

@@ -15,7 +15,9 @@ int main(int argc, char *argv[])
     hb::tools::HbApplicationHelper::initApp( "hb-io", "hb-io.com" );
     hb::tools::HbApplicationHelper::initSkin("fusion");
 
-    hb::log::HbLogService::processArgs(argc, argv);
+    hb::log::HbLogService::install("%{level} %{message}");
+    hb::log::HbLogService::addConsoleOutput();
+    hb::log::HbLogService::processArgs( a.arguments() );
 
     BasicServerMainWindow w;
     w.show();

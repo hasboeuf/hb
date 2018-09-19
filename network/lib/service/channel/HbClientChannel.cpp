@@ -9,7 +9,7 @@ void HbClientChannel::onContractToSend( HbNetworkContract * contract )
 {
     if( !contract )
     {
-        HbError( "Null contract." );
+        qWarning() << "Null contract";
         return;
     }
 

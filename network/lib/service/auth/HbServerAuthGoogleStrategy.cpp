@@ -56,12 +56,11 @@ bool HbServerAuthGoogleStrategy::checkLogin( const HbAuthRequestContract * contr
 
 void HbServerAuthGoogleStrategy::onLinkSucceed()
 {
-    HbLogBegin();
     HbO2ServerGoogle * server_auth = dynamic_cast< HbO2ServerGoogle * >( sender() );
     q_assert_ptr( server_auth );
     q_assert( mPendingToken.contains( server_auth ) );
 
-    HbInfo( "Server link succeed. Requesting Google user object %s...", HbLatin1( server_auth->config().clientId() ) );
+    qDebug() << "Server link succeed. Requesting Google user object" << server_auth->config().clientId();
 
     networkuid sender = mPendingToken.take( server_auth );
     quint64 request_id = mRequester.requestUser( server_auth );
@@ -75,8 +74,6 @@ void HbServerAuthGoogleStrategy::onLinkSucceed()
     }
 
     server_auth->deleteLater();
-
-    HbLogEnd();
 }
 
 void HbServerAuthGoogleStrategy::onRequestCompleted( quint64 request_id, HbGoogleObject * object )
@@ -88,7 +85,7 @@ void HbServerAuthGoogleStrategy::onRequestCompleted( quint64 request_id, HbGoogl
     HbGoogleUser * user = dynamic_cast< HbGoogleUser * >( object );
     if( user )
     {
-        HbInfo( "Google user informations: %s", HbLatin1( user->toString() ) );
+        qDebug() << "Google user informations:" << user->toString();
 
         HbNetworkUserInfo user_info;
         user_info.setId       ( user->id() );
@@ -116,7 +113,7 @@ void HbServerAuthGoogleStrategy::onRequestCompleted( quint64 request_id, HbGoogl
     }
     else
     {
-        HbError( "Bad dynamic cast HbGoogleObject -> HbGoogleUser." );
+        qWarning() << "Bad dynamic cast HbGoogleObject -> HbGoogleUser";
         emit authFailed( sender, HbNetworkProtocol::AUTH_OAUTH_KO, "" );
     }
 

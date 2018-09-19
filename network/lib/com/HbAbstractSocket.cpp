@@ -38,7 +38,7 @@ bool HbAbstractSocket::sendContract( ShConstHbNetworkContract contract )
     stream << contract->header();
     if ( !contract->write( stream ) )
     {
-        HbError( "Invalid contract format." );
+        qWarning() << "Invalid contract format";
     }
     else
     {
@@ -64,7 +64,7 @@ QByteArray HbAbstractSocket::readPacket()
         return mPackets.dequeue();
     }
 
-    HbWarning( "Read an empty packet." );
+    qWarning() << "Read an empty packet";
     return QByteArray();
 }
 
@@ -80,7 +80,7 @@ qint64 HbAbstractSocket::writePacket( const QByteArray & packet ) const
     }
     else
     {
-        HbWarning( "Try to write an empty packet." );
+        qWarning() << "Try to write an empty packet";
     }
 
     return 0;
@@ -144,7 +144,7 @@ qint64 HbAbstractSocket::readStream( QDataStream & stream )
 
         if ( bytesRead < 0 )
         {
-            HbWarning( "No bytes read => packets cleared." );
+            qWarning() << "No bytes read => packets cleared";
             stream.device()->readAll();
             mPackets.clear();
 
@@ -166,7 +166,7 @@ qint64 HbAbstractSocket::writeBuffer( const QByteArray & buffer ) const
 
     if( buffer.isEmpty() )
     {
-        HbWarning( "Try to write an empty buffer." );
+        qWarning() << "Try to write an empty buffer";
         return 0;
     }
 

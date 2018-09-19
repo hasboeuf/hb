@@ -47,7 +47,8 @@ bool HbChannelService::plugChannel(HbNetworkChannel * channel , networkuid netwo
     {
         if( channel_uid < HbNetworkProtocol::SERVICE_USER )
         {
-            HbError( "Bad range channel uid: %d must be >= %d", channel_uid, HbNetworkProtocol::SERVICE_USER );
+            qWarning() << QString("Bad range channel uid: %1 must be >= %2")
+                          .arg( channel_uid ).arg( HbNetworkProtocol::SERVICE_USER );
         }
         else
         {
@@ -58,12 +59,12 @@ bool HbChannelService::plugChannel(HbNetworkChannel * channel , networkuid netwo
 
             connect( channel, &HbNetworkService::contractToSend, this, &HbChannelService::onContractToSend );
 
-            HbInfo( "Channel %d added to network %d.", channel->uid(), network_uid );
+            qDebug() << "Channel" << channel->uid() << "added to network" << network_uid;
         }
     }
     else
     {
-        HbError( "Channel %d already exists.", channel->uid() );
+        qWarning() << "Channel" << channel->uid() << "already exists";
     }
 
     return ok;
@@ -75,7 +76,7 @@ bool HbChannelService::unplugChannel( HbNetworkChannel * channel )
 
     if( !mChannels.contains( channel->uid() ) )
     {
-        HbWarning( "Channel %d inexistant.", channel );
+        qWarning() << "Channel" << channel << "inexistant";
         return false;
     }
 
@@ -86,7 +87,7 @@ bool HbChannelService::unplugChannel( HbNetworkChannel * channel )
 
     disconnect( channel, &HbNetworkService::contractToSend, this, &HbChannelService::onContractToSend );
 
-    HbInfo( "Channel %d removed from network %d.", channel->uid(), channel->networkUid() );
+    qDebug() << "Channel" << channel->uid() << "removed from network" << channel->networkUid();
 
     return true;
 }

@@ -47,7 +47,7 @@ bool HbServicePresenceServerConfig::isValid() const
     if( mWarningAliveThreshold <= 0 ||
         mKickAliveThreshold <= mWarningAliveThreshold )
     {
-        HbError( "Must be 0 < WarningAliveThreshold < KickAliveThreshold." );
+        qWarning() << "Must be 0 < WarningAliveThreshold < KickAliveThreshold";
         return false;
     }
 

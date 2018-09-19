@@ -33,8 +33,8 @@ void ServerSumChannel::onUserContractReceived( ShConstHbNetworkUserInfo user_inf
 {
     q_assert_ptr( contract );
 
-    HbInfo( "Contract received from %d.", HbLatin1( user_info->email() ) );
-    HbInfo( "Contract details: %s", HbLatin1( contract->toString() ) );
+    qDebug() << "Contract received from" << user_info->email();
+    qDebug() << "Contract details:" << contract->toString();
 
     const RequestSumContract * sum_contract = contract->value< RequestSumContract >();
     if( sum_contract )

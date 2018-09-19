@@ -20,7 +20,7 @@ HbPeer::HbPeer( const HbGeneralConfig &config )
     }
     else
     {
-        HbError( "General configuration not valid. HbPeer will never do anything." );
+        qWarning() << "General configuration not valid. HbPeer will never do anything";
         mReady = false;
     }
 }
@@ -29,7 +29,7 @@ bool HbPeer::isReady() const
 {
     if( !mReady )
     {
-        HbWarning( "HbPeer not ready. Invalid config." );
+        qWarning() << "HbPeer not ready. Invalid config";
     }
     return mReady;
 }

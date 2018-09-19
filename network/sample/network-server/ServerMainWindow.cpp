@@ -9,9 +9,6 @@
 #include <QtGui/QStandardItemModel>
 // Hb
 #include <HbGlobal.h>
-#include <HbLogService.h>
-#include <gui/HbLogWidget.h>
-#include <HbLoggerOutputs.h>
 #include <HbServer.h>
 // Local
 #include <ServerMainWindow.h>
@@ -20,7 +17,6 @@
 #include <ServerChatChannel.h>
 
 
-using namespace hb::log;
 using namespace hb::link;
 using namespace hb::network;
 using namespace hb::networkexample;
@@ -31,16 +27,6 @@ QString ServerMainWindow::msClientSecret = "74621eedf9aa2cde9cd31dc5c4d3c440"; /
 ServerMainWindow::ServerMainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
-
-    // Log
-    /*QString error;
-    if( HbLogService::outputs()->addConsoleOutput( &error ) == 0 )
-    {
-        printf( "HbLog error: %s", HbLatin1( error ) );
-    }*/
-
-    HbLogBegin();
-
     HbO2ServerConfig facebook_config;
     facebook_config.setClientId( msClientId );
     facebook_config.setClientSecret( msClientSecret );
@@ -73,21 +59,14 @@ ServerMainWindow::ServerMainWindow(QWidget *parent) :
     connect(ui_qpb_stop,  &QPushButton::clicked, this, &ServerMainWindow::onStopClicked);
 
     connect( mpHbServer, &HbServer::serverStatusChanged, this, &ServerMainWindow::onServerStatusChanged );
-
-    HbLogEnd();
 }
 
 ServerMainWindow::~ServerMainWindow()
 {
-    HbLogBegin();
-
-    HbLogEnd();
 }
 
 void ServerMainWindow::onStartClicked()
 {
-    HbLogBegin();
-
     HbTcpServerConfig config;
     config.setAddress(QHostAddress::Any);
     config.setPort( 4000 );
@@ -100,23 +79,17 @@ void ServerMainWindow::onStartClicked()
     networkuid server_uid = mpHbServer->joinTcpServer( config, true );
     if( server_uid > 0 )
     {
-        HbInfo( "Server %d started.", server_uid );
+        qDebug() << "Server started" << server_uid;
     }
-
-    HbLogEnd();
 }
 
 void ServerMainWindow::onStopClicked()
 {
-    HbLogBegin();
-
     mpHbServer->leave();
-
-    HbLogEnd();
 }
 
 void ServerMainWindow::onServerStatusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status )
 {
-    HbInfo( "Status changed on server %d: %s.", server_uid, HbLatin1( HbNetworkProtocol::MetaServerStatus::toString( status ) ) );
+    qDebug() << "Status changed on server" << server_uid << HbNetworkProtocol::MetaServerStatus::toString( status );
 }
 

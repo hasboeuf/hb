@@ -146,7 +146,7 @@ networkuid HbClientConnectionPool::joinTcpClient( HbTcpClientConfig & config , b
     networkuid network_uid = 0;
     if( mUser.mainSocketUid() > 0 )
     {
-        HbError( "Impossible to create two main clients." );
+        qWarning() << "Impossible to create two main clients";
         return network_uid;
     }
 
@@ -206,13 +206,13 @@ bool HbClientConnectionPool::authRequested( HbClientAuthLoginObject * login_obje
 {
     if( !login_object )
     {
-        HbError( "Login object null." );
+        qWarning() << "Login object null";
         return false;
     }
 
     if( mUser.status() != HbNetworkProtocol::USER_CONNECTED )
     {
-        HbError( "User not in a connected state." );
+        qWarning() << "User not in a connected state";
         return false;
     }
 
@@ -235,7 +235,7 @@ void HbClientConnectionPool::onClientConnected( networkuid client_uid )
 
     connect( client, &HbAbstractClient::clientContractReceived, this, &HbClientConnectionPool::onClientContractReceived, Qt::UniqueConnection );
 
-    HbInfo( "Client %d connected.", client_uid );
+    qDebug() << "Client" << client_uid << "connected";
 
     emit statusChanged( client_uid, HbNetworkProtocol::CLIENT_CONNECTED );
 
@@ -262,7 +262,7 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
     bool reconnecting = ( client->configuration().reconnectionDelay() > 0 ? true : false );
     if( mLeaving ) // If HbClient is leaving.
     {
-        HbInfo( "HbClient is leaving. Client %d removed.", client_uid );
+        qDebug() << "HbClient is leaving. Client" << client_uid << "removed";
         mClients.remove( client_uid );
 
         // Deletion is handled in leave()
@@ -271,10 +271,10 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
     }
     else
     {
-        HbInfo( "Client %d disconnected.", client_uid );
+        qDebug() << "Client" << client_uid << "disconnected";
         if( !reconnecting )
         {
-            HbInfo( "Client %d will not reconnect, deletion...", client_uid );
+            qDebug() << "Client" << client_uid << "will not reconnect, deletion...";
 
             // Unplug channels.
             for( HbNetworkChannel * channel: client->configuration().channels() )
@@ -288,7 +288,7 @@ void HbClientConnectionPool::onClientDisconnected( networkuid client_uid )
 
             if( client_uid == mUser.mainSocketUid() )
             {
-                HbInfo( "Client %d was the main client, reset.", client_uid );
+                qDebug() << "Client" << client_uid << "was the main client, reset";
                 mUser.reset();
             }
         }
@@ -317,13 +317,12 @@ void HbClientConnectionPool::onClientContractReceived( networkuid client_uid, co
     q_assert_ptr( client );
     q_assert( mClients.contains( client_uid ) );
 
-    HbInfo( "Contract received from client %d.", client_uid );
+    qDebug() << "Contract received from client" << client_uid;
 
     serviceuid requested_service = contract->header().service();
 
-    HbInfo( "Contract OK [client=%d, %s].",
-            client_uid,
-            HbLatin1( contract->header().toString() ) );
+    qDebug() << QString("Contract OK [client=%1, %2]")
+                .arg(client_uid).arg(contract->header().toString());
 
     if( checkKickReceived( contract ) )
     {
@@ -341,7 +340,7 @@ void HbClientConnectionPool::onClientContractReceived( networkuid client_uid, co
     HbNetworkService * service = getService( requested_service );
     if( !service )
     {
-        HbError( "Service %s is not instanciated.", HbLatin1( HbNetworkProtocol::MetaService::toString( contract->header().service() ) ) );
+        qWarning() << "Service" << HbNetworkProtocol::MetaService::toString( contract->header().service() ) << "is not instanciated";
         return;
     }
 
@@ -376,13 +375,13 @@ void HbClientConnectionPool::onContractToSend ( const HbNetworkContract * contra
             }
             else
             {
-                HbWarning( "Receiver %d does not exist.", receiver );
+                qWarning() << "Receiver" << receiver << "does not exist";
             }
         }
     }
     else
     {
-        HbWarning( "Try to send an invalid contract." );
+        qWarning() << "Try to send an invalid contract";
     }
 }
 
@@ -394,10 +393,10 @@ void HbClientConnectionPool::onSocketAuthenticated( networkuid socket_uid, const
     {
         mUser.setInfo( user_info );
         mUser.setStatus( HbNetworkProtocol::USER_AUTHENTICATED );
-        HbInfo( "User %s (me) is authenticated.", HbLatin1( user_info.email() ) );
+        qDebug() << "User" << user_info.email() << "is authenticated";
     }
 
-    HbInfo( "Socket %d authenticated.", socket_uid );
+    qDebug() << "Socket" << socket_uid << "authenticated";
 
     emit socketAuthenticated( socket_uid ); // To IHbSocketAuthListener.
 }
@@ -410,14 +409,11 @@ void HbClientConnectionPool::onSocketUnauthenticated( networkuid socket_uid, qui
     {
         mUser.setInfo( HbNetworkUserInfo() );
         mUser.setStatus( HbNetworkProtocol::USER_CONNECTED );
-        HbInfo( "User (me) is unauthenticated." );
+        qDebug() << "User (me) is unauthenticated";
     }
 
-    HbInfo( "Socket %d unauthenticated (try_number=%d, max_tries=%d, reason=%s).",
-            socket_uid,
-            try_number,
-            max_tries,
-            HbLatin1( reason ) );
+    qDebug() << QString("Socket %1 unauthenticated (try_number=%2, max_tries=%3, reason=%4)")
+                .arg(socket_uid).arg(try_number).arg(max_tries).arg(reason);
 
     //! \todo Send reason to HbClient.
 
@@ -439,9 +435,9 @@ bool HbClientConnectionPool::checkKickReceived( const HbNetworkContract * contra
         const HbKickContract * kick_contract = contract->value< HbKickContract >();
         q_assert_ptr( kick_contract );
 
-        HbError( "Kick contract received! (reason=%s, description=%s)",
-                 HbLatin1( HbNetworkProtocol::MetaKickCode::toString( kick_contract->reason() ) ),
-                 HbLatin1( kick_contract->description() ) );
+        qWarning() << QString("Kick contract received! (reason=%1, description=%2)")
+                      .arg(HbNetworkProtocol::MetaKickCode::toString( kick_contract->reason() ) )
+                      .arg( kick_contract->description() );
 
         //! \todo Tell it to HbClient.
 

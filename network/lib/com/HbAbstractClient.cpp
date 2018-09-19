@@ -25,7 +25,7 @@ bool HbAbstractClient::join()
     {
         if ( !this->configuration( ).isValid( ) )
         {
-            HbError( "Invalid client configuration." );
+            qWarning() << "Invalid client configuration";
 
             return false;
         }
@@ -43,7 +43,7 @@ bool HbAbstractClient::join()
 
         if( !connectToNetwork() )
         {
-            HbError( "Can not connect to network." );
+            qWarning() << "Can not connect to network";
             return false;
         }
     }
@@ -86,7 +86,7 @@ bool HbAbstractClient::send( ShConstHbNetworkContract contract )
 {
     if ( !contract )
     {
-        HbWarning( "Try to send a null contract." );
+        qWarning() << "Try to send a null contract";
     }
     else
     {
@@ -94,17 +94,17 @@ bool HbAbstractClient::send( ShConstHbNetworkContract contract )
 
         if ( !socket || !socket->isListening() )
         {
-            HbError( "Unable to send contract on null/inactive socket." );
+            qWarning() << "Unable to send contract on null/inactive socket";
         }
         else if( !this->configuration().openMode().testFlag( QIODevice::WriteOnly ) )
         {
-            HbError( "Unable to send contract on read only socket." );
+            qWarning() << "Unable to send contract on read only socket";
         }
         else
         {
             if ( !configuration().exchanges().registered( contract->header().service(), contract->header().code() ) )
             {
-                HbError( "Try to send an unregistered contract (%s).", HbLatin1( contract->header().toString() ) );
+                qWarning() << "Try to send an unregistered contract" << contract->header().toString();
 
                 return false;
             }
@@ -132,7 +132,7 @@ void HbAbstractClient::timerEvent(QTimerEvent * event)
 
     if( !connectToNetwork() )
     {
-        HbError( "Can not connect to network." );
+        qWarning() << "Can not connect to network";
     }
 }
 
@@ -160,7 +160,7 @@ void HbAbstractClient::onSocketReadyPacket()
 
         if( !configuration().openMode( ).testFlag( QIODevice::ReadOnly ) )
         {
-            HbError( "Unable to receive contract on write only socket %d.", socket->uid() );
+            qWarning() << "Unable to receive contract on write only socket" << socket->uid();
         }
         else
         {
@@ -174,9 +174,9 @@ void HbAbstractClient::onSocketReadyPacket()
             {
                 if( !HbAbstractNetwork::checkHeader( header ) )
                 {
-                    HbError( "Bad contract header (app=%s, protocol=%d. Disconnection.",
-                             HbLatin1( header.appName() ),
-                             header.protocolVersion() );
+                    qWarning() << QString("Bad contract header (app=%1, protocol=%2). Disconnection")
+                                  .arg( header.appName() )
+                                  .arg( header.protocolVersion() );
                     leave();
                     return;
                 }
@@ -186,7 +186,7 @@ void HbAbstractClient::onSocketReadyPacket()
 
             if( !contract )
             {
-                HbError( "Try to read unregistered contract (%s).", HbLatin1( contract->header().toString() ) );
+                qWarning() << "Try to read unregistered contract" << contract->header().toString();
             }
             else
             {
@@ -194,7 +194,7 @@ void HbAbstractClient::onSocketReadyPacket()
                 {
                     q_assert( stream.status( ) == QDataStream::Ok );
 
-                    HbError( "Error occurred while reading contract (%s).", HbLatin1( contract->header().toString() ) );
+                    qWarning() << "Error occurred while reading contract" << contract->header().toString();
                 }
                 else
                 {

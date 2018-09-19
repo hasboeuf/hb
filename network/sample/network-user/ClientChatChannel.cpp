@@ -33,7 +33,7 @@ void ClientChatChannel::sendMessage( const QString message )
 {
     if( message.isEmpty() )
     {
-        HbWarning( "Not enable to send empty chat message." );
+        qWarning() << "Not enable to send empty chat message";
         return;
     }
 
@@ -47,8 +47,8 @@ void ClientChatChannel::onUserContractReceived( const HbNetworkContract * contra
 {
     q_assert_ptr( contract );
 
-    HbInfo( "Contract received from %d.", HbLatin1( contract->sender() ) );
-    HbInfo( "Contract details: %s", HbLatin1( contract->toString() ) );
+    qDebug() << "Contract received from" << contract->sender();
+    qDebug() << "Contract details:" << contract->toString();
 
     const ChatMessageBackContract * message_contract = contract->value< ChatMessageBackContract >();
     if( message_contract )

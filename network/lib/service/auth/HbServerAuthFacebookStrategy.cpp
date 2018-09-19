@@ -64,12 +64,11 @@ bool HbServerAuthFacebookStrategy::checkLogin( const HbAuthRequestContract * con
 
 void HbServerAuthFacebookStrategy::onLinkSucceed()
 {
-    HbLogBegin();
     HbO2ServerFacebook * server_auth = dynamic_cast< HbO2ServerFacebook * >( sender() );
     q_assert_ptr( server_auth );
     q_assert( mPendingToken.contains( server_auth ) );
 
-    HbInfo( "Server link succeed. Requesting Facebook user object %s...", HbLatin1( server_auth->config().clientId() ) );
+    qDebug() << "Server link succeed. Requesting Facebook user object" << server_auth->config().clientId();
 
     networkuid sender = mPendingToken.take( server_auth );
     quint64 request_id = mRequester.requestUser( server_auth );
@@ -83,8 +82,6 @@ void HbServerAuthFacebookStrategy::onLinkSucceed()
     }
 
     server_auth->deleteLater();
-
-    HbLogEnd();
 }
 
 void HbServerAuthFacebookStrategy::onRequestCompleted( quint64 request_id, HbFacebookObject * object )
@@ -96,7 +93,7 @@ void HbServerAuthFacebookStrategy::onRequestCompleted( quint64 request_id, HbFac
     HbFacebookUser * user = dynamic_cast< HbFacebookUser * >( object );
     if( user )
     {
-        HbInfo( "Facebook user informations: %s", HbLatin1( user->toString() ) );
+        qDebug() << "Facebook user informations:" << user->toString();
 
         HbNetworkUserInfo user_info;
         user_info.setId       ( user->id() );
@@ -123,7 +120,7 @@ void HbServerAuthFacebookStrategy::onRequestCompleted( quint64 request_id, HbFac
     }
     else
     {
-        HbError( "Bad dynamic cast HbFacebookObject -> HbFacebookUser." );
+        qWarning() << "Bad dynamic cast HbFacebookObject -> HbFacebookUser";
         emit authFailed( sender, HbNetworkProtocol::AUTH_OAUTH_KO, "" );
     }
 
