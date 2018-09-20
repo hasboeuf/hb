@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 add_subdirectory(lib)
+add_subdirectory(tests/test_HbSettings)
 add_subdirectory(tests/test_HbSteadyDateTime)
 add_subdirectory(tests/test_HbEnum)
 add_subdirectory(tests/test_HbUid)

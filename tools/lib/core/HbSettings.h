@@ -22,16 +22,21 @@ namespace hb
         /*!
          * HbSettings provides settings conveniencies.
          */
-        class HB_TOOLS_DECL HbSettings : public QObject
+        class HB_TOOLS_DECL HbSettings
         {
-
         public:
             /**
              * HbSettings constructor.
              * \param parent Parent QObject.
-             * \see init
              */
-            HbSettings( QObject * parent = nullptr );
+            HbSettings();
+
+            /**
+             * HbSettings constructor.
+             * \param scope QSettings scope.
+             * \param format QSettings format.
+             */
+            HbSettings( QSettings::Format format, QSettings::Scope scope );
 
             /**
              * Write data in application settings.
@@ -54,21 +59,10 @@ namespace hb
              */
             void remove( const QString & key );
 
-            /*!
-             * Initialize QSettings format and scope.
-             *
-             * \param scope QSettings scope.
-             * \param format QSettings format.
-             * \see QSettings::setDefaultFormat
-             */
-            static void init( QSettings::Scope scope, QSettings::Format format );
+            bool isValid() const;
 
         private:
-            bool mIsValid;
             QSettings mSettings;
-
-            static QSettings::Scope msScope;
-            static QSettings::Format msFormat;
         };
     }
 }
