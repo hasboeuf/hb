@@ -50,7 +50,7 @@ namespace hb
             /*!
              * Catch OS interrupting events and quit Qt application properly.
              * \note OS specific.
-             * \todo Not tested on Unix system yet.
+             * \todo Not tested on all platform.
              */
             static void catchInterruptingEvents();
         };
