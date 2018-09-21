@@ -3,10 +3,9 @@
 
 // Qt
 #include <QtGui/QStandardItem>
-// Hb
-#include <core/HbMultipleSortFilterProxyModel.h>
 // Local
 #include <ui_LogViewerTab.h>
+#include <MultipleSortFilterProxyModel.h>
 
 class QPropertyAnimation;
 
@@ -19,7 +18,7 @@ namespace logviewer {
 class LogViewerConfig;
 
 using hb::log::HbLogMessage;
-using hb::tools::HbMultipleSortFilterProxyModel;
+using hb::tools::MultipleSortFilterProxyModel;
 using hb::tools::ModelFilter;
 
 class LogViewerTab final : public QWidget, private hb::logviewer::Ui::LogViewerTab {
@@ -91,7 +90,7 @@ private:
 private:
     quint32 mId;
     QStandardItemModel mModel;
-    HbMultipleSortFilterProxyModel mProxy;
+    MultipleSortFilterProxyModel mProxy;
     QStringList mLabels;
     bool mFrozen;
     bool mRerun;

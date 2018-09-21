@@ -9,7 +9,7 @@
 #ifndef MULTIPLESORTFILTERPROXYMODEL_H
 #define MULTIPLESORTFILTERPROXYMODEL_H
 
-/*! \file HbMultipleSortFilterProxyModel.h */
+/*! \file MultipleSortFilterProxyModel.h */
 
 // Qt
 #include <QtCore/QSortFilterProxyModel>
@@ -22,16 +22,16 @@ namespace tools {
 class ModelFilter;
 
 /*!
- * HbMultipleSortFilterProxyModel is a multiple QSortFilterProxyModel.
+ * MultipleSortFilterProxyModel is a multiple QSortFilterProxyModel.
  * Used to set filters on several columns for example.
  */
-class HB_TOOLS_DECL HbMultipleSortFilterProxyModel final : public QSortFilterProxyModel {
+class HB_TOOLS_DECL MultipleSortFilterProxyModel final : public QSortFilterProxyModel {
     Q_OBJECT
-    Q_DISABLE_COPY(HbMultipleSortFilterProxyModel)
+    Q_DISABLE_COPY(MultipleSortFilterProxyModel)
 
 public:
-    HbMultipleSortFilterProxyModel(QObject* parent = nullptr);
-    virtual ~HbMultipleSortFilterProxyModel() = default;
+    MultipleSortFilterProxyModel(QObject* parent = nullptr);
+    virtual ~MultipleSortFilterProxyModel() = default;
 
     void beginDeclareFilter();
     void endDeclareFilter();
