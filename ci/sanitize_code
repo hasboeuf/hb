@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+# This script:
+# - find all source files
+# - remove blacklisted ones
+# - call clang-format and let it change files
+cd "$(git rev-parse --show-toplevel)"
+find \( -name '*.h' -o -name '*.cpp' \) -print0 \
+    | grep --null-data --invert-match --file ci/.sanitize_ignore \
+    | xargs --null clang-format -i

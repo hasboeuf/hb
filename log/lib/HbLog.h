@@ -30,6 +30,7 @@ namespace log {
 
 const size_t CLASS_LOG = 30; //!< Identifier for log in/output uids class.
 
+// clang-format off
 #if !defined( HB_LOG_DECL )
 #   if defined( HB_SHARED )
 #       if defined( HB_LOG_SHARED )
@@ -41,5 +42,6 @@ const size_t CLASS_LOG = 30; //!< Identifier for log in/output uids class.
 #       define HB_LOG_DECL
 #   endif
 #endif
+// clang-format on
 
 #endif // HBLOG_H

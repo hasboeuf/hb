@@ -17,6 +17,7 @@
 #include <QtCore/QString>
 
 //! Check compilator compatibility.
+// clang-format off
 #if defined( Q_OS_WIN32 ) || defined( Q_OS_WINPHONE) || defined ( Q_OS_WINRT )
 #   if !defined( Q_CC_MSVC ) && !defined( Q_CC_MINGW )
 #   error Windows compiler not supported
@@ -32,6 +33,7 @@
 #else
 #error Operating system not supported
 #endif
+// clang-format on
 
 
 //! Android specifics.

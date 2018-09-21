@@ -33,6 +33,7 @@ const size_t CLASS_SOCKET   = 20; //!< Identifier for socket uids class.
 const size_t CLASS_SERVER   = 21; //!< Identifier for server uids class.
 const size_t CLASS_CONTRACT = 22; //!< Identifier for contract uids class.
 
+// clang-format off
 #if !defined( HB_NETWORK_DECL )
 #   if defined( HB_SHARED )
 #       if defined( HB_NETWORK_SHARED )
@@ -44,5 +45,6 @@ const size_t CLASS_CONTRACT = 22; //!< Identifier for contract uids class.
 #       define HB_NETWORK_DECL
 #   endif
 #endif
+// clang-format on
 
 #endif // HBNETWORK_H

@@ -18,6 +18,7 @@
 // Qt
 #include <QtCore/QtGlobal>
 
+// clang-format off
 #if !defined( HB_PLUGIN_DECL )
 #   if defined( HB_SHARED )
 #       if defined( HB_PLUGIN_SHARED )
@@ -29,5 +30,6 @@
 #       define HB_PLUGIN_DECL
 #   endif
 #endif
+// clang-format on
 
 #endif // HBNETWORK_H
