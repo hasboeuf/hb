@@ -16,32 +16,29 @@
 #include <core/HbUid.h>
 // Local
 
-namespace hb
-{
-    namespace log
-    {
-        class HbLogMessage;
+namespace hb {
+namespace log {
+class HbLogMessage;
 
-        /*!
-         * TODOC.
-         */
-        class HbLogAbstractInput : public QObject, public HbUid< CLASS_LOG >
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbLogAbstractInput )
-            friend class HbLoggerPool;
+/*!
+ * TODOC.
+ */
+class HbLogAbstractInput : public QObject, public HbUid<CLASS_LOG> {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbLogAbstractInput)
+    friend class HbLoggerPool;
 
-        public:
-            HbLogAbstractInput( QObject * parent = nullptr );
-            virtual ~HbLogAbstractInput() = default;
+public:
+    HbLogAbstractInput(QObject* parent = nullptr);
+    virtual ~HbLogAbstractInput() = default;
 
-        protected:
-            virtual void init() = 0;
+protected:
+    virtual void init() = 0;
 
-        signals:
-            void inputMessageReceived( HbLogMessage * message );
-        };
-    }
-}
+signals:
+    void inputMessageReceived(HbLogMessage* message);
+};
+} // namespace log
+} // namespace hb
 
 #endif // HBLOGABSTRACTINPUT_H

@@ -26,9 +26,9 @@
 // Qt
 #include <QtCore/QtGlobal>
 
-const size_t CLASS_DEFAULT = 0; //!< Default class identifier for uids.
+const size_t CLASS_DEFAULT = 0;  //!< Default class identifier for uids.
 const size_t CLASS_REPLIES = 10; //!< Identifier for replies uids class.
-const size_t CLASS_USER = 100; //!< User class identifiers can begin from this value.
+const size_t CLASS_USER = 100;   //!< User class identifiers can begin from this value.
 
 // clang-format off
 #if !defined( HB_TOOLS_DECL )

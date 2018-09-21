@@ -1,6 +1,6 @@
 ﻿// Qt
-#include <QtCore/QFile>
 #include <QtCore/QDebug>
+#include <QtCore/QFile>
 #include <QtCore/QSettings>
 #include <QtXml/QDomDocument>
 // Local
@@ -8,53 +8,42 @@
 
 using namespace hb::log;
 
-
-const char *  HbLogConfig::msDefaultConfigXml = ":/config/default.hblog";
+const char* HbLogConfig::msDefaultConfigXml = ":/config/default.hblog";
 const quint32 HbLogConfig::msMaxLevel = 64;
 
-HbLogConfig::HbLogConfig() :
-    QObject()
-{
+HbLogConfig::HbLogConfig() : QObject() {
     mMaxBuffer = 5000;
     mFont = QFont(QStringLiteral("Courier New"));
 
     quint32 currentmLevel = 1;
-    while ( currentmLevel <= msMaxLevel )
-    {
-        mLevelColors.insert( currentmLevel, QColor( 0, 0, 0 ) );
+    while (currentmLevel <= msMaxLevel) {
+        mLevelColors.insert(currentmLevel, QColor(0, 0, 0));
         currentmLevel <<= 1;
     }
-    mBackgroundColor = QColor( 255, 255, 255 );
+    mBackgroundColor = QColor(255, 255, 255);
 }
 
-HbLogConfig::HbLogConfig(const HbLogConfig & config) :
-HbLogConfig()
-{
-    if (&config != this)
-    {
-        mMaxBuffer       = config.mMaxBuffer;
-        mLevelColors     = config.mLevelColors;
-        mFont            = config.mFont;
+HbLogConfig::HbLogConfig(const HbLogConfig& config) : HbLogConfig() {
+    if (&config != this) {
+        mMaxBuffer = config.mMaxBuffer;
+        mLevelColors = config.mLevelColors;
+        mFont = config.mFont;
         mBackgroundColor = config.mBackgroundColor;
     }
 }
 
-
-HbLogConfig & HbLogConfig::operator =(const HbLogConfig & config)
-{
-    if (&config != this)
-    {
-        mMaxBuffer       = config.mMaxBuffer;
-        mLevelColors     = config.mLevelColors;
-        mFont            = config.mFont;
+HbLogConfig& HbLogConfig::operator=(const HbLogConfig& config) {
+    if (&config != this) {
+        mMaxBuffer = config.mMaxBuffer;
+        mLevelColors = config.mLevelColors;
+        mFont = config.mFont;
         mBackgroundColor = config.mBackgroundColor;
     }
 
     return *this;
 }
 
-void HbLogConfig::buildDomFromConfig(QDomElement& root) const
-{
+void HbLogConfig::buildDomFromConfig(QDomElement& root) const {
     QDomDocument dom = root.ownerDocument();
 
     // Max buffer
@@ -77,8 +66,7 @@ void HbLogConfig::buildDomFromConfig(QDomElement& root) const
     // Levels
     QDomElement levels = dom.createElement(QStringLiteral("levels"));
     QMap<quint32, QColor>::const_iterator it_c = mLevelColors.constBegin();
-    while (it_c != mLevelColors.constEnd())
-    {
+    while (it_c != mLevelColors.constEnd()) {
         QDomElement level = dom.createElement(QStringLiteral("level"));
         level.setAttribute(QStringLiteral("id"), it_c.key());
         level.setAttribute(QStringLiteral("color"), it_c.value().name());
@@ -94,11 +82,9 @@ void HbLogConfig::buildDomFromConfig(QDomElement& root) const
     root.appendChild(levels);
 }
 
-bool HbLogConfig::exportConfigXml(QString file_path, const HbLogConfig& config)
-{
+bool HbLogConfig::exportConfigXml(QString file_path, const HbLogConfig& config) {
     QFile xml_doc(file_path);
-    if (!xml_doc.open(QIODevice::WriteOnly))
-    {
+    if (!xml_doc.open(QIODevice::WriteOnly)) {
         qDebug() << "Erreur à l'écriture du document XML : " << xml_doc.errorString();
         return false;
     }
@@ -117,67 +103,46 @@ bool HbLogConfig::exportConfigXml(QString file_path, const HbLogConfig& config)
     return true;
 }
 
-void HbLogConfig::buildConfigFromDom(QDomElement& root)
-{
+void HbLogConfig::buildConfigFromDom(QDomElement& root) {
     QDomNode node = root.firstChild();
 
-    while (!node.isNull())
-    {
+    while (!node.isNull()) {
         QString tag = node.nodeName();
 
-        if (tag == QLatin1String("maxBuffer"))
-        {
+        if (tag == QLatin1String("maxBuffer")) {
             mMaxBuffer = node.toElement().text().toInt();
-        }
-        else if (tag == QLatin1String("font"))
-        {
+        } else if (tag == QLatin1String("font")) {
             QDomNodeList font_children = node.childNodes();
 
-            for (qint32 i = 0; i < font_children.size(); ++i)
-            {
+            for (qint32 i = 0; i < font_children.size(); ++i) {
                 QString child_tag = font_children.at(i).toElement().tagName();
-                if (child_tag == QLatin1String("family"))
-                {
+                if (child_tag == QLatin1String("family")) {
                     mFont.setFamily(font_children.at(i).toElement().text());
-                }
-                else if (child_tag == QLatin1String("size"))
-                {
+                } else if (child_tag == QLatin1String("size")) {
                     mFont.setPointSize(font_children.at(i).toElement().text().toInt());
-                }
-                else
-                {
+                } else {
                     qDebug() << QStringLiteral("Unknown tag: logger > font > ") + tag;
                 }
             }
-        }
-        else if (tag == QLatin1String("backgroundColor"))
-        {
+        } else if (tag == QLatin1String("backgroundColor")) {
             mBackgroundColor = node.toElement().text();
-        }
-        else if (tag == QLatin1String("levels"))
-        {
+        } else if (tag == QLatin1String("levels")) {
             QDomNodeList levels_children = node.childNodes();
 
-            for (qint32 i = 0; i < levels_children.size(); ++i)
-            {
+            for (qint32 i = 0; i < levels_children.size(); ++i) {
                 QString child_tag = levels_children.at(i).toElement().tagName();
-                if (child_tag == QLatin1String("level"))
-                {
+                if (child_tag == QLatin1String("level")) {
                     QDomNode level = levels_children.at(i);
 
-                    qint32  level_id = level.toElement().attribute(QStringLiteral("id")).toInt();
+                    qint32 level_id = level.toElement().attribute(QStringLiteral("id")).toInt();
                     QString level_color = level.toElement().attribute(QStringLiteral("color"));
 
                     mLevelColors.insert(level_id, QColor(level_color));
-                }
-                else
-                {
+                } else {
                     // qDebug() << QStringLiteral("Unknown tag: logger > levels > ") + tag;
                 }
             }
-        }
-        else
-        {
+        } else {
             // qDebug() << QStringLiteral("Unknown tag: logger > ") + tag;
         }
 
@@ -185,25 +150,22 @@ void HbLogConfig::buildConfigFromDom(QDomElement& root)
     }
 }
 
-const HbLogConfig HbLogConfig::importConfigXml(QString file_path)
-{
+const HbLogConfig HbLogConfig::importConfigXml(QString file_path) {
     HbLogConfig config;
 
     QFile xml_doc(file_path);
-    if (!xml_doc.open(QIODevice::ReadOnly))
-    {
+    if (!xml_doc.open(QIODevice::ReadOnly)) {
         qDebug() << QStringLiteral("Erreur %1 [%2] à l'ouverture du document XML %3")
-            .arg(xml_doc.error())
-            .arg(xml_doc.errorString())
-            .arg(xml_doc.fileName());
+                        .arg(xml_doc.error())
+                        .arg(xml_doc.errorString())
+                        .arg(xml_doc.fileName());
 
         return config;
     }
 
-    QDomDocument *dom = q_check_ptr(new QDomDocument(QStringLiteral("hbLogConfig")));
+    QDomDocument* dom = q_check_ptr(new QDomDocument(QStringLiteral("hbLogConfig")));
 
-    if (!dom->setContent(&xml_doc))
-    {
+    if (!dom->setContent(&xml_doc)) {
         xml_doc.close();
         qDebug() << "Erreur à l'ouverture du document XML";
         return config;
@@ -218,13 +180,11 @@ const HbLogConfig HbLogConfig::importConfigXml(QString file_path)
     return config;
 }
 
-bool HbLogConfig::isValid() const
-{
+bool HbLogConfig::isValid() const {
     return true;
 }
 
-void HbLogConfig::loadSettings()
-{
+void HbLogConfig::loadSettings() {
     QSettings settings;
 
     if (settings.childGroups().isEmpty()) // First start, we load the default XML config file.
@@ -240,7 +200,8 @@ void HbLogConfig::loadSettings()
     mFont.setFamily(settings.value(QStringLiteral("font/family"), QStringLiteral("Courier")).toString());
     mFont.setPointSize(settings.value(QStringLiteral("font/size"), 8).toInt());
     // Background color
-    mBackgroundColor.setNamedColor(settings.value(QStringLiteral("general/backgroundColor"), QStringLiteral("#ffffff")).toString());
+    mBackgroundColor.setNamedColor(
+        settings.value(QStringLiteral("general/backgroundColor"), QStringLiteral("#ffffff")).toString());
 
     // Colors
     QMap<qint32, QString> colors;
@@ -248,19 +209,16 @@ void HbLogConfig::loadSettings()
     mLevelColors.clear();
     QStringList levels = settings.childKeys();
 
-    for(QString level: levels)
-    {
+    for (QString level : levels) {
         QColor color;
         color.setNamedColor(settings.value(level).toString());
 
         mLevelColors[level.toInt()] = color;
     }
     settings.endGroup();
-
 }
 
-void HbLogConfig::saveSettings()
-{
+void HbLogConfig::saveSettings() {
     QSettings settings;
 
     // Max buffer
@@ -275,8 +233,7 @@ void HbLogConfig::saveSettings()
     QMap<quint32, QColor>::const_iterator icolor = mLevelColors.constBegin();
     settings.beginGroup(QStringLiteral("levels/colors"));
     settings.remove(QString()); // All keys in the current group() are removed.
-    while (icolor != mLevelColors.constEnd())
-    {
+    while (icolor != mLevelColors.constEnd()) {
         settings.setValue(QString::number(icolor.key()), icolor.value().name());
         ++icolor;
     }
@@ -285,52 +242,41 @@ void HbLogConfig::saveSettings()
     settings.sync(); // Commit.
 }
 
-
-const QColor HbLogConfig::colorByIdLevel(quint32 color_id) const
-{
-    if (mLevelColors.contains(color_id))
-    {
+const QColor HbLogConfig::colorByIdLevel(quint32 color_id) const {
+    if (mLevelColors.contains(color_id)) {
         return mLevelColors.value(color_id);
-    }
-    else return QColor(0, 0, 0);
+    } else
+        return QColor(0, 0, 0);
 }
 
-quint32 HbLogConfig::maxBuffer() const
-{
+quint32 HbLogConfig::maxBuffer() const {
     return mMaxBuffer;
 }
 
-const QFont HbLogConfig::font() const
-{
+const QFont HbLogConfig::font() const {
     return mFont;
 }
 
-const QMap<quint32, QColor> &HbLogConfig::levelColor() const
-{
+const QMap<quint32, QColor>& HbLogConfig::levelColor() const {
     return mLevelColors;
 }
 
-const QColor HbLogConfig::backgroundColor() const
-{
+const QColor HbLogConfig::backgroundColor() const {
     return mBackgroundColor;
 }
 
-void HbLogConfig::setMaxBuffer(quint32 maxBuffer)
-{
+void HbLogConfig::setMaxBuffer(quint32 maxBuffer) {
     mMaxBuffer = maxBuffer;
 }
 
-void HbLogConfig::setFont(QFont& font)
-{
+void HbLogConfig::setFont(QFont& font) {
     mFont = font;
 }
 
-void HbLogConfig::setColorById(qint32 color_id, QColor& color)
-{
+void HbLogConfig::setColorById(qint32 color_id, QColor& color) {
     mLevelColors.insert(color_id, color);
 }
 
-void HbLogConfig::setBackgroundColor(QColor &color)
-{
+void HbLogConfig::setBackgroundColor(QColor& color) {
     mBackgroundColor = color;
 }

@@ -17,25 +17,22 @@
 #include <HbNetwork.h>
 #include <contract/HbNetworkContract.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL IHbContractListener
-        {
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL IHbContractListener {
+public
+    callbacks : virtual void onContractReceived(const HbNetworkContract* contract) = 0;
 
-        public callbacks:
-            virtual void onContractReceived( const HbNetworkContract * contract ) = 0;
+protected:
+    virtual ~IHbContractListener() {
+    } //!< \todo defaulted linux-g++ issue
+};
 
-        protected:
-            virtual ~IHbContractListener(){} //!< \todo defaulted linux-g++ issue
-        };
-
-    }
-}
+} // namespace network
+} // namespace hb
 
 using hb::network::IHbContractListener;
 

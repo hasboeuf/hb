@@ -5,25 +5,22 @@
 #include <AppPlatformService.h>
 #include <ui_AppMainWindow.h>
 
-namespace hb
-{
-    namespace pluginexample
-    {
-        class AppMainWindow : public QMainWindow, private Ui::AppMainWindow
-        {
-            Q_OBJECT
+namespace hb {
+namespace pluginexample {
+class AppMainWindow : public QMainWindow, private Ui::AppMainWindow {
+    Q_OBJECT
 
-        public:
-            explicit AppMainWindow( QWidget * parent = nullptr );
+public:
+    explicit AppMainWindow(QWidget* parent = nullptr);
 
-        public slots:
-            void onLoadClicked  ();
-            void onUnloadClicked();
+public slots:
+    void onLoadClicked();
+    void onUnloadClicked();
 
-        private:
-            AppPlatformService mPlatformServices;
-        };
-    }
-}
+private:
+    AppPlatformService mPlatformServices;
+};
+} // namespace pluginexample
+} // namespace hb
 
 #endif // APPMAINWINDOW_H

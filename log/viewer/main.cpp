@@ -8,13 +8,11 @@
 // Local
 #include <LogViewerMainWindow.h>
 
-int main( int argc, char *argv[] )
-{
-
+int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
-    hb::tools::HbApplicationHelper::initApp( "hb-io", "hb-io.com" );
+    hb::tools::HbApplicationHelper::initApp("hb-io", "hb-io.com");
 
-    hb::log::HbLogService::processArgs( a.arguments() );
+    hb::log::HbLogService::processArgs(a.arguments());
     hb::log::HbLogService::addConsoleOutput();
 
     hb::logviewer::LogViewerMainWindow w;

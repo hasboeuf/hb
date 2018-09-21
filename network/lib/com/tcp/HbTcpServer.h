@@ -9,65 +9,61 @@
 #include <com/HbAbstractServer.h>
 #include <config/com/HbTcpServerConfig.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class TcpServer final : public QTcpServer
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( TcpServer )
-            Q_FRIEND_CLASS( HbTcpServer )
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class TcpServer final : public QTcpServer {
+    Q_OBJECT
+    Q_DISABLE_COPY(TcpServer)
+    Q_FRIEND_CLASS(HbTcpServer)
 
-        protected:
-            TcpServer( QObject * parent = nullptr );
-            void incomingConnection( qintptr socket_descriptor ) override;
-        signals:
-            void newConnection( qint32 socket_descriptor );
-        };
+protected:
+    TcpServer(QObject* parent = nullptr);
+    void incomingConnection(qintptr socket_descriptor) override;
+signals:
+    void newConnection(qint32 socket_descriptor);
+};
 
-        class HB_NETWORK_DECL HbTcpServer : public HbAbstractServer
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbTcpServer )
+class HB_NETWORK_DECL HbTcpServer : public HbAbstractServer {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbTcpServer)
 
-        public:
+public:
+    HbTcpServer(QObject* parent = nullptr);
+    virtual ~HbTcpServer();
 
-            HbTcpServer( QObject * parent = nullptr );
-            virtual ~HbTcpServer();
+    using HbAbstractServer::join;
+    virtual bool join(const HbTcpServerConfig& config) final;
 
-            using HbAbstractServer::join;
-            virtual bool join( const HbTcpServerConfig & config ) final;
+    virtual bool setConfiguration(const HbTcpServerConfig& config) final;
+    virtual const HbTcpServerConfig& configuration() const final;
 
-            virtual bool setConfiguration( const HbTcpServerConfig & config ) final;
-            virtual const HbTcpServerConfig & configuration() const final;
+private:
+    virtual bool connectToNetwork() override;
+    virtual void disconnectFromNetwork() override;
+    virtual bool isListening() const override;
+    virtual HbNetworkProtocol::NetworkType type() const override;
 
-        private:
-            virtual bool connectToNetwork() override;
-            virtual void disconnectFromNetwork() override;
-            virtual bool isListening() const override;
-            virtual HbNetworkProtocol::NetworkType type() const override;
+    virtual void reset() final;
 
-            virtual void reset() final;
+private
+    callbacks :
+        // From device.
+        void
+        onNewConnection(qint32 socket_descriptor);
 
-        private callbacks:
-            // From device.
-            void onNewConnection( qint32 socket_descriptor );
+signals:
+    // To HbTcpSocketHandler.
+    void newConnection(qint32 socket_descriptor);
 
-        signals:
-            // To HbTcpSocketHandler.
-            void newConnection( qint32 socket_descriptor );
-
-        private:
-
-            TcpServer * mpDevice;
-            HbTcpServerConfig mConfig;
-        };
-    }
-}
+private:
+    TcpServer* mpDevice;
+    HbTcpServerConfig mConfig;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbTcpServer;
 

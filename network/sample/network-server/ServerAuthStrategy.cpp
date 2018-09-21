@@ -7,19 +7,14 @@
 using namespace hb::network;
 using namespace hb::networkexample;
 
-void ServerAuthStrategy::reset()
-{
-
+void ServerAuthStrategy::reset() {
 }
 
-bool ServerAuthStrategy::checkLogin( const HbAuthRequestContract * contract )
-{
-    Q_UNUSED( contract )
+bool ServerAuthStrategy::checkLogin(const HbAuthRequestContract* contract) {
+    Q_UNUSED(contract)
     return true;
 }
 
-authstgy ServerAuthStrategy::type() const
-{
+authstgy ServerAuthStrategy::type() const {
     return HbAuthService::AUTH_USER + 0;
 }
-

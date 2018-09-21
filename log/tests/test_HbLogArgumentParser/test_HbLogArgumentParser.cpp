@@ -1,5 +1,5 @@
-#include <QtTest>
 #include <QtCore/QObject>
+#include <QtTest>
 
 #include <HbLogArgumentParser.h>
 
@@ -24,9 +24,9 @@ private slots:
         QFETCH(bool, valid);
 
         HbLogArgumentParser parser;
-        parser.setInput( input );
+        parser.setInput(input);
 
-        QCOMPARE( parser.checkIsConsoleOutput(), valid );
+        QCOMPARE(parser.checkIsConsoleOutput(), valid);
     }
 
     void testCheckIsFileOutput_data() {
@@ -34,11 +34,11 @@ private slots:
         QTest::addColumn<bool>("valid");
         QTest::addColumn<QString>("filePath");
         QTest::addColumn<quint32>("fileMaxSize");
-        QTest::addRow("ok") << "--hblog-output-file:toto:32" << true << "toto" << ( quint32 ) 32;
-        QTest::addRow("missing one arg") << "--hblog-output-file:toto:" << false << "" << ( quint32 ) 0;
-        QTest::addRow("missing all args") << "--hblog-output-file::" << false << "" << ( quint32 ) 0;
-        QTest::addRow("wrong") << "--hblog-input-file:toto:" << false << "" << ( quint32 ) 0;
-        QTest::addRow("off-topic") << "appname" << false << "" << ( quint32 ) 0;
+        QTest::addRow("ok") << "--hblog-output-file:toto:32" << true << "toto" << (quint32)32;
+        QTest::addRow("missing one arg") << "--hblog-output-file:toto:" << false << "" << (quint32)0;
+        QTest::addRow("missing all args") << "--hblog-output-file::" << false << "" << (quint32)0;
+        QTest::addRow("wrong") << "--hblog-input-file:toto:" << false << "" << (quint32)0;
+        QTest::addRow("off-topic") << "appname" << false << "" << (quint32)0;
     }
 
     void testCheckIsFileOutput() {
@@ -48,11 +48,11 @@ private slots:
         QFETCH(quint32, fileMaxSize);
 
         HbLogArgumentParser parser;
-        parser.setInput( input );
+        parser.setInput(input);
 
-        QCOMPARE( parser.checkIsFileOutput(), valid );
-        QCOMPARE( parser.filePath(), filePath);
-        QCOMPARE( parser.fileMaxSize(), fileMaxSize);
+        QCOMPARE(parser.checkIsFileOutput(), valid);
+        QCOMPARE(parser.filePath(), filePath);
+        QCOMPARE(parser.fileMaxSize(), fileMaxSize);
     }
 
     void testCheckIsLocalOutput_data() {
@@ -71,10 +71,10 @@ private slots:
         QFETCH(QString, serverName);
 
         HbLogArgumentParser parser;
-        parser.setInput( input );
+        parser.setInput(input);
 
-        QCOMPARE( parser.checkIsLocalOutput(), valid );
-        QCOMPARE( parser.serverName(), serverName);
+        QCOMPARE(parser.checkIsLocalOutput(), valid);
+        QCOMPARE(parser.serverName(), serverName);
     }
 
     void testCheckIsTcpSocketOutput_data() {
@@ -82,10 +82,10 @@ private slots:
         QTest::addColumn<bool>("valid");
         QTest::addColumn<QString>("ip");
         QTest::addColumn<quint16>("port");
-        QTest::addRow("ok") << "--hblog-output-tcp:192.168.1.89:8000" << true << "192.168.1.89" << ( quint16 ) 8000;
-        QTest::addRow("missing one arg") << "--hblog-output-tcp:192.168.1.89:" << false << "" << ( quint16 ) 0;
-        QTest::addRow("missing all args") << "--hblog-output-tcp::" << false << "" << ( quint16 ) 0;
-        QTest::addRow("off-topic") << "appname" << false << "" << ( quint16 ) 0;
+        QTest::addRow("ok") << "--hblog-output-tcp:192.168.1.89:8000" << true << "192.168.1.89" << (quint16)8000;
+        QTest::addRow("missing one arg") << "--hblog-output-tcp:192.168.1.89:" << false << "" << (quint16)0;
+        QTest::addRow("missing all args") << "--hblog-output-tcp::" << false << "" << (quint16)0;
+        QTest::addRow("off-topic") << "appname" << false << "" << (quint16)0;
     }
 
     void testCheckIsTcpSocketOutput() {
@@ -95,11 +95,11 @@ private slots:
         QFETCH(quint16, port);
 
         HbLogArgumentParser parser;
-        parser.setInput( input );
+        parser.setInput(input);
 
-        QCOMPARE( parser.checkIsTcpSocketOutput(), valid );
-        QCOMPARE( parser.ip(), ip);
-        QCOMPARE( parser.port(), port);
+        QCOMPARE(parser.checkIsTcpSocketOutput(), valid);
+        QCOMPARE(parser.ip(), ip);
+        QCOMPARE(parser.port(), port);
     }
 
     void testCheckIsUdpSocketOutput_data() {
@@ -107,9 +107,9 @@ private slots:
         QTest::addColumn<bool>("valid");
         QTest::addColumn<QString>("ip");
         QTest::addColumn<quint16>("port");
-        QTest::addRow("ok") << "--hblog-output-udp:127.0.0.1:4000" << true << "127.0.0.1" << ( quint16 ) 4000;
-        QTest::addRow("missing one arg") << "--hblog-output-udp:127.0.0.1:" << false << "" << ( quint16 ) 0;
-        QTest::addRow("missing all args") << "--hblog-output-udp::" << false << "" << ( quint16 ) 0;
+        QTest::addRow("ok") << "--hblog-output-udp:127.0.0.1:4000" << true << "127.0.0.1" << (quint16)4000;
+        QTest::addRow("missing one arg") << "--hblog-output-udp:127.0.0.1:" << false << "" << (quint16)0;
+        QTest::addRow("missing all args") << "--hblog-output-udp::" << false << "" << (quint16)0;
     }
 
     void testCheckIsUdpSocketOutput() {
@@ -119,11 +119,11 @@ private slots:
         QFETCH(quint16, port);
 
         HbLogArgumentParser parser;
-        parser.setInput( input );
+        parser.setInput(input);
 
-        QCOMPARE( parser.checkIsUdpSocketOutput(), valid );
-        QCOMPARE( parser.ip(), ip);
-        QCOMPARE( parser.port(), port);
+        QCOMPARE(parser.checkIsUdpSocketOutput(), valid);
+        QCOMPARE(parser.ip(), ip);
+        QCOMPARE(parser.port(), port);
     }
 
     void testCheckIsLocalInput_data() {
@@ -141,19 +141,19 @@ private slots:
         QFETCH(QString, serverName);
 
         HbLogArgumentParser parser;
-        parser.setInput( input );
+        parser.setInput(input);
 
-        QCOMPARE( parser.checkIsLocalInput(), valid );
-        QCOMPARE( parser.serverName(), serverName);
+        QCOMPARE(parser.checkIsLocalInput(), valid);
+        QCOMPARE(parser.serverName(), serverName);
     }
 
     void testCheckIsTcpSocketInput_data() {
         QTest::addColumn<QString>("input");
         QTest::addColumn<bool>("valid");
         QTest::addColumn<quint16>("port");
-        QTest::addRow("ok") << "--hblog-input-tcp:4000" << true << ( quint16 ) 4000;
-        QTest::addRow("missing one arg") << "--hblog-input-tcp:" << false << ( quint16 ) 0;
-        QTest::addRow("wrong") << "--hblog-output-tcp:4000" << false << ( quint16 ) 0;
+        QTest::addRow("ok") << "--hblog-input-tcp:4000" << true << (quint16)4000;
+        QTest::addRow("missing one arg") << "--hblog-input-tcp:" << false << (quint16)0;
+        QTest::addRow("wrong") << "--hblog-output-tcp:4000" << false << (quint16)0;
     }
 
     void testCheckIsTcpSocketInput() {
@@ -162,19 +162,19 @@ private slots:
         QFETCH(quint16, port);
 
         HbLogArgumentParser parser;
-        parser.setInput( input );
+        parser.setInput(input);
 
-        QCOMPARE( parser.checkIsTcpSocketInput(), valid );
-        QCOMPARE( parser.port(), port);
+        QCOMPARE(parser.checkIsTcpSocketInput(), valid);
+        QCOMPARE(parser.port(), port);
     }
 
     void testCheckIsUdpSocketInput_data() {
         QTest::addColumn<QString>("input");
         QTest::addColumn<bool>("valid");
         QTest::addColumn<quint16>("port");
-        QTest::addRow("ok") << "--hblog-input-udp:4000" << true << ( quint16 ) 4000;
-        QTest::addRow("empty") << "" << false << ( quint16 ) 0;
-        QTest::addRow("no args") << "--hblog-input-udp" << false << ( quint16 ) 0;
+        QTest::addRow("ok") << "--hblog-input-udp:4000" << true << (quint16)4000;
+        QTest::addRow("empty") << "" << false << (quint16)0;
+        QTest::addRow("no args") << "--hblog-input-udp" << false << (quint16)0;
     }
 
     void testCheckIsUdpSocketInput() {
@@ -183,10 +183,10 @@ private slots:
         QFETCH(quint16, port);
 
         HbLogArgumentParser parser;
-        parser.setInput( input );
+        parser.setInput(input);
 
-        QCOMPARE( parser.checkIsUdpSocketInput(), valid );
-        QCOMPARE( parser.port(), port);
+        QCOMPARE(parser.checkIsUdpSocketInput(), valid);
+        QCOMPARE(parser.port(), port);
     }
 };
 

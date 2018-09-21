@@ -20,36 +20,32 @@
 
 using namespace std::chrono;
 
-namespace hb
-{
-    namespace tools
-    {
-        /*!
-         * HbSteadyDateTime provides a non-exact* but steady datetime.
-         * For micro and nano seconds precision.
-         */
-        class HB_TOOLS_DECL HbSteadyDateTime
-        {
+namespace hb {
+namespace tools {
+/*!
+ * HbSteadyDateTime provides a non-exact* but steady datetime.
+ * For micro and nano seconds precision.
+ */
+class HB_TOOLS_DECL HbSteadyDateTime {
+public:
+    static HbSteadyDateTime now();
+    static HbSteadyDateTime fromDateTime(const QDateTime& datetime, quint64 steady = 0);
+    static HbSteadyDateTime fromString(const QString& value, const QString& format);
+    static HbSteadyDateTime fromNsSinceEpoch(qint64 nano);
+    qint64 toNsSinceEpoch() const;
+    QString toString(const QString& format);
 
-        public:
-            static HbSteadyDateTime now();
-            static HbSteadyDateTime fromDateTime( const QDateTime & datetime, quint64 steady = 0 );
-            static HbSteadyDateTime fromString( const QString & value , const QString & format );
-            static HbSteadyDateTime fromNsSinceEpoch(qint64 nano );
-            qint64 toNsSinceEpoch() const;
-            QString toString( const QString & format );
+    const QDateTime& datetime() const;
+    quint64 steady() const;
 
-            const QDateTime & datetime() const;
-            quint64 steady() const;
+protected:
+    HbSteadyDateTime();
 
-        protected:
-            HbSteadyDateTime();
-
-        private:
-            QDateTime mDateTime;
-            quint64   mSteady;
-        };
-    }
-}
+private:
+    QDateTime mDateTime;
+    quint64 mSteady;
+};
+} // namespace tools
+} // namespace hb
 
 #endif // HBSTEADYDATETIME_H

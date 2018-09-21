@@ -1,6 +1,6 @@
 // Qt
-#include <QtGui/QDesktopServices>
 #include <QtCore/QUrl>
+#include <QtGui/QDesktopServices>
 // Hb
 #include <HbLogService.h>
 // Local
@@ -8,13 +8,11 @@
 
 using namespace hb::linkexample;
 
-void LinkBrowserControls::onOpenBrowser( const QUrl & url )
-{
+void LinkBrowserControls::onOpenBrowser(const QUrl& url) {
     qDebug() << "Opening browser on" << url.toString();
-    QDesktopServices::openUrl( url );
+    QDesktopServices::openUrl(url);
 }
 
-void LinkBrowserControls::onCloseBrowser()
-{
+void LinkBrowserControls::onCloseBrowser() {
     qDebug() << "Browser could be closed";
 }

@@ -18,62 +18,60 @@
 #include <com/HbAbstractNetwork.h>
 #include <config/com/HbClientConfig.h>
 
-namespace hb
-{
-    namespace network
-    {
+namespace hb {
+namespace network {
 
-        class HbAbstractSocket;
+class HbAbstractSocket;
 
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbAbstractClient : public HbAbstractNetwork
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbAbstractClient )
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbAbstractClient : public HbAbstractNetwork {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbAbstractClient)
 
-        public:
-            virtual ~HbAbstractClient() = default;
+public:
+    virtual ~HbAbstractClient() = default;
 
-            virtual bool join () final;
-            virtual bool leave() final;
-            virtual bool isReady() const final;
-            virtual networkuid uid() const = 0;
+    virtual bool join() final;
+    virtual bool leave() final;
+    virtual bool isReady() const final;
+    virtual networkuid uid() const = 0;
 
-            virtual bool send( ShConstHbNetworkContract contract);
+    virtual bool send(ShConstHbNetworkContract contract);
 
-            virtual const HbClientConfig & configuration() const; // SUB
+    virtual const HbClientConfig& configuration() const; // SUB
 
-        signals:
-            void clientConnected         ( networkuid client_uid );
-            void clientDisconnected      ( networkuid client_uid );
-            void clientContractReceived  ( networkuid client_uid, const HbNetworkContract * contract );
+signals:
+    void clientConnected(networkuid client_uid);
+    void clientDisconnected(networkuid client_uid);
+    void clientContractReceived(networkuid client_uid, const HbNetworkContract* contract);
 
-        protected:
-            HbAbstractClient(QObject * parent = nullptr);
+protected:
+    HbAbstractClient(QObject* parent = nullptr);
 
-            virtual void deleteSocket() = 0;
+    virtual void deleteSocket() = 0;
 
-            virtual HbAbstractSocket * pendingConnection() = 0;
-            virtual HbAbstractSocket * currentConnection() const = 0;
+    virtual HbAbstractSocket* pendingConnection() = 0;
+    virtual HbAbstractSocket* currentConnection() const = 0;
 
-        private:
-            void timerEvent(QTimerEvent * event);
+private:
+    void timerEvent(QTimerEvent* event);
 
-        private callbacks: // From device.
-            void onSocketConnected();
-            void onSocketReadyPacket();
-            void onSocketDisconnected();
+private
+    callbacks : // From device.
+                void
+                onSocketConnected();
+    void onSocketReadyPacket();
+    void onSocketDisconnected();
 
-        private:
-            HbClientConfig mConfig; // SUB
-            qint32 mRetry;
-            bool mReady;
-        };
+private:
+    HbClientConfig mConfig; // SUB
+    qint32 mRetry;
+    bool mReady;
+};
 
-
-    }
-}
+} // namespace network
+} // namespace hb
 
 #endif // HBABSTRACTCLIENT_H

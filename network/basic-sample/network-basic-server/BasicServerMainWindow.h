@@ -7,37 +7,33 @@
 // Local
 #include <ui_BasicServerMainWindow.h>
 
-namespace hb
-{
-    namespace networkexample
-    {
+namespace hb {
+namespace networkexample {
 
-        class BasicServerMainWindow : public QMainWindow, private Ui::BasicServerMainWindow
-        {
-            Q_OBJECT
+class BasicServerMainWindow : public QMainWindow, private Ui::BasicServerMainWindow {
+    Q_OBJECT
 
-        public:
-            explicit BasicServerMainWindow( QWidget * parent = nullptr );
-            virtual ~BasicServerMainWindow() = default;
+public:
+    explicit BasicServerMainWindow(QWidget* parent = nullptr);
+    virtual ~BasicServerMainWindow() = default;
 
-        private:
-            hb::network::HbTcpServer mTcpServer;
+private:
+    hb::network::HbTcpServer mTcpServer;
 
-        private slots:
-            void onStartClicked();
-            void onSendContractClicked();
-            void onStopClicked();
+private slots:
+    void onStartClicked();
+    void onSendContractClicked();
+    void onStopClicked();
 
-            void onServerConnected       ( networkuid server_uid );
-            void onServerDisconnected    ( networkuid server_uid );
-            void onSocketConnected       ( networkuid server_uid, networkuid socket_uid );
-            void onSocketDisconnected    ( networkuid server_uid, networkuid socket_uid );
-            void onSocketContractReceived( networkuid server_uid, networkuid socket_uid, const HbNetworkContract * contract );
+    void onServerConnected(networkuid server_uid);
+    void onServerDisconnected(networkuid server_uid);
+    void onSocketConnected(networkuid server_uid, networkuid socket_uid);
+    void onSocketDisconnected(networkuid server_uid, networkuid socket_uid);
+    void onSocketContractReceived(networkuid server_uid, networkuid socket_uid, const HbNetworkContract* contract);
 
-        signals:
-
-        };
-    }
-}
+signals:
+};
+} // namespace networkexample
+} // namespace hb
 
 #endif // BASICNETWORKSERVERMAINWINDOW_H

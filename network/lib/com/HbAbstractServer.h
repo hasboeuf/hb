@@ -21,68 +21,68 @@
 #include <com/HbAbstractNetwork.h>
 #include <config/com/HbServerConfig.h>
 
-namespace hb
-{
-    namespace network
-    {
+namespace hb {
+namespace network {
 
-        class HbSocketHandler;
+class HbSocketHandler;
 
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbAbstractServer : public HbAbstractNetwork, public HbUid< CLASS_SERVER >
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbAbstractServer )
-            Q_FRIEND_CLASS( HbSocketHandler )
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbAbstractServer : public HbAbstractNetwork, public HbUid<CLASS_SERVER> {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbAbstractServer)
+    Q_FRIEND_CLASS(HbSocketHandler)
 
-        public:
-            virtual ~HbAbstractServer() = default; // Keep it, inherited classes should handle deletion to avoid pure virtual calls.
+public:
+    virtual ~HbAbstractServer() =
+        default; // Keep it, inherited classes should handle deletion to avoid pure virtual calls.
 
-            virtual bool join () final;
-            virtual bool leave() final;
-            virtual bool leave( networkuid uid ) final;
-            virtual bool isReady() const final;
+    virtual bool join() final;
+    virtual bool leave() final;
+    virtual bool leave(networkuid uid) final;
+    virtual bool isReady() const final;
 
-            virtual bool send( ShConstHbNetworkContract contract );
+    virtual bool send(ShConstHbNetworkContract contract);
 
-            virtual bool isUidConnected( networkuid uid ) const final;
+    virtual bool isUidConnected(networkuid uid) const final;
 
-            virtual const HbServerConfig & configuration() const; // SUB
+    virtual const HbServerConfig& configuration() const; // SUB
 
-        protected:
-            HbAbstractServer( QObject * parent = nullptr );
+protected:
+    HbAbstractServer(QObject* parent = nullptr);
 
-            virtual bool isListening() const = 0; // From device.
+    virtual bool isListening() const = 0; // From device.
 
-            virtual void reset();
+    virtual void reset();
 
-        signals:
-            void serverConnected   ( networkuid server_uid );
-            void serverDisconnected( networkuid server_uid );
-            // To higher level class.
-            void socketConnected       ( networkuid server_uid, networkuid socket_uid );
-            void socketDisconnected    ( networkuid server_uid, networkuid socket_uid );
-            void socketContractReceived( networkuid server_uid, networkuid socket_uid, const HbNetworkContract * contract );
+signals:
+    void serverConnected(networkuid server_uid);
+    void serverDisconnected(networkuid server_uid);
+    // To higher level class.
+    void socketConnected(networkuid server_uid, networkuid socket_uid);
+    void socketDisconnected(networkuid server_uid, networkuid socket_uid);
+    void socketContractReceived(networkuid server_uid, networkuid socket_uid, const HbNetworkContract* contract);
 
-        public callbacks:
-            // From HbSocketHandler.
-            void onSocketConnected       ( qint32 socket_descriptor, networkuid socket_uid );
-            void onSocketDisconnected    ( networkuid socket_uid );
-            void onSocketContractReceived( networkuid socket_uid, const HbNetworkContract * contract );
-            void onHandlerIdled();
+public
+    callbacks :
+        // From HbSocketHandler.
+        void
+        onSocketConnected(qint32 socket_descriptor, networkuid socket_uid);
+    void onSocketDisconnected(networkuid socket_uid);
+    void onSocketContractReceived(networkuid socket_uid, const HbNetworkContract* contract);
+    void onHandlerIdled();
 
-        private:
-            HbServerConfig mConfig; // SUB
-            bool mReady;
+private:
+    HbServerConfig mConfig; // SUB
+    bool mReady;
 
-        protected:
-            QList< qint32 > mPending; // Socket descriptors not instanciated.
-            QHash< networkuid, HbSocketHandler * > mHandlerBySocketId;
-            QHash< networkuid, HbSocketHandler * > mHandlerById;
-        };
-    }
-}
+protected:
+    QList<qint32> mPending; // Socket descriptors not instanciated.
+    QHash<networkuid, HbSocketHandler*> mHandlerBySocketId;
+    QHash<networkuid, HbSocketHandler*> mHandlerById;
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBABSTRACTSERVER_H

@@ -4,16 +4,15 @@
 #include <QCoreApplication>
 #include <QDebug>
 // Hb
-#include <config.h>
-#include <core/HbSteadyDateTime.h>
 #include <HbLogService.h>
 #include <HbLoggerOutputs.h>
-#include <facebook/HbO2ClientFacebook.h>
 #include <HbPluginService.h>
 #include <com/tcp/HbTcpClient.h>
+#include <config.h>
+#include <core/HbSteadyDateTime.h>
+#include <facebook/HbO2ClientFacebook.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     QCoreApplication a(argc, argv);
 
     qDebug() << "Sample uses hb version" << HB_VERSION_STRING;

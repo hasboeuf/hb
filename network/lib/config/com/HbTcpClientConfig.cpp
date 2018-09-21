@@ -3,33 +3,28 @@
 // Local
 #include <config/com/HbTcpClientConfig.h>
 
-HbTcpClientConfig::HbTcpClientConfig( const HbTcpClientConfig & config ) :
-    HbNetworkConfig( config ), HbTcpConfig( config ), HbClientConfig( config )
-{
-
+HbTcpClientConfig::HbTcpClientConfig(const HbTcpClientConfig& config) :
+        HbNetworkConfig(config),
+        HbTcpConfig(config),
+        HbClientConfig(config) {
 }
 
-HbTcpClientConfig & HbTcpClientConfig::operator =( const HbTcpClientConfig & config )
-{
-    if (this != &config)
-    {
-        HbNetworkConfig::operator=    ( config );
-        HbTcpConfig::operator=    ( config );
-        HbClientConfig::operator =( config );
+HbTcpClientConfig& HbTcpClientConfig::operator=(const HbTcpClientConfig& config) {
+    if (this != &config) {
+        HbNetworkConfig::operator=(config);
+        HbTcpConfig::operator=(config);
+        HbClientConfig::operator=(config);
     }
 
     return *this;
 }
 
-bool HbTcpClientConfig::isValid() const
-{
-    if ( !HbTcpConfig::isValid() )
-    {
+bool HbTcpClientConfig::isValid() const {
+    if (!HbTcpConfig::isValid()) {
         return false;
     }
 
-    if ( !HbClientConfig::isValid() )
-    {
+    if (!HbClientConfig::isValid()) {
         return false;
     }
 

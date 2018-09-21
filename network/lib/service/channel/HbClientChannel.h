@@ -18,35 +18,30 @@
 #include <listener/IHbClientUserContractListener.h>
 #include <service/channel/HbNetworkChannel.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbClientChannel :
-            public HbNetworkChannel,
-            public IHbClientUserContractListener
-        {
-        public:
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbClientChannel : public HbNetworkChannel, public IHbClientUserContractListener {
+public:
+    HbClientChannel() = default;
+    virtual ~HbClientChannel() = default;
 
-            HbClientChannel() = default;
-            virtual ~HbClientChannel() = default;
+    // Hide server side signals.
+    void userContractToSend(ShConstHbNetworkUserInfo user_info, HbNetworkContract* contract) = delete;
+    void usersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos, HbNetworkContract* contract) = delete;
+    void
+    userToKick(ShConstHbNetworkUserInfo user_info, netwlint reason, const QString& description = QString()) = delete;
 
-            // Hide server side signals.
-            void userContractToSend ( ShConstHbNetworkUserInfo user_info,             HbNetworkContract * contract )        = delete;
-            void usersContractToSend( QList< ShConstHbNetworkUserInfo > users_infos,  HbNetworkContract * contract )        = delete;
-            void userToKick( ShConstHbNetworkUserInfo user_info, netwlint reason, const QString & description = QString() ) = delete;
+private:
+    // Hide low level signal, slot must be used by end user.
+    using HbNetworkService::contractToSend;
 
-        private:
-            // Hide low level signal, slot must be used by end user.
-            using HbNetworkService::contractToSend;
-
-        public callbacks:
-            virtual void onContractToSend( HbNetworkContract * contract ) override;
-        };
-    }
-}
+public
+    callbacks : virtual void onContractToSend(HbNetworkContract* contract) override;
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBCLIENTCHANNEL_H

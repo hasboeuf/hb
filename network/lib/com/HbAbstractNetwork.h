@@ -17,45 +17,41 @@
 #include <HbGlobal.h>
 // Local
 #include <HbNetwork.h>
-#include <contract/HbNetworkContract.h>
 #include <config/com/HbNetworkConfig.h>
+#include <contract/HbNetworkContract.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbAbstractNetwork : public QObject
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbAbstractNetwork )
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbAbstractNetwork : public QObject {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbAbstractNetwork)
 
-        public:
+public:
+    static bool checkHeader(const HbNetworkHeader& header);
 
-            static bool checkHeader( const HbNetworkHeader & header );
+    virtual bool join() = 0;
+    virtual bool leave() = 0;
+    virtual bool isReady() const = 0;
+    virtual HbNetworkProtocol::NetworkType type() const = 0;
 
-            virtual bool join() = 0;
-            virtual bool leave() = 0;
-            virtual bool isReady() const = 0;
-            virtual HbNetworkProtocol::NetworkType type() const = 0;
+    virtual bool send(ShConstHbNetworkContract contract) = 0;
 
-            virtual bool send( ShConstHbNetworkContract contract ) = 0;
+    virtual const HbNetworkConfig& configuration() const; // SUB
 
-            virtual const HbNetworkConfig & configuration() const; // SUB
+protected:
+    HbAbstractNetwork(QObject* parent = nullptr);
+    virtual ~HbAbstractNetwork() = default;
 
-        protected:
-            HbAbstractNetwork( QObject * parent = nullptr );
-            virtual ~HbAbstractNetwork() = default;
+    virtual bool connectToNetwork() = 0;
+    virtual void disconnectFromNetwork() = 0;
 
-            virtual bool connectToNetwork() = 0;
-            virtual void disconnectFromNetwork() = 0;
-
-        private:
-            HbNetworkConfig mConfig; // SUB
-        };
-    }
-}
+private:
+    HbNetworkConfig mConfig; // SUB
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBABSTRACTNETWORK_H

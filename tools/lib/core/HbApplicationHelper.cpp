@@ -1,45 +1,44 @@
-//System
+// System
 #include <iostream>
 // Qt
 #include <QtCore/QCoreApplication>
+#include <QtCore/QDebug>
+#include <QtCore/QSet>
 #include <QtCore/QThread>
+#include <QtCore/QTime>
+#include <QtGui/QIcon>
+#include <QtGui/QPalette>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QStyleFactory>
-#include <QtGui/QPalette>
-#include <QtGui/QIcon>
-#include <QtCore/QTime>
-#include <QtCore/QSet>
-#include <QtCore/QDebug>
 // System
 #if defined Q_OS_WIN32
 #include <Windows.h>
 #elif defined Q_OS_LINUX || defined Q_OS_DARWIN
-#include "unistd.h"
 #include <signal.h>
+#include "unistd.h"
 #endif
 // Local
 #include <core/HbApplicationHelper.h>
 
 using namespace hb::tools;
 
-void HbApplicationHelper::initApp(const QString & company, const QString & domain, const QString & name)
-{
+void HbApplicationHelper::initApp(const QString& company, const QString& domain, const QString& name) {
     // New seed for the app
     QTime time = QTime::currentTime();
-    qsrand( ( uint ) time.msec() );
+    qsrand((uint)time.msec());
 
     Q_ASSERT(qApp);
 
     // QSettings
-    QCoreApplication::setOrganizationName( company );
-    QCoreApplication::setOrganizationDomain( domain );
-    if (!name.isEmpty()) QCoreApplication::setApplicationName( name );
+    QCoreApplication::setOrganizationName(company);
+    QCoreApplication::setOrganizationDomain(domain);
+    if (!name.isEmpty())
+        QCoreApplication::setApplicationName(name);
 }
 
-void HbApplicationHelper::initSkin( const QString & skin )
-{
+void HbApplicationHelper::initSkin(const QString& skin) {
     // Logo
-    QApplication::setWindowIcon( QIcon( ":/HbLogo.png" ) );
+    QApplication::setWindowIcon(QIcon(":/HbLogo.png"));
 
     // Style
     qApp->setStyle(QStyleFactory::create(skin));
@@ -54,15 +53,12 @@ void HbApplicationHelper::initSkin( const QString & skin )
     p.setColor(QPalette::Highlight, QColor(102, 204, 51));
 
     qApp->setPalette(p);
-
 }
 
-void HbApplicationHelper::catchInterruptingEvents()
-{
+void HbApplicationHelper::catchInterruptingEvents() {
 #if defined Q_OS_WIN32
-    auto handler = []( DWORD sig ) -> BOOL {
-        switch( sig )
-        {
+    auto handler = [](DWORD sig) -> BOOL {
+        switch (sig) {
         case CTRL_C_EVENT:
         case CTRL_CLOSE_EVENT:
         case CTRL_BREAK_EVENT:
@@ -71,8 +67,8 @@ void HbApplicationHelper::catchInterruptingEvents()
             // This callback is called from another thread than Qt main thread.
             // That is why we wait for Qt main thread to finish.
 
-            qCritical() << QString( "Signal %1 caught. Quit qApp." ).arg( sig );
-            QMetaObject::invokeMethod( qApp, "quit", Qt::QueuedConnection );
+            qCritical() << QString("Signal %1 caught. Quit qApp.").arg(sig);
+            QMetaObject::invokeMethod(qApp, "quit", Qt::QueuedConnection);
             qApp->thread()->wait();
         default:
             break;
@@ -81,19 +77,18 @@ void HbApplicationHelper::catchInterruptingEvents()
         return FALSE;
     };
 
-    SetConsoleCtrlHandler( handler, TRUE );
+    SetConsoleCtrlHandler(handler, TRUE);
 
 #elif defined Q_OS_LINUX || defined Q_OS_DARWIN
 
-    auto handler = []( int sig ) {
-        std::cerr << QString( "Signal %1 caught. Quit qApp." ).arg( sig ).toStdString().c_str();
+    auto handler = [](int sig) {
+        std::cerr << QString("Signal %1 caught. Quit qApp.").arg(sig).toStdString().c_str();
         qApp->quit();
     };
 
-    QSet< int > sigs = {SIGQUIT, SIGINT, SIGTERM, SIGHUP, SIGABRT};
-    for( int sig : sigs )
-    {
-        signal( sig, handler );
+    QSet<int> sigs = {SIGQUIT, SIGINT, SIGTERM, SIGHUP, SIGABRT};
+    for (int sig : sigs) {
+        signal(sig, handler);
     }
 
 #endif

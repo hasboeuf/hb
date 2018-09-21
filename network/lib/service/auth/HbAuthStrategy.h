@@ -18,28 +18,23 @@
 #include <contract/HbNetworkProtocol.h>
 #include <user/HbNetworkUserInfo.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbAuthStrategy : public QObject
-        {
-            Q_OBJECT
-        public:
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbAuthStrategy : public QObject {
+    Q_OBJECT
+public:
+    HbAuthStrategy() = default;
+    virtual ~HbAuthStrategy() = default;
 
-            HbAuthStrategy() = default;
-            virtual ~HbAuthStrategy() = default;
+    virtual void reset() = 0;
 
-            virtual void reset() = 0;
-
-            virtual authstgy type() const = 0;
-
-        };
-    }
-}
+    virtual authstgy type() const = 0;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbAuthStrategy;
 

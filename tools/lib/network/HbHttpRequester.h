@@ -12,47 +12,44 @@
 /*! \file HbHttpRequester.h */
 
 // Qt
-#include <QtNetwork/QNetworkAccessManager>
 #include <QtCore/QJsonDocument>
+#include <QtNetwork/QNetworkAccessManager>
 // Local
-#include <network/HbTimeoutNetworkReplies.h>
 #include <HbTools.h>
+#include <network/HbTimeoutNetworkReplies.h>
 
-namespace hb
-{
-    namespace tools
-    {
-        /*!
-         * HbHttpRequester makes HTTP request.
-         * As an HTTP request is not a synchrone event,
-         * it tracks a request, waits for the answer and
-         * notifies when the associated response is received.
-         * \sa HbTimeoutNetworkReplies
-         */
-        class HB_TOOLS_DECL HbHttpRequester : public QObject
-        {
-            Q_OBJECT
+namespace hb {
+namespace tools {
+/*!
+ * HbHttpRequester makes HTTP request.
+ * As an HTTP request is not a synchrone event,
+ * it tracks a request, waits for the answer and
+ * notifies when the associated response is received.
+ * \sa HbTimeoutNetworkReplies
+ */
+class HB_TOOLS_DECL HbHttpRequester : public QObject {
+    Q_OBJECT
 
-        public:
-            HbHttpRequester();
-            virtual ~HbHttpRequester();
+public:
+    HbHttpRequester();
+    virtual ~HbHttpRequester();
 
-            quint64 processRequest( const QUrl & url, quint32 timeout = hb::tools::HbTimeoutNetworkReply::msDefaultTimeout );
+    quint64 processRequest(const QUrl& url, quint32 timeout = hb::tools::HbTimeoutNetworkReply::msDefaultTimeout);
 
-        public slots:
-            void onFinished();
-            void onError( const QNetworkReply::NetworkError & error );
+public slots:
+    void onFinished();
+    void onError(const QNetworkReply::NetworkError& error);
 
-        signals:
-            void requestFinished( quint64 request_id, const QJsonDocument & response );
-            void requestError   ( quint64 request_id, const QString & error );
+signals:
+    void requestFinished(quint64 request_id, const QJsonDocument& response);
+    void requestError(quint64 request_id, const QString& error);
 
-        private:
-            QNetworkAccessManager mManager;
-            HbTimeoutNetworkReplies mReplies;
-        };
-    }
-}
+private:
+    QNetworkAccessManager mManager;
+    HbTimeoutNetworkReplies mReplies;
+};
+} // namespace tools
+} // namespace hb
 
 using hb::tools::HbHttpRequester;
 

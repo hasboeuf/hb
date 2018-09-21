@@ -10,60 +10,56 @@
 #define HBGOOGLEUSER_H
 
 // Qt
-#include <QtCore/QString>
 #include <QtCore/QJsonDocument>
+#include <QtCore/QString>
 // Local
 #include <HbLink.h>
 #include <google/api/HbGoogleObject.h>
 
-namespace hb
-{
-    namespace link
-    {
-        /*!
-         * HbGoogleUser describes a Google user object.
-         */
-        class HB_LINK_DECL HbGoogleUser : public HbGoogleObject
-        {
+namespace hb {
+namespace link {
+/*!
+ * HbGoogleUser describes a Google user object.
+ */
+class HB_LINK_DECL HbGoogleUser : public HbGoogleObject {
+public:
+    HbGoogleUser();
+    virtual ~HbGoogleUser() = default;
 
-        public:
-            HbGoogleUser();
-            virtual ~HbGoogleUser() = default;
+    virtual void load(const QJsonDocument& doc) override;
 
-            virtual void load( const QJsonDocument & doc ) override;
+    virtual QString toString() const override;
 
-            virtual QString toString() const override;
+    virtual const QString& firstName() const final;
+    virtual const QString& lastName() const final;
+    virtual const QString& link() const final;
+    virtual const QString& email() const final;
+    virtual const QString& gender() const final;
+    virtual const QString& locale() const final;
+    virtual bool isVerified() const final;
+    virtual const QString& picture() const final;
 
-            virtual const QString & firstName()  const final;
-            virtual const QString & lastName()   const final;
-            virtual const QString & link()       const final;
-            virtual const QString & email()      const final;
-            virtual const QString & gender()     const final;
-            virtual const QString & locale()     const final;
-            virtual bool            isVerified() const final;
-            virtual const QString & picture()    const final;
+    virtual void setFirstName(const QString& first_name) final;
+    virtual void setLastName(const QString& last_name) final;
+    virtual void setLink(const QString& link) final;
+    virtual void setEmail(const QString& email) final;
+    virtual void setGender(const QString& gender) final;
+    virtual void setLocale(const QString& locale) final;
+    virtual void setVerified(bool verified) final;
+    virtual void setPicture(const QString& picture) final;
 
-            virtual void setFirstName( const QString & first_name ) final;
-            virtual void setLastName ( const QString & last_name  ) final;
-            virtual void setLink     ( const QString & link       ) final;
-            virtual void setEmail    ( const QString & email      ) final;
-            virtual void setGender   ( const QString & gender     ) final;
-            virtual void setLocale   ( const QString & locale     ) final;
-            virtual void setVerified ( bool            verified   ) final;
-            virtual void setPicture  ( const QString & picture    ) final;
-
-        protected:
-            QString mFirstName;
-            QString mLastName;
-            QString mLink;
-            QString mEmail;
-            QString mGender;
-            QString mLocale;
-            bool    mVerified;
-            QString mPicture;
-        };
-    }
-}
+protected:
+    QString mFirstName;
+    QString mLastName;
+    QString mLink;
+    QString mEmail;
+    QString mGender;
+    QString mLocale;
+    bool mVerified;
+    QString mPicture;
+};
+} // namespace link
+} // namespace hb
 
 using hb::link::HbGoogleUser;
 

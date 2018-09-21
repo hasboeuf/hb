@@ -14,48 +14,36 @@
 // Qt
 // Hb
 // Local
-#include <service/HbNetworkService.h>
-#include <user/HbNetworkUserInfo.h>
 #include <listener/IHbContractListener.h>
 #include <listener/IHbSocketListener.h>
+#include <service/HbNetworkService.h>
+#include <user/HbNetworkUserInfo.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbAuthService :
-            public HbNetworkService,
-            public IHbContractListener,
-            public IHbSocketListener
-        {
-            Q_OBJECT
-        public:
-            enum AuthType : authstgy
-            {
-                AUTH_NONE = 0,
-                AUTH_FACEBOOK,
-                AUTH_GOOGLE,
-                AUTH_USER = 255
-            };
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbAuthService : public HbNetworkService, public IHbContractListener, public IHbSocketListener {
+    Q_OBJECT
+public:
+    enum AuthType : authstgy { AUTH_NONE = 0, AUTH_FACEBOOK, AUTH_GOOGLE, AUTH_USER = 255 };
 
-            HbAuthService();
-            virtual ~HbAuthService(){} //!< \todo defaulted linux-g++ issue
+    HbAuthService();
+    virtual ~HbAuthService() {
+    } //!< \todo defaulted linux-g++ issue
 
-            virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
+    virtual void plugContracts(HbNetworkExchanges& exchanges) override;
 
-            virtual serviceuid uid() const override;
+    virtual serviceuid uid() const override;
 
-        signals:
-            void socketAuthenticated  ( networkuid socket_uid, const HbNetworkUserInfo & user_info );
-            void socketUnauthenticated( networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString & reason );
+signals:
+    void socketAuthenticated(networkuid socket_uid, const HbNetworkUserInfo& user_info);
+    void socketUnauthenticated(networkuid socket_uid, quint8 try_number, quint8 max_tries, const QString& reason);
 
-        protected:
-
-        };
-    }
-}
+protected:
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBAUTHSERVICE_H

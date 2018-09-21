@@ -16,46 +16,40 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <service/channel/HbServerChannel.h>
 #include <listener/IHbUserListener.h>
+#include <service/channel/HbServerChannel.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbServerPeopledChannel :
-            public HbServerChannel,
-            public IHbUserListener
-        {
-            Q_OBJECT
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbServerPeopledChannel : public HbServerChannel, public IHbUserListener {
+    Q_OBJECT
 
-        public:
+public:
+    HbServerPeopledChannel() = default;
+    virtual ~HbServerPeopledChannel() = default;
 
-            HbServerPeopledChannel() = default;
-            virtual ~HbServerPeopledChannel() = default;
+    virtual void internalReset(bool keep_uid = false) override;
 
-            virtual void internalReset( bool keep_uid = false ) override;
+    virtual void onUserConnected(ShConstHbNetworkUserInfo user_info) override final;
+    virtual void onUserDisconnected(ShConstHbNetworkUserInfo user_info) override final;
 
-            virtual void onUserConnected   ( ShConstHbNetworkUserInfo user_info ) override final;
-            virtual void onUserDisconnected( ShConstHbNetworkUserInfo user_info ) override final;
+    const QHash<QString, ShConstHbNetworkUserInfo>& connectedUsers() const;
+    ShConstHbNetworkUserInfo connectedUser(const QString& email);
 
-            const QHash< QString, ShConstHbNetworkUserInfo > & connectedUsers() const;
-            ShConstHbNetworkUserInfo connectedUser( const QString & email );
+public
+    callbacks :
 
-        public callbacks:
+        private : QHash<QString, ShConstHbNetworkUserInfo>
+                      mUsers;
 
-        private:
-            QHash< QString, ShConstHbNetworkUserInfo > mUsers;
-
-        signals:
-            void userConnected   ( ShConstHbNetworkUserInfo user_info );
-            void userDisconnected( ShConstHbNetworkUserInfo user_info );
-
-        };
-    }
-}
+signals:
+    void userConnected(ShConstHbNetworkUserInfo user_info);
+    void userDisconnected(ShConstHbNetworkUserInfo user_info);
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBSERVERPEOPLEDCHANNEL_H

@@ -7,39 +7,28 @@
 
 using namespace hb::network;
 
-
-HbTcpSocket::HbTcpSocket( QTcpSocket * device ) :
-    HbAbstractSocket( device )
-{
-    q_assert_ptr( device );
+HbTcpSocket::HbTcpSocket(QTcpSocket* device) : HbAbstractSocket(device) {
+    q_assert_ptr(device);
     mpDevice = device;
 
-    connect( mpDevice, &QTcpSocket::stateChanged, this, &HbTcpSocket::onStateChanged, Qt::UniqueConnection );
-    connect( mpDevice, ( void (QTcpSocket::*)( QAbstractSocket::SocketError ) ) &QTcpSocket::error,
-    [this]()
-    {
+    connect(mpDevice, &QTcpSocket::stateChanged, this, &HbTcpSocket::onStateChanged, Qt::UniqueConnection);
+    connect(mpDevice, (void (QTcpSocket::*)(QAbstractSocket::SocketError)) & QTcpSocket::error, [this]() {
         emit socketError();
-    } );
+    });
 }
 
-HbTcpSocket::~HbTcpSocket()
-{
+HbTcpSocket::~HbTcpSocket() {
     // HbAbstractSocket handles the destruction.
 }
 
-
-HbNetworkProtocol::NetworkType HbTcpSocket::type() const
-{
+HbNetworkProtocol::NetworkType HbTcpSocket::type() const {
     return HbNetworkProtocol::NETWORK_TCP;
 }
 
-
-bool HbTcpSocket::connectToHost(const HbTcpConfig & config)
-{
-    if ( state() == QAbstractSocket::UnconnectedState)
-    {
+bool HbTcpSocket::connectToHost(const HbTcpConfig& config) {
+    if (state() == QAbstractSocket::UnconnectedState) {
         mConfig = config;
-        mpDevice->connectToHost( mConfig.address(), mConfig.port(), QIODevice::ReadWrite );
+        mpDevice->connectToHost(mConfig.address(), mConfig.port(), QIODevice::ReadWrite);
 
         return true;
     }
@@ -47,10 +36,8 @@ bool HbTcpSocket::connectToHost(const HbTcpConfig & config)
     return false;
 }
 
-bool HbTcpSocket::leave()
-{
-    if ( state() != QAbstractSocket::UnconnectedState)
-    {
+bool HbTcpSocket::leave() {
+    if (state() != QAbstractSocket::UnconnectedState) {
         mpDevice->disconnectFromHost();
         return true;
     }
@@ -58,22 +45,17 @@ bool HbTcpSocket::leave()
     return false;
 }
 
-
-bool HbTcpSocket::isListening() const
-{
-    return ( state() == QAbstractSocket::ConnectedState );
+bool HbTcpSocket::isListening() const {
+    return (state() == QAbstractSocket::ConnectedState);
 }
 
-
-void HbTcpSocket::setSocketOption( QAbstractSocket::SocketOption option, bool enable )
-{
-    switch ( option )
-    {
+void HbTcpSocket::setSocketOption(QAbstractSocket::SocketOption option, bool enable) {
+    switch (option) {
     case QAbstractSocket::LowDelayOption:
     case QAbstractSocket::KeepAliveOption:
     case QAbstractSocket::MulticastLoopbackOption:
 
-        mpDevice->setSocketOption( option, enable );
+        mpDevice->setSocketOption(option, enable);
         break;
 
     default:
@@ -83,74 +65,52 @@ void HbTcpSocket::setSocketOption( QAbstractSocket::SocketOption option, bool en
     }
 }
 
-bool HbTcpSocket::socketOption( QAbstractSocket::SocketOption option ) const
-{
-    switch ( option )
-    {
+bool HbTcpSocket::socketOption(QAbstractSocket::SocketOption option) const {
+    switch (option) {
     case QAbstractSocket::LowDelayOption:
     case QAbstractSocket::KeepAliveOption:
     case QAbstractSocket::MulticastLoopbackOption:
-        return mpDevice->socketOption( option ).toBool();
+        return mpDevice->socketOption(option).toBool();
 
     default:
         return false;
     }
 }
 
-
-QAbstractSocket::SocketError HbTcpSocket::error() const
-{
+QAbstractSocket::SocketError HbTcpSocket::error() const {
     return mpDevice->error();
 }
 
-QAbstractSocket::SocketState HbTcpSocket::state() const
-{
+QAbstractSocket::SocketState HbTcpSocket::state() const {
     return mpDevice->state();
 }
 
+void HbTcpSocket::onReadyRead() {
+    QDataStream stream(mpDevice);
 
-void HbTcpSocket::onReadyRead()
-{
-    QDataStream stream( mpDevice );
-
-    if ( readStream( stream ) < 0 )
-    {
+    if (readStream(stream) < 0) {
         qWarning() << "Read stream failed";
     }
 }
 
-void HbTcpSocket::onStateChanged( QAbstractSocket::SocketState state )
-{
-    q_assert( mpDevice == sender() );
+void HbTcpSocket::onStateChanged(QAbstractSocket::SocketState state) {
+    q_assert(mpDevice == sender());
 
-    if( state == QAbstractSocket::UnconnectedState )
-    {
+    if (state == QAbstractSocket::UnconnectedState) {
         qDebug() << "Socket enters UnconnectedState";
         emit socketDisconnected();
-    }
-    else if( state == QAbstractSocket::HostLookupState )
-    {
+    } else if (state == QAbstractSocket::HostLookupState) {
         qDebug() << "Socket enters HostLookupState";
-    }
-    else if( state == QAbstractSocket::ConnectingState )
-    {
+    } else if (state == QAbstractSocket::ConnectingState) {
         qDebug() << "Socket enters ConnectingState";
-    }
-    else if( state == QAbstractSocket::ConnectedState )
-    {
+    } else if (state == QAbstractSocket::ConnectedState) {
         qDebug() << "Socket enters ConnectedState";
         emit socketConnected();
-    }
-    else if( state == QAbstractSocket::BoundState )
-    {
+    } else if (state == QAbstractSocket::BoundState) {
         qDebug() << "Socket enters BoundState";
-    }
-    else if( state == QAbstractSocket::ClosingState )
-    {
+    } else if (state == QAbstractSocket::ClosingState) {
         qDebug() << "Socket enters ClosingState";
-    }
-    else if( state == QAbstractSocket::ListeningState )
-    {
+    } else if (state == QAbstractSocket::ListeningState) {
         qDebug() << "Socket enters ListeningState";
     }
 

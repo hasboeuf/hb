@@ -17,29 +17,24 @@
 #include <HbNetwork.h>
 #include <config/service/HbServiceConfig.h>
 
-namespace hb
-{
-    namespace network
-    {
+namespace hb {
+namespace network {
 
-        class HB_NETWORK_DECL HbServicePresenceConfig : public HbServiceConfig
-        {
+class HB_NETWORK_DECL HbServicePresenceConfig : public HbServiceConfig {
+public:
+    HbServicePresenceConfig();
+    HbServicePresenceConfig(const HbServicePresenceConfig& config);
+    virtual ~HbServicePresenceConfig() {
+    } //!< \todo defaulted linux-g++ issue
+    virtual HbServicePresenceConfig& operator=(const HbServicePresenceConfig& config);
 
-        public:
-            HbServicePresenceConfig();
-            HbServicePresenceConfig( const HbServicePresenceConfig & config );
-            virtual ~HbServicePresenceConfig(){} //!< \todo defaulted linux-g++ issue
-            virtual HbServicePresenceConfig & operator =( const HbServicePresenceConfig & config );
+    virtual bool isValid() const;
 
-            virtual bool isValid() const;
-
-        protected:
-
-        private:
-
-        };
-    }
-}
+protected:
+private:
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbServicePresenceConfig;
 

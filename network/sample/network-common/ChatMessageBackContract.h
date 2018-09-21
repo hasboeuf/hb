@@ -16,42 +16,36 @@
 #include <contract/HbNetworkContract.h>
 // Local
 
+namespace hb {
+namespace networkexample {
 
-namespace hb
-{
-    namespace networkexample
-    {
+class ChatMessageBackContract : public HbNetworkContract {
+public:
+    ChatMessageBackContract();
+    virtual ~ChatMessageBackContract() = default;
+    ChatMessageBackContract(const ChatMessageBackContract& source);
+    ChatMessageBackContract& operator=(const ChatMessageBackContract& source);
 
-        class ChatMessageBackContract : public HbNetworkContract
-        {
+    virtual QString toString() const;
 
-        public:
+    virtual bool read(QDataStream& stream);
+    virtual bool write(QDataStream& stream) const;
 
-            ChatMessageBackContract();
-            virtual ~ChatMessageBackContract() = default;
-            ChatMessageBackContract( const ChatMessageBackContract & source );
-            ChatMessageBackContract & operator=(const ChatMessageBackContract & source);
+    virtual const QString& message() const final;
+    virtual void setMessage(const QString& message) final;
 
-            virtual QString toString() const;
+    virtual const QString& author() const final;
+    virtual void setAuthor(const QString& author) final;
 
-            virtual bool read ( QDataStream & stream );
-            virtual bool write( QDataStream & stream ) const;
+protected:
+    virtual ChatMessageBackContract* create() const override;
 
-            virtual const QString & message() const final;
-            virtual void setMessage( const QString & message ) final;
-
-            virtual const QString & author( ) const final;
-            virtual void setAuthor( const QString & author ) final;
-
-        protected:
-            virtual ChatMessageBackContract * create() const override;
-
-        protected:
-            QString mMessage;
-            QString mAuthor;
-        };
-    }
-}
+protected:
+    QString mMessage;
+    QString mAuthor;
+};
+} // namespace networkexample
+} // namespace hb
 
 using hb::networkexample::ChatMessageBackContract;
 

@@ -22,43 +22,39 @@
 class QLocalSocket;
 class QLocalServer;
 
-namespace hb
-{
-    namespace log
-    {
-        class HbLogMessage;
+namespace hb {
+namespace log {
+class HbLogMessage;
 
-        /*!
-        * TODOC
-        * \brief The %HbLogLocalSocketInput class defines a local server input.
-        */
-        class HbLogLocalSocketInput final : public HbLogAbstractInput
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbLogLocalSocketInput )
+/*!
+ * TODOC
+ * \brief The %HbLogLocalSocketInput class defines a local server input.
+ */
+class HbLogLocalSocketInput final : public HbLogAbstractInput {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbLogLocalSocketInput)
 
-        public:
-            HbLogLocalSocketInput( const QString & name = QString(), QObject * parent = nullptr );
-            ~HbLogLocalSocketInput() override;
+public:
+    HbLogLocalSocketInput(const QString& name = QString(), QObject* parent = nullptr);
+    ~HbLogLocalSocketInput() override;
 
-            const QString & name() const;
+    const QString& name() const;
 
-        protected:
-            void init() override;
+protected:
+    void init() override;
 
-        private callbacks:
-            void incomingConnection();
-            void onReadyRead();
-            void onClientDisconnected();
+private
+    callbacks : void incomingConnection();
+    void onReadyRead();
+    void onClientDisconnected();
 
-        private:
-            QString mName;
-            qint32 mExpected;
-            QScopedPointer< QLocalServer > mLocalServer;
-            QSet< QLocalSocket * > mClients;
-        };
-    }
-}
+private:
+    QString mName;
+    qint32 mExpected;
+    QScopedPointer<QLocalServer> mLocalServer;
+    QSet<QLocalSocket*> mClients;
+};
+} // namespace log
+} // namespace hb
 
 #endif
-

@@ -16,38 +16,32 @@
 #include <contract/HbNetworkContract.h>
 // Local
 
+namespace hb {
+namespace networkexample {
 
-namespace hb
-{
-    namespace networkexample
-    {
+class MessageContract : public HbNetworkContract {
+public:
+    MessageContract();
+    virtual ~MessageContract() = default;
+    MessageContract(const MessageContract& source);
+    MessageContract& operator=(const MessageContract& source);
 
-        class MessageContract : public HbNetworkContract
-        {
+    virtual QString toString() const;
 
-        public:
+    virtual bool read(QDataStream& stream);
+    virtual bool write(QDataStream& stream) const;
 
-            MessageContract();
-            virtual ~MessageContract() = default;
-            MessageContract( const MessageContract & source );
-            MessageContract & operator=( const MessageContract & source );
+    virtual const QString& message() const final;
+    virtual void setMessage(const QString& message) final;
 
-            virtual QString toString() const;
+protected:
+    virtual MessageContract* create() const override;
 
-            virtual bool read ( QDataStream & stream );
-            virtual bool write( QDataStream & stream ) const;
-
-            virtual const QString & message() const final;
-            virtual void setMessage( const QString & message ) final;
-
-        protected:
-            virtual MessageContract * create() const override;
-
-        protected:
-            QString mMessage;
-        };
-    }
-}
+protected:
+    QString mMessage;
+};
+} // namespace networkexample
+} // namespace hb
 
 using hb::networkexample::MessageContract;
 

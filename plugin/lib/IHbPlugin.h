@@ -12,55 +12,45 @@
 /*! \file IHbPlugin.h */
 
 // Qt
-#include <QtCore/QtPlugin>
 #include <QtCore/QPluginLoader>
+#include <QtCore/QtPlugin>
 #include <QtGui/QIcon>
 // Local
-#include <HbPluginPlatform.h>
 #include <HbPlugin.h>
+#include <HbPluginPlatform.h>
 
-namespace hb
-{
-    namespace plugin
-    {
-        /*!
-         * IHbPlugin is the interface that every plugin must implement.
-         */
-        class HB_PLUGIN_DECL IHbPlugin
-        {
-        public:
+namespace hb {
+namespace plugin {
+/*!
+ * IHbPlugin is the interface that every plugin must implement.
+ */
+class HB_PLUGIN_DECL IHbPlugin {
+public:
+    enum PluginInitState { INIT_SUCCESS, INIT_SUCCESS_PARTIALLY, INIT_FAIL };
 
-            enum PluginInitState
-            {
-                INIT_SUCCESS,
-                INIT_SUCCESS_PARTIALLY,
-                INIT_FAIL
-            };
+    IHbPlugin() = default;
+    virtual ~IHbPlugin() = default;
 
-            IHbPlugin() = default;
-            virtual ~IHbPlugin() = default;
+    /*!
+     * Init plugin.
+     * Called by HbPluginManager just after QPluginLoader finished to load the library.
+     * \param platform_service Platform service, useful to request a plugin/service.
+     * \todo hide load/unload plugin features.
+     * \return INIT_SUCCESS: all good.
+     *         INIT_SUCCESS_PARTLY: optional services/plugins are missing.
+     *         INIT_FAIL: not good, should be unloaded.
+     */
+    virtual PluginInitState init(const HbPluginPlatform* platform_service) = 0;
 
-            /*!
-             * Init plugin.
-             * Called by HbPluginManager just after QPluginLoader finished to load the library.
-             * \param platform_service Platform service, useful to request a plugin/service.
-             * \todo hide load/unload plugin features.
-             * \return INIT_SUCCESS: all good.
-             *         INIT_SUCCESS_PARTLY: optional services/plugins are missing.
-             *         INIT_FAIL: not good, should be unloaded.
-             */
-            virtual PluginInitState init( const HbPluginPlatform * platform_service ) = 0;
+    /*!
+     * Terminate plugin.
+     * Called by HbPluginManager just before QPluginLoader unloads the library.
+     */
+    virtual void unload() = 0;
+};
+} // namespace plugin
+} // namespace hb
 
-            /*!
-             * Terminate plugin.
-             * Called by HbPluginManager just before QPluginLoader unloads the library.
-             */
-            virtual void unload() = 0;
-
-        };
-    }
-}
-
-Q_DECLARE_INTERFACE( hb::plugin::IHbPlugin, "hb::plugin::IHbPlugin" )
+Q_DECLARE_INTERFACE(hb::plugin::IHbPlugin, "hb::plugin::IHbPlugin")
 
 #endif // IHBPLUGIN_H

@@ -12,8 +12,8 @@
 /*! \file HbGeneralClientConfig.h */
 
 // Qt
-#include <QtCore/QString>
 #include <QtCore/QHash>
+#include <QtCore/QString>
 // Hb
 // Local
 #include <HbNetwork.h>
@@ -22,41 +22,36 @@
 #include <config/service/channel/HbServiceChannelClientConfig.h>
 #include <config/service/presence/HbServicePresenceClientConfig.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbGeneralClientConfig final : public HbGeneralConfig
-        {
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbGeneralClientConfig final : public HbGeneralConfig {
+public:
+    HbGeneralClientConfig() = default;
+    HbGeneralClientConfig(const HbGeneralClientConfig& config);
+    virtual ~HbGeneralClientConfig() = default;
+    virtual HbGeneralClientConfig& operator=(const HbGeneralClientConfig& config);
 
-        public:
-            HbGeneralClientConfig() = default;
-            HbGeneralClientConfig( const HbGeneralClientConfig & config );
-            virtual ~HbGeneralClientConfig() = default;
-            virtual HbGeneralClientConfig & operator =( const HbGeneralClientConfig & config );
+    virtual bool isValid() const;
 
-            virtual bool isValid() const;
+    HbServiceAuthClientConfig& auth();
+    HbServiceChannelClientConfig& channel();
+    HbServicePresenceClientConfig& presence();
 
-            HbServiceAuthClientConfig     & auth    ();
-            HbServiceChannelClientConfig  & channel ();
-            HbServicePresenceClientConfig & presence();
+    const HbServiceAuthClientConfig& auth() const;
+    const HbServiceChannelClientConfig& channel() const;
+    const HbServicePresenceClientConfig& presence() const;
 
-            const HbServiceAuthClientConfig     & auth    () const;
-            const HbServiceChannelClientConfig  & channel () const;
-            const HbServicePresenceClientConfig & presence() const;
-
-        protected:
-
-        private:
-            HbServiceAuthClientConfig     mAuthConfig;
-            HbServiceChannelClientConfig  mChannelConfig;
-            HbServicePresenceClientConfig mPresenceConfig;
-        };
-    }
-}
+protected:
+private:
+    HbServiceAuthClientConfig mAuthConfig;
+    HbServiceChannelClientConfig mChannelConfig;
+    HbServicePresenceClientConfig mPresenceConfig;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbGeneralClientConfig;
 

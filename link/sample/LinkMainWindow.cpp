@@ -16,70 +16,68 @@
 using namespace hb::link;
 using namespace hb::linkexample;
 
-QString LinkMainWindow::msClientId     = "940633959281250";                  // Fake value.
+QString LinkMainWindow::msClientId = "940633959281250";                      // Fake value.
 QString LinkMainWindow::msClientSecret = "74621eedf9aa2cde9cd31dc5c4d3c440"; // Fake value.
 
-LinkMainWindow::LinkMainWindow(QWidget * parent) :
-    QMainWindow( parent )
-{
+LinkMainWindow::LinkMainWindow(QWidget* parent) : QMainWindow(parent) {
     // Ui
-    setupUi( this );
-    setWindowTitle( "Link" );
+    setupUi(this);
+    setWindowTitle("Link");
 
     mpFacebookClient = nullptr;
     mpFacebookServer = nullptr;
-    mpGoogleClient   = nullptr;
-    mpGoogleServer   = nullptr;
+    mpGoogleClient = nullptr;
+    mpGoogleServer = nullptr;
 
-    connect( ui_qpb_facebook_connect, &QPushButton::clicked, this, &LinkMainWindow::onFacebookConnectClicked );
-    connect( ui_qpb_google_connect,   &QPushButton::clicked, this, &LinkMainWindow::onGoogleConnectClicked );
+    connect(ui_qpb_facebook_connect, &QPushButton::clicked, this, &LinkMainWindow::onFacebookConnectClicked);
+    connect(ui_qpb_google_connect, &QPushButton::clicked, this, &LinkMainWindow::onGoogleConnectClicked);
 
-    connect( &mFacebookRequester, &HbFacebookRequester::requestCompleted, this, &LinkMainWindow::onFacebookRequestCompleted );
-    connect( &mGoogleRequester,   &HbGoogleRequester::requestCompleted, this, &LinkMainWindow::onGoogleRequestCompleted );
+    connect(
+        &mFacebookRequester, &HbFacebookRequester::requestCompleted, this, &LinkMainWindow::onFacebookRequestCompleted);
+    connect(&mGoogleRequester, &HbGoogleRequester::requestCompleted, this, &LinkMainWindow::onGoogleRequestCompleted);
 }
 
-LinkMainWindow::~LinkMainWindow()
-{
-    if( mpFacebookClient ) delete mpFacebookClient;
-    if( mpFacebookServer ) delete mpFacebookServer;
-    if( mpGoogleClient   ) delete mpGoogleClient;
-    if( mpGoogleServer   ) delete mpGoogleServer;
+LinkMainWindow::~LinkMainWindow() {
+    if (mpFacebookClient)
+        delete mpFacebookClient;
+    if (mpFacebookServer)
+        delete mpFacebookServer;
+    if (mpGoogleClient)
+        delete mpGoogleClient;
+    if (mpGoogleServer)
+        delete mpGoogleServer;
 }
 
-void LinkMainWindow::onFacebookConnectClicked()
-{
+void LinkMainWindow::onFacebookConnectClicked() {
     mpFacebookClient = new HbO2ClientFacebook();
 
-    connect( mpFacebookClient, &HbO2::linkSucceed, this, &LinkMainWindow::onFacebookClientLinkSucceed );
+    connect(mpFacebookClient, &HbO2::linkSucceed, this, &LinkMainWindow::onFacebookClientLinkSucceed);
 
-    mpFacebookClient->config().setClientId( msClientId );
-    mpFacebookClient->config().setLocalPort( 8080 );
-    mpFacebookClient->config().addScope( FB_PERMISSION_EMAIL );
-    mpFacebookClient->config().addScope( FB_PERMISSION_FRIENDS );
-    mpFacebookClient->config().setBrowserControls( &mBrowserControls );
+    mpFacebookClient->config().setClientId(msClientId);
+    mpFacebookClient->config().setLocalPort(8080);
+    mpFacebookClient->config().addScope(FB_PERMISSION_EMAIL);
+    mpFacebookClient->config().addScope(FB_PERMISSION_FRIENDS);
+    mpFacebookClient->config().setBrowserControls(&mBrowserControls);
 
     mpFacebookClient->link();
 }
 
-void LinkMainWindow::onGoogleConnectClicked()
-{
+void LinkMainWindow::onGoogleConnectClicked() {
     mpGoogleClient = new HbO2ClientGoogle();
 
-    connect( mpGoogleClient, &HbO2::linkSucceed, this, &LinkMainWindow::onGoogleClientLinkSucceed );
+    connect(mpGoogleClient, &HbO2::linkSucceed, this, &LinkMainWindow::onGoogleClientLinkSucceed);
 
-    mpGoogleClient->config().setClientId( msClientId );
-    mpGoogleClient->config().setLocalPort( 8080 );
-    mpGoogleClient->config().addScope( GL_PERMISSION_EMAIL );
-    mpGoogleClient->config().addScope( GL_PERMISSION_PROFILE );
-    mpGoogleClient->config().setBrowserControls( &mBrowserControls );
+    mpGoogleClient->config().setClientId(msClientId);
+    mpGoogleClient->config().setLocalPort(8080);
+    mpGoogleClient->config().addScope(GL_PERMISSION_EMAIL);
+    mpGoogleClient->config().addScope(GL_PERMISSION_PROFILE);
+    mpGoogleClient->config().setBrowserControls(&mBrowserControls);
 
     mpGoogleClient->link();
 }
 
-void LinkMainWindow::onFacebookClientLinkSucceed()
-{
-    if( sender() != mpFacebookClient )
-    {
+void LinkMainWindow::onFacebookClientLinkSucceed() {
+    if (sender() != mpFacebookClient) {
         return;
     }
 
@@ -87,20 +85,24 @@ void LinkMainWindow::onFacebookClientLinkSucceed()
 
     mpFacebookServer = new HbO2ServerFacebook();
 
-    connect( mpFacebookServer, &HbO2ServerFacebook::linkSucceed, this, &LinkMainWindow::onFacebookServerLinkSucceed, Qt::UniqueConnection );
+    connect(mpFacebookServer,
+            &HbO2ServerFacebook::linkSucceed,
+            this,
+            &LinkMainWindow::onFacebookServerLinkSucceed,
+            Qt::UniqueConnection);
 
-    mpFacebookServer->config().setClientId( mpFacebookClient->config().clientId() );
-    mpFacebookServer->config().setClientSecret( msClientSecret );
-    mpFacebookServer->setRedirectUri( mpFacebookClient->redirectUri() );
-    mpFacebookServer->setCode( mpFacebookClient->code() );
-    mpFacebookServer->addField( FB_USER_FIRST_NAME );
-    mpFacebookServer->addField( FB_USER_LAST_NAME );
-    mpFacebookServer->addField( FB_USER_LINK );
-    mpFacebookServer->addField( FB_USER_EMAIL );
-    mpFacebookServer->addField( FB_USER_GENDER );
-    mpFacebookServer->addField( FB_USER_LOCALE );
-    mpFacebookServer->addField( FB_USER_VERIFIED );
-    mpFacebookServer->addField( FB_USER_TIMEZONE );
+    mpFacebookServer->config().setClientId(mpFacebookClient->config().clientId());
+    mpFacebookServer->config().setClientSecret(msClientSecret);
+    mpFacebookServer->setRedirectUri(mpFacebookClient->redirectUri());
+    mpFacebookServer->setCode(mpFacebookClient->code());
+    mpFacebookServer->addField(FB_USER_FIRST_NAME);
+    mpFacebookServer->addField(FB_USER_LAST_NAME);
+    mpFacebookServer->addField(FB_USER_LINK);
+    mpFacebookServer->addField(FB_USER_EMAIL);
+    mpFacebookServer->addField(FB_USER_GENDER);
+    mpFacebookServer->addField(FB_USER_LOCALE);
+    mpFacebookServer->addField(FB_USER_VERIFIED);
+    mpFacebookServer->addField(FB_USER_TIMEZONE);
 
     mpFacebookClient->deleteLater();
     mpFacebookClient = nullptr;
@@ -108,22 +110,17 @@ void LinkMainWindow::onFacebookClientLinkSucceed()
     mpFacebookServer->link();
 }
 
-void LinkMainWindow::onFacebookServerLinkSucceed()
-{
-    if( sender() != mpFacebookServer )
-    {
+void LinkMainWindow::onFacebookServerLinkSucceed() {
+    if (sender() != mpFacebookServer) {
         return;
     }
 
     qDebug() << "Server link succeed. Request facebook user...";
 
-    quint64 request_id = mFacebookRequester.requestUser( mpFacebookServer );
-    if( request_id > 0 )
-    {
+    quint64 request_id = mFacebookRequester.requestUser(mpFacebookServer);
+    if (request_id > 0) {
         qDebug() << "Request id:" << request_id;
-    }
-    else
-    {
+    } else {
         qDebug() << "Request user failed";
     }
 
@@ -131,41 +128,31 @@ void LinkMainWindow::onFacebookServerLinkSucceed()
     mpFacebookServer = nullptr;
 }
 
-void LinkMainWindow::onFacebookRequestCompleted( quint64 request_id, hb::link::HbFacebookObject * object )
-{
+void LinkMainWindow::onFacebookRequestCompleted(quint64 request_id, hb::link::HbFacebookObject* object) {
     qDebug() << "Request completed" << request_id;
-    if( !object )
-    {
+    if (!object) {
         qWarning() << "Facebook object null";
         return;
     }
 
-    qDebug() << "Facebook object of type" << HbFacebookObject::MetaObjectType::toString( object->type() ) << "received";
+    qDebug() << "Facebook object of type" << HbFacebookObject::MetaObjectType::toString(object->type()) << "received";
 
-    if( object->type() == HbFacebookObject::OBJECT_USER )
-    {
-        HbFacebookUser * user = dynamic_cast< HbFacebookUser * >( object );
-        if( user )
-        {
+    if (object->type() == HbFacebookObject::OBJECT_USER) {
+        HbFacebookUser* user = dynamic_cast<HbFacebookUser*>(object);
+        if (user) {
             qDebug() << "Facebook user informations:" << user->toString();
-        }
-        else
-        {
+        } else {
             qWarning() << "Bad dynamic cast HbFacebookObject -> HbFacebookUser";
         }
-    }
-    else
-    {
+    } else {
         qWarning() << "No displayable for this type";
     }
 
     delete object;
 }
 
-void LinkMainWindow::onGoogleClientLinkSucceed()
-{
-    if( sender() != mpGoogleClient )
-    {
+void LinkMainWindow::onGoogleClientLinkSucceed() {
+    if (sender() != mpGoogleClient) {
         return;
     }
 
@@ -173,12 +160,16 @@ void LinkMainWindow::onGoogleClientLinkSucceed()
 
     mpGoogleServer = new HbO2ServerGoogle();
 
-    connect( mpGoogleServer, &HbO2ServerGoogle::linkSucceed, this, &LinkMainWindow::onGoogleServerLinkSucceed, Qt::UniqueConnection );
+    connect(mpGoogleServer,
+            &HbO2ServerGoogle::linkSucceed,
+            this,
+            &LinkMainWindow::onGoogleServerLinkSucceed,
+            Qt::UniqueConnection);
 
-    mpGoogleServer->config().setClientId( mpGoogleClient->config().clientId() );
-    mpGoogleServer->config().setClientSecret( msClientSecret );
-    mpGoogleServer->setRedirectUri( mpGoogleClient->redirectUri() );
-    mpGoogleServer->setCode( mpGoogleClient->code() );
+    mpGoogleServer->config().setClientId(mpGoogleClient->config().clientId());
+    mpGoogleServer->config().setClientSecret(msClientSecret);
+    mpGoogleServer->setRedirectUri(mpGoogleClient->redirectUri());
+    mpGoogleServer->setCode(mpGoogleClient->code());
 
     mpGoogleClient->deleteLater();
     mpGoogleClient = nullptr;
@@ -186,22 +177,17 @@ void LinkMainWindow::onGoogleClientLinkSucceed()
     mpGoogleServer->link();
 }
 
-void LinkMainWindow::onGoogleServerLinkSucceed()
-{
-    if( sender() != mpGoogleServer )
-    {
+void LinkMainWindow::onGoogleServerLinkSucceed() {
+    if (sender() != mpGoogleServer) {
         return;
     }
 
     qDebug() << "Server link succeed. Request google user...";
 
-    quint64 request_id = mGoogleRequester.requestUser( mpGoogleServer );
-    if( request_id > 0 )
-    {
+    quint64 request_id = mGoogleRequester.requestUser(mpGoogleServer);
+    if (request_id > 0) {
         qDebug() << "Request id:" << request_id;
-    }
-    else
-    {
+    } else {
         qWarning() << "Request user failed";
     }
 
@@ -209,31 +195,23 @@ void LinkMainWindow::onGoogleServerLinkSucceed()
     mpGoogleServer = nullptr;
 }
 
-void LinkMainWindow::onGoogleRequestCompleted( quint64 request_id, hb::link::HbGoogleObject * object )
-{
-    qDebug() << "Request completed" << request_id ;
-    if( !object )
-    {
+void LinkMainWindow::onGoogleRequestCompleted(quint64 request_id, hb::link::HbGoogleObject* object) {
+    qDebug() << "Request completed" << request_id;
+    if (!object) {
         qWarning() << "Google object null";
         return;
     }
 
-    qDebug() << "Google object of type" << HbGoogleObject::MetaObjectType::toString( object->type() ) << "received";
+    qDebug() << "Google object of type" << HbGoogleObject::MetaObjectType::toString(object->type()) << "received";
 
-    if( object->type() == HbGoogleObject::OBJECT_USER )
-    {
-        HbGoogleUser * user = dynamic_cast< HbGoogleUser * >( object );
-        if( user )
-        {
+    if (object->type() == HbGoogleObject::OBJECT_USER) {
+        HbGoogleUser* user = dynamic_cast<HbGoogleUser*>(object);
+        if (user) {
             qDebug() << "Google user informations:" << user->toString();
-        }
-        else
-        {
+        } else {
             qWarning() << "Bad dynamic cast HbGoogleObject -> HbGoogleUser";
         }
-    }
-    else
-    {
+    } else {
         qWarning() << "No displayable for this type";
     }
 

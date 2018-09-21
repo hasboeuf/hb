@@ -4,28 +4,21 @@
 using namespace hb::plugin;
 using namespace hb::pluginexample;
 
-AppAbstractPlugin::AppAbstractPlugin() :
-    IHbPlugin()
-{
+AppAbstractPlugin::AppAbstractPlugin() : IHbPlugin() {
     mpPlatformService = 0;
 }
 
-AppAbstractPlugin::~AppAbstractPlugin()
-{
-
+AppAbstractPlugin::~AppAbstractPlugin() {
 }
 
-IHbPlugin::PluginInitState AppAbstractPlugin::init( const HbPluginPlatform * platform_service )
-{
-    if( !platform_service )
-    {
+IHbPlugin::PluginInitState AppAbstractPlugin::init(const HbPluginPlatform* platform_service) {
+    if (!platform_service) {
         return INIT_FAIL;
     }
 
-    const AppPlatformService * app_platform_service = dynamic_cast< const AppPlatformService * >( platform_service );
+    const AppPlatformService* app_platform_service = dynamic_cast<const AppPlatformService*>(platform_service);
 
-    if( !app_platform_service )
-    {
+    if (!app_platform_service) {
         return INIT_FAIL;
     }
 

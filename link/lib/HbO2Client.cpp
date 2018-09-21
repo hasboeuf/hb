@@ -1,6 +1,6 @@
 // Qt
-#include <QtCore/QUrlQuery>
 #include <QtCore/QPair>
+#include <QtCore/QUrlQuery>
 // Hb
 #include <HbLogService.h>
 #include <core/HbDictionaryHelper.h>
@@ -10,76 +10,69 @@
 
 using namespace hb::link;
 
-bool HbO2Client::isValid() const
-{
-    if( !HbO2::isValid() )
-    {
+bool HbO2Client::isValid() const {
+    if (!HbO2::isValid()) {
         return false;
     }
 
     return mConfig.isValid();
 }
 
-HbO2ClientConfig & HbO2Client::config()
-{
+HbO2ClientConfig& HbO2Client::config() {
     return mConfig;
 }
 
-const HbO2ClientConfig & HbO2Client::config() const
-{
+const HbO2ClientConfig& HbO2Client::config() const {
     return mConfig;
 }
 
-bool HbO2Client::link()
-{
-    mRedirectUri = REDIRECT_URI.arg( mConfig.localPort() ); // Complete uri with the port.
+bool HbO2Client::link() {
+    mRedirectUri = REDIRECT_URI.arg(mConfig.localPort()); // Complete uri with the port.
 
-    if( !isValid() )
-    {
+    if (!isValid()) {
         qWarning() << "O2Client config invalid";
         return false;
     }
 
-    connect( this, &HbO2Client::openBrowser, mConfig.browserControls(), &IHbLinkBrowserControls::onOpenBrowser );
-    connect( this, &HbO2Client::closeBrowser, mConfig.browserControls(), &IHbLinkBrowserControls::onCloseBrowser );
+    connect(this, &HbO2Client::openBrowser, mConfig.browserControls(), &IHbLinkBrowserControls::onOpenBrowser);
+    connect(this, &HbO2Client::closeBrowser, mConfig.browserControls(), &IHbLinkBrowserControls::onCloseBrowser);
 
     mLinkStatus = LINKING;
 
-    if( mReplyServer.isListening() )
-    {
+    if (mReplyServer.isListening()) {
         mReplyServer.close();
     }
 
-    mReplyServer.listen( QHostAddress::Any, mConfig.localPort() );
-    connect( &mReplyServer, &HbLinkLocalServer::responseReceived, this, &HbO2Client::onCodeResponseReceived, Qt::UniqueConnection );
+    mReplyServer.listen(QHostAddress::Any, mConfig.localPort());
+    connect(&mReplyServer,
+            &HbLinkLocalServer::responseReceived,
+            this,
+            &HbO2Client::onCodeResponseReceived,
+            Qt::UniqueConnection);
 
-    QUrl url( endPoint() );
+    QUrl url(endPoint());
 
-    QUrlQuery request( url );
-    request.setQueryItems( HbDictionaryHelper::toPairList< QString, QString >( codeRequest() ) );
-    url.setQuery( request );
+    QUrlQuery request(url);
+    request.setQueryItems(HbDictionaryHelper::toPairList<QString, QString>(codeRequest()));
+    url.setQuery(request);
 
     qDebug() << "Url to open:" << url.toString();
 
-    emit openBrowser( url );
+    emit openBrowser(url);
 
     return true;
 }
 
-void HbO2Client::onCodeResponseReceived( const QHash< QString, QString > response )
-{
-    if( codeResponse( response ) == LINKED )
-    {
+void HbO2Client::onCodeResponseReceived(const QHash<QString, QString> response) {
+    if (codeResponse(response) == LINKED) {
         qDebug() << "Verification succeed";
         qDebug() << "Code received:" << mCode;
         mLinkStatus = LINKED;
         emit linkSucceed();
-    }
-    else
-    {
+    } else {
         qWarning() << "Verification failed" << mErrorString;
         mLinkStatus = UNLINKED;
-        emit linkFailed( mErrorString );
+        emit linkFailed(mErrorString);
     }
 
     emit closeBrowser();

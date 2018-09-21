@@ -19,37 +19,33 @@
 // Local
 #include <HbTools.h>
 
-namespace hb
-{
-    namespace tools
-    {
-        /*!
-         * HbTimeoutNetworkReply invalidates a QNetworkReply if it times out.
-         * \bug Does not work as expected as QNetworkReply::abort does not
-         * cancel the reply. For now timeout feature is disable.
-         */
-        class HB_TOOLS_DECL HbTimeoutNetworkReply final : public QTimer, public HbUid< CLASS_REPLIES >
-        {
-            Q_OBJECT
+namespace hb {
+namespace tools {
+/*!
+ * HbTimeoutNetworkReply invalidates a QNetworkReply if it times out.
+ * \bug Does not work as expected as QNetworkReply::abort does not
+ * cancel the reply. For now timeout feature is disable.
+ */
+class HB_TOOLS_DECL HbTimeoutNetworkReply final : public QTimer, public HbUid<CLASS_REPLIES> {
+    Q_OBJECT
 
-        public:
-            HbTimeoutNetworkReply( QNetworkReply * reply, quint32 timeout = msDefaultTimeout );
-            ~HbTimeoutNetworkReply();
+public:
+    HbTimeoutNetworkReply(QNetworkReply* reply, quint32 timeout = msDefaultTimeout);
+    ~HbTimeoutNetworkReply();
 
-        signals:
-            void error( QNetworkReply::NetworkError error );
+signals:
+    void error(QNetworkReply::NetworkError error);
 
-        public slots:
-            void onTimeout();
+public slots:
+    void onTimeout();
 
-        public:
-            static quint32 msDefaultTimeout;
+public:
+    static quint32 msDefaultTimeout;
 
-        private:
-
-        };
-    }
-}
+private:
+};
+} // namespace tools
+} // namespace hb
 
 using hb::tools::HbTimeoutNetworkReply;
 

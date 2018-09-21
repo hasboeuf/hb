@@ -12,82 +12,74 @@
 /*! \file HbLoggerPool.h */
 
 // Qt
-#include <QtCore/QObject>
 #include <QtCore/QHash>
+#include <QtCore/QObject>
 // Hb
 #include <HbGlobal.h>
 #include <HbLog.h>
 
 class QTimer;
 
-namespace hb
-{
-    namespace log
-    {
+namespace hb {
+namespace log {
 
-        class HbLogAbstractOutput;
-        class HbLogAbstractInput;
-        class HbLogAbstractOutput;
-        class HbLogGuiNotifier;
-        class HbLogMessage;
+class HbLogAbstractOutput;
+class HbLogAbstractInput;
+class HbLogAbstractOutput;
+class HbLogGuiNotifier;
+class HbLogMessage;
 
-        /*!
-         * Internal class, TODOC.
-         */
-        class HbLoggerPool final : public QObject
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbLoggerPool )
+/*!
+ * Internal class, TODOC.
+ */
+class HbLoggerPool final : public QObject {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbLoggerPool)
 
-        private:
+private:
+    static const quint16 MAX_CAPACITY = 500;
+    static const quint16 TCP_PORT_MIN = 1024;
+    // static const quint16 TCP_PORT_MAX = 65535; Useless as quint16 protects the range.
 
-            static const quint16 MAX_CAPACITY = 500;
-            static const quint16 TCP_PORT_MIN = 1024;
-            // static const quint16 TCP_PORT_MAX = 65535; Useless as quint16 protects the range.
+public:
+    HbLoggerPool();
+    virtual ~HbLoggerPool();
 
+    void addUdpSocketInput(quint16 port);
+    void addTcpSocketInput(quint16 port);
+    void addLocalSocketInput(const QString& name);
 
-        public:
+    void addConsoleOutput();
+    void addGuiOutput(HbLogGuiNotifier* notifier);
+    void addFileOutput(const QString& path, quint32 max_size);
+    void addUdpSocketOutput(const QString& ip, quint16 port);
+    void addTcpSocketOutput(const QString& ip, quint16 port);
+    void addLocalSocketOutput(const QString& name);
 
-            HbLoggerPool();
-            virtual ~HbLoggerPool();
+    bool enqueueMessage(QList<HbLogMessage*>& buffer);
 
-            void addUdpSocketInput  ( quint16 port );
-            void addTcpSocketInput  ( quint16 port );
-            void addLocalSocketInput( const QString & name );
+public slots:
+    void running();
 
-            void addConsoleOutput    ();
-            void addGuiOutput        ( HbLogGuiNotifier * notifier );
-            void addFileOutput       ( const QString & path, quint32 max_size );
-            void addUdpSocketOutput  ( const QString & ip, quint16 port );
-            void addTcpSocketOutput  ( const QString & ip, quint16 port );
-            void addLocalSocketOutput( const QString & name );
+private
+    callbacks : void onInputMessageReceived(HbLogMessage* message);
+    // From QThread
 
-            bool enqueueMessage( QList< HbLogMessage * > & buffer );
+    void process();
 
-        public slots:
-            void running();
+private:
+    QAtomicInt mAtomic;
 
-        private callbacks:
-            void onInputMessageReceived( HbLogMessage * message );
-            // From QThread
+    QTimer* mpClock;
+    qint32 mCapacity;
 
-            void process();
+    QList<HbLogMessage*> mLoggerStream;
+    QList<HbLogMessage*> mInputsStream;
 
-
-        private:
-
-            QAtomicInt mAtomic;
-
-            QTimer * mpClock;
-            qint32 mCapacity;
-
-            QList< HbLogMessage * > mLoggerStream;
-            QList< HbLogMessage * > mInputsStream;
-
-            QHash< quint32, HbLogAbstractInput * > mInputs;
-            QHash< quint32, HbLogAbstractOutput * > mOutputs;
-        };
-    }
-}
+    QHash<quint32, HbLogAbstractInput*> mInputs;
+    QHash<quint32, HbLogAbstractOutput*> mOutputs;
+};
+} // namespace log
+} // namespace hb
 
 #endif // HBLOGGERPOOL_H

@@ -12,72 +12,71 @@
 /*! \file HbAbstractSocket.h */
 
 // Qt
-#include <QtNetwork/QAbstractSocket>
-#include <QtCore/QQueue>
-#include <QtCore/QPointer>
 #include <QtCore/QDataStream>
+#include <QtCore/QPointer>
+#include <QtCore/QQueue>
+#include <QtNetwork/QAbstractSocket>
 // Hb
 #include <HbGlobal.h>
-#include <core/HbUid.h>
 #include <contract/HbNetworkContract.h>
 #include <contract/HbNetworkProtocol.h>
+#include <core/HbUid.h>
 
-namespace hb
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HbAbstractSocket : public QObject,
+                         public HbUid<CLASS_SOCKET> // 0 is excluded, HbNetworkContract::sender() returns 0 when the
+                                                    // server is the sender.
 {
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HbAbstractSocket : public QObject, public HbUid< CLASS_SOCKET > // 0 is excluded, HbNetworkContract::sender() returns 0 when the server is the sender.
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbAbstractSocket )
+    Q_OBJECT
+    Q_DISABLE_COPY(HbAbstractSocket)
 
-        public:
+public:
+    virtual ~HbAbstractSocket();
 
-            virtual ~HbAbstractSocket();
+    virtual HbNetworkProtocol::NetworkType type() const = 0;
+    virtual bool isListening() const = 0;
+    virtual bool leave() = 0;
 
-            virtual HbNetworkProtocol::NetworkType type() const = 0;
-            virtual bool isListening() const = 0;
-            virtual bool leave() = 0;
+    virtual QAbstractSocket::SocketError error() const = 0;
+    virtual QAbstractSocket::SocketState state() const = 0;
+    virtual QString errorString() const final;
 
-            virtual QAbstractSocket::SocketError error() const = 0;
-            virtual QAbstractSocket::SocketState state() const = 0;
-            virtual QString errorString() const final;
+    bool sendContract(ShConstHbNetworkContract contract);
+    virtual QByteArray readPacket() final;
+    virtual qint64 writePacket(const QByteArray& packet) const final;
+    virtual bool packetAvailable() const final;
 
-            bool               sendContract   ( ShConstHbNetworkContract contract );
-            virtual QByteArray readPacket     () final;
-            virtual qint64     writePacket    (const QByteArray & packet) const final;
-            virtual bool       packetAvailable() const final;
+signals:
+    void socketReadyPacket();
+    void socketStateChanged(); // Used in children.
+    void socketError();        // Used in children.
+    void socketConnected();    // Used in childen.
+    void socketDisconnected(); // Used in children.
 
-        signals:
-            void socketReadyPacket ();
-            void socketStateChanged(); // Used in children.
-            void socketError       (); // Used in children.
-            void socketConnected   (); // Used in childen.
-            void socketDisconnected(); // Used in children.
+protected:
+    HbAbstractSocket() = delete;
+    HbAbstractSocket(QIODevice* device);
 
-        protected:
+    virtual qint64 readStream(QDataStream& stream) final;
+    virtual qint64 writeBuffer(const QByteArray& buffer) const final;
 
-            HbAbstractSocket() = delete;
-            HbAbstractSocket(QIODevice * device);
+protected
+    callbacks :
+        // From children device.
+        virtual void
+        onReadyRead() = 0;
 
-            virtual qint64 readStream ( QDataStream & stream ) final;
-            virtual qint64 writeBuffer( const QByteArray & buffer ) const final;
+private:
+    QPointer<QIODevice> mDevice;
 
-        protected callbacks:
-            // From children device.
-            virtual void onReadyRead() = 0;
-
-        private:
-            QPointer< QIODevice > mDevice;
-
-            quint32 mBytesPending;
-            QQueue< QByteArray > mPackets;
-
-        };
-    }
-}
+    quint32 mBytesPending;
+    QQueue<QByteArray> mPackets;
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBABSTRACTSOCKET_H

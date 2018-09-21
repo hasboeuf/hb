@@ -14,33 +14,28 @@
 // Qt
 // Hb
 // Local
-#include <service/HbNetworkService.h>
 #include <listener/IHbSocketAuthListener.h>
+#include <service/HbNetworkService.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbPresenceService :
-            public HbNetworkService,
-            public IHbSocketAuthListener
-        {
-        public:
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbPresenceService : public HbNetworkService, public IHbSocketAuthListener {
+public:
+    HbPresenceService();
+    virtual ~HbPresenceService() {
+    } //!< \todo defaulted linux-g++ issue
 
-            HbPresenceService();
-            virtual ~HbPresenceService(){} //!< \todo defaulted linux-g++ issue
+    virtual void plugContracts(HbNetworkExchanges& exchanges) override;
 
-            virtual void plugContracts( HbNetworkExchanges & exchanges ) override;
+    virtual serviceuid uid() const override;
 
-            virtual serviceuid uid() const override;
-
-        public callbacks:
-
-        };
-    }
-}
+public
+    callbacks:
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBPRESENCESERVICE_H

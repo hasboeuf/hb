@@ -6,28 +6,24 @@
 // Local
 #include <AppPlatformService.h> // Covariance.
 
-namespace hb
-{
-    namespace pluginexample
-    {
-        using hb::plugin::IHbPlugin;
+namespace hb {
+namespace pluginexample {
+using hb::plugin::IHbPlugin;
 
-        class AppAbstractPlugin : public IHbPlugin
-        {
+class AppAbstractPlugin : public IHbPlugin {
+public:
+    explicit AppAbstractPlugin();
+    virtual ~AppAbstractPlugin();
 
-        public:
-            explicit AppAbstractPlugin();
-            virtual ~AppAbstractPlugin();
+    virtual PluginInitState init(const HbPluginPlatform* platform_service);
+    virtual void unload() = 0;
 
-            virtual PluginInitState init  ( const HbPluginPlatform * platform_service );
-            virtual void            unload() = 0;
+protected:
+    const AppPlatformService* mpPlatformService;
+};
+} // namespace pluginexample
+} // namespace hb
 
-        protected:
-            const AppPlatformService * mpPlatformService;
-        };
-    }
-}
-
-Q_DECLARE_INTERFACE( hb::pluginexample::AppAbstractPlugin, "hb::pluginexample::AppAbstractPlugin" )
+Q_DECLARE_INTERFACE(hb::pluginexample::AppAbstractPlugin, "hb::pluginexample::AppAbstractPlugin")
 
 #endif // APPABSTRACTPLUGIN_H

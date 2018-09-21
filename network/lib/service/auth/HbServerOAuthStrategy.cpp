@@ -2,9 +2,9 @@
 #include <HbLogService.h>
 #include <HbO2Server.h>
 // Local
+#include <contract/auth/HbOAuthRequestContract.h>
 #include <service/auth/HbAuthService.h>
 #include <service/auth/HbServerOAuthStrategy.h>
-#include <contract/auth/HbOAuthRequestContract.h>
 #ifdef DEV
 #include <mock/HbNetworkUserInfoMock.h>
 #endif
@@ -12,39 +12,33 @@
 using namespace hb::network;
 using namespace hb::link;
 
-HbServerOAuthStrategy::HbServerOAuthStrategy() :
-    HbServerAuthStrategy()
-{
+HbServerOAuthStrategy::HbServerOAuthStrategy() : HbServerAuthStrategy() {
 }
 
-HbServerOAuthStrategy::~HbServerOAuthStrategy()
-{
+HbServerOAuthStrategy::~HbServerOAuthStrategy() {
     reset();
 }
 
-void HbServerOAuthStrategy::reset()
-{
-    qDeleteAll( mPendingToken.keys() );
+void HbServerOAuthStrategy::reset() {
+    qDeleteAll(mPendingToken.keys());
     mPendingToken.clear();
     mPendingRequest.clear();
 }
 
-void HbServerOAuthStrategy::setConfig( const HbO2ServerConfig & config )
-{
+void HbServerOAuthStrategy::setConfig(const HbO2ServerConfig& config) {
     mConfig = config;
 }
 
-void HbServerOAuthStrategy::onLinkFailed(const QString & error )
-{
-    HbO2Server * server_auth = dynamic_cast< HbO2Server * >( sender() );
-    q_assert_ptr( server_auth );
-    q_assert( mPendingToken.contains( server_auth ) );
+void HbServerOAuthStrategy::onLinkFailed(const QString& error) {
+    HbO2Server* server_auth = dynamic_cast<HbO2Server*>(sender());
+    q_assert_ptr(server_auth);
+    q_assert(mPendingToken.contains(server_auth));
 
     qDebug() << "Server link failed for user" << server_auth->config().clientId() << error;
 
-    networkuid sender = mPendingToken.take( server_auth );
+    networkuid sender = mPendingToken.take(server_auth);
 
     server_auth->deleteLater();
 
-    emit authFailed( sender, HbNetworkProtocol::AUTH_OAUTH_KO, error );
+    emit authFailed(sender, HbNetworkProtocol::AUTH_OAUTH_KO, error);
 }

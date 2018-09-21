@@ -14,54 +14,49 @@
 // Qt
 // Hb
 // Local
-#include <service/auth/HbAuthService.h>
 #include <config/service/auth/HbServiceAuthClientConfig.h>
+#include <service/auth/HbAuthService.h>
 
-namespace hb
-{
-    namespace network
-    {
-        class HbClientAuthStrategy;
-        class HbClientAuthLoginObject;
-        class HbAuthRequestContract;
+namespace hb {
+namespace network {
+class HbClientAuthStrategy;
+class HbClientAuthLoginObject;
+class HbAuthRequestContract;
 
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbClientAuthService : public HbAuthService
-        {
-            Q_OBJECT
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbClientAuthService : public HbAuthService {
+    Q_OBJECT
 
-        public:
+public:
+    HbClientAuthService();
+    virtual ~HbClientAuthService() = default;
 
-            HbClientAuthService();
-            virtual ~HbClientAuthService() = default;
+    virtual void reset() override;
+    const HbServiceAuthClientConfig& config() const;
+    void setConfig(const HbServiceAuthClientConfig& config);
 
-            virtual void reset() override;
-            const HbServiceAuthClientConfig & config() const;
-            void setConfig( const HbServiceAuthClientConfig & config );
+    void addStrategy(HbClientAuthStrategy* strategy);
 
-            void addStrategy( HbClientAuthStrategy * strategy );
+public
+    callbacks : virtual void onContractReceived(const HbNetworkContract* contract) override;
+    virtual void onSocketConnected(networkuid socket_uid) override;
+    virtual void onSocketDisconnected(networkuid socket_uid) override;
 
-        public callbacks:
-            virtual void onContractReceived( const HbNetworkContract * contract ) override;
-            virtual void onSocketConnected   ( networkuid socket_uid ) override;
-            virtual void onSocketDisconnected( networkuid socket_uid ) override;
+    // From ClientConnectionPool.
+    void onAuthRequested(HbClientAuthLoginObject* login_object);
 
-            // From ClientConnectionPool.
-            void onAuthRequested( HbClientAuthLoginObject * login_object );
+    // From HbClientAuthStrategy.
+    void onAuthContractReady(networkuid socket_uid, HbAuthRequestContract* contract);
+    void onAuthContractFailed(networkuid socket_uid, const QString& description);
 
-            // From HbClientAuthStrategy.
-            void onAuthContractReady ( networkuid socket_uid, HbAuthRequestContract * contract );
-            void onAuthContractFailed( networkuid socket_uid, const QString & description );
-
-        private:
-            networkuid mPendingSocket;
-            HbServiceAuthClientConfig mConfig;
-            QHash< authstgy, HbClientAuthStrategy * > mStrategies;
-
-        };
-    }
-}
+private:
+    networkuid mPendingSocket;
+    HbServiceAuthClientConfig mConfig;
+    QHash<authstgy, HbClientAuthStrategy*> mStrategies;
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBCLIENTAUTHSERVICE_H

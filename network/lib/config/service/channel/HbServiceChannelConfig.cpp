@@ -3,35 +3,22 @@
 
 using namespace hb::network;
 
-
-HbServiceChannelConfig::HbServiceChannelConfig() :
-    HbServiceConfig()
-{
-
+HbServiceChannelConfig::HbServiceChannelConfig() : HbServiceConfig() {
 }
 
-HbServiceChannelConfig::HbServiceChannelConfig(const HbServiceChannelConfig & config) :
-    HbServiceConfig( config )
-{
-    if (this != &config)
-    {
-
+HbServiceChannelConfig::HbServiceChannelConfig(const HbServiceChannelConfig& config) : HbServiceConfig(config) {
+    if (this != &config) {
     }
 }
 
-
-HbServiceChannelConfig & HbServiceChannelConfig::operator =(const HbServiceChannelConfig & config)
-{
-    if (this != &config)
-    {
-        HbServiceConfig::operator =( config );
-
+HbServiceChannelConfig& HbServiceChannelConfig::operator=(const HbServiceChannelConfig& config) {
+    if (this != &config) {
+        HbServiceConfig::operator=(config);
     }
 
     return *this;
 }
 
-bool HbServiceChannelConfig::isValid() const
-{
+bool HbServiceChannelConfig::isValid() const {
     return HbServiceConfig::isValid();
 }

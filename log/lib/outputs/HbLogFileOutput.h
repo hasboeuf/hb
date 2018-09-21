@@ -20,41 +20,38 @@
 class QFile;
 class QTextStream;
 
-namespace hb
-{
-    namespace log
-    {
-        /*!
-        * \brief The %HbLogFileOutput class defines a file output.
-        */
-        class HB_LOG_DECL HbLogFileOutput final : public HbLogAbstractOutput
-        {
-            Q_DISABLE_COPY( HbLogFileOutput )
+namespace hb {
+namespace log {
+/*!
+ * \brief The %HbLogFileOutput class defines a file output.
+ */
+class HB_LOG_DECL HbLogFileOutput final : public HbLogAbstractOutput {
+    Q_DISABLE_COPY(HbLogFileOutput)
 
-        public:
-            static const QString msDefaultPath;
-            static const quint32 msMaxFileSize;
+public:
+    static const QString msDefaultPath;
+    static const quint32 msMaxFileSize;
 
-        public:
-            HbLogFileOutput() = delete;
-            HbLogFileOutput( const QString & path, quint32 maxSize = 0, QObject * parent = nullptr );
-            virtual ~HbLogFileOutput();
+public:
+    HbLogFileOutput() = delete;
+    HbLogFileOutput(const QString& path, quint32 maxSize = 0, QObject* parent = nullptr);
+    virtual ~HbLogFileOutput();
 
-        protected:
-            void init() override;
-            void processMessage( const HbLogMessagePtr & message ) override;
+protected:
+    void init() override;
+    void processMessage(const HbLogMessagePtr& message) override;
 
-        private:
-            void closeLogFile();
-            void createLogFile();
+private:
+    void closeLogFile();
+    void createLogFile();
 
-        private:
-            QString mPath;
-            quint32 mMaxSize;
-            QScopedPointer< QFile > mFile;
-            QScopedPointer< QTextStream > mStream;
-        };
-    }
-}
+private:
+    QString mPath;
+    quint32 mMaxSize;
+    QScopedPointer<QFile> mFile;
+    QScopedPointer<QTextStream> mStream;
+};
+} // namespace log
+} // namespace hb
 
 #endif

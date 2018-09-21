@@ -19,34 +19,29 @@
 #include <HbServerConnectionPool.h>
 #include <config/peer/HbGeneralServerConfig.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbServer final : public HbPeer
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbServer )
-        public:
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbServer final : public HbPeer {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbServer)
+public:
+    HbServer() = delete;
+    HbServer(const HbGeneralServerConfig& config);
+    virtual ~HbServer();
 
-            HbServer() = delete;
-            HbServer( const HbGeneralServerConfig & config );
-            virtual ~HbServer();
+    networkuid joinTcpServer(HbTcpServerConfig& config, bool main);
+    virtual bool leave() override;
 
-            networkuid joinTcpServer( HbTcpServerConfig & config, bool main );
-            virtual bool leave() override;
+signals:
+    void serverStatusChanged(networkuid server_uid, HbNetworkProtocol::ServerStatus status);
 
-        signals:
-            void serverStatusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status );
-
-        private:
-            HbServerConnectionPool mConnectionPool;
-
-        };
-    }
-}
+private:
+    HbServerConnectionPool mConnectionPool;
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBSERVER_H

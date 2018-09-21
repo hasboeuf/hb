@@ -16,26 +16,23 @@
 // Local
 #include <HbNetwork.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL IHbSocketListener
-        {
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL IHbSocketListener {
+public
+    callbacks : virtual void onSocketConnected(networkuid socket_uid) = 0;
+    virtual void onSocketDisconnected(networkuid socket_uid) = 0;
 
-        public callbacks:
-            virtual void onSocketConnected   ( networkuid socket_uid ) = 0;
-            virtual void onSocketDisconnected( networkuid socket_uid ) = 0;
+protected:
+    virtual ~IHbSocketListener() {
+    } //!< \todo defaulted linux-g++ issue
+};
 
-        protected:
-            virtual ~IHbSocketListener(){} //!< \todo defaulted linux-g++ issue
-        };
-
-    }
-}
+} // namespace network
+} // namespace hb
 
 using hb::network::IHbSocketListener;
 

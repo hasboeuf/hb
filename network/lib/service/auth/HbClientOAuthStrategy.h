@@ -15,41 +15,37 @@
 #include <HbO2Client.h>
 // Local
 #include <HbNetwork.h>
-#include <service/auth/HbClientAuthStrategy.h>
 #include <contract/HbNetworkProtocol.h>
 #include <contract/auth/HbAuthRequestContract.h> // Template.
+#include <service/auth/HbClientAuthStrategy.h>
 
-namespace hb
-{
-    using namespace link;
+namespace hb {
+using namespace link;
 
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbClientOAuthStrategy : public HbClientAuthStrategy
-        {
-            Q_OBJECT
-        public:
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbClientOAuthStrategy : public HbClientAuthStrategy {
+    Q_OBJECT
+public:
+    HbClientOAuthStrategy() = default;
+    virtual ~HbClientOAuthStrategy();
 
-            HbClientOAuthStrategy() = default;
-            virtual ~HbClientOAuthStrategy();
+    virtual void reset() override;
 
-            virtual void reset() override;
+    virtual void setConfig(const HbO2ClientConfig& config);
 
-            virtual void setConfig( const HbO2ClientConfig & config );
+public slots:
+    void onLinkSucceed();
+    void onLinkFailed();
 
-        public slots:
-            void onLinkSucceed();
-            void onLinkFailed();
-
-        protected:
-            QHash< HbO2Client *, networkuid > mPendingCodes;
-            HbO2ClientConfig mConfig;
-        };
-    }
-}
+protected:
+    QHash<HbO2Client*, networkuid> mPendingCodes;
+    HbO2ClientConfig mConfig;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbClientOAuthStrategy;
 

@@ -16,38 +16,32 @@
 #include <contract/HbNetworkContract.h>
 // Local
 
+namespace hb {
+namespace networkexample {
 
-namespace hb
-{
-    namespace networkexample
-    {
+class ResponseSumContract : public HbNetworkContract {
+public:
+    ResponseSumContract();
+    virtual ~ResponseSumContract() = default;
+    ResponseSumContract(const ResponseSumContract& source);
+    ResponseSumContract& operator=(const ResponseSumContract& source);
 
-        class ResponseSumContract : public HbNetworkContract
-        {
+    virtual QString toString() const;
 
-        public:
+    virtual bool read(QDataStream& stream);
+    virtual bool write(QDataStream& stream) const;
 
-            ResponseSumContract();
-            virtual ~ResponseSumContract( ) = default;
-            ResponseSumContract( const ResponseSumContract & source );
-            ResponseSumContract & operator=(const ResponseSumContract & source);
+    virtual qint32 result() const final;
+    virtual void setResult(qint32 result) final;
 
-            virtual QString toString() const;
+protected:
+    virtual ResponseSumContract* create() const override;
 
-            virtual bool read ( QDataStream & stream );
-            virtual bool write( QDataStream & stream ) const;
-
-            virtual qint32 result() const final;
-            virtual void setResult( qint32 result ) final;
-
-        protected:
-            virtual ResponseSumContract * create() const override;
-
-        protected:
-            qint32 mResult;
-        };
-    }
-}
+protected:
+    qint32 mResult;
+};
+} // namespace networkexample
+} // namespace hb
 
 using hb::networkexample::ResponseSumContract;
 

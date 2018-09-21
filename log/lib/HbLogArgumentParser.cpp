@@ -11,7 +11,7 @@ static constexpr char INPUT_LOCAL_PATTERN[] = "--hblog-input-local:(\\w+)";
 static constexpr char INPUT_TCP_PATTERN[] = "--hblog-input-tcp:(\\d+)";
 static constexpr char INPUT_UDP_PATTERN[] = "--hblog-input-udp:(\\d+)";
 
-void HbLogArgumentParser::setInput( const QString & input ) {
+void HbLogArgumentParser::setInput(const QString& input) {
     mInput = input;
     mFilePath.clear();
     mFileMaxSize = 0;
@@ -26,100 +26,100 @@ bool HbLogArgumentParser::checkIsConsoleOutput() {
 
 bool HbLogArgumentParser::checkIsFileOutput() {
     QRegExp rx(OUTPUT_FILE_PATTERN);
-    if ( rx.indexIn( mInput ) < 0) {
+    if (rx.indexIn(mInput) < 0) {
         return false;
     }
-    if ( rx.captureCount() != 2 ) {
+    if (rx.captureCount() != 2) {
         return false;
     }
 
     bool ok = true;
-    mFilePath = rx.cap( 1 );
-    mFileMaxSize = rx.cap( 2 ).toInt( &ok );
+    mFilePath = rx.cap(1);
+    mFileMaxSize = rx.cap(2).toInt(&ok);
     return ok;
 }
 
 bool HbLogArgumentParser::checkIsLocalOutput() {
     QRegExp rx(OUTPUT_LOCAL_PATTERN);
-    if ( rx.indexIn( mInput ) < 0) {
+    if (rx.indexIn(mInput) < 0) {
         return false;
     }
-    if ( rx.captureCount() != 1 ) {
+    if (rx.captureCount() != 1) {
         return false;
     }
 
-    mServerName = rx.cap( 1 );
+    mServerName = rx.cap(1);
     return true;
 }
 
 bool HbLogArgumentParser::checkIsTcpSocketOutput() {
     QRegExp rx(OUTPUT_TCP_PATTERN);
-    if ( rx.indexIn( mInput ) < 0) {
+    if (rx.indexIn(mInput) < 0) {
         return false;
     }
-    if ( rx.captureCount() != 2 ) {
+    if (rx.captureCount() != 2) {
         return false;
     }
 
     bool ok = true;
-    mIp = rx.cap( 1 );
-    mPort = rx.cap( 2 ).toInt( &ok );
+    mIp = rx.cap(1);
+    mPort = rx.cap(2).toInt(&ok);
     return ok;
 }
 
 bool HbLogArgumentParser::checkIsUdpSocketOutput() {
     QRegExp rx(OUTPUT_UDP_PATTERN);
-    if ( rx.indexIn( mInput ) < 0) {
+    if (rx.indexIn(mInput) < 0) {
         return false;
     }
-    if ( rx.captureCount() != 2 ) {
+    if (rx.captureCount() != 2) {
         return false;
     }
 
     bool ok = true;
-    mIp = rx.cap( 1 );
-    mPort = rx.cap( 2 ).toInt( &ok );
+    mIp = rx.cap(1);
+    mPort = rx.cap(2).toInt(&ok);
     return ok;
 }
 
 bool HbLogArgumentParser::checkIsLocalInput() {
     QRegExp rx(INPUT_LOCAL_PATTERN);
-    if ( rx.indexIn( mInput ) < 0 ) {
+    if (rx.indexIn(mInput) < 0) {
         return false;
     }
-    if ( rx.captureCount() != 1 ) {
+    if (rx.captureCount() != 1) {
         return false;
     }
 
-    mServerName = rx.cap( 1 );
+    mServerName = rx.cap(1);
     return true;
 }
 
 bool HbLogArgumentParser::checkIsTcpSocketInput() {
     QRegExp rx(INPUT_TCP_PATTERN);
-    if ( rx.indexIn( mInput ) < 0) {
+    if (rx.indexIn(mInput) < 0) {
         return false;
     }
-    if ( rx.captureCount() != 1 ) {
+    if (rx.captureCount() != 1) {
         return false;
     }
 
     bool ok = true;
-    mPort = rx.cap( 1 ).toInt( &ok );
+    mPort = rx.cap(1).toInt(&ok);
     return ok;
 }
 
 bool HbLogArgumentParser::checkIsUdpSocketInput() {
     QRegExp rx(INPUT_UDP_PATTERN);
-    if ( rx.indexIn( mInput ) < 0) {
+    if (rx.indexIn(mInput) < 0) {
         return false;
     }
-    if ( rx.captureCount() != 1 ) {
+    if (rx.captureCount() != 1) {
         return false;
     }
 
     bool ok = true;
-    mPort = rx.cap( 1 ).toInt( &ok );
+    mPort = rx.cap(1).toInt(&ok);
     return ok;
 }
 

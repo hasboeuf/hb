@@ -22,50 +22,45 @@
 #include <HbNetwork.h>
 #include <contract/HbNetworkContract.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbAuthStatusContract final : public HbNetworkContract
-        {
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbAuthStatusContract final : public HbNetworkContract {
+public:
+    HbAuthStatusContract();
+    virtual ~HbAuthStatusContract() = default;
+    HbAuthStatusContract(const HbAuthStatusContract& source);
+    HbAuthStatusContract& operator=(const HbAuthStatusContract& source);
 
-        public:
+    virtual HbAuthStatusContract* create() const override;
 
-            HbAuthStatusContract();
-            virtual ~HbAuthStatusContract() = default;
-            HbAuthStatusContract( const HbAuthStatusContract & source );
-            HbAuthStatusContract & operator=( const HbAuthStatusContract & source );
+    virtual bool read(QDataStream& stream) override;
+    virtual bool write(QDataStream& stream) const override;
 
-            virtual HbAuthStatusContract * create() const override;
+    void setUserInfo(const HbNetworkUserInfo& user_info);
+    void setStatus(HbNetworkProtocol::AuthStatus status);
+    void setDescription(const QString& description);
+    void setTryNumber(quint8 try_number);
+    void setMaxTries(quint8 max_tries);
 
-            virtual bool read ( QDataStream & stream ) override;
-            virtual bool write( QDataStream & stream ) const override;
+    const HbNetworkUserInfo& userInfo() const;
+    HbNetworkUserInfo& userInfo();
+    HbNetworkProtocol::AuthStatus status() const;
+    const QString& description() const;
+    quint8 tryNumber() const;
+    quint8 maxTries() const;
 
-            void setUserInfo( const HbNetworkUserInfo & user_info );
-            void setStatus   ( HbNetworkProtocol::AuthStatus status );
-            void setDescription( const QString & description );
-            void setTryNumber( quint8 try_number );
-            void setMaxTries ( quint8 max_tries );
-
-            const HbNetworkUserInfo & userInfo() const;
-            HbNetworkUserInfo & userInfo();
-            HbNetworkProtocol::AuthStatus status() const;
-            const QString & description() const;
-            quint8 tryNumber() const;
-            quint8 maxTries () const;
-
-        private:
-            HbNetworkUserInfo mUserInfo;
-            HbNetworkProtocol::AuthStatus mStatus;
-            QString mDescription;
-            quint8 mTryNumber;
-            quint8 mMaxTries;
-        };
-    }
-}
+private:
+    HbNetworkUserInfo mUserInfo;
+    HbNetworkProtocol::AuthStatus mStatus;
+    QString mDescription;
+    quint8 mTryNumber;
+    quint8 mMaxTries;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbAuthStatusContract;
 

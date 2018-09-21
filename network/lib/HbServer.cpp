@@ -9,28 +9,23 @@
 
 using namespace hb::network;
 
-HbServer::HbServer(const HbGeneralServerConfig & config ) :
-    HbPeer( config ), mConnectionPool( config )
-{
-    if( isReady() )
-    {
-        connect( &mConnectionPool, &HbServerConnectionPool::statusChanged, this, &HbServer::serverStatusChanged );
+HbServer::HbServer(const HbGeneralServerConfig& config) : HbPeer(config), mConnectionPool(config) {
+    if (isReady()) {
+        connect(&mConnectionPool, &HbServerConnectionPool::statusChanged, this, &HbServer::serverStatusChanged);
     }
 }
 
-HbServer::~HbServer()
-{
-
+HbServer::~HbServer() {
 }
 
-networkuid HbServer::joinTcpServer( HbTcpServerConfig & config , bool main )
-{
-    if( !isReady() ) return false;
-    return mConnectionPool.joinTcpServer( config, main );
+networkuid HbServer::joinTcpServer(HbTcpServerConfig& config, bool main) {
+    if (!isReady())
+        return false;
+    return mConnectionPool.joinTcpServer(config, main);
 }
 
-bool HbServer::leave()
-{
-    if( !isReady() ) return false;
+bool HbServer::leave() {
+    if (!isReady())
+        return false;
     return mConnectionPool.leave();
 }

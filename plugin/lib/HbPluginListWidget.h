@@ -12,81 +12,66 @@
 /*! \file HbPluginListWidget.h */
 
 // Qt
-#include <QtGui/QStandardItemModel>
-#include <QtCore/QStringList>
 #include <QtCore/QSortFilterProxyModel>
+#include <QtCore/QStringList>
+#include <QtGui/QStandardItemModel>
 // Local
-#include <ui_HbPluginListWidget.h>
-#include <HbPluginInfos.h>
 #include <HbPlugin.h>
+#include <HbPluginInfos.h>
+#include <ui_HbPluginListWidget.h>
 
-namespace hb
-{
-    namespace plugin
-    {
-        /*!
-         * HbPluginListWidget is a widget to display HbPluginInfos in a convenient way.
-         */
-        class HB_PLUGIN_DECL HbPluginListWidget : public QWidget, private Ui::HbPluginListWidget
-        {
-            Q_OBJECT
+namespace hb {
+namespace plugin {
+/*!
+ * HbPluginListWidget is a widget to display HbPluginInfos in a convenient way.
+ */
+class HB_PLUGIN_DECL HbPluginListWidget : public QWidget, private Ui::HbPluginListWidget {
+    Q_OBJECT
 
-        public:
-            enum ColumnId
-            {
-                COLUMN_NAME = 0,
-                COLUMN_LOAD,
-                COLUMN_VERSION,
-                COLUMN_AUTHOR,
-                COLUMN_REQUIRED,
-                COLUMN_OPTIONAL
-            };
+public:
+    enum ColumnId { COLUMN_NAME = 0, COLUMN_LOAD, COLUMN_VERSION, COLUMN_AUTHOR, COLUMN_REQUIRED, COLUMN_OPTIONAL };
 
-            enum RoleId
-            {
-                ROLE_PLUGIN_NAME = Qt::UserRole,
-                ROLE_PLUGIN_CHECKSTATE
-            };
+    enum RoleId { ROLE_PLUGIN_NAME = Qt::UserRole, ROLE_PLUGIN_CHECKSTATE };
 
-            explicit HbPluginListWidget( QWidget * parent = nullptr );
+    explicit HbPluginListWidget(QWidget* parent = nullptr);
 
-        public slots:
-            /*!
-             * Fired when a plugin has changed its state.
-             * From HbPluginPlatform.
-             */
-            void onPluginStateChanged( const HbPluginInfos & plugin_infos );
+public slots:
+    /*!
+     * Fired when a plugin has changed its state.
+     * From HbPluginPlatform.
+     */
+    void onPluginStateChanged(const HbPluginInfos& plugin_infos);
 
-            /*!
-             * Fired when a QStandardItemModel changed.
-             * Internal.
-             * \param item_load Pointer of the item.
-             */
-            void onPluginChecked( QStandardItem * item_load );
+    /*!
+     * Fired when a QStandardItemModel changed.
+     * Internal.
+     * \param item_load Pointer of the item.
+     */
+    void onPluginChecked(QStandardItem* item_load);
 
-        signals:
-            /*!
-             * Triggered when a plugin item got checked.
-             * \param Plugin name.
-             */
-            void loadPluginRequest  ( const QString & plugin_name );
-            /*!
-             * Triggered when a plugin item got unchecked.
-             * \param Plugin name.
-             */
-            void unloadPluginRequest( const QString & plugin_name );
+signals:
+    /*!
+     * Triggered when a plugin item got checked.
+     * \param Plugin name.
+     */
+    void loadPluginRequest(const QString& plugin_name);
+    /*!
+     * Triggered when a plugin item got unchecked.
+     * \param Plugin name.
+     */
+    void unloadPluginRequest(const QString& plugin_name);
 
-        private:
-            QStandardItem * getLoadItem( const QString & plugin_name );
+private:
+    QStandardItem* getLoadItem(const QString& plugin_name);
 
-        private:
-            QStringList           mLabels;
-            QStandardItemModel    mModel;
-            QSortFilterProxyModel mProxy;
+private:
+    QStringList mLabels;
+    QStandardItemModel mModel;
+    QSortFilterProxyModel mProxy;
 
-            QHash< QString, QStandardItem * > mPlugins;
-        };
-    }
-}
+    QHash<QString, QStandardItem*> mPlugins;
+};
+} // namespace plugin
+} // namespace hb
 
 #endif // HBPLUGINLISTWIDGET_H

@@ -16,32 +16,29 @@
 // Hb
 #include <HbLog.h>
 
-namespace hb
-{
-    namespace log
-    {
+namespace hb {
+namespace log {
 
-        class HbLogMessage;
+class HbLogMessage;
 
-        /*!
-         * HbLogGuiNotifier is needed to add a gui output.
-         * It is the middleman between HbLog and user class.
-         * TODOC.
-         */
-        class HB_LOG_DECL HbLogGuiNotifier final : public QObject
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbLogGuiNotifier )
-            friend class HbLogGuiOutput;
+/*!
+ * HbLogGuiNotifier is needed to add a gui output.
+ * It is the middleman between HbLog and user class.
+ * TODOC.
+ */
+class HB_LOG_DECL HbLogGuiNotifier final : public QObject {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbLogGuiNotifier)
+    friend class HbLogGuiOutput;
 
-        public:
-            HbLogGuiNotifier();
-            virtual ~HbLogGuiNotifier() = default;
+public:
+    HbLogGuiNotifier();
+    virtual ~HbLogGuiNotifier() = default;
 
-        signals:
-            void newLogMessage( const HbLogMessagePtr & message );
-        };
-    }
-}
+signals:
+    void newLogMessage(const HbLogMessagePtr& message);
+};
+} // namespace log
+} // namespace hb
 
 #endif // HBLOGGUINOTIFIER_H

@@ -18,35 +18,30 @@
 #include <HbNetwork.h>
 #include <config/service/auth/HbServiceAuthConfig.h>
 
-namespace hb
-{
-    namespace network
-    {
-        class HB_NETWORK_DECL HbServiceAuthClientConfig : public HbServiceAuthConfig
-        {
+namespace hb {
+namespace network {
+class HB_NETWORK_DECL HbServiceAuthClientConfig : public HbServiceAuthConfig {
+public:
+    HbServiceAuthClientConfig();
+    HbServiceAuthClientConfig(const HbServiceAuthClientConfig& config);
+    virtual ~HbServiceAuthClientConfig() = default;
+    virtual HbServiceAuthClientConfig& operator=(const HbServiceAuthClientConfig& config);
 
-        public:
-            HbServiceAuthClientConfig();
-            HbServiceAuthClientConfig( const HbServiceAuthClientConfig & config );
-            virtual ~HbServiceAuthClientConfig() = default;
-            virtual HbServiceAuthClientConfig & operator =( const HbServiceAuthClientConfig & config );
+    virtual bool isValid() const;
 
-            virtual bool isValid() const;
+    void enableFacebookAuth(const hb::link::HbO2ClientConfig& config);
+    const hb::link::HbO2ClientConfig& facebookAuthConfig() const;
 
-            void enableFacebookAuth( const hb::link::HbO2ClientConfig & config );
-            const hb::link::HbO2ClientConfig & facebookAuthConfig() const;
+    void enableGoogleAuth(const hb::link::HbO2ClientConfig& config);
+    const hb::link::HbO2ClientConfig& googleAuthConfig() const;
 
-            void enableGoogleAuth( const hb::link::HbO2ClientConfig & config );
-            const hb::link::HbO2ClientConfig & googleAuthConfig() const;
-
-        protected:
-
-        private:
-            hb::link::HbO2ClientConfig mFacebookAuthConfig;
-            hb::link::HbO2ClientConfig mGoogleAuthConfig;
-        };
-    }
-}
+protected:
+private:
+    hb::link::HbO2ClientConfig mFacebookAuthConfig;
+    hb::link::HbO2ClientConfig mGoogleAuthConfig;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbServiceAuthClientConfig;
 

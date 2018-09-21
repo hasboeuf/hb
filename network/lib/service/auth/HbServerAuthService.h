@@ -14,66 +14,63 @@
 // Qt
 // Hb
 // Local
-#include <service/auth/HbAuthService.h>
 #include <config/service/auth/HbServiceAuthServerConfig.h>
+#include <service/auth/HbAuthService.h>
 
 class QTimerEvent;
 
-namespace hb
-{
-    namespace network
-    {
+namespace hb {
+namespace network {
 
-        class HbServerAuthStrategy;
-        class HbAuthStatusContract;
+class HbServerAuthStrategy;
+class HbAuthStatusContract;
 
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbServerAuthService : public HbAuthService
-        {
-            Q_OBJECT
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbServerAuthService : public HbAuthService {
+    Q_OBJECT
 
-        public:
+public:
+    HbServerAuthService();
+    virtual ~HbServerAuthService();
 
-            HbServerAuthService();
-            virtual ~HbServerAuthService();
+    virtual void reset() override;
+    const HbServiceAuthServerConfig& config() const;
+    void setConfig(const HbServiceAuthServerConfig& config);
 
-            virtual void reset() override;
-            const HbServiceAuthServerConfig & config() const;
-            void setConfig( const HbServiceAuthServerConfig & config );
+    void addStrategy(HbServerAuthStrategy* strategy);
 
-            void addStrategy( HbServerAuthStrategy * strategy );
+private:
+    void timerEvent(QTimerEvent* event);
+    bool checkSocket(networkuid socket_uid);
+    void addSocket(networkuid socket_uid);
+    void delSocket(networkuid socket_uid, bool delete_responses = true);
+    void kickSocket(networkuid socket_uid, HbNetworkProtocol::KickCode reason, const QString& description = QString());
 
-        private:
-            void timerEvent( QTimerEvent * event );
-            bool checkSocket( networkuid socket_uid );
-            void addSocket  ( networkuid socket_uid );
-            void delSocket  ( networkuid socket_uid, bool delete_responses = true );
-            void kickSocket ( networkuid socket_uid, HbNetworkProtocol::KickCode reason, const QString & description = QString() );
+public
+    callbacks :
+        // From HbConnectionPool.
+        virtual void
+        onContractReceived(const HbNetworkContract* contract) override;
+    virtual void onSocketConnected(networkuid socket_uid) override;
+    virtual void onSocketDisconnected(networkuid socket_uid) override;
+    // From HbServerAuthStrategy.
+    void onAuthSucceed(networkuid socket_uid, const HbNetworkUserInfo& user_info);
+    void onAuthFailed(networkuid socket_uid, HbNetworkProtocol::AuthStatus, const QString& description);
 
-        public callbacks:
-            // From HbConnectionPool.
-            virtual void onContractReceived( const HbNetworkContract * contract ) override;
-            virtual void onSocketConnected   ( networkuid socket_uid ) override;
-            virtual void onSocketDisconnected( networkuid socket_uid ) override;
-            // From HbServerAuthStrategy.
-            void onAuthSucceed( networkuid socket_uid, const HbNetworkUserInfo & user_info );
-            void onAuthFailed ( networkuid socket_uid, HbNetworkProtocol::AuthStatus, const QString & description );
+private:
+    HbServiceAuthServerConfig mConfig;
+    QHash<authstgy, HbServerAuthStrategy*> mStrategies;
+    qint32 mTimerId;
 
-        private:
-            HbServiceAuthServerConfig mConfig;
-            QHash< authstgy, HbServerAuthStrategy * > mStrategies;
-            qint32 mTimerId;
-
-
-            // InOut.
-            QSet< networkuid > mPendingSocket;
-            QHash< networkuid, quint8 > mAuthTries;
-            QHash< networkuid, quint8 > mAuthTimeout;
-            QHash< networkuid, HbAuthStatusContract * > mResponses;
-        };
-    }
-}
+    // InOut.
+    QSet<networkuid> mPendingSocket;
+    QHash<networkuid, quint8> mAuthTries;
+    QHash<networkuid, quint8> mAuthTimeout;
+    QHash<networkuid, HbAuthStatusContract*> mResponses;
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBSERVERAUTHSERVICE_H

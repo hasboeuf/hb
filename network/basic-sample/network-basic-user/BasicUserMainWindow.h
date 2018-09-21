@@ -7,35 +7,31 @@
 // Local
 #include <ui_BasicUserMainWindow.h>
 
-namespace hb
-{
-    namespace networkexample
-    {
+namespace hb {
+namespace networkexample {
 
-        class BasicUserMainWindow : public QMainWindow, private Ui::BasicUserMainWindow
-        {
-            Q_OBJECT
+class BasicUserMainWindow : public QMainWindow, private Ui::BasicUserMainWindow {
+    Q_OBJECT
 
-        public:
-            explicit BasicUserMainWindow( QWidget *parent = nullptr );
-            virtual ~BasicUserMainWindow() = default;
+public:
+    explicit BasicUserMainWindow(QWidget* parent = nullptr);
+    virtual ~BasicUserMainWindow() = default;
 
-        private:
-            hb::network::HbTcpClient mTcpClient;
+private:
+    hb::network::HbTcpClient mTcpClient;
 
-        private slots:
-            void onStartClicked();
-            void onSendContractClicked();
-            void onStopClicked();
+private slots:
+    void onStartClicked();
+    void onSendContractClicked();
+    void onStopClicked();
 
-            void onClientConnected       ( networkuid client_uid );
-            void onClientDisconnected    ( networkuid client_uid );
-            void onClientContractReceived( networkuid client_uid, const HbNetworkContract * contract );
+    void onClientConnected(networkuid client_uid);
+    void onClientDisconnected(networkuid client_uid);
+    void onClientContractReceived(networkuid client_uid, const HbNetworkContract* contract);
 
-        signals:
-
-        };
-    }
-}
+signals:
+};
+} // namespace networkexample
+} // namespace hb
 
 #endif // BASICNETWORKUSERMAINWINDOW_H

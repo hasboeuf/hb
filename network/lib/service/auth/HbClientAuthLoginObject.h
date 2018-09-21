@@ -16,33 +16,28 @@
 // Local
 #include <service/auth/HbAuthService.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbClientAuthLoginObject
-        {
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbClientAuthLoginObject {
+public:
+    HbClientAuthLoginObject();
+    virtual ~HbClientAuthLoginObject() = default;
 
-        public:
+    virtual void setStrategy(authstgy strategy) final;
+    virtual void setSocketUid(networkuid socket_uid) final;
 
-            HbClientAuthLoginObject();
-            virtual ~HbClientAuthLoginObject() = default;
+    virtual authstgy strategy() const final;
+    virtual networkuid socketUid() const final;
 
-            virtual void setStrategy ( authstgy strategy ) final;
-            virtual void setSocketUid( networkuid socket_uid ) final;
-
-            virtual authstgy   strategy() const final;
-            virtual networkuid socketUid() const final;
-
-        protected:
-            authstgy mStrategy;
-            networkuid mSocketUid;
-        };
-    }
-}
+protected:
+    authstgy mStrategy;
+    networkuid mSocketUid;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbClientAuthLoginObject;
 

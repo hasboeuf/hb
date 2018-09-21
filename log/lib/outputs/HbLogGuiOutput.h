@@ -16,33 +16,30 @@
 // Hb
 #include <outputs/HbLogAbstractOutput.h>
 
-namespace hb
-{
-    namespace log
-    {
+namespace hb {
+namespace log {
 
-        class HbLogGuiNotifier;
+class HbLogGuiNotifier;
 
-        /*! 
-        * \brief The %HbLogGuiOutput class defines a GUI output.
-        */
-        class HbLogGuiOutput final : public HbLogAbstractOutput
-        {
-            Q_DISABLE_COPY( HbLogGuiOutput )
+/*!
+ * \brief The %HbLogGuiOutput class defines a GUI output.
+ */
+class HbLogGuiOutput final : public HbLogAbstractOutput {
+    Q_DISABLE_COPY(HbLogGuiOutput)
 
-        public:
-            HbLogGuiOutput() = delete;
-            HbLogGuiOutput( HbLogGuiNotifier * notifier, QObject * parent = nullptr );
-            virtual ~HbLogGuiOutput();
+public:
+    HbLogGuiOutput() = delete;
+    HbLogGuiOutput(HbLogGuiNotifier* notifier, QObject* parent = nullptr);
+    virtual ~HbLogGuiOutput();
 
-        protected:
-            void init() override;
-            void processMessage( const HbLogMessagePtr & message ) override;
+protected:
+    void init() override;
+    void processMessage(const HbLogMessagePtr& message) override;
 
-        private:
-            QScopedPointer< HbLogGuiNotifier > mNotifier;
-        };
-    }
-}
+private:
+    QScopedPointer<HbLogGuiNotifier> mNotifier;
+};
+} // namespace log
+} // namespace hb
 
 #endif

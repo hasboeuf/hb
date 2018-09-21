@@ -10,45 +10,40 @@
 // Local
 #include <ui_ServerMainWindow.h>
 
-namespace hb
-{
-    namespace network
-    {
-        class HbServer;
-    }
-
-    namespace networkexample
-    {
-        class ServerSumChannel;
-        class ServerChatChannel;
-
-        class ServerMainWindow : public QMainWindow, private Ui::ServerMainWindow
-        {
-            Q_OBJECT
-
-        public:
-            explicit ServerMainWindow( QWidget * parent = nullptr );
-            virtual ~ServerMainWindow();
-
-            static QString msClientId;     // Shared by facebook and google => makes oauth exclusif in that sample.
-            static QString msClientSecret; // Shared by facebook and google => makes oauth exclusif in that sample.
-
-        public slots:
-            void onServerStatusChanged( networkuid server_uid, HbNetworkProtocol::ServerStatus status );
-
-        private slots:
-            void onStartClicked();
-            void onStopClicked ();
-
-        private:
-            hb::network::HbServer * mpHbServer;
-            ServerSumChannel      * mpSumChannel;
-            ServerChatChannel     * mpChatChannel;
-
-        signals:
-
-        };
-    }
+namespace hb {
+namespace network {
+class HbServer;
 }
+
+namespace networkexample {
+class ServerSumChannel;
+class ServerChatChannel;
+
+class ServerMainWindow : public QMainWindow, private Ui::ServerMainWindow {
+    Q_OBJECT
+
+public:
+    explicit ServerMainWindow(QWidget* parent = nullptr);
+    virtual ~ServerMainWindow();
+
+    static QString msClientId;     // Shared by facebook and google => makes oauth exclusif in that sample.
+    static QString msClientSecret; // Shared by facebook and google => makes oauth exclusif in that sample.
+
+public slots:
+    void onServerStatusChanged(networkuid server_uid, HbNetworkProtocol::ServerStatus status);
+
+private slots:
+    void onStartClicked();
+    void onStopClicked();
+
+private:
+    hb::network::HbServer* mpHbServer;
+    ServerSumChannel* mpSumChannel;
+    ServerChatChannel* mpChatChannel;
+
+signals:
+};
+} // namespace networkexample
+} // namespace hb
 
 #endif // SERVERMAINWINDOW_H

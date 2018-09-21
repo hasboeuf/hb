@@ -12,111 +12,106 @@
 /*! \file HbPluginPlatform.h */
 
 // Qt
-#include <QtCore/QObject>
 #include <QtCore/QHash>
+#include <QtCore/QObject>
 // Local
 #include <HbPlugin.h>
-#include <HbPluginManager.h>
 #include <HbPluginInfos.h>
+#include <HbPluginManager.h>
 
+namespace hb {
+namespace plugin {
+class IHbPlugin;
+class HbPluginService;
 
-namespace hb
-{
-    namespace plugin
-    {
-        class IHbPlugin;
-        class HbPluginService;
+/*!
+ * HbPluginPlatform manages services and handles plugin manager.
+ */
+class HB_PLUGIN_DECL HbPluginPlatform : public QObject {
+    Q_OBJECT
 
-        /*!
-         * HbPluginPlatform manages services and handles plugin manager.
-         */
-        class HB_PLUGIN_DECL HbPluginPlatform : public QObject
-        {
-            Q_OBJECT
+public:
+    explicit HbPluginPlatform();
 
-        public:
+    /*!
+     * Load plugins contained in a folder.
+     * The folder is scanned and all library files are loaded.
+     * \param plugin_folder Folder to scan.
+     */
+    void loadPlugins(const QString& plugin_folder);
 
-            explicit HbPluginPlatform();
+    /*!
+     * Unload all currently loaded plugins.
+     */
+    void unloadPlugins();
 
-            /*!
-             * Load plugins contained in a folder.
-             * The folder is scanned and all library files are loaded.
-             * \param plugin_folder Folder to scan.
-             */
-            void loadPlugins  ( const QString & plugin_folder );
+    /*!
+     * Return previously scanned plugins infos.
+     * \return Plugin infos list.
+     */
+    QList<HbPluginInfos> pluginInfoList();
 
-            /*!
-             * Unload all currently loaded plugins.
-             */
-            void unloadPlugins();
+    /*!
+     * Get a service.
+     * \param name Service name.
+     * \return Requested service or nullptr if not found.
+     */
+    virtual HbPluginService* requestService(const QString& name) const;
 
-            /*!
-             * Return previously scanned plugins infos.
-             * \return Plugin infos list.
-             */
-            QList< HbPluginInfos > pluginInfoList();
+    /*!
+     * Get a plugin.
+     * \param name Plugin name.
+     * \return Requested plugin or nullptr if not found.
+     */
+    virtual const IHbPlugin* requestPlugin(const QString& name) const;
 
-            /*!
-             * Get a service.
-             * \param name Service name.
-             * \return Requested service or nullptr if not found.
-             */
-            virtual HbPluginService * requestService( const QString & name ) const;
+    /*!
+     * Register a service.
+     * \param service Service to register.
+     */
+    virtual void registerService(HbPluginService* service);
 
-            /*!
-             * Get a plugin.
-             * \param name Plugin name.
-             * \return Requested plugin or nullptr if not found.
-             */
-            virtual const IHbPlugin * requestPlugin ( const QString & name ) const;
+    /*!
+     * Check if a service is registered.
+     * \param service_name Service name.
+     * \return Version of the service or "" if not registered.
+     */
+    virtual QString isServiceRegistered(const QString& service_name) const;
 
-            /*!
-             * Register a service.
-             * \param service Service to register.
-             */
-            virtual void registerService( HbPluginService * service );
+signals:
+    /*!
+     * Triggered when a plugin has changed its state.
+     * To GUI.
+     */
+    void pluginStateChanged(const HbPluginInfos& plugin_infos);
 
-            /*!
-             * Check if a service is registered.
-             * \param service_name Service name.
-             * \return Version of the service or "" if not registered.
-             */
-            virtual QString isServiceRegistered( const QString & service_name ) const;
+public slots:
+    /*!
+     * Fired when a plugin has changed its state.
+     * From HbPluginManager.
+     */
+    void onPluginStateChanged(const HbPluginInfos& plugin_infos);
 
-        signals:
-            /*!
-             * Triggered when a plugin has changed its state.
-             * To GUI.
-             */
-            void pluginStateChanged( const HbPluginInfos & plugin_infos );
+    /*!
+     * Fired when user requests to load a plugin.
+     * From GUI.
+     * \param plugin_name Plugin name.
+     */
+    void onLoadPluginRequest(const QString& plugin_name);
 
-        public slots:
-            /*!
-             * Fired when a plugin has changed its state.
-             * From HbPluginManager.
-             */
-            void onPluginStateChanged( const HbPluginInfos & plugin_infos );
+    /*!
+     * Fired when user requests to unload a plugin.
+     * From GUI.
+     * \param plugin_name Plugin name.
+     */
+    void onUnloadPluginRequest(const QString& plugin_name);
 
-            /*!
-             * Fired when user requests to load a plugin.
-             * From GUI.
-             * \param plugin_name Plugin name.
-             */
-            void onLoadPluginRequest  ( const QString & plugin_name );
-
-            /*!
-             * Fired when user requests to unload a plugin.
-             * From GUI.
-             * \param plugin_name Plugin name.
-             */
-            void onUnloadPluginRequest( const QString & plugin_name );
-
-        protected:
-            bool                             mPluginLoaded;
-            HbPluginManager                  mPluginManager;
-            QHash<QString, HbPluginService*> mServices;
-        };
-    }
-}
+protected:
+    bool mPluginLoaded;
+    HbPluginManager mPluginManager;
+    QHash<QString, HbPluginService*> mServices;
+};
+} // namespace plugin
+} // namespace hb
 
 #endif // HBPLUGINPLATFORM_H

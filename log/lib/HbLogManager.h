@@ -20,43 +20,38 @@
 
 class QTimerEvent;
 
-namespace hb
-{
-    namespace log
-    {
-        class HbLoggerInputs;
-        class HbLoggerOutputs;
-        class HbLoggerPool;
-        class HbLogMessage;
+namespace hb {
+namespace log {
+class HbLoggerInputs;
+class HbLoggerOutputs;
+class HbLoggerPool;
+class HbLogMessage;
 
-        /*!
-        * Internal class, TODOC.
-        */
-        class HbLogManager final : public QObject, public HbLogger
-        {
-            Q_DISABLE_COPY( HbLogManager )
+/*!
+ * Internal class, TODOC.
+ */
+class HbLogManager final : public QObject, public HbLogger {
+    Q_DISABLE_COPY(HbLogManager)
 
+public:
+    HbLogManager(HbLoggerPool* pool);
+    virtual ~HbLogManager();
 
-        public:
+protected:
+    void timerEvent(QTimerEvent* event);
 
-            HbLogManager( HbLoggerPool * pool );
-            virtual ~HbLogManager();
+private:
+    void tryEnqueueMessage();
+    void enqueueMessage(Level level, const HbLogContext& context, const QString& text);
+    void dequeuePendingMessages();
 
-        protected:
-            void timerEvent( QTimerEvent * event );
+private:
+    QPointer<HbLoggerPool> mPool;
 
-        private:
-            void tryEnqueueMessage();
-            void enqueueMessage(Level level, const HbLogContext & context, const QString & text );
-            void dequeuePendingMessages();
-
-        private:
-            QPointer< HbLoggerPool > mPool;
-
-            QList< HbLogMessage * > mMessages;
-            qint32 mRetry;
-        };
-    }
-}
+    QList<HbLogMessage*> mMessages;
+    qint32 mRetry;
+};
+} // namespace log
+} // namespace hb
 
 #endif // HBLOGMANAGER_H

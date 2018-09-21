@@ -19,48 +19,44 @@
 #include <HbNetwork.h>
 #include <contract/HbNetworkExchanges.h>
 
-namespace hb
-{
-    namespace network
-    {
-        class HbNetworkChannel;
+namespace hb {
+namespace network {
+class HbNetworkChannel;
 
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbNetworkConfig
-        {
-        public:
-            HbNetworkConfig();
-            virtual ~HbNetworkConfig() = default;
-            HbNetworkConfig(const HbNetworkConfig & config);
-            virtual HbNetworkConfig & operator =(const HbNetworkConfig & config);
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbNetworkConfig {
+public:
+    HbNetworkConfig();
+    virtual ~HbNetworkConfig() = default;
+    HbNetworkConfig(const HbNetworkConfig& config);
+    virtual HbNetworkConfig& operator=(const HbNetworkConfig& config);
 
-            virtual bool isValid() const;
+    virtual bool isValid() const;
 
-            virtual void setOpenMode(QIODevice::OpenMode mode) final;
-            virtual QIODevice::OpenMode openMode() const final;
+    virtual void setOpenMode(QIODevice::OpenMode mode) final;
+    virtual QIODevice::OpenMode openMode() const final;
 
-            virtual void setBadHeaderTolerant( bool tolerant ) final;
-            virtual bool isBadHeaderTolerant() const final;
+    virtual void setBadHeaderTolerant(bool tolerant) final;
+    virtual bool isBadHeaderTolerant() const final;
 
-            virtual const HbNetworkExchanges & exchanges() const final;
-            virtual HbNetworkExchanges & exchanges() final;
+    virtual const HbNetworkExchanges& exchanges() const final;
+    virtual HbNetworkExchanges& exchanges() final;
 
-            virtual bool plugChannel( HbNetworkChannel * channel ) final;
-            virtual QList< HbNetworkChannel * > channels() const final;
+    virtual bool plugChannel(HbNetworkChannel* channel) final;
+    virtual QList<HbNetworkChannel*> channels() const final;
 
-        protected:
-            HbNetworkExchanges mExchanges;
+protected:
+    HbNetworkExchanges mExchanges;
 
-        private:
-            QIODevice::OpenMode mOpenMode;
-            bool mBadHeaderTolerant;
-            QList< HbNetworkChannel * > mChannels;
-
-        };
-    }
-}
+private:
+    QIODevice::OpenMode mOpenMode;
+    bool mBadHeaderTolerant;
+    QList<HbNetworkChannel*> mChannels;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbNetworkConfig;
 

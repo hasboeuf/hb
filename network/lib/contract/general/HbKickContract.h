@@ -19,39 +19,35 @@
 #include <HbNetwork.h>
 #include <contract/HbNetworkContract.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbKickContract final : public HbNetworkContract
-        {
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbKickContract final : public HbNetworkContract {
+public:
+    HbKickContract();
+    virtual ~HbKickContract() = default;
+    HbKickContract(const HbKickContract& source);
+    HbKickContract& operator=(const HbKickContract& source);
 
-        public:
-            HbKickContract();
-            virtual ~HbKickContract() = default;
-            HbKickContract( const HbKickContract & source );
-            HbKickContract & operator=( const HbKickContract & source );
+    virtual HbKickContract* create() const override;
 
-            virtual HbKickContract * create() const override;
+    virtual bool read(QDataStream& stream) override;
+    virtual bool write(QDataStream& stream) const override;
 
-            virtual bool read ( QDataStream & stream ) override;
-            virtual bool write( QDataStream & stream ) const override;
+    void setReason(netwlint reason);
+    void setDescription(const QString& description);
 
-            void setReason( netwlint reason );
-            void setDescription( const QString & description );
+    netwlint reason() const;
+    const QString& description() const;
 
-            netwlint reason() const;
-            const QString & description() const;
-
-        private:
-            netwlint mReason;
-            QString mDescription;
-        };
-    }
-}
+private:
+    netwlint mReason;
+    QString mDescription;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbKickContract;
 

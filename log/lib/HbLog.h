@@ -16,17 +16,17 @@
  */
 
 // Qt
-#include <QtCore/QtGlobal>
 #include <QtCore/QSharedPointer>
+#include <QtCore/QtGlobal>
 
 typedef quint32 loguid; //!< Integer range for log in/outputs.
 
 namespace hb {
 namespace log {
-    class HbLogMessage;
-    using HbLogMessagePtr = QSharedPointer<HbLogMessage>;
-}
-}
+class HbLogMessage;
+using HbLogMessagePtr = QSharedPointer<HbLogMessage>;
+} // namespace log
+} // namespace hb
 
 const size_t CLASS_LOG = 30; //!< Identifier for log in/output uids class.
 

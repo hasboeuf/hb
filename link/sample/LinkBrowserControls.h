@@ -5,21 +5,17 @@
 // Hb
 #include <IHbLinkBrowserControls.h>
 
-namespace hb
-{
-    namespace linkexample
-    {
+namespace hb {
+namespace linkexample {
 
-        class LinkBrowserControls : public link::IHbLinkBrowserControls
-        {
-            Q_OBJECT
+class LinkBrowserControls : public link::IHbLinkBrowserControls {
+    Q_OBJECT
 
-        public slots:
-            virtual void onOpenBrowser( const QUrl & url );
-            virtual void onCloseBrowser();
-        };
-    }
-}
-
+public slots:
+    virtual void onOpenBrowser(const QUrl& url);
+    virtual void onCloseBrowser();
+};
+} // namespace linkexample
+} // namespace hb
 
 #endif // LINKBROWSERCONTROLS_H

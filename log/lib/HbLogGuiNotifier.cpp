@@ -3,8 +3,5 @@
 
 using namespace hb::log;
 
-
-HbLogGuiNotifier::HbLogGuiNotifier() : 
-    QObject()
-{
+HbLogGuiNotifier::HbLogGuiNotifier() : QObject() {
 }

@@ -18,41 +18,37 @@
 
 class QUdpSocket;
 
-namespace hb
-{
-    namespace log
-    {
-        class HbLogMessage;
+namespace hb {
+namespace log {
+class HbLogMessage;
 
-        /*! 
-        * TODOC
-        */
-        class HbLogUdpSocketInput final : public HbLogAbstractInput
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbLogUdpSocketInput )
+/*!
+ * TODOC
+ */
+class HbLogUdpSocketInput final : public HbLogAbstractInput {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbLogUdpSocketInput)
 
-        public:
+public:
+    HbLogUdpSocketInput() = delete;
+    HbLogUdpSocketInput(quint16 port, QObject* parent = nullptr);
+    virtual ~HbLogUdpSocketInput();
 
-            HbLogUdpSocketInput() = delete;
-            HbLogUdpSocketInput( quint16 port, QObject * parent = nullptr );
-            virtual ~HbLogUdpSocketInput();
+    quint16 port() const;
 
-            quint16 port() const;
+protected:
+    void init() override;
 
-        protected:
-            void init() override;
+private
+    callbacks : void onReconnection();
+    void onReadyRead();
 
-        private callbacks:
-            void onReconnection();
-            void onReadyRead();
-
-        private:
-            qint32  mExpected;
-            quint16 mPort;
-            QScopedPointer< QUdpSocket > mUdpSocket;
-        };
-    }
-}
+private:
+    qint32 mExpected;
+    quint16 mPort;
+    QScopedPointer<QUdpSocket> mUdpSocket;
+};
+} // namespace log
+} // namespace hb
 
 #endif // HBLOGUDPSOCKETINPUT_H

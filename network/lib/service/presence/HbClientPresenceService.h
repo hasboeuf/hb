@@ -15,46 +15,41 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <service/presence/HbPresenceService.h>
 #include <config/service/presence/HbServicePresenceClientConfig.h>
+#include <service/presence/HbPresenceService.h>
 
 class QTimerEvent;
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbClientPresenceService :
-            public HbPresenceService
-        {
-            Q_OBJECT
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbClientPresenceService : public HbPresenceService {
+    Q_OBJECT
 
-        public:
+public:
+    HbClientPresenceService();
+    virtual ~HbClientPresenceService() = default;
 
-            HbClientPresenceService();
-            virtual ~HbClientPresenceService() = default;
+    virtual void reset() override;
 
-            virtual void reset() override;
+    const HbServicePresenceClientConfig& config() const;
+    void setConfig(const HbServicePresenceClientConfig& config);
 
-            const HbServicePresenceClientConfig & config() const;
-            void setConfig( const HbServicePresenceClientConfig & config );
+protected:
+    void timerEvent(QTimerEvent*);
 
-        protected:
-            void timerEvent( QTimerEvent * );
+public
+    callbacks : void onSocketAuthenticated(networkuid socket_uid) override;
+    void onSocketUnauthenticated(networkuid socket_uid) override;
 
-        public callbacks:
-            void onSocketAuthenticated  ( networkuid socket_uid ) override;
-            void onSocketUnauthenticated( networkuid socket_uid ) override;
-
-        private:
-            HbServicePresenceClientConfig mConfig;
-            QHash< networkuid, qint32 > mTimerBySocketUid;
-            QHash< qint32, networkuid > mSocketByTimerId;
-        };
-    }
-}
+private:
+    HbServicePresenceClientConfig mConfig;
+    QHash<networkuid, qint32> mTimerBySocketUid;
+    QHash<qint32, networkuid> mSocketByTimerId;
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBCLIENTPRESENCESERVICE_H

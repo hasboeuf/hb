@@ -16,25 +16,21 @@
 // Local
 #include <HbTools.h>
 
-namespace hb
-{
-    namespace tools
-    {
-        /*!
-         * HbStringHelper provides helper methods for strings.
-         */
-        class HB_TOOLS_DECL HbStringHelper
-        {
-
-        public:
-            /*!
-             * Create a random string.
-             * \param string_length Size of the generated string.
-             * \param input List of possible characters, by default alphabet lower case is used.
-             */
-            static QString randomString( quint32 string_length, QString input = QString() );
-        };
-    }
-}
+namespace hb {
+namespace tools {
+/*!
+ * HbStringHelper provides helper methods for strings.
+ */
+class HB_TOOLS_DECL HbStringHelper {
+public:
+    /*!
+     * Create a random string.
+     * \param string_length Size of the generated string.
+     * \param input List of possible characters, by default alphabet lower case is used.
+     */
+    static QString randomString(quint32 string_length, QString input = QString());
+};
+} // namespace tools
+} // namespace hb
 
 #endif // HBSTRINGHELPER_H

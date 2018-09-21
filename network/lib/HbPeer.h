@@ -17,31 +17,27 @@
 #include <HbNetwork.h>
 #include <config/peer/HbGeneralConfig.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbPeer : public QObject
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbPeer )
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbPeer : public QObject {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbPeer)
 
-        public:
+public:
+    HbPeer() = delete;
+    HbPeer(const HbGeneralConfig& config);
+    virtual ~HbPeer() = default;
 
-            HbPeer() = delete;
-            HbPeer( const HbGeneralConfig & config );
-            virtual ~HbPeer() = default;
+    virtual bool isReady() const final;
+    virtual bool leave() = 0;
 
-            virtual bool isReady() const final;
-            virtual bool leave() = 0;
-
-        private:
-            bool mReady;
-        };
-    }
-}
+private:
+    bool mReady;
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBSERVER_H

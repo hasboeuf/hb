@@ -17,36 +17,31 @@
 #include <HbNetwork.h>
 #include <service/HbNetworkService.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbNetworkChannel : public HbNetworkService
-        {
-        public:
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbNetworkChannel : public HbNetworkService {
+public:
+    HbNetworkChannel();
+    virtual ~HbNetworkChannel() = default;
 
-            HbNetworkChannel();
-            virtual ~HbNetworkChannel() = default;
+    virtual void internalReset(bool keep_uid = false); //!< \todo Make it protected.
 
-            virtual void internalReset( bool keep_uid = false ); //!< \todo Make it protected.
+    void setNetworkUid(networkuid network_uid);
+    networkuid networkUid() const;
 
-            void setNetworkUid( networkuid network_uid );
-            networkuid networkUid() const;
+    // Hide service side signals.
+    void socketToKick(networkuid socket_uid, netwlint reason, const QString& description = QString()) = delete;
 
-            // Hide service side signals.
-            void socketToKick( networkuid socket_uid, netwlint reason, const QString & description = QString() ) = delete;
+public
+    callbacks : virtual void onContractToSend(HbNetworkContract* contract) = 0;
 
-        public callbacks:
-            virtual void onContractToSend( HbNetworkContract * contract ) = 0;
-
-        protected:
-            networkuid mNetworkUid;
-
-        };
-    }
-}
+protected:
+    networkuid mNetworkUid;
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBNETWORKCHANNEL_H

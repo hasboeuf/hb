@@ -1,38 +1,29 @@
 // Hb
 #include <HbLogService.h>
 // Local
-#include <service/channel/HbNetworkChannel.h>
 #include <contract/HbNetworkContract.h>
+#include <service/channel/HbNetworkChannel.h>
 
 using namespace hb::network;
 
-
-HbNetworkChannel::HbNetworkChannel()
-{
+HbNetworkChannel::HbNetworkChannel() {
     mNetworkUid = 0;
 }
 
-void HbNetworkChannel::internalReset( bool keep_uid )
-{
-    if( !keep_uid )
-    {
+void HbNetworkChannel::internalReset(bool keep_uid) {
+    if (!keep_uid) {
         mNetworkUid = 0;
     }
 }
 
-void HbNetworkChannel::setNetworkUid( networkuid network_uid )
-{
-    if( mNetworkUid == 0 )
-    {
+void HbNetworkChannel::setNetworkUid(networkuid network_uid) {
+    if (mNetworkUid == 0) {
         mNetworkUid = network_uid;
-    }
-    else
-    {
+    } else {
         qWarning() << "Network uid already set";
     }
 }
 
-networkuid HbNetworkChannel::networkUid() const
-{
+networkuid HbNetworkChannel::networkUid() const {
     return mNetworkUid;
 }

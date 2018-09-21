@@ -21,37 +21,31 @@
 #include <contract/HbNetworkContract.h>
 #include <user/HbNetworkUserSync.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbUserSyncContract final : public HbNetworkContract
-        {
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbUserSyncContract final : public HbNetworkContract {
+public:
+    HbUserSyncContract();
+    virtual ~HbUserSyncContract() = default;
+    HbUserSyncContract(const HbUserSyncContract& source);
+    HbUserSyncContract& operator=(const HbUserSyncContract& source);
 
-        public:
+    virtual HbUserSyncContract* create() const override;
 
-            HbUserSyncContract();
-            virtual ~HbUserSyncContract() = default;
-            HbUserSyncContract( const HbUserSyncContract & source );
-            HbUserSyncContract & operator=( const HbUserSyncContract & source );
+    void addSync(const HbNetworkUserSync& user_sync);
+    const QList<HbNetworkUserSync>& syncs() const;
 
-            virtual HbUserSyncContract * create() const override;
+    virtual bool read(QDataStream& stream) override;
+    virtual bool write(QDataStream& stream) const override;
 
-            void addSync( const HbNetworkUserSync & user_sync );
-            const QList< HbNetworkUserSync > & syncs() const;
-
-            virtual bool read ( QDataStream & stream ) override;
-            virtual bool write( QDataStream & stream ) const override;
-
-        private:
-            QList< HbNetworkUserSync > mSyncs;
-
-        };
-    }
-}
+private:
+    QList<HbNetworkUserSync> mSyncs;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbUserSyncContract;
 

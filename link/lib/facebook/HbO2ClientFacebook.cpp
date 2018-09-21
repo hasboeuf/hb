@@ -1,45 +1,36 @@
 // Local
 #include <facebook/HbO2ClientFacebook.h>
 
-const QString FB_ERROR             = QStringLiteral( "error" );
-const QString FB_ERROR_REASON      = QStringLiteral( "error_reason" );
-const QString FB_ERROR_DESCRIPTION = QStringLiteral( "error_description" );
+const QString FB_ERROR = QStringLiteral("error");
+const QString FB_ERROR_REASON = QStringLiteral("error_reason");
+const QString FB_ERROR_DESCRIPTION = QStringLiteral("error_description");
 
-const QUrl HbO2ClientFacebook::endPoint() const
-{
-    return QUrl( QStringLiteral( "https://www.facebook.com/dialog/oauth" ) );
+const QUrl HbO2ClientFacebook::endPoint() const {
+    return QUrl(QStringLiteral("https://www.facebook.com/dialog/oauth"));
 }
 
-const QHash< QString, QString > HbO2ClientFacebook::codeRequest() const
-{
-    QHash< QString, QString > request;
-    request.insert( OAUTH2_RESPONSE_TYPE, OAUTH2_GRANT_CODE );
-    request.insert( OAUTH2_CLIENT_ID,     mConfig.clientId() );
-    request.insert( OAUTH2_REDIRECT_URI,  mRedirectUri );
-    request.insert( OAUTH2_SCOPE,         mConfig.scopesStr() );
+const QHash<QString, QString> HbO2ClientFacebook::codeRequest() const {
+    QHash<QString, QString> request;
+    request.insert(OAUTH2_RESPONSE_TYPE, OAUTH2_GRANT_CODE);
+    request.insert(OAUTH2_CLIENT_ID, mConfig.clientId());
+    request.insert(OAUTH2_REDIRECT_URI, mRedirectUri);
+    request.insert(OAUTH2_SCOPE, mConfig.scopesStr());
 
     return request;
 }
 
-HbO2::LinkStatus HbO2ClientFacebook::codeResponse( const QHash< QString, QString > & response )
-{
-    if ( response.contains( FB_ERROR ) )
-    {
-        mErrorString += FB_ERROR + ": " + response.value( FB_ERROR ) + ";";
-        mErrorString += FB_ERROR_REASON + ": " + response.value( FB_ERROR_REASON ) + ";";
-        mErrorString += FB_ERROR_DESCRIPTION + ": " + response.value( FB_ERROR_DESCRIPTION ) + ";";
+HbO2::LinkStatus HbO2ClientFacebook::codeResponse(const QHash<QString, QString>& response) {
+    if (response.contains(FB_ERROR)) {
+        mErrorString += FB_ERROR + ": " + response.value(FB_ERROR) + ";";
+        mErrorString += FB_ERROR_REASON + ": " + response.value(FB_ERROR_REASON) + ";";
+        mErrorString += FB_ERROR_DESCRIPTION + ": " + response.value(FB_ERROR_DESCRIPTION) + ";";
 
         return UNLINKED;
-    }
-    else if( response.contains( OAUTH2_CODE ) )
-    {
-        mCode = response.value( OAUTH2_CODE );
+    } else if (response.contains(OAUTH2_CODE)) {
+        mCode = response.value(OAUTH2_CODE);
         return LINKED;
-    }
-    else
-    {
+    } else {
         mErrorString += "undefined error";
         return UNLINKED;
     }
 }
-

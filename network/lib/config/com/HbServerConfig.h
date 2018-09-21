@@ -17,34 +17,29 @@
 #include <HbNetwork.h>
 #include <config/com/HbNetworkConfig.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbServerConfig : public virtual HbNetworkConfig
-        {
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbServerConfig : public virtual HbNetworkConfig {
+public:
+    HbServerConfig();
+    virtual ~HbServerConfig() = default;
+    HbServerConfig(const HbServerConfig& config);
+    HbServerConfig& operator=(const HbServerConfig& config);
 
-        public:
+    bool isValid() const;
 
-            HbServerConfig();
-            virtual ~HbServerConfig() = default;
-            HbServerConfig( const HbServerConfig & config );
-            HbServerConfig & operator =( const HbServerConfig & config );
+    virtual void setMaxUsersPerThread(quint16 max_users) final;
+    virtual quint16 maxUsersPerThread() const final;
+    virtual bool isThreaded() const final;
 
-            bool isValid() const;
-
-            virtual void setMaxUsersPerThread( quint16 max_users ) final;
-            virtual quint16 maxUsersPerThread() const final;
-            virtual bool isThreaded() const final;
-
-        private:
-            quint16 mMaxUsersPerThread;
-        };
-    }
-}
+private:
+    quint16 mMaxUsersPerThread;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbServerConfig;
 

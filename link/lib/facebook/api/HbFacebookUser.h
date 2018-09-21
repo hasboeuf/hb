@@ -12,61 +12,56 @@
 /*! \file HbFacebookUser.h */
 
 // Qt
-#include <QtCore/QString>
 #include <QtCore/QJsonDocument>
+#include <QtCore/QString>
 // Local
 #include <HbLink.h>
 #include <facebook/api/HbFacebookObject.h>
 
-namespace hb
-{
-    namespace link
-    {
-        /*!
-         * HbFacebookUser describes a Facebook user object.
-         */
-        class HB_LINK_DECL HbFacebookUser : public HbFacebookObject
-        {
+namespace hb {
+namespace link {
+/*!
+ * HbFacebookUser describes a Facebook user object.
+ */
+class HB_LINK_DECL HbFacebookUser : public HbFacebookObject {
+public:
+    HbFacebookUser();
+    virtual ~HbFacebookUser() = default;
 
-        public:
-            HbFacebookUser();
-            virtual ~HbFacebookUser() = default;
+    virtual void load(const QJsonDocument& doc) override;
 
-            virtual void load( const QJsonDocument & doc ) override;
+    virtual QString toString() const override;
 
-            virtual QString toString() const override;
+    virtual const QString& firstName() const final;
+    virtual const QString& lastName() const final;
+    virtual const QString& link() const final;
+    virtual const QString& email() const final;
+    virtual const QString& gender() const final;
+    virtual const QString& locale() const final;
+    virtual bool isVerified() const final;
+    virtual qint8 timezone() const final;
 
-            virtual const QString & firstName()  const final;
-            virtual const QString & lastName()   const final;
-            virtual const QString & link()       const final;
-            virtual const QString & email()      const final;
-            virtual const QString & gender()     const final;
-            virtual const QString & locale()     const final;
-            virtual bool            isVerified() const final;
-            virtual qint8           timezone()   const final;
+    virtual void setFirstName(const QString& first_name) final;
+    virtual void setLastName(const QString& last_name) final;
+    virtual void setLink(const QString& link) final;
+    virtual void setEmail(const QString& email) final;
+    virtual void setGender(const QString& gender) final;
+    virtual void setLocale(const QString& locale) final;
+    virtual void setVerified(bool verified) final;
+    virtual void setTimezone(qint8 timezone) final;
 
-            virtual void setFirstName( const QString & first_name ) final;
-            virtual void setLastName ( const QString & last_name  ) final;
-            virtual void setLink     ( const QString & link       ) final;
-            virtual void setEmail    ( const QString & email      ) final;
-            virtual void setGender   ( const QString & gender     ) final;
-            virtual void setLocale   ( const QString & locale     ) final;
-            virtual void setVerified ( bool            verified   ) final;
-            virtual void setTimezone ( qint8           timezone   ) final;
-
-
-        protected:
-            QString mFirstName;
-            QString mLastName;
-            QString mLink;
-            QString mEmail;
-            QString mGender;
-            QString mLocale;
-            bool    mVerified;
-            qint8   mTimezone;
-        };
-    }
-}
+protected:
+    QString mFirstName;
+    QString mLastName;
+    QString mLink;
+    QString mEmail;
+    QString mGender;
+    QString mLocale;
+    bool mVerified;
+    qint8 mTimezone;
+};
+} // namespace link
+} // namespace hb
 
 using hb::link::HbFacebookUser;
 

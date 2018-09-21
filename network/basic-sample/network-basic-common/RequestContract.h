@@ -17,40 +17,34 @@
 // Local
 #include <ResponseContract.h> // Covariance
 
+namespace hb {
+namespace networkexample {
 
-namespace hb
-{
-    namespace networkexample
-    {
+class RequestContract : public HbNetworkContract {
+public:
+    RequestContract();
+    virtual ~RequestContract() = default;
+    RequestContract(const RequestContract& source);
+    RequestContract& operator=(const RequestContract& source);
 
-        class RequestContract : public HbNetworkContract
-        {
+    virtual ResponseContract* takeReply() const;
 
-        public:
+    virtual QString toString() const;
 
-            RequestContract();
-            virtual ~RequestContract() = default;
-            RequestContract( const RequestContract & source );
-            RequestContract & operator=( const RequestContract & source );
+    virtual bool read(QDataStream& stream);
+    virtual bool write(QDataStream& stream) const;
 
-            virtual ResponseContract * takeReply() const;
+    virtual const QString& request() const final;
+    virtual void setRequest(const QString& request) final;
 
-            virtual QString toString() const;
+protected:
+    virtual RequestContract* create() const override;
 
-            virtual bool read ( QDataStream & stream );
-            virtual bool write( QDataStream & stream ) const;
-
-            virtual const QString & request() const final;
-            virtual void setRequest( const QString & request ) final;
-
-        protected:
-            virtual RequestContract * create() const override;
-
-        protected:
-            QString mRequest;
-        };
-    }
-}
+protected:
+    QString mRequest;
+};
+} // namespace networkexample
+} // namespace hb
 
 using hb::networkexample::RequestContract;
 

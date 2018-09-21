@@ -17,44 +17,38 @@
 // Local
 #include <ResponseSumContract.h> // Covariance
 
+namespace hb {
+namespace networkexample {
 
-namespace hb
-{
-    namespace networkexample
-    {
+class RequestSumContract : public HbNetworkContract {
+public:
+    RequestSumContract();
+    virtual ~RequestSumContract() = default;
+    RequestSumContract(const RequestSumContract& source);
+    RequestSumContract& operator=(const RequestSumContract& source);
 
-        class RequestSumContract : public HbNetworkContract
-        {
+    virtual ResponseSumContract* takeReply() const;
 
-        public:
+    virtual QString toString() const;
 
-            RequestSumContract();
-            virtual ~RequestSumContract() = default;
-            RequestSumContract( const RequestSumContract & source );
-            RequestSumContract & operator=( const RequestSumContract & source );
+    virtual bool read(QDataStream& stream);
+    virtual bool write(QDataStream& stream) const;
 
-            virtual ResponseSumContract * takeReply() const;
+    virtual qint32 intA() const final;
+    virtual void setIntA(qint32 a) final;
 
-            virtual QString toString() const;
+    virtual qint32 intB() const final;
+    virtual void setIntB(qint32 b) final;
 
-            virtual bool read ( QDataStream & stream );
-            virtual bool write( QDataStream & stream ) const;
+protected:
+    virtual RequestSumContract* create() const override;
 
-            virtual qint32 intA() const final;
-            virtual void setIntA( qint32 a ) final;
-
-            virtual qint32 intB( ) const final;
-            virtual void setIntB( qint32 b ) final;
-
-        protected:
-            virtual RequestSumContract * create() const override;
-
-        protected:
-            qint32 mIntA;
-            qint32 mIntB;
-        };
-    }
-}
+protected:
+    qint32 mIntA;
+    qint32 mIntB;
+};
+} // namespace networkexample
+} // namespace hb
 
 using hb::networkexample::RequestSumContract;
 

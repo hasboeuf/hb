@@ -14,29 +14,25 @@
 #include <HbLink.h>
 #include <HbO2Server.h>
 
+namespace hb {
+namespace link {
+/*!
+ * HbO2ServerGoogle is the Google implementation of HbO2Server.
+ */
+class HB_LINK_DECL HbO2ServerGoogle : public HbO2Server {
+    Q_OBJECT
 
-namespace hb
-{
-    namespace link
-    {
-        /*!
-         * HbO2ServerGoogle is the Google implementation of HbO2Server.
-         */
-        class HB_LINK_DECL HbO2ServerGoogle : public HbO2Server
-        {
-            Q_OBJECT
+public:
+    HbO2ServerGoogle() = default;
+    virtual ~HbO2ServerGoogle() = default;
 
-        public:
-            HbO2ServerGoogle() = default;
-            virtual ~HbO2ServerGoogle() = default;
-
-        protected:
-            virtual const QUrl endPoint() const override;
-            virtual const QHash< QString, QString > tokenRequest() const override;
-            virtual LinkStatus tokenResponse( const QByteArray & data ) override;
-        };
-    }
-}
+protected:
+    virtual const QUrl endPoint() const override;
+    virtual const QHash<QString, QString> tokenRequest() const override;
+    virtual LinkStatus tokenResponse(const QByteArray& data) override;
+};
+} // namespace link
+} // namespace hb
 
 using hb::link::HbO2ServerGoogle;
 

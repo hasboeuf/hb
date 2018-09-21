@@ -1,6 +1,6 @@
-#include <QtTest>
-#include <QtCore/QObject>
 #include <core/HbSettings.h>
+#include <QtCore/QObject>
+#include <QtTest>
 
 using namespace hb::tools;
 

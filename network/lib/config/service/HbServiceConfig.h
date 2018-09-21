@@ -16,29 +16,24 @@
 // Local
 #include <HbNetwork.h>
 
-namespace hb
-{
-    namespace network
-    {
+namespace hb {
+namespace network {
 
-        class HB_NETWORK_DECL HbServiceConfig
-        {
+class HB_NETWORK_DECL HbServiceConfig {
+public:
+    HbServiceConfig();
+    HbServiceConfig(const HbServiceConfig& config);
+    virtual ~HbServiceConfig() {
+    } //!< \todo defaulted linux-g++ issue
+    virtual HbServiceConfig& operator=(const HbServiceConfig& config);
 
-        public:
-            HbServiceConfig();
-            HbServiceConfig( const HbServiceConfig & config );
-            virtual ~HbServiceConfig(){} //!< \todo defaulted linux-g++ issue
-            virtual HbServiceConfig & operator =( const HbServiceConfig & config );
+    virtual bool isValid() const;
 
-            virtual bool isValid() const;
-
-        protected:
-
-        private:
-
-        };
-    }
-}
+protected:
+private:
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbServiceConfig;
 

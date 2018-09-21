@@ -18,39 +18,36 @@
 
 class QLocalSocket;
 
-namespace hb
-{
-    namespace log
-    {
-        /*! 
-        * TODOC
-        * \brief The %HbLogLocalSocketOutput class defines a local socket output.
-        *
-        * %HbLogLocalSocketOutput inherits from HbLogAbstractOutput.\n
-        */
-        class HbLogLocalSocketOutput final : public HbLogAbstractOutput
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbLogLocalSocketOutput )
+namespace hb {
+namespace log {
+/*!
+ * TODOC
+ * \brief The %HbLogLocalSocketOutput class defines a local socket output.
+ *
+ * %HbLogLocalSocketOutput inherits from HbLogAbstractOutput.\n
+ */
+class HbLogLocalSocketOutput final : public HbLogAbstractOutput {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbLogLocalSocketOutput)
 
-        public:
-            HbLogLocalSocketOutput(const QString & name = QString(), QObject * parent = nullptr );
-            virtual ~HbLogLocalSocketOutput();
+public:
+    HbLogLocalSocketOutput(const QString& name = QString(), QObject* parent = nullptr);
+    virtual ~HbLogLocalSocketOutput();
 
-            const QString & name() const;
+    const QString& name() const;
 
-        private:
-            void processMessage( const HbLogMessagePtr & message ) override;
-            void init() override;
+private:
+    void processMessage(const HbLogMessagePtr& message) override;
+    void init() override;
 
-        private slots:
-            void onReconnection();
+private slots:
+    void onReconnection();
 
-        private:
-            QString mName;
-            QScopedPointer< QLocalSocket > mLocalSocket;
-        };
-    }
-}
+private:
+    QString mName;
+    QScopedPointer<QLocalSocket> mLocalSocket;
+};
+} // namespace log
+} // namespace hb
 
 #endif

@@ -3,4 +3,3 @@
 
 QString HbNetworkProtocol::msAppName = "";
 quint16 HbNetworkProtocol::msProtocolVersion = 0;
-

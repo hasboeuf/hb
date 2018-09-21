@@ -5,15 +5,13 @@
 
 using namespace hb::network;
 
-void HbClientChannel::onContractToSend( HbNetworkContract * contract )
-{
-    if( !contract )
-    {
+void HbClientChannel::onContractToSend(HbNetworkContract* contract) {
+    if (!contract) {
         qWarning() << "Null contract";
         return;
     }
 
-    contract->addSocketReceiver( mNetworkUid );
+    contract->addSocketReceiver(mNetworkUid);
 
-    emit contractToSend( contract );
+    emit contractToSend(contract);
 }

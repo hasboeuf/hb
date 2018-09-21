@@ -3,7 +3,6 @@
 // Local
 #include <core/HbMultipleSortFilterProxyModel.h>
 
-
 /*!
     Usage:
 
@@ -21,15 +20,12 @@
 
 using namespace hb::tools;
 
-
 /*!
     Constructs a new HbMultipleSortFilterProxyModel with \a parent.
  */
-HbMultipleSortFilterProxyModel::HbMultipleSortFilterProxyModel ( QObject * parent ) : QSortFilterProxyModel( parent )
-{
+HbMultipleSortFilterProxyModel::HbMultipleSortFilterProxyModel(QObject* parent) : QSortFilterProxyModel(parent) {
     mDeclaringFilter = false;
 }
-
 
 /*!
     \brief Tells the model you want to declare a new filter.
@@ -37,11 +33,10 @@ HbMultipleSortFilterProxyModel::HbMultipleSortFilterProxyModel ( QObject * paren
     If you have a lot of data in your model it can be slow to declare more than one filter,
     because the model will always rebuild itself. If you call this member before setting the
     new filters the model will invalidate its contents not before you call.
-    
+
     \sa endDeclareFilter()
  */
-void HbMultipleSortFilterProxyModel::beginDeclareFilter()
-{
+void HbMultipleSortFilterProxyModel::beginDeclareFilter() {
     mDeclaringFilter = true;
 }
 
@@ -50,10 +45,8 @@ void HbMultipleSortFilterProxyModel::beginDeclareFilter()
 
     \sa beginDeclareFilter()
  */
-void HbMultipleSortFilterProxyModel::endDeclareFilter()
-{
-    if( mDeclaringFilter )
-    {
+void HbMultipleSortFilterProxyModel::endDeclareFilter() {
+    if (mDeclaringFilter) {
         mDeclaringFilter = false;
         invalidateFilter();
     }
@@ -62,42 +55,34 @@ void HbMultipleSortFilterProxyModel::endDeclareFilter()
 /*!
     \reimp
  */
-bool HbMultipleSortFilterProxyModel::filterAcceptsRow ( int source_row, const QModelIndex & source_parent ) const
-{
-    QList< qint32 > filter_columns = filters.keys();
+bool HbMultipleSortFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const {
+    QList<qint32> filter_columns = filters.keys();
 
     // If the column specified by the user is -1
     // that means all columns need to pass the filter to get into the result.
-    if ( filter_columns.contains( -1 ) )
-    {
+    if (filter_columns.contains(-1)) {
         ModelFilter filter = filters[-1];
 
-        qint32 column_count = sourceModel()->columnCount( source_parent );
-        for ( qint32 column = 0; column < column_count; ++column)
-        {
-            QModelIndex source_index = sourceModel()->index( source_row, column, source_parent );
-            QVariant key = sourceModel()->data( source_index, filter.mRole );
-            if( !filter.acceptsValue( key ) )
-            {
-               return false;
+        qint32 column_count = sourceModel()->columnCount(source_parent);
+        for (qint32 column = 0; column < column_count; ++column) {
+            QModelIndex source_index = sourceModel()->index(source_row, column, source_parent);
+            QVariant key = sourceModel()->data(source_index, filter.mRole);
+            if (!filter.acceptsValue(key)) {
+                return false;
             }
         }
-    }
-    else
-    {
-        for( qint32 current_column: filter_columns )
-        {
+    } else {
+        for (qint32 current_column : filter_columns) {
             ModelFilter filter = filters[current_column];
 
-            QModelIndex source_index = sourceModel()->index( source_row, current_column , source_parent );
-            if ( !source_index.isValid() ) // The column may not exist.
+            QModelIndex source_index = sourceModel()->index(source_row, current_column, source_parent);
+            if (!source_index.isValid()) // The column may not exist.
             {
                 continue;
             }
 
-            QVariant key = sourceModel()->data( source_index, filter.mRole );
-            if( !filter.acceptsValue( key ) )
-            {
+            QVariant key = sourceModel()->data(source_index, filter.mRole);
+            if (!filter.acceptsValue(key)) {
                 return false;
             }
         }
@@ -109,13 +94,14 @@ bool HbMultipleSortFilterProxyModel::filterAcceptsRow ( int source_row, const QM
 /*!
     \brief Sets the filter with \a value, \a role and \a flags to the given \a column
  */
-void HbMultipleSortFilterProxyModel::setFilter( qint32 column, const QVariant &value, qint32 role, Qt::MatchFlags flags )
-{
+void HbMultipleSortFilterProxyModel::setFilter(qint32 column,
+                                               const QVariant& value,
+                                               qint32 role,
+                                               Qt::MatchFlags flags) {
     // Could overwrite current filter.
-    filters[column] = ModelFilter( value, role, flags);
+    filters[column] = ModelFilter(value, role, flags);
 
-    if( !mDeclaringFilter )
-    {
+    if (!mDeclaringFilter) {
         invalidateFilter();
     }
 }
@@ -123,12 +109,9 @@ void HbMultipleSortFilterProxyModel::setFilter( qint32 column, const QVariant &v
 /*!
     \brief Removes the filter from the given \a column
  */
-void HbMultipleSortFilterProxyModel::removeFilter ( qint32 column )
-{
-    if( filters.remove( column ) > 0 )
-    {
-        if( !mDeclaringFilter )
-        {
+void HbMultipleSortFilterProxyModel::removeFilter(qint32 column) {
+    if (filters.remove(column) > 0) {
+        if (!mDeclaringFilter) {
             invalidateFilter();
         }
     }
@@ -137,12 +120,10 @@ void HbMultipleSortFilterProxyModel::removeFilter ( qint32 column )
 /*!
     \brief Removes filters of all columns
  */
-void HbMultipleSortFilterProxyModel::removeFilters()
-{
+void HbMultipleSortFilterProxyModel::removeFilters() {
     filters.clear();
 
-    if( !mDeclaringFilter )
-    {
+    if (!mDeclaringFilter) {
         invalidateFilter();
     }
 }
@@ -150,19 +131,14 @@ void HbMultipleSortFilterProxyModel::removeFilters()
 /*!
     \brief Sets the filter \a value for the given \a column
  */
-void HbMultipleSortFilterProxyModel::setFilterValue ( qint32 column , const QVariant &value )
-{
-    if( filters.contains( column ) )
-    {
+void HbMultipleSortFilterProxyModel::setFilterValue(qint32 column, const QVariant& value) {
+    if (filters.contains(column)) {
         filters[column].mValue = value;
-    }
-    else
-    {
-        filters.insert(column, ModelFilter( value ) );
+    } else {
+        filters.insert(column, ModelFilter(value));
     }
 
-    if( !mDeclaringFilter )
-    {
+    if (!mDeclaringFilter) {
         invalidateFilter();
     }
 }
@@ -170,19 +146,14 @@ void HbMultipleSortFilterProxyModel::setFilterValue ( qint32 column , const QVar
 /*!
     \brief Sets the filter \a role for the given \a column
  */
-void HbMultipleSortFilterProxyModel::setFilterRole ( qint32 column , qint32 role )
-{
-    if( filters.contains( column ) )
-    {
+void HbMultipleSortFilterProxyModel::setFilterRole(qint32 column, qint32 role) {
+    if (filters.contains(column)) {
         filters[column].mRole = role;
-    }
-    else
-    {
-        filters.insert( column, ModelFilter( QVariant(), role ) );
+    } else {
+        filters.insert(column, ModelFilter(QVariant(), role));
     }
 
-    if( !mDeclaringFilter )
-    {
+    if (!mDeclaringFilter) {
         invalidateFilter();
     }
 }
@@ -190,19 +161,14 @@ void HbMultipleSortFilterProxyModel::setFilterRole ( qint32 column , qint32 role
 /*!
     \brief Sets the filter \a flags for the given \a column
  */
-void HbMultipleSortFilterProxyModel::setFilterFlags ( qint32 column , const Qt::MatchFlags flags )
-{
-    if( filters.contains( column ) )
-    {
+void HbMultipleSortFilterProxyModel::setFilterFlags(qint32 column, const Qt::MatchFlags flags) {
+    if (filters.contains(column)) {
         filters[column].mFlags = flags;
-    }
-    else
-    {
-        filters.insert( column, ModelFilter( QVariant(), Qt::DisplayRole, flags ) );
+    } else {
+        filters.insert(column, ModelFilter(QVariant(), Qt::DisplayRole, flags));
     }
 
-    if( !mDeclaringFilter )
-    {
+    if (!mDeclaringFilter) {
         invalidateFilter();
     }
 }
@@ -211,10 +177,8 @@ void HbMultipleSortFilterProxyModel::setFilterFlags ( qint32 column , const Qt::
     \brief Returns the filter value for the given \a column
     \bold {Note:} if the column is not filtered it will return a null variant
  */
-QVariant HbMultipleSortFilterProxyModel::filterValue ( qint32 column ) const
-{
-    if( filters.contains(column) )
-    {
+QVariant HbMultipleSortFilterProxyModel::filterValue(qint32 column) const {
+    if (filters.contains(column)) {
         return filters[column].mValue;
     }
 
@@ -223,12 +187,10 @@ QVariant HbMultipleSortFilterProxyModel::filterValue ( qint32 column ) const
 
 /*!
     \brief Returns the filter role for the given \a column
-    \bold {Note:} if the column is not filtered it will return \c -1    
+    \bold {Note:} if the column is not filtered it will return \c -1
 */
-qint32 HbMultipleSortFilterProxyModel::filterRole ( qint32 column ) const
-{
-    if( filters.contains( column ) )
-    {
+qint32 HbMultipleSortFilterProxyModel::filterRole(qint32 column) const {
+    if (filters.contains(column)) {
         return filters[column].mRole;
     }
 
@@ -239,10 +201,8 @@ qint32 HbMultipleSortFilterProxyModel::filterRole ( qint32 column ) const
     \brief Returns the filter flags for the given \a column
     \bold {Note:} if the column is not filtered it will return the default value
  */
-Qt::MatchFlags HbMultipleSortFilterProxyModel::filterFlags( qint32 column ) const
-{
-    if( filters.contains( column ) )
-    {
+Qt::MatchFlags HbMultipleSortFilterProxyModel::filterFlags(qint32 column) const {
+    if (filters.contains(column)) {
         return filters[column].mFlags;
     }
 
@@ -252,7 +212,6 @@ Qt::MatchFlags HbMultipleSortFilterProxyModel::filterFlags( qint32 column ) cons
 /*!
     Returns true if the \a column is filtered
  */
-bool HbMultipleSortFilterProxyModel::isFiltered ( qint32 column )
-{
-    return filters.contains( column );
+bool HbMultipleSortFilterProxyModel::isFiltered(qint32 column) {
+    return filters.contains(column);
 }

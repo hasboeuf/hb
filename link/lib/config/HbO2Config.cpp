@@ -3,63 +3,49 @@
 
 using namespace hb::link;
 
-HbO2Config::HbO2Config( const HbO2Config & config )
-{
-    if ( this != &config )
-    {
+HbO2Config::HbO2Config(const HbO2Config& config) {
+    if (this != &config) {
         mClientId = config.mClientId;
     }
 }
 
-
-HbO2Config & HbO2Config::operator =( const HbO2Config & config )
-{
-    if ( this != &config )
-    {
+HbO2Config& HbO2Config::operator=(const HbO2Config& config) {
+    if (this != &config) {
         mClientId = config.mClientId;
     }
 
     return *this;
 }
 
-
-bool HbO2Config::isValid() const
-{
-    return ( !mClientId.isEmpty() );
+bool HbO2Config::isValid() const {
+    return (!mClientId.isEmpty());
 }
 
-const QString & HbO2Config::clientId() const
-{
+const QString& HbO2Config::clientId() const {
     return mClientId;
 }
 
-void HbO2Config::setClientId( const QString & client_id )
-{
-    if( !client_id.isEmpty() )
-    {
+void HbO2Config::setClientId(const QString& client_id) {
+    if (!client_id.isEmpty()) {
         mClientId = client_id;
     }
 }
 
-namespace hb
-{
-    namespace link
-    {
+namespace hb {
+namespace link {
 
-        QDataStream & operator <<( QDataStream & stream, const HbO2Config & config )
-        {
-            // stream << config.mClientId; ClientId is also set on server side.
-            config.write( stream );
+QDataStream& operator<<(QDataStream& stream, const HbO2Config& config) {
+    // stream << config.mClientId; ClientId is also set on server side.
+    config.write(stream);
 
-            return stream;
-        }
-
-        QDataStream & operator >>( QDataStream & stream, HbO2Config & config )
-        {
-            // stream >> config.mClientId; ClientId is also set on server side.
-            config.read( stream );
-
-            return stream;
-        }
-    }
+    return stream;
 }
+
+QDataStream& operator>>(QDataStream& stream, HbO2Config& config) {
+    // stream >> config.mClientId; ClientId is also set on server side.
+    config.read(stream);
+
+    return stream;
+}
+} // namespace link
+} // namespace hb

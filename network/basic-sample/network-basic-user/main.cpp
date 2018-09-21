@@ -9,19 +9,17 @@
 
 using hb::networkexample::BasicUserMainWindow;
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
-    hb::tools::HbApplicationHelper::initApp( "hb-io", "hb-io.com" );
+    hb::tools::HbApplicationHelper::initApp("hb-io", "hb-io.com");
     hb::tools::HbApplicationHelper::initSkin("fusion");
 
     hb::log::HbLogService::install("%{level} %{message}");
     hb::log::HbLogService::addConsoleOutput();
-    hb::log::HbLogService::processArgs( a.arguments() );
+    hb::log::HbLogService::processArgs(a.arguments());
 
     BasicUserMainWindow w;
     w.show();
 
     return a.exec();
 }
-

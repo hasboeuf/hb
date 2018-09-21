@@ -17,35 +17,30 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <user/HbNetworkUser.h>
 #include <contract/HbNetworkProtocol.h>
+#include <user/HbNetworkUser.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbServerUser : public HbNetworkUser
-        {
-            Q_OBJECT
-        public:
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbServerUser : public HbNetworkUser {
+    Q_OBJECT
+public:
+    HbServerUser();
+    virtual ~HbServerUser() = default;
 
-            HbServerUser();
-            virtual ~HbServerUser() = default;
+    void addSocket(networkuid server_uid, networkuid socket_uid, bool main = false);
+    virtual void delSocket(networkuid socket_uid) override;
 
-            void addSocket( networkuid server_uid, networkuid socket_uid , bool main = false );
-            virtual void delSocket( networkuid socket_uid ) override;
+    networkuid socketUid(networkuid server_uid);
+    virtual QList<networkuid> socketsUid() const override;
 
-            networkuid socketUid( networkuid server_uid );
-            virtual QList< networkuid > socketsUid() const override;
-
-        private:
-            QHash< networkuid, networkuid > mSocketsByServer;
-
-        };
-    }
-}
+private:
+    QHash<networkuid, networkuid> mSocketsByServer;
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBSERVERUSER_H

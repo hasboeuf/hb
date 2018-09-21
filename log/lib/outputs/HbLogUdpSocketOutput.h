@@ -20,39 +20,34 @@
 
 class QUdpSocket;
 
-namespace hb
-{
-    namespace log
-    {
-        class HbLogMessage;
+namespace hb {
+namespace log {
+class HbLogMessage;
 
+/*!
+ * TODOC
+ */
+class HbLogUdpSocketOutput final : public HbLogAbstractOutput {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbLogUdpSocketOutput)
 
-        /*!
-        * TODOC
-        */
-        class HbLogUdpSocketOutput final : public HbLogAbstractOutput
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbLogUdpSocketOutput )
+public:
+    HbLogUdpSocketOutput() = delete;
+    HbLogUdpSocketOutput(const QString& ip, quint16 port, QObject* parent = nullptr);
+    virtual ~HbLogUdpSocketOutput();
 
-        public:
-            HbLogUdpSocketOutput() = delete;
-            HbLogUdpSocketOutput( const QString & ip, quint16 port, QObject * parent = nullptr );
-            virtual ~HbLogUdpSocketOutput();
+    quint16 port() const;
 
-            quint16 port() const;
+protected:
+    void init() override;
+    void processMessage(const HbLogMessagePtr& message) override;
 
-        protected:
-            void init() override;
-            void processMessage( const HbLogMessagePtr & message ) override;
-
-        private:
-            QScopedPointer< QUdpSocket > mUdpSocket;
-            QString mIp;
-            quint16 mPort;
-        };
-    }
-}
+private:
+    QScopedPointer<QUdpSocket> mUdpSocket;
+    QString mIp;
+    quint16 mPort;
+};
+} // namespace log
+} // namespace hb
 
 #endif // HBLOGUDPSOCKETOUTPUT_H
-

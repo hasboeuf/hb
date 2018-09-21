@@ -5,45 +5,35 @@
 
 using namespace hb::link;
 
-HbO2ClientConfig::HbO2ClientConfig()
-{
+HbO2ClientConfig::HbO2ClientConfig() {
     mLocalPort = 8080;
     mScopesSeparator = ",";
     mpBrowserControls = nullptr;
 }
 
-HbO2ClientConfig::HbO2ClientConfig(const HbO2ClientConfig & config) :
-    HbO2Config( config )
-{
-    if (this != &config)
-    {
-        mLocalPort        = config.mLocalPort;
-        mScopes           = config.mScopes;
+HbO2ClientConfig::HbO2ClientConfig(const HbO2ClientConfig& config) : HbO2Config(config) {
+    if (this != &config) {
+        mLocalPort = config.mLocalPort;
+        mScopes = config.mScopes;
         mpBrowserControls = config.mpBrowserControls;
     }
 }
 
-HbO2ClientConfig & HbO2ClientConfig::operator =(const HbO2ClientConfig & config)
-{
-    if (this != &config)
-    {
-        HbO2Config::operator=( config );
+HbO2ClientConfig& HbO2ClientConfig::operator=(const HbO2ClientConfig& config) {
+    if (this != &config) {
+        HbO2Config::operator=(config);
 
-        mLocalPort        = config.mLocalPort;
-        mScopes           = config.mScopes;
+        mLocalPort = config.mLocalPort;
+        mScopes = config.mScopes;
         mpBrowserControls = config.mpBrowserControls;
     }
 
     return *this;
 }
 
-
-bool HbO2ClientConfig::isValid() const
-{
-    if( HbO2Config::isValid() )
-    {
-        if ( !mpBrowserControls )
-        {
+bool HbO2ClientConfig::isValid() const {
+    if (HbO2Config::isValid()) {
+        if (!mpBrowserControls) {
             return false;
         }
 
@@ -52,73 +42,58 @@ bool HbO2ClientConfig::isValid() const
     return false;
 }
 
-bool HbO2ClientConfig::read( QDataStream & stream )
-{
+bool HbO2ClientConfig::read(QDataStream& stream) {
     stream >> mScopes;
     stream >> mLocalPort;
 
     return true;
 }
 
-bool HbO2ClientConfig::write( QDataStream & stream ) const
-{
+bool HbO2ClientConfig::write(QDataStream& stream) const {
     stream << mScopes;
     stream << mLocalPort;
 
     return true;
 }
 
-void HbO2ClientConfig::setLocalPort( quint16 local_port )
-{
+void HbO2ClientConfig::setLocalPort(quint16 local_port) {
     mLocalPort = local_port;
 }
 
-quint16 HbO2ClientConfig::localPort() const
-{
+quint16 HbO2ClientConfig::localPort() const {
     return mLocalPort;
 }
 
-void HbO2ClientConfig::addScope( const QString & permission )
-{
-    if( !permission.isEmpty() )
-    {
+void HbO2ClientConfig::addScope(const QString& permission) {
+    if (!permission.isEmpty()) {
         mScopes << permission;
     }
 }
 
-void HbO2ClientConfig::setScopes( const QStringList & permissions )
-{
-    if( mScopes.isEmpty() )
-    {
+void HbO2ClientConfig::setScopes(const QStringList& permissions) {
+    if (mScopes.isEmpty()) {
         mScopes = permissions;
-    }
-    else
-    {
+    } else {
         qWarning() << "Scope is not empty";
     }
 }
 
-const QStringList & HbO2ClientConfig::scopes() const
-{
+const QStringList& HbO2ClientConfig::scopes() const {
     return mScopes;
 }
 
-QString HbO2ClientConfig::scopesStr() const
-{
-    return mScopes.join( mScopesSeparator );
+QString HbO2ClientConfig::scopesStr() const {
+    return mScopes.join(mScopesSeparator);
 }
 
-void HbO2ClientConfig::setScopeSeparator( const QString & separator )
-{
+void HbO2ClientConfig::setScopeSeparator(const QString& separator) {
     mScopesSeparator = separator;
 }
 
-void HbO2ClientConfig::setBrowserControls( IHbLinkBrowserControls * browser_controls )
-{
+void HbO2ClientConfig::setBrowserControls(IHbLinkBrowserControls* browser_controls) {
     mpBrowserControls = browser_controls;
 }
 
-IHbLinkBrowserControls * HbO2ClientConfig::browserControls()
-{
+IHbLinkBrowserControls* HbO2ClientConfig::browserControls() {
     return mpBrowserControls;
 }

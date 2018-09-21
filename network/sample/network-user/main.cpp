@@ -9,29 +9,24 @@
 
 using hb::networkexample::UserMainWindow;
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
 
-    if( argc >= 2 )
-    {
-        hb::networkexample::UserMainWindow::msClientId = QString( argv[1] );
-    }
-    else
-    {
+    if (argc >= 2) {
+        hb::networkexample::UserMainWindow::msClientId = QString(argv[1]);
+    } else {
         std::cout << "Missing args." << std::endl;
     }
 
-    hb::tools::HbApplicationHelper::initApp( "hb-io", "hb-io.com" );
+    hb::tools::HbApplicationHelper::initApp("hb-io", "hb-io.com");
     hb::tools::HbApplicationHelper::initSkin("fusion");
 
     hb::log::HbLogService::install("%{level} %{message}");
     hb::log::HbLogService::addConsoleOutput();
-    hb::log::HbLogService::processArgs( a.arguments() );
+    hb::log::HbLogService::processArgs(a.arguments());
 
     UserMainWindow w;
     w.show();
 
     return a.exec();
 }
-

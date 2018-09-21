@@ -16,22 +16,18 @@
 // Local
 #include <user/HbNetworkUserInfo.h>
 
-namespace hb
-{
-    namespace network
-    {
+namespace hb {
+namespace network {
 
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbNetworkUserInfoMock final
-        {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbNetworkUserInfoMock final {
+public:
+    static void mockNetworkUserInfo(HbNetworkUserInfo& user_info);
+};
 
-        public:
-            static void mockNetworkUserInfo( HbNetworkUserInfo & user_info );
-        };
-
-    }
-}
+} // namespace network
+} // namespace hb
 
 #endif // HBNETWORKUSERINFOMOCK_H

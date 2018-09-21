@@ -16,36 +16,32 @@
 #include <HbLink.h>
 #include <HbO2Server.h>
 
+namespace hb {
+namespace link {
+/*!
+ * HbO2ServerFacebook is the Facebook implementation of HbO2Server.
+ */
+class HB_LINK_DECL HbO2ServerFacebook : public HbO2Server {
+    Q_OBJECT
 
-namespace hb
-{
-    namespace link
-    {
-        /*!
-         * HbO2ServerFacebook is the Facebook implementation of HbO2Server.
-         */
-        class HB_LINK_DECL HbO2ServerFacebook : public HbO2Server
-        {
-            Q_OBJECT
+public:
+    HbO2ServerFacebook();
+    virtual ~HbO2ServerFacebook() = default;
 
-        public:
-            HbO2ServerFacebook();
-            virtual ~HbO2ServerFacebook() = default;
+    virtual void addField(const QString& field) final;
+    virtual void setFields(const QString& fields) final;
+    virtual const QString& fields() const final;
 
-            virtual void addField( const QString & field ) final;
-            virtual void setFields( const QString & fields ) final;
-            virtual const QString & fields() const final;
+protected:
+    virtual const QUrl endPoint() const override;
+    virtual const QHash<QString, QString> tokenRequest() const override;
+    virtual LinkStatus tokenResponse(const QByteArray& data) override;
 
-        protected:
-            virtual const QUrl endPoint() const override;
-            virtual const QHash< QString, QString > tokenRequest() const override;
-            virtual LinkStatus tokenResponse( const QByteArray & data ) override;
-
-        private:
-            QString mFields;
-        };
-    }
-}
+private:
+    QString mFields;
+};
+} // namespace link
+} // namespace hb
 
 using hb::link::HbO2ServerFacebook;
 

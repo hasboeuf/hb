@@ -18,43 +18,40 @@
 
 class QTcpSocket;
 
-namespace hb
-{
-    namespace log
-    {
+namespace hb {
+namespace log {
 
-        /*! 
-        * TODOC
-        * \brief The %HbLogTcpSocketOutput class defines a tcp socket output.
-        *
-        * %HbLogTcpSocketOutput inherits from HbLogAbstractOutput.\n
-        */
-        class HbLogTcpSocketOutput final : public HbLogAbstractOutput
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbLogTcpSocketOutput )
+/*!
+ * TODOC
+ * \brief The %HbLogTcpSocketOutput class defines a tcp socket output.
+ *
+ * %HbLogTcpSocketOutput inherits from HbLogAbstractOutput.\n
+ */
+class HbLogTcpSocketOutput final : public HbLogAbstractOutput {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbLogTcpSocketOutput)
 
-        public:
-            HbLogTcpSocketOutput() = delete;
-            HbLogTcpSocketOutput( const QString & ip, quint16 port, QObject * parent = nullptr );
-            virtual ~HbLogTcpSocketOutput();
+public:
+    HbLogTcpSocketOutput() = delete;
+    HbLogTcpSocketOutput(const QString& ip, quint16 port, QObject* parent = nullptr);
+    virtual ~HbLogTcpSocketOutput();
 
-            const QString & ip() const;
-            quint16 port() const;
+    const QString& ip() const;
+    quint16 port() const;
 
-        protected:
-            void init() override;
-            void processMessage( const HbLogMessagePtr & message ) override;
+protected:
+    void init() override;
+    void processMessage(const HbLogMessagePtr& message) override;
 
-        private slots:
-            void onReconnection();
+private slots:
+    void onReconnection();
 
-        private:
-            QScopedPointer< QTcpSocket > mTcpSocket;
-            QString mIp;
-            quint16 mPort;
-        };
-    }
-}
+private:
+    QScopedPointer<QTcpSocket> mTcpSocket;
+    QString mIp;
+    quint16 mPort;
+};
+} // namespace log
+} // namespace hb
 
 #endif

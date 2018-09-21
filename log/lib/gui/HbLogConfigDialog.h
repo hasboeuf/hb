@@ -15,53 +15,46 @@
 #include <QButtonGroup>
 // Local
 #include <HbLog.h>
-#include <ui_HbLogConfigDialog.h>
 #include <gui/HbLogConfig.h>
+#include <ui_HbLogConfigDialog.h>
 
-namespace hb
-{
-    namespace log
-    {
-        /*!
-         * TODOC.
-         */
-        class HbLogConfigDialog : public QDialog, private Ui::HbLogConfigDialog
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY(HbLogConfigDialog)
+namespace hb {
+namespace log {
+/*!
+ * TODOC.
+ */
+class HbLogConfigDialog : public QDialog, private Ui::HbLogConfigDialog {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbLogConfigDialog)
 
+public:
+    HbLogConfigDialog() = delete;
+    HbLogConfigDialog(HbLogConfig& pConfig, QWidget* parent = nullptr);
+    virtual ~HbLogConfigDialog() = default;
 
-        public:
+    const HbLogConfig& config() const;
 
-            HbLogConfigDialog() = delete;
-            HbLogConfigDialog( HbLogConfig & pConfig, QWidget *parent = nullptr );
-            virtual ~HbLogConfigDialog() = default;
+private:
+    void saveConfig();
+    void updateGui();
 
-            const HbLogConfig & config() const;
+private slots:
 
-        private:
-            void saveConfig();
-            void updateGui();
+    void onFontClicked();
+    void onColorClicked(int color_id);
+    void onBackgroundColorClicked();
+    void onSaveClicked();
+    void onResetClicked();
+    void onImportClicked();
+    void onExportClicked();
 
-        private slots:
+private:
+    HbLogConfig mConfig;
 
-            void onFontClicked();
-            void onColorClicked(int color_id);
-            void onBackgroundColorClicked();
-            void onSaveClicked();
-            void onResetClicked();
-            void onImportClicked();
-            void onExportClicked();
-
-
-        private:
-
-            HbLogConfig mConfig;
-
-            QButtonGroup qbg_colors;
-            QList< QLineEdit * > qfl_editor_fields; // Use when saving.
-        };
-    }
-}
+    QButtonGroup qbg_colors;
+    QList<QLineEdit*> qfl_editor_fields; // Use when saving.
+};
+} // namespace log
+} // namespace hb
 
 #endif // HBLOGCONFIGDIALOG_H

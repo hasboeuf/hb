@@ -16,32 +16,28 @@
 // Local
 #include <service/auth/HbAuthStrategy.h>
 
-namespace hb
-{
-    namespace network
-    {
-        class HbAuthRequestContract;
-        class HbClientAuthLoginObject;
+namespace hb {
+namespace network {
+class HbAuthRequestContract;
+class HbClientAuthLoginObject;
 
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbClientAuthStrategy : public HbAuthStrategy
-        {
-            Q_OBJECT
-        public:
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbClientAuthStrategy : public HbAuthStrategy {
+    Q_OBJECT
+public:
+    HbClientAuthStrategy() = default;
+    virtual ~HbClientAuthStrategy() = default;
 
-            HbClientAuthStrategy() = default;
-            virtual ~HbClientAuthStrategy() = default;
+    virtual bool prepareAuthContract(HbClientAuthLoginObject* login_object) = 0;
 
-            virtual bool prepareAuthContract( HbClientAuthLoginObject * login_object ) = 0;
-
-        signals:
-            void authContractReady ( networkuid socket_uid, HbAuthRequestContract * contract );
-            void authContractFailed( networkuid socket_uid, const QString & description );
-        };
-    }
-}
+signals:
+    void authContractReady(networkuid socket_uid, HbAuthRequestContract* contract);
+    void authContractFailed(networkuid socket_uid, const QString& description);
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbClientAuthStrategy;
 

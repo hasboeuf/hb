@@ -15,52 +15,46 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <service/presence/HbPresenceService.h>
-#include <listener/IHbContractListener.h>
 #include <config/service/presence/HbServicePresenceServerConfig.h>
+#include <listener/IHbContractListener.h>
+#include <service/presence/HbPresenceService.h>
 
 class QTimerEvent;
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbServerPresenceService :
-            public HbPresenceService,
-            public IHbContractListener
-        {
-            Q_OBJECT
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbServerPresenceService : public HbPresenceService, public IHbContractListener {
+    Q_OBJECT
 
-        public:
+public:
+    HbServerPresenceService();
+    virtual ~HbServerPresenceService() = default;
 
-            HbServerPresenceService();
-            virtual ~HbServerPresenceService() = default;
+    virtual void reset() override;
 
-            virtual void reset() override;
+    const HbServicePresenceServerConfig& config() const;
+    void setConfig(const HbServicePresenceServerConfig& config);
 
-            const HbServicePresenceServerConfig & config() const;
-            void setConfig( const HbServicePresenceServerConfig & config );
+protected:
+    void timerEvent(QTimerEvent*);
 
-        protected:
-            void timerEvent( QTimerEvent * );
+public
+    callbacks : virtual void onSocketAuthenticated(networkuid socket_uid) override;
+    virtual void onSocketUnauthenticated(networkuid socket_uid) override;
+    virtual void onContractReceived(const HbNetworkContract* contract) override;
 
-        public callbacks:
-            virtual void onSocketAuthenticated  ( networkuid socket_uid ) override;
-            virtual void onSocketUnauthenticated( networkuid socket_uid ) override;
-            virtual void onContractReceived( const HbNetworkContract * contract ) override;
+signals:
+    void socketLagged(networkuid socket_uid, quint16 last_presence, quint16 kick_threshold);
 
-        signals:
-            void socketLagged( networkuid socket_uid, quint16 last_presence, quint16 kick_threshold );
-
-        private:
-            HbServicePresenceServerConfig mConfig;
-            qint32 mTickTimer;
-            QHash< networkuid, quint16 > mClientAliveTick;
-        };
-    }
-}
+private:
+    HbServicePresenceServerConfig mConfig;
+    qint32 mTickTimer;
+    QHash<networkuid, quint16> mClientAliveTick;
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBSERVERPRESENCESERVICE_H

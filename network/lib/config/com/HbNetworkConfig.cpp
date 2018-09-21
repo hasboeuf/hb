@@ -6,17 +6,13 @@
 
 using namespace hb::network;
 
-
-HbNetworkConfig::HbNetworkConfig()
-{
+HbNetworkConfig::HbNetworkConfig() {
     mOpenMode = QIODevice::ReadWrite;
     mBadHeaderTolerant = true;
 }
 
-HbNetworkConfig::HbNetworkConfig( const HbNetworkConfig & config )
-{
-    if ( this != &config )
-    {
+HbNetworkConfig::HbNetworkConfig(const HbNetworkConfig& config) {
+    if (this != &config) {
         mOpenMode = config.mOpenMode;
         mBadHeaderTolerant = config.mBadHeaderTolerant;
         mExchanges = config.mExchanges;
@@ -24,11 +20,8 @@ HbNetworkConfig::HbNetworkConfig( const HbNetworkConfig & config )
     }
 }
 
-
-HbNetworkConfig & HbNetworkConfig::operator =( const HbNetworkConfig & config )
-{
-    if ( this != &config )
-    {
+HbNetworkConfig& HbNetworkConfig::operator=(const HbNetworkConfig& config) {
+    if (this != &config) {
         mOpenMode = config.mOpenMode;
         mBadHeaderTolerant = config.mBadHeaderTolerant;
         mExchanges = config.mExchanges;
@@ -38,17 +31,13 @@ HbNetworkConfig & HbNetworkConfig::operator =( const HbNetworkConfig & config )
     return *this;
 }
 
-bool HbNetworkConfig::isValid() const
-{
-    return ( mOpenMode != QIODevice::NotOpen );
+bool HbNetworkConfig::isValid() const {
+    return (mOpenMode != QIODevice::NotOpen);
 }
 
-void HbNetworkConfig::setOpenMode( QIODevice::OpenMode mode )
-{
-    if ( mOpenMode != mode )
-    {
-        switch (mode)
-        {
+void HbNetworkConfig::setOpenMode(QIODevice::OpenMode mode) {
+    if (mOpenMode != mode) {
+        switch (mode) {
         case QIODevice::ReadOnly:
         case QIODevice::WriteOnly:
         case QIODevice::ReadWrite:
@@ -70,52 +59,43 @@ void HbNetworkConfig::setOpenMode( QIODevice::OpenMode mode )
     }
 }
 
-QIODevice::OpenMode HbNetworkConfig::openMode() const
-{
+QIODevice::OpenMode HbNetworkConfig::openMode() const {
     return mOpenMode;
 }
 
-void HbNetworkConfig::setBadHeaderTolerant( bool tolerant )
-{
+void HbNetworkConfig::setBadHeaderTolerant(bool tolerant) {
     mBadHeaderTolerant = tolerant;
 }
 
-bool HbNetworkConfig::isBadHeaderTolerant() const
-{
+bool HbNetworkConfig::isBadHeaderTolerant() const {
     return mBadHeaderTolerant;
 }
 
-const HbNetworkExchanges & HbNetworkConfig::exchanges() const
-{
+const HbNetworkExchanges& HbNetworkConfig::exchanges() const {
     return mExchanges;
 }
 
-HbNetworkExchanges & HbNetworkConfig::exchanges()
-{
+HbNetworkExchanges& HbNetworkConfig::exchanges() {
     return mExchanges;
 }
 
-bool HbNetworkConfig::plugChannel( HbNetworkChannel * channel )
-{
-    if( !channel )
-    {
+bool HbNetworkConfig::plugChannel(HbNetworkChannel* channel) {
+    if (!channel) {
         qWarning() << "Can not assign null channel";
         return false;
     }
 
-    if( mChannels.contains( channel ) )
-    {
+    if (mChannels.contains(channel)) {
         qWarning() << "Channel" << channel->uid() << "already assigned";
         return false;
     }
 
-    channel->plugContracts( mExchanges );
+    channel->plugContracts(mExchanges);
 
-    mChannels.push_back( channel );
+    mChannels.push_back(channel);
     return true;
 }
 
-QList< HbNetworkChannel * > HbNetworkConfig::channels() const
-{
+QList<HbNetworkChannel*> HbNetworkConfig::channels() const {
     return mChannels;
 }

@@ -1,31 +1,22 @@
 // Hb
-#include <outputs/HbLogGuiOutput.h>
 #include <HbLogGuiNotifier.h>
+#include <outputs/HbLogGuiOutput.h>
 
 using namespace hb::log;
 
-
-HbLogGuiOutput::HbLogGuiOutput( HbLogGuiNotifier * notifier , QObject * parent) :
-    HbLogAbstractOutput( parent )
-{
-    mNotifier.reset( notifier );
+HbLogGuiOutput::HbLogGuiOutput(HbLogGuiNotifier* notifier, QObject* parent) : HbLogAbstractOutput(parent) {
+    mNotifier.reset(notifier);
 }
 
-HbLogGuiOutput::~HbLogGuiOutput()
-{
+HbLogGuiOutput::~HbLogGuiOutput() {
     mNotifier.take()->deleteLater(); // mNotifier does not leave in the same thread.
 }
 
-void HbLogGuiOutput::init()
-{
-
+void HbLogGuiOutput::init() {
 }
 
-void HbLogGuiOutput::processMessage( const HbLogMessagePtr & message )
-{
-    if( mNotifier ) {
-        QMetaObject::invokeMethod( mNotifier.data(), [this, message]() {
-            mNotifier->newLogMessage( message );
-        } );
+void HbLogGuiOutput::processMessage(const HbLogMessagePtr& message) {
+    if (mNotifier) {
+        QMetaObject::invokeMethod(mNotifier.data(), [this, message]() { mNotifier->newLogMessage(message); });
     }
 }

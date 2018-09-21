@@ -3,7 +3,5 @@
 
 using namespace hb::log;
 
-HbLogAbstractOutput::HbLogAbstractOutput( QObject * parent ) :
-    QObject( parent ) {
-
+HbLogAbstractOutput::HbLogAbstractOutput(QObject* parent) : QObject(parent) {
 }

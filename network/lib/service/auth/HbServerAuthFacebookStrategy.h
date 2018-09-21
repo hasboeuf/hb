@@ -14,43 +14,39 @@
 // Qt
 #include <QtCore/QHash>
 // Hb
-#include <facebook/HbFacebookRequester.h>
 #include <config/HbO2ServerConfig.h>
+#include <facebook/HbFacebookRequester.h>
 // Local
 #include <HbNetwork.h>
-#include <service/auth/HbServerOAuthStrategy.h>
 #include <contract/HbNetworkProtocol.h>
 #include <contract/auth/HbAuthRequestContract.h> // Template.
+#include <service/auth/HbServerOAuthStrategy.h>
 
-namespace hb
-{
-    using namespace link;
+namespace hb {
+using namespace link;
 
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbServerAuthFacebookStrategy : public HbServerOAuthStrategy
-        {
-            Q_OBJECT
-        public:
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbServerAuthFacebookStrategy : public HbServerOAuthStrategy {
+    Q_OBJECT
+public:
+    HbServerAuthFacebookStrategy();
+    virtual ~HbServerAuthFacebookStrategy() = default;
 
-            HbServerAuthFacebookStrategy();
-            virtual ~HbServerAuthFacebookStrategy() = default;
+    virtual authstgy type() const final;
+    virtual bool checkLogin(const HbAuthRequestContract* contract) override;
 
-            virtual authstgy type() const final;
-            virtual bool checkLogin( const HbAuthRequestContract * contract ) override;
+public slots:
+    void onLinkSucceed();
+    void onRequestCompleted(quint64 request_id, HbFacebookObject* object);
 
-        public slots:
-            void onLinkSucceed();
-            void onRequestCompleted( quint64 request_id, HbFacebookObject * object );
-
-        private:
-            HbFacebookRequester mRequester;
-        };
-    }
-}
+private:
+    HbFacebookRequester mRequester;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbServerAuthFacebookStrategy;
 

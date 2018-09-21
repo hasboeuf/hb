@@ -1,8 +1,8 @@
 // Qt
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QColorDialog>
-#include <QtWidgets/QFontDialog>
 #include <QtWidgets/QFileDialog>
+#include <QtWidgets/QFontDialog>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMenu>
 // Hb
 #include <HbLogService.h>
@@ -11,10 +11,7 @@
 
 using namespace hb::log;
 
-
-HbLogConfigDialog::HbLogConfigDialog(HbLogConfig& pConfig, QWidget *parent) :
-QDialog(parent), mConfig(pConfig)
-{
+HbLogConfigDialog::HbLogConfigDialog(HbLogConfig& pConfig, QWidget* parent) : QDialog(parent), mConfig(pConfig) {
     setupUi(this);
 
     QMenu* save_menu = new QMenu(qtb_save);
@@ -22,22 +19,24 @@ QDialog(parent), mConfig(pConfig)
     QAction* action_export = save_menu->addAction("Export...");
     qtb_save->setMenu(save_menu);
 
-    connect(qpb_cancel,    &QPushButton::clicked, this, &HbLogConfigDialog::reject,                   Qt::UniqueConnection );
-    connect(qtb_save,      &QToolButton::clicked, this, &HbLogConfigDialog::onSaveClicked,            Qt::UniqueConnection );
-    connect(qpb_reset,     &QPushButton::clicked, this, &HbLogConfigDialog::onResetClicked,           Qt::UniqueConnection );
-    connect(qpb_font,      &QPushButton::clicked, this, &HbLogConfigDialog::onFontClicked,            Qt::UniqueConnection );
-    connect(qpb_bck_color, &QPushButton::clicked, this, &HbLogConfigDialog::onBackgroundColorClicked, Qt::UniqueConnection );
-    connect(action_import, &QAction::triggered,   this, &HbLogConfigDialog::onImportClicked,          Qt::UniqueConnection );
-    connect(action_export, &QAction::triggered,   this, &HbLogConfigDialog::onExportClicked,          Qt::UniqueConnection );
-    connect(&qbg_colors,   (void (QButtonGroup::*)(int)) &QButtonGroup::buttonClicked,
-            this, &HbLogConfigDialog::onColorClicked, Qt::UniqueConnection );
+    connect(qpb_cancel, &QPushButton::clicked, this, &HbLogConfigDialog::reject, Qt::UniqueConnection);
+    connect(qtb_save, &QToolButton::clicked, this, &HbLogConfigDialog::onSaveClicked, Qt::UniqueConnection);
+    connect(qpb_reset, &QPushButton::clicked, this, &HbLogConfigDialog::onResetClicked, Qt::UniqueConnection);
+    connect(qpb_font, &QPushButton::clicked, this, &HbLogConfigDialog::onFontClicked, Qt::UniqueConnection);
+    connect(
+        qpb_bck_color, &QPushButton::clicked, this, &HbLogConfigDialog::onBackgroundColorClicked, Qt::UniqueConnection);
+    connect(action_import, &QAction::triggered, this, &HbLogConfigDialog::onImportClicked, Qt::UniqueConnection);
+    connect(action_export, &QAction::triggered, this, &HbLogConfigDialog::onExportClicked, Qt::UniqueConnection);
+    connect(&qbg_colors,
+            (void (QButtonGroup::*)(int)) & QButtonGroup::buttonClicked,
+            this,
+            &HbLogConfigDialog::onColorClicked,
+            Qt::UniqueConnection);
 
-    
     // Level colors
     QMap<quint32, QColor>::const_iterator iC = mConfig.levelColor().constBegin();
-    while (iC != mConfig.levelColor().constEnd())
-    {
-        QLabel*      label = q_check_ptr(new QLabel(QStringLiteral("Level %1").arg(iC.key())));
+    while (iC != mConfig.levelColor().constEnd()) {
+        QLabel* label = q_check_ptr(new QLabel(QStringLiteral("Level %1").arg(iC.key())));
         QPushButton* button = q_check_ptr(new QPushButton(QStringLiteral("Choose...")));
         button->setFixedHeight(20);
 
@@ -53,17 +52,14 @@ QDialog(parent), mConfig(pConfig)
     }
 
     updateGui();
-
 }
 
-void HbLogConfigDialog::updateGui()
-{
+void HbLogConfigDialog::updateGui() {
     // Max buffer
     qsb_buffer->setValue(mConfig.maxBuffer());
 
     // Colors
-    for(QAbstractButton* vButton: qbg_colors.buttons())
-    {
+    for (QAbstractButton* vButton : qbg_colors.buttons()) {
         QColor c = mConfig.colorByIdLevel(qbg_colors.id(vButton));
 
         QPixmap vPix(10, 10);
@@ -77,19 +73,16 @@ void HbLogConfigDialog::updateGui()
     qpb_bck_color->setIcon(QIcon(vPix));
 }
 
-void HbLogConfigDialog::onFontClicked()
-{
+void HbLogConfigDialog::onFontClicked() {
     bool ok = false;
     QFont vFont = QFontDialog::getFont(&ok, mConfig.font(), this, QStringLiteral("Select a font"));
 
-    if (ok)
-    {
+    if (ok) {
         mConfig.setFont(vFont);
     }
 }
 
-void HbLogConfigDialog::onColorClicked(int pId)
-{
+void HbLogConfigDialog::onColorClicked(int pId) {
     QColor vColor = QColorDialog::getColor(mConfig.colorByIdLevel(pId), this, QStringLiteral("Select a color"));
     mConfig.setColorById(pId, vColor);
 
@@ -98,8 +91,7 @@ void HbLogConfigDialog::onColorClicked(int pId)
     qbg_colors.button(pId)->setIcon(QIcon(vPix));
 }
 
-void HbLogConfigDialog::onBackgroundColorClicked()
-{
+void HbLogConfigDialog::onBackgroundColorClicked() {
     QColor vColor = QColorDialog::getColor(mConfig.backgroundColor(), this, QStringLiteral("Select a color"));
     mConfig.setBackgroundColor(vColor);
 
@@ -108,16 +100,13 @@ void HbLogConfigDialog::onBackgroundColorClicked()
     qpb_bck_color->setIcon(QIcon(vPix));
 }
 
-void HbLogConfigDialog::onSaveClicked()
-{
+void HbLogConfigDialog::onSaveClicked() {
     saveConfig();
 
     accept();
-
 }
 
-void HbLogConfigDialog::saveConfig()
-{
+void HbLogConfigDialog::saveConfig() {
     // Save the GUI values in the local model.
     // NOTE: Colors are saved a little at a time in the local model.
 
@@ -125,46 +114,40 @@ void HbLogConfigDialog::saveConfig()
     mConfig.setMaxBuffer(qsb_buffer->value());
 }
 
-void HbLogConfigDialog::onResetClicked()
-{
+void HbLogConfigDialog::onResetClicked() {
     mConfig = HbLogConfig::importConfigXml(QString::fromLatin1(HbLogConfig::msDefaultConfigXml));
     accept();
 }
 
-void HbLogConfigDialog::onImportClicked()
-{
-    QString file_path = QFileDialog::getOpenFileName(this, QStringLiteral("Import log configuration"), QStringLiteral(""), "Config file (*.hblog)");
-    if (file_path.isEmpty())
-    {
+void HbLogConfigDialog::onImportClicked() {
+    QString file_path = QFileDialog::getOpenFileName(
+        this, QStringLiteral("Import log configuration"), QStringLiteral(""), "Config file (*.hblog)");
+    if (file_path.isEmpty()) {
         return;
     }
 
     HbLogConfig config = HbLogConfig::importConfigXml(file_path);
 
-    if (config.isValid())
-    {
+    if (config.isValid()) {
         mConfig = config;
         updateGui();
     }
 }
 
-void HbLogConfigDialog::onExportClicked()
-{
+void HbLogConfigDialog::onExportClicked() {
     saveConfig();
 
-    QString file_path = QFileDialog::getSaveFileName(this, QStringLiteral("Export log configuration"), QStringLiteral(""), "Config file (*.hblog)");
-    if (file_path.isEmpty())
-    {
+    QString file_path = QFileDialog::getSaveFileName(
+        this, QStringLiteral("Export log configuration"), QStringLiteral(""), "Config file (*.hblog)");
+    if (file_path.isEmpty()) {
         return;
     }
 
-    if (!HbLogConfig::exportConfigXml(file_path, mConfig))
-    {
+    if (!HbLogConfig::exportConfigXml(file_path, mConfig)) {
         qWarning() << "Exporting log config file failed";
     }
 }
 
-const HbLogConfig & HbLogConfigDialog::config() const
-{
+const HbLogConfig& HbLogConfigDialog::config() const {
     return mConfig;
 }

@@ -21,38 +21,33 @@
 #include <contract/HbNetworkContract.h>
 #include <contract/auth/HbAuthStatusContract.h> // Covariance.
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbAuthRequestContract : public HbNetworkContract
-        {
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbAuthRequestContract : public HbNetworkContract {
+public:
+    HbAuthRequestContract();
+    virtual ~HbAuthRequestContract() = default;
+    HbAuthRequestContract(const HbAuthRequestContract& source);
+    HbAuthRequestContract& operator=(const HbAuthRequestContract& source);
 
-        public:
+    virtual HbAuthRequestContract* create() const override;
 
-            HbAuthRequestContract();
-            virtual ~HbAuthRequestContract() = default;
-            HbAuthRequestContract( const HbAuthRequestContract & source );
-            HbAuthRequestContract & operator=( const HbAuthRequestContract & source );
+    HbAuthStatusContract* takeReply() const;
 
-            virtual HbAuthRequestContract * create() const override;
+    virtual bool read(QDataStream& stream) override;
+    virtual bool write(QDataStream& stream) const override;
 
-            HbAuthStatusContract * takeReply() const;
+    virtual authstgy type() const final;
+    virtual void setType(authstgy type) final;
 
-            virtual bool read ( QDataStream & stream ) override;
-            virtual bool write( QDataStream & stream ) const override;
-
-            virtual authstgy type() const final;
-            virtual void setType( authstgy type ) final;
-
-        protected:
-            authstgy mType;
-        };
-    }
-}
+protected:
+    authstgy mType;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbAuthRequestContract;
 

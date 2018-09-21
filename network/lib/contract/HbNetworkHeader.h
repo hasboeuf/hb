@@ -19,46 +19,42 @@
 #include <HbNetwork.h>
 #include <contract/HbNetworkProtocol.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HbNetworkHeader final
-        {
-            friend QDataStream & operator<<( QDataStream & stream, const HbNetworkHeader & header );
-            friend QDataStream & operator>>( QDataStream & stream, HbNetworkHeader & header );
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HbNetworkHeader final {
+    friend QDataStream& operator<<(QDataStream& stream, const HbNetworkHeader& header);
+    friend QDataStream& operator>>(QDataStream& stream, HbNetworkHeader& header);
 
-        public:
+public:
+    HbNetworkHeader(); // Used before streamed back.
+    HbNetworkHeader(const HbNetworkHeader& header);
+    HbNetworkHeader(serviceuid service, codeuid code);
+    HbNetworkHeader& operator=(const HbNetworkHeader& header);
+    ~HbNetworkHeader() = default;
 
-            HbNetworkHeader(); // Used before streamed back.
-            HbNetworkHeader( const HbNetworkHeader & header );
-            HbNetworkHeader( serviceuid service, codeuid code );
-            HbNetworkHeader & operator=( const HbNetworkHeader & header );
-            ~HbNetworkHeader() = default;
+    QString toString() const;
 
-            QString toString() const;
+    const QString& appName() const;
+    quint16 protocolVersion() const;
+    serviceuid service() const;
+    codeuid code() const;
 
-            const QString & appName() const;
-            quint16 protocolVersion() const;
-            serviceuid service() const;
-            codeuid code() const;
+    void setRouting(HbNetworkProtocol::RoutingScheme routing);
 
-            void setRouting( HbNetworkProtocol::RoutingScheme routing );
+private:
+    QString mAppName;
+    quint16 mProtocolVersion;
+    serviceuid mService;
+    codeuid mCode;
+};
 
-        private:
-            QString mAppName;
-            quint16 mProtocolVersion;
-            serviceuid mService;
-            codeuid mCode;
-        };
-
-        QDataStream & operator<<(QDataStream & stream, const HbNetworkHeader & header);
-        QDataStream & operator>>(QDataStream & stream, HbNetworkHeader & header);
-    }
-}
+QDataStream& operator<<(QDataStream& stream, const HbNetworkHeader& header);
+QDataStream& operator>>(QDataStream& stream, HbNetworkHeader& header);
+} // namespace network
+} // namespace hb
 
 using hb::network::HbNetworkHeader;
 

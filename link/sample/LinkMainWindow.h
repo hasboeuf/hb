@@ -10,65 +10,60 @@
 // Hb
 
 // Local
-#include <ui_LinkMainWindow.h>
+#include <LinkBrowserControls.h>
 #include <facebook/HbFacebookRequester.h>
 #include <google/HbGoogleRequester.h>
-#include <LinkBrowserControls.h>
+#include <ui_LinkMainWindow.h>
 
-namespace hb
-{
-    namespace link
-    {
-        class HbO2ClientFacebook;
-        class HbO2ServerFacebook;
-        class HbFacebookObject;
+namespace hb {
+namespace link {
+class HbO2ClientFacebook;
+class HbO2ServerFacebook;
+class HbFacebookObject;
 
-        class HbO2ClientGoogle;
-        class HbO2ServerGoogle;
-    }
+class HbO2ClientGoogle;
+class HbO2ServerGoogle;
+} // namespace link
 
-    namespace linkexample
-    {
+namespace linkexample {
 
-        class LinkMainWindow : public QMainWindow, private Ui::LinkMainWindow
-        {
-            Q_OBJECT
+class LinkMainWindow : public QMainWindow, private Ui::LinkMainWindow {
+    Q_OBJECT
 
-        public:
-            explicit LinkMainWindow(QWidget * parent = nullptr);
-            virtual ~LinkMainWindow();
+public:
+    explicit LinkMainWindow(QWidget* parent = nullptr);
+    virtual ~LinkMainWindow();
 
-            static QString msClientId;
-            static QString msClientSecret;
+    static QString msClientId;
+    static QString msClientSecret;
 
-        private:
-            hb::link::HbO2ClientFacebook * mpFacebookClient;
-            hb::link::HbO2ServerFacebook * mpFacebookServer;
-            hb::link::HbFacebookRequester  mFacebookRequester;
+private:
+    hb::link::HbO2ClientFacebook* mpFacebookClient;
+    hb::link::HbO2ServerFacebook* mpFacebookServer;
+    hb::link::HbFacebookRequester mFacebookRequester;
 
-            hb::link::HbO2ClientGoogle * mpGoogleClient;
-            hb::link::HbO2ServerGoogle * mpGoogleServer;
-            hb::link::HbGoogleRequester  mGoogleRequester;
+    hb::link::HbO2ClientGoogle* mpGoogleClient;
+    hb::link::HbO2ServerGoogle* mpGoogleServer;
+    hb::link::HbGoogleRequester mGoogleRequester;
 
-            LinkBrowserControls mBrowserControls;
+    LinkBrowserControls mBrowserControls;
 
-        public slots:
-            void onFacebookClientLinkSucceed();
-            void onFacebookServerLinkSucceed();
-            void onFacebookRequestCompleted(quint64 request_id, hb::link::HbFacebookObject * object );
+public slots:
+    void onFacebookClientLinkSucceed();
+    void onFacebookServerLinkSucceed();
+    void onFacebookRequestCompleted(quint64 request_id, hb::link::HbFacebookObject* object);
 
-            void onGoogleClientLinkSucceed();
-            void onGoogleServerLinkSucceed();
-            void onGoogleRequestCompleted( quint64 request_id, hb::link::HbGoogleObject * object );
+    void onGoogleClientLinkSucceed();
+    void onGoogleServerLinkSucceed();
+    void onGoogleRequestCompleted(quint64 request_id, hb::link::HbGoogleObject* object);
 
-        private slots:
-            void onFacebookConnectClicked();
-            void onGoogleConnectClicked();
+private slots:
+    void onFacebookConnectClicked();
+    void onGoogleConnectClicked();
 
-        signals:
-
-        };
-    }
-}
+signals:
+};
+} // namespace linkexample
+} // namespace hb
 
 #endif // USERMAINWINDOW_H

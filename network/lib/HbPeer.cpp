@@ -9,26 +9,20 @@
 
 using namespace hb::network;
 
-HbPeer::HbPeer( const HbGeneralConfig &config )
-{
-    if( config.isValid() )
-    {
+HbPeer::HbPeer(const HbGeneralConfig& config) {
+    if (config.isValid()) {
         HbNetworkProtocol::msAppName = config.appName();
         HbNetworkProtocol::msProtocolVersion = config.protocolVersion();
 
         mReady = true;
-    }
-    else
-    {
+    } else {
         qWarning() << "General configuration not valid. HbPeer will never do anything";
         mReady = false;
     }
 }
 
-bool HbPeer::isReady() const
-{
-    if( !mReady )
-    {
+bool HbPeer::isReady() const {
+    if (!mReady) {
         qWarning() << "HbPeer not ready. Invalid config";
     }
     return mReady;

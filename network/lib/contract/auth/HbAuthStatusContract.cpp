@@ -1,55 +1,46 @@
 // Local
-#include <contract/auth/HbAuthStatusContract.h>
 #include <contract/HbNetworkProtocol.h>
+#include <contract/auth/HbAuthStatusContract.h>
 
 using namespace hb::network;
 
 HbAuthStatusContract::HbAuthStatusContract() :
-    HbNetworkContract( HbNetworkProtocol::SERVICE_AUTH,
-                       HbNetworkProtocol::CODE_SRV_AUTH_STATUS )
-{
-    setRouting( HbNetworkProtocol::ROUTING_UNICAST );
-    mStatus    = HbNetworkProtocol::AUTH_BAD;
+        HbNetworkContract(HbNetworkProtocol::SERVICE_AUTH, HbNetworkProtocol::CODE_SRV_AUTH_STATUS) {
+    setRouting(HbNetworkProtocol::ROUTING_UNICAST);
+    mStatus = HbNetworkProtocol::AUTH_BAD;
     mTryNumber = 0;
-    mMaxTries  = 0;
+    mMaxTries = 0;
 }
 
-HbAuthStatusContract::HbAuthStatusContract( const HbAuthStatusContract & source ) :
-    HbNetworkContract( source )
-{
-    if( & source != this )
-    {
-        mUserInfo    = source.mUserInfo;
-        mStatus      = source.mStatus;
+HbAuthStatusContract::HbAuthStatusContract(const HbAuthStatusContract& source) : HbNetworkContract(source) {
+    if (&source != this) {
+        mUserInfo = source.mUserInfo;
+        mStatus = source.mStatus;
         mDescription = source.mDescription;
-        mTryNumber   = source.mTryNumber;
-        mMaxTries    = source.mMaxTries;
+        mTryNumber = source.mTryNumber;
+        mMaxTries = source.mMaxTries;
     }
 }
 
-HbAuthStatusContract & HbAuthStatusContract::operator=( const HbAuthStatusContract & source )
-{
-    if( &source != this )
-    {
-        HbNetworkContract::operator=( source );
+HbAuthStatusContract& HbAuthStatusContract::operator=(const HbAuthStatusContract& source) {
+    if (&source != this) {
+        HbNetworkContract::operator=(source);
 
-        mUserInfo    = source.mUserInfo;
-        mStatus      = source.mStatus;
+        mUserInfo = source.mUserInfo;
+        mStatus = source.mStatus;
         mDescription = source.mDescription;
-        mTryNumber   = source.mTryNumber;
-        mMaxTries    = source.mMaxTries;
+        mTryNumber = source.mTryNumber;
+        mMaxTries = source.mMaxTries;
     }
 
-    return ( *this );
+    return (*this);
 }
 
-HbAuthStatusContract * HbAuthStatusContract::create() const
-{
+HbAuthStatusContract* HbAuthStatusContract::create() const {
     return new HbAuthStatusContract();
 }
 
-bool HbAuthStatusContract::read( QDataStream & stream )
-{
+bool HbAuthStatusContract::read(QDataStream& stream) {
     stream >> mUserInfo;
     netwint status;
     stream >> status;
@@ -57,15 +48,14 @@ bool HbAuthStatusContract::read( QDataStream & stream )
     stream >> mTryNumber;
     stream >> mMaxTries;
 
-    mStatus = ( HbNetworkProtocol::AuthStatus ) status;
+    mStatus = (HbNetworkProtocol::AuthStatus)status;
 
     return true;
 }
 
-bool HbAuthStatusContract::write( QDataStream & stream ) const
-{
+bool HbAuthStatusContract::write(QDataStream& stream) const {
     stream << mUserInfo;
-    stream << ( netwint ) mStatus;
+    stream << (netwint)mStatus;
     stream << mDescription;
     stream << mTryNumber;
     stream << mMaxTries;
@@ -73,57 +63,46 @@ bool HbAuthStatusContract::write( QDataStream & stream ) const
     return true;
 }
 
-void HbAuthStatusContract::setUserInfo(const HbNetworkUserInfo & user_info )
-{
+void HbAuthStatusContract::setUserInfo(const HbNetworkUserInfo& user_info) {
     mUserInfo = user_info;
 }
 
-void HbAuthStatusContract::setStatus( HbNetworkProtocol::AuthStatus status )
-{
+void HbAuthStatusContract::setStatus(HbNetworkProtocol::AuthStatus status) {
     mStatus = status;
 }
 
-void HbAuthStatusContract::setDescription( const QString & description )
-{
+void HbAuthStatusContract::setDescription(const QString& description) {
     mDescription = description;
 }
 
-void HbAuthStatusContract::setTryNumber( quint8 try_number )
-{
+void HbAuthStatusContract::setTryNumber(quint8 try_number) {
     mTryNumber = try_number;
 }
 
-void HbAuthStatusContract::setMaxTries ( quint8 max_tries )
-{
+void HbAuthStatusContract::setMaxTries(quint8 max_tries) {
     mMaxTries = max_tries;
 }
 
-const HbNetworkUserInfo & HbAuthStatusContract::userInfo() const
-{
+const HbNetworkUserInfo& HbAuthStatusContract::userInfo() const {
     return mUserInfo;
 }
 
-HbNetworkUserInfo & HbAuthStatusContract::userInfo()
-{
+HbNetworkUserInfo& HbAuthStatusContract::userInfo() {
     return mUserInfo;
 }
 
-HbNetworkProtocol::AuthStatus HbAuthStatusContract::status() const
-{
+HbNetworkProtocol::AuthStatus HbAuthStatusContract::status() const {
     return mStatus;
 }
 
-const QString & HbAuthStatusContract::description() const
-{
+const QString& HbAuthStatusContract::description() const {
     return mDescription;
 }
 
-quint8 HbAuthStatusContract::tryNumber() const
-{
+quint8 HbAuthStatusContract::tryNumber() const {
     return mTryNumber;
 }
 
-quint8 HbAuthStatusContract::maxTries() const
-{
+quint8 HbAuthStatusContract::maxTries() const {
     return mMaxTries;
 }

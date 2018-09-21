@@ -4,24 +4,19 @@
 // Hb
 #include <HbPluginService.h>
 
-namespace hb
-{
-    namespace pluginexample
-    {
-        using hb::plugin::HbPluginService;
+namespace hb {
+namespace pluginexample {
+using hb::plugin::HbPluginService;
 
-        class AppService : public HbPluginService
-        {
-            Q_OBJECT
+class AppService : public HbPluginService {
+    Q_OBJECT
 
-        public:
+public:
+    explicit AppService(const QString& name, const QString& version);
 
-            explicit AppService( const QString & name, const QString & version );
-
-        protected:
-
-        };
-    }
-}
+protected:
+};
+} // namespace pluginexample
+} // namespace hb
 
 #endif // APPSERVICE_H

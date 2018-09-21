@@ -6,29 +6,23 @@
 // Local
 #include <AppService.h>
 
-namespace hb
-{
-    namespace pluginexample
-    {
-        using hb::plugin::HbPluginPlatform;
+namespace hb {
+namespace pluginexample {
+using hb::plugin::HbPluginPlatform;
 
-        class AppPlatformService : public HbPluginPlatform
-        {
-            Q_OBJECT
+class AppPlatformService : public HbPluginPlatform {
+    Q_OBJECT
 
+public:
+    static const QString SERVICE_MENU_BAR;
+    static const QString SERVICE_TAB;
 
-        public:
-            static const QString SERVICE_MENU_BAR;
-            static const QString SERVICE_TAB;
+    explicit AppPlatformService();
+    virtual ~AppPlatformService();
 
-            explicit AppPlatformService();
-            virtual ~AppPlatformService();
-
-            virtual AppService * requestService ( const QString & service_name ) const override;
-
-
-        };
-    }
-}
+    virtual AppService* requestService(const QString& service_name) const override;
+};
+} // namespace pluginexample
+} // namespace hb
 
 #endif // APPPLATFORMSERVICE_H

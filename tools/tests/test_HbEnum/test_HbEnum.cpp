@@ -1,6 +1,6 @@
-#include <QtTest>
-#include <QtCore/QObject>
 #include <core/HbEnum.h>
+#include <QtCore/QObject>
+#include <QtTest>
 
 using namespace hb::tools;
 
@@ -19,20 +19,22 @@ public:
 private slots:
 
     void testToString() {
-
-        QCOMPARE( MetaMyEnum::toString(), QStringList() << "Value1" << "Value2" << "Value3" );
-        QCOMPARE( MetaMyEnum::toString( Value1 ), "Value1" );
-        QCOMPARE( MetaMyEnum::toString( Value2 ), "Value2" );
-        QCOMPARE( MetaMyEnum::toString( Value3 ), "Value3" );
-        QCOMPARE( MetaMyEnum::toString( 0 ), "Value1" );
-        QCOMPARE( MetaMyEnum::toString( 1 ), "Value2" );
-        QCOMPARE( MetaMyEnum::toString( 2 ), "Value3" );
+        QCOMPARE(MetaMyEnum::toString(),
+                 QStringList() << "Value1"
+                               << "Value2"
+                               << "Value3");
+        QCOMPARE(MetaMyEnum::toString(Value1), "Value1");
+        QCOMPARE(MetaMyEnum::toString(Value2), "Value2");
+        QCOMPARE(MetaMyEnum::toString(Value3), "Value3");
+        QCOMPARE(MetaMyEnum::toString(0), "Value1");
+        QCOMPARE(MetaMyEnum::toString(1), "Value2");
+        QCOMPARE(MetaMyEnum::toString(2), "Value3");
     }
 
     void testFromString() {
-        QCOMPARE( MetaMyEnum::fromString( "Value1" ), Value1 );
-        QCOMPARE( MetaMyEnum::fromString( "Value2" ), Value2 );
-        QCOMPARE( MetaMyEnum::fromString( "Value3" ), Value3 );
+        QCOMPARE(MetaMyEnum::fromString("Value1"), Value1);
+        QCOMPARE(MetaMyEnum::fromString("Value2"), Value2);
+        QCOMPARE(MetaMyEnum::fromString("Value3"), Value3);
     }
 };
 

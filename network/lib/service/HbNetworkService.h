@@ -16,43 +16,39 @@
 // Hb
 // Local
 #include <HbNetwork.h>
-#include <user/HbNetworkUserInfo.h>
 #include <contract/HbNetworkContract.h>
 #include <contract/HbNetworkExchanges.h>
 #include <listener/IHbContractListener.h>
+#include <user/HbNetworkUserInfo.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbNetworkService : public QObject
-        {
-            Q_OBJECT
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbNetworkService : public QObject {
+    Q_OBJECT
 
-        public:
+public:
+    HbNetworkService() = default;
+    virtual ~HbNetworkService() {
+    } //!< \todo defaulted linux-g++ issue
 
-            HbNetworkService() = default;
-            virtual ~HbNetworkService(){} //!< \todo defaulted linux-g++ issue
+    virtual void reset() = 0;
+    virtual void plugContracts(HbNetworkExchanges& exchanges) = 0;
 
-            virtual void reset() = 0;
-            virtual void plugContracts( HbNetworkExchanges & exchanges ) = 0;
+    virtual serviceuid uid() const = 0;
 
-            virtual serviceuid uid() const = 0;
+signals:
+    void contractToSend(const HbNetworkContract* contract);
 
-        signals:
-            void contractToSend( const HbNetworkContract * contract );
-
-            // Server side.
-            void userContractToSend ( ShConstHbNetworkUserInfo user_info,             HbNetworkContract * contract );
-            void usersContractToSend( QList< ShConstHbNetworkUserInfo > users_infos,  HbNetworkContract * contract );
-            void userToKick( ShConstHbNetworkUserInfo user_info, netwlint reason, const QString & description = QString() );
-            void socketToKick( networkuid socket_uid, netwlint reason, const QString & description = QString() );
-
-        };
-    }
-}
+    // Server side.
+    void userContractToSend(ShConstHbNetworkUserInfo user_info, HbNetworkContract* contract);
+    void usersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos, HbNetworkContract* contract);
+    void userToKick(ShConstHbNetworkUserInfo user_info, netwlint reason, const QString& description = QString());
+    void socketToKick(networkuid socket_uid, netwlint reason, const QString& description = QString());
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBNETWORKSERVICE_H

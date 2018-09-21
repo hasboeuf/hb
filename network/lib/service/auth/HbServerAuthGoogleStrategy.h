@@ -15,39 +15,35 @@
 #include <google/HbGoogleRequester.h>
 // Local
 #include <HbNetwork.h>
-#include <service/auth/HbServerOAuthStrategy.h>
 #include <contract/HbNetworkProtocol.h>
 #include <contract/auth/HbAuthRequestContract.h> // Template.
+#include <service/auth/HbServerOAuthStrategy.h>
 
-namespace hb
-{
-    using namespace link;
+namespace hb {
+using namespace link;
 
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbServerAuthGoogleStrategy : public HbServerOAuthStrategy
-        {
-            Q_OBJECT
-        public:
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbServerAuthGoogleStrategy : public HbServerOAuthStrategy {
+    Q_OBJECT
+public:
+    HbServerAuthGoogleStrategy();
+    virtual ~HbServerAuthGoogleStrategy() = default;
 
-            HbServerAuthGoogleStrategy();
-            virtual ~HbServerAuthGoogleStrategy() = default;
+    virtual authstgy type() const final;
+    virtual bool checkLogin(const HbAuthRequestContract* contract) override;
 
-            virtual authstgy type() const final;
-            virtual bool checkLogin( const HbAuthRequestContract * contract ) override;
+public slots:
+    void onLinkSucceed();
+    void onRequestCompleted(quint64 request_id, HbGoogleObject* object);
 
-        public slots:
-            void onLinkSucceed();
-            void onRequestCompleted( quint64 request_id, HbGoogleObject * object );
-
-        private:
-            HbGoogleRequester mRequester;
-        };
-    }
-}
+private:
+    HbGoogleRequester mRequester;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbServerAuthGoogleStrategy;
 

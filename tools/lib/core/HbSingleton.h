@@ -14,49 +14,39 @@
 // System
 #include <iostream>
 
-namespace hb
-{
-    namespace tools
-    {
+namespace hb {
+namespace tools {
 
-        /*!
-         * HbSingleton represents a non-threadsafe singleton class.
-         */
-        template < class T >
-        class HbSingleton
-        {
-
-        public:
-            static T * get()
-            {
-                if( mpInstance == nullptr )
-                {
-                    mpInstance = new T();
-                }
-                return mpInstance;
-            }
-
-            static void kill()
-            {
-                if( mpInstance )
-                {
-                    delete mpInstance;
-                    mpInstance = nullptr;
-                }
-            }
-
-        protected:
-            static T * mpInstance;
-
-        private:
-            T & operator=( const T & );
-        };
+/*!
+ * HbSingleton represents a non-threadsafe singleton class.
+ */
+template <class T> class HbSingleton {
+public:
+    static T* get() {
+        if (mpInstance == nullptr) {
+            mpInstance = new T();
+        }
+        return mpInstance;
     }
-}
+
+    static void kill() {
+        if (mpInstance) {
+            delete mpInstance;
+            mpInstance = nullptr;
+        }
+    }
+
+protected:
+    static T* mpInstance;
+
+private:
+    T& operator=(const T&);
+};
+} // namespace tools
+} // namespace hb
 
 using hb::tools::HbSingleton;
 
-template< typename T >
-T * HbSingleton< T >::mpInstance = nullptr;
+template <typename T> T* HbSingleton<T>::mpInstance = nullptr;
 
 #endif // HBSINGLETON_H

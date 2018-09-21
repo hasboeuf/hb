@@ -17,51 +17,47 @@
 // Local
 #include <config/HbO2Config.h>
 
-namespace hb
-{
-    namespace link
-    {
+namespace hb {
+namespace link {
 
-        class IHbLinkBrowserControls;
+class IHbLinkBrowserControls;
 
-        /*!
-         * TODOC
-         */
-        class HB_LINK_DECL HbO2ClientConfig final : public HbO2Config
-        {
+/*!
+ * TODOC
+ */
+class HB_LINK_DECL HbO2ClientConfig final : public HbO2Config {
+public:
+    HbO2ClientConfig();
+    HbO2ClientConfig(const HbO2ClientConfig& config);
+    virtual ~HbO2ClientConfig() = default;
+    virtual HbO2ClientConfig& operator=(const HbO2ClientConfig& config);
 
-        public:
-            HbO2ClientConfig();
-            HbO2ClientConfig( const HbO2ClientConfig & config );
-            virtual ~HbO2ClientConfig() = default;
-            virtual HbO2ClientConfig & operator =( const HbO2ClientConfig & config );
+    virtual bool isValid() const;
 
-            virtual bool isValid() const;
+    virtual bool read(QDataStream& stream);
+    virtual bool write(QDataStream& stream) const;
 
-            virtual bool read( QDataStream & stream );
-            virtual bool write( QDataStream & stream ) const;
+    virtual void setLocalPort(quint16 local_port) final;
+    virtual quint16 localPort() const final;
 
-            virtual void setLocalPort( quint16 local_port ) final;
-            virtual quint16 localPort() const final;
+    virtual void addScope(const QString& permission) final;
+    virtual void setScopes(const QStringList& permissions) final;
+    virtual const QStringList& scopes() const final;
+    virtual QString scopesStr() const final;
 
-            virtual void addScope( const QString & permission  ) final;
-            virtual void setScopes( const QStringList & permissions ) final;
-            virtual const QStringList & scopes() const final;
-            virtual QString scopesStr() const final;
+    virtual void setScopeSeparator(const QString& separator) final;
 
-            virtual void setScopeSeparator( const QString & separator ) final;
+    void setBrowserControls(IHbLinkBrowserControls* browser_controls);
+    IHbLinkBrowserControls* browserControls();
 
-            void setBrowserControls( IHbLinkBrowserControls * browser_controls );
-            IHbLinkBrowserControls * browserControls();
-
-        private:
-            QStringList mScopes;
-            QString     mScopesSeparator;
-            quint16 mLocalPort;
-            IHbLinkBrowserControls * mpBrowserControls; // Not serialized.
-        };
-    }
-}
+private:
+    QStringList mScopes;
+    QString mScopesSeparator;
+    quint16 mLocalPort;
+    IHbLinkBrowserControls* mpBrowserControls; // Not serialized.
+};
+} // namespace link
+} // namespace hb
 
 using hb::link::HbO2ClientConfig;
 

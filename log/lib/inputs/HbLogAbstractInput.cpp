@@ -5,7 +5,5 @@
 
 using namespace hb::log;
 
-HbLogAbstractInput::HbLogAbstractInput( QObject * parent ) :
-    QObject( parent )
-{
+HbLogAbstractInput::HbLogAbstractInput(QObject* parent) : QObject(parent) {
 }

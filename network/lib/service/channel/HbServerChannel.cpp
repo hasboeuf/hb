@@ -5,58 +5,49 @@
 
 using namespace hb::network;
 
-void HbServerChannel::onContractToSend( HbNetworkContract * contract )
-{
+void HbServerChannel::onContractToSend(HbNetworkContract* contract) {
     // Function used to send a reply contract from a channel.
 
-    if( !contract )
-    {
+    if (!contract) {
         qWarning() << "Null contract";
         return;
     }
 
-    if( contract->routing() != HbNetworkProtocol::ROUTING_UNICAST )
-    {
+    if (contract->routing() != HbNetworkProtocol::ROUTING_UNICAST) {
         qWarning() << "Only unicast contract are supported";
         delete contract;
         return;
     }
 
-    if( contract->receivers().size() != 1 )
-    {
+    if (contract->receivers().size() != 1) {
         qWarning() << "There must be only one receiver";
     }
 
-    emit contractToSend( contract );
+    emit contractToSend(contract);
 }
 
-void HbServerChannel::onUserContractToSend ( ShConstHbNetworkUserInfo user_info, HbNetworkContract * contract )
-{
-    if( !contract )
-    {
+void HbServerChannel::onUserContractToSend(ShConstHbNetworkUserInfo user_info, HbNetworkContract* contract) {
+    if (!contract) {
         qWarning() << "Null contract";
         return;
     }
 
-    contract->setNetworkReceiver( mNetworkUid );
+    contract->setNetworkReceiver(mNetworkUid);
 
-    emit userContractToSend( user_info, contract );
+    emit userContractToSend(user_info, contract);
 }
 
-void HbServerChannel::onUsersContractToSend( QList< ShConstHbNetworkUserInfo > users_infos, HbNetworkContract * contract )
-{
-    if( !contract )
-    {
+void HbServerChannel::onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos, HbNetworkContract* contract) {
+    if (!contract) {
         qWarning() << "Null contract";
         return;
     }
 
-    contract->setNetworkReceiver( mNetworkUid );
+    contract->setNetworkReceiver(mNetworkUid);
 
-    emit usersContractToSend( users_infos, contract );
+    emit usersContractToSend(users_infos, contract);
 }
 
-void HbServerChannel::onUserToKick( ShConstHbNetworkUserInfo user_info, netwlint reason, const QString & description )
-{
-    emit userToKick( user_info, reason, description );
+void HbServerChannel::onUserToKick(ShConstHbNetworkUserInfo user_info, netwlint reason, const QString& description) {
+    emit userToKick(user_info, reason, description);
 }

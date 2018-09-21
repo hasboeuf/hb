@@ -11,39 +11,34 @@
 #include <com/HbSocketHandler.h>
 #include <com/tcp/HbTcpServer.h> // Covariance.
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HbTcpSocketHandler : public HbSocketHandler
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbTcpSocketHandler )
-            Q_FRIEND_CLASS( HbTcpServer )
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HbTcpSocketHandler : public HbSocketHandler {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbTcpSocketHandler)
+    Q_FRIEND_CLASS(HbTcpServer)
 
-        protected:
+protected:
+    HbTcpSocketHandler(HbTcpServer* server);
+    virtual ~HbTcpSocketHandler();
 
-            HbTcpSocketHandler( HbTcpServer * server );
-            virtual ~HbTcpSocketHandler();
+    virtual HbTcpServer* server() const override;
 
-            virtual HbTcpServer * server( ) const override;
+    virtual void init();
+    virtual void reset();
 
-            virtual void init();
-            virtual void reset();
+public slots:
+    virtual void onNewPendingConnection(qint32 socket_descriptor) override;
 
-        public slots:
-            virtual void onNewPendingConnection( qint32 socket_descriptor ) override;
+private:
+    HbTcpServer* mpServer;
 
-        private:
-            HbTcpServer * mpServer;
-
-        signals:
-
-        };
-    }
-}
+signals:
+};
+} // namespace network
+} // namespace hb
 
 #endif // HBTCPSOCKETHANDLER_H

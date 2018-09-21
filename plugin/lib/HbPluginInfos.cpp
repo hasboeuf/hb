@@ -5,26 +5,21 @@
 
 using namespace hb::plugin;
 
-HbPluginInfos::HbPluginInfos()
-{
-    mState         = PLUGIN_NOT_REGISTERED;
+HbPluginInfos::HbPluginInfos() {
+    mState = PLUGIN_NOT_REGISTERED;
 }
 
-HbPluginInfos::~HbPluginInfos()
-{
-    setState( PLUGIN_NOT_REGISTERED );
+HbPluginInfos::~HbPluginInfos() {
+    setState(PLUGIN_NOT_REGISTERED);
 }
 
-HbPluginInfos::HbPluginInfos( const HbPluginInfos & copy ) :
-    QObject()
-{
-    if ( this != &copy )
-    {
-        mPath    = copy.mPath;
-        mAuthor  = copy.mAuthor;
-        mName    = copy.mName;
+HbPluginInfos::HbPluginInfos(const HbPluginInfos& copy) : QObject() {
+    if (this != &copy) {
+        mPath = copy.mPath;
+        mAuthor = copy.mAuthor;
+        mName = copy.mName;
         mVersion = copy.mVersion;
-        mState   = copy.mState;
+        mState = copy.mState;
 
         mRequiredPlugins = copy.mRequiredPlugins;
         mOptionalPlugins = copy.mOptionalPlugins;
@@ -35,15 +30,13 @@ HbPluginInfos::HbPluginInfos( const HbPluginInfos & copy ) :
     }
 }
 
-HbPluginInfos& HbPluginInfos::operator=( const HbPluginInfos & copy )
-{
-    if ( this != &copy )
-    {
-        mPath    = copy.mPath;
-        mAuthor  = copy.mAuthor;
-        mName    = copy.mName;
+HbPluginInfos& HbPluginInfos::operator=(const HbPluginInfos& copy) {
+    if (this != &copy) {
+        mPath = copy.mPath;
+        mAuthor = copy.mAuthor;
+        mName = copy.mName;
         mVersion = copy.mVersion;
-        mState   = copy.mState;
+        mState = copy.mState;
 
         mRequiredPlugins = copy.mRequiredPlugins;
         mOptionalPlugins = copy.mOptionalPlugins;
@@ -53,187 +46,153 @@ HbPluginInfos& HbPluginInfos::operator=( const HbPluginInfos & copy )
         mChildren = copy.mChildren;
     }
 
-    return ( *this );
+    return (*this);
 }
 
-void HbPluginInfos::setPath   ( const QString & path    )
-{
+void HbPluginInfos::setPath(const QString& path) {
     mPath = path;
 }
 
-void HbPluginInfos::setAuthor ( const QString & author  )
-{
+void HbPluginInfos::setAuthor(const QString& author) {
     mAuthor = author;
 }
 
-void HbPluginInfos::setName   ( const QString & name    )
-{
+void HbPluginInfos::setName(const QString& name) {
     mName = name;
 }
 
-void HbPluginInfos::setVersion( const QString & version )
-{
+void HbPluginInfos::setVersion(const QString& version) {
     mVersion = version;
 }
 
-void HbPluginInfos::setState( PluginState state )
-{
-    if( mState != state )
-    {
+void HbPluginInfos::setState(PluginState state) {
+    if (mState != state) {
         mState = state;
         emit stateChanged();
     }
 }
 
-bool HbPluginInfos::isLoaded() const
-{
-    if( mState == PLUGIN_LOADED )           return true;
-    if( mState == PLUGIN_LOADED_PARTIALLY ) return true;
+bool HbPluginInfos::isLoaded() const {
+    if (mState == PLUGIN_LOADED)
+        return true;
+    if (mState == PLUGIN_LOADED_PARTIALLY)
+        return true;
 
     return false;
 }
 
-const QString & HbPluginInfos::path() const
-{
+const QString& HbPluginInfos::path() const {
     return mPath;
 }
 
-const QString & HbPluginInfos::author() const
-{
+const QString& HbPluginInfos::author() const {
     return mAuthor;
 }
 
-const QString & HbPluginInfos::name() const
-{
+const QString& HbPluginInfos::name() const {
     return mName;
 }
 
-const QString & HbPluginInfos::version() const
-{
+const QString& HbPluginInfos::version() const {
     return mVersion;
 }
 
-const QHash< QString, QString > & HbPluginInfos::requiredPlugins() const
-{
+const QHash<QString, QString>& HbPluginInfos::requiredPlugins() const {
     return mRequiredPlugins;
 }
 
-QString HbPluginInfos::requiredPluginsStr() const
-{
+QString HbPluginInfos::requiredPluginsStr() const {
     QString depends;
 
     auto it = mRequiredPlugins.constBegin();
-    while(it != mRequiredPlugins.constEnd())
-    {
+    while (it != mRequiredPlugins.constEnd()) {
         depends += it.key() + " (" + it.value() + ") ";
         ++it;
     }
 
     return depends;
-
 }
 
-const QHash<QString, QString> & HbPluginInfos::optionalPlugins() const
-{
+const QHash<QString, QString>& HbPluginInfos::optionalPlugins() const {
     return mOptionalPlugins;
 }
 
-QString HbPluginInfos::optionalPluginsStr() const
-{
+QString HbPluginInfos::optionalPluginsStr() const {
     QString depends;
 
     auto it = mOptionalPlugins.constBegin();
-    while( it != mOptionalPlugins.constEnd() )
-    {
+    while (it != mOptionalPlugins.constEnd()) {
         depends += it.key() + " (" + it.value() + ") ";
         ++it;
     }
 
     return depends;
-
 }
 
-const QHash< QString, QString > & HbPluginInfos::requiredServices() const
-{
+const QHash<QString, QString>& HbPluginInfos::requiredServices() const {
     return mRequiredService;
 }
 
-QString HbPluginInfos::requiredServicesStr() const
-{
+QString HbPluginInfos::requiredServicesStr() const {
     QString depends;
 
     auto it = mRequiredService.constBegin();
-    while( it != mRequiredService.constEnd() )
-    {
+    while (it != mRequiredService.constEnd()) {
         depends += it.key() + " (" + it.value() + ") ";
         ++it;
     }
 
     return depends;
-
 }
 
-const QHash< QString, QString > & HbPluginInfos::optionalServices() const
-{
+const QHash<QString, QString>& HbPluginInfos::optionalServices() const {
     return mOptionalService;
 }
 
-QString HbPluginInfos::optionalServicesStr() const
-{
+QString HbPluginInfos::optionalServicesStr() const {
     QString depends;
 
     auto it = mOptionalService.constBegin();
-    while( it != mOptionalService.constEnd() )
-    {
+    while (it != mOptionalService.constEnd()) {
         depends += it.key() + " (" + it.value() + ") ";
         ++it;
     }
 
     return depends;
-
 }
 
-HbPluginInfos::PluginState HbPluginInfos::state() const
-{
+HbPluginInfos::PluginState HbPluginInfos::state() const {
     return mState;
 }
 
-QString HbPluginInfos::stateStr() const
-{
-    return HbPluginInfos::MetaPluginState::toString( mState );
+QString HbPluginInfos::stateStr() const {
+    return HbPluginInfos::MetaPluginState::toString(mState);
 }
 
-const QSet< QString > & HbPluginInfos::children() const
-{
+const QSet<QString>& HbPluginInfos::children() const {
     return mChildren;
 }
 
-bool HbPluginInfos::requiresPlugin( const QString & name ) const
-{
+bool HbPluginInfos::requiresPlugin(const QString& name) const {
     return mRequiredPlugins.contains(name);
 }
 
-void HbPluginInfos::addRequiredPlugin( const QString & name, const QString & version )
-{
+void HbPluginInfos::addRequiredPlugin(const QString& name, const QString& version) {
     mRequiredPlugins[name] = version;
 }
 
-void HbPluginInfos::addOptionalPlugin( const QString & name, const QString & version )
-{
+void HbPluginInfos::addOptionalPlugin(const QString& name, const QString& version) {
     mOptionalPlugins[name] = version;
 }
 
-void HbPluginInfos::addRequiredService( const QString & name, const QString & version )
-{
+void HbPluginInfos::addRequiredService(const QString& name, const QString& version) {
     mRequiredService[name] = version;
 }
 
-void HbPluginInfos::addOptionalService( const QString & name, const QString & version )
-{
+void HbPluginInfos::addOptionalService(const QString& name, const QString& version) {
     mOptionalService[name] = version;
 }
 
-void HbPluginInfos::addChild( const QString & plugin_name )
-{
-    mChildren.insert( plugin_name );
+void HbPluginInfos::addChild(const QString& plugin_name) {
+    mChildren.insert(plugin_name);
 }

@@ -17,31 +17,24 @@
 #include <config/com/HbServerConfig.h>
 #include <config/com/HbTcpConfig.h>
 
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbTcpServerConfig final : public virtual HbNetworkConfig,
+                                                public HbTcpConfig,
+                                                public HbServerConfig {
+public:
+    HbTcpServerConfig() = default;
+    virtual ~HbTcpServerConfig() = default;
+    HbTcpServerConfig(const HbTcpServerConfig& config);
+    HbTcpServerConfig& operator=(const HbTcpServerConfig& config);
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbTcpServerConfig final :
-            public virtual HbNetworkConfig,
-            public HbTcpConfig,
-            public HbServerConfig
-        {
-        public:
-
-            HbTcpServerConfig() = default;
-            virtual ~HbTcpServerConfig() = default;
-            HbTcpServerConfig( const HbTcpServerConfig & config );
-            HbTcpServerConfig & operator =( const HbTcpServerConfig & config );
-
-            bool isValid() const;
-
-        };
-    }
-}
+    bool isValid() const;
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbTcpServerConfig;
 

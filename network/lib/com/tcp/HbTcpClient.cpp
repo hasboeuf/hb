@@ -8,58 +8,40 @@
 
 using namespace hb::network;
 
-
-HbTcpClient::HbTcpClient( QObject * parent ) :
-    HbAbstractClient( parent )
-{
+HbTcpClient::HbTcpClient(QObject* parent) : HbAbstractClient(parent) {
     mpSocket = nullptr;
 }
 
-HbTcpClient::~HbTcpClient()
-{
+HbTcpClient::~HbTcpClient() {
     leave();
 }
 
-
-bool HbTcpClient::join( const HbTcpClientConfig & config )
-{
-    if( setConfiguration( config ) )
-    {
+bool HbTcpClient::join(const HbTcpClientConfig& config) {
+    if (setConfiguration(config)) {
         return HbAbstractClient::join();
     }
 
     return false;
 }
 
-networkuid HbTcpClient::uid() const
-{
-    if( mpSocket )
-    {
+networkuid HbTcpClient::uid() const {
+    if (mpSocket) {
         return mpSocket->uid();
-    }
-    else
-    {
+    } else {
         return 0;
     }
 }
 
-HbNetworkProtocol::NetworkType HbTcpClient::type() const
-{
-    if( mpSocket )
-    {
+HbNetworkProtocol::NetworkType HbTcpClient::type() const {
+    if (mpSocket) {
         return mpSocket->type();
-    }
-    else
-    {
+    } else {
         return HbNetworkProtocol::NETWORK_UNDEFINED;
     }
 }
 
-
-bool HbTcpClient::setConfiguration( const HbTcpClientConfig & config )
-{
-    if( mpSocket )
-    {
+bool HbTcpClient::setConfiguration(const HbTcpClientConfig& config) {
+    if (mpSocket) {
         qWarning() << "Can not apply configuration on instanciated socket";
         return false;
     }
@@ -68,16 +50,13 @@ bool HbTcpClient::setConfiguration( const HbTcpClientConfig & config )
     return true;
 }
 
-const HbTcpClientConfig &HbTcpClient::configuration() const
-{
+const HbTcpClientConfig& HbTcpClient::configuration() const {
     return mConfig;
 }
 
-bool HbTcpClient::connectToNetwork()
-{
-    q_assert_ptr( mpSocket );
-    if( !mpSocket->connectToHost( this->configuration( ) ) )
-    {
+bool HbTcpClient::connectToNetwork() {
+    q_assert_ptr(mpSocket);
+    if (!mpSocket->connectToHost(this->configuration())) {
         qWarning() << "Can not connect to host";
         return false;
     }
@@ -85,50 +64,45 @@ bool HbTcpClient::connectToNetwork()
     return true;
 }
 
-void HbTcpClient::disconnectFromNetwork()
-{
-    q_assert_ptr( mpSocket );
-    if( !mpSocket->leave() )
-    {
+void HbTcpClient::disconnectFromNetwork() {
+    q_assert_ptr(mpSocket);
+    if (!mpSocket->leave()) {
         qWarning() << "Can not disconnect from host";
-    }
-    else
-    {
+    } else {
         deleteSocket();
     }
 }
 
-void HbTcpClient::deleteSocket()
-{
+void HbTcpClient::deleteSocket() {
     mpSocket->disconnect();
     mpSocket->deleteLater();
     mpSocket = nullptr;
 }
 
-
-HbAbstractSocket * HbTcpClient::pendingConnection()
-{
-    if( mpSocket )
-    {
+HbAbstractSocket* HbTcpClient::pendingConnection() {
+    if (mpSocket) {
         return mpSocket;
     }
 
-    QTcpSocket * device = q_check_ptr( new QTcpSocket( this ) );
-    mpSocket = q_check_ptr( new HbTcpSocket( device ) );
+    QTcpSocket* device = q_check_ptr(new QTcpSocket(this));
+    mpSocket = q_check_ptr(new HbTcpSocket(device));
 
-    connect( mpSocket, &HbAbstractSocket::socketError,
-             this,    [this](){ emit socketError( mpSocket->error(), mpSocket->errorString() ); }, Qt::UniqueConnection );
+    connect(mpSocket,
+            &HbAbstractSocket::socketError,
+            this,
+            [this]() { emit socketError(mpSocket->error(), mpSocket->errorString()); },
+            Qt::UniqueConnection);
 
     HbTcpConfig::SocketOptions options = mConfig.options();
 
-    mpSocket->setSocketOption( QAbstractSocket::LowDelayOption, options.testFlag( HbTcpConfig::SocketOption::LowDelay ) );
-    mpSocket->setSocketOption( QAbstractSocket::KeepAliveOption, options.testFlag( HbTcpConfig::SocketOption::KeepAlive ) );
-    mpSocket->setSocketOption( QAbstractSocket::MulticastLoopbackOption, options.testFlag( HbTcpConfig::SocketOption::MulticastLoopback ) );
+    mpSocket->setSocketOption(QAbstractSocket::LowDelayOption, options.testFlag(HbTcpConfig::SocketOption::LowDelay));
+    mpSocket->setSocketOption(QAbstractSocket::KeepAliveOption, options.testFlag(HbTcpConfig::SocketOption::KeepAlive));
+    mpSocket->setSocketOption(QAbstractSocket::MulticastLoopbackOption,
+                              options.testFlag(HbTcpConfig::SocketOption::MulticastLoopback));
 
     return mpSocket;
 }
 
-HbAbstractSocket * HbTcpClient::currentConnection() const
-{
+HbAbstractSocket* HbTcpClient::currentConnection() const {
     return mpSocket;
 }

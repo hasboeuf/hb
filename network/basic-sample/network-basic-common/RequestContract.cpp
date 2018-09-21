@@ -1,76 +1,59 @@
 // Local
-#include <RequestContract.h>
 #include <Protocol.h>
+#include <RequestContract.h>
 
 using namespace hb::network;
 using namespace hb::networkexample;
 
-RequestContract::RequestContract() :
-    HbNetworkContract( Protocol::SERVICE_QUESTION,
-                       Protocol::CODE_CLT_REQUEST )
-{
+RequestContract::RequestContract() : HbNetworkContract(Protocol::SERVICE_QUESTION, Protocol::CODE_CLT_REQUEST) {
     mRequest = "";
     mpReply = new ResponseContract();
 }
 
-RequestContract::RequestContract( const RequestContract & source ) :
-    HbNetworkContract( source )
-{
-    if( &source != this )
-    {
+RequestContract::RequestContract(const RequestContract& source) : HbNetworkContract(source) {
+    if (&source != this) {
         mRequest = source.mRequest;
     }
 }
 
-RequestContract & RequestContract::operator=( const RequestContract & source )
-{
-    if( &source != this )
-    {
-        HbNetworkContract::operator=( source );
+RequestContract& RequestContract::operator=(const RequestContract& source) {
+    if (&source != this) {
+        HbNetworkContract::operator=(source);
 
         mRequest = source.mRequest;
     }
 
-    return ( *this );
+    return (*this);
 }
 
-RequestContract * RequestContract::create() const
-{
+RequestContract* RequestContract::create() const {
     return new RequestContract();
 }
 
-ResponseContract * RequestContract::takeReply() const
-{
-    return HbNetworkContract::takeReply()->value< ResponseContract >();
+ResponseContract* RequestContract::takeReply() const {
+    return HbNetworkContract::takeReply()->value<ResponseContract>();
 }
 
-QString RequestContract::toString() const
-{
-    return QString( "%1,request=%2" )
-            .arg( HbNetworkContract::toString() )
-            .arg( mRequest );
+QString RequestContract::toString() const {
+    return QString("%1,request=%2").arg(HbNetworkContract::toString()).arg(mRequest);
 }
 
-bool RequestContract::read( QDataStream & stream )
-{
+bool RequestContract::read(QDataStream& stream) {
     stream >> mRequest;
 
     return true;
 }
 
-bool RequestContract::write( QDataStream & stream ) const
-{
+bool RequestContract::write(QDataStream& stream) const {
     stream << mRequest;
 
     return true;
 }
 
-void RequestContract::setRequest( const QString & request )
-{
+void RequestContract::setRequest(const QString& request) {
     mRequest = request;
 }
 
-const QString & RequestContract::request() const
-{
+const QString& RequestContract::request() const {
     return mRequest;
 }

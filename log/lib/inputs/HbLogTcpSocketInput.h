@@ -21,48 +21,45 @@
 class QTcpServer;
 class QTcpSocket;
 
-namespace hb
-{
-    namespace log
-    {
-        class HbLogMessage;
+namespace hb {
+namespace log {
+class HbLogMessage;
 
-        /*!
-        * TODOC
-        * \brief The %HbLogTcpSocketInput class defines a tcp server input.
-        */
-        class HbLogTcpSocketInput final : public HbLogAbstractInput
-        {
-            Q_OBJECT
-            Q_DISABLE_COPY( HbLogTcpSocketInput )
+/*!
+ * TODOC
+ * \brief The %HbLogTcpSocketInput class defines a tcp server input.
+ */
+class HbLogTcpSocketInput final : public HbLogAbstractInput {
+    Q_OBJECT
+    Q_DISABLE_COPY(HbLogTcpSocketInput)
 
-        public:
+public:
+    HbLogTcpSocketInput() = delete;
+    HbLogTcpSocketInput(quint16 port, QObject* parent);
+    virtual ~HbLogTcpSocketInput();
 
-            HbLogTcpSocketInput() = delete;
-            HbLogTcpSocketInput( quint16 port, QObject * parent );
-            virtual ~HbLogTcpSocketInput();
+    quint16 port() const;
 
-            quint16 port() const;
+protected:
+    void init() override;
 
-        protected:
-            void init() override;
+private:
+    void onNewConnection();
 
-        private:
-            void onNewConnection();
+private
+    callbacks :
 
-        private callbacks:
+        void
+        onReadyRead();
+    void onClientDisconnected();
 
-            void onReadyRead();
-            void onClientDisconnected();
-
-        private:
-            quint16 mPort;
-            qint32  mExpected;
-            QScopedPointer< QTcpServer > mTcpServer;
-            QSet< QTcpSocket * > mClients;
-        };
-    }
-}
+private:
+    quint16 mPort;
+    qint32 mExpected;
+    QScopedPointer<QTcpServer> mTcpServer;
+    QSet<QTcpSocket*> mClients;
+};
+} // namespace log
+} // namespace hb
 
 #endif
-

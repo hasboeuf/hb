@@ -20,33 +20,27 @@
 #include <HbNetwork.h>
 #include <contract/HbNetworkContract.h>
 
-namespace hb
-{
-    namespace network
-    {
-        /*!
-         * TODOC
-         */
-        class HB_NETWORK_DECL HbPresenceContract final : public HbNetworkContract
-        {
+namespace hb {
+namespace network {
+/*!
+ * TODOC
+ */
+class HB_NETWORK_DECL HbPresenceContract final : public HbNetworkContract {
+public:
+    HbPresenceContract();
+    virtual ~HbPresenceContract() = default;
+    HbPresenceContract(const HbPresenceContract& source);
+    HbPresenceContract& operator=(const HbPresenceContract& source);
 
-        public:
+    virtual HbPresenceContract* create() const override;
 
-            HbPresenceContract();
-            virtual ~HbPresenceContract() = default;
-            HbPresenceContract( const HbPresenceContract & source );
-            HbPresenceContract & operator=( const HbPresenceContract & source );
+    virtual bool read(QDataStream& stream) override;
+    virtual bool write(QDataStream& stream) const override;
 
-            virtual HbPresenceContract * create() const override;
-
-            virtual bool read ( QDataStream & stream ) override;
-            virtual bool write( QDataStream & stream ) const override;
-
-        private:
-
-        };
-    }
-}
+private:
+};
+} // namespace network
+} // namespace hb
 
 using hb::network::HbPresenceContract;
 
