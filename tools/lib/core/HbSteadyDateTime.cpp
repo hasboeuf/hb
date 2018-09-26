@@ -73,26 +73,28 @@ HbSteadyDateTime HbSteadyDateTime::fromString(const QString& value, const QStrin
 
 HbSteadyDateTime HbSteadyDateTime::fromNsSinceEpoch(qint64 nano) {
     HbSteadyDateTime steady_time;
-    qint64 ms = nano * pow(10, -6);
 
-    steady_time.mDateTime = QDateTime::fromMSecsSinceEpoch(ms);
-    steady_time.mSteady = (nano - ms * pow(10, 6));
+    std::chrono::nanoseconds ns(nano);
+    std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(ns);
 
-    if (!steady_time.mDateTime.isValid())
+    steady_time.mDateTime = QDateTime::fromMSecsSinceEpoch(ms.count());
+    steady_time.mSteady = (ns - ms).count();
+
+    if (!steady_time.mDateTime.isValid()) {
         qDebug() << "Invalid datetime!";
+    }
+
     return steady_time;
 }
 
 qint64 HbSteadyDateTime::toNsSinceEpoch() const {
     if (!mDateTime.isValid())
         qDebug() << "Invalid datetime!";
-    qint64 timestamp = mDateTime.toMSecsSinceEpoch();
-    qint64 ns = mSteady;
+    std::chrono::milliseconds ms(mDateTime.toMSecsSinceEpoch());
+    std::chrono::nanoseconds ns(std::chrono::duration_cast<std::chrono::nanoseconds>(ms));
+    ns += std::chrono::nanoseconds(mSteady);
 
-    timestamp *= pow(10, 6); // ms to ns.
-    timestamp += ns;
-
-    return timestamp;
+    return ns.count();
 }
 
 QString HbSteadyDateTime::toString(const QString& format) {
@@ -103,7 +105,7 @@ QString HbSteadyDateTime::toString(const QString& format) {
 
     // Stringify steady part.
     QString steady = QString::number(mSteady);
-    steady = steady.leftJustified(6, '0');
+    steady = steady.rightJustified(6, '0');
     quint32 u_max = steady.length();
     quint32 u_nb = 0;
     for (int i = 0; i < format.length(); ++i) {
