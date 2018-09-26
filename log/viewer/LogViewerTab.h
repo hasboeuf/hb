@@ -4,8 +4,8 @@
 // Qt
 #include <QtGui/QStandardItem>
 // Local
-#include <ui_LogViewerTab.h>
 #include <MultipleSortFilterProxyModel.h>
+#include <ui_LogViewerTab.h>
 
 class QPropertyAnimation;
 
@@ -18,8 +18,8 @@ namespace logviewer {
 class LogViewerConfig;
 
 using hb::log::HbLogMessage;
-using hb::tools::MultipleSortFilterProxyModel;
 using hb::tools::ModelFilter;
+using hb::tools::MultipleSortFilterProxyModel;
 
 class LogViewerTab final : public QWidget, private hb::logviewer::Ui::LogViewerTab {
     Q_OBJECT

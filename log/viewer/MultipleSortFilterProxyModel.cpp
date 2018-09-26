@@ -94,10 +94,7 @@ bool MultipleSortFilterProxyModel::filterAcceptsRow(int source_row, const QModel
 /*!
     \brief Sets the filter with \a value, \a role and \a flags to the given \a column
  */
-void MultipleSortFilterProxyModel::setFilter(qint32 column,
-                                               const QVariant& value,
-                                               qint32 role,
-                                               Qt::MatchFlags flags) {
+void MultipleSortFilterProxyModel::setFilter(qint32 column, const QVariant& value, qint32 role, Qt::MatchFlags flags) {
     // Could overwrite current filter.
     filters[column] = ModelFilter(value, role, flags);
 
