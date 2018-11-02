@@ -32,7 +32,7 @@ struct HB_TOOLS_DECL HbWebServiceResult {
 public:
     int httpStatusCode() const;
     QList<QNetworkReply::RawHeaderPair> rawHeadersPair() const;
-    QNetworkReply::NetworkError error() const;
+    QNetworkReply::NetworkError networkError() const;
     QString networkErrorString() const;
     QByteArray rawContent() const;
     QJsonDocument jsonContent() const;

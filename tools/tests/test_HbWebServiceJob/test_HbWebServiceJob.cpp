@@ -22,7 +22,7 @@ private slots:
         job->waitForFinished();
 
         QCOMPARE(job->result().httpStatusCode(), 0);
-        QCOMPARE(job->result().error(), QNetworkReply::OperationCanceledError);
+        QCOMPARE(job->result().networkError(), QNetworkReply::OperationCanceledError);
     }
 
     void testWaitForFinishedSuccess() {
@@ -35,7 +35,7 @@ private slots:
         QVERIFY(job->waitForFinished());
 
         QCOMPARE(job->result().httpStatusCode(), 200);
-        QCOMPARE(job->result().error(), QNetworkReply::NoError);
+        QCOMPARE(job->result().networkError(), QNetworkReply::NoError);
     }
 
     void testWaitForFinishedFailure() {
@@ -48,7 +48,7 @@ private slots:
         QVERIFY(!job->waitForFinished(0));
 
         QCOMPARE(job->result().httpStatusCode(), 0);
-        QCOMPARE(job->result().error(), QNetworkReply::OperationCanceledError);
+        QCOMPARE(job->result().networkError(), QNetworkReply::OperationCanceledError);
     }
 };
 
