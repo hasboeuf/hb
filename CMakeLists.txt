@@ -32,6 +32,7 @@ add_subdirectory(tools)
 add_subdirectory(log)
 add_subdirectory(plugin)
 add_subdirectory(link)
+add_subdirectory(auth)
 add_subdirectory(network)
 
 # Add all targets to the build-tree export set
