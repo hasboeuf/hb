@@ -24,11 +24,10 @@ namespace tools {
 class HB_TOOLS_DECL HbStringHelper {
 public:
     /*!
-     * Create a random string.
-     * \param string_length Size of the generated string.
-     * \param input List of possible characters, by default alphabet lower case is used.
+     * Create a lower and upper alpha random string.
+     * \param length Size of the generated string.
      */
-    static QString randomString(quint32 string_length, QString input = QString());
+    static QString randomString(quint32 string_length);
 };
 } // namespace tools
 } // namespace hb
