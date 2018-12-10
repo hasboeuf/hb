@@ -30,6 +30,9 @@ public:
     void requestAuthorizationCode();
     void requestAccessToken();
 
+signals:
+    void authorized();
+
 protected:
     void setAccessToken(const QString& accessToken);
     void resourceOwnerAuthorization(const QUrl& url, const QVariantMap& parameters) override;

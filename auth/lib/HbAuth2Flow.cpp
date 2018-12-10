@@ -140,8 +140,10 @@ void HbAuth2Flow::updateStatus() {
     if (!mConfig.authorizationCode().isEmpty()) {
         if (!config().accessToken().isEmpty()) {
             setStatus(Status::Granted);
+            emit granted();
         } else {
             setStatus(Status::TemporaryCredentialsReceived);
+            emit authorized();
         }
     } else {
         setStatus(Status::NotAuthenticated);
