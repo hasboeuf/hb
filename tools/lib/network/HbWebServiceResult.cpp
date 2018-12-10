@@ -15,7 +15,7 @@ QList<QNetworkReply::RawHeaderPair> HbWebServiceResult::rawHeadersPair() const {
     return mRawHeadersPair;
 }
 
-QNetworkReply::NetworkError HbWebServiceResult::error() const {
+QNetworkReply::NetworkError HbWebServiceResult::networkError() const {
     return mNetworkError;
 }
 

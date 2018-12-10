@@ -8,7 +8,7 @@ using namespace hb::network;
 using namespace hb::tools;
 
 void HbNetworkUserInfoMock::mockNetworkUserInfo(HbNetworkUserInfo& user_info) {
-    QString random_numbers = HbStringHelper::randomString(3, "0123456789");
+    QString random_numbers = HbStringHelper::randomString(3);
     QString random_letters = HbStringHelper::randomString(3);
 
     user_info.setId(user_info.id() + random_numbers);

@@ -34,7 +34,7 @@ private slots:
         HbWebServiceJob* job = controller.get(TEST_URL, 2);
         job->waitForFinished();
         QCOMPARE(job->result().httpStatusCode(), 200);
-        QCOMPARE(job->result().error(), QNetworkReply::NoError);
+        QCOMPARE(job->result().networkError(), QNetworkReply::NoError);
     }
 
     void testTimeout() {
@@ -47,7 +47,7 @@ private slots:
         job->waitForFinished();
 
         QCOMPARE(job->result().httpStatusCode(), 0);
-        QCOMPARE(job->result().error(), QNetworkReply::TimeoutError);
+        QCOMPARE(job->result().networkError(), QNetworkReply::TimeoutError);
     }
 };
 

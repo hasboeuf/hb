@@ -6,11 +6,13 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBSTRINGHELPER_H
-#define HBSTRINGHELPER_H
+#ifndef HBSCOPEDFUNCTION_H
+#define HBSCOPEDFUNCTION_H
 
-/*! \file HbStringHelper.h */
+/*! \file HbScopedFunction.h */
 
+// System
+#include <functional>
 // Hb
 #include <QtCore/QString>
 // Local
@@ -19,17 +21,18 @@
 namespace hb {
 namespace tools {
 /*!
- * HbStringHelper provides helper methods for strings.
+ * HbScopedFunction executes a function at destruction time.
  */
-class HB_TOOLS_DECL HbStringHelper {
+class HB_TOOLS_DECL HbScopedFunction {
 public:
-    /*!
-     * Create a lower and upper alpha random string.
-     * \param length Size of the generated string.
-     */
-    static QString randomString(quint32 string_length);
+    using Callback = std::function<void()>;
+    HbScopedFunction(Callback callback);
+    ~HbScopedFunction();
+
+private:
+    Callback mCallback;
 };
 } // namespace tools
 } // namespace hb
 
-#endif // HBSTRINGHELPER_H
+#endif // HBSCOPEDFUNCTION_H

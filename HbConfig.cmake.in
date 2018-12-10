@@ -6,4 +6,4 @@ set(HB_INCLUDE_DIRS "@CONF_INCLUDE_DIRS@")
 include("${HB_CMAKE_DIR}/HbTargets.cmake")
 
 # These are IMPORTED targets created by HbTargets.cmake
-set(HB_LIBRARIES HbTools HbLog HbLink HbPlugin HbNetwork)
+set(HB_LIBRARIES HbTools HbLog HbAuth HbLink HbPlugin HbNetwork)
