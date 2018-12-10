@@ -19,4 +19,4 @@ public slots:
 } // namespace auth
 } // namespace hb
 
-#endif // IHBLINKBROWSERCONTROLS_H
+#endif // IHBAUTHBROWSERCONTROLS_H
