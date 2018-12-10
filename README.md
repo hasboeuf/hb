@@ -71,11 +71,12 @@ HbPlugin is a set of high-level classes, useful to create plugins based on Qt5 p
 - Plugins can depend on other plugins features.
 - Unplug / plug in live.
 
-### HbLink
+### HbAuth
 
 #### Overview
 
-HbLink a set of classes implementing OAuth 2 protocol. For now only Facebook is supported, the rest will be developped on need. This is designed for a client / server architecture.
+HbAuth a set of classes implementing OAuth 2 protocol. For now only Google and Facebook is supported,
+the rest will be developped on need. This is designed for a client / server architecture.
 
 #### Features
 
