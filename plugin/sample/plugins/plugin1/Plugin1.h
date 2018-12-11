@@ -21,9 +21,6 @@ public:
     virtual PluginInitState init(const HbPluginPlatform* platform_service);
     virtual void unload();
 
-signals:
-
-public slots:
     void onAction1Triggered();
 };
 } // namespace pluginexample

@@ -34,7 +34,6 @@ public:
 
     void requestSum(quint32 a, quint32 b);
 
-public:
     virtual void onUserContractReceived(const HbNetworkContract* contract) override;
 
 signals:

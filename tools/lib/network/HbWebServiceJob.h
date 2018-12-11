@@ -33,15 +33,15 @@ public:
     bool waitForFinished(int timeout = 30000);
     HbWebServiceResult result() const;
 
-protected:
-    HbWebServiceJob(QObject* parent = nullptr);
-    void setResult(const HbWebServiceResult& result);
-
 signals:
     void cancelRequested();
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
     void uploadProgress(qint64 bytesSent, qint64 bytesTotal);
     void finished(const HbWebServiceResult& result);
+
+protected:
+    HbWebServiceJob(QObject* parent = nullptr);
+    void setResult(const HbWebServiceResult& result);
 
 private:
     bool mCancelling = false;

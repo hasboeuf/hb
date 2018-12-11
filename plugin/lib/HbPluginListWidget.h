@@ -35,7 +35,6 @@ public:
 
     explicit HbPluginListWidget(QWidget* parent = nullptr);
 
-public slots:
     /*!
      * Fired when a plugin has changed its state.
      * From HbPluginPlatform.
@@ -64,7 +63,6 @@ signals:
 private:
     QStandardItem* getLoadItem(const QString& plugin_name);
 
-private:
     QStringList mLabels;
     QStandardItemModel mModel;
     QSortFilterProxyModel mProxy;

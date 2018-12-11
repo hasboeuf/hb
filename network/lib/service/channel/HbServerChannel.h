@@ -28,18 +28,17 @@ public:
     HbServerChannel() = default;
     virtual ~HbServerChannel() = default;
 
+    virtual void onContractToSend(HbNetworkContract* contract) override;
+    void onUserContractToSend(ShConstHbNetworkUserInfo user_info, HbNetworkContract* contract);
+    void onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos, HbNetworkContract* contract);
+    void onUserToKick(ShConstHbNetworkUserInfo user_info, netwlint reason, const QString& description = QString());
+
 private:
     // Hide low level signal, slot must be used by end user.
     using HbNetworkService::contractToSend;
     using HbNetworkService::userContractToSend;
     using HbNetworkService::usersContractToSend;
     using HbNetworkService::userToKick;
-
-public:
-    virtual void onContractToSend(HbNetworkContract* contract) override;
-    void onUserContractToSend(ShConstHbNetworkUserInfo user_info, HbNetworkContract* contract);
-    void onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos, HbNetworkContract* contract);
-    void onUserToKick(ShConstHbNetworkUserInfo user_info, netwlint reason, const QString& description = QString());
 };
 } // namespace network
 } // namespace hb

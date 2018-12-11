@@ -30,7 +30,6 @@ public:
     virtual void plugContracts(HbNetworkExchanges& exchanges) override;
     virtual serviceuid uid() const override;
 
-public:
     virtual void onUserContractReceived(hb::network::ShConstHbNetworkUserInfo user_info,
                                         const HbNetworkContract* contract) override;
 };

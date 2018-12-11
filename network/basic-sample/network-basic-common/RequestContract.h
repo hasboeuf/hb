@@ -40,7 +40,6 @@ public:
 protected:
     virtual RequestContract* create() const override;
 
-protected:
     QString mRequest;
 };
 } // namespace networkexample

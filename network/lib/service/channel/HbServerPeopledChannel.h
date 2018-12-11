@@ -39,12 +39,12 @@ public:
     const QHash<QString, ShConstHbNetworkUserInfo>& connectedUsers() const;
     ShConstHbNetworkUserInfo connectedUser(const QString& email);
 
-private:
-    QHash<QString, ShConstHbNetworkUserInfo> mUsers;
-
 signals:
     void userConnected(ShConstHbNetworkUserInfo user_info);
     void userDisconnected(ShConstHbNetworkUserInfo user_info);
+
+private:
+    QHash<QString, ShConstHbNetworkUserInfo> mUsers;
 };
 } // namespace network
 } // namespace hb

@@ -32,7 +32,6 @@ public:
     static const QString msDefaultPath;
     static const quint32 msMaxFileSize;
 
-public:
     HbLogFileOutput() = delete;
     HbLogFileOutput(const QString& path, quint32 maxSize = 0, QObject* parent = nullptr);
     virtual ~HbLogFileOutput();
@@ -45,7 +44,6 @@ private:
     void closeLogFile();
     void createLogFile();
 
-private:
     QString mPath;
     quint32 mMaxSize;
     QScopedPointer<QFile> mFile;

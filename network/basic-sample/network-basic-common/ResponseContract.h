@@ -37,7 +37,6 @@ public:
 protected:
     virtual ResponseContract* create() const override;
 
-protected:
     QString mResponse;
 };
 } // namespace networkexample

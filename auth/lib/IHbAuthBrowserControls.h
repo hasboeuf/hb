@@ -12,7 +12,7 @@ namespace auth {
 class HB_AUTH_DECL IHbAuthBrowserControls : public QObject {
     Q_OBJECT
 
-public slots:
+public:
     virtual void onOpenBrowser(const QUrl& url) = 0;
     virtual void onCloseBrowser() = 0;
 };

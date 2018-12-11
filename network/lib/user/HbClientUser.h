@@ -40,12 +40,12 @@ public:
     virtual void delSocket(networkuid socket_uid) override;
     virtual QList<networkuid> socketsUid() const override;
 
+signals:
+    void statusChanged(HbNetworkProtocol::UserStatus status);
+
 private:
     HbNetworkProtocol::UserStatus mStatus;
     QList<networkuid> mSocketsUid;
-
-signals:
-    void statusChanged(HbNetworkProtocol::UserStatus status);
 };
 } // namespace network
 } // namespace hb

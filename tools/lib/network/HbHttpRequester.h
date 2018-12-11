@@ -36,7 +36,6 @@ public:
 
     quint64 processRequest(const QUrl& url, quint32 timeout = hb::tools::HbTimeoutNetworkReply::msDefaultTimeout);
 
-public slots:
     void onFinished();
     void onError(const QNetworkReply::NetworkError& error);
 

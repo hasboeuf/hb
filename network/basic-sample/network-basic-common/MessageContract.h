@@ -37,7 +37,6 @@ public:
 protected:
     virtual MessageContract* create() const override;
 
-protected:
     QString mMessage;
 };
 } // namespace networkexample

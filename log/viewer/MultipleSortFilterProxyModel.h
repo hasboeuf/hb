@@ -54,7 +54,6 @@ public:
 private:
     bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
 
-private:
     QMap<qint32, ModelFilter> filters;
     bool mDeclaringFilter;
 };
@@ -143,7 +142,6 @@ public:
         return false;
     }
 
-public: // As is it an inner class, members are public for convenience.
     QVariant mValue;
     qint32 mRole;
     Qt::MatchFlags mFlags;

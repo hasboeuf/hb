@@ -21,6 +21,9 @@ class HbTcpSocketHandler : public HbSocketHandler {
     Q_DISABLE_COPY(HbTcpSocketHandler)
     friend class HbTcpServer;
 
+public:
+    virtual void onNewPendingConnection(qint32 socket_descriptor) override;
+
 protected:
     HbTcpSocketHandler(HbTcpServer* server);
     virtual ~HbTcpSocketHandler();
@@ -30,13 +33,8 @@ protected:
     virtual void init();
     virtual void reset();
 
-public slots:
-    virtual void onNewPendingConnection(qint32 socket_descriptor) override;
-
 private:
     HbTcpServer* mpServer;
-
-signals:
 };
 } // namespace network
 } // namespace hb

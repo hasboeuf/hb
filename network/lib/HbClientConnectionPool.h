@@ -41,7 +41,6 @@ public:
 
     bool authRequested(HbClientAuthLoginObject* login_object);
 
-public:
     // From HbAbstractClient.
     void onClientConnected(networkuid client_uid);
     void onClientDisconnected(networkuid client_uid);
@@ -58,14 +57,13 @@ public:
     // From HbNetworkUser.
     void onMeStatusChanged(HbNetworkProtocol::UserStatus me_status);
 
-private:
-    bool checkKickReceived(const HbNetworkContract* contract);
-
 signals:
     void statusChanged(networkuid client_uid, HbNetworkProtocol::ClientStatus status);
     void meStatusChanged(HbNetworkProtocol::UserStatus status_me, ShConstHbNetworkUserInfo me_info);
 
 private:
+    bool checkKickReceived(const HbNetworkContract* contract);
+
     QHash<networkuid, HbAbstractClient*> mClients;
     HbClientUser mUser;
 };

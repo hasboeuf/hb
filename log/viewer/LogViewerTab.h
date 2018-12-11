@@ -39,7 +39,6 @@ public:
         COLUMN_FUNC = 7, // Hidden.
     };
 
-public:
     LogViewerTab() = delete;
     LogViewerTab(qint32 id,
                  const LogViewerConfig& config,
@@ -55,12 +54,7 @@ public:
 
     void addEntry(const hb::log::HbLogMessage* msg, bool rerun = false);
 
-signals:
-
-    void newTabRequest(quint8 column, const QString& value);
-
-public slots:
-
+public:
     // From GUI
     void onLevelChanged(int index);
     void onFilterTextChanged(const QString& filter);
@@ -73,6 +67,9 @@ public slots:
 
     void onRowDoubleClicked(const QModelIndex& index);
     void onCustomContextMenuRequested(const QPoint& pos);
+
+signals:
+    void newTabRequest(quint8 column, const QString& value);
 
 private:
     static QString labels(ColumnId col_id);
@@ -87,7 +84,6 @@ private:
     qreal freezeAnimationValue() const;
     void setFreezeAnimationValue(qreal value);
 
-private:
     quint32 mId;
     QStandardItemModel mModel;
     MultipleSortFilterProxyModel mProxy;

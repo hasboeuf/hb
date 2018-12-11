@@ -47,7 +47,6 @@ public:
     HB_ENUM(Level)
     Q_DECLARE_FLAGS(Levels, Level)
 
-public:
     /*!
      * Set the general level of the log service (affected to the current thread).
      * All logger messages having a level which is not included in general level are ignored by HbLog.
@@ -77,7 +76,6 @@ protected:
 private:
     void print(Level level, const HbLogContext& context, const QString& message);
 
-private:
     static QReadWriteLock msLock;
     static Levels msLevel;
 };

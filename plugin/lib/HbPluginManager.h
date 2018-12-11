@@ -74,6 +74,8 @@ public:
      */
     QList<HbPluginInfos> pluginInfoList();
 
+    void onPluginStateChanged();
+
 signals:
     /*!
      * Triggered when the state has changed.
@@ -81,15 +83,11 @@ signals:
      */
     void pluginStateChanged(const HbPluginInfos& plugin_infos);
 
-public slots:
-    void onPluginStateChanged();
-
 private:
     void scanFolder(const QString& folder_path);
     HbPluginInfos* scanPlugin(const QString& plugin_path);
     bool loadPlugin(const QString& plugin_name);
 
-private:
     HbPluginPlatform* mpPlatformService;
 
     QString mPath;

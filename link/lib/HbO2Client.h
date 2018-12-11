@@ -48,11 +48,6 @@ public:
      */
     virtual const HbO2ClientConfig& config() const;
 
-protected:
-    virtual const QHash<QString, QString> codeRequest() const = 0;
-    virtual LinkStatus codeResponse(const QHash<QString, QString>& response) = 0;
-
-public slots:
     /*!
      * Fired when auth code is received.
      * \param response_parameters Response parameters.
@@ -74,6 +69,9 @@ signals:
     void closeBrowser();
 
 protected:
+    virtual const QHash<QString, QString> codeRequest() const = 0;
+    virtual LinkStatus codeResponse(const QHash<QString, QString>& response) = 0;
+
     HbO2ClientConfig mConfig;
 
 private:

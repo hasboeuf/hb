@@ -32,11 +32,11 @@ public:
     HbLogAbstractInput(QObject* parent = nullptr);
     virtual ~HbLogAbstractInput() = default;
 
-protected:
-    virtual void init() = 0;
-
 signals:
     void inputMessageReceived(HbLogMessage* message);
+
+protected:
+    virtual void init() = 0;
 };
 } // namespace log
 } // namespace hb

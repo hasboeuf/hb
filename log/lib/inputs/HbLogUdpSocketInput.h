@@ -43,7 +43,6 @@ private:
     void onReconnection();
     void onReadyRead();
 
-private:
     qint32 mExpected;
     quint16 mPort;
     QScopedPointer<QUdpSocket> mUdpSocket;

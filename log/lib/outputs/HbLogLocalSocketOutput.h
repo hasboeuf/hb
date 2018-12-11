@@ -40,10 +40,8 @@ private:
     void processMessage(const HbLogMessagePtr& message) override;
     void init() override;
 
-private slots:
     void onReconnection();
 
-private:
     QString mName;
     QScopedPointer<QLocalSocket> mLocalSocket;
 };

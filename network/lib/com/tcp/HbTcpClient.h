@@ -41,7 +41,6 @@ private:
     HbAbstractSocket* pendingConnection() override;
     HbAbstractSocket* currentConnection() const override;
 
-private:
     HbTcpSocket* mpSocket;
     HbTcpClientConfig mConfig;
 };

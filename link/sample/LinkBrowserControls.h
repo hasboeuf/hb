@@ -11,7 +11,7 @@ namespace linkexample {
 class LinkBrowserControls : public link::IHbLinkBrowserControls {
     Q_OBJECT
 
-public slots:
+public:
     virtual void onOpenBrowser(const QUrl& url);
     virtual void onCloseBrowser();
 };

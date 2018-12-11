@@ -38,6 +38,17 @@ public:
     static QString msClientSecret;
 
 private:
+    void onFacebookClientLinkSucceed();
+    void onFacebookServerLinkSucceed();
+    void onFacebookRequestCompleted(quint64 request_id, hb::link::HbFacebookObject* object);
+
+    void onGoogleClientLinkSucceed();
+    void onGoogleServerLinkSucceed();
+    void onGoogleRequestCompleted(quint64 request_id, hb::link::HbGoogleObject* object);
+
+    void onFacebookConnectClicked();
+    void onGoogleConnectClicked();
+
     hb::link::HbO2ClientFacebook* mpFacebookClient;
     hb::link::HbO2ServerFacebook* mpFacebookServer;
     hb::link::HbFacebookRequester mFacebookRequester;
@@ -47,21 +58,6 @@ private:
     hb::link::HbGoogleRequester mGoogleRequester;
 
     LinkBrowserControls mBrowserControls;
-
-public slots:
-    void onFacebookClientLinkSucceed();
-    void onFacebookServerLinkSucceed();
-    void onFacebookRequestCompleted(quint64 request_id, hb::link::HbFacebookObject* object);
-
-    void onGoogleClientLinkSucceed();
-    void onGoogleServerLinkSucceed();
-    void onGoogleRequestCompleted(quint64 request_id, hb::link::HbGoogleObject* object);
-
-private slots:
-    void onFacebookConnectClicked();
-    void onGoogleConnectClicked();
-
-signals:
 };
 } // namespace linkexample
 } // namespace hb

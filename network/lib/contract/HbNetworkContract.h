@@ -82,14 +82,12 @@ protected:
 
     virtual HbNetworkContract* create() const = 0;
 
-protected:
     HbNetworkHeader mHeader;
     HbNetworkContract* mpReply;
 
 private:
     void resetReceivers();
 
-private:
     //! \todo Internal use. Server side. Protect the client side.
     networkuid mSender;
     HbNetworkProtocol::NetworkType mNetworkType;

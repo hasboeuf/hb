@@ -34,12 +34,11 @@ public:
     void
     userToKick(ShConstHbNetworkUserInfo user_info, netwlint reason, const QString& description = QString()) = delete;
 
+    virtual void onContractToSend(HbNetworkContract* contract) override;
+
 private:
     // Hide low level signal, slot must be used by end user.
     using HbNetworkService::contractToSend;
-
-public:
-    virtual void onContractToSend(HbNetworkContract* contract) override;
 };
 } // namespace network
 } // namespace hb

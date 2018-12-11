@@ -34,7 +34,6 @@ public:
 
     void sendMessage(const QString message);
 
-public:
     virtual void onUserContractReceived(const HbNetworkContract* contract) override;
 
 signals:

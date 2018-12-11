@@ -36,28 +36,6 @@ class HbSocketHandler : public QObject, public HbUid<CLASS_SERVER> {
 public:
     virtual bool canHandleNewConnection();
 
-protected:
-    enum HandlerState { NOT_THREADED = 0, THREADED };
-
-    HbSocketHandler();
-    virtual ~HbSocketHandler();
-
-    virtual HbAbstractServer* server() const = 0;
-
-    virtual bool storeNewSocket(HbAbstractSocket* socket, qint32 previous_uid);
-
-protected:
-    virtual void reset();
-
-protected:
-    HandlerState mState;
-
-    QHash<networkuid, HbAbstractSocket*> mSocketById;
-    QHash<HbAbstractSocket*, networkuid> mIdBySocket;
-
-    QMutex mSocketMutex;
-
-public slots:
     // From QThread
     virtual void init();
     // From Server
@@ -76,6 +54,25 @@ signals:
     void socketConnected(qint32 socket_previous_id, networkuid socket_id);
     void socketDisconnected(networkuid socket_uid);
     void socketContractReceived(networkuid socket_uid, const HbNetworkContract* contract);
+
+protected:
+    enum HandlerState { NOT_THREADED = 0, THREADED };
+
+    HbSocketHandler();
+    virtual ~HbSocketHandler();
+
+    virtual HbAbstractServer* server() const = 0;
+
+    virtual bool storeNewSocket(HbAbstractSocket* socket, qint32 previous_uid);
+
+    virtual void reset();
+
+    HandlerState mState;
+
+    QHash<networkuid, HbAbstractSocket*> mSocketById;
+    QHash<HbAbstractSocket*, networkuid> mIdBySocket;
+
+    QMutex mSocketMutex;
 };
 } // namespace network
 } // namespace hb

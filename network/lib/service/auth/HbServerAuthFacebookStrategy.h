@@ -38,7 +38,6 @@ public:
     virtual authstgy type() const;
     virtual bool checkLogin(const HbAuthRequestContract* contract) override;
 
-public slots:
     void onLinkSucceed();
     void onRequestCompleted(quint64 request_id, HbFacebookObject* object);
 

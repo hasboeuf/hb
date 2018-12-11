@@ -32,17 +32,11 @@ class HB_TOOLS_DECL HbTimeoutNetworkReply : public QTimer, public HbUid<CLASS_RE
 public:
     HbTimeoutNetworkReply(QNetworkReply* reply, quint32 timeout = msDefaultTimeout);
     ~HbTimeoutNetworkReply();
+    void onTimeout();
+    static quint32 msDefaultTimeout;
 
 signals:
     void error(QNetworkReply::NetworkError error);
-
-public slots:
-    void onTimeout();
-
-public:
-    static quint32 msDefaultTimeout;
-
-private:
 };
 } // namespace tools
 } // namespace hb

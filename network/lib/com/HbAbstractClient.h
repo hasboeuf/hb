@@ -58,13 +58,11 @@ protected:
 private:
     void timerEvent(QTimerEvent* event);
 
-private:
     // From device.
     void onSocketConnected();
     void onSocketReadyPacket();
     void onSocketDisconnected();
 
-private:
     HbClientConfig mConfig; // SUB
     qint32 mRetry;
     bool mReady;

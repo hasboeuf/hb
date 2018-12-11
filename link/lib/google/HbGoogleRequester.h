@@ -41,10 +41,6 @@ public:
      */
     quint64 requestUser(HbO2ServerGoogle* auth);
 
-private slots:
-    void onRequestFinished(quint64 request_id, const QJsonDocument& doc); //!< From HbHttpRequester
-    void onRequestError(quint64 request_id, const QString& error);        //!< From HbHttpRequester
-
 signals:
     /*!
      * Triggered when a Google request gets completed.
@@ -54,6 +50,8 @@ signals:
     void requestCompleted(quint64 request_id, HbGoogleObject* object);
 
 private:
+    void onRequestFinished(quint64 request_id, const QJsonDocument& doc); //!< From HbHttpRequester
+    void onRequestError(quint64 request_id, const QString& error);        //!< From HbHttpRequester
     QHash<quint64, HbGoogleObject::ObjectType> mRequestTypes;
 };
 } // namespace link

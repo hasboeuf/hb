@@ -34,8 +34,7 @@ public:
 
     HbLogGuiNotifier* logNotifier() const;
 
-private slots:
-
+private:
     // From mLogNotifier.
     void onNewLogMessage(const hb::log::HbLogMessagePtr& message);
 
@@ -51,7 +50,6 @@ private slots:
     // From LogViewerTab.
     void onNewTabRequest(quint8 column, const QString& value);
 
-private:
     quint32 mTabIds;
     QHash<quint32, LogViewerTab*> mTabs;
 

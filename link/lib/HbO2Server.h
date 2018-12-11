@@ -80,17 +80,15 @@ protected:
     virtual const QHash<QString, QString> tokenRequest() const = 0;
     virtual LinkStatus tokenResponse(const QByteArray& data) = 0;
 
-private slots:
-    void onTokenResponseReceived();
-    void onTokenResponseError(QNetworkReply::NetworkError error);
-
-protected:
     HbO2ServerConfig mConfig;
     QString mToken;
     qint32 mTokenExpiration;
     RequestType mRequestType;
 
 private:
+    void onTokenResponseReceived();
+    void onTokenResponseError(QNetworkReply::NetworkError error);
+
     QNetworkAccessManager mManager;
     HbTimeoutNetworkReplies mReplies;
 };

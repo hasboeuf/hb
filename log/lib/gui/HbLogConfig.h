@@ -53,7 +53,6 @@ public:
     void loadSettings();
     void saveSettings();
 
-public:
     static const char* msDefaultConfigXml;
     static const quint32 msMaxLevel;
 
@@ -61,7 +60,6 @@ protected:
     virtual void buildDomFromConfig(QDomElement& root) const;
     virtual void buildConfigFromDom(QDomElement& root);
 
-protected:
     quint32 mMaxBuffer;
     QFont mFont;
     QMap<quint32, QColor> mLevelColors;

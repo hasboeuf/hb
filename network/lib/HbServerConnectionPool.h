@@ -39,7 +39,6 @@ public:
     networkuid joinTcpServer(HbTcpServerConfig& config, bool main);
     virtual bool leave() override;
 
-public:
     // From HbAbstractServer.
     void onServerConnected(networkuid server_uid);
     void onServerDisconnected(networkuid server_uid);
@@ -72,7 +71,6 @@ private:
     void kickUser(HbServerUser* user, netwlint reason, const QString& description);
     void kickSocket(networkuid socket_uid, netwlint reason, const QString& description);
 
-private:
     networkuid mMainServer;
     QHash<networkuid, HbAbstractServer*> mServers;
 

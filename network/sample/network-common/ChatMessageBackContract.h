@@ -40,7 +40,6 @@ public:
 protected:
     virtual ChatMessageBackContract* create() const override;
 
-protected:
     QString mMessage;
     QString mAuthor;
 };

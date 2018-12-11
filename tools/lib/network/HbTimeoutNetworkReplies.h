@@ -37,7 +37,6 @@ public:
 
     quint64 id(QNetworkReply* reply) const;
 
-public slots:
     void onFinished();
 
 private:

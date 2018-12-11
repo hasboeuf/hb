@@ -38,16 +38,15 @@ public:
     const HbServicePresenceServerConfig& config() const;
     void setConfig(const HbServicePresenceServerConfig& config);
 
-protected:
-    void timerEvent(QTimerEvent*);
-
-public:
     virtual void onSocketAuthenticated(networkuid socket_uid) override;
     virtual void onSocketUnauthenticated(networkuid socket_uid) override;
     virtual void onContractReceived(const HbNetworkContract* contract) override;
 
 signals:
     void socketLagged(networkuid socket_uid, quint16 last_presence, quint16 kick_threshold);
+
+protected:
+    void timerEvent(QTimerEvent*);
 
 private:
     HbServicePresenceServerConfig mConfig;

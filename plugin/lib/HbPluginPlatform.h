@@ -78,14 +78,6 @@ public:
      */
     virtual QString isServiceRegistered(const QString& service_name) const;
 
-signals:
-    /*!
-     * Triggered when a plugin has changed its state.
-     * To GUI.
-     */
-    void pluginStateChanged(const HbPluginInfos& plugin_infos);
-
-public slots:
     /*!
      * Fired when a plugin has changed its state.
      * From HbPluginManager.
@@ -105,6 +97,13 @@ public slots:
      * \param plugin_name Plugin name.
      */
     void onUnloadPluginRequest(const QString& plugin_name);
+
+signals:
+    /*!
+     * Triggered when a plugin has changed its state.
+     * To GUI.
+     */
+    void pluginStateChanged(const HbPluginInfos& plugin_infos);
 
 protected:
     bool mPluginLoaded;

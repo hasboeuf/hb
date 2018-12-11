@@ -37,7 +37,6 @@ public:
 protected:
     virtual ResponseSumContract* create() const override;
 
-protected:
     qint32 mResult;
 };
 } // namespace networkexample

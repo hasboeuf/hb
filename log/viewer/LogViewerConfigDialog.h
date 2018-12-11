@@ -26,7 +26,6 @@ private:
     void saveConfig();
     void addEditorField(const QString& name, const QString& cmd);
 
-private slots:
     void onFontClicked();
     void onColorClicked(int color_id);
     void onBackgroundColorClicked();
@@ -37,7 +36,6 @@ private slots:
     void onExportClicked();
     void onEditorNameChanged();
 
-private:
     LogViewerConfig mConfig;
 
     QButtonGroup qbg_colors;

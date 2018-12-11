@@ -43,10 +43,9 @@ protected:
     void init() override;
     void processMessage(const HbLogMessagePtr& message) override;
 
-private slots:
+private:
     void onReconnection();
 
-private:
     QScopedPointer<QTcpSocket> mTcpSocket;
     QString mIp;
     quint16 mPort;

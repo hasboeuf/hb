@@ -19,11 +19,12 @@ class TcpServer : public QTcpServer {
     Q_DISABLE_COPY(TcpServer)
     friend class HbTcpServer;
 
+signals:
+    void newConnection(qint32 socket_descriptor);
+
 protected:
     TcpServer(QObject* parent = nullptr);
     void incomingConnection(qintptr socket_descriptor) override;
-signals:
-    void newConnection(qint32 socket_descriptor);
 };
 
 class HB_NETWORK_DECL HbTcpServer : public HbAbstractServer {
@@ -40,6 +41,10 @@ public:
     virtual bool setConfiguration(const HbTcpServerConfig& config);
     virtual const HbTcpServerConfig& configuration() const;
 
+signals:
+    // To HbTcpSocketHandler.
+    void newConnection(qint32 socket_descriptor);
+
 private:
     virtual bool connectToNetwork() override;
     virtual void disconnectFromNetwork() override;
@@ -48,15 +53,9 @@ private:
 
     virtual void reset();
 
-private:
     // From device.
     void onNewConnection(qint32 socket_descriptor);
 
-signals:
-    // To HbTcpSocketHandler.
-    void newConnection(qint32 socket_descriptor);
-
-private:
     TcpServer* mpDevice;
     HbTcpServerConfig mConfig;
 };

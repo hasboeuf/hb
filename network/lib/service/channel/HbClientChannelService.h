@@ -44,7 +44,6 @@ public:
 
     void processContract(const HbNetworkContract* contract);
 
-public:
     virtual void onUserContractReceived(const HbNetworkContract* contract) override;
     virtual void onUserConnected(ShConstHbNetworkUserInfo user_info) override;
     virtual void onUserDisconnected(ShConstHbNetworkUserInfo user_info) override;

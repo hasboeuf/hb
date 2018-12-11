@@ -37,12 +37,11 @@ public:
     const HbServicePresenceClientConfig& config() const;
     void setConfig(const HbServicePresenceClientConfig& config);
 
-protected:
-    void timerEvent(QTimerEvent*);
-
-public:
     void onSocketAuthenticated(networkuid socket_uid) override;
     void onSocketUnauthenticated(networkuid socket_uid) override;
+
+protected:
+    void timerEvent(QTimerEvent*);
 
 private:
     HbServicePresenceClientConfig mConfig;

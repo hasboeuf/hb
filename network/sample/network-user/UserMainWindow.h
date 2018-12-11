@@ -34,17 +34,10 @@ public:
 
     static QString msClientId; // Shared by facebook and google => makes oauth exclusif in that sample.
 
-private:
-    hb::network::HbClient* mpHbClient;
-    ClientSumChannel* mpSumChannel;
-    ClientChatChannel* mpChatChannel;
-
-private:
-public slots:
     void onClientStatusChanged(networkuid client_uid, HbNetworkProtocol::ClientStatus status);
     void onMeStatusChanged(HbNetworkProtocol::UserStatus status, hb::network::ShConstHbNetworkUserInfo me_info);
 
-private slots:
+private:
     void onStartClicked();
     void onStopClicked();
     void onSendClicked();
@@ -60,10 +53,11 @@ private slots:
     // From math channel
     void onComputationReceived(qint32 result);
 
-private:
     void resetGui();
 
-signals:
+    hb::network::HbClient* mpHbClient;
+    ClientSumChannel* mpSumChannel;
+    ClientChatChannel* mpChatChannel;
 };
 } // namespace networkexample
 } // namespace hb

@@ -43,10 +43,6 @@ public:
      */
     quint64 requestUser(HbO2ServerFacebook* auth);
 
-private slots:
-    void onRequestFinished(quint64 request_id, const QJsonDocument& doc); //!< From HbHttpRequester
-    void onRequestError(quint64 request_id, const QString& error);        //!< From HbHttpRequester
-
 signals:
     /*!
      * Triggered when a Facebook request gets completed.
@@ -56,6 +52,9 @@ signals:
     void requestCompleted(quint64 request_id, HbFacebookObject* object);
 
 private:
+    void onRequestFinished(quint64 request_id, const QJsonDocument& doc); //!< From HbHttpRequester
+    void onRequestError(quint64 request_id, const QString& error);        //!< From HbHttpRequester
+
     QHash<quint64, HbFacebookObject::ObjectType> mRequestTypes;
 };
 } // namespace link

@@ -18,9 +18,6 @@ public:
     virtual ~BasicServerMainWindow() = default;
 
 private:
-    hb::network::HbTcpServer mTcpServer;
-
-private slots:
     void onStartClicked();
     void onSendContractClicked();
     void onStopClicked();
@@ -31,7 +28,7 @@ private slots:
     void onSocketDisconnected(networkuid server_uid, networkuid socket_uid);
     void onSocketContractReceived(networkuid server_uid, networkuid socket_uid, const HbNetworkContract* contract);
 
-signals:
+    hb::network::HbTcpServer mTcpServer;
 };
 } // namespace networkexample
 } // namespace hb

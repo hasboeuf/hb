@@ -31,12 +31,10 @@ signals:
      */
     void responseReceived(QHash<QString, QString> response);
 
-private slots:
-
+private:
     void onIncomingConnection();
     void onReadyRead();
 
-private:
     QHash<QString, QString> parseResponse(QByteArray& data);
 };
 } // namespace link

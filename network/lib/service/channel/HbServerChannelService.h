@@ -42,7 +42,6 @@ public:
     virtual bool unplugChannel(HbNetworkChannel* channel) override;
     virtual HbServerChannel* channel(serviceuid channel_uid) override;
 
-public:
     // From HbConnectionPool.
     virtual void onUserContractReceived(ShConstHbNetworkUserInfo user_info, const HbNetworkContract* contract) override;
     virtual void onUserConnected(ShConstHbNetworkUserInfo user_info) override;

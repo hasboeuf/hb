@@ -48,7 +48,6 @@ private:
     void onReadyRead();
     void onClientDisconnected();
 
-private:
     QString mName;
     qint32 mExpected;
     QScopedPointer<QLocalServer> mLocalServer;

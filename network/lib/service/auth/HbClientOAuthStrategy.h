@@ -36,7 +36,6 @@ public:
 
     virtual void setConfig(const HbO2ClientConfig& config);
 
-public slots:
     void onLinkSucceed();
     void onLinkFailed();
 

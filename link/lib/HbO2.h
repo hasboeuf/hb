@@ -83,9 +83,6 @@ public:
      */
     virtual const QString& code() const;
 
-protected:
-    virtual const QUrl endPoint() const = 0; //!< Target specific.
-
 signals:
 
     /*!
@@ -99,6 +96,8 @@ signals:
     void linkSucceed();
 
 protected:
+    virtual const QUrl endPoint() const = 0; //!< Target specific.
+
     LinkStatus mLinkStatus;
     QString mErrorString;
     QString mCode;

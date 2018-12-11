@@ -13,7 +13,6 @@ class AppMainWindow : public QMainWindow, private Ui::AppMainWindow {
 public:
     explicit AppMainWindow(QWidget* parent = nullptr);
 
-public slots:
     void onLoadClicked();
     void onUnloadClicked();
 

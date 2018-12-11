@@ -36,10 +36,6 @@ public:
     virtual bool plugChannel(HbNetworkChannel* channel, networkuid network_uid);
     virtual bool unplugChannel(HbNetworkChannel* channel);
 
-protected:
-    void setExchanges(HbNetworkExchanges& exchanges);
-
-public:
     // From services.
     virtual void onContractToSend(const HbNetworkContract* contract) = 0;
     // From HbAuthService.
@@ -59,6 +55,8 @@ signals:
     void userContractReceived(ShConstHbNetworkUserInfo user_info, const HbNetworkContract* contract);
 
 protected:
+    void setExchanges(HbNetworkExchanges& exchanges);
+
     virtual void reset();
 
     HbNetworkService* getService(serviceuid service_uid);
@@ -79,7 +77,6 @@ protected:
         return listeners;
     }
 
-protected:
     bool mLeaving;
     QHash<serviceuid, HbNetworkService*> mServices;
 };

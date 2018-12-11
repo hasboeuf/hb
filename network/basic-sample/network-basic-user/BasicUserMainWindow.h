@@ -18,9 +18,6 @@ public:
     virtual ~BasicUserMainWindow() = default;
 
 private:
-    hb::network::HbTcpClient mTcpClient;
-
-private slots:
     void onStartClicked();
     void onSendContractClicked();
     void onStopClicked();
@@ -29,7 +26,7 @@ private slots:
     void onClientDisconnected(networkuid client_uid);
     void onClientContractReceived(networkuid client_uid, const HbNetworkContract* contract);
 
-signals:
+    hb::network::HbTcpClient mTcpClient;
 };
 } // namespace networkexample
 } // namespace hb

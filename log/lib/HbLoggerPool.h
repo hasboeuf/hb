@@ -36,11 +36,6 @@ class HbLoggerPool : public QObject {
     Q_OBJECT
     Q_DISABLE_COPY(HbLoggerPool)
 
-private:
-    static const quint16 MAX_CAPACITY = 500;
-    static const quint16 TCP_PORT_MIN = 1024;
-    // static const quint16 TCP_PORT_MAX = 65535; Useless as quint16 protects the range.
-
 public:
     HbLoggerPool();
     virtual ~HbLoggerPool();
@@ -58,7 +53,6 @@ public:
 
     bool enqueueMessage(QList<HbLogMessage*>& buffer);
 
-public slots:
     void running();
 
 private:
@@ -67,7 +61,10 @@ private:
 
     void process();
 
-private:
+    static const quint16 MAX_CAPACITY = 500;
+    static const quint16 TCP_PORT_MIN = 1024;
+    // static const quint16 TCP_PORT_MAX = 65535; Useless as quint16 protects the range.
+
     QAtomicInt mAtomic;
 
     QTimer* mpClock;

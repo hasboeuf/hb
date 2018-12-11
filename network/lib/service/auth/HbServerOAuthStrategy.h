@@ -40,7 +40,6 @@ public:
 
     virtual void setConfig(const HbO2ServerConfig& config);
 
-public slots:
     void onLinkFailed(const QString& error);
 
 protected:

@@ -19,7 +19,6 @@ class HbTcpSocket : public HbAbstractSocket {
     Q_OBJECT
     Q_DISABLE_COPY(HbTcpSocket)
 
-private:
 public:
     HbTcpSocket() = delete;
     HbTcpSocket(QTcpSocket* device);
@@ -43,7 +42,6 @@ private:
     void onReadyRead();
     void onStateChanged(QAbstractSocket::SocketState state);
 
-private:
     HbTcpConfig mConfig;
     QTcpSocket* mpDevice;
 };

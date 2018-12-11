@@ -45,7 +45,6 @@ private:
     void enqueueMessage(Level level, const HbLogContext& context, const QString& text);
     void dequeuePendingMessages();
 
-private:
     QPointer<HbLoggerPool> mPool;
 
     QList<HbLogMessage*> mMessages;

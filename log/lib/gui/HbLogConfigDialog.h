@@ -38,8 +38,6 @@ private:
     void saveConfig();
     void updateGui();
 
-private slots:
-
     void onFontClicked();
     void onColorClicked(int color_id);
     void onBackgroundColorClicked();
@@ -48,7 +46,6 @@ private slots:
     void onImportClicked();
     void onExportClicked();
 
-private:
     HbLogConfig mConfig;
 
     QButtonGroup qbg_colors;

@@ -43,7 +43,6 @@ public:
 protected:
     virtual RequestSumContract* create() const override;
 
-protected:
     qint32 mIntA;
     qint32 mIntB;
 };

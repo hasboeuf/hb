@@ -41,14 +41,6 @@ public:
 
     void addStrategy(HbServerAuthStrategy* strategy);
 
-private:
-    void timerEvent(QTimerEvent* event);
-    bool checkSocket(networkuid socket_uid);
-    void addSocket(networkuid socket_uid);
-    void delSocket(networkuid socket_uid, bool delete_responses = true);
-    void kickSocket(networkuid socket_uid, HbNetworkProtocol::KickCode reason, const QString& description = QString());
-
-public:
     // From HbConnectionPool.
     virtual void onContractReceived(const HbNetworkContract* contract) override;
     virtual void onSocketConnected(networkuid socket_uid) override;
@@ -58,6 +50,12 @@ public:
     void onAuthFailed(networkuid socket_uid, HbNetworkProtocol::AuthStatus, const QString& description);
 
 private:
+    void timerEvent(QTimerEvent* event);
+    bool checkSocket(networkuid socket_uid);
+    void addSocket(networkuid socket_uid);
+    void delSocket(networkuid socket_uid, bool delete_responses = true);
+    void kickSocket(networkuid socket_uid, HbNetworkProtocol::KickCode reason, const QString& description = QString());
+
     HbServiceAuthServerConfig mConfig;
     QHash<authstgy, HbServerAuthStrategy*> mStrategies;
     qint32 mTimerId;

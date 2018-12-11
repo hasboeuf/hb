@@ -22,9 +22,7 @@ public:
     virtual void unload();
 
     bool doSomething() const;
-signals:
 
-public slots:
     void onAction1Triggered();
 };
 } // namespace pluginexample

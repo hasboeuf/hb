@@ -29,19 +29,15 @@ public:
     static QString msClientId;     // Shared by facebook and google => makes oauth exclusif in that sample.
     static QString msClientSecret; // Shared by facebook and google => makes oauth exclusif in that sample.
 
-public slots:
     void onServerStatusChanged(networkuid server_uid, HbNetworkProtocol::ServerStatus status);
 
-private slots:
+private:
     void onStartClicked();
     void onStopClicked();
 
-private:
     hb::network::HbServer* mpHbServer;
     ServerSumChannel* mpSumChannel;
     ServerChatChannel* mpChatChannel;
-
-signals:
 };
 } // namespace networkexample
 } // namespace hb

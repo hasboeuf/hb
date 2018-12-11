@@ -59,7 +59,6 @@ private:
     bool add(HbNetworkContract* contract);
     bool remove(HbNetworkContract* contract);
 
-private:
     typedef QHash<codeuid, HbNetworkContract*> Contracts;
     QHash<serviceuid, Contracts> mContracts;
 };
