@@ -41,11 +41,9 @@ public:
 
     bool authRequested(HbClientAuthLoginObject* login_object);
 
-public
-    callbacks :
-        // From HbAbstractClient.
-        void
-        onClientConnected(networkuid client_uid);
+public:
+    // From HbAbstractClient.
+    void onClientConnected(networkuid client_uid);
     void onClientDisconnected(networkuid client_uid);
     void onClientContractReceived(networkuid client_uid, const HbNetworkContract* contract);
 

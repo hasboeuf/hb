@@ -138,5 +138,6 @@ void HbTcpServer::onNewConnection(qint32 socket_descriptor) {
     }
 
     mPending.append(socket_descriptor);
-    q_assert(QMetaObject::invokeMethod(handler, "onNewPendingConnection", Q_ARG(qint32, socket_descriptor)));
+    bool ok = QMetaObject::invokeMethod(handler, "onNewPendingConnection", Q_ARG(qint32, socket_descriptor));
+    Q_ASSERT(ok);
 }

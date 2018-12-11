@@ -38,8 +38,8 @@ private:
     // Hide low level signal, slot must be used by end user.
     using HbNetworkService::contractToSend;
 
-public
-    callbacks : virtual void onContractToSend(HbNetworkContract* contract) override;
+public:
+    virtual void onContractToSend(HbNetworkContract* contract) override;
 };
 } // namespace network
 } // namespace hb

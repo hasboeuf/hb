@@ -39,11 +39,9 @@ public:
     virtual bool unplugChannel(HbNetworkChannel* channel);
     virtual HbNetworkChannel* channel(serviceuid channel_uid);
 
-public
-    callbacks :
-        // From channels.
-        void
-        onContractToSend(const HbNetworkContract* contract);
+public:
+    // From channels.
+    void onContractToSend(const HbNetworkContract* contract);
 
 signals:
     // To channels.

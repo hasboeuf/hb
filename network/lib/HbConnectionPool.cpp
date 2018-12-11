@@ -23,14 +23,14 @@ HbConnectionPool::HbConnectionPool(const HbGeneralConfig& config) {
 
 bool HbConnectionPool::plugChannel(HbNetworkChannel* channel, networkuid network_uid) {
     HbChannelService* channel_service = getService<HbChannelService>(HbNetworkProtocol::SERVICE_CHANNEL);
-    q_assert_ptr(channel_service);
+    Q_ASSERT(channel_service);
 
     return channel_service->plugChannel(channel, network_uid);
 }
 
 bool HbConnectionPool::unplugChannel(HbNetworkChannel* channel) {
     HbChannelService* channel_service = getService<HbChannelService>(HbNetworkProtocol::SERVICE_CHANNEL);
-    q_assert_ptr(channel_service);
+    Q_ASSERT(channel_service);
 
     return channel_service->unplugChannel(channel);
 }
@@ -39,13 +39,15 @@ void HbConnectionPool::setExchanges(HbNetworkExchanges& exchanges) {
     exchanges.plug<HbKickContract>();
 
     for (HbNetworkService* service : mServices) {
-        q_assert_ptr(service)->plugContracts(exchanges);
+        Q_ASSERT(service);
+        service->plugContracts(exchanges);
     }
 }
 
 void HbConnectionPool::reset() {
     for (HbNetworkService* service : mServices) {
-        q_assert_ptr(service)->reset();
+        Q_ASSERT(service);
+        service->reset();
     }
 }
 

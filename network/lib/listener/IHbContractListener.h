@@ -23,8 +23,8 @@ namespace network {
  * TODOC
  */
 class HB_NETWORK_DECL IHbContractListener {
-public
-    callbacks : virtual void onContractReceived(const HbNetworkContract* contract) = 0;
+public:
+    virtual void onContractReceived(const HbNetworkContract* contract) = 0;
 
 protected:
     virtual ~IHbContractListener() {

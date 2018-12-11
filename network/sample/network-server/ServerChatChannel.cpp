@@ -25,7 +25,7 @@ serviceuid ServerChatChannel::uid() const {
 }
 
 void ServerChatChannel::onUserContractReceived(ShConstHbNetworkUserInfo user_info, const HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     qDebug() << "Contract received from" << user_info->email();
     qDebug() << "Contract details:" << contract->toString();

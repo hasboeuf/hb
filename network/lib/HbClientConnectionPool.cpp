@@ -58,7 +58,7 @@ HbClientConnectionPool::HbClientConnectionPool(const HbGeneralClientConfig& conf
             Qt::UniqueConnection);
 
     for (HbNetworkService* service : mServices) {
-        q_assert_ptr(service);
+        Q_ASSERT(service);
 
         // From services.
         connect(service, &HbNetworkService::contractToSend, this, &HbClientConnectionPool::onContractToSend);
@@ -185,7 +185,7 @@ bool HbClientConnectionPool::leave() {
 
     mLeaving = false;
 
-    q_assert(mClients.isEmpty());
+    Q_ASSERT(mClients.isEmpty());
 
     return true;
 }
@@ -202,7 +202,7 @@ bool HbClientConnectionPool::authRequested(HbClientAuthLoginObject* login_object
     }
 
     HbClientAuthService* auth_service = getService<HbClientAuthService>(HbNetworkProtocol::SERVICE_AUTH);
-    q_assert_ptr(auth_service);
+    Q_ASSERT(auth_service);
 
     login_object->setSocketUid(mUser.mainSocketUid());
     mUser.setStatus(HbNetworkProtocol::USER_AUTHENTICATING);
@@ -214,8 +214,8 @@ bool HbClientConnectionPool::authRequested(HbClientAuthLoginObject* login_object
 
 void HbClientConnectionPool::onClientConnected(networkuid client_uid) {
     HbAbstractClient* client = dynamic_cast<HbAbstractClient*>(sender());
-    q_assert_ptr(client);
-    q_assert(mClients.contains(client_uid));
+    Q_ASSERT(client);
+    Q_ASSERT(mClients.contains(client_uid));
 
     connect(client,
             &HbAbstractClient::clientContractReceived,
@@ -234,8 +234,8 @@ void HbClientConnectionPool::onClientConnected(networkuid client_uid) {
 
 void HbClientConnectionPool::onClientDisconnected(networkuid client_uid) {
     HbAbstractClient* client = dynamic_cast<HbAbstractClient*>(sender());
-    q_assert_ptr(client);
-    q_assert(mClients.contains(client_uid));
+    Q_ASSERT(client);
+    Q_ASSERT(mClients.contains(client_uid));
 
     if (mUser.status() > HbNetworkProtocol::USER_CONNECTED) {
         emit socketUnauthenticated(client_uid);
@@ -260,7 +260,7 @@ void HbClientConnectionPool::onClientDisconnected(networkuid client_uid) {
 
             // Unplug channels.
             for (HbNetworkChannel* channel : client->configuration().channels()) {
-                q_assert_ptr(channel);
+                Q_ASSERT(channel);
                 HbConnectionPool::unplugChannel(channel);
             }
 
@@ -274,7 +274,7 @@ void HbClientConnectionPool::onClientDisconnected(networkuid client_uid) {
         } else {
             // It will reconnect so we do not unplug channels but we reset it.
             for (HbNetworkChannel* channel : client->configuration().channels()) {
-                q_assert_ptr(channel);
+                Q_ASSERT(channel);
                 channel->internalReset(/*keep_uid*/ true);
                 channel->reset();
             }
@@ -289,8 +289,8 @@ void HbClientConnectionPool::onClientDisconnected(networkuid client_uid) {
 
 void HbClientConnectionPool::onClientContractReceived(networkuid client_uid, const HbNetworkContract* contract) {
     HbAbstractClient* client = dynamic_cast<HbAbstractClient*>(sender());
-    q_assert_ptr(client);
-    q_assert(mClients.contains(client_uid));
+    Q_ASSERT(client);
+    Q_ASSERT(mClients.contains(client_uid));
 
     qDebug() << "Contract received from client" << client_uid;
 
@@ -306,7 +306,7 @@ void HbClientConnectionPool::onClientContractReceived(networkuid client_uid, con
     bool is_authenticated = true;
     if (mUser.status() != HbNetworkProtocol::USER_AUTHENTICATED) {
         is_authenticated = false;
-        q_assert(requested_service == HbNetworkProtocol::SERVICE_AUTH);
+        Q_ASSERT(requested_service == HbNetworkProtocol::SERVICE_AUTH);
     }
 
     HbNetworkService* service = getService(requested_service);
@@ -318,11 +318,11 @@ void HbClientConnectionPool::onClientContractReceived(networkuid client_uid, con
 
     if (is_authenticated) {
         IHbClientUserContractListener* auth_service = dynamic_cast<IHbClientUserContractListener*>(service);
-        q_assert_ptr(auth_service);
+        Q_ASSERT(auth_service);
         auth_service->onUserContractReceived(contract);
     } else {
         IHbContractListener* unauth_service = dynamic_cast<IHbContractListener*>(service);
-        q_assert_ptr(unauth_service);
+        Q_ASSERT(unauth_service);
         unauth_service->onContractReceived(contract);
     }
 }
@@ -345,7 +345,7 @@ void HbClientConnectionPool::onContractToSend(const HbNetworkContract* contract)
 }
 
 void HbClientConnectionPool::onSocketAuthenticated(networkuid socket_uid, const HbNetworkUserInfo& user_info) {
-    q_assert(socket_uid > 0);
+    Q_ASSERT(socket_uid > 0);
 
     if (mUser.mainSocketUid() == socket_uid) {
         mUser.setInfo(user_info);
@@ -362,7 +362,7 @@ void HbClientConnectionPool::onSocketUnauthenticated(networkuid socket_uid,
                                                      quint8 try_number,
                                                      quint8 max_tries,
                                                      const QString& reason) {
-    q_assert(socket_uid > 0);
+    Q_ASSERT(socket_uid > 0);
 
     if (mUser.mainSocketUid() == socket_uid) {
         mUser.setInfo(HbNetworkUserInfo());
@@ -386,12 +386,12 @@ void HbClientConnectionPool::onMeStatusChanged(HbNetworkProtocol::UserStatus sta
 }
 
 bool HbClientConnectionPool::checkKickReceived(const HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     if (contract->header().service() == HbNetworkProtocol::SERVICE_KICK
         && contract->header().code() == HbNetworkProtocol::CODE_SRV_KICK) {
         const HbKickContract* kick_contract = contract->value<HbKickContract>();
-        q_assert_ptr(kick_contract);
+        Q_ASSERT(kick_contract);
 
         qWarning() << QString("Kick contract received! (reason=%1, description=%2)")
                           .arg(HbNetworkProtocol::MetaKickCode::toString(kick_contract->reason()))

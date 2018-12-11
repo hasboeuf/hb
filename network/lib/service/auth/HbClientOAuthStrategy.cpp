@@ -26,8 +26,8 @@ void HbClientOAuthStrategy::reset() {
 
 void HbClientOAuthStrategy::onLinkSucceed() {
     HbO2Client* client = dynamic_cast<HbO2Client*>(sender());
-    q_assert_ptr(client);
-    q_assert(mPendingCodes.contains(client));
+    Q_ASSERT(client);
+    Q_ASSERT(mPendingCodes.contains(client));
 
     networkuid socket_uid = mPendingCodes.value(client);
 
@@ -44,8 +44,8 @@ void HbClientOAuthStrategy::onLinkSucceed() {
 
 void HbClientOAuthStrategy::onLinkFailed() {
     HbO2Client* client = dynamic_cast<HbO2Client*>(sender());
-    q_assert_ptr(client);
-    q_assert(mPendingCodes.contains(client));
+    Q_ASSERT(client);
+    Q_ASSERT(mPendingCodes.contains(client));
 
     networkuid socket_uid = mPendingCodes.value(client);
 

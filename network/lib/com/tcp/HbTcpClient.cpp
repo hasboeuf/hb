@@ -55,7 +55,7 @@ const HbTcpClientConfig& HbTcpClient::configuration() const {
 }
 
 bool HbTcpClient::connectToNetwork() {
-    q_assert_ptr(mpSocket);
+    Q_ASSERT(mpSocket);
     if (!mpSocket->connectToHost(this->configuration())) {
         qWarning() << "Can not connect to host";
         return false;
@@ -65,7 +65,7 @@ bool HbTcpClient::connectToNetwork() {
 }
 
 void HbTcpClient::disconnectFromNetwork() {
-    q_assert_ptr(mpSocket);
+    Q_ASSERT(mpSocket);
     if (!mpSocket->leave()) {
         qWarning() << "Can not disconnect from host";
     } else {

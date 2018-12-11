@@ -30,7 +30,7 @@ namespace network {
  * TODOC
  */
 class HB_NETWORK_DECL HbNetworkContract {
-    Q_FRIEND_CLASS(HbNetworkExchanges)
+    friend class HbNetworkExchanges;
 
 public:
     virtual ~HbNetworkContract();

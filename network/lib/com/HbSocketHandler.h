@@ -31,7 +31,7 @@ class HbAbstractSocket;
 class HbSocketHandler : public QObject, public HbUid<CLASS_SERVER> {
     Q_OBJECT
     Q_DISABLE_COPY(HbSocketHandler)
-    Q_FRIEND_CLASS(HbAbstractServer)
+    friend class HbAbstractServer;
 
 public:
     virtual bool canHandleNewConnection();

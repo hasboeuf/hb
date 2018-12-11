@@ -53,7 +53,7 @@ void HbClientAuthService::addStrategy(HbClientAuthStrategy* strategy) {
 }
 
 void HbClientAuthService::onContractReceived(const HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     const HbAuthStatusContract* auth_status = contract->value<HbAuthStatusContract>();
     if (auth_status) {
@@ -89,8 +89,8 @@ void HbClientAuthService::onSocketDisconnected(networkuid socket_uid) {
 }
 
 void HbClientAuthService::onAuthRequested(HbClientAuthLoginObject* login_object) {
-    q_assert_ptr(login_object);
-    q_assert(mPendingSocket == 0);
+    Q_ASSERT(login_object);
+    Q_ASSERT(mPendingSocket == 0);
 
     authstgy strategy_id = login_object->strategy();
 

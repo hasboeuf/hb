@@ -34,8 +34,8 @@ public:
 
     void sendMessage(const QString message);
 
-public
-    callbacks : virtual void onUserContractReceived(const HbNetworkContract* contract) override;
+public:
+    virtual void onUserContractReceived(const HbNetworkContract* contract) override;
 
 signals:
     void chatMessageReceived(const QString& author, const QString& message);

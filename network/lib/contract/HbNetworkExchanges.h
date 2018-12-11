@@ -25,7 +25,7 @@ namespace network {
  * TODOC
  */
 class HB_NETWORK_DECL HbNetworkExchanges {
-    Q_FRIEND_CLASS(HbNetworkConfig)
+    friend class HbNetworkConfig;
 
 protected:
     HbNetworkExchanges() = default;

@@ -23,8 +23,8 @@ namespace network {
  * TODOC
  */
 class HB_NETWORK_DECL IHbSocketAuthListener {
-public
-    callbacks : virtual void onSocketAuthenticated(networkuid socket_uid) = 0;
+public:
+    virtual void onSocketAuthenticated(networkuid socket_uid) = 0;
     virtual void onSocketUnauthenticated(networkuid socket_uid) = 0;
 
 protected:

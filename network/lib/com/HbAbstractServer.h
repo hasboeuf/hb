@@ -32,7 +32,7 @@ class HbSocketHandler;
 class HB_NETWORK_DECL HbAbstractServer : public HbAbstractNetwork, public HbUid<CLASS_SERVER> {
     Q_OBJECT
     Q_DISABLE_COPY(HbAbstractServer)
-    Q_FRIEND_CLASS(HbSocketHandler)
+    friend class HbSocketHandler;
 
 public:
     virtual ~HbAbstractServer() =
@@ -64,11 +64,9 @@ signals:
     void socketDisconnected(networkuid server_uid, networkuid socket_uid);
     void socketContractReceived(networkuid server_uid, networkuid socket_uid, const HbNetworkContract* contract);
 
-public
-    callbacks :
-        // From HbSocketHandler.
-        void
-        onSocketConnected(qint32 socket_descriptor, networkuid socket_uid);
+public:
+    // From HbSocketHandler.
+    void onSocketConnected(qint32 socket_descriptor, networkuid socket_uid);
     void onSocketDisconnected(networkuid socket_uid);
     void onSocketContractReceived(networkuid socket_uid, const HbNetworkContract* contract);
     void onHandlerIdled();

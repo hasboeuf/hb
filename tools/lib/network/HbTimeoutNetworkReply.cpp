@@ -9,7 +9,7 @@ quint32 HbTimeoutNetworkReply::msDefaultTimeout = 1000 * 60;
 HbTimeoutNetworkReply::HbTimeoutNetworkReply(QNetworkReply* reply, quint32 timeout) : QTimer(reply) {
     setSingleShot(true);
 
-    q_assert_ptr(reply);
+    Q_ASSERT(reply);
 
     connect(this,
             &HbTimeoutNetworkReply::error,

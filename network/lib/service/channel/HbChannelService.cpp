@@ -17,7 +17,7 @@ void HbChannelService::reset() {
         unplugChannel(channel); // Handles reset.
     }
 
-    q_assert(mChannels.size() == 0);
+    Q_ASSERT(mChannels.size() == 0);
     mUsers.clear();
 }
 
@@ -30,8 +30,8 @@ serviceuid HbChannelService::uid() const {
 }
 
 bool HbChannelService::plugChannel(HbNetworkChannel* channel, networkuid network_uid) {
-    q_assert_ptr(channel);
-    q_assert(channel->networkUid() == 0);
+    Q_ASSERT(channel);
+    Q_ASSERT(channel->networkUid() == 0);
 
     channel->setNetworkUid(network_uid);
     serviceuid channel_uid = channel->uid();
@@ -60,7 +60,7 @@ bool HbChannelService::plugChannel(HbNetworkChannel* channel, networkuid network
 }
 
 bool HbChannelService::unplugChannel(HbNetworkChannel* channel) {
-    q_assert_ptr(channel);
+    Q_ASSERT(channel);
 
     if (!mChannels.contains(channel->uid())) {
         qWarning() << "Channel" << channel << "inexistant";
@@ -84,7 +84,7 @@ HbNetworkChannel* HbChannelService::channel(serviceuid channel_uid) {
 }
 
 void HbChannelService::onContractToSend(const HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     emit contractToSend(contract);
 }

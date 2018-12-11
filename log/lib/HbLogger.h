@@ -30,7 +30,7 @@ class HbLogServiceController;
 class HB_LOG_DECL HbLogger {
     Q_GADGET
     Q_DISABLE_COPY(HbLogger)
-    Q_FRIEND_CLASS(HbLogServiceController)
+    friend class HbLogServiceController;
 
 public:
     enum Level : qint8 {

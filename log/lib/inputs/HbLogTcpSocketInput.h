@@ -45,15 +45,9 @@ protected:
 
 private:
     void onNewConnection();
-
-private
-    callbacks :
-
-        void
-        onReadyRead();
+    void onReadyRead();
     void onClientDisconnected();
 
-private:
     quint16 mPort;
     qint32 mExpected;
     QScopedPointer<QTcpServer> mTcpServer;

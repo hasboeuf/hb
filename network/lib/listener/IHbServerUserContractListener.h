@@ -24,9 +24,8 @@ namespace network {
  * TODOC
  */
 class HB_NETWORK_DECL IHbServerUserContractListener {
-public
-    callbacks : virtual void onUserContractReceived(ShConstHbNetworkUserInfo user_info,
-                                                    const HbNetworkContract* contract) = 0;
+public:
+    virtual void onUserContractReceived(ShConstHbNetworkUserInfo user_info, const HbNetworkContract* contract) = 0;
 
 protected:
     virtual ~IHbServerUserContractListener() {

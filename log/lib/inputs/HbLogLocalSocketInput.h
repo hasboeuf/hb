@@ -43,8 +43,8 @@ public:
 protected:
     void init() override;
 
-private
-    callbacks : void incomingConnection();
+private:
+    void incomingConnection();
     void onReadyRead();
     void onClientDisconnected();
 

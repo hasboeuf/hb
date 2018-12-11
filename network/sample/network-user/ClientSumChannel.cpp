@@ -25,7 +25,7 @@ serviceuid ClientSumChannel::uid() const {
 }
 
 void ClientSumChannel::onUserContractReceived(const HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     qDebug() << "Contract received from" << contract->sender();
     qDebug() << "Contract details:" << contract->toString();

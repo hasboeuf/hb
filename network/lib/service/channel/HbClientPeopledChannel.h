@@ -37,11 +37,8 @@ public:
 
     const QHash<QString, ShConstHbNetworkUserInfo>& connectedUsers() const;
 
-public
-    callbacks :
-
-        signals : void
-                  userConnected(ShConstHbNetworkUserInfo user_info);
+signals:
+    void userConnected(ShConstHbNetworkUserInfo user_info);
     void userDisconnected(ShConstHbNetworkUserInfo user_info);
 
 private:

@@ -67,8 +67,8 @@ bool HbServerAuthFacebookStrategy::checkLogin(const HbAuthRequestContract* contr
 
 void HbServerAuthFacebookStrategy::onLinkSucceed() {
     HbO2ServerFacebook* server_auth = dynamic_cast<HbO2ServerFacebook*>(sender());
-    q_assert_ptr(server_auth);
-    q_assert(mPendingToken.contains(server_auth));
+    Q_ASSERT(server_auth);
+    Q_ASSERT(mPendingToken.contains(server_auth));
 
     qDebug() << "Server link succeed. Requesting Facebook user object" << server_auth->config().clientId();
 
@@ -84,7 +84,7 @@ void HbServerAuthFacebookStrategy::onLinkSucceed() {
 }
 
 void HbServerAuthFacebookStrategy::onRequestCompleted(quint64 request_id, HbFacebookObject* object) {
-    q_assert(mPendingRequest.contains(request_id));
+    Q_ASSERT(mPendingRequest.contains(request_id));
 
     networkuid sender = mPendingRequest.take(request_id);
 

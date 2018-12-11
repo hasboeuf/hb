@@ -39,8 +39,8 @@ public:
 
     void addStrategy(HbClientAuthStrategy* strategy);
 
-public
-    callbacks : virtual void onContractReceived(const HbNetworkContract* contract) override;
+public:
+    virtual void onContractReceived(const HbNetworkContract* contract) override;
     virtual void onSocketConnected(networkuid socket_uid) override;
     virtual void onSocketDisconnected(networkuid socket_uid) override;
 

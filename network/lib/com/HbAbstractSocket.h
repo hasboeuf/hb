@@ -64,11 +64,9 @@ protected:
     virtual qint64 readStream(QDataStream& stream);
     virtual qint64 writeBuffer(const QByteArray& buffer) const;
 
-protected
-    callbacks :
-        // From children device.
-        virtual void
-        onReadyRead() = 0;
+protected:
+    // From children device.
+    virtual void onReadyRead() = 0;
 
 private:
     QPointer<QIODevice> mDevice;

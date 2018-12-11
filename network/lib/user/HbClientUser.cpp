@@ -26,17 +26,17 @@ void HbClientUser::setStatus(HbNetworkProtocol::UserStatus status) {
 }
 
 void HbClientUser::addSocket(networkuid socket_uid, bool main) {
-    q_assert(!mSocketsUid.contains(socket_uid));
+    Q_ASSERT(!mSocketsUid.contains(socket_uid));
 
     if (main) {
-        q_assert(mMainSocket == 0);
+        Q_ASSERT(mMainSocket == 0);
         mMainSocket = socket_uid;
         setStatus(HbNetworkProtocol::USER_CONNECTING);
     }
 }
 
 void HbClientUser::delSocket(networkuid socket_uid) {
-    q_assert(mSocketsUid.contains(socket_uid));
+    Q_ASSERT(mSocketsUid.contains(socket_uid));
     mSocketsUid.removeOne(socket_uid);
 }
 

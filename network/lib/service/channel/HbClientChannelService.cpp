@@ -11,7 +11,7 @@ using namespace hb::network;
 
 void HbClientChannelService::reset() {
     HbChannelService::reset(); // Handles channels unplugging.
-    q_assert(mPeopledChannels.size() == 0);
+    Q_ASSERT(mPeopledChannels.size() == 0);
 }
 
 const HbServiceChannelClientConfig& HbClientChannelService::config() const {
@@ -30,7 +30,7 @@ bool HbClientChannelService::plugChannel(HbNetworkChannel* channel, networkuid n
     if (dynamic_cast<HbClientChannel*>(channel)) {
         ok = HbChannelService::plugChannel(channel, network_uid);
 
-        q_assert(channel->networkUid() != 0);
+        Q_ASSERT(channel->networkUid() != 0);
 
         if (ok) {
             HbClientPeopledChannel* peopled_channel = dynamic_cast<HbClientPeopledChannel*>(channel);
@@ -79,7 +79,7 @@ HbClientChannel* HbClientChannelService::channel(serviceuid channel_uid) {
 }
 
 void HbClientChannelService::onUserContractReceived(const HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     serviceuid channel_uid = contract->header().service();
 
@@ -110,7 +110,7 @@ void HbClientChannelService::onUserDisconnected(ShConstHbNetworkUserInfo user_in
 }
 
 void HbClientChannelService::processContract(const HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     const HbUserSyncContract* sync_contract = contract->value<HbUserSyncContract>();
     if (sync_contract) {

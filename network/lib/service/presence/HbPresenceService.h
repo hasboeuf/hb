@@ -31,9 +31,6 @@ public:
     virtual void plugContracts(HbNetworkExchanges& exchanges) override;
 
     virtual serviceuid uid() const override;
-
-public
-    callbacks:
 };
 } // namespace network
 } // namespace hb

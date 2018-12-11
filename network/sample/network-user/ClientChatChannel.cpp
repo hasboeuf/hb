@@ -37,7 +37,7 @@ void ClientChatChannel::sendMessage(const QString message) {
 }
 
 void ClientChatChannel::onUserContractReceived(const HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     qDebug() << "Contract received from" << contract->sender();
     qDebug() << "Contract details:" << contract->toString();

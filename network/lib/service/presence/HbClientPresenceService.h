@@ -40,8 +40,8 @@ public:
 protected:
     void timerEvent(QTimerEvent*);
 
-public
-    callbacks : void onSocketAuthenticated(networkuid socket_uid) override;
+public:
+    void onSocketAuthenticated(networkuid socket_uid) override;
     void onSocketUnauthenticated(networkuid socket_uid) override;
 
 private:

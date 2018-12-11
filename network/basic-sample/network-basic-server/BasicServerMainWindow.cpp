@@ -76,7 +76,7 @@ void BasicServerMainWindow::onSocketDisconnected(networkuid server_uid, networku
 void BasicServerMainWindow::onSocketContractReceived(networkuid server_uid,
                                                      networkuid socket_uid,
                                                      const HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     qDebug() << "Contract received from socket" << socket_uid << "on server" << server_uid;
     qDebug() << "Contract details:" << contract->toString();

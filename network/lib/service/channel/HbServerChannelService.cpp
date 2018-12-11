@@ -11,7 +11,7 @@ using namespace hb::network;
 
 void HbServerChannelService::reset() {
     HbChannelService::reset(); // Handles channels unplugging.
-    q_assert(mPeopledChannels.size() == 0);
+    Q_ASSERT(mPeopledChannels.size() == 0);
 }
 
 const HbServiceChannelServerConfig& HbServerChannelService::config() const {
@@ -87,7 +87,7 @@ HbServerChannel* HbServerChannelService::channel(serviceuid channel_uid) {
 
 void HbServerChannelService::onUserContractReceived(ShConstHbNetworkUserInfo user_info,
                                                     const HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     serviceuid channel_uid = contract->header().service();
 
@@ -103,7 +103,7 @@ void HbServerChannelService::onUserContractReceived(ShConstHbNetworkUserInfo use
 }
 
 void HbServerChannelService::onUserConnected(ShConstHbNetworkUserInfo user_info) {
-    q_assert(!mUsers.contains(user_info->email()));
+    Q_ASSERT(!mUsers.contains(user_info->email()));
 
     if (mUsers.size() > 0) {
         HbUserSyncContract* one_contract = new HbUserSyncContract();    // Notify the new connected user.
@@ -136,7 +136,7 @@ void HbServerChannelService::onUserConnected(ShConstHbNetworkUserInfo user_info)
 }
 
 void HbServerChannelService::onUserDisconnected(ShConstHbNetworkUserInfo user_info) {
-    q_assert(mUsers.contains(user_info->email()));
+    Q_ASSERT(mUsers.contains(user_info->email()));
 
     mUsers.remove(user_info->email());
 
@@ -156,13 +156,13 @@ void HbServerChannelService::onUserDisconnected(ShConstHbNetworkUserInfo user_in
 }
 
 void HbServerChannelService::onUserContractToSend(ShConstHbNetworkUserInfo user_info, HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
     emit userContractToSend(user_info, contract);
 }
 
 void HbServerChannelService::onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos,
                                                    HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
     emit usersContractToSend(users_infos, contract);
 }
 

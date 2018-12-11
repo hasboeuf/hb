@@ -35,8 +35,8 @@ private:
     using HbNetworkService::usersContractToSend;
     using HbNetworkService::userToKick;
 
-public
-    callbacks : virtual void onContractToSend(HbNetworkContract* contract) override;
+public:
+    virtual void onContractToSend(HbNetworkContract* contract) override;
     void onUserContractToSend(ShConstHbNetworkUserInfo user_info, HbNetworkContract* contract);
     void onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos, HbNetworkContract* contract);
     void onUserToKick(ShConstHbNetworkUserInfo user_info, netwlint reason, const QString& description = QString());

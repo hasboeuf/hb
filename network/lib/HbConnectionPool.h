@@ -39,11 +39,9 @@ public:
 protected:
     void setExchanges(HbNetworkExchanges& exchanges);
 
-public
-    callbacks :
-        // From services.
-        virtual void
-        onContractToSend(const HbNetworkContract* contract) = 0;
+public:
+    // From services.
+    virtual void onContractToSend(const HbNetworkContract* contract) = 0;
     // From HbAuthService.
     virtual void onSocketAuthenticated(networkuid socket_uid, const HbNetworkUserInfo& user_info) = 0;
     virtual void

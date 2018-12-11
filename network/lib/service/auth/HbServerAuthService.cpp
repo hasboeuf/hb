@@ -138,7 +138,7 @@ void HbServerAuthService::kickSocket(networkuid socket_uid,
 }
 
 void HbServerAuthService::onContractReceived(const HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     const HbAuthRequestContract* auth_contract = contract->value<HbAuthRequestContract>();
     if (auth_contract) {
@@ -152,7 +152,7 @@ void HbServerAuthService::onContractReceived(const HbNetworkContract* contract) 
                 mResponses.insert(socket_uid, response);
 
                 if (strategy->checkLogin(auth_contract)) {
-                    q_assert(mAuthTries.contains(socket_uid));
+                    Q_ASSERT(mAuthTries.contains(socket_uid));
                     mAuthTries[socket_uid]++;
                 } else {
                     qWarning() << "Bad contract";
@@ -220,7 +220,7 @@ void HbServerAuthService::onAuthFailed(networkuid socket_uid,
             return;
         }
 
-        q_assert(mAuthTries.contains(socket_uid));
+        Q_ASSERT(mAuthTries.contains(socket_uid));
 
         response->setStatus(status);
         response->setDescription(description);

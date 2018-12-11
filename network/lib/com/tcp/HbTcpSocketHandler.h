@@ -19,7 +19,7 @@ namespace network {
 class HbTcpSocketHandler : public HbSocketHandler {
     Q_OBJECT
     Q_DISABLE_COPY(HbTcpSocketHandler)
-    Q_FRIEND_CLASS(HbTcpServer)
+    friend class HbTcpServer;
 
 protected:
     HbTcpSocketHandler(HbTcpServer* server);

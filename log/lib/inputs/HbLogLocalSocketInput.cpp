@@ -42,7 +42,7 @@ void HbLogLocalSocketInput::incomingConnection() {
 }
 
 void HbLogLocalSocketInput::onReadyRead() {
-    QLocalSocket* socket = q_dynamic_cast(QLocalSocket*, sender());
+    QLocalSocket* socket = dynamic_cast<QLocalSocket*>(sender());
     QDataStream stream(socket);
 
     do {
@@ -67,8 +67,8 @@ void HbLogLocalSocketInput::onReadyRead() {
 }
 
 void HbLogLocalSocketInput::onClientDisconnected() {
-    QLocalSocket* socket = q_dynamic_cast(QLocalSocket*, sender());
-
-    mClients.remove(q_assert_ptr(socket));
+    QLocalSocket* socket = dynamic_cast<QLocalSocket*>(sender());
+    Q_ASSERT(socket);
+    mClients.remove(socket);
     socket->deleteLater();
 }

@@ -128,7 +128,8 @@ void HbAbstractClient::onSocketConnected() {
 }
 
 void HbAbstractClient::onSocketReadyPacket() {
-    HbAbstractSocket* socket = q_assert_ptr(dynamic_cast<HbAbstractSocket*>(sender()));
+    HbAbstractSocket* socket = dynamic_cast<HbAbstractSocket*>(sender());
+    Q_ASSERT(socket);
 
     bool available = (socket->isListening() && socket->packetAvailable());
 
@@ -142,7 +143,7 @@ void HbAbstractClient::onSocketReadyPacket() {
 
             HbNetworkHeader header;
             stream >> header;
-            q_assert(stream.status() == QDataStream::Ok);
+            Q_ASSERT(stream.status() == QDataStream::Ok);
 
             if (!configuration().isBadHeaderTolerant()) {
                 if (!HbAbstractNetwork::checkHeader(header)) {
@@ -160,7 +161,7 @@ void HbAbstractClient::onSocketReadyPacket() {
                 qWarning() << "Try to read unregistered contract" << contract->header().toString();
             } else {
                 if (!contract->read(stream)) {
-                    q_assert(stream.status() == QDataStream::Ok);
+                    Q_ASSERT(stream.status() == QDataStream::Ok);
 
                     qWarning() << "Error occurred while reading contract" << contract->header().toString();
                 } else {

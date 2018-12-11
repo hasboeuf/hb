@@ -17,7 +17,7 @@ namespace network {
 class TcpServer : public QTcpServer {
     Q_OBJECT
     Q_DISABLE_COPY(TcpServer)
-    Q_FRIEND_CLASS(HbTcpServer)
+    friend class HbTcpServer;
 
 protected:
     TcpServer(QObject* parent = nullptr);
@@ -48,11 +48,9 @@ private:
 
     virtual void reset();
 
-private
-    callbacks :
-        // From device.
-        void
-        onNewConnection(qint32 socket_descriptor);
+private:
+    // From device.
+    void onNewConnection(qint32 socket_descriptor);
 
 signals:
     // To HbTcpSocketHandler.

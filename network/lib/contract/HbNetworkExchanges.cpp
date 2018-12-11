@@ -74,7 +74,7 @@ HbNetworkContract* HbNetworkExchanges::contract(const HbNetworkHeader& header) c
         Contracts contracts = mContracts.value(header.service());
         if (contracts.contains(header.code())) {
             HbNetworkContract* reference = contracts.value(header.code(), nullptr);
-            q_assert_ptr(reference);
+            Q_ASSERT(reference);
             contract = reference->create();
             contract->setHeader(header);
         }

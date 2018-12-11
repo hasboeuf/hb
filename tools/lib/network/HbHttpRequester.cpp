@@ -32,7 +32,7 @@ quint64 HbHttpRequester::processRequest(const QUrl& url, quint32 timeout) {
 
 void HbHttpRequester::onFinished() {
     QNetworkReply* reply = dynamic_cast<QNetworkReply*>(sender());
-    q_assert_ptr(reply);
+    Q_ASSERT(reply);
 
     quint64 id = mReplies.id(reply);
     mReplies.remove(reply);
@@ -53,7 +53,7 @@ void HbHttpRequester::onError(const QNetworkReply::NetworkError& error) {
     Q_UNUSED(error)
 
     QNetworkReply* reply = dynamic_cast<QNetworkReply*>(sender());
-    q_assert_ptr(reply);
+    Q_ASSERT(reply);
 
     quint64 id = mReplies.id(reply);
 

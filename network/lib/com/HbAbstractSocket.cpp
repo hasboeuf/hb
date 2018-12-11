@@ -10,7 +10,7 @@ using namespace hb::network;
 using namespace hb::tools;
 
 HbAbstractSocket::HbAbstractSocket(QIODevice* device) {
-    q_assert_ptr(device);
+    Q_ASSERT(device);
     mDevice = device;
 
     connect(mDevice.data(), &QIODevice::readyRead, this, &HbAbstractSocket::onReadyRead, Qt::UniqueConnection);
@@ -41,10 +41,10 @@ bool HbAbstractSocket::sendContract(ShConstHbNetworkContract contract) {
             return true;
         }
 
-        q_assert(bytesWritten);
+        Q_ASSERT(bytesWritten);
     }
 
-    q_assert(stream.status() == QDataStream::Ok);
+    Q_ASSERT(stream.status() == QDataStream::Ok);
 
     return false;
 }
@@ -63,7 +63,8 @@ qint64 HbAbstractSocket::writePacket(const QByteArray& packet) const {
         QByteArray buffer;
         QDataStream stream(&buffer, QIODevice::WriteOnly);
 
-        q_assert(stream.writeBytes(packet.constData(), packet.size()).status() == QDataStream::Ok);
+        auto status = stream.writeBytes(packet.constData(), packet.size()).status();
+        Q_ASSERT(status == QDataStream::Ok);
         return writeBuffer(buffer);
     } else {
         qWarning() << "Try to write an empty packet";
@@ -95,7 +96,7 @@ qint64 HbAbstractSocket::readStream(QDataStream& stream) {
     {
         if (mBytesPending == 0) {
             QDataStream::Status status = (stream >> mBytesPending).status();
-            q_assert(status == QDataStream::Ok);
+            Q_ASSERT(status == QDataStream::Ok);
 
             expected = mBytesPending;
         }
@@ -132,7 +133,7 @@ qint64 HbAbstractSocket::readStream(QDataStream& stream) {
 }
 
 qint64 HbAbstractSocket::writeBuffer(const QByteArray& buffer) const {
-    q_assert(!mDevice.isNull());
+    Q_ASSERT(!mDevice.isNull());
 
     if (buffer.isEmpty()) {
         qWarning() << "Try to write an empty buffer";

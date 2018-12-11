@@ -48,11 +48,9 @@ private:
     void delSocket(networkuid socket_uid, bool delete_responses = true);
     void kickSocket(networkuid socket_uid, HbNetworkProtocol::KickCode reason, const QString& description = QString());
 
-public
-    callbacks :
-        // From HbConnectionPool.
-        virtual void
-        onContractReceived(const HbNetworkContract* contract) override;
+public:
+    // From HbConnectionPool.
+    virtual void onContractReceived(const HbNetworkContract* contract) override;
     virtual void onSocketConnected(networkuid socket_uid) override;
     virtual void onSocketDisconnected(networkuid socket_uid) override;
     // From HbServerAuthStrategy.

@@ -38,11 +38,9 @@ public:
     QAbstractSocket::SocketError error() const override;
     QAbstractSocket::SocketState state() const override;
 
-private
-    callbacks :
-        // From device.
-        void
-        onReadyRead();
+private:
+    // From device.
+    void onReadyRead();
     void onStateChanged(QAbstractSocket::SocketState state);
 
 private:

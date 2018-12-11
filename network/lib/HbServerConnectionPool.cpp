@@ -61,7 +61,7 @@ HbServerConnectionPool::HbServerConnectionPool(const HbGeneralServerConfig& conf
             Qt::UniqueConnection);
 
     for (HbNetworkService* service : mServices) {
-        q_assert_ptr(service);
+        Q_ASSERT(service);
 
         // From services.
         connect(service, &HbNetworkService::contractToSend, this, &HbServerConnectionPool::onContractToSend);
@@ -197,20 +197,20 @@ bool HbServerConnectionPool::leave() {
 
     mLeaving = false;
 
-    q_assert(mMainServer == 0);
-    q_assert(mServers.isEmpty());
-    q_assert(mPendingSockets.isEmpty());
-    q_assert(mServerBySocketId.isEmpty());
-    q_assert(mUserBySocketId.isEmpty());
-    q_assert(mUserByEmail.isEmpty());
+    Q_ASSERT(mMainServer == 0);
+    Q_ASSERT(mServers.isEmpty());
+    Q_ASSERT(mPendingSockets.isEmpty());
+    Q_ASSERT(mServerBySocketId.isEmpty());
+    Q_ASSERT(mUserBySocketId.isEmpty());
+    Q_ASSERT(mUserByEmail.isEmpty());
 
     return true;
 }
 
 void HbServerConnectionPool::onServerConnected(networkuid server_uid) {
     HbAbstractServer* server = dynamic_cast<HbAbstractServer*>(sender());
-    q_assert_ptr(server);
-    q_assert(!mServers.contains(server_uid));
+    Q_ASSERT(server);
+    Q_ASSERT(!mServers.contains(server_uid));
 
     connect(server,
             &HbAbstractServer::socketConnected,
@@ -237,8 +237,8 @@ void HbServerConnectionPool::onServerConnected(networkuid server_uid) {
 
 void HbServerConnectionPool::onServerDisconnected(networkuid server_uid) {
     HbAbstractServer* server = dynamic_cast<HbAbstractServer*>(sender());
-    q_assert_ptr(server);
-    q_assert(mServers.contains(server_uid));
+    Q_ASSERT(server);
+    Q_ASSERT(mServers.contains(server_uid));
 
     emit statusChanged(server_uid, HbNetworkProtocol::SERVER_DISCONNECTED);
 
@@ -250,7 +250,7 @@ void HbServerConnectionPool::onServerDisconnected(networkuid server_uid) {
         // Unplugging channels is done in leave().
     } else {
         for (HbNetworkChannel* channel : server->configuration().channels()) {
-            q_assert_ptr(channel);
+            Q_ASSERT(channel);
             HbConnectionPool::unplugChannel(channel);
         }
 
@@ -265,7 +265,7 @@ void HbServerConnectionPool::onServerDisconnected(networkuid server_uid) {
 }
 
 void HbServerConnectionPool::onSocketConnected(networkuid server_uid, networkuid socket_uid) {
-    q_assert(mServers.contains(server_uid));
+    Q_ASSERT(mServers.contains(server_uid));
 
     qDebug() << "Socket" << socket_uid << "on server" << server_uid << "connected";
 
@@ -276,9 +276,9 @@ void HbServerConnectionPool::onSocketConnected(networkuid server_uid, networkuid
 }
 
 void HbServerConnectionPool::onSocketDisconnected(networkuid server_uid, networkuid socket_uid) {
-    q_assert(mServers.contains(server_uid));
-    q_assert(mServerBySocketId.contains(socket_uid));
-    q_assert(mPendingSockets.contains(socket_uid) || mUserBySocketId.contains(socket_uid));
+    Q_ASSERT(mServers.contains(server_uid));
+    Q_ASSERT(mServerBySocketId.contains(socket_uid));
+    Q_ASSERT(mPendingSockets.contains(socket_uid) || mUserBySocketId.contains(socket_uid));
 
     mServerBySocketId.remove(socket_uid);
 
@@ -290,7 +290,7 @@ void HbServerConnectionPool::onSocketDisconnected(networkuid server_uid, network
 
         emit socketDisconnected(socket_uid); // To IHbSocketListener.
     } else {
-        q_assert(mUserByEmail.contains(user->info().data()->email()));
+        Q_ASSERT(mUserByEmail.contains(user->info().data()->email()));
         mUserByEmail.remove(user->info()->email());
         mUserBySocketId.remove(socket_uid);
 
@@ -305,7 +305,7 @@ void HbServerConnectionPool::onSocketDisconnected(networkuid server_uid, network
 void HbServerConnectionPool::onSocketContractReceived(networkuid server_uid,
                                                       networkuid socket_uid,
                                                       const HbNetworkContract* contract) {
-    q_assert(mServers.contains(server_uid));
+    Q_ASSERT(mServers.contains(server_uid));
 
     qDebug() << QString("Contract received from socket %1 on server %2").arg(socket_uid).arg(server_uid);
 
@@ -340,21 +340,21 @@ void HbServerConnectionPool::onSocketContractReceived(networkuid server_uid,
     if (unauth_service) {
         unauth_service->onContractReceived(contract);
     } else {
-        q_assert_ptr(user);
+        Q_ASSERT(user);
         IHbServerUserContractListener* auth_service = dynamic_cast<IHbServerUserContractListener*>(service);
-        q_assert_ptr(auth_service);
+        Q_ASSERT(auth_service);
         auth_service->onUserContractReceived(user->info(), contract);
     }
 }
 
 void HbServerConnectionPool::onSocketContractToSend(networkuid receiver, HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     networkuid server_uid = mServerBySocketId.value(receiver, 0);
 
     HbAbstractServer* server = mServers.value(server_uid, nullptr);
 
-    q_assert_ptr(server);
+    Q_ASSERT(server);
 
     contract->setRouting(HbNetworkProtocol::ROUTING_UNICAST);
     contract->addSocketReceiver(receiver);
@@ -364,8 +364,8 @@ void HbServerConnectionPool::onSocketContractToSend(networkuid receiver, HbNetwo
 
 void HbServerConnectionPool::onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos,
                                                    HbNetworkContract* contract) {
-    q_assert_ptr(contract);
-    q_assert(contract->receivers().size() == 0);
+    Q_ASSERT(contract);
+    Q_ASSERT(contract->receivers().size() == 0);
 
     networkuid server_uid = contract->networkReceiver();
 
@@ -373,7 +373,7 @@ void HbServerConnectionPool::onUsersContractToSend(QList<ShConstHbNetworkUserInf
         // Contract coming from channels must have a network receiver.
         // Others are internal contracts and are directly forwarded to main socket uid.
 
-        q_assert(server_uid != 0);
+        Q_ASSERT(server_uid != 0);
     }
 
     for (ShConstHbNetworkUserInfo user_info : users_infos) {
@@ -391,8 +391,8 @@ void HbServerConnectionPool::onUsersContractToSend(QList<ShConstHbNetworkUserInf
 }
 
 void HbServerConnectionPool::onUserContractToSend(ShConstHbNetworkUserInfo user_info, HbNetworkContract* contract) {
-    q_assert_ptr(contract);
-    q_assert(contract->receivers().size() == 0);
+    Q_ASSERT(contract);
+    Q_ASSERT(contract->receivers().size() == 0);
 
     networkuid server_uid = contract->networkReceiver();
 
@@ -400,7 +400,7 @@ void HbServerConnectionPool::onUserContractToSend(ShConstHbNetworkUserInfo user_
         // Contract coming from channels must have a network receiver.
         // Others are internal contracts and are directly forwarded to main socket uid.
 
-        q_assert(server_uid != 0);
+        Q_ASSERT(server_uid != 0);
     }
 
     HbServerUser* user = getUser(user_info);
@@ -417,7 +417,7 @@ void HbServerConnectionPool::onUserContractToSend(ShConstHbNetworkUserInfo user_
 }
 
 void HbServerConnectionPool::onContractToSend(const HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     ShConstHbNetworkContract shared_contract(contract);
 
@@ -452,13 +452,13 @@ void HbServerConnectionPool::onUserToKick(ShConstHbNetworkUserInfo user_info,
                                           netwlint reason,
                                           const QString& description) {
     HbServerUser* user = getUser(user_info);
-    q_assert_ptr(user);
+    Q_ASSERT(user);
 
     kickUser(user, reason, description);
 }
 
 void HbServerConnectionPool::onSocketToKick(networkuid socket_uid, netwlint reason, const QString& description) {
-    q_assert(mServerBySocketId.contains(socket_uid));
+    Q_ASSERT(mServerBySocketId.contains(socket_uid));
 
     HbServerUser* user = mUserBySocketId.value(socket_uid, nullptr);
     if (user) {
@@ -469,7 +469,7 @@ void HbServerConnectionPool::onSocketToKick(networkuid socket_uid, netwlint reas
 }
 
 void HbServerConnectionPool::kickUser(HbServerUser* user, netwlint reason, const QString& description) {
-    q_assert_ptr(user);
+    Q_ASSERT(user);
 
     for (networkuid socket_uid : user->socketsUid()) {
         kickSocket(socket_uid, reason, description);
@@ -478,11 +478,11 @@ void HbServerConnectionPool::kickUser(HbServerUser* user, netwlint reason, const
 
 void HbServerConnectionPool::kickSocket(networkuid socket_uid, netwlint reason, const QString& description) {
     networkuid server_uid = mServerBySocketId.value(socket_uid, 0);
-    q_assert(server_uid > 0);
+    Q_ASSERT(server_uid > 0);
 
     HbAbstractServer* server = mServers.value(server_uid);
 
-    q_assert(server);
+    Q_ASSERT(server);
 
     HbKickContract* kick_contract = new HbKickContract();
     kick_contract->addSocketReceiver(socket_uid);
@@ -502,7 +502,7 @@ void HbServerConnectionPool::onSocketAuthenticated(networkuid socket_uid, const 
     HbServerUser* user = new HbServerUser();
     user->setInfo(user_info);
 
-    q_assert(mServerBySocketId.contains(socket_uid));
+    Q_ASSERT(mServerBySocketId.contains(socket_uid));
 
     networkuid server_uid = mServerBySocketId.value(socket_uid);
 
@@ -524,12 +524,12 @@ void HbServerConnectionPool::onSocketUnauthenticated(networkuid socket_uid,
     Q_UNUSED(max_tries)
     Q_UNUSED(reason)
 
-    q_assert(mUserBySocketId.contains(socket_uid));
+    Q_ASSERT(mUserBySocketId.contains(socket_uid));
 
     HbServerUser* user = mUserBySocketId.value(socket_uid, nullptr);
-    q_assert_ptr(user);
-    q_assert(user->mainSocketUid() == socket_uid);
-    q_assert(mUserByEmail.contains(user->info().data()->email()));
+    Q_ASSERT(user);
+    Q_ASSERT(user->mainSocketUid() == socket_uid);
+    Q_ASSERT(mUserByEmail.contains(user->info().data()->email()));
 
     mUserByEmail.remove(user->info().data()->email());
 

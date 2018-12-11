@@ -64,7 +64,7 @@ void HbPluginManager::loadPluginFromName(const QString& plugin_name) {
 
 void HbPluginManager::unloadPlugin(const QString& plugin_name) {
     HbPluginInfos* infos = mPluginsInfos.value(plugin_name, nullptr);
-    q_assert_ptr(infos);
+    Q_ASSERT(infos);
 
     if (infos->state() < HbPluginInfos::PLUGIN_LOADED_PARTIALLY) {
         return; // Plugin already unloaded.
@@ -74,8 +74,8 @@ void HbPluginManager::unloadPlugin(const QString& plugin_name) {
 
     QPluginLoader* loader = mPluginsLoaders.value(plugin_name, nullptr);
     IHbPlugin* plugin = mPlugins.value(plugin_name, nullptr);
-    q_assert_ptr(loader);
-    q_assert_ptr(plugin);
+    Q_ASSERT(loader);
+    Q_ASSERT(plugin);
 
     for (QString child_name : infos->children()) {
         qWarning() << "Unload child plugin" << child_name;
@@ -110,7 +110,7 @@ QList<HbPluginInfos> HbPluginManager::pluginInfoList() {
     QList<HbPluginInfos> plugin_info_list;
 
     for (const HbPluginInfos* info : mPluginsInfos) {
-        q_assert_ptr(info);
+        Q_ASSERT(info);
         plugin_info_list.append(*info);
     }
 

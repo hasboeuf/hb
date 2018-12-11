@@ -24,8 +24,8 @@ namespace network {
  * TODOC
  */
 class HB_NETWORK_DECL IHbUserListener {
-public
-    callbacks : virtual void onUserConnected(ShConstHbNetworkUserInfo user_info) = 0;
+public:
+    virtual void onUserConnected(ShConstHbNetworkUserInfo user_info) = 0;
     virtual void onUserDisconnected(ShConstHbNetworkUserInfo user_info) = 0;
 
 protected:

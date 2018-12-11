@@ -14,7 +14,8 @@ using namespace hb::log;
 using namespace hb::network;
 
 HbTcpSocketHandler::HbTcpSocketHandler(HbTcpServer* server) : HbSocketHandler() {
-    mpServer = q_assert_ptr(server);
+    Q_ASSERT(server);
+    mpServer = server;
 }
 
 HbTcpSocketHandler::~HbTcpSocketHandler() {
@@ -43,8 +44,9 @@ void HbTcpSocketHandler::onNewPendingConnection(qint32 socket_descriptor) {
         return;
     }
 
-    QTcpSocket* device = q_assert_ptr(new QTcpSocket());
-    q_assert(device->setSocketDescriptor(socket_descriptor));
+    QTcpSocket* device = new QTcpSocket();
+    bool ok = device->setSocketDescriptor(socket_descriptor);
+    Q_ASSERT(ok);
 
     HbTcpSocket* socket = new HbTcpSocket(device);
 

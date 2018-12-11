@@ -8,7 +8,7 @@
 using namespace hb::network;
 
 HbTcpSocket::HbTcpSocket(QTcpSocket* device) : HbAbstractSocket(device) {
-    q_assert_ptr(device);
+    Q_ASSERT(device);
     mpDevice = device;
 
     connect(mpDevice, &QTcpSocket::stateChanged, this, &HbTcpSocket::onStateChanged, Qt::UniqueConnection);
@@ -94,7 +94,7 @@ void HbTcpSocket::onReadyRead() {
 }
 
 void HbTcpSocket::onStateChanged(QAbstractSocket::SocketState state) {
-    q_assert(mpDevice == sender());
+    Q_ASSERT(mpDevice == sender());
 
     if (state == QAbstractSocket::UnconnectedState) {
         qDebug() << "Socket enters UnconnectedState";

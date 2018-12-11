@@ -39,7 +39,7 @@ const HbO2ServerConfig& HbO2Server::config() const {
 
 void HbO2Server::onTokenResponseReceived() {
     QNetworkReply* token_reply = dynamic_cast<QNetworkReply*>(sender());
-    q_assert_ptr(token_reply);
+    Q_ASSERT(token_reply);
 
     qDebug() << "Token response received";
 
@@ -72,7 +72,7 @@ void HbO2Server::onTokenResponseError(QNetworkReply::NetworkError error) {
     Q_UNUSED(error)
 
     QNetworkReply* token_reply = dynamic_cast<QNetworkReply*>(sender());
-    q_assert_ptr(token_reply);
+    Q_ASSERT(token_reply);
 
     mLinkStatus = UNLINKED;
     mErrorString = token_reply->errorString();

@@ -41,8 +41,8 @@ public:
 protected:
     void timerEvent(QTimerEvent*);
 
-public
-    callbacks : virtual void onSocketAuthenticated(networkuid socket_uid) override;
+public:
+    virtual void onSocketAuthenticated(networkuid socket_uid) override;
     virtual void onSocketUnauthenticated(networkuid socket_uid) override;
     virtual void onContractReceived(const HbNetworkContract* contract) override;
 

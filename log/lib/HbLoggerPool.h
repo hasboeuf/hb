@@ -61,8 +61,8 @@ public:
 public slots:
     void running();
 
-private
-    callbacks : void onInputMessageReceived(HbLogMessage* message);
+private:
+    void onInputMessageReceived(HbLogMessage* message);
     // From QThread
 
     void process();

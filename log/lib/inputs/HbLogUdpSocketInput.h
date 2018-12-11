@@ -39,8 +39,8 @@ public:
 protected:
     void init() override;
 
-private
-    callbacks : void onReconnection();
+private:
+    void onReconnection();
     void onReadyRead();
 
 private:

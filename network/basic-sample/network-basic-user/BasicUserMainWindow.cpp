@@ -64,7 +64,7 @@ void BasicUserMainWindow::onClientDisconnected(networkuid client_uid) {
 }
 
 void BasicUserMainWindow::onClientContractReceived(networkuid client_uid, const HbNetworkContract* contract) {
-    q_assert_ptr(contract);
+    Q_ASSERT(contract);
 
     qDebug() << "Contract received on client" << client_uid;
     qDebug() << "Contract details:" << contract->toString();

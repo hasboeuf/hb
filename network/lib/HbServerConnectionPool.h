@@ -39,11 +39,9 @@ public:
     networkuid joinTcpServer(HbTcpServerConfig& config, bool main);
     virtual bool leave() override;
 
-public
-    callbacks :
-        // From HbAbstractServer.
-        void
-        onServerConnected(networkuid server_uid);
+public:
+    // From HbAbstractServer.
+    void onServerConnected(networkuid server_uid);
     void onServerDisconnected(networkuid server_uid);
     void onSocketConnected(networkuid server_uid, networkuid socket_uid);
     void onSocketDisconnected(networkuid server_uid, networkuid socket_uid);

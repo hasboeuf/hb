@@ -61,9 +61,9 @@ bool HbSocketHandler::canHandleNewConnection() {
 bool HbSocketHandler::storeNewSocket(HbAbstractSocket* socket, qint32 previous_uid) {
     QMutexLocker locker(&mSocketMutex);
 
-    // q_assert( socket->type() != HbAbstractSocket::UdpSocket );
+    // Q_ASSERT( socket->type() != HbAbstractSocket::UdpSocket );
 
-    q_assert_ptr(socket);
+    Q_ASSERT(socket);
 
     mSocketById.insert(socket->uid(), socket);
     mIdBySocket.insert(socket, socket->uid());
@@ -143,7 +143,8 @@ void HbSocketHandler::onSendContract(networkuid socket_uid, ShConstHbNetworkCont
 }
 
 void HbSocketHandler::onSocketReadyPacket() {
-    HbAbstractSocket* socket = q_assert_ptr(dynamic_cast<HbAbstractSocket*>(sender()));
+    HbAbstractSocket* socket = dynamic_cast<HbAbstractSocket*>(sender());
+    Q_ASSERT(socket);
 
     bool available = (socket->isListening() && socket->packetAvailable());
 
@@ -157,7 +158,7 @@ void HbSocketHandler::onSocketReadyPacket() {
 
             HbNetworkHeader header;
             stream >> header;
-            q_assert(stream.status() == QDataStream::Ok);
+            Q_ASSERT(stream.status() == QDataStream::Ok);
 
             if (!server()->configuration().isBadHeaderTolerant()) {
                 if (!HbAbstractNetwork::checkHeader(header)) {
@@ -175,7 +176,7 @@ void HbSocketHandler::onSocketReadyPacket() {
                 qWarning() << "Try to read unregistered contract" << contract->header().toString();
             } else {
                 if (!contract->read(stream)) {
-                    q_assert(stream.status() == QDataStream::Ok);
+                    Q_ASSERT(stream.status() == QDataStream::Ok);
 
                     qWarning() << "Error occurred while reading contract" << contract->header().toString();
                 } else {
@@ -195,10 +196,11 @@ void HbSocketHandler::onSocketReadyPacket() {
 void HbSocketHandler::onSocketDisconnected() {
     QMutexLocker locker(&mSocketMutex);
 
-    HbAbstractSocket* socket = q_assert_ptr(dynamic_cast<HbAbstractSocket*>(sender()));
+    HbAbstractSocket* socket = dynamic_cast<HbAbstractSocket*>(sender());
+    Q_ASSERT(socket);
 
-    q_assert(mIdBySocket.contains(socket));
-    q_assert(mSocketById.contains(socket->uid()));
+    Q_ASSERT(mIdBySocket.contains(socket));
+    Q_ASSERT(mSocketById.contains(socket->uid()));
 
     qDebug() << QString("SocketPool %1: Socket %2 disconnected.").arg(mUid).arg(socket->uid());
 

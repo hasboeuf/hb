@@ -15,7 +15,8 @@ HbLogTcpSocketInput::HbLogTcpSocketInput(quint16 port, QObject* parent) : HbLogA
 HbLogTcpSocketInput::~HbLogTcpSocketInput() {
     // onDisconnected() handles the rest.
     for (QTcpSocket* client : mClients.values()) {
-        q_assert_ptr(client)->close();
+        Q_ASSERT(client);
+        client->close();
     }
 
     mClients.clear();
@@ -44,7 +45,7 @@ void HbLogTcpSocketInput::onNewConnection() {
 }
 
 void HbLogTcpSocketInput::onReadyRead() {
-    QTcpSocket* socket = q_dynamic_cast(QTcpSocket*, sender());
+    QTcpSocket* socket = dynamic_cast<QTcpSocket*>(sender());
     QDataStream stream(socket);
 
     do {
@@ -67,7 +68,7 @@ void HbLogTcpSocketInput::onReadyRead() {
 }
 
 void HbLogTcpSocketInput::onClientDisconnected() {
-    QTcpSocket* socket = q_dynamic_cast(QTcpSocket*, sender());
+    QTcpSocket* socket = dynamic_cast<QTcpSocket*>(sender());
 
     mClients.remove(socket);
     socket->deleteLater();
