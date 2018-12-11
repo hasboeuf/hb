@@ -18,7 +18,6 @@
 #include <QtCore/QStringList>
 // Hb
 #include <HbGlobal.h>
-#include <core/HbUid.h>
 // Local
 #include <HbNetwork.h>
 #include <contract/HbNetworkHeader.h>
@@ -30,7 +29,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HB_NETWORK_DECL HbNetworkContract : public HbUid<CLASS_CONTRACT> {
+class HB_NETWORK_DECL HbNetworkContract {
     Q_FRIEND_CLASS(HbNetworkExchanges)
 
 public:

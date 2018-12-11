@@ -137,7 +137,7 @@ void HbSocketHandler::onSendContract(networkuid socket_uid, ShConstHbNetworkCont
     }
 
     if (!socket->sendContract(contract)) {
-        qWarning() << QString("Error writing contract %1 in socket %2").arg(contract->uid()).arg(socket_uid);
+        qWarning() << QString("Error writing contract in socket %1").arg(socket_uid);
         //! \todo Use socket error string.
     }
 }

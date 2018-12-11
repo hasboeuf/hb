@@ -56,7 +56,6 @@ HbNetworkContract::~HbNetworkContract() {
 
 void HbNetworkContract::updateReply() {
     if (mpReply) {
-        mpReply->takeUid(this);
         mpReply->setNetworkType(mNetworkType);
         mpReply->setRouting(HbNetworkProtocol::ROUTING_UNICAST); // Replies only support unicast.
         mpReply->addSocketReceiver(mSender);
@@ -171,8 +170,7 @@ HbNetworkContract* HbNetworkContract::takeReply() const {
 }
 
 QString HbNetworkContract::toString() const {
-    return QString("ctctuid=%1,type=%2,%3")
-        .arg(mUid)
+    return QString("type=%1,%2")
         .arg(HbNetworkProtocol::MetaNetworkType::toString(mNetworkType))
         .arg(mHeader.toString());
 }
