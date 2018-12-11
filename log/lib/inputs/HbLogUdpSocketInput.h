@@ -25,7 +25,7 @@ class HbLogMessage;
 /*!
  * TODOC
  */
-class HbLogUdpSocketInput final : public HbLogAbstractInput {
+class HbLogUdpSocketInput : public HbLogAbstractInput {
     Q_OBJECT
     Q_DISABLE_COPY(HbLogUdpSocketInput)
 

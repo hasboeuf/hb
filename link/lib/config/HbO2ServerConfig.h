@@ -22,7 +22,7 @@ namespace link {
 /*!
  * TODOC
  */
-class HB_LINK_DECL HbO2ServerConfig final : public HbO2Config {
+class HB_LINK_DECL HbO2ServerConfig : public HbO2Config {
 public:
     HbO2ServerConfig() = default;
     HbO2ServerConfig(const HbO2ServerConfig& config);
@@ -34,8 +34,8 @@ public:
     virtual bool read(QDataStream& stream);
     virtual bool write(QDataStream& stream) const;
 
-    virtual void setClientSecret(const QString& client_secret) final;
-    virtual const QString& clientSecret() const final;
+    virtual void setClientSecret(const QString& client_secret);
+    virtual const QString& clientSecret() const;
 
 private:
     QString mClientSecret;

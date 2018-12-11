@@ -40,8 +40,8 @@ public:
     virtual bool read(QDataStream& stream) override;
     virtual bool write(QDataStream& stream) const override;
 
-    virtual authstgy type() const final;
-    virtual void setType(authstgy type) final;
+    virtual authstgy type() const;
+    virtual void setType(authstgy type);
 
 protected:
     authstgy mType;

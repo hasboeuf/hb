@@ -35,7 +35,7 @@ public:
     HbServerAuthFacebookStrategy();
     virtual ~HbServerAuthFacebookStrategy() = default;
 
-    virtual authstgy type() const final;
+    virtual authstgy type() const;
     virtual bool checkLogin(const HbAuthRequestContract* contract) override;
 
 public slots:

@@ -26,7 +26,7 @@ class HbLogMessage;
  * It is the middleman between HbLog and user class.
  * TODOC.
  */
-class HB_LOG_DECL HbLogGuiNotifier final : public QObject {
+class HB_LOG_DECL HbLogGuiNotifier : public QObject {
     Q_OBJECT
     Q_DISABLE_COPY(HbLogGuiNotifier)
     friend class HbLogGuiOutput;

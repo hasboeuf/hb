@@ -25,7 +25,7 @@ namespace log {
 /*!
  * \brief The %HbLogFileOutput class defines a file output.
  */
-class HB_LOG_DECL HbLogFileOutput final : public HbLogAbstractOutput {
+class HB_LOG_DECL HbLogFileOutput : public HbLogAbstractOutput {
     Q_DISABLE_COPY(HbLogFileOutput)
 
 public:

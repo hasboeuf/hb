@@ -43,12 +43,12 @@ public:
 
     virtual QAbstractSocket::SocketError error() const = 0;
     virtual QAbstractSocket::SocketState state() const = 0;
-    virtual QString errorString() const final;
+    virtual QString errorString() const;
 
     bool sendContract(ShConstHbNetworkContract contract);
-    virtual QByteArray readPacket() final;
-    virtual qint64 writePacket(const QByteArray& packet) const final;
-    virtual bool packetAvailable() const final;
+    virtual QByteArray readPacket();
+    virtual qint64 writePacket(const QByteArray& packet) const;
+    virtual bool packetAvailable() const;
 
 signals:
     void socketReadyPacket();
@@ -61,8 +61,8 @@ protected:
     HbAbstractSocket() = delete;
     HbAbstractSocket(QIODevice* device);
 
-    virtual qint64 readStream(QDataStream& stream) final;
-    virtual qint64 writeBuffer(const QByteArray& buffer) const final;
+    virtual qint64 readStream(QDataStream& stream);
+    virtual qint64 writeBuffer(const QByteArray& buffer) const;
 
 protected
     callbacks :

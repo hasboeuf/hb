@@ -34,7 +34,7 @@ class HbSocketHandler : public QObject, public HbUid<CLASS_SERVER> {
     Q_FRIEND_CLASS(HbAbstractServer)
 
 public:
-    virtual bool canHandleNewConnection() final;
+    virtual bool canHandleNewConnection();
 
 protected:
     enum HandlerState { NOT_THREADED = 0, THREADED };
@@ -44,7 +44,7 @@ protected:
 
     virtual HbAbstractServer* server() const = 0;
 
-    virtual bool storeNewSocket(HbAbstractSocket* socket, qint32 previous_uid) final;
+    virtual bool storeNewSocket(HbAbstractSocket* socket, qint32 previous_uid);
 
 protected:
     virtual void reset();

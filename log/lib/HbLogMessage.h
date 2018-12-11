@@ -20,7 +20,7 @@ namespace log {
  * HbLogMessage class defines a log message.
  * TODOC.
  */
-class HB_LOG_DECL HbLogMessage final {
+class HB_LOG_DECL HbLogMessage {
     Q_GADGET
 public:
     enum Output {

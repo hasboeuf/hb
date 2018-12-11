@@ -21,7 +21,7 @@ using hb::log::HbLogMessage;
 using hb::tools::ModelFilter;
 using hb::tools::MultipleSortFilterProxyModel;
 
-class LogViewerTab final : public QWidget, private hb::logviewer::Ui::LogViewerTab {
+class LogViewerTab : public QWidget, private hb::logviewer::Ui::LogViewerTab {
     Q_OBJECT
     Q_DISABLE_COPY(LogViewerTab)
 

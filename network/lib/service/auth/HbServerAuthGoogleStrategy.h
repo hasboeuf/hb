@@ -32,7 +32,7 @@ public:
     HbServerAuthGoogleStrategy();
     virtual ~HbServerAuthGoogleStrategy() = default;
 
-    virtual authstgy type() const final;
+    virtual authstgy type() const;
     virtual bool checkLogin(const HbAuthRequestContract* contract) override;
 
 public slots:

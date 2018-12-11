@@ -28,9 +28,9 @@ public:
     HbO2ServerFacebook();
     virtual ~HbO2ServerFacebook() = default;
 
-    virtual void addField(const QString& field) final;
-    virtual void setFields(const QString& fields) final;
-    virtual const QString& fields() const final;
+    virtual void addField(const QString& field);
+    virtual void setFields(const QString& fields);
+    virtual const QString& fields() const;
 
 protected:
     virtual const QUrl endPoint() const override;

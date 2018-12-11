@@ -31,8 +31,8 @@ public:
     virtual bool read(QDataStream& stream);
     virtual bool write(QDataStream& stream) const;
 
-    virtual const QString& response() const final;
-    virtual void setResponse(const QString& response) final;
+    virtual const QString& response() const;
+    virtual void setResponse(const QString& response);
 
 protected:
     virtual ResponseContract* create() const override;

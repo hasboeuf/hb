@@ -33,9 +33,9 @@ class HB_NETWORK_DECL HbAbstractClient : public HbAbstractNetwork {
 public:
     virtual ~HbAbstractClient() = default;
 
-    virtual bool join() final;
-    virtual bool leave() final;
-    virtual bool isReady() const final;
+    virtual bool join();
+    virtual bool leave();
+    virtual bool isReady() const;
     virtual networkuid uid() const = 0;
 
     virtual bool send(ShConstHbNetworkContract contract);

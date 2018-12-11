@@ -32,7 +32,7 @@ class HbLogMessage;
 /*!
  * Internal class, TODOC.
  */
-class HbLoggerPool final : public QObject {
+class HbLoggerPool : public QObject {
     Q_OBJECT
     Q_DISABLE_COPY(HbLoggerPool)
 

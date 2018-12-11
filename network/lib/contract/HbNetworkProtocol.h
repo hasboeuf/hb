@@ -24,7 +24,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HB_NETWORK_DECL HbNetworkProtocol final {
+class HB_NETWORK_DECL HbNetworkProtocol {
     Q_GADGET
 
 public:

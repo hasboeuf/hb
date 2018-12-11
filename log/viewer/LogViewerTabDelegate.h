@@ -7,7 +7,7 @@
 namespace hb {
 namespace logviewer {
 
-class LogViewerTabDelegate final : public QStyledItemDelegate {
+class LogViewerTabDelegate : public QStyledItemDelegate {
     Q_OBJECT
     Q_DISABLE_COPY(LogViewerTabDelegate)
 

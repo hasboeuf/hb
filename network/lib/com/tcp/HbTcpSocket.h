@@ -15,7 +15,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HbTcpSocket final : public HbAbstractSocket {
+class HbTcpSocket : public HbAbstractSocket {
     Q_OBJECT
     Q_DISABLE_COPY(HbTcpSocket)
 

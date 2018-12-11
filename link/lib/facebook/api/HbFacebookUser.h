@@ -32,23 +32,23 @@ public:
 
     virtual QString toString() const override;
 
-    virtual const QString& firstName() const final;
-    virtual const QString& lastName() const final;
-    virtual const QString& link() const final;
-    virtual const QString& email() const final;
-    virtual const QString& gender() const final;
-    virtual const QString& locale() const final;
-    virtual bool isVerified() const final;
-    virtual qint8 timezone() const final;
+    virtual const QString& firstName() const;
+    virtual const QString& lastName() const;
+    virtual const QString& link() const;
+    virtual const QString& email() const;
+    virtual const QString& gender() const;
+    virtual const QString& locale() const;
+    virtual bool isVerified() const;
+    virtual qint8 timezone() const;
 
-    virtual void setFirstName(const QString& first_name) final;
-    virtual void setLastName(const QString& last_name) final;
-    virtual void setLink(const QString& link) final;
-    virtual void setEmail(const QString& email) final;
-    virtual void setGender(const QString& gender) final;
-    virtual void setLocale(const QString& locale) final;
-    virtual void setVerified(bool verified) final;
-    virtual void setTimezone(qint8 timezone) final;
+    virtual void setFirstName(const QString& first_name);
+    virtual void setLastName(const QString& last_name);
+    virtual void setLink(const QString& link);
+    virtual void setEmail(const QString& email);
+    virtual void setGender(const QString& gender);
+    virtual void setLocale(const QString& locale);
+    virtual void setVerified(bool verified);
+    virtual void setTimezone(qint8 timezone);
 
 protected:
     QString mFirstName;

@@ -18,7 +18,7 @@ namespace log {
 /*!
  * \brief The %HbLogConsoleOutput class defines a console output.
  */
-class HbLogConsoleOutput final : public HbLogAbstractOutput {
+class HbLogConsoleOutput : public HbLogAbstractOutput {
 public:
     HbLogConsoleOutput(QObject* parent = nullptr);
     virtual ~HbLogConsoleOutput() = default;

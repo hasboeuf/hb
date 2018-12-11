@@ -26,7 +26,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HB_NETWORK_DECL HbClient final : public HbPeer {
+class HB_NETWORK_DECL HbClient : public HbPeer {
     Q_OBJECT
     Q_DISABLE_COPY(HbClient)
 public:

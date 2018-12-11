@@ -31,7 +31,7 @@ public:
     HbPeer(const HbGeneralConfig& config);
     virtual ~HbPeer() = default;
 
-    virtual bool isReady() const final;
+    virtual bool isReady() const;
     virtual bool leave() = 0;
 
 private:

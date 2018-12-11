@@ -31,9 +31,9 @@ public:
 
     bool isValid() const;
 
-    virtual void setMaxUsersPerThread(quint16 max_users) final;
-    virtual quint16 maxUsersPerThread() const final;
-    virtual bool isThreaded() const final;
+    virtual void setMaxUsersPerThread(quint16 max_users);
+    virtual quint16 maxUsersPerThread() const;
+    virtual bool isThreaded() const;
 
 private:
     quint16 mMaxUsersPerThread;

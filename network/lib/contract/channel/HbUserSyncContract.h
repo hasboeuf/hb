@@ -26,7 +26,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HB_NETWORK_DECL HbUserSyncContract final : public HbNetworkContract {
+class HB_NETWORK_DECL HbUserSyncContract : public HbNetworkContract {
 public:
     HbUserSyncContract();
     virtual ~HbUserSyncContract() = default;

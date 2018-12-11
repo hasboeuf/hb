@@ -24,7 +24,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HbNetworkHeader final {
+class HbNetworkHeader {
     friend QDataStream& operator<<(QDataStream& stream, const HbNetworkHeader& header);
     friend QDataStream& operator>>(QDataStream& stream, HbNetworkHeader& header);
 

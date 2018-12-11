@@ -17,7 +17,7 @@ namespace link {
  * HbLinkLocalServer listens a local port to catch http response.
  * It is used on client side to get the auth code.
  */
-class HB_LINK_DECL HbLinkLocalServer final : public QTcpServer {
+class HB_LINK_DECL HbLinkLocalServer : public QTcpServer {
     Q_OBJECT
 
 public:

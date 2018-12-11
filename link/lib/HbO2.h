@@ -63,25 +63,25 @@ public:
      * Return the last occured error.
      * \return Error string.
      */
-    virtual const QString& errorString() const final;
+    virtual const QString& errorString() const;
 
     /*!
      * Return the current link status.
      * \return Link status.
      */
-    virtual LinkStatus linkStatus() const final;
+    virtual LinkStatus linkStatus() const;
 
     /*!
      * Return the redirect Uri.
      * \return Redirect Uri.
      */
-    virtual const QString& redirectUri() const final;
+    virtual const QString& redirectUri() const;
 
     /*!
      * Return OAuth code.
      * \return Authentication code.
      */
-    virtual const QString& code() const final;
+    virtual const QString& code() const;
 
 protected:
     virtual const QUrl endPoint() const = 0; //!< Target specific.

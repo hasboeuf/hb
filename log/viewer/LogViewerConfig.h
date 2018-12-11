@@ -12,7 +12,7 @@ namespace hb {
 namespace logviewer {
 using hb::log::HbLogConfig;
 
-class LogViewerConfig final : public HbLogConfig {
+class LogViewerConfig : public HbLogConfig {
     Q_OBJECT
 
 public:

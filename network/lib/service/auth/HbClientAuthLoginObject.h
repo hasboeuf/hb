@@ -26,11 +26,11 @@ public:
     HbClientAuthLoginObject();
     virtual ~HbClientAuthLoginObject() = default;
 
-    virtual void setStrategy(authstgy strategy) final;
-    virtual void setSocketUid(networkuid socket_uid) final;
+    virtual void setStrategy(authstgy strategy);
+    virtual void setSocketUid(networkuid socket_uid);
 
-    virtual authstgy strategy() const final;
-    virtual networkuid socketUid() const final;
+    virtual authstgy strategy() const;
+    virtual networkuid socketUid() const;
 
 protected:
     authstgy mStrategy;

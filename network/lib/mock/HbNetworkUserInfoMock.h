@@ -22,7 +22,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HB_NETWORK_DECL HbNetworkUserInfoMock final {
+class HB_NETWORK_DECL HbNetworkUserInfoMock {
 public:
     static void mockNetworkUserInfo(HbNetworkUserInfo& user_info);
 };

@@ -35,33 +35,33 @@ class HB_NETWORK_DECL HbNetworkContract {
 public:
     virtual ~HbNetworkContract();
 
-    virtual bool isValid() const final;
+    virtual bool isValid() const;
 
-    virtual void setHeader(const HbNetworkHeader& header) final;
-    virtual const HbNetworkHeader& header() const final;
+    virtual void setHeader(const HbNetworkHeader& header);
+    virtual const HbNetworkHeader& header() const;
 
-    virtual void setSender(networkuid sender) final;
-    virtual networkuid sender() const final;
+    virtual void setSender(networkuid sender);
+    virtual networkuid sender() const;
 
-    virtual void addPendingReceiver(ShConstHbNetworkUserInfo users_infos) final;
-    virtual void addSocketReceiver(networkuid socket_uid) final;
-    virtual const QList<ShConstHbNetworkUserInfo>& pendingReceivers() const final;
-    virtual const QSet<networkuid>& receivers() const final;
-    virtual networkuid receiver() const final;
+    virtual void addPendingReceiver(ShConstHbNetworkUserInfo users_infos);
+    virtual void addSocketReceiver(networkuid socket_uid);
+    virtual const QList<ShConstHbNetworkUserInfo>& pendingReceivers() const;
+    virtual const QSet<networkuid>& receivers() const;
+    virtual networkuid receiver() const;
 
-    virtual void setNetworkReceiver(networkuid network_receiver) final;
+    virtual void setNetworkReceiver(networkuid network_receiver);
     virtual networkuid networkReceiver() const;
 
-    virtual HbNetworkProtocol::RoutingScheme routing() const final;
-    virtual bool setRouting(HbNetworkProtocol::RoutingScheme routing) final;
+    virtual HbNetworkProtocol::RoutingScheme routing() const;
+    virtual bool setRouting(HbNetworkProtocol::RoutingScheme routing);
 
     virtual HbNetworkContract* takeReply() const;
-    virtual void updateReply() final;
+    virtual void updateReply();
 
     virtual QString toString() const;
 
-    virtual void setNetworkType(HbNetworkProtocol::NetworkType type) final;
-    virtual HbNetworkProtocol::NetworkType networkType() const final;
+    virtual void setNetworkType(HbNetworkProtocol::NetworkType type);
+    virtual HbNetworkProtocol::NetworkType networkType() const;
 
     template <typename T> inline const T* value() const {
         return dynamic_cast<const T*>(this);

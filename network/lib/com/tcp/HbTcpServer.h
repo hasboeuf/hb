@@ -14,7 +14,7 @@ namespace network {
 /*!
  * TODOC
  */
-class TcpServer final : public QTcpServer {
+class TcpServer : public QTcpServer {
     Q_OBJECT
     Q_DISABLE_COPY(TcpServer)
     Q_FRIEND_CLASS(HbTcpServer)
@@ -35,10 +35,10 @@ public:
     virtual ~HbTcpServer();
 
     using HbAbstractServer::join;
-    virtual bool join(const HbTcpServerConfig& config) final;
+    virtual bool join(const HbTcpServerConfig& config);
 
-    virtual bool setConfiguration(const HbTcpServerConfig& config) final;
-    virtual const HbTcpServerConfig& configuration() const final;
+    virtual bool setConfiguration(const HbTcpServerConfig& config);
+    virtual const HbTcpServerConfig& configuration() const;
 
 private:
     virtual bool connectToNetwork() override;
@@ -46,7 +46,7 @@ private:
     virtual bool isListening() const override;
     virtual HbNetworkProtocol::NetworkType type() const override;
 
-    virtual void reset() final;
+    virtual void reset();
 
 private
     callbacks :

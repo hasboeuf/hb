@@ -36,7 +36,7 @@ public:
         }
     }
 
-    virtual quint32 uid() const final {
+    virtual quint32 uid() const {
         return mUid;
     }
 

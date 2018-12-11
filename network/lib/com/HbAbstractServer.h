@@ -38,14 +38,14 @@ public:
     virtual ~HbAbstractServer() =
         default; // Keep it, inherited classes should handle deletion to avoid pure virtual calls.
 
-    virtual bool join() final;
-    virtual bool leave() final;
-    virtual bool leave(networkuid uid) final;
-    virtual bool isReady() const final;
+    virtual bool join();
+    virtual bool leave();
+    virtual bool leave(networkuid uid);
+    virtual bool isReady() const;
 
     virtual bool send(ShConstHbNetworkContract contract);
 
-    virtual bool isUidConnected(networkuid uid) const final;
+    virtual bool isUidConnected(networkuid uid) const;
 
     virtual const HbServerConfig& configuration() const; // SUB
 

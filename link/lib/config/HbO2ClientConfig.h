@@ -25,7 +25,7 @@ class IHbLinkBrowserControls;
 /*!
  * TODOC
  */
-class HB_LINK_DECL HbO2ClientConfig final : public HbO2Config {
+class HB_LINK_DECL HbO2ClientConfig : public HbO2Config {
 public:
     HbO2ClientConfig();
     HbO2ClientConfig(const HbO2ClientConfig& config);
@@ -37,15 +37,15 @@ public:
     virtual bool read(QDataStream& stream);
     virtual bool write(QDataStream& stream) const;
 
-    virtual void setLocalPort(quint16 local_port) final;
-    virtual quint16 localPort() const final;
+    virtual void setLocalPort(quint16 local_port);
+    virtual quint16 localPort() const;
 
-    virtual void addScope(const QString& permission) final;
-    virtual void setScopes(const QStringList& permissions) final;
-    virtual const QStringList& scopes() const final;
-    virtual QString scopesStr() const final;
+    virtual void addScope(const QString& permission);
+    virtual void setScopes(const QStringList& permissions);
+    virtual const QStringList& scopes() const;
+    virtual QString scopesStr() const;
 
-    virtual void setScopeSeparator(const QString& separator) final;
+    virtual void setScopeSeparator(const QString& separator);
 
     void setBrowserControls(IHbLinkBrowserControls* browser_controls);
     IHbLinkBrowserControls* browserControls();

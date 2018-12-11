@@ -31,8 +31,8 @@ public:
     virtual bool read(QDataStream& stream);
     virtual bool write(QDataStream& stream) const;
 
-    virtual const QString& message() const final;
-    virtual void setMessage(const QString& message) final;
+    virtual const QString& message() const;
+    virtual void setMessage(const QString& message);
 
 protected:
     virtual ChatMessageContract* create() const override;

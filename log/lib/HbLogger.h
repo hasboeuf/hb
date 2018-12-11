@@ -52,19 +52,19 @@ public:
      * Set the general level of the log service (affected to the current thread).
      * All logger messages having a level which is not included in general level are ignored by HbLog.
      */
-    virtual void setLevel(Levels level) final;
+    virtual void setLevel(Levels level);
 
     /*!
      * Return the current general max level.
      * \return General max level.
      */
-    virtual Levels level() const final;
+    virtual Levels level() const;
 
     /*!
      * Dequeue pending log message.
      * Internal use.
      */
-    virtual void flush() final;
+    virtual void flush();
 
 protected:
     HbLogger() = default;

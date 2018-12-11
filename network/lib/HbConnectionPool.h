@@ -33,8 +33,8 @@ public:
     virtual ~HbConnectionPool() = default;
 
     virtual bool leave() = 0;
-    virtual bool plugChannel(HbNetworkChannel* channel, networkuid network_uid) final;
-    virtual bool unplugChannel(HbNetworkChannel* channel) final;
+    virtual bool plugChannel(HbNetworkChannel* channel, networkuid network_uid);
+    virtual bool unplugChannel(HbNetworkChannel* channel);
 
 protected:
     void setExchanges(HbNetworkExchanges& exchanges);

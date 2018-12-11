@@ -27,7 +27,7 @@ namespace log {
  *
  * %HbLogTcpSocketOutput inherits from HbLogAbstractOutput.\n
  */
-class HbLogTcpSocketOutput final : public HbLogAbstractOutput {
+class HbLogTcpSocketOutput : public HbLogAbstractOutput {
     Q_OBJECT
     Q_DISABLE_COPY(HbLogTcpSocketOutput)
 

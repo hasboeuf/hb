@@ -49,20 +49,20 @@ public:
      * Set the Google id of the object.
      * \param id Google id.
      */
-    virtual void setId(const QString& id) final;
+    virtual void setId(const QString& id);
 
     /*!
      * Return the Google id.
      * \return Google id.
      */
-    virtual const QString& id() const final;
+    virtual const QString& id() const;
 
     /*!
      * Return the object type.
      * \return Object type.
      * \sa ObjectType
      */
-    virtual ObjectType type() const final;
+    virtual ObjectType type() const;
 
 protected:
     QString mId;

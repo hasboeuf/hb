@@ -30,7 +30,7 @@ class HbLogMessage;
  * TODOC
  * \brief The %HbLogLocalSocketInput class defines a local server input.
  */
-class HbLogLocalSocketInput final : public HbLogAbstractInput {
+class HbLogLocalSocketInput : public HbLogAbstractInput {
     Q_OBJECT
     Q_DISABLE_COPY(HbLogLocalSocketInput)
 

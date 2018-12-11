@@ -25,7 +25,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HB_NETWORK_DECL HbNetworkUserInfo final {
+class HB_NETWORK_DECL HbNetworkUserInfo {
     friend QDataStream& operator<<(QDataStream& stream, const HbNetworkUserInfo& header);
     friend QDataStream& operator>>(QDataStream& stream, HbNetworkUserInfo& header);
 

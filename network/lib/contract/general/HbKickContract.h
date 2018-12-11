@@ -24,7 +24,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HB_NETWORK_DECL HbKickContract final : public HbNetworkContract {
+class HB_NETWORK_DECL HbKickContract : public HbNetworkContract {
 public:
     HbKickContract();
     virtual ~HbKickContract() = default;

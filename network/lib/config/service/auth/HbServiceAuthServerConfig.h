@@ -36,10 +36,10 @@ public:
     void enableGoogleAuth(const hb::link::HbO2ServerConfig& config);
     const hb::link::HbO2ServerConfig& googleAuthConfig() const;
 
-    virtual void setAuthMaxTries(quint16 max) final;
+    virtual void setAuthMaxTries(quint16 max);
     virtual quint16 authMaxTries() const;
 
-    virtual void setAuthTimeout(quint16 timeout) final;
+    virtual void setAuthTimeout(quint16 timeout);
     virtual quint16 authTimeout() const;
 
 private:

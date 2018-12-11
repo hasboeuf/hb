@@ -22,7 +22,7 @@ namespace log {
  * HbLogContext represents the exact place of a log trace in the code.
  * Internal class.
  */
-class HB_LOG_DECL HbLogContext final {
+class HB_LOG_DECL HbLogContext {
 public:
     HbLogContext();
     virtual ~HbLogContext() = default;

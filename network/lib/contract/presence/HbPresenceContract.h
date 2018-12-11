@@ -25,7 +25,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HB_NETWORK_DECL HbPresenceContract final : public HbNetworkContract {
+class HB_NETWORK_DECL HbPresenceContract : public HbNetworkContract {
 public:
     HbPresenceContract();
     virtual ~HbPresenceContract() = default;

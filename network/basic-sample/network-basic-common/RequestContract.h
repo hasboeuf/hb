@@ -34,8 +34,8 @@ public:
     virtual bool read(QDataStream& stream);
     virtual bool write(QDataStream& stream) const;
 
-    virtual const QString& request() const final;
-    virtual void setRequest(const QString& request) final;
+    virtual const QString& request() const;
+    virtual void setRequest(const QString& request);
 
 protected:
     virtual RequestContract* create() const override;

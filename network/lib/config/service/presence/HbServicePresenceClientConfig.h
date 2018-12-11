@@ -30,8 +30,8 @@ public:
 
     virtual bool isValid() const;
 
-    virtual void setKeepAliveInterval(quint16 interval) final;
-    virtual quint16 keepAliveInterval() const final;
+    virtual void setKeepAliveInterval(quint16 interval);
+    virtual quint16 keepAliveInterval() const;
 
 protected:
 private:

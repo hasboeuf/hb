@@ -35,17 +35,17 @@ public:
 
     virtual bool isValid() const;
 
-    virtual void setOpenMode(QIODevice::OpenMode mode) final;
-    virtual QIODevice::OpenMode openMode() const final;
+    virtual void setOpenMode(QIODevice::OpenMode mode);
+    virtual QIODevice::OpenMode openMode() const;
 
-    virtual void setBadHeaderTolerant(bool tolerant) final;
-    virtual bool isBadHeaderTolerant() const final;
+    virtual void setBadHeaderTolerant(bool tolerant);
+    virtual bool isBadHeaderTolerant() const;
 
-    virtual const HbNetworkExchanges& exchanges() const final;
-    virtual HbNetworkExchanges& exchanges() final;
+    virtual const HbNetworkExchanges& exchanges() const;
+    virtual HbNetworkExchanges& exchanges();
 
-    virtual bool plugChannel(HbNetworkChannel* channel) final;
-    virtual QList<HbNetworkChannel*> channels() const final;
+    virtual bool plugChannel(HbNetworkChannel* channel);
+    virtual QList<HbNetworkChannel*> channels() const;
 
 protected:
     HbNetworkExchanges mExchanges;

@@ -35,7 +35,7 @@ public:
 
     virtual void setConfig(const HbO2ClientConfig& config) override;
 
-    virtual authstgy type() const final;
+    virtual authstgy type() const;
 
     virtual bool prepareAuthContract(HbClientAuthLoginObject* login_object) override;
 };

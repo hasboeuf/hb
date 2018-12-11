@@ -67,14 +67,14 @@ public:
      * Return token.
      * \return Auth token.
      */
-    virtual const QString& token() const final;
+    virtual const QString& token() const;
 
     /*!
      * Return token expiration.
      * In seconds.
      * \return Token expiration.
      */
-    virtual qint32 tokenExpiration() const final;
+    virtual qint32 tokenExpiration() const;
 
 protected:
     virtual const QHash<QString, QString> tokenRequest() const = 0;

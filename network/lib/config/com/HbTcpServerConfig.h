@@ -22,9 +22,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HB_NETWORK_DECL HbTcpServerConfig final : public virtual HbNetworkConfig,
-                                                public HbTcpConfig,
-                                                public HbServerConfig {
+class HB_NETWORK_DECL HbTcpServerConfig : public virtual HbNetworkConfig, public HbTcpConfig, public HbServerConfig {
 public:
     HbTcpServerConfig() = default;
     virtual ~HbTcpServerConfig() = default;

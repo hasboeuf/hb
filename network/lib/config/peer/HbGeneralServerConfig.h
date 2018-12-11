@@ -27,7 +27,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HB_NETWORK_DECL HbGeneralServerConfig final : public HbGeneralConfig {
+class HB_NETWORK_DECL HbGeneralServerConfig : public HbGeneralConfig {
 public:
     HbGeneralServerConfig() = default;
     HbGeneralServerConfig(const HbGeneralServerConfig& config);

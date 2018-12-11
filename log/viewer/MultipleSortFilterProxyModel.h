@@ -25,7 +25,7 @@ class ModelFilter;
  * MultipleSortFilterProxyModel is a multiple QSortFilterProxyModel.
  * Used to set filters on several columns for example.
  */
-class HB_TOOLS_DECL MultipleSortFilterProxyModel final : public QSortFilterProxyModel {
+class HB_TOOLS_DECL MultipleSortFilterProxyModel : public QSortFilterProxyModel {
     Q_OBJECT
     Q_DISABLE_COPY(MultipleSortFilterProxyModel)
 
@@ -59,7 +59,7 @@ private:
     bool mDeclaringFilter;
 };
 
-class ModelFilter final {
+class ModelFilter {
 public:
     ModelFilter(const QVariant& value = QVariant(),
                 qint32 role = Qt::DisplayRole,

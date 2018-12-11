@@ -51,20 +51,20 @@ public:
      * Set the Facebook id of the object.
      * \param id Facebook id.
      */
-    virtual void setId(const QString& id) final;
+    virtual void setId(const QString& id);
 
     /*!
      * Return the Facebook id.
      * \return Facebook id.
      */
-    virtual const QString& id() const final;
+    virtual const QString& id() const;
 
     /*!
      * Return the object type.
      * \return Object type.
      * \sa ObjectType
      */
-    virtual ObjectType type() const final;
+    virtual ObjectType type() const;
 
 protected:
     QString mId;

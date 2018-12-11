@@ -24,7 +24,7 @@ class HbLogGuiNotifier;
 /*!
  * \brief The %HbLogGuiOutput class defines a GUI output.
  */
-class HbLogGuiOutput final : public HbLogAbstractOutput {
+class HbLogGuiOutput : public HbLogAbstractOutput {
     Q_DISABLE_COPY(HbLogGuiOutput)
 
 public:

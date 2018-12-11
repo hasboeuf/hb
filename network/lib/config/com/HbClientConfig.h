@@ -31,8 +31,8 @@ public:
 
     bool isValid() const;
 
-    virtual void setReconnectionDelay(quint16 duration) final;
-    virtual quint16 reconnectionDelay() const final;
+    virtual void setReconnectionDelay(quint16 duration);
+    virtual quint16 reconnectionDelay() const;
 
 private:
     quint16 mReconnectionDelay;

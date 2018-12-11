@@ -23,12 +23,12 @@ public:
     virtual ~HbTcpClient();
 
     using HbAbstractClient::join;
-    virtual bool join(const HbTcpClientConfig& config) final;
-    virtual networkuid uid() const final;
-    virtual HbNetworkProtocol::NetworkType type() const final;
+    virtual bool join(const HbTcpClientConfig& config);
+    virtual networkuid uid() const;
+    virtual HbNetworkProtocol::NetworkType type() const;
 
-    virtual bool setConfiguration(const HbTcpClientConfig& config) final;
-    virtual const HbTcpClientConfig& configuration() const final;
+    virtual bool setConfiguration(const HbTcpClientConfig& config);
+    virtual const HbTcpClientConfig& configuration() const;
 
 signals:
     void socketError(QAbstractSocket::SocketError error, QString error_str);

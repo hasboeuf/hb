@@ -24,7 +24,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HB_NETWORK_DECL HbNetworkExchanges final {
+class HB_NETWORK_DECL HbNetworkExchanges {
     Q_FRIEND_CLASS(HbNetworkConfig)
 
 protected:

@@ -34,11 +34,11 @@ public:
     virtual bool read(QDataStream& stream);
     virtual bool write(QDataStream& stream) const;
 
-    virtual qint32 intA() const final;
-    virtual void setIntA(qint32 a) final;
+    virtual qint32 intA() const;
+    virtual void setIntA(qint32 a);
 
-    virtual qint32 intB() const final;
-    virtual void setIntB(qint32 b) final;
+    virtual qint32 intB() const;
+    virtual void setIntB(qint32 b);
 
 protected:
     virtual RequestSumContract* create() const override;

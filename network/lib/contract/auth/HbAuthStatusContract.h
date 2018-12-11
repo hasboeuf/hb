@@ -27,7 +27,7 @@ namespace network {
 /*!
  * TODOC
  */
-class HB_NETWORK_DECL HbAuthStatusContract final : public HbNetworkContract {
+class HB_NETWORK_DECL HbAuthStatusContract : public HbNetworkContract {
 public:
     HbAuthStatusContract();
     virtual ~HbAuthStatusContract() = default;

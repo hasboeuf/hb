@@ -29,7 +29,7 @@ class HbLogMessage;
  * TODOC
  * \brief The %HbLogTcpSocketInput class defines a tcp server input.
  */
-class HbLogTcpSocketInput final : public HbLogAbstractInput {
+class HbLogTcpSocketInput : public HbLogAbstractInput {
     Q_OBJECT
     Q_DISABLE_COPY(HbLogTcpSocketInput)
 

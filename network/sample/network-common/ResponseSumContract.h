@@ -31,8 +31,8 @@ public:
     virtual bool read(QDataStream& stream);
     virtual bool write(QDataStream& stream) const;
 
-    virtual qint32 result() const final;
-    virtual void setResult(qint32 result) final;
+    virtual qint32 result() const;
+    virtual void setResult(qint32 result);
 
 protected:
     virtual ResponseSumContract* create() const override;

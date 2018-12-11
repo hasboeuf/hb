@@ -29,11 +29,11 @@ public:
 
     virtual bool isValid() const;
 
-    virtual void setWarningAliveThreshold(quint16 threshold) final;
-    virtual quint16 warningAliveThreshold() const final;
+    virtual void setWarningAliveThreshold(quint16 threshold);
+    virtual quint16 warningAliveThreshold() const;
 
-    virtual void setKickAliveThreshold(quint16 threshold) final;
-    virtual quint16 kickAliveThreshold() const final;
+    virtual void setKickAliveThreshold(quint16 threshold);
+    virtual quint16 kickAliveThreshold() const;
 
 protected:
 private:

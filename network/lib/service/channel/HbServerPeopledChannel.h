@@ -33,8 +33,8 @@ public:
 
     virtual void internalReset(bool keep_uid = false) override;
 
-    virtual void onUserConnected(ShConstHbNetworkUserInfo user_info) override final;
-    virtual void onUserDisconnected(ShConstHbNetworkUserInfo user_info) override final;
+    virtual void onUserConnected(ShConstHbNetworkUserInfo user_info) override;
+    virtual void onUserDisconnected(ShConstHbNetworkUserInfo user_info) override;
 
     const QHash<QString, ShConstHbNetworkUserInfo>& connectedUsers() const;
     ShConstHbNetworkUserInfo connectedUser(const QString& email);
