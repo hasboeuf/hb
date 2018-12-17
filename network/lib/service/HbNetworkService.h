@@ -44,7 +44,7 @@ signals:
 
     // Server side.
     void userContractToSend(ShConstHbNetworkUserInfo user_info, HbNetworkContract* contract);
-    void usersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos, HbNetworkContract* contract);
+    void usersContractToSend(QList<ShConstHbNetworkUserInfo> users_info, HbNetworkContract* contract);
     void userToKick(ShConstHbNetworkUserInfo user_info, netwlint reason, const QString& description = QString());
     void socketToKick(networkuid socket_uid, netwlint reason, const QString& description = QString());
 };

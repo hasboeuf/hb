@@ -160,10 +160,10 @@ void HbServerChannelService::onUserContractToSend(ShConstHbNetworkUserInfo user_
     emit userContractToSend(user_info, contract);
 }
 
-void HbServerChannelService::onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos,
+void HbServerChannelService::onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_info,
                                                    HbNetworkContract* contract) {
     Q_ASSERT(contract);
-    emit usersContractToSend(users_infos, contract);
+    emit usersContractToSend(users_info, contract);
 }
 
 void HbServerChannelService::onUserToKick(ShConstHbNetworkUserInfo user_info,

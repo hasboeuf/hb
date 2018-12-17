@@ -48,7 +48,7 @@ public:
 
     // From services.
     void onSocketContractToSend(networkuid receiver, HbNetworkContract* contract); //! \todo clean
-    void onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos, HbNetworkContract* contract);
+    void onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_info, HbNetworkContract* contract);
     void onUserContractToSend(ShConstHbNetworkUserInfo user_info, HbNetworkContract* contract);
     void onContractToSend(const HbNetworkContract* contract) override;
     void onUserToKick(ShConstHbNetworkUserInfo user_info, netwlint reason, const QString& description);

@@ -43,7 +43,7 @@ public:
     virtual void setSender(networkuid sender);
     virtual networkuid sender() const;
 
-    virtual void addPendingReceiver(ShConstHbNetworkUserInfo users_infos);
+    virtual void addPendingReceiver(ShConstHbNetworkUserInfo users_info);
     virtual void addSocketReceiver(networkuid socket_uid);
     virtual const QList<ShConstHbNetworkUserInfo>& pendingReceivers() const;
     virtual const QSet<networkuid>& receivers() const;
@@ -93,7 +93,7 @@ private:
     HbNetworkProtocol::NetworkType mNetworkType;
     HbNetworkProtocol::RoutingScheme mRouting;
 
-    QList<ShConstHbNetworkUserInfo> mPendingReceivers; // Users infos, morph into networkuid at sending time.
+    QList<ShConstHbNetworkUserInfo> mPendingReceivers; // Users info, morph into networkuid at sending time.
     QSet<networkuid> mReceivers;
 
     networkuid mNetworkReceiver; // Used by server channels.

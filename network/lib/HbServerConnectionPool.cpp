@@ -362,7 +362,7 @@ void HbServerConnectionPool::onSocketContractToSend(networkuid receiver, HbNetwo
     server->send(ShConstHbNetworkContract(contract));
 }
 
-void HbServerConnectionPool::onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos,
+void HbServerConnectionPool::onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_info,
                                                    HbNetworkContract* contract) {
     Q_ASSERT(contract);
     Q_ASSERT(contract->receivers().size() == 0);
@@ -376,7 +376,7 @@ void HbServerConnectionPool::onUsersContractToSend(QList<ShConstHbNetworkUserInf
         Q_ASSERT(server_uid != 0);
     }
 
-    for (ShConstHbNetworkUserInfo user_info : users_infos) {
+    for (ShConstHbNetworkUserInfo user_info : users_info) {
         HbServerUser* user = getUser(user_info);
         if (!user) {
             qWarning() << "User %d is disconnected";

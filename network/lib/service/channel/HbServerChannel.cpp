@@ -37,7 +37,7 @@ void HbServerChannel::onUserContractToSend(ShConstHbNetworkUserInfo user_info, H
     emit userContractToSend(user_info, contract);
 }
 
-void HbServerChannel::onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos, HbNetworkContract* contract) {
+void HbServerChannel::onUsersContractToSend(QList<ShConstHbNetworkUserInfo> users_info, HbNetworkContract* contract) {
     if (!contract) {
         qWarning() << "Null contract";
         return;
@@ -45,7 +45,7 @@ void HbServerChannel::onUsersContractToSend(QList<ShConstHbNetworkUserInfo> user
 
     contract->setNetworkReceiver(mNetworkUid);
 
-    emit usersContractToSend(users_infos, contract);
+    emit usersContractToSend(users_info, contract);
 }
 
 void HbServerChannel::onUserToKick(ShConstHbNetworkUserInfo user_info, netwlint reason, const QString& description) {

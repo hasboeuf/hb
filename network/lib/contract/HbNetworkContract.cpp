@@ -78,8 +78,8 @@ networkuid HbNetworkContract::sender() const {
     return mSender;
 }
 
-void HbNetworkContract::addPendingReceiver(ShConstHbNetworkUserInfo user_info) {
-    mPendingReceivers.push_back(user_info);
+void HbNetworkContract::addPendingReceiver(ShConstHbNetworkUserInfo users_info) {
+    mPendingReceivers.push_back(users_info);
 }
 
 void HbNetworkContract::addSocketReceiver(networkuid socket_uid) {

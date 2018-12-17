@@ -30,7 +30,7 @@ public:
 
     // Hide server side signals.
     void userContractToSend(ShConstHbNetworkUserInfo user_info, HbNetworkContract* contract) = delete;
-    void usersContractToSend(QList<ShConstHbNetworkUserInfo> users_infos, HbNetworkContract* contract) = delete;
+    void usersContractToSend(QList<ShConstHbNetworkUserInfo> users_info, HbNetworkContract* contract) = delete;
     void
     userToKick(ShConstHbNetworkUserInfo user_info, netwlint reason, const QString& description = QString()) = delete;
 
