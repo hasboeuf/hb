@@ -28,7 +28,7 @@ namespace network {
 class HB_NETWORK_DECL HbClientUser : public HbNetworkUser {
     Q_OBJECT
 public:
-    HbClientUser();
+    HbClientUser(QObject* parent = nullptr);
     virtual ~HbClientUser() = default;
 
     virtual void reset();

@@ -9,7 +9,7 @@
 using namespace hb::network;
 using namespace hb::tools;
 
-HbAbstractSocket::HbAbstractSocket(QIODevice* device) {
+HbAbstractSocket::HbAbstractSocket(QIODevice* device, QObject* parent) : QObject(parent) {
     Q_ASSERT(device);
     mDevice = device;
 

@@ -15,7 +15,7 @@ class Plugin2 : public QObject, public IPlugin2, public AppAbstractPlugin {
     Q_INTERFACES(hb::pluginexample::AppAbstractPlugin)
 
 public:
-    explicit Plugin2();
+    explicit Plugin2(QObject* parent = nullptr);
     virtual ~Plugin2();
 
     virtual PluginInitState init(const HbPluginPlatform* platform_service);

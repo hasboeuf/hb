@@ -12,7 +12,6 @@
 /*! \file HbNetworkUser.h */
 
 // Qt
-#include <QtCore/QObject>
 #include <QtCore/QSet>
 // Hb
 // Local
@@ -26,9 +25,8 @@ namespace network {
  * TODOC
  */
 class HB_NETWORK_DECL HbNetworkUser : public QObject {
-    Q_OBJECT
 public:
-    HbNetworkUser();
+    HbNetworkUser(QObject* parent = nullptr);
     virtual ~HbNetworkUser() = default;
 
     virtual void reset();

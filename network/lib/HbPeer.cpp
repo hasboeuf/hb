@@ -9,7 +9,7 @@
 
 using namespace hb::network;
 
-HbPeer::HbPeer(const HbGeneralConfig& config) {
+HbPeer::HbPeer(const HbGeneralConfig& config, QObject* parent) : QObject(parent) {
     if (config.isValid()) {
         HbNetworkProtocol::msAppName = config.appName();
         HbNetworkProtocol::msProtocolVersion = config.protocolVersion();

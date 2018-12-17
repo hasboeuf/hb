@@ -24,9 +24,7 @@ namespace log {
 /*!
  * TODOC.
  */
-class HB_LOG_DECL HbLogConfig : public QObject {
-    Q_OBJECT
-
+class HB_LOG_DECL HbLogConfig {
 public:
     static const HbLogConfig importConfigXml(QString file_path);
     static bool exportConfigXml(QString file_path, const HbLogConfig& config);

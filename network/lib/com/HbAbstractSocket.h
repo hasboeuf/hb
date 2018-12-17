@@ -59,7 +59,7 @@ signals:
 
 protected:
     HbAbstractSocket() = delete;
-    HbAbstractSocket(QIODevice* device);
+    HbAbstractSocket(QIODevice* device, QObject* parent = nullptr);
 
     virtual qint64 readStream(QDataStream& stream);
     virtual qint64 writeBuffer(const QByteArray& buffer) const;

@@ -28,8 +28,8 @@ authstgy HbClientAuthGoogleStrategy::type() const {
 bool HbClientAuthGoogleStrategy::prepareAuthContract(HbClientAuthLoginObject* login_object) {
     HbO2ClientGoogle* google_client = new HbO2ClientGoogle();
 
-    connect(google_client, &HbO2::linkSucceed, this, &HbClientOAuthStrategy::onLinkSucceed);
-    connect(google_client, &HbO2::linkFailed, this, &HbClientOAuthStrategy::onLinkFailed);
+    QObject::connect(google_client, &HbO2::linkSucceed, this, &HbClientOAuthStrategy::onLinkSucceed);
+    QObject::connect(google_client, &HbO2::linkFailed, this, &HbClientOAuthStrategy::onLinkFailed);
 
     google_client->config().setClientId(mConfig.clientId());
     google_client->config().setLocalPort(mConfig.localPort());

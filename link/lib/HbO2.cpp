@@ -9,7 +9,7 @@
 
 using namespace hb::link;
 
-HbO2::HbO2() : QObject() {
+HbO2::HbO2(QObject* parent) : QObject(parent) {
     mLinkStatus = UNLINKED;
 }
 

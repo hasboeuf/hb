@@ -34,7 +34,7 @@ class HbLogManager : public QObject, public HbLogger {
     Q_DISABLE_COPY(HbLogManager)
 
 public:
-    HbLogManager(HbLoggerPool* pool);
+    HbLogManager(HbLoggerPool* pool, QObject* parent = nullptr);
     virtual ~HbLogManager();
 
 protected:

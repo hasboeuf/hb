@@ -16,7 +16,7 @@ using namespace hb::tools;
 using namespace hb::log;
 using namespace hb::network;
 
-HbSocketHandler::HbSocketHandler() : QObject(nullptr) {
+HbSocketHandler::HbSocketHandler(QObject* parent) : QObject(parent) {
     mState = NOT_THREADED;
 }
 

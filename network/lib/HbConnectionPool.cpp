@@ -10,7 +10,7 @@
 
 using namespace hb::network;
 
-HbConnectionPool::HbConnectionPool(const HbGeneralConfig& config) {
+HbConnectionPool::HbConnectionPool(const HbGeneralConfig& config, QObject* parent) : QObject(parent) {
     Q_UNUSED(config)
 
     mLeaving = false;

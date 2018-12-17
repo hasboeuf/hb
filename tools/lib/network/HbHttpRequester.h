@@ -31,7 +31,7 @@ class HB_TOOLS_DECL HbHttpRequester : public QObject {
     Q_OBJECT
 
 public:
-    HbHttpRequester();
+    HbHttpRequester(QObject* parent = nullptr);
     virtual ~HbHttpRequester();
 
     quint64 processRequest(const QUrl& url, quint32 timeout = hb::tools::HbTimeoutNetworkReply::msDefaultTimeout);

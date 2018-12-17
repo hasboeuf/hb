@@ -28,7 +28,7 @@ class HB_TOOLS_DECL HbTimeoutNetworkReplies : public QObject {
     Q_OBJECT
 
 public:
-    HbTimeoutNetworkReplies() = default;
+    HbTimeoutNetworkReplies(QObject* parent = nullptr);
     virtual ~HbTimeoutNetworkReplies();
 
     quint64 add(QNetworkReply* reply, quint32 timeout = HbTimeoutNetworkReply::msDefaultTimeout);

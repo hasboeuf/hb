@@ -1,4 +1,5 @@
 // Qt
+#include <QtCore/QObject>
 // Hb
 #include <HbLogService.h>
 #include <facebook/HbO2ServerFacebook.h>
@@ -28,8 +29,8 @@ authstgy HbClientAuthFacebookStrategy::type() const {
 bool HbClientAuthFacebookStrategy::prepareAuthContract(HbClientAuthLoginObject* login_object) {
     HbO2ClientFacebook* facebook_client = new HbO2ClientFacebook();
 
-    connect(facebook_client, &HbO2::linkSucceed, this, &HbClientOAuthStrategy::onLinkSucceed);
-    connect(facebook_client, &HbO2::linkFailed, this, &HbClientOAuthStrategy::onLinkFailed);
+    QObject::connect(facebook_client, &HbO2::linkSucceed, this, &HbClientOAuthStrategy::onLinkSucceed);
+    QObject::connect(facebook_client, &HbO2::linkFailed, this, &HbClientOAuthStrategy::onLinkFailed);
 
     facebook_client->config().setClientId(mConfig.clientId());
     facebook_client->config().setLocalPort(mConfig.localPort());

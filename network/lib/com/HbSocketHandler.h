@@ -58,7 +58,7 @@ signals:
 protected:
     enum HandlerState { NOT_THREADED = 0, THREADED };
 
-    HbSocketHandler();
+    HbSocketHandler(QObject* parent = nullptr);
     virtual ~HbSocketHandler();
 
     virtual HbAbstractServer* server() const = 0;

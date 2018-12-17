@@ -7,7 +7,7 @@
 
 using namespace hb::tools;
 
-HbHttpRequester::HbHttpRequester() {
+HbHttpRequester::HbHttpRequester(QObject* parent) : QObject(parent) {
 }
 
 HbHttpRequester::~HbHttpRequester() {

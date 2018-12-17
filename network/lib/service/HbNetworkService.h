@@ -30,7 +30,7 @@ class HB_NETWORK_DECL HbNetworkService : public QObject {
     Q_OBJECT
 
 public:
-    HbNetworkService() = default;
+    HbNetworkService(QObject* parent = nullptr);
     virtual ~HbNetworkService() {
     } //!< \todo defaulted linux-g++ issue
 

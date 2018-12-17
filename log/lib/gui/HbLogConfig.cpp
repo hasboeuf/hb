@@ -11,7 +11,7 @@ using namespace hb::log;
 const char* HbLogConfig::msDefaultConfigXml = ":/config/default.hblog";
 const quint32 HbLogConfig::msMaxLevel = 64;
 
-HbLogConfig::HbLogConfig() : QObject() {
+HbLogConfig::HbLogConfig() {
     mMaxBuffer = 5000;
     mFont = QFont(QStringLiteral("Courier New"));
 

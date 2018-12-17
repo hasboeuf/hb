@@ -106,15 +106,8 @@ IHbPlugin* HbPluginManager::plugin(const QString& plugin_name) const {
     return nullptr;
 }
 
-QList<HbPluginInfos> HbPluginManager::pluginInfoList() {
-    QList<HbPluginInfos> plugin_info_list;
-
-    for (const HbPluginInfos* info : mPluginsInfos) {
-        Q_ASSERT(info);
-        plugin_info_list.append(*info);
-    }
-
-    return plugin_info_list;
+QList<HbPluginInfos*> HbPluginManager::pluginInfoList() {
+    return mPluginsInfos.values();
 }
 
 void HbPluginManager::onPluginStateChanged() {

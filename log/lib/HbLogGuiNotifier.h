@@ -32,7 +32,7 @@ class HB_LOG_DECL HbLogGuiNotifier : public QObject {
     friend class HbLogGuiOutput;
 
 public:
-    HbLogGuiNotifier();
+    HbLogGuiNotifier(QObject* parent = nullptr);
     virtual ~HbLogGuiNotifier() = default;
 
 signals:

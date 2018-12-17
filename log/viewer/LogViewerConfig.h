@@ -13,8 +13,6 @@ namespace logviewer {
 using hb::log::HbLogConfig;
 
 class LogViewerConfig : public HbLogConfig {
-    Q_OBJECT
-
 public:
     static const LogViewerConfig importConfigXml(const QString& file_path);
     static bool exportConfigXml(const QString& file_path, const LogViewerConfig& config);

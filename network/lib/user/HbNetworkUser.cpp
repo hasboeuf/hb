@@ -5,7 +5,7 @@
 
 using namespace hb::network;
 
-HbNetworkUser::HbNetworkUser() {
+HbNetworkUser::HbNetworkUser(QObject* parent) : QObject(parent) {
     mMainSocket = 0;
     mInfo = ShConstHbNetworkUserInfo(
         new HbNetworkUserInfo()); // Valid object instead of nullptr to avoid checking ptr everytime.

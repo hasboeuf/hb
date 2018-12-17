@@ -10,7 +10,7 @@
 
 using namespace hb::plugin;
 
-HbPluginPlatform::HbPluginPlatform() : QObject(), mPluginManager(this) {
+HbPluginPlatform::HbPluginPlatform(QObject* parent) : QObject(parent), mPluginManager(this) {
     connect(&mPluginManager,
             &HbPluginManager::pluginStateChanged,
             this,
@@ -26,7 +26,7 @@ void HbPluginPlatform::unloadPlugins() {
     mPluginManager.unload();
 }
 
-QList<HbPluginInfos> HbPluginPlatform::pluginInfoList() {
+QList<HbPluginInfos*> HbPluginPlatform::pluginInfoList() {
     return mPluginManager.pluginInfoList();
 }
 

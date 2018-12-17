@@ -19,7 +19,7 @@
 
 using namespace hb::log;
 
-HbLoggerPool::HbLoggerPool() : QObject() {
+HbLoggerPool::HbLoggerPool(QObject* parent) : QObject(parent) {
     mAtomic = 0;
     mpClock = nullptr;
     mCapacity = MAX_CAPACITY;

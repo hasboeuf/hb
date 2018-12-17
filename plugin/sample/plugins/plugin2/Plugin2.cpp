@@ -12,7 +12,7 @@ Q_PLUGIN_METADATA(IID "hb::pluginexample::AppAbstractPlugin")
 
 using namespace hb::pluginexample;
 
-Plugin2::Plugin2() : QObject(), AppAbstractPlugin() {
+Plugin2::Plugin2(QObject* parent) : QObject(parent), AppAbstractPlugin() {
 }
 
 Plugin2::~Plugin2() {

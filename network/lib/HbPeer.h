@@ -28,7 +28,7 @@ class HB_NETWORK_DECL HbPeer : public QObject {
 
 public:
     HbPeer() = delete;
-    HbPeer(const HbGeneralConfig& config);
+    HbPeer(const HbGeneralConfig& config, QObject* parent = nullptr);
     virtual ~HbPeer() = default;
 
     virtual bool isReady() const;

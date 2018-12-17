@@ -29,7 +29,7 @@ class HB_NETWORK_DECL HbConnectionPool : public QObject {
     Q_OBJECT
 public:
     HbConnectionPool() = delete;
-    HbConnectionPool(const HbGeneralConfig& config);
+    HbConnectionPool(const HbGeneralConfig& config, QObject* parent = nullptr);
     virtual ~HbConnectionPool() = default;
 
     virtual bool leave() = 0;

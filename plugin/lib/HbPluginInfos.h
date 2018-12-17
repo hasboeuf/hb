@@ -13,7 +13,6 @@
 
 // Qt
 #include <QtCore/QHash>
-#include <QtCore/QObject>
 #include <QtCore/QSet>
 #include <QtCore/QString>
 // Hb
@@ -42,10 +41,8 @@ public:
     Q_ENUM(PluginState)
     HB_ENUM(PluginState)
 
-    HbPluginInfos();
+    HbPluginInfos(QObject* parent = nullptr);
     ~HbPluginInfos();
-    HbPluginInfos(const HbPluginInfos& copy);
-    HbPluginInfos& operator=(const HbPluginInfos& copy);
 
     void setPath(const QString& path);
     void setAuthor(const QString& author);

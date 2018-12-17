@@ -2,16 +2,14 @@
 #define IHBAUTHBROWSERCONTROLS_H
 
 // Qt
-#include <QtCore/QObject>
+#include <QtCore/QUrl>
 // Hb
 #include <HbAuth.h>
 
 namespace hb {
 namespace auth {
 
-class HB_AUTH_DECL IHbAuthBrowserControls : public QObject {
-    Q_OBJECT
-
+class HB_AUTH_DECL IHbAuthBrowserControls {
 public:
     virtual void onOpenBrowser(const QUrl& url) = 0;
     virtual void onCloseBrowser() = 0;

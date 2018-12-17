@@ -72,7 +72,7 @@ public:
      * Return previously scanned plugins infos.
      * \return Plugin infos list.
      */
-    QList<HbPluginInfos> pluginInfoList();
+    QList<HbPluginInfos*> pluginInfoList();
 
     void onPluginStateChanged();
 

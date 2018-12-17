@@ -31,7 +31,7 @@ class HB_PLUGIN_DECL HbPluginPlatform : public QObject {
     Q_OBJECT
 
 public:
-    explicit HbPluginPlatform();
+    explicit HbPluginPlatform(QObject* parent = nullptr);
 
     /*!
      * Load plugins contained in a folder.
@@ -49,7 +49,7 @@ public:
      * Return previously scanned plugins infos.
      * \return Plugin infos list.
      */
-    QList<HbPluginInfos> pluginInfoList();
+    QList<HbPluginInfos*> pluginInfoList();
 
     /*!
      * Get a service.

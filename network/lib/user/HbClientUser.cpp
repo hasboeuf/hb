@@ -5,7 +5,7 @@
 
 using namespace hb::network;
 
-HbClientUser::HbClientUser() : HbNetworkUser() {
+HbClientUser::HbClientUser(QObject* parent) : HbNetworkUser(parent) {
     setStatus(HbNetworkProtocol::USER_DISCONNECTED);
 }
 

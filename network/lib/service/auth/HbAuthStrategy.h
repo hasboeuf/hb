@@ -24,7 +24,6 @@ namespace network {
  * TODOC
  */
 class HB_NETWORK_DECL HbAuthStrategy : public QObject {
-    Q_OBJECT
 public:
     HbAuthStrategy() = default;
     virtual ~HbAuthStrategy() = default;

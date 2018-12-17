@@ -11,7 +11,7 @@
 using namespace hb::log;
 using namespace hb::tools;
 
-HbLogManager::HbLogManager(HbLoggerPool* pool) : QObject(), HbLogger() {
+HbLogManager::HbLogManager(HbLoggerPool* pool, QObject* parent) : QObject(parent), HbLogger() {
     mPool = pool;
     mRetry = 0;
 }

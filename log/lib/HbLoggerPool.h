@@ -37,7 +37,7 @@ class HbLoggerPool : public QObject {
     Q_DISABLE_COPY(HbLoggerPool)
 
 public:
-    HbLoggerPool();
+    HbLoggerPool(QObject* parent = nullptr);
     virtual ~HbLoggerPool();
 
     void addUdpSocketInput(quint16 port);

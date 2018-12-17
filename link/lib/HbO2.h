@@ -44,7 +44,7 @@ public:
      */
     static QHash<QString, QString> getUrlItems(const QString& content);
 
-    HbO2();
+    HbO2(QObject* parent = nullptr);
     virtual ~HbO2() = default;
 
     /*!

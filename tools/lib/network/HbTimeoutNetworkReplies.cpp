@@ -3,6 +3,9 @@
 
 using namespace hb::tools;
 
+HbTimeoutNetworkReplies::HbTimeoutNetworkReplies(QObject* parent) : QObject(parent) {
+}
+
 HbTimeoutNetworkReplies::~HbTimeoutNetworkReplies() {
     printf("~HbTimeoutNetworkReplies mReplies=%d\n", mReplies.size());
 

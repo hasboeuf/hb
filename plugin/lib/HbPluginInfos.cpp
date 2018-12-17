@@ -5,48 +5,12 @@
 
 using namespace hb::plugin;
 
-HbPluginInfos::HbPluginInfos() {
+HbPluginInfos::HbPluginInfos(QObject* parent) : QObject(parent) {
     mState = PLUGIN_NOT_REGISTERED;
 }
 
 HbPluginInfos::~HbPluginInfos() {
     setState(PLUGIN_NOT_REGISTERED);
-}
-
-HbPluginInfos::HbPluginInfos(const HbPluginInfos& copy) : QObject() {
-    if (this != &copy) {
-        mPath = copy.mPath;
-        mAuthor = copy.mAuthor;
-        mName = copy.mName;
-        mVersion = copy.mVersion;
-        mState = copy.mState;
-
-        mRequiredPlugins = copy.mRequiredPlugins;
-        mOptionalPlugins = copy.mOptionalPlugins;
-        mRequiredService = copy.mRequiredService;
-        mOptionalService = copy.mOptionalService;
-
-        mChildren = copy.mChildren;
-    }
-}
-
-HbPluginInfos& HbPluginInfos::operator=(const HbPluginInfos& copy) {
-    if (this != &copy) {
-        mPath = copy.mPath;
-        mAuthor = copy.mAuthor;
-        mName = copy.mName;
-        mVersion = copy.mVersion;
-        mState = copy.mState;
-
-        mRequiredPlugins = copy.mRequiredPlugins;
-        mOptionalPlugins = copy.mOptionalPlugins;
-        mRequiredService = copy.mRequiredService;
-        mOptionalService = copy.mOptionalService;
-
-        mChildren = copy.mChildren;
-    }
-
-    return (*this);
 }
 
 void HbPluginInfos::setPath(const QString& path) {
