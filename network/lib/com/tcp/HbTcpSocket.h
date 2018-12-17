@@ -43,7 +43,7 @@ private:
     void onStateChanged(QAbstractSocket::SocketState state);
 
     HbTcpConfig mConfig;
-    QTcpSocket* mpDevice;
+    QTcpSocket* mDevice;
 };
 } // namespace network
 } // namespace hb

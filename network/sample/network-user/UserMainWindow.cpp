@@ -53,13 +53,13 @@ UserMainWindow::UserMainWindow(QWidget* parent) : QMainWindow(parent) {
     config.auth().enableGoogleAuth(google_config);
     config.presence().setKeepAliveInterval(30);
 
-    mpHbClient = new HbClient(config);
+    mHbClient = new HbClient(config);
 
-    mpSumChannel = new ClientSumChannel();
-    mpChatChannel = new ClientChatChannel();
+    mSumChannel = new ClientSumChannel();
+    mChatChannel = new ClientChatChannel();
 
-    connect(mpSumChannel, &ClientSumChannel::computationReceived, this, &UserMainWindow::onComputationReceived);
-    connect(mpChatChannel, &ClientChatChannel::chatMessageReceived, this, &UserMainWindow::onChatMessageReceived);
+    connect(mSumChannel, &ClientSumChannel::computationReceived, this, &UserMainWindow::onComputationReceived);
+    connect(mChatChannel, &ClientChatChannel::chatMessageReceived, this, &UserMainWindow::onChatMessageReceived);
 
     connect(ui_qpb_start, &QPushButton::clicked, this, &UserMainWindow::onStartClicked);
     connect(ui_qpb_stop, &QPushButton::clicked, this, &UserMainWindow::onStopClicked);
@@ -69,8 +69,8 @@ UserMainWindow::UserMainWindow(QWidget* parent) : QMainWindow(parent) {
     connect(ui_qpb_send, &QPushButton::clicked, this, &UserMainWindow::onSendClicked);
     connect(ui_qpb_compute, &QPushButton::clicked, this, &UserMainWindow::onComputeClicked);
 
-    connect(mpHbClient, &HbClient::clientStatusChanged, this, &UserMainWindow::onClientStatusChanged);
-    connect(mpHbClient, &HbClient::meStatusChanged, this, &UserMainWindow::onMeStatusChanged);
+    connect(mHbClient, &HbClient::clientStatusChanged, this, &UserMainWindow::onClientStatusChanged);
+    connect(mHbClient, &HbClient::meStatusChanged, this, &UserMainWindow::onMeStatusChanged);
 }
 
 UserMainWindow::~UserMainWindow() {
@@ -83,34 +83,34 @@ void UserMainWindow::onStartClicked() {
     config.setReconnectionDelay(0);
     config.setBadHeaderTolerant(false);
 
-    config.plugChannel(mpSumChannel);
-    config.plugChannel(mpChatChannel);
+    config.plugChannel(mSumChannel);
+    config.plugChannel(mChatChannel);
 
-    networkuid client_uid = mpHbClient->joinTcpClient(config, true);
+    networkuid client_uid = mHbClient->joinTcpClient(config, true);
     if (client_uid > 0) {
         qDebug() << "Client started" << client_uid;
     }
 }
 
 void UserMainWindow::onStopClicked() {
-    mpHbClient->leave();
+    mHbClient->leave();
 }
 
 void UserMainWindow::onSendClicked() {
-    mpChatChannel->sendMessage(ui_qle_chat->text());
+    mChatChannel->sendMessage(ui_qle_chat->text());
     ui_qle_chat->clear();
 }
 
 void UserMainWindow::onComputeClicked() {
-    mpSumChannel->requestSum(ui_qsb_a->value(), ui_qsb_b->value());
+    mSumChannel->requestSum(ui_qsb_a->value(), ui_qsb_b->value());
 }
 
 void UserMainWindow::onFacebookAuthRequest() {
-    mpHbClient->OAuthRequested(HbAuthService::AUTH_FACEBOOK);
+    mHbClient->OAuthRequested(HbAuthService::AUTH_FACEBOOK);
 }
 
 void UserMainWindow::onGoogleAuthRequest() {
-    mpHbClient->OAuthRequested(HbAuthService::AUTH_GOOGLE);
+    mHbClient->OAuthRequested(HbAuthService::AUTH_GOOGLE);
 }
 
 void UserMainWindow::onUnauthRequest() {

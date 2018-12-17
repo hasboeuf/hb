@@ -55,9 +55,9 @@ private:
 
     void resetGui();
 
-    hb::network::HbClient* mpHbClient;
-    ClientSumChannel* mpSumChannel;
-    ClientChatChannel* mpChatChannel;
+    hb::network::HbClient* mHbClient;
+    ClientSumChannel* mSumChannel;
+    ClientChatChannel* mChatChannel;
 };
 } // namespace networkexample
 } // namespace hb

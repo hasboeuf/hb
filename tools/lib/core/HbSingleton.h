@@ -23,21 +23,21 @@ namespace tools {
 template <class T> class HbSingleton {
 public:
     static T* get() {
-        if (mpInstance == nullptr) {
-            mpInstance = new T();
+        if (mInstance == nullptr) {
+            mInstance = new T();
         }
-        return mpInstance;
+        return mInstance;
     }
 
     static void kill() {
-        if (mpInstance) {
-            delete mpInstance;
-            mpInstance = nullptr;
+        if (mInstance) {
+            delete mInstance;
+            mInstance = nullptr;
         }
     }
 
 protected:
-    static T* mpInstance;
+    static T* mInstance;
 
 private:
     T& operator=(const T&);
@@ -47,6 +47,6 @@ private:
 
 using hb::tools::HbSingleton;
 
-template <typename T> T* HbSingleton<T>::mpInstance = nullptr;
+template <typename T> T* HbSingleton<T>::mInstance = nullptr;
 
 #endif // HBSINGLETON_H

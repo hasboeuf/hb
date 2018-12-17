@@ -42,10 +42,10 @@ ServerMainWindow::ServerMainWindow(QWidget* parent) : QMainWindow(parent) {
     config.presence().setWarningAliveThreshold(60);
     config.presence().setKickAliveThreshold(90);
 
-    mpHbServer = new HbServer(config);
+    mHbServer = new HbServer(config);
 
-    mpSumChannel = new ServerSumChannel();
-    mpChatChannel = new ServerChatChannel();
+    mSumChannel = new ServerSumChannel();
+    mChatChannel = new ServerChatChannel();
 
     // Ui
     setupUi(this);
@@ -54,7 +54,7 @@ ServerMainWindow::ServerMainWindow(QWidget* parent) : QMainWindow(parent) {
     connect(ui_qpb_start, &QPushButton::clicked, this, &ServerMainWindow::onStartClicked);
     connect(ui_qpb_stop, &QPushButton::clicked, this, &ServerMainWindow::onStopClicked);
 
-    connect(mpHbServer, &HbServer::serverStatusChanged, this, &ServerMainWindow::onServerStatusChanged);
+    connect(mHbServer, &HbServer::serverStatusChanged, this, &ServerMainWindow::onServerStatusChanged);
 }
 
 ServerMainWindow::~ServerMainWindow() {
@@ -67,17 +67,17 @@ void ServerMainWindow::onStartClicked() {
     config.setMaxUsersPerThread(1);
     config.setBadHeaderTolerant(false);
 
-    config.plugChannel(mpSumChannel);
-    config.plugChannel(mpChatChannel);
+    config.plugChannel(mSumChannel);
+    config.plugChannel(mChatChannel);
 
-    networkuid server_uid = mpHbServer->joinTcpServer(config, true);
+    networkuid server_uid = mHbServer->joinTcpServer(config, true);
     if (server_uid > 0) {
         qDebug() << "Server started" << server_uid;
     }
 }
 
 void ServerMainWindow::onStopClicked() {
-    mpHbServer->leave();
+    mHbServer->leave();
 }
 
 void ServerMainWindow::onServerStatusChanged(networkuid server_uid, HbNetworkProtocol::ServerStatus status) {

@@ -49,12 +49,12 @@ private:
     void onFacebookConnectClicked();
     void onGoogleConnectClicked();
 
-    hb::link::HbO2ClientFacebook* mpFacebookClient;
-    hb::link::HbO2ServerFacebook* mpFacebookServer;
+    hb::link::HbO2ClientFacebook* mFacebookClient;
+    hb::link::HbO2ServerFacebook* mFacebookServer;
     hb::link::HbFacebookRequester mFacebookRequester;
 
-    hb::link::HbO2ClientGoogle* mpGoogleClient;
-    hb::link::HbO2ServerGoogle* mpGoogleServer;
+    hb::link::HbO2ClientGoogle* mGoogleClient;
+    hb::link::HbO2ServerGoogle* mGoogleServer;
     hb::link::HbGoogleRequester mGoogleRequester;
 
     LinkBrowserControls mBrowserControls;

@@ -20,9 +20,9 @@ void TcpServer::incomingConnection(qintptr socket_descriptor) {
 }
 
 HbTcpServer::HbTcpServer(QObject* parent) : HbAbstractServer(parent) {
-    mpDevice = q_check_ptr(new TcpServer(this));
+    mDevice = q_check_ptr(new TcpServer(this));
 
-    connect(mpDevice, &TcpServer::newConnection, this, &HbTcpServer::onNewConnection, Qt::UniqueConnection);
+    connect(mDevice, &TcpServer::newConnection, this, &HbTcpServer::onNewConnection, Qt::UniqueConnection);
 }
 
 HbTcpServer::~HbTcpServer() {
@@ -61,7 +61,7 @@ void HbTcpServer::reset() {
 bool HbTcpServer::connectToNetwork() {
     quint16 port = configuration().port();
 
-    if (!mpDevice->listen(configuration().address(), port)) {
+    if (!mDevice->listen(configuration().address(), port)) {
         qWarning() << "Server failed to listen";
         return false;
     }
@@ -71,11 +71,11 @@ bool HbTcpServer::connectToNetwork() {
 }
 
 void HbTcpServer::disconnectFromNetwork() {
-    mpDevice->close();
+    mDevice->close();
 }
 
 bool HbTcpServer::isListening() const {
-    return mpDevice->isListening();
+    return mDevice->isListening();
 }
 
 HbNetworkProtocol::NetworkType HbTcpServer::type() const {

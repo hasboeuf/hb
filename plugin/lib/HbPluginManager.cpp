@@ -17,7 +17,7 @@
 using namespace hb::plugin;
 
 HbPluginManager::HbPluginManager(HbPluginPlatform* platformService, QObject* parent) : QObject(parent) {
-    mpPlatformService = platformService;
+    mPlatformService = platformService;
 }
 
 void HbPluginManager::load(const QString& folder_path) {
@@ -277,7 +277,7 @@ bool HbPluginManager::loadPlugin(const QString& plugin_name) {
         QString dep_name = it_rs.key();
         QString dep_version = it_rs.value();
 
-        if (!mpPlatformService || mpPlatformService->isServiceRegistered(dep_name) != dep_version) {
+        if (!mPlatformService || mPlatformService->isServiceRegistered(dep_name) != dep_version) {
             required_services_ok = false;
             qWarning() << "Missing service for plugin" << info->name() << dep_name;
         }
@@ -290,7 +290,7 @@ bool HbPluginManager::loadPlugin(const QString& plugin_name) {
         if (loader->load()) {
             IHbPlugin* plugin = dynamic_cast<IHbPlugin*>(loader->instance());
             if (plugin) {
-                IHbPlugin::PluginInitState state = plugin->init(mpPlatformService);
+                IHbPlugin::PluginInitState state = plugin->init(mPlatformService);
 
                 if ((state == IHbPlugin::INIT_SUCCESS) || (state == IHbPlugin::INIT_SUCCESS_PARTIALLY)) {
                     mPlugins.insert(info->name(), plugin);

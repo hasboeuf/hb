@@ -92,11 +92,11 @@ private:
     bool mRerun;
     const LogViewerConfig& mConfig;
 
-    ModelFilter* mpFilter;
+    ModelFilter* mFilter;
     quint8 mFilterColumn;
 
     qreal mFreezeAnimationValue;
-    QPropertyAnimation* mpFreezeAnimation;
+    QPropertyAnimation* mFreezeAnimation;
 };
 } // namespace logviewer
 } // namespace hb

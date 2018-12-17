@@ -83,7 +83,7 @@ protected:
     virtual HbNetworkContract* create() const = 0;
 
     HbNetworkHeader mHeader;
-    HbNetworkContract* mpReply;
+    HbNetworkContract* mReply;
 
 private:
     void resetReceivers();

@@ -24,10 +24,10 @@ LinkMainWindow::LinkMainWindow(QWidget* parent) : QMainWindow(parent) {
     setupUi(this);
     setWindowTitle("Link");
 
-    mpFacebookClient = nullptr;
-    mpFacebookServer = nullptr;
-    mpGoogleClient = nullptr;
-    mpGoogleServer = nullptr;
+    mFacebookClient = nullptr;
+    mFacebookServer = nullptr;
+    mGoogleClient = nullptr;
+    mGoogleServer = nullptr;
 
     connect(ui_qpb_facebook_connect, &QPushButton::clicked, this, &LinkMainWindow::onFacebookConnectClicked);
     connect(ui_qpb_google_connect, &QPushButton::clicked, this, &LinkMainWindow::onGoogleConnectClicked);
@@ -38,94 +38,94 @@ LinkMainWindow::LinkMainWindow(QWidget* parent) : QMainWindow(parent) {
 }
 
 LinkMainWindow::~LinkMainWindow() {
-    if (mpFacebookClient)
-        delete mpFacebookClient;
-    if (mpFacebookServer)
-        delete mpFacebookServer;
-    if (mpGoogleClient)
-        delete mpGoogleClient;
-    if (mpGoogleServer)
-        delete mpGoogleServer;
+    if (mFacebookClient)
+        delete mFacebookClient;
+    if (mFacebookServer)
+        delete mFacebookServer;
+    if (mGoogleClient)
+        delete mGoogleClient;
+    if (mGoogleServer)
+        delete mGoogleServer;
 }
 
 void LinkMainWindow::onFacebookConnectClicked() {
-    mpFacebookClient = new HbO2ClientFacebook();
+    mFacebookClient = new HbO2ClientFacebook();
 
-    connect(mpFacebookClient, &HbO2::linkSucceed, this, &LinkMainWindow::onFacebookClientLinkSucceed);
+    connect(mFacebookClient, &HbO2::linkSucceed, this, &LinkMainWindow::onFacebookClientLinkSucceed);
 
-    mpFacebookClient->config().setClientId(msClientId);
-    mpFacebookClient->config().setLocalPort(8080);
-    mpFacebookClient->config().addScope(FB_PERMISSION_EMAIL);
-    mpFacebookClient->config().addScope(FB_PERMISSION_FRIENDS);
-    mpFacebookClient->config().setBrowserControls(&mBrowserControls);
+    mFacebookClient->config().setClientId(msClientId);
+    mFacebookClient->config().setLocalPort(8080);
+    mFacebookClient->config().addScope(FB_PERMISSION_EMAIL);
+    mFacebookClient->config().addScope(FB_PERMISSION_FRIENDS);
+    mFacebookClient->config().setBrowserControls(&mBrowserControls);
 
-    mpFacebookClient->link();
+    mFacebookClient->link();
 }
 
 void LinkMainWindow::onGoogleConnectClicked() {
-    mpGoogleClient = new HbO2ClientGoogle();
+    mGoogleClient = new HbO2ClientGoogle();
 
-    connect(mpGoogleClient, &HbO2::linkSucceed, this, &LinkMainWindow::onGoogleClientLinkSucceed);
+    connect(mGoogleClient, &HbO2::linkSucceed, this, &LinkMainWindow::onGoogleClientLinkSucceed);
 
-    mpGoogleClient->config().setClientId(msClientId);
-    mpGoogleClient->config().setLocalPort(8080);
-    mpGoogleClient->config().addScope(GL_PERMISSION_EMAIL);
-    mpGoogleClient->config().addScope(GL_PERMISSION_PROFILE);
-    mpGoogleClient->config().setBrowserControls(&mBrowserControls);
+    mGoogleClient->config().setClientId(msClientId);
+    mGoogleClient->config().setLocalPort(8080);
+    mGoogleClient->config().addScope(GL_PERMISSION_EMAIL);
+    mGoogleClient->config().addScope(GL_PERMISSION_PROFILE);
+    mGoogleClient->config().setBrowserControls(&mBrowserControls);
 
-    mpGoogleClient->link();
+    mGoogleClient->link();
 }
 
 void LinkMainWindow::onFacebookClientLinkSucceed() {
-    if (sender() != mpFacebookClient) {
+    if (sender() != mFacebookClient) {
         return;
     }
 
     qDebug() << "Client link succeed";
 
-    mpFacebookServer = new HbO2ServerFacebook();
+    mFacebookServer = new HbO2ServerFacebook();
 
-    connect(mpFacebookServer,
+    connect(mFacebookServer,
             &HbO2ServerFacebook::linkSucceed,
             this,
             &LinkMainWindow::onFacebookServerLinkSucceed,
             Qt::UniqueConnection);
 
-    mpFacebookServer->config().setClientId(mpFacebookClient->config().clientId());
-    mpFacebookServer->config().setClientSecret(msClientSecret);
-    mpFacebookServer->setRedirectUri(mpFacebookClient->redirectUri());
-    mpFacebookServer->setCode(mpFacebookClient->code());
-    mpFacebookServer->addField(FB_USER_FIRST_NAME);
-    mpFacebookServer->addField(FB_USER_LAST_NAME);
-    mpFacebookServer->addField(FB_USER_LINK);
-    mpFacebookServer->addField(FB_USER_EMAIL);
-    mpFacebookServer->addField(FB_USER_GENDER);
-    mpFacebookServer->addField(FB_USER_LOCALE);
-    mpFacebookServer->addField(FB_USER_VERIFIED);
-    mpFacebookServer->addField(FB_USER_TIMEZONE);
+    mFacebookServer->config().setClientId(mFacebookClient->config().clientId());
+    mFacebookServer->config().setClientSecret(msClientSecret);
+    mFacebookServer->setRedirectUri(mFacebookClient->redirectUri());
+    mFacebookServer->setCode(mFacebookClient->code());
+    mFacebookServer->addField(FB_USER_FIRST_NAME);
+    mFacebookServer->addField(FB_USER_LAST_NAME);
+    mFacebookServer->addField(FB_USER_LINK);
+    mFacebookServer->addField(FB_USER_EMAIL);
+    mFacebookServer->addField(FB_USER_GENDER);
+    mFacebookServer->addField(FB_USER_LOCALE);
+    mFacebookServer->addField(FB_USER_VERIFIED);
+    mFacebookServer->addField(FB_USER_TIMEZONE);
 
-    mpFacebookClient->deleteLater();
-    mpFacebookClient = nullptr;
+    mFacebookClient->deleteLater();
+    mFacebookClient = nullptr;
 
-    mpFacebookServer->link();
+    mFacebookServer->link();
 }
 
 void LinkMainWindow::onFacebookServerLinkSucceed() {
-    if (sender() != mpFacebookServer) {
+    if (sender() != mFacebookServer) {
         return;
     }
 
     qDebug() << "Server link succeed. Request facebook user...";
 
-    quint64 request_id = mFacebookRequester.requestUser(mpFacebookServer);
+    quint64 request_id = mFacebookRequester.requestUser(mFacebookServer);
     if (request_id > 0) {
         qDebug() << "Request id:" << request_id;
     } else {
         qDebug() << "Request user failed";
     }
 
-    mpFacebookServer->deleteLater();
-    mpFacebookServer = nullptr;
+    mFacebookServer->deleteLater();
+    mFacebookServer = nullptr;
 }
 
 void LinkMainWindow::onFacebookRequestCompleted(quint64 request_id, hb::link::HbFacebookObject* object) {
@@ -152,47 +152,47 @@ void LinkMainWindow::onFacebookRequestCompleted(quint64 request_id, hb::link::Hb
 }
 
 void LinkMainWindow::onGoogleClientLinkSucceed() {
-    if (sender() != mpGoogleClient) {
+    if (sender() != mGoogleClient) {
         return;
     }
 
     qDebug() << "Client link succeed";
 
-    mpGoogleServer = new HbO2ServerGoogle();
+    mGoogleServer = new HbO2ServerGoogle();
 
-    connect(mpGoogleServer,
+    connect(mGoogleServer,
             &HbO2ServerGoogle::linkSucceed,
             this,
             &LinkMainWindow::onGoogleServerLinkSucceed,
             Qt::UniqueConnection);
 
-    mpGoogleServer->config().setClientId(mpGoogleClient->config().clientId());
-    mpGoogleServer->config().setClientSecret(msClientSecret);
-    mpGoogleServer->setRedirectUri(mpGoogleClient->redirectUri());
-    mpGoogleServer->setCode(mpGoogleClient->code());
+    mGoogleServer->config().setClientId(mGoogleClient->config().clientId());
+    mGoogleServer->config().setClientSecret(msClientSecret);
+    mGoogleServer->setRedirectUri(mGoogleClient->redirectUri());
+    mGoogleServer->setCode(mGoogleClient->code());
 
-    mpGoogleClient->deleteLater();
-    mpGoogleClient = nullptr;
+    mGoogleClient->deleteLater();
+    mGoogleClient = nullptr;
 
-    mpGoogleServer->link();
+    mGoogleServer->link();
 }
 
 void LinkMainWindow::onGoogleServerLinkSucceed() {
-    if (sender() != mpGoogleServer) {
+    if (sender() != mGoogleServer) {
         return;
     }
 
     qDebug() << "Server link succeed. Request google user...";
 
-    quint64 request_id = mGoogleRequester.requestUser(mpGoogleServer);
+    quint64 request_id = mGoogleRequester.requestUser(mGoogleServer);
     if (request_id > 0) {
         qDebug() << "Request id:" << request_id;
     } else {
         qWarning() << "Request user failed";
     }
 
-    mpGoogleServer->deleteLater();
-    mpGoogleServer = nullptr;
+    mGoogleServer->deleteLater();
+    mGoogleServer = nullptr;
 }
 
 void LinkMainWindow::onGoogleRequestCompleted(quint64 request_id, hb::link::HbGoogleObject* object) {

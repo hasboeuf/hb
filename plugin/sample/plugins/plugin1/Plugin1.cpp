@@ -23,7 +23,7 @@ IHbPlugin::PluginInitState Plugin1::init(const HbPluginPlatform* platform_servic
     }
 
     MenuService* service_menu =
-        dynamic_cast<MenuService*>(mpPlatformService->requestService(AppPlatformService::SERVICE_MENU_BAR));
+        dynamic_cast<MenuService*>(mPlatformService->requestService(AppPlatformService::SERVICE_MENU_BAR));
     if (!service_menu) {
         return INIT_FAIL;
     }
@@ -45,7 +45,7 @@ void Plugin1::unload() {
 }
 
 void Plugin1::onAction1Triggered() {
-    const IPlugin2* plugin = dynamic_cast<const IPlugin2*>(mpPlatformService->requestPlugin("Plugin2"));
+    const IPlugin2* plugin = dynamic_cast<const IPlugin2*>(mPlatformService->requestPlugin("Plugin2"));
 
     if (plugin) {
         plugin->doSomething();

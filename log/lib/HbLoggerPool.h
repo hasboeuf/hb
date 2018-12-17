@@ -67,7 +67,7 @@ private:
 
     QAtomicInt mAtomic;
 
-    QTimer* mpClock;
+    QTimer* mClock;
     qint32 mCapacity;
 
     QList<HbLogMessage*> mLoggerStream;

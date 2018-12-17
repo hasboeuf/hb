@@ -5,7 +5,7 @@ using namespace hb::plugin;
 using namespace hb::pluginexample;
 
 AppAbstractPlugin::AppAbstractPlugin() : IHbPlugin() {
-    mpPlatformService = 0;
+    mPlatformService = 0;
 }
 
 AppAbstractPlugin::~AppAbstractPlugin() {
@@ -22,7 +22,7 @@ IHbPlugin::PluginInitState AppAbstractPlugin::init(const HbPluginPlatform* platf
         return INIT_FAIL;
     }
 
-    mpPlatformService = app_platform_service;
+    mPlatformService = app_platform_service;
 
     return INIT_SUCCESS;
 }

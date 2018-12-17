@@ -53,7 +53,7 @@ private:
     quint32 mTabIds;
     QHash<quint32, LogViewerTab*> mTabs;
 
-    HbLogGuiNotifier* mpLogNotifier;
+    HbLogGuiNotifier* mLogNotifier;
 
     LogViewerConfig mConfig;
 

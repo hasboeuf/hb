@@ -88,7 +88,7 @@ private:
     HbPluginInfo* scanPlugin(const QString& plugin_path);
     bool loadPlugin(const QString& plugin_name);
 
-    HbPluginPlatform* mpPlatformService;
+    HbPluginPlatform* mPlatformService;
 
     QString mPath;
 

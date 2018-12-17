@@ -33,7 +33,7 @@ LogViewerTab::LogViewerTab(qint32 id,
     setupUi(this);
 
     mId = id;
-    mpFilter = filter;
+    mFilter = filter;
     mFilterColumn = filter_column;
     mFrozen = rerun;
     mRerun = rerun;
@@ -42,12 +42,12 @@ LogViewerTab::LogViewerTab(qint32 id,
         qpb_freeze->setEnabled(false);
     }
 
-    mpFreezeAnimation = q_check_ptr(new QPropertyAnimation(this, "_freezeAnimationValue"));
-    mpFreezeAnimation->setDuration(2000);
-    mpFreezeAnimation->setLoopCount(-1);
-    mpFreezeAnimation->setStartValue(0.f);
-    mpFreezeAnimation->setKeyValueAt(0.5, 1.f);
-    mpFreezeAnimation->setEndValue(0.f);
+    mFreezeAnimation = q_check_ptr(new QPropertyAnimation(this, "_freezeAnimationValue"));
+    mFreezeAnimation->setDuration(2000);
+    mFreezeAnimation->setLoopCount(-1);
+    mFreezeAnimation->setStartValue(0.f);
+    mFreezeAnimation->setKeyValueAt(0.5, 1.f);
+    mFreezeAnimation->setEndValue(0.f);
 
     mFreezeAnimationValue = -1.f;
 
@@ -98,7 +98,7 @@ LogViewerTab::LogViewerTab(qint32 id,
 }
 
 LogViewerTab::~LogViewerTab() {
-    delete mpFilter;
+    delete mFilter;
 }
 
 qint32 LogViewerTab::id() const {
@@ -152,12 +152,12 @@ bool LogViewerTab::isValidEntry(QList<QStandardItem*>& row) {
         return false;
     }
 
-    if (!mpFilter) {
+    if (!mFilter) {
         return true;
     }
 
     QStandardItem* item_to_be_filtered = row.at(mFilterColumn);
-    return mpFilter->acceptsValue(item_to_be_filtered->data(mpFilter->mRole));
+    return mFilter->acceptsValue(item_to_be_filtered->data(mFilter->mRole));
 }
 
 void LogViewerTab::addEntry(const HbLogMessage* msg, bool rerun) {
@@ -317,11 +317,11 @@ void LogViewerTab::onClearClicked() {
 void LogViewerTab::onFreezeClicked(bool checked) {
     mFrozen = checked;
 
-    if (mpFreezeAnimation) {
+    if (mFreezeAnimation) {
         if (mFrozen) {
-            mpFreezeAnimation->start();
+            mFreezeAnimation->start();
         } else {
-            mpFreezeAnimation->stop();
+            mFreezeAnimation->stop();
             setFreezeAnimationValue(-1.f);
         }
     }

@@ -8,14 +8,14 @@ using namespace hb::link;
 HbO2ClientConfig::HbO2ClientConfig() {
     mLocalPort = 8080;
     mScopesSeparator = ",";
-    mpBrowserControls = nullptr;
+    mBrowserControls = nullptr;
 }
 
 HbO2ClientConfig::HbO2ClientConfig(const HbO2ClientConfig& config) : HbO2Config(config) {
     if (this != &config) {
         mLocalPort = config.mLocalPort;
         mScopes = config.mScopes;
-        mpBrowserControls = config.mpBrowserControls;
+        mBrowserControls = config.mBrowserControls;
     }
 }
 
@@ -25,7 +25,7 @@ HbO2ClientConfig& HbO2ClientConfig::operator=(const HbO2ClientConfig& config) {
 
         mLocalPort = config.mLocalPort;
         mScopes = config.mScopes;
-        mpBrowserControls = config.mpBrowserControls;
+        mBrowserControls = config.mBrowserControls;
     }
 
     return *this;
@@ -33,7 +33,7 @@ HbO2ClientConfig& HbO2ClientConfig::operator=(const HbO2ClientConfig& config) {
 
 bool HbO2ClientConfig::isValid() const {
     if (HbO2Config::isValid()) {
-        if (!mpBrowserControls) {
+        if (!mBrowserControls) {
             return false;
         }
 
@@ -91,9 +91,9 @@ void HbO2ClientConfig::setScopeSeparator(const QString& separator) {
 }
 
 void HbO2ClientConfig::setBrowserControls(IHbLinkBrowserControls* browser_controls) {
-    mpBrowserControls = browser_controls;
+    mBrowserControls = browser_controls;
 }
 
 IHbLinkBrowserControls* HbO2ClientConfig::browserControls() {
-    return mpBrowserControls;
+    return mBrowserControls;
 }

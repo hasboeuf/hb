@@ -56,7 +56,7 @@ private:
     // From device.
     void onNewConnection(qint32 socket_descriptor);
 
-    TcpServer* mpDevice;
+    TcpServer* mDevice;
     HbTcpServerConfig mConfig;
 };
 } // namespace network

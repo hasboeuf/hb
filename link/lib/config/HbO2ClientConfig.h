@@ -54,7 +54,7 @@ private:
     QStringList mScopes;
     QString mScopesSeparator;
     quint16 mLocalPort;
-    IHbLinkBrowserControls* mpBrowserControls; // Not serialized.
+    IHbLinkBrowserControls* mBrowserControls; // Not serialized.
 };
 } // namespace link
 } // namespace hb

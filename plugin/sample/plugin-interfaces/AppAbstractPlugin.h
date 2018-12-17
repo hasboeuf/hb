@@ -19,7 +19,7 @@ public:
     virtual void unload() = 0;
 
 protected:
-    const AppPlatformService* mpPlatformService;
+    const AppPlatformService* mPlatformService;
 };
 } // namespace pluginexample
 } // namespace hb

@@ -34,7 +34,7 @@ protected:
     virtual void reset();
 
 private:
-    HbTcpServer* mpServer;
+    HbTcpServer* mServer;
 };
 } // namespace network
 } // namespace hb

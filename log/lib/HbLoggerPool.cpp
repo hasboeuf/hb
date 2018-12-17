@@ -21,15 +21,15 @@ using namespace hb::log;
 
 HbLoggerPool::HbLoggerPool(QObject* parent) : QObject(parent) {
     mAtomic = 0;
-    mpClock = nullptr;
+    mClock = nullptr;
     mCapacity = MAX_CAPACITY;
 }
 
 HbLoggerPool::~HbLoggerPool() {
     // Dequeueing events
-    Q_ASSERT(mpClock);
-    mpClock->deleteLater();
-    mpClock = nullptr;
+    Q_ASSERT(mClock);
+    mClock->deleteLater();
+    mClock = nullptr;
 
     QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 
@@ -161,13 +161,13 @@ bool HbLoggerPool::enqueueMessage(QList<HbLogMessage*>& buffer) {
 }
 
 void HbLoggerPool::running() {
-    Q_ASSERT(!mpClock);
-    mpClock = new QTimer();
+    Q_ASSERT(!mClock);
+    mClock = new QTimer();
 
-    connect(mpClock, &QTimer::timeout, this, &HbLoggerPool::process, Qt::UniqueConnection);
+    connect(mClock, &QTimer::timeout, this, &HbLoggerPool::process, Qt::UniqueConnection);
 
-    mpClock->setInterval(1);
-    mpClock->start();
+    mClock->setInterval(1);
+    mClock->start();
 }
 
 void HbLoggerPool::onInputMessageReceived(HbLogMessage* message) {

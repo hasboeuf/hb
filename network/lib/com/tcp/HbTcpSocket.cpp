@@ -9,10 +9,10 @@ using namespace hb::network;
 
 HbTcpSocket::HbTcpSocket(QTcpSocket* device) : HbAbstractSocket(device) {
     Q_ASSERT(device);
-    mpDevice = device;
+    mDevice = device;
 
-    connect(mpDevice, &QTcpSocket::stateChanged, this, &HbTcpSocket::onStateChanged, Qt::UniqueConnection);
-    connect(mpDevice, (void (QTcpSocket::*)(QAbstractSocket::SocketError)) & QTcpSocket::error, [this]() {
+    connect(mDevice, &QTcpSocket::stateChanged, this, &HbTcpSocket::onStateChanged, Qt::UniqueConnection);
+    connect(mDevice, (void (QTcpSocket::*)(QAbstractSocket::SocketError)) & QTcpSocket::error, [this]() {
         emit socketError();
     });
 }
@@ -28,7 +28,7 @@ HbNetworkProtocol::NetworkType HbTcpSocket::type() const {
 bool HbTcpSocket::connectToHost(const HbTcpConfig& config) {
     if (state() == QAbstractSocket::UnconnectedState) {
         mConfig = config;
-        mpDevice->connectToHost(mConfig.address(), mConfig.port(), QIODevice::ReadWrite);
+        mDevice->connectToHost(mConfig.address(), mConfig.port(), QIODevice::ReadWrite);
 
         return true;
     }
@@ -38,7 +38,7 @@ bool HbTcpSocket::connectToHost(const HbTcpConfig& config) {
 
 bool HbTcpSocket::leave() {
     if (state() != QAbstractSocket::UnconnectedState) {
-        mpDevice->disconnectFromHost();
+        mDevice->disconnectFromHost();
         return true;
     }
 
@@ -55,7 +55,7 @@ void HbTcpSocket::setSocketOption(QAbstractSocket::SocketOption option, bool ena
     case QAbstractSocket::KeepAliveOption:
     case QAbstractSocket::MulticastLoopbackOption:
 
-        mpDevice->setSocketOption(option, enable);
+        mDevice->setSocketOption(option, enable);
         break;
 
     default:
@@ -70,7 +70,7 @@ bool HbTcpSocket::socketOption(QAbstractSocket::SocketOption option) const {
     case QAbstractSocket::LowDelayOption:
     case QAbstractSocket::KeepAliveOption:
     case QAbstractSocket::MulticastLoopbackOption:
-        return mpDevice->socketOption(option).toBool();
+        return mDevice->socketOption(option).toBool();
 
     default:
         return false;
@@ -78,15 +78,15 @@ bool HbTcpSocket::socketOption(QAbstractSocket::SocketOption option) const {
 }
 
 QAbstractSocket::SocketError HbTcpSocket::error() const {
-    return mpDevice->error();
+    return mDevice->error();
 }
 
 QAbstractSocket::SocketState HbTcpSocket::state() const {
-    return mpDevice->state();
+    return mDevice->state();
 }
 
 void HbTcpSocket::onReadyRead() {
-    QDataStream stream(mpDevice);
+    QDataStream stream(mDevice);
 
     if (readStream(stream) < 0) {
         qWarning() << "Read stream failed";
@@ -94,7 +94,7 @@ void HbTcpSocket::onReadyRead() {
 }
 
 void HbTcpSocket::onStateChanged(QAbstractSocket::SocketState state) {
-    Q_ASSERT(mpDevice == sender());
+    Q_ASSERT(mDevice == sender());
 
     if (state == QAbstractSocket::UnconnectedState) {
         qDebug() << "Socket enters UnconnectedState";

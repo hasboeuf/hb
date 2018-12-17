@@ -41,7 +41,7 @@ private:
     HbAbstractSocket* pendingConnection() override;
     HbAbstractSocket* currentConnection() const override;
 
-    HbTcpSocket* mpSocket;
+    HbTcpSocket* mSocket;
     HbTcpClientConfig mConfig;
 };
 } // namespace network

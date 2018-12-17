@@ -10,14 +10,14 @@ HbNetworkContract::HbNetworkContract() {
     mNetworkReceiver = 0;
     mNetworkType = HbNetworkProtocol::NETWORK_UNDEFINED;
     mRouting = HbNetworkProtocol::ROUTING_UNDEFINED;
-    mpReply = nullptr;
+    mReply = nullptr;
 }
 
 HbNetworkContract::HbNetworkContract(serviceuid service, codeuid code) : mHeader(service, code) {
     mSender = 0;
     mNetworkType = HbNetworkProtocol::NETWORK_UNDEFINED;
     mRouting = HbNetworkProtocol::ROUTING_UNDEFINED;
-    mpReply = nullptr;
+    mReply = nullptr;
 }
 
 HbNetworkContract::HbNetworkContract(const HbNetworkContract& source) {
@@ -29,7 +29,7 @@ HbNetworkContract::HbNetworkContract(const HbNetworkContract& source) {
         mRouting = source.mRouting;
         mReceivers = source.mReceivers;
         mPendingReceivers = source.mPendingReceivers;
-        mpReply = (source.mpReply ? source.mpReply->create() : nullptr);
+        mReply = (source.mReply ? source.mReply->create() : nullptr);
     }
 }
 
@@ -42,23 +42,23 @@ HbNetworkContract& HbNetworkContract::operator=(const HbNetworkContract& source)
         mRouting = source.mRouting;
         mReceivers = source.mReceivers;
         mPendingReceivers = source.mPendingReceivers;
-        mpReply = (source.mpReply ? source.mpReply->create() : nullptr);
+        mReply = (source.mReply ? source.mReply->create() : nullptr);
     }
     return (*this);
 }
 
 HbNetworkContract::~HbNetworkContract() {
-    if (mpReply) {
+    if (mReply) {
         // Delete reply if user did not take it.
-        delete mpReply;
+        delete mReply;
     }
 }
 
 void HbNetworkContract::updateReply() {
-    if (mpReply) {
-        mpReply->setNetworkType(mNetworkType);
-        mpReply->setRouting(HbNetworkProtocol::ROUTING_UNICAST); // Replies only support unicast.
-        mpReply->addSocketReceiver(mSender);
+    if (mReply) {
+        mReply->setNetworkType(mNetworkType);
+        mReply->setRouting(HbNetworkProtocol::ROUTING_UNICAST); // Replies only support unicast.
+        mReply->addSocketReceiver(mSender);
     }
 }
 
@@ -156,15 +156,15 @@ bool HbNetworkContract::setRouting(HbNetworkProtocol::RoutingScheme routing) {
 }
 
 HbNetworkContract* HbNetworkContract::takeReply() const {
-    if (!mpReply) {
+    if (!mReply) {
         return nullptr;
     }
 
-    HbNetworkContract* reply = mpReply;
+    HbNetworkContract* reply = mReply;
 
     HbNetworkContract* this_non_const = const_cast<HbNetworkContract*>(
-        this);                         // Hack to avoid breaking const-correctness in the reception flow of HbNetwork.
-    this_non_const->mpReply = nullptr; // User takes reply, so it must be deleted by himself.
+        this);                        // Hack to avoid breaking const-correctness in the reception flow of HbNetwork.
+    this_non_const->mReply = nullptr; // User takes reply, so it must be deleted by himself.
 
     return reply;
 }

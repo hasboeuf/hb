@@ -15,7 +15,7 @@ using namespace hb::network;
 
 HbTcpSocketHandler::HbTcpSocketHandler(HbTcpServer* server) : HbSocketHandler() {
     Q_ASSERT(server);
-    mpServer = server;
+    mServer = server;
 }
 
 HbTcpSocketHandler::~HbTcpSocketHandler() {
@@ -23,7 +23,7 @@ HbTcpSocketHandler::~HbTcpSocketHandler() {
 }
 
 HbTcpServer* HbTcpSocketHandler::server() const {
-    return mpServer;
+    return mServer;
 }
 
 void HbTcpSocketHandler::init() {
@@ -50,7 +50,7 @@ void HbTcpSocketHandler::onNewPendingConnection(qint32 socket_descriptor) {
 
     HbTcpSocket* socket = new HbTcpSocket(device);
 
-    HbTcpConfig::SocketOptions options = mpServer->configuration().options();
+    HbTcpConfig::SocketOptions options = mServer->configuration().options();
     socket->setSocketOption(QAbstractSocket::LowDelayOption, options.testFlag(HbTcpConfig::SocketOption::LowDelay));
     socket->setSocketOption(QAbstractSocket::KeepAliveOption, options.testFlag(HbTcpConfig::SocketOption::KeepAlive));
     socket->setSocketOption(QAbstractSocket::MulticastLoopbackOption,

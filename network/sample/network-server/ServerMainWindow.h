@@ -35,9 +35,9 @@ private:
     void onStartClicked();
     void onStopClicked();
 
-    hb::network::HbServer* mpHbServer;
-    ServerSumChannel* mpSumChannel;
-    ServerChatChannel* mpChatChannel;
+    hb::network::HbServer* mHbServer;
+    ServerSumChannel* mSumChannel;
+    ServerChatChannel* mChatChannel;
 };
 } // namespace networkexample
 } // namespace hb

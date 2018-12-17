@@ -18,11 +18,11 @@ LogViewer::LogViewer(QWidget* parent) : QWidget(parent), Ui::LogViewer() {
     setupUi(this);
 
     mTabIds = 0;
-    mpLogNotifier = q_check_ptr(new HbLogGuiNotifier());
+    mLogNotifier = q_check_ptr(new HbLogGuiNotifier());
 
     mConfig.loadSettings();
 
-    connect(mpLogNotifier, &HbLogGuiNotifier::newLogMessage, this, &LogViewer::onNewLogMessage, Qt::UniqueConnection);
+    connect(mLogNotifier, &HbLogGuiNotifier::newLogMessage, this, &LogViewer::onNewLogMessage, Qt::UniqueConnection);
     connect(&mProcessTimer, &QTimer::timeout, this, &LogViewer::processLogMessage);
     connect(qpb_open, &QPushButton::clicked, this, &LogViewer::onOpenFileClicked);
     connect(qpb_configure, &QPushButton::clicked, this, &LogViewer::onConfigureClicked);
@@ -59,7 +59,7 @@ void LogViewer::loadConfigSettings() {
 }
 
 HbLogGuiNotifier* LogViewer::logNotifier() const {
-    return mpLogNotifier;
+    return mLogNotifier;
 }
 
 void LogViewer::onNewLogMessage(const HbLogMessagePtr& message) {

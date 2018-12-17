@@ -9,7 +9,7 @@ RequestSumContract::RequestSumContract() : HbNetworkContract(Protocol::CHANNEL_S
     setRouting(HbNetworkProtocol::ROUTING_UNICAST);
     mIntA = 0;
     mIntB = 0;
-    mpReply = new ResponseSumContract();
+    mReply = new ResponseSumContract();
 }
 
 RequestSumContract::RequestSumContract(const RequestSumContract& source) : HbNetworkContract(source) {
