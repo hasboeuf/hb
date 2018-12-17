@@ -17,13 +17,13 @@
 #include <QtGui/QStandardItemModel>
 // Local
 #include <HbPlugin.h>
-#include <HbPluginInfos.h>
+#include <HbPluginInfo.h>
 #include <ui_HbPluginListWidget.h>
 
 namespace hb {
 namespace plugin {
 /*!
- * HbPluginListWidget is a widget to display HbPluginInfos in a convenient way.
+ * HbPluginListWidget is a widget to display HbPluginInfo in a convenient way.
  */
 class HB_PLUGIN_DECL HbPluginListWidget : public QWidget, private Ui::HbPluginListWidget {
     Q_OBJECT
@@ -39,7 +39,7 @@ public:
      * Fired when a plugin has changed its state.
      * From HbPluginPlatform.
      */
-    void onPluginStateChanged(const HbPluginInfos& plugin_infos);
+    void onPluginStateChanged(const HbPluginInfo& plugin_info);
 
     /*!
      * Fired when a QStandardItemModel changed.

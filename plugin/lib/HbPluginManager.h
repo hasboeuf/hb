@@ -16,7 +16,7 @@
 #include <QtCore/QObject>
 // Local
 #include <HbPlugin.h>
-#include <HbPluginInfos.h>
+#include <HbPluginInfo.h>
 
 class QPluginLoader;
 
@@ -69,10 +69,10 @@ public:
     IHbPlugin* plugin(const QString& plugin_name) const;
 
     /*!
-     * Return previously scanned plugins infos.
-     * \return Plugin infos list.
+     * Return previously scanned plugins info.
+     * \return Plugin info list.
      */
-    QList<HbPluginInfos*> pluginInfoList();
+    QList<HbPluginInfo*> pluginInfoList();
 
     void onPluginStateChanged();
 
@@ -81,18 +81,18 @@ signals:
      * Triggered when the state has changed.
      * To HbPluginManager.
      */
-    void pluginStateChanged(const HbPluginInfos& plugin_infos);
+    void pluginStateChanged(const HbPluginInfo& plugin_info);
 
 private:
     void scanFolder(const QString& folder_path);
-    HbPluginInfos* scanPlugin(const QString& plugin_path);
+    HbPluginInfo* scanPlugin(const QString& plugin_path);
     bool loadPlugin(const QString& plugin_name);
 
     HbPluginPlatform* mpPlatformService;
 
     QString mPath;
 
-    QHash<QString, HbPluginInfos*> mPluginsInfos;
+    QHash<QString, HbPluginInfo*> mPluginsInfo;
     QHash<QString, QPluginLoader*> mPluginsLoaders;
     QHash<QString, IHbPlugin*> mPlugins;
 };

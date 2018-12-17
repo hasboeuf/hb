@@ -16,7 +16,7 @@
 #include <QtCore/QObject>
 // Local
 #include <HbPlugin.h>
-#include <HbPluginInfos.h>
+#include <HbPluginInfo.h>
 #include <HbPluginManager.h>
 
 namespace hb {
@@ -46,10 +46,10 @@ public:
     void unloadPlugins();
 
     /*!
-     * Return previously scanned plugins infos.
-     * \return Plugin infos list.
+     * Return previously scanned plugins info.
+     * \return Plugin info list.
      */
-    QList<HbPluginInfos*> pluginInfoList();
+    QList<HbPluginInfo*> pluginInfoList();
 
     /*!
      * Get a service.
@@ -82,7 +82,7 @@ public:
      * Fired when a plugin has changed its state.
      * From HbPluginManager.
      */
-    void onPluginStateChanged(const HbPluginInfos& plugin_infos);
+    void onPluginStateChanged(const HbPluginInfo& plugin_info);
 
     /*!
      * Fired when user requests to load a plugin.
@@ -103,7 +103,7 @@ signals:
      * Triggered when a plugin has changed its state.
      * To GUI.
      */
-    void pluginStateChanged(const HbPluginInfos& plugin_infos);
+    void pluginStateChanged(const HbPluginInfo& plugin_info);
 
 protected:
     bool mPluginLoaded;

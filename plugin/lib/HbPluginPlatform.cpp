@@ -3,7 +3,7 @@
 // Hb
 #include <HbLogService.h>
 // Local
-#include <HbPluginInfos.h>
+#include <HbPluginInfo.h>
 #include <HbPluginPlatform.h>
 #include <HbPluginService.h>
 #include <IHbPlugin.h>
@@ -26,7 +26,7 @@ void HbPluginPlatform::unloadPlugins() {
     mPluginManager.unload();
 }
 
-QList<HbPluginInfos*> HbPluginPlatform::pluginInfoList() {
+QList<HbPluginInfo*> HbPluginPlatform::pluginInfoList() {
     return mPluginManager.pluginInfoList();
 }
 
@@ -64,8 +64,8 @@ QString HbPluginPlatform::isServiceRegistered(const QString& service_name) const
     return QString();
 }
 
-void HbPluginPlatform::onPluginStateChanged(const HbPluginInfos& plugin_infos) {
-    emit pluginStateChanged(plugin_infos);
+void HbPluginPlatform::onPluginStateChanged(const HbPluginInfo& plugin_info) {
+    emit pluginStateChanged(plugin_info);
 }
 
 void HbPluginPlatform::onLoadPluginRequest(const QString& plugin_name) {

@@ -6,10 +6,10 @@
 ** OR CONDITIONS OF ANY KIND, either express or implied.
 ****************************************************************************/
 
-#ifndef HBPLUGININFOS_H
-#define HBPLUGININFOS_H
+#ifndef HBPLUGININFO_H
+#define HBPLUGININFO_H
 
-/*! \file HbPluginInfos.h */
+/*! \file HbPluginInfo.h */
 
 // Qt
 #include <QtCore/QHash>
@@ -23,11 +23,11 @@
 namespace hb {
 namespace plugin {
 /*!
- * HbPluginInfos represents plugin informations.
+ * HbPluginInfo represents plugin informations.
  * It stores all informations to correctly identify and use a plugin:
  * path, name, version, author, dependencies and children.
  */
-class HB_PLUGIN_DECL HbPluginInfos : public QObject {
+class HB_PLUGIN_DECL HbPluginInfo : public QObject {
     Q_OBJECT
 
 public:
@@ -41,8 +41,8 @@ public:
     Q_ENUM(PluginState)
     HB_ENUM(PluginState)
 
-    HbPluginInfos(QObject* parent = nullptr);
-    ~HbPluginInfos();
+    HbPluginInfo(QObject* parent = nullptr);
+    ~HbPluginInfo();
 
     void setPath(const QString& path);
     void setAuthor(const QString& author);
@@ -64,7 +64,7 @@ public:
     QString requiredServicesStr() const;
     const QHash<QString, QString>& optionalServices() const;
     QString optionalServicesStr() const;
-    HbPluginInfos::PluginState state() const;
+    HbPluginInfo::PluginState state() const;
     QString stateStr() const;
     const QSet<QString>& children() const;
 
@@ -97,4 +97,4 @@ private:
 } // namespace plugin
 } // namespace hb
 
-#endif // HBPLUGININFOS_H
+#endif // HBPLUGININFO_H

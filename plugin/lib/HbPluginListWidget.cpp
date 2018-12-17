@@ -43,21 +43,21 @@ QStandardItem* HbPluginListWidget::getLoadItem(const QString& plugin_name) {
     return mModel.item(row, COLUMN_LOAD);
 }
 
-void HbPluginListWidget::onPluginStateChanged(const HbPluginInfos& plugin_infos) {
-    qDebug() << "onPluginStateChanged state" << plugin_infos.stateStr();
+void HbPluginListWidget::onPluginStateChanged(const HbPluginInfo& plugin_info) {
+    qDebug() << "onPluginStateChanged state" << plugin_info.stateStr();
 
     // Unregistered plugin.
-    if (plugin_infos.state() == HbPluginInfos::PLUGIN_NOT_REGISTERED) {
-        QStandardItem* item_load = getLoadItem(plugin_infos.name());
+    if (plugin_info.state() == HbPluginInfo::PLUGIN_NOT_REGISTERED) {
+        QStandardItem* item_load = getLoadItem(plugin_info.name());
         if (item_load) {
             mModel.removeRow(item_load->row());
         }
-        mPlugins.remove(plugin_infos.name());
+        mPlugins.remove(plugin_info.name());
 
         return;
     }
 
-    if (!mPlugins.contains(plugin_infos.name())) // Plugin not exists.
+    if (!mPlugins.contains(plugin_info.name())) // Plugin not exists.
     {
         QStandardItem* item_name = new QStandardItem();
         QStandardItem* item_load = new QStandardItem();
@@ -68,17 +68,17 @@ void HbPluginListWidget::onPluginStateChanged(const HbPluginInfos& plugin_infos)
 
         item_load->setFlags(item_load->flags() | Qt::ItemIsUserCheckable);
 
-        item_name->setData(plugin_infos.name(), Qt::DisplayRole);
+        item_name->setData(plugin_info.name(), Qt::DisplayRole);
         item_load->setData(Qt::Unchecked, Qt::CheckStateRole);     // Initial state.
         item_load->setData(Qt::Unchecked, ROLE_PLUGIN_CHECKSTATE); // Store previous checkstate to do a proper action.
         item_load->setData(
-            plugin_infos.name(),
+            plugin_info.name(),
             ROLE_PLUGIN_NAME); // To retrieve efficiently the name of the plugin when the checkbox is un/checked.
-        item_version->setData(plugin_infos.version(), Qt::DisplayRole);
-        item_author->setData(plugin_infos.author(), Qt::DisplayRole);
-        item_required->setData(plugin_infos.requiredPluginsStr() + " " + plugin_infos.requiredServicesStr(),
+        item_version->setData(plugin_info.version(), Qt::DisplayRole);
+        item_author->setData(plugin_info.author(), Qt::DisplayRole);
+        item_required->setData(plugin_info.requiredPluginsStr() + " " + plugin_info.requiredServicesStr(),
                                Qt::DisplayRole);
-        item_optional->setData(plugin_infos.optionalPluginsStr() + " " + plugin_infos.optionalServicesStr(),
+        item_optional->setData(plugin_info.optionalPluginsStr() + " " + plugin_info.optionalServicesStr(),
                                Qt::DisplayRole);
 
         QList<QStandardItem*> plugin_row;
@@ -89,13 +89,13 @@ void HbPluginListWidget::onPluginStateChanged(const HbPluginInfos& plugin_infos)
         plugin_row.append(item_required);
         plugin_row.append(item_optional);
 
-        mPlugins.insert(plugin_infos.name(), item_name);
+        mPlugins.insert(plugin_info.name(), item_name);
 
         mModel.appendRow(plugin_row);
     }
 
     // Update checkbox.
-    QStandardItem* item_load = getLoadItem(plugin_infos.name());
+    QStandardItem* item_load = getLoadItem(plugin_info.name());
     if (item_load) {
         disconnect(&mModel,
                    &QStandardItemModel::itemChanged,
@@ -105,9 +105,9 @@ void HbPluginListWidget::onPluginStateChanged(const HbPluginInfos& plugin_infos)
         //! \todo use PLUGIN_CHANGING?
 
         // Change state
-        if (plugin_infos.state() == HbPluginInfos::PLUGIN_LOADED) {
+        if (plugin_info.state() == HbPluginInfo::PLUGIN_LOADED) {
             item_load->setData(Qt::Checked, Qt::CheckStateRole);
-        } else if (plugin_infos.state() == HbPluginInfos::PLUGIN_LOADED_PARTIALLY) {
+        } else if (plugin_info.state() == HbPluginInfo::PLUGIN_LOADED_PARTIALLY) {
             item_load->setData(Qt::PartiallyChecked, Qt::CheckStateRole);
         } else {
             item_load->setData(Qt::Unchecked, Qt::CheckStateRole);
