@@ -16,3 +16,5 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(LogSample ${LogSample_SRC})
 
 target_link_libraries(LogSample Qt5::Core HbLog HbTools)
+
+install(TARGETS LogSample DESTINATION bin)

@@ -22,3 +22,5 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(NetworkBasicServer ${NetworkBasicServer_SRC} ${NetworkBasicServer_UI})
 
 target_link_libraries(NetworkBasicServer Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network NetworkBasicCommon HbNetwork HbLink HbLog HbTools)
+
+install(TARGETS NetworkBasicServer DESTINATION bin)

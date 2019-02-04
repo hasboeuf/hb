@@ -22,3 +22,5 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(NetworkUser ${NetworkUser_SRC} ${NetworkUser_UI})
 
 target_link_libraries(NetworkUser Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network NetworkCommon HbNetwork HbLink HbLog HbTools)
+
+install(TARGETS NetworkUser DESTINATION bin)

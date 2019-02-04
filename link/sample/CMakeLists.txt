@@ -22,3 +22,5 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(LinkSample ${LinkSample_SRC} ${LinkSample_UI})
 
 target_link_libraries(LinkSample Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Xml Qt5::Network HbLink HbLog HbTools)
+
+install(TARGETS LinkSample DESTINATION bin)

@@ -22,3 +22,5 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_executable(PluginDemo ${PluginDemo_SRC} ${PluginDemo_UI})
 
 target_link_libraries(PluginDemo Qt5::Core Qt5::Gui Qt5::Widgets PluginInterfaces HbPlugin HbLog HbTools)
+
+install(TARGETS PluginDemo DESTINATION bin)
