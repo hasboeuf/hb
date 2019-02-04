@@ -5,7 +5,6 @@
 #include <QDebug>
 // Hb
 #include <HbLogService.h>
-#include <HbLoggerOutputs.h>
 #include <HbPluginService.h>
 #include <com/tcp/HbTcpClient.h>
 #include <config.h>
@@ -18,8 +17,8 @@ int main(int argc, char* argv[]) {
     qDebug() << "Sample uses hb version" << HB_VERSION_STRING;
     qDebug() << "It is" << hb::tools::HbSteadyDateTime::now().toString("yyyy/MM/dd HH:mm:ss:zzz:uuuuuu");
 
-    hb::log::HbLogService::outputs()->addConsoleOutput();
-    HbDebug("This is a trace using HbLog");
+    hb::log::HbLogService::addConsoleOutput();
+    qDebug() << "This is a trace using HbLog";
     hb::link::HbO2ClientFacebook o2Service;
     hb::plugin::HbPluginService pluginService("sample", "1.0.0");
     hb::network::HbTcpClient tcpClient;
