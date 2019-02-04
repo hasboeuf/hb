@@ -109,19 +109,23 @@ HbNetwork is a high-level network library which is simple of use and efficient.
 
 ## How to compile
 
-### Requierements
+### Requirements
 
-- Qt 5.10
+- Qt 5.12
 - cmake >= 3.5
 
 ### Steps
 
 ```
-cd hb
+# Assuming hb sources are in ./hb
+# Assuming Qt installation is in /opt/Qt5.12
+mkdir hb-build
+cd hb-build
+cmake -DCMAKE_PREFIX_PATH=/opt/Qt5.12 -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON  ../hb
 cmake --build . --target all
 cmake --build . --target install
 ```
-Distribuables will stands in `delivery`
+Distribuables will stands in `hb/delivery`
 
 ## Documentation
 
