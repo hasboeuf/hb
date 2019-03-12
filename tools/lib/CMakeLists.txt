@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project(HbTools)
 
-find_package(Qt5 REQUIRED Core Widgets)
+find_package(Qt5 REQUIRED Core Widgets Network)
 
 set(CMAKE_AUTOMOC ON)
 
@@ -26,7 +26,7 @@ target_include_directories(
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:include/HbTools>
 )
-target_link_libraries(HbTools Qt5::Core Qt5::Widgets)
+target_link_libraries(HbTools Qt5::Core Qt5::Widgets Qt5::Network)
 
 install(
     TARGETS HbTools
