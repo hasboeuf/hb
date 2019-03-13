@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
 add_subdirectory(lib)
+add_subdirectory(sample/single-application)
 add_subdirectory(tests/test_HbSettings)
 add_subdirectory(tests/test_HbSteadyDateTime)
 add_subdirectory(tests/test_HbEnum)
@@ -9,3 +10,4 @@ add_subdirectory(tests/test_HbWebServiceController)
 add_subdirectory(tests/test_HbWebServiceJob)
 add_subdirectory(tests/test_HbWebServiceResult)
 add_subdirectory(tests/test_HbScopedFunction)
+add_subdirectory(tests/test_HbSingleApplication)
