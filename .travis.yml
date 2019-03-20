@@ -1,0 +1,11 @@
+dist: xenial
+language: minimal
+
+services:
+- docker
+
+install:
+- ci/docker/build
+
+script:
+- docker run --rm -v $PWD:/root/workspace hb:1 /root/workspace/ci/docker/build-hb

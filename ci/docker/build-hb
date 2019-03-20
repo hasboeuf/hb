@@ -1,0 +1,10 @@
+#!/bin/sh
+set -ev
+cd $(dirname $0)/../..
+
+rm -rf hb-build
+mkdir hb-build
+cd hb-build
+cmake -DCMAKE_PREFIX_PATH=/opt/Qt/5.12.2/gcc_64 ..
+cmake --build . --target all
+cmake --build . --target install
