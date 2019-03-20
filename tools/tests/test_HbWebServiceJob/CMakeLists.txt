@@ -10,3 +10,5 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 add_executable(test_HbWebServiceJob test_HbWebServiceJob.cpp)
 
 target_link_libraries(test_HbWebServiceJob Qt5::Core Qt5::Network Qt5::Test HbTools)
+
+add_test(NAME test_HbWebServiceJob COMMAND test_HbWebServiceJob)

@@ -10,6 +10,9 @@ cmake -DCMAKE_PREFIX_PATH=/opt/Qt/5.12.2/gcc_64 ..
 cmake --build . --target all
 cmake --build . --target install
 
+# Run unittests
+ctest --output-on-failure
+
 # Build sample
 cd ..
 rm -rf sample-build

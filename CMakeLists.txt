@@ -37,6 +37,7 @@ foreach(p LIB BIN INCLUDE CMAKE)
     endif()
 endforeach()
 
+enable_testing()
 add_subdirectory(tools)
 add_subdirectory(log)
 add_subdirectory(plugin)

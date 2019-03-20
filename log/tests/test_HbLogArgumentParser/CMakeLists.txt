@@ -10,3 +10,5 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 add_executable(test_HbLogArgumentParser test_HbLogArgumentParser.cpp)
 
 target_link_libraries(test_HbLogArgumentParser Qt5::Core Qt5::Test HbLog HbTools)
+
+add_test(NAME test_HbLogArgumentParser COMMAND test_HbLogArgumentParser)
