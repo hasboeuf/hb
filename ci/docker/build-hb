@@ -2,9 +2,27 @@
 set -ev
 cd $(dirname $0)/../..
 
+# Build hb
 rm -rf hb-build
 mkdir hb-build
 cd hb-build
 cmake -DCMAKE_PREFIX_PATH=/opt/Qt/5.12.2/gcc_64 ..
 cmake --build . --target all
 cmake --build . --target install
+
+# Build sample
+cd ..
+rm -rf sample-build
+mkdir sample-build
+cd sample-build
+cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_PREFIX_PATH="/opt/Qt/5.12.2/gcc_64;/root/workspace/delivery" \
+    -DCMAKE_INSTALL_PREFIX=/root/workspace/sample-build/dist \
+    ../sample
+cmake --build . --target all
+cmake --build . --target install
+
+# Run sample
+export LD_LIBRARY_PATH=/opt/Qt/5.12.2/gcc_64/lib
+./dist/bin/HbSample

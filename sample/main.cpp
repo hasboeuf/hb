@@ -1,8 +1,9 @@
 // System
 #include <stdio.h>
 // Qt
-#include <QCoreApplication>
-#include <QDebug>
+#include <QtCore/QCoreApplication>
+#include <QtCore/QDebug>
+#include <QtCore/QTimer>
 // Hb
 #include <HbLogService.h>
 #include <HbPluginService.h>
@@ -12,7 +13,7 @@
 #include <facebook/HbO2ClientFacebook.h>
 
 int main(int argc, char* argv[]) {
-    QCoreApplication a(argc, argv);
+    QCoreApplication app(argc, argv);
 
     qDebug() << "Sample uses hb version" << HB_VERSION_STRING;
     qDebug() << "It is" << hb::tools::HbSteadyDateTime::now().toString("yyyy/MM/dd HH:mm:ss:zzz:uuuuuu");
@@ -23,5 +24,7 @@ int main(int argc, char* argv[]) {
     hb::plugin::HbPluginService pluginService("sample", "1.0.0");
     hb::network::HbTcpClient tcpClient;
 
-    return a.exec();
+    QTimer::singleShot(0, &app, &QCoreApplication::quit);
+
+    return app.exec();
 }
