@@ -1,13 +1,22 @@
 cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/delivery)
-
 project(Hb)
+
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/delivery)
+endif()
+
+message(STATUS "Deployment path: '${CMAKE_INSTALL_PREFIX}'")
 
 set(HB_MAJOR_VERSION 2)
 set(HB_MINOR_VERSION 0)
 set(HB_PATCH_VERSION 0)
 set(HB_VERSION ${HB_MAJOR_VERSION}.${HB_MINOR_VERSION}.${HB_PATCH_VERSION})
+
+if(NOT CMAKE_BUILD_TYPE)
+    message(STATUS "CMAKE_BUILD_TYPE not set, default to Release")
+    set(CMAKE_BUILD_TYPE "Release")
+endif()
 
 add_compile_options(-DQT_DISABLE_DEPRECATED_BEFORE=0x051000)
 add_compile_options(-Werror=switch)

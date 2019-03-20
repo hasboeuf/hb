@@ -116,16 +116,24 @@ HbNetwork is a high-level network library which is simple of use and efficient.
 
 ### Steps
 
+Let `<hb>` be where sources are.
+
+Let `<qt>` be where Qt is (e.g.: `/opt/Qt/5.12.2`)
+
+By default Hb is compiled in `Release`,
+add `-DCMAKE_BUILD_TYPE=Debug` to the first `cmake` command if you want a debug build.
+
+By default Hb is installed in `<hb>/delivery`,
+add `-DCMAKE_INSTALL_PREFIX=<path>` to the first `cmake` command to customize it.
+
 ```
-# Assuming hb sources are in <hb>
-# Assuming Qt installation is in /opt/Qt5.12
 mkdir hb-build
 cd hb-build
-cmake -DCMAKE_PREFIX_PATH=/opt/Qt5.12 <hb>
+cmake -DCMAKE_PREFIX_PATH=<qt> <hb>
 cmake --build . --target all
 cmake --build . --target install
 ```
-Distribuables will stands in `hb/delivery`
+
 Note: in case of error, add `-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON` to the first `cmake` command to generate verbose Makefiles.
 
 ## How to integrate
