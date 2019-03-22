@@ -128,6 +128,9 @@ add `-DCMAKE_BUILD_TYPE=Debug` to the first `cmake` command if you want a debug 
 By default Hb is installed in `<hb>/delivery`,
 add `-DCMAKE_INSTALL_PREFIX=<path>` to the first `cmake` command to customize it.
 
+If you don't want to compile samples and unittests,
+add `-DHB_MINIMAL_BUILD=ON` to the first `cmake` command.
+
 ```
 mkdir hb-build
 cd hb-build
