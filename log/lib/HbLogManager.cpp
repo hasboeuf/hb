@@ -1,7 +1,7 @@
 // Qt
 #include <QtCore/QCoreApplication>
 #include <QtCore/QThread>
-#include <QtCore/QTime>
+#include <QtCore/QTimer>
 // Hb
 #include <HbLogManager.h>
 #include <HbLogMessage.h>
@@ -13,33 +13,15 @@ using namespace hb::tools;
 
 HbLogManager::HbLogManager(HbLoggerPool* pool, QObject* parent) : QObject(parent), HbLogger() {
     mPool = pool;
-    mRetry = 0;
 }
 
 HbLogManager::~HbLogManager() {
-    if (mRetry)
-        killTimer(mRetry);
     dequeuePendingMessages();
 }
 
-void HbLogManager::timerEvent(QTimerEvent* event) {
-    Q_UNUSED(event)
-
-    tryEnqueueMessage();
-}
-
 void HbLogManager::tryEnqueueMessage() {
-    if (mPool->enqueueMessage(mMessages)) {
-        if (mRetry) {
-            // printf( "HbLogManager: push buffer ok.\n" );
-            killTimer(mRetry);
-            mRetry = 0;
-        }
-    } else {
-        if (!mRetry) {
-            // printf( "HbLogManager: locked pool, %d message(s) in buffer, retry in 200 ms.\n", mMessages.size() );
-            mRetry = startTimer(200);
-        }
+    if (!mPool->enqueueMessage(mMessages)) {
+        QTimer::singleShot(0, this, &HbLogManager::tryEnqueueMessage);
     }
 }
 

@@ -31,13 +31,13 @@ public:
         mLogPool->moveToThread(mLogPoolThread);
 
         QObject::connect(mLogPoolThread, &QThread::started, mLogPool, &HbLoggerPool::running);
+        QObject::connect(mLogPoolThread, &QThread::finished, mLogPool, &HbLoggerPool::deleteLater);
         mLogPoolThread->start();
     }
 
     ~HbLogServiceController() {
         mLogPoolThread->quit();
         mLogPoolThread->wait();
-        delete mLogPool;
     }
 
     void install(const QString& logPattern) {

@@ -18,13 +18,13 @@ int main(int argc, char* argv[]) {
     hb::log::HbLogService::addConsoleOutput();
     hb::log::HbLogService::processArgs(a.arguments());
 
-    QTimer::singleShot(0, &a, [&a]() {
-        qDebug() << "This is a debug trace";
-        qInfo() << "This is a info trace";
-        qWarning() << "This is a warning trace";
-        qCritical() << "This is a critical trace";
-        // qFatal("This is a fatal trace");
+    qDebug() << "This is a debug trace";
+    qInfo() << "This is a info trace";
+    qWarning() << "This is a warning trace";
+    qCritical() << "This is a critical trace";
+    // qFatal("This is a fatal trace");
 
+    QTimer::singleShot(1000, &a, [&a]() {
         QTextStream stream(stdin);
         QString line;
         while (stream.readLineInto(&line)) {

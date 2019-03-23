@@ -1,6 +1,7 @@
 // Qt
 #include <QtCore/QCoreApplication>
 #include <QtCore/QMetaObject>
+#include <QtCore/QMutexLocker>
 #include <QtCore/QThread>
 #include <QtCore/QTimer>
 // Hb
@@ -21,16 +22,11 @@ using namespace hb::log;
 
 HbLoggerPool::HbLoggerPool(QObject* parent) : QObject(parent) {
     mAtomic = 0;
-    mClock = nullptr;
     mCapacity = MAX_CAPACITY;
 }
 
 HbLoggerPool::~HbLoggerPool() {
     // Dequeueing events
-    Q_ASSERT(mClock);
-    mClock->deleteLater();
-    mClock = nullptr;
-
     QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
 
     qDeleteAll(mInputs); // Disconnect inputs.
@@ -45,102 +41,93 @@ HbLoggerPool::~HbLoggerPool() {
 }
 
 void HbLoggerPool::addUdpSocketInput(quint16 port) {
-    QTimer::singleShot(0, this, [this, port]() {
-        HbLogAbstractInput* input = new HbLogUdpSocketInput(port, this);
-        input->moveToThread(thread());
-        input->init();
+    QMutexLocker locker(&mMutex);
+    HbLogAbstractInput* input = new HbLogUdpSocketInput(port, this);
+    input->moveToThread(thread());
+    input->init();
 
-        connect(input, &HbLogUdpSocketInput::inputMessageReceived, this, &HbLoggerPool::onInputMessageReceived);
+    connect(input, &HbLogUdpSocketInput::inputMessageReceived, this, &HbLoggerPool::onInputMessageReceived);
 
-        mInputs.insert(input->uid(), input);
-        std::cout << "HbLog: added upd input on port " << port << std::endl;
-    });
+    mInputs.insert(input->uid(), input);
+    std::cout << "HbLog: added upd input on port " << port << std::endl;
 }
 
 void HbLoggerPool::addTcpSocketInput(quint16 port) {
-    QTimer::singleShot(0, this, [this, port]() {
-        HbLogAbstractInput* input = new HbLogTcpSocketInput(port, this);
-        input->moveToThread(thread());
-        input->init();
+    QMutexLocker locker(&mMutex);
+    HbLogAbstractInput* input = new HbLogTcpSocketInput(port, this);
+    input->moveToThread(thread());
+    input->init();
 
-        connect(input, &HbLogUdpSocketInput::inputMessageReceived, this, &HbLoggerPool::onInputMessageReceived);
+    connect(input, &HbLogUdpSocketInput::inputMessageReceived, this, &HbLoggerPool::onInputMessageReceived);
 
-        mInputs.insert(input->uid(), input);
-        std::cout << "HbLog: added tcp input on port " << port << std::endl;
-    });
+    mInputs.insert(input->uid(), input);
+    std::cout << "HbLog: added tcp input on port " << port << std::endl;
 }
 
 void HbLoggerPool::addLocalSocketInput(const QString& name) {
-    QTimer::singleShot(0, this, [this, name]() {
-        HbLogAbstractInput* input = new HbLogLocalSocketInput(name, this);
-        input->moveToThread(thread());
-        input->init();
+    QMutexLocker locker(&mMutex);
+    HbLogAbstractInput* input = new HbLogLocalSocketInput(name, this);
+    input->moveToThread(thread());
+    input->init();
 
-        connect(input, &HbLogUdpSocketInput::inputMessageReceived, this, &HbLoggerPool::onInputMessageReceived);
+    connect(input, &HbLogUdpSocketInput::inputMessageReceived, this, &HbLoggerPool::onInputMessageReceived);
 
-        mInputs.insert(input->uid(), input);
-        std::cout << "HbLog: added local input " << name.toStdString() << std::endl;
-    });
+    mInputs.insert(input->uid(), input);
+    std::cout << "HbLog: added local input " << name.toStdString() << std::endl;
 }
 
 void HbLoggerPool::addConsoleOutput() {
-    QTimer::singleShot(0, this, [this]() {
-        HbLogAbstractOutput* output = new HbLogConsoleOutput();
-        output->moveToThread(thread());
-        output->init();
-        mOutputs.insert(output->uid(), output);
-        std::cout << "HbLog: added console output" << std::endl;
-    });
+    QMutexLocker locker(&mMutex);
+    HbLogAbstractOutput* output = new HbLogConsoleOutput();
+    output->moveToThread(thread());
+    output->init();
+    mOutputs.insert(output->uid(), output);
+    std::cout << "HbLog: added console output" << std::endl;
 }
 
 void HbLoggerPool::addGuiOutput(HbLogGuiNotifier* notifier) {
-    QTimer::singleShot(0, this, [this, notifier]() {
-        HbLogAbstractOutput* output = new HbLogGuiOutput(notifier);
-        output->moveToThread(thread());
-        output->init();
-        mOutputs.insert(output->uid(), output);
-        std::cout << "HbLog: added gui output for notifier " << notifier << std::endl;
-    });
+    QMutexLocker locker(&mMutex);
+    HbLogAbstractOutput* output = new HbLogGuiOutput(notifier);
+    output->moveToThread(thread());
+    output->init();
+    mOutputs.insert(output->uid(), output);
+    std::cout << "HbLog: added gui output for notifier " << notifier << std::endl;
 }
 
 void HbLoggerPool::addFileOutput(const QString& dir, quint32 maxSize) {
-    QTimer::singleShot(0, this, [this, dir, maxSize]() {
-        HbLogAbstractOutput* output = new HbLogFileOutput(dir, maxSize);
-        output->moveToThread(thread());
-        output->init();
-        mOutputs.insert(output->uid(), output);
-        std::cout << "HbLog: added file output in " << dir.toStdString() << std::endl;
-    });
+    QMutexLocker locker(&mMutex);
+    HbLogAbstractOutput* output = new HbLogFileOutput(dir, maxSize);
+    output->moveToThread(thread());
+    output->init();
+    mOutputs.insert(output->uid(), output);
+    std::cout << "HbLog: added file output in " << dir.toStdString() << std::endl;
 }
 
 void HbLoggerPool::addUdpSocketOutput(const QString& ip, quint16 port) {
-    QTimer::singleShot(0, this, [this, ip, port]() {
-        HbLogAbstractOutput* output = new HbLogUdpSocketOutput(ip, port);
-        output->moveToThread(thread());
-        output->init();
-        mOutputs.insert(output->uid(), output);
-        std::cout << "HbLog: added upd output on " << ip.toStdString() << ":" << port << std::endl;
-    });
+    QMutexLocker locker(&mMutex);
+    HbLogAbstractOutput* output = new HbLogUdpSocketOutput(ip, port);
+    output->moveToThread(thread());
+    output->init();
+    mOutputs.insert(output->uid(), output);
+    std::cout << "HbLog: added upd output on " << ip.toStdString() << ":" << port << std::endl;
 }
 
 void HbLoggerPool::addTcpSocketOutput(const QString& ip, quint16 port) {
-    QTimer::singleShot(0, this, [this, ip, port]() {
-        HbLogAbstractOutput* output = new HbLogTcpSocketOutput(ip, port);
-        output->moveToThread(thread());
-        output->init();
-        mOutputs.insert(output->uid(), output);
-        std::cout << "HbLog: added tcp output on " << ip.toStdString() << ":" << port << std::endl;
-    });
+    QMutexLocker locker(&mMutex);
+    HbLogAbstractOutput* output = new HbLogTcpSocketOutput(ip, port);
+    output->moveToThread(thread());
+    output->init();
+    mOutputs.insert(output->uid(), output);
+    std::cout << "HbLog: added tcp output on " << ip.toStdString() << ":" << port << std::endl;
 }
 
 void HbLoggerPool::addLocalSocketOutput(const QString& name) {
-    QTimer::singleShot(0, this, [this, name]() {
-        HbLogAbstractOutput* output = new HbLogLocalSocketOutput(name);
-        output->moveToThread(thread());
-        output->init();
-        mOutputs.insert(output->uid(), output);
-        std::cout << "HbLog: added local output " << name.toStdString() << std::endl;
-    });
+    QMutexLocker locker(&mMutex);
+    HbLogAbstractOutput* output = new HbLogLocalSocketOutput(name);
+    output->moveToThread(thread());
+    output->init();
+    mOutputs.insert(output->uid(), output);
+    std::cout << "HbLog: added local output " << name.toStdString() << std::endl;
 }
 
 bool HbLoggerPool::enqueueMessage(QList<HbLogMessage*>& buffer) {
@@ -152,26 +139,20 @@ bool HbLoggerPool::enqueueMessage(QList<HbLogMessage*>& buffer) {
 
             mLoggerStream.push_back(buffer.takeFirst());
         }
+        QTimer::singleShot(0, this, &HbLoggerPool::process);
 
         mAtomic.fetchAndStoreOrdered(0);
         return true;
     }
-
     return false;
 }
 
 void HbLoggerPool::running() {
-    Q_ASSERT(!mClock);
-    mClock = new QTimer();
-
-    connect(mClock, &QTimer::timeout, this, &HbLoggerPool::process, Qt::UniqueConnection);
-
-    mClock->setInterval(1);
-    mClock->start();
 }
 
 void HbLoggerPool::onInputMessageReceived(HbLogMessage* message) {
     mInputsStream.push_back(message);
+    QTimer::singleShot(0, this, &HbLoggerPool::process);
 }
 
 void HbLoggerPool::process() {
@@ -197,5 +178,7 @@ void HbLoggerPool::process() {
         }
 
         mAtomic.fetchAndStoreOrdered(0);
+    } else {
+        QTimer::singleShot(0, this, &HbLoggerPool::process);
     }
 }

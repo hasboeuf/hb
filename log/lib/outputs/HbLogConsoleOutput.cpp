@@ -11,5 +11,9 @@ void HbLogConsoleOutput::init() {
 }
 
 void HbLogConsoleOutput::processMessage(const HbLogMessagePtr& message) {
-    fprintf(stderr, "%s\n", qUtf8Printable(message->toString()));
+    if (message->level() < HbLogger::LEVEL_CRITICAL) {
+        std::cout << qUtf8Printable(message->toString()) << std::endl << std::flush;
+        return;
+    }
+    std::cerr << qUtf8Printable(message->toString()) << std::endl << std::flush;
 }

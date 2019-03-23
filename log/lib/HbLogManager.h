@@ -29,9 +29,6 @@ public:
     HbLogManager(HbLoggerPool* pool, QObject* parent = nullptr);
     virtual ~HbLogManager();
 
-protected:
-    void timerEvent(QTimerEvent* event);
-
 private:
     void tryEnqueueMessage();
     void enqueueMessage(Level level, const HbLogContext& context, const QString& text);
@@ -40,7 +37,6 @@ private:
     QPointer<HbLoggerPool> mPool;
 
     QList<HbLogMessage*> mMessages;
-    qint32 mRetry;
 };
 } // namespace log
 } // namespace hb

@@ -5,6 +5,7 @@
 
 // Qt
 #include <QtCore/QHash>
+#include <QtCore/QMutex>
 #include <QtCore/QObject>
 // Hb
 #include <HbGlobal.h>
@@ -59,8 +60,9 @@ private:
 
     QAtomicInt mAtomic;
 
-    QTimer* mClock;
     qint32 mCapacity;
+
+    QMutex mMutex;
 
     QList<HbLogMessage*> mLoggerStream;
     QList<HbLogMessage*> mInputsStream;
