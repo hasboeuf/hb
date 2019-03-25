@@ -9,6 +9,7 @@ using namespace hb::log;
 
 HbLogLocalSocketOutput::HbLogLocalSocketOutput(const QString& name, QObject* parent) : HbLogAbstractOutput(parent) {
     mName = name;
+    qRegisterMetaType<QLocalSocket::LocalSocketState>("QLocalSocket::LocalSocketState");
 }
 
 HbLogLocalSocketOutput::~HbLogLocalSocketOutput() {
@@ -22,8 +23,7 @@ const QString& HbLogLocalSocketOutput::name() const {
 void HbLogLocalSocketOutput::init() {
     mLocalSocket.reset(new QLocalSocket());
 
-    connect(mLocalSocket.data(), &QLocalSocket::stateChanged, this, [this]() {
-        auto state = mLocalSocket->state();
+    connect(mLocalSocket.data(), &QLocalSocket::stateChanged, this, [this](QLocalSocket::LocalSocketState state) {
         if (state == QLocalSocket::UnconnectedState) {
             QTimer::singleShot(5000, this, &HbLogLocalSocketOutput::onReconnection);
         } else if (state == QLocalSocket::ConnectedState) {
