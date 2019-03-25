@@ -46,11 +46,11 @@ bool HbOAuthRequestContract::write(QDataStream& stream) const {
     return true;
 }
 
-const QString& HbOAuthRequestContract::code() const {
+QString HbOAuthRequestContract::code() const {
     return mCode;
 }
 
-const QString& HbOAuthRequestContract::redirectUri() const {
+QString HbOAuthRequestContract::redirectUri() const {
     return mRedirectUri;
 }
 

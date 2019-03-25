@@ -23,7 +23,7 @@ public:
     LogViewerConfig& operator=(const LogViewerConfig& config);
 
     void addEditor(const QString& name, const QString& path);
-    const QString editorCommand(const QString& editor_name) const;
+    QString editorCommand(const QString& editor_name) const;
     void resetEditors();
     QMap<QString, QString> editors() const;
 

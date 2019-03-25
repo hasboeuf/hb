@@ -8,10 +8,10 @@ HbPluginService::HbPluginService(const QString& name, const QString& version, QO
     mVersion = version;
 }
 
-const QString& HbPluginService::name() const {
+QString HbPluginService::name() const {
     return mName;
 }
 
-const QString& HbPluginService::version() const {
+QString HbPluginService::version() const {
     return mVersion;
 }

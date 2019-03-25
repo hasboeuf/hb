@@ -17,7 +17,7 @@ HbLogTcpSocketOutput::~HbLogTcpSocketOutput() {
     mTcpSocket->close();
 }
 
-const QString& HbLogTcpSocketOutput::ip() const {
+QString HbLogTcpSocketOutput::ip() const {
     return mIp;
 }
 

@@ -31,7 +31,7 @@ public:
     virtual bool read(QDataStream& stream) = 0;
     virtual bool write(QDataStream& stream) const = 0;
 
-    const QString& clientId() const;
+    QString clientId() const;
     void setClientId(const QString& client_id);
 
 private:

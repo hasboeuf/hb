@@ -41,7 +41,7 @@ HbNetworkUserInfo& HbNetworkUserInfo::operator=(const HbNetworkUserInfo& source)
     return (*this);
 }
 
-const QString& HbNetworkUserInfo::id() const {
+QString HbNetworkUserInfo::id() const {
     return mId;
 }
 
@@ -49,19 +49,19 @@ authstgy HbNetworkUserInfo::type() const {
     return mType;
 }
 
-const QString& HbNetworkUserInfo::email() const {
+QString HbNetworkUserInfo::email() const {
     return mEmail;
 }
 
-const QString& HbNetworkUserInfo::nickname() const {
+QString HbNetworkUserInfo::nickname() const {
     return mNickname;
 }
 
-const QString& HbNetworkUserInfo::firstName() const {
+QString HbNetworkUserInfo::firstName() const {
     return mFirstName;
 }
 
-const QString& HbNetworkUserInfo::lastName() const {
+QString HbNetworkUserInfo::lastName() const {
     return mLastName;
 }
 

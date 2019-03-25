@@ -26,7 +26,7 @@ public:
     HbLogLocalSocketOutput(const QString& name = QString(), QObject* parent = nullptr);
     virtual ~HbLogLocalSocketOutput();
 
-    const QString& name() const;
+    QString name() const;
 
 private:
     void processMessage(const HbLogMessagePtr& message) override;

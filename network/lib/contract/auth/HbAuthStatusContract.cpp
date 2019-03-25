@@ -95,7 +95,7 @@ HbNetworkProtocol::AuthStatus HbAuthStatusContract::status() const {
     return mStatus;
 }
 
-const QString& HbAuthStatusContract::description() const {
+QString HbAuthStatusContract::description() const {
     return mDescription;
 }
 

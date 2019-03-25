@@ -17,7 +17,7 @@ HbLogLocalSocketInput::~HbLogLocalSocketInput() {
     qDeleteAll(mClients);
 }
 
-const QString& HbLogLocalSocketInput::name() const {
+QString HbLogLocalSocketInput::name() const {
     return mName;
 }
 

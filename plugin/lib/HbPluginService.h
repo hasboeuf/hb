@@ -18,8 +18,8 @@ class HB_PLUGIN_DECL HbPluginService : public QObject {
 public:
     explicit HbPluginService(const QString& name, const QString& version, QObject* parent = nullptr);
 
-    const QString& name() const;
-    const QString& version() const;
+    QString name() const;
+    QString version() const;
 
 protected:
     QString mName;

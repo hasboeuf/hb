@@ -28,7 +28,7 @@ bool HbGeneralConfig::isValid() const {
     return (!mAppName.isEmpty());
 }
 
-const QString& HbGeneralConfig::appName() const {
+QString HbGeneralConfig::appName() const {
     return mAppName;
 }
 

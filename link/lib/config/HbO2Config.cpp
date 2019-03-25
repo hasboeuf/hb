@@ -21,7 +21,7 @@ bool HbO2Config::isValid() const {
     return (!mClientId.isEmpty());
 }
 
-const QString& HbO2Config::clientId() const {
+QString HbO2Config::clientId() const {
     return mClientId;
 }
 

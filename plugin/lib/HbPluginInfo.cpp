@@ -45,19 +45,19 @@ bool HbPluginInfo::isLoaded() const {
     return false;
 }
 
-const QString& HbPluginInfo::path() const {
+QString HbPluginInfo::path() const {
     return mPath;
 }
 
-const QString& HbPluginInfo::author() const {
+QString HbPluginInfo::author() const {
     return mAuthor;
 }
 
-const QString& HbPluginInfo::name() const {
+QString HbPluginInfo::name() const {
     return mName;
 }
 
-const QString& HbPluginInfo::version() const {
+QString HbPluginInfo::version() const {
     return mVersion;
 }
 

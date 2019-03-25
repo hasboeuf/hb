@@ -40,7 +40,7 @@ public:
     const HbNetworkUserInfo& userInfo() const;
     HbNetworkUserInfo& userInfo();
     HbNetworkProtocol::AuthStatus status() const;
-    const QString& description() const;
+    QString description() const;
     quint8 tryNumber() const;
     quint8 maxTries() const;
 

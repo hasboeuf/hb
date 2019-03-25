@@ -32,7 +32,7 @@ public:
     void setDescription(const QString& description);
 
     netwlint reason() const;
-    const QString& description() const;
+    QString description() const;
 
 private:
     netwlint mReason;

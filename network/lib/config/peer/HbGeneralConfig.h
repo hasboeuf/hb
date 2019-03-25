@@ -26,7 +26,7 @@ public:
 
     virtual bool isValid() const;
 
-    const QString& appName() const;
+    QString appName() const;
     quint16 protocolVersion() const;
 
     void setAppName(const QString& app_name);

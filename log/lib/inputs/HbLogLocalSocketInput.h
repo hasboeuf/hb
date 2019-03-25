@@ -30,7 +30,7 @@ public:
     HbLogLocalSocketInput(const QString& name = QString(), QObject* parent = nullptr);
     ~HbLogLocalSocketInput() override;
 
-    const QString& name() const;
+    QString name() const;
 
 protected:
     void init() override;

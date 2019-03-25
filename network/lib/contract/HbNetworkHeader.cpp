@@ -43,7 +43,7 @@ QString HbNetworkHeader::toString() const {
         .arg(HbNetworkProtocol::MetaCode::toString(mCode));
 }
 
-const QString& HbNetworkHeader::appName() const {
+QString HbNetworkHeader::appName() const {
     return mAppName;
 }
 

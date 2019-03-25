@@ -222,7 +222,7 @@ void LogViewerConfig::addEditor(const QString& name, const QString& path) {
     mEditorCommands.insert(name, path);
 }
 
-const QString LogViewerConfig::editorCommand(const QString& editor_name) const {
+QString LogViewerConfig::editorCommand(const QString& editor_name) const {
     if (mEditorCommands.contains(editor_name)) {
         return mEditorCommands.value(editor_name);
     }

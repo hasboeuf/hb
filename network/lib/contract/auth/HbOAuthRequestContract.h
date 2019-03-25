@@ -27,8 +27,8 @@ public:
     virtual bool read(QDataStream& stream) override;
     virtual bool write(QDataStream& stream) const override;
 
-    const QString& code() const;
-    const QString& redirectUri() const;
+    QString code() const;
+    QString redirectUri() const;
 
     void setCode(const QString& code);
     void setRedirectUri(const QString& redirect_uri);

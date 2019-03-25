@@ -16,7 +16,7 @@ HbLogLocalSocketOutput::~HbLogLocalSocketOutput() {
     mLocalSocket->close();
 }
 
-const QString& HbLogLocalSocketOutput::name() const {
+QString HbLogLocalSocketOutput::name() const {
     return mName;
 }
 

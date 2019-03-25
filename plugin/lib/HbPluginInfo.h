@@ -44,10 +44,10 @@ public:
 
     bool isLoaded() const;
 
-    const QString& path() const;
-    const QString& author() const;
-    const QString& name() const;
-    const QString& version() const;
+    QString path() const;
+    QString author() const;
+    QString name() const;
+    QString version() const;
     const QHash<QString, QString>& requiredPlugins() const;
     QString requiredPluginsStr() const;
     const QHash<QString, QString>& optionalPlugins() const;

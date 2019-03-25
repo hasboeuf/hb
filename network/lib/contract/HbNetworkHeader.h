@@ -29,7 +29,7 @@ public:
 
     QString toString() const;
 
-    const QString& appName() const;
+    QString appName() const;
     quint16 protocolVersion() const;
     serviceuid service() const;
     codeuid code() const;

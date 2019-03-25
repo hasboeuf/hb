@@ -57,6 +57,6 @@ netwlint HbKickContract::reason() const {
     return mReason;
 }
 
-const QString& HbKickContract::description() const {
+QString HbKickContract::description() const {
     return mDescription;
 }

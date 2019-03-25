@@ -28,7 +28,7 @@ public:
     HbLogTcpSocketOutput(const QString& ip, quint16 port, QObject* parent = nullptr);
     virtual ~HbLogTcpSocketOutput();
 
-    const QString& ip() const;
+    QString ip() const;
     quint16 port() const;
 
 protected:

@@ -29,12 +29,12 @@ public:
     HbNetworkUserInfo(const HbNetworkUserInfo& source);
     HbNetworkUserInfo& operator=(const HbNetworkUserInfo& source);
 
-    const QString& id() const;
+    QString id() const;
     authstgy type() const;
-    const QString& email() const;
-    const QString& nickname() const;
-    const QString& firstName() const;
-    const QString& lastName() const;
+    QString email() const;
+    QString nickname() const;
+    QString firstName() const;
+    QString lastName() const;
     quint8 age() const;
     Gender gender() const;
     const QString& picture() const;
