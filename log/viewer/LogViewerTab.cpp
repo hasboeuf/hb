@@ -12,9 +12,9 @@
 // Hb
 #include <HbLogMessage.h>
 #include <HbLogService.h>
-#include <gui/HbLogConfig.h>
 #include <outputs/HbLogFileOutput.h>
 // Local
+#include <LogConfig.h>
 #include <LogViewerConfig.h>
 #include <LogViewerTab.h>
 #include <LogViewerTabDelegate.h>
@@ -288,7 +288,7 @@ void LogViewerTab::onLevelChanged(int index) {
     QString regexp;
     regexp += QLatin1Char('(');
 
-    qint32 current_level = HbLogConfig::msMaxLevel;
+    qint32 current_level = LogConfig::msMaxLevel;
     while (current_level >= min_level) {
         regexp += QStringLiteral("%1|").arg(current_level);
         current_level >>= 1;

@@ -11,10 +11,10 @@
 using namespace hb::log;
 using namespace hb::logviewer;
 
-LogViewerConfig::LogViewerConfig() : HbLogConfig() {
+LogViewerConfig::LogViewerConfig() : LogConfig() {
 }
 
-LogViewerConfig::LogViewerConfig(const LogViewerConfig& config) : HbLogConfig(config) {
+LogViewerConfig::LogViewerConfig(const LogViewerConfig& config) : LogConfig(config) {
     if (&config != this) {
         mProjectFolders = config.mProjectFolders;
         mEditorDefault = config.mEditorDefault;
@@ -24,7 +24,7 @@ LogViewerConfig::LogViewerConfig(const LogViewerConfig& config) : HbLogConfig(co
 
 LogViewerConfig& LogViewerConfig::operator=(const LogViewerConfig& config) {
     if (&config != this) {
-        HbLogConfig::operator=(config);
+        LogConfig::operator=(config);
         mProjectFolders = config.mProjectFolders;
         mEditorDefault = config.mEditorDefault;
         mEditorCommands = config.mEditorCommands;
@@ -34,7 +34,7 @@ LogViewerConfig& LogViewerConfig::operator=(const LogViewerConfig& config) {
 }
 
 void LogViewerConfig::buildDomFromConfig(QDomElement& root) const {
-    HbLogConfig::buildDomFromConfig(root);
+    LogConfig::buildDomFromConfig(root);
 
     QDomDocument dom = root.ownerDocument();
 
@@ -89,7 +89,7 @@ bool LogViewerConfig::exportConfigXml(const QString& file_path, const LogViewerC
 }
 
 void LogViewerConfig::buildConfigFromDom(QDomElement& root) {
-    HbLogConfig::buildConfigFromDom(root);
+    LogConfig::buildConfigFromDom(root);
 
     QDomNode node = root.firstChild();
 
@@ -177,7 +177,7 @@ void LogViewerConfig::loadSettings() {
         return;
     }
 
-    HbLogConfig::loadSettings();
+    LogConfig::loadSettings();
 
     // Project folders
     mProjectFolders.clear();
@@ -196,7 +196,7 @@ void LogViewerConfig::loadSettings() {
 }
 
 void LogViewerConfig::saveSettings() {
-    HbLogConfig::saveSettings();
+    LogConfig::saveSettings();
 
     QSettings settings;
 

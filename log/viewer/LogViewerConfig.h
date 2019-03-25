@@ -6,13 +6,12 @@
 #include <QtGui/QColor>
 #include <QtGui/QFont>
 // Hb
-#include <gui/HbLogConfig.h>
+#include <LogConfig.h>
 
 namespace hb {
 namespace logviewer {
-using hb::log::HbLogConfig;
 
-class LogViewerConfig : public HbLogConfig {
+class LogViewerConfig : public LogConfig {
 public:
     static const LogViewerConfig importConfigXml(const QString& file_path);
     static bool exportConfigXml(const QString& file_path, const LogViewerConfig& config);

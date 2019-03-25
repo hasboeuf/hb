@@ -1,7 +1,7 @@
-#ifndef HBLOGCONFIG_H
-#define HBLOGCONFIG_H
+#ifndef LOGCONFIG_H
+#define LOGCONFIG_H
 
-/*! \file HbLogConfig.h */
+/*! \file LogConfig.h */
 
 // Qt
 #include <QtCore/QMap>
@@ -12,20 +12,20 @@
 #include <HbLog.h>
 
 namespace hb {
-namespace log {
+namespace logviewer {
 /*!
  * TODOC.
  */
-class HB_LOG_DECL HbLogConfig {
+class HB_LOG_DECL LogConfig {
 public:
-    static const HbLogConfig importConfigXml(QString file_path);
-    static bool exportConfigXml(QString file_path, const HbLogConfig& config);
+    static const LogConfig importConfigXml(QString file_path);
+    static bool exportConfigXml(QString file_path, const LogConfig& config);
 
-    HbLogConfig();
-    HbLogConfig(const HbLogConfig& config);
-    virtual ~HbLogConfig() = default;
+    LogConfig();
+    LogConfig(const LogConfig& config);
+    virtual ~LogConfig() = default;
 
-    HbLogConfig& operator=(const HbLogConfig& config);
+    LogConfig& operator=(const LogConfig& config);
 
     quint32 maxBuffer() const;
     const QFont font() const;
@@ -55,7 +55,7 @@ protected:
     QMap<quint32, QColor> mLevelColors;
     QColor mBackgroundColor;
 };
-} // namespace log
+} // namespace logviewer
 } // namespace hb
 
-#endif // HBLOGCONFIG_H
+#endif // LOGCONFIG_H
