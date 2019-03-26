@@ -1,23 +1,24 @@
-#ifndef HBPLUGINLISTWIDGET_H
-#define HBPLUGINLISTWIDGET_H
+#ifndef PLUGINLISTWIDGET_H
+#define PLUGINLISTWIDGET_H
 
-/*! \file HbPluginListWidget.h */
+/*! \file PluginListWidget.h */
 
 // Qt
 #include <QtCore/QSortFilterProxyModel>
 #include <QtCore/QStringList>
 #include <QtGui/QStandardItemModel>
 // Local
-#include <HbPlugin.h>
 #include <HbPluginInfo.h>
-#include <ui_HbPluginListWidget.h>
+#include <ui_PluginListWidget.h>
+
+using hb::plugin::HbPluginInfo;
 
 namespace hb {
-namespace plugin {
+namespace pluginexample {
 /*!
- * HbPluginListWidget is a widget to display HbPluginInfo in a convenient way.
+ * PluginListWidget is a widget to display HbPluginInfo in a convenient way.
  */
-class HB_PLUGIN_DECL HbPluginListWidget : public QWidget, private Ui::HbPluginListWidget {
+class PluginListWidget : public QWidget, private Ui::PluginListWidget {
     Q_OBJECT
 
 public:
@@ -25,7 +26,7 @@ public:
 
     enum RoleId { ROLE_PLUGIN_NAME = Qt::UserRole, ROLE_PLUGIN_CHECKSTATE };
 
-    explicit HbPluginListWidget(QWidget* parent = nullptr);
+    explicit PluginListWidget(QWidget* parent = nullptr);
 
     /*!
      * Fired when a plugin has changed its state.
@@ -61,7 +62,7 @@ private:
 
     QHash<QString, QStandardItem*> mPlugins;
 };
-} // namespace plugin
+} // namespace pluginexample
 } // namespace hb
 
-#endif // HBPLUGINLISTWIDGET_H
+#endif // PLUGINLISTWIDGET_H

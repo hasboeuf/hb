@@ -47,7 +47,7 @@
      </layout>
     </item>
     <item>
-     <widget class="hb::plugin::HbPluginListWidget" name="plw_plugins" native="true"/>
+     <widget class="hb::pluginexample::PluginListWidget" name="plw_plugins" native="true"/>
     </item>
    </layout>
   </widget>
@@ -57,7 +57,7 @@
      <x>0</x>
      <y>0</y>
      <width>400</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -108,9 +108,9 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>hb::plugin::HbPluginListWidget</class>
+   <class>hb::pluginexample::PluginListWidget</class>
    <extends>QWidget</extends>
-   <header>HbPluginListWidget.h</header>
+   <header>PluginListWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

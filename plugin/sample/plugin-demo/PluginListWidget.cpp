@@ -2,11 +2,11 @@
 #include <QtCore/QDebug>
 // Hb
 #include <HbLogService.h>
-#include <HbPluginListWidget.h>
+#include <PluginListWidget.h>
 
-using namespace hb::plugin;
+using namespace hb::pluginexample;
 
-HbPluginListWidget::HbPluginListWidget(QWidget* parent) : QWidget(parent) {
+PluginListWidget::PluginListWidget(QWidget* parent) : QWidget(parent) {
     setupUi(this);
 
     mLabels.insert(COLUMN_NAME, QStringLiteral("Name"));
@@ -19,8 +19,7 @@ HbPluginListWidget::HbPluginListWidget(QWidget* parent) : QWidget(parent) {
     mModel.setHorizontalHeaderLabels(mLabels);
     mProxy.setSourceModel(&mModel);
 
-    connect(
-        &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked, Qt::UniqueConnection);
+    connect(&mModel, &QStandardItemModel::itemChanged, this, &PluginListWidget::onPluginChecked, Qt::UniqueConnection);
 
     qtv_plugins->setModel(&mProxy);
     qtv_plugins->setAlternatingRowColors(true);
@@ -32,7 +31,7 @@ HbPluginListWidget::HbPluginListWidget(QWidget* parent) : QWidget(parent) {
     qtv_plugins->setSortingEnabled(true);
 }
 
-QStandardItem* HbPluginListWidget::getLoadItem(const QString& plugin_name) {
+QStandardItem* PluginListWidget::getLoadItem(const QString& plugin_name) {
     QStandardItem* item_name = mPlugins.value(plugin_name);
     if (!item_name) {
         return nullptr;
@@ -43,7 +42,7 @@ QStandardItem* HbPluginListWidget::getLoadItem(const QString& plugin_name) {
     return mModel.item(row, COLUMN_LOAD);
 }
 
-void HbPluginListWidget::onPluginStateChanged(const HbPluginInfo& plugin_info) {
+void PluginListWidget::onPluginStateChanged(const HbPluginInfo& plugin_info) {
     qDebug() << "onPluginStateChanged state" << plugin_info.stateStr();
 
     // Unregistered plugin.
@@ -100,7 +99,7 @@ void HbPluginListWidget::onPluginStateChanged(const HbPluginInfo& plugin_info) {
         disconnect(&mModel,
                    &QStandardItemModel::itemChanged,
                    this,
-                   &HbPluginListWidget::onPluginChecked); // Avoid to call onPluginChecked.
+                   &PluginListWidget::onPluginChecked); // Avoid to call onPluginChecked.
 
         //! \todo use PLUGIN_CHANGING?
 
@@ -114,15 +113,12 @@ void HbPluginListWidget::onPluginStateChanged(const HbPluginInfo& plugin_info) {
         }
         item_load->setData(item_load->data(Qt::CheckStateRole), ROLE_PLUGIN_CHECKSTATE); // Store previous state.
 
-        connect(&mModel,
-                &QStandardItemModel::itemChanged,
-                this,
-                &HbPluginListWidget::onPluginChecked,
-                Qt::UniqueConnection);
+        connect(
+            &mModel, &QStandardItemModel::itemChanged, this, &PluginListWidget::onPluginChecked, Qt::UniqueConnection);
     }
 }
 
-void HbPluginListWidget::onPluginChecked(QStandardItem* item_load) {
+void PluginListWidget::onPluginChecked(QStandardItem* item_load) {
     if (!item_load) {
         return;
     }
@@ -132,7 +128,7 @@ void HbPluginListWidget::onPluginChecked(QStandardItem* item_load) {
     disconnect(&mModel,
                &QStandardItemModel::itemChanged,
                this,
-               &HbPluginListWidget::onPluginChecked); // Avoid to call onPluginChecked.
+               &PluginListWidget::onPluginChecked); // Avoid to call onPluginChecked.
 
     qint32 previous_state = item_load->data(ROLE_PLUGIN_CHECKSTATE).toInt();
     if (previous_state == Qt::Unchecked) {
@@ -141,6 +137,5 @@ void HbPluginListWidget::onPluginChecked(QStandardItem* item_load) {
         emit unloadPluginRequest(plugin_name);
     }
 
-    connect(
-        &mModel, &QStandardItemModel::itemChanged, this, &HbPluginListWidget::onPluginChecked, Qt::UniqueConnection);
+    connect(&mModel, &QStandardItemModel::itemChanged, this, &PluginListWidget::onPluginChecked, Qt::UniqueConnection);
 }

@@ -5,7 +5,6 @@
 #include <AppPlatformService.h>
 #include <MenuService.h>
 
-using namespace hb::plugin;
 using namespace hb::pluginexample;
 
 AppMainWindow::AppMainWindow(QWidget* parent) : QMainWindow(parent) {
@@ -17,14 +16,12 @@ AppMainWindow::AppMainWindow(QWidget* parent) : QMainWindow(parent) {
     connect(&mPlatformServices,
             &HbPluginPlatform::pluginStateChanged,
             plw_plugins,
-            &HbPluginListWidget::onPluginStateChanged);
+            &PluginListWidget::onPluginStateChanged);
 
+    connect(
+        plw_plugins, &PluginListWidget::loadPluginRequest, &mPlatformServices, &HbPluginPlatform::onLoadPluginRequest);
     connect(plw_plugins,
-            &HbPluginListWidget::loadPluginRequest,
-            &mPlatformServices,
-            &HbPluginPlatform::onLoadPluginRequest);
-    connect(plw_plugins,
-            &HbPluginListWidget::unloadPluginRequest,
+            &PluginListWidget::unloadPluginRequest,
             &mPlatformServices,
             &HbPluginPlatform::onUnloadPluginRequest);
 

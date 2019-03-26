@@ -7,7 +7,7 @@
 
 namespace hb {
 namespace pluginexample {
-class AppMainWindow : public QMainWindow, private Ui::AppMainWindow {
+class AppMainWindow : public QMainWindow, private Ui_AppMainWindow {
     Q_OBJECT
 
 public:
