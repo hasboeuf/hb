@@ -14,17 +14,17 @@ int main(int argc, char* argv[]) {
 
     hb::tools::HbApplicationHelper::initApp("hb-io", "hb-io.com");
 
-    hb::log::HbLogService::install("%{level} %{message}");
+    hb::log::HbLogService::install();
     hb::log::HbLogService::addConsoleOutput();
     hb::log::HbLogService::processArgs(a.arguments());
 
-    qDebug() << "This is a debug trace";
-    qInfo() << "This is a info trace";
-    qWarning() << "This is a warning trace";
-    qCritical() << "This is a critical trace";
-    // qFatal("This is a fatal trace");
-
     QTimer::singleShot(1000, &a, [&a]() {
+        qDebug() << "This is a debug trace";
+        qInfo() << "This is a info trace";
+        qWarning() << "This is a warning trace";
+        qCritical() << "This is a critical trace";
+        // qFatal("This is a fatal trace");
+
         QTextStream stream(stdin);
         QString line;
         while (stream.readLineInto(&line)) {
