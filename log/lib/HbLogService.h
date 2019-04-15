@@ -37,10 +37,14 @@ void print(HbLogger::Level level, const HbLogContext& context, const QString& me
  *
  * Each argument must fit the following usage (otherwise it is ignored).
  * Usage:
- * -hblog-(output|input)-local:name
- * -hblog-(output|input)-tcp:port[:ip]
- * -hblog-(output|input)-udp:port[:ip]
- * -hblog-output-file:dir:file_max_size
+ * --hblog-output-console
+ * --hblog-output-file:dir:file_max_size_mo
+ * --hblog-output-local:name
+ * --hblog-output-tcp:ip:port
+ * --hblog-output-udp:ip:port
+ * --hblog-input-local:name
+ * --hblog-input-tcp:port
+ * --hblog-input-udp:port
  */
 void processArgs(QStringList args);
 
